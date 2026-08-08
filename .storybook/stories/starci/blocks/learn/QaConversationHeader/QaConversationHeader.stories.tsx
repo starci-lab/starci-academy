@@ -19,10 +19,11 @@ type Story = StoryObj<typeof QaConversationHeader>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the root row placing collapse control, avatar, identity column, avatar group and follow toggle on one baseline", storyId: "frames-stack-stackh--default" },
+    "FillAvailable": { tier: "frame", role: "owns min-w-0 flex-1 on the identity column so the name truncates without a CSS door", storyId: "frames-fillavailable-fillavailable--default" },
     "StackV": { tier: "frame", role: "the identity column stacking the asker's name row above the reply-count line", storyId: "frames-stack-stackv--default" },
-    "Button": { tier: "atom", role: "the collapse-back control, and the optional follow toggle", storyId: "atoms-buttons-button-button--default" },
+    "Button": { tier: "atom", role: "the collapse-back control, and the optional follow toggle (finite Follow/Following labels — not FollowButton)", storyId: "atoms-buttons-button-button--default" },
     "Avatar": { tier: "atom", role: "the asker's avatar", storyId: "atoms-display-avatar-avatar--default" },
-    "AvatarGroup": { tier: "atom", role: "distinct people who have answered so far", storyId: "composites-lists-avatargroup--default" },
+    "AvatarGroup": { tier: "composite", role: "distinct people who have answered so far", storyId: "composites-lists-avatargroup--default" },
     "Typography": { tier: "atom", role: "asker name and the reply-count line", storyId: "atoms-text-typography-typography--overview" },
 }
 
@@ -87,6 +88,55 @@ export const NoRepliesYet: Story = {
                                 participants={[]}
                                 replyCount={0}
                                 onCollapse={() => {}}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — follow control + optional labels override (house Button, not FollowButton). */
+export const WithFollow: Story = {
+    render: () => (
+        <div data-tier="fixture" className="p-8">
+            <BlockAnatomy
+                name="QaConversationHeader"
+                tier="block"
+                leaf="With follow"
+                parts={[]}
+                annotate={ANNOTATE}
+                states={[
+                    {
+                        name: "canFollow, isFollowing = false, default labels",
+                        why: "Follow is a house Button with finite Follow/Following labels owned by the block (or optional labels prop) — never the FollowButton block.",
+                        code: "<QaConversationHeader asker={asker} participants={participants} replyCount={3} canFollow onCollapse={collapse} onToggleFollow={toggle} />",
+                        render: (
+                            <QaConversationHeader
+                                asker={ASKER}
+                                participants={PARTICIPANTS}
+                                replyCount={3}
+                                canFollow
+                                isFollowing={false}
+                                onCollapse={() => {}}
+                                onToggleFollow={() => {}}
+                            />
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true",
+                        why: "Every part draws its own shimmer mirror; follow and collapse stay disabled.",
+                        code: "<QaConversationHeader … isSkeleton />",
+                        render: (
+                            <QaConversationHeader
+                                asker={ASKER}
+                                participants={PARTICIPANTS}
+                                replyCount={3}
+                                canFollow
+                                onCollapse={() => {}}
+                                onToggleFollow={() => {}}
+                                isSkeleton
                             />
                         ),
                     },

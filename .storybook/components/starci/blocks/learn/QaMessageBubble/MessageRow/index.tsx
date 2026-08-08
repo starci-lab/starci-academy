@@ -99,9 +99,7 @@ export const MessageRow = ({
                         () => authorRow,
                         () => (
                             <QaChatBubble role={isMine ? "user" : "assistant"}>
-                                <div className="[&_p]:m-0">
-                                    <MarkdownContent source={answer.body} measure="compact" />
-                                </div>
+                                <MarkdownContent source={answer.body} measure="compact" flow="embedded" />
                             </QaChatBubble>
                         ),
                         ...(reactionRow != null ? [() => reactionRow] : []),

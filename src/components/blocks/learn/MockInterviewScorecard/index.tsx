@@ -346,14 +346,13 @@ const MockInterviewScorecard = ({
 
 
                     body={() => (
-                        <div className="italic [&_p]:m-0">
-                            <MarkdownContent
-                                source={followUpQuestion ?? ""}
-                                measure="compact"
-                                isSkeleton={isSkeleton}
-
-                            />
-                        </div>
+                        <MarkdownContent
+                            source={followUpQuestion ?? ""}
+                            measure="compact"
+                            flow="embedded"
+                            emphasis="italic"
+                            isSkeleton={isSkeleton}
+                        />
                     )}
                 />
             ) : null}

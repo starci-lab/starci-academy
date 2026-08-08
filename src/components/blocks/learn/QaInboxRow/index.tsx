@@ -84,7 +84,9 @@ export const QaInboxRow = ({ question, onOpen }: QaInboxRowProps) => {
                 {/* two-line preview */}
                 <MarkdownContent
                     markdown={question.body}
-                    className="text-sm text-foreground [&_p]:m-0 [&_p]:line-clamp-2"
+                    density="compact"
+                    flow="embedded"
+                    previewLines={2}
                 />
 
                 {/* scope tag + status + reply count */}

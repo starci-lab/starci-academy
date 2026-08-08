@@ -2,12 +2,19 @@
 
 import React, { useMemo } from "react"
 import { Card, CardContent } from "@heroui/react"
+import {
+    CheckCircleIcon,
+    WarningIcon,
+    XCircleIcon,
+} from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import type { IconComponent } from "@/components/atoms/chips/Chip"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { Box } from "@/components/frames/Box"
 import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { resolveComponentStatusVisual } from "../map"
+import { ComponentStatus } from "@/modules/api/graphql/queries/enums"
 import type { SystemHealthComponent } from "@/modules/api/graphql/queries/types/system-health-status"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 
@@ -15,6 +22,13 @@ import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 export interface ComponentCardProps {
     /** One probed infrastructure component from GraphQL. */
     component: SystemHealthComponent
+}
+
+/** Leading StatusChip icon per infrastructure status (contract E — component refs). */
+const STATUS_CHIP_ICON: Record<ComponentStatus, IconComponent> = {
+    [ComponentStatus.Up]: CheckCircleIcon,
+    [ComponentStatus.Degraded]: WarningIcon,
+    [ComponentStatus.Down]: XCircleIcon,
 }
 
 /**
@@ -28,6 +42,8 @@ export interface ComponentCardProps {
 export const ComponentCard = ({ component }: ComponentCardProps) => {
     const t = useTranslations()
     const visual = resolveComponentStatusVisual(component.status)
+    const statusIcon =
+        STATUS_CHIP_ICON[component.status as ComponentStatus] ?? STATUS_CHIP_ICON[ComponentStatus.Down]
 
     const statusLabel = t(`status.componentStatus.${component.status}`)
 
@@ -77,7 +93,7 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
                                             />
                                         ),
                                         () => (
-                                            <StatusChip tone={visual.tone} icon={visual.icon}>
+                                            <StatusChip tone={visual.tone} icon={statusIcon}>
                                                 {statusLabel}
                                             </StatusChip>
                                         ),

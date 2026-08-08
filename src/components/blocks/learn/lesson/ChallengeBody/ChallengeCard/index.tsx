@@ -144,7 +144,10 @@ export const ChallengeCard = ({ challenge}: ChallengeCardProps) => {
                 {challenge.description ? (
                     <MarkdownContent
                         markdown={challenge.description}
-                        className="text-xs text-muted [&_p]:m-0 [&_p]:line-clamp-2"
+                        density="caption"
+                        tone="muted"
+                        flow="embedded"
+                        previewLines={2}
                     />
                 ) : null}
                 <div className="flex items-center justify-between gap-2">

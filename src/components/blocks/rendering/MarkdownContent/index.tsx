@@ -40,7 +40,18 @@ export type MarkdownContentConnectedProps = Omit<MarkdownContentProps, "componen
  * `design/storybook/architecture/split.md`.
  * @param props - {@link MarkdownContentConnectedProps}
  */
-export const MarkdownContent = ({ markdown, reading = false, arcSections = false, plain = false, codeElevated = false, className }: MarkdownContentConnectedProps) => {
+export const MarkdownContent = ({
+    markdown,
+    reading = false,
+    arcSections = false,
+    plain = false,
+    codeElevated = false,
+    density = "default",
+    tone = "default",
+    flow = "document",
+    emphasis = "normal",
+    previewLines,
+}: MarkdownContentConnectedProps) => {
     const theme = useTheme()
     const t = useTranslations()
     // hold back an unterminated trailing mermaid fence FIRST (same rule the
@@ -71,8 +82,12 @@ export const MarkdownContent = ({ markdown, reading = false, arcSections = false
             markdown={markdown}
             reading={reading}
             arcSections={arcSections}
+            density={density}
+            tone={tone}
+            flow={flow}
+            emphasis={emphasis}
+            previewLines={previewLines}
             components={components}
-            className={className}
         />
     )
 }

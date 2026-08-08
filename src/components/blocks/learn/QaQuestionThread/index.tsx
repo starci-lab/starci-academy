@@ -7,13 +7,12 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
-import type { AvatarGroupItem } from "@/components/composites/lists/AvatarGroup"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Composer } from "@/components/blocks/feed/Composer"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { ReactionBar } from "@/components/blocks/community/Discussion/ReactionBar"
 import { QaInboxRow } from "../QaInboxRow"
-import { QaConversationHeader } from "../QaConversationHeader"
+import { QaConversationHeader, type QaConversationHeaderPerson } from "../QaConversationHeader"
 import { QaMessageBubble } from "../QaMessageBubble"
 import { useQuestionAnswers } from "@/hooks/swr/api/graphql/queries/useQuestionAnswersSwr"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
@@ -93,17 +92,16 @@ export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswe
     }, [isFollowingAsker, triggerSetFollow, question.author.id])
 
     // distinct answerers → the "who joined in" avatar group in the header
-    const participants = useMemo<Array<AvatarGroupItem>>(() => {
+    const participants = useMemo<Array<QaConversationHeaderPerson>>(() => {
         const seen = new Set<string>()
-        const list: Array<AvatarGroupItem> = []
+        const list: Array<QaConversationHeaderPerson> = []
         for (const answer of answers) {
             if (!seen.has(answer.author.id)) {
                 seen.add(answer.author.id)
                 list.push({
-                    key: answer.author.id,
-                    seed: answer.author.username,
-                    name: answer.author.username,
-                    src: answer.author.avatar ?? undefined,
+                    id: answer.author.id,
+                    displayName: answer.author.username,
+                    avatarUrl: answer.author.avatar ?? undefined,
                 })
             }
         }
@@ -158,7 +156,11 @@ export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswe
     return (
         <div className={"flex flex-col gap-4 p-3"}>
             <QaConversationHeader
-                asker={question.author}
+                asker={{
+                    id: question.author.id,
+                    displayName: question.author.displayName || question.author.username,
+                    avatarUrl: question.author.avatar ?? undefined,
+                }}
                 isFounderAsker={question.isFounderAuthor}
                 participants={participants}
                 replyCount={question.replyCount}
@@ -191,7 +193,7 @@ export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswe
                         </div>
 
                         <ChatBubble role={isMineQuestion ? "user" : "assistant"}>
-                            <MarkdownContent markdown={question.body} className="text-sm [&_p]:m-0" />
+                            <MarkdownContent markdown={question.body} density="compact" flow="embedded" />
                         </ChatBubble>
 
                         {/* lesson-funnel tag (course content) + answered/unanswered status */}

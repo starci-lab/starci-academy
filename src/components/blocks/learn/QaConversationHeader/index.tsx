@@ -1,51 +1,79 @@
 "use client"
 
-import React from "react"
-import { Button, Typography } from "@heroui/react"
-import {
-    CaretUpIcon,
-    SealCheckIcon,
-} from "@phosphor-icons/react"
+import { ArrowLeftIcon, SealCheckIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
-import { AvatarGroup, type AvatarGroupItem } from "@/components/composites/lists/AvatarGroup"
-import { FollowButton } from "@/components/blocks/community/FollowButton"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Avatar } from "@/components/atoms/display/Avatar"
+import { Typography } from "@/components/atoms/text/Typography"
+import { AvatarGroup } from "@/components/composites/lists/AvatarGroup"
+import { FillAvailable } from "@/components/frames/FillAvailable"
+import { StackH, StackV } from "@/components/frames/Stack"
+
+/**
+ * BLOCK — `QaConversationHeader`: the top of an EXPANDED question thread —
+ * collapse control, asker identity, who joined in, reply count.
+ */
+
+/** Minimal identity this header needs for the asker or a participant. */
+export interface QaConversationHeaderPerson {
+    /** Stable id. */
+    id: string
+    /** Display name, already resolved by the caller. */
+    displayName: string
+    /** Avatar image url. Omitted → generated/initials fallback. */
+    avatarUrl?: string
+}
+
+/** Finite copy vocabulary for {@link QaConversationHeader} — never ReactNode. */
+export interface QaConversationHeaderLabels {
+    /** Accessible label for the collapse control. */
+    collapse: string
+    /** Formats the asker identity line from a display name. */
+    askedBy: (displayName: string) => string
+    /** Formats the reply-count fact when `replyCount > 0`. */
+    replies: (count: number) => string
+    /** Nudge shown when nobody has answered yet. */
+    beFirst: string
+    /** Accessible label for the founder seal beside the asker. */
+    founderBadge: string
+    /** Follow control label when the viewer is not following. */
+    follow: string
+    /** Follow control label when the viewer is already following. */
+    following: string
+}
 
 /** Props for {@link QaConversationHeader}. */
 export interface QaConversationHeaderProps {
-    /** The asker (whose question opens the conversation). */
-    asker: {
-        /** Asker username (drives avatar fallback). */
-        username: string
-        /** Asker display name; falls back to username. */
-        displayName?: string | null
-        /** Asker avatar url, or null. */
-        avatar?: string | null
-    }
-    /** Whether the asker is the founder (drives the verified badge). */
+    /** Who asked the question. */
+    asker: QaConversationHeaderPerson
+    /** `true` → a verified badge rides beside the asker's name. */
     isFounderAsker?: boolean
-    /** Distinct people who have answered — shown as an overlapping avatar group. */
-    participants: Array<AvatarGroupItem>
-    /** Total answers (top-level + replies) — the "N replies" line. */
+    /** Distinct people who have answered so far — rendered as an overlapping avatar row. */
+    participants: ReadonlyArray<QaConversationHeaderPerson>
+    /** Total replies (top-level + flattened). `0` swaps the count for a "be first" nudge. */
     replyCount: number
-    /** Collapse the conversation back to its inbox row. */
+    /** Collapse back to the inbox-row view. */
     onCollapse: () => void
-    /** Show a follow control for the asker (hidden for one's own question / signed out). */
+    /** `true` → the viewer can follow this thread for updates. Omit to hide the control entirely. */
     canFollow?: boolean
-    /** Whether the viewer currently follows the asker. */
+    /** `true` → the viewer already follows this thread. Only read when {@link canFollow}. */
     isFollowing?: boolean
-    /** Toggle following the asker; the parent owns the `setFollow` mutation. */
+    /** Follow/unfollow toggle. Only rendered when {@link canFollow}. */
     onToggleFollow?: () => void
-    /** True while the follow toggle is in flight. */
+    /** `true` → the follow toggle is mid-request (disables it). */
     isFollowPending?: boolean
+    /** `true` → every part draws its own shimmer mirror. */
+    isSkeleton?: boolean
+    /**
+     * Optional copy override. Omitted → localized defaults from next-intl.
+     * Named strings/formatters only — not ReactNode.
+     */
+    labels?: QaConversationHeaderLabels
 }
 
 /**
- * Header of an opened course-Q&A conversation: a collapse control, the asker's
- * identity (avatar + name + founder badge), and — on the right — who has joined in
- * (an {@link AvatarGroup} of distinct answerers) plus the answer count. When nobody
- * has answered yet it shows a gentle, honest nudge inviting the viewer to be first,
- * turning the empty state into a social prompt rather than a dead end.
+ * Collapse control + asker identity + who joined in + reply-count nudge, atop
+ * an expanded {@link QaQuestionThread}.
  *
  * Presentational: identity + participants + follow state arrive via props; the parent
  * owns the `setFollow` mutation and hides the control on one's own question / when signed out.
@@ -58,74 +86,118 @@ export const QaConversationHeader = ({
     participants,
     replyCount,
     onCollapse,
-    canFollow = false,
-    isFollowing = false,
+    canFollow,
+    isFollowing,
     onToggleFollow,
-    isFollowPending = false}: QaConversationHeaderProps) => {
+    isFollowPending,
+    isSkeleton = false,
+    labels,
+}: QaConversationHeaderProps) => {
     const t = useTranslations()
-    const displayName = asker.displayName || asker.username
-    const hasAnswers = replyCount > 0
+    const L = labels ?? {
+        collapse: t("courseQa.collapse"),
+        askedBy: (displayName: string) => t("courseQa.askedBy", { name: displayName }),
+        replies: (count: number) => t("courseQa.replyCount", { count }),
+        beFirst: t("courseQa.beFirstToAnswer"),
+        founderBadge: t("courseQa.founderBadge"),
+        follow: t("follow.follow"),
+        following: t("follow.following"),
+    }
+    const replyLine = replyCount > 0 ? L.replies(replyCount) : L.beFirst
 
-    return (
-        <div className={"flex flex-wrap items-center justify-between gap-3 border-b border-default pb-3"}>
-            {/* collapse + asker identity + follow */}
-            <div className="flex min-w-0 items-center gap-2">
-                <Button
-                    isIconOnly
-                    size="sm"
-                    variant="tertiary"
-                    aria-label={t("courseQa.collapse")}
-                    onPress={onCollapse}
-                >
-                    <CaretUpIcon aria-hidden className="size-4" />
-                </Button>
-                <UserAvatar
-                    size="sm"
-                    username={asker.username}
-                    avatar={asker.avatar}
-                    seed={asker.username}
-                    className="shrink-0"
-                />
-                <div className="flex min-w-0 items-center gap-2">
-                    <Typography type="body-sm" weight="semibold" className="truncate">
-                        {t("courseQa.askedBy", { name: displayName })}
-                    </Typography>
-                    {isFounderAsker ? (
+    const nameRow = (
+        <StackH
+            gap={2}
+            principle="icon-text"
+            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+            align="center"
+            isSkeleton={isSkeleton}
+            items={isSkeleton
+                ? [() => <Typography size="sm" weight="medium" isSkeleton />]
+                : [
+                    () => <Typography size="sm" weight="medium" truncate text={L.askedBy(asker.displayName)} />,
+                    ...(isFounderAsker ? [() => (
                         <SealCheckIcon
                             weight="fill"
-                            aria-label={t("courseQa.founderBadge")}
+                            aria-label={L.founderBadge}
+                            focusable="false"
                             className="size-3.5 shrink-0 text-accent-soft-foreground"
                         />
-                    ) : null}
-                </div>
-                {/* follow the asker — quiet so it never competes with the composer's primary */}
-                {canFollow ? (
-                    <span className="ml-1">
-                        <FollowButton
-                            quiet
-                            following={isFollowing}
-                            isPending={isFollowPending}
-                            onToggle={onToggleFollow}
-                        />
-                    </span>
-                ) : null}
-            </div>
+                    )] : []),
+                ]}
+        />
+    )
 
-            {/* who joined in + answer count, or an invite-to-answer nudge */}
-            {hasAnswers ? (
-                <div className="flex shrink-0 items-center gap-2">
-                    {participants.length > 0 ? (
-                        <AvatarGroup items={participants} max={4} />
-                    ) : null}
-                    <Typography type="body-xs" color="muted">
-                        {t("courseQa.replyCount", { count: replyCount })}
-                    </Typography>
-                </div>
-            ) : (
-                <Typography type="body-xs" color="muted" className="shrink-0">
-                    {t("courseQa.beFirstToAnswer")}
-                </Typography>
+    const identityColumn = (
+        <FillAvailable
+            at="base"
+            isSkeleton={isSkeleton}
+            body={() => (
+                <StackV
+                    gap={1}
+                    principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => nameRow,
+                        () => (isSkeleton ? (
+                            <Typography size="xs" color="muted" isSkeleton />
+                        ) : (
+                            <Typography size="xs" color="muted" text={replyLine} />
+                        )),
+                    ]}
+                />
             )}
-        </div>
+        />
+    )
+
+    return (
+        <StackH
+            identity={{ tier: "block", component: "QaConversationHeader" }}
+            gap={4}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            align="center"
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <Button
+                        isIconOnly
+                        variant="ghost"
+                        size="sm"
+                        prefixIcon={ArrowLeftIcon}
+                        ariaLabel={L.collapse}
+                        onPress={onCollapse}
+                        isDisabled={isSkeleton}
+                    />
+                ),
+                () => (
+                    <Avatar
+                        src={asker.avatarUrl}
+                        name={asker.displayName}
+                        seed={asker.id}
+                        size="sm"
+                        isSkeleton={isSkeleton}
+                    />
+                ),
+                () => identityColumn,
+                ...(participants.length > 0 ? [() => (
+                    <AvatarGroup
+                        items={participants.map((p) => ({ key: p.id, src: p.avatarUrl, name: p.displayName, seed: p.id }))}
+                        size="sm"
+                        isSkeleton={isSkeleton}
+                    />
+                )] : []),
+                ...(canFollow ? [() => (
+                    <Button
+                        variant={isFollowing ? "secondary" : "primary"}
+                        size="sm"
+                        label={isFollowing ? L.following : L.follow}
+                        onPress={onToggleFollow}
+                        isDisabled={isSkeleton || isFollowPending}
+                    />
+                )] : []),
+            ]}
+        />
     )
 }

@@ -4,8 +4,6 @@ import remarkGfm from "remark-gfm"
 import remarkDirective from "remark-directive"
 import { cn } from "@heroui/react"
 import type { Components } from "react-markdown"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
 // Re-export the colocated sub-renderers so the reuseable barrel surface stays identical.
 export * from "./CodeToHtml"
 export * from "./LayoutWidget"
@@ -392,8 +390,23 @@ const stripMermaidCaptions = (markdown: string): string => {
 const stripClozeMarkers = (markdown: string): string =>
     markdown.replace(/\{\{c\d+::([\s\S]*?)(?:::[\s\S]*?)?\}\}/g, "$1")
 
+/** Intrinsic type scale on the prose root (independent of {@link MarkdownContentProps.reading}). */
+export type MarkdownDensity = "default" | "compact" | "caption"
+
+/** Foreground colour role on the prose root. */
+export type MarkdownTone = "default" | "muted"
+
+/** Whether paragraphs keep document rhythm or sit flush as an embedded passenger. */
+export type MarkdownFlow = "document" | "embedded"
+
+/** Italic emphasis on the whole prose root. */
+export type MarkdownEmphasis = "normal" | "italic"
+
+/** Clamp each paragraph to this many visible lines (preview / list snip). */
+export type MarkdownPreviewLines = 1 | 2
+
 /** Props for {@link _MarkdownContent} — presentational; the renderer map already resolved. */
-export interface MarkdownContentProps extends WithClassNames<undefined> {
+export interface MarkdownContentProps {
     /** Markdown source string. */
     markdown: string
     /**
@@ -410,6 +423,16 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
      * flashcard/mock-interview answer (FlipCard back face) turns this on.
      */
     arcSections?: boolean
+    /** Intrinsic type scale on the prose root. Defaults to `"default"`. */
+    density?: MarkdownDensity
+    /** Foreground colour role on the prose root. Defaults to `"default"`. */
+    tone?: MarkdownTone
+    /** Document rhythm vs flush embedded paragraphs. Defaults to `"document"`. */
+    flow?: MarkdownFlow
+    /** Italic emphasis on the prose root. Defaults to `"normal"`. */
+    emphasis?: MarkdownEmphasis
+    /** Clamp each paragraph to 1 or 2 visible lines (omit for no clamp). */
+    previewLines?: MarkdownPreviewLines
     /** The element-renderer map, already resolved (theme + i18n baked in). */
     components: Components
 }
@@ -424,7 +447,17 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
  * @see Story: .storybook/stories/blocks/rendering/MarkdownContent/MarkdownContent.stories
  * @param props - {@link MarkdownContentProps}
  */
-export const _MarkdownContent = ({ markdown, reading = false, arcSections = false, components, className }: MarkdownContentProps) => {
+export const _MarkdownContent = ({
+    markdown,
+    reading = false,
+    arcSections = false,
+    density = "default",
+    tone = "default",
+    flow = "document",
+    emphasis = "normal",
+    previewLines,
+    components,
+}: MarkdownContentProps) => {
     // hold back an unterminated trailing mermaid fence FIRST — markdown streamed in
     // progressively (typewriter reveal, AI token stream) walks through every partial
     // length of a diagram's source, and parsing those mid-fence snapshots is what
@@ -446,7 +479,14 @@ export const _MarkdownContent = ({ markdown, reading = false, arcSections = fals
                 reading
                     ? "text-base leading-7 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
                     : "space-y-2 text-sm leading-relaxed",
-                className,
+                // Presentation axes (contract D) — mirror composites/viewers/MarkdownContent.
+                density === "compact" && "text-sm",
+                density === "caption" && "text-xs",
+                tone === "muted" && "text-muted",
+                flow === "embedded" && "[&_p]:m-0",
+                emphasis === "italic" && "italic",
+                previewLines === 1 && "[&_p]:line-clamp-1",
+                previewLines === 2 && "[&_p]:line-clamp-2",
             )}
         >
             <ReactMarkdown

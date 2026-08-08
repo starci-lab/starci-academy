@@ -136,7 +136,7 @@ export const QaMessageBubble = ({
                     />
                 ) : (
                     <ChatBubble role={isMine ? "user" : "assistant"}>
-                        <MarkdownContent markdown={comment.body} className="text-sm [&_p]:m-0" />
+                        <MarkdownContent markdown={comment.body} density="compact" flow="embedded" />
                     </ChatBubble>
                 )}
 

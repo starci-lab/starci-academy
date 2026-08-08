@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Chip } from "@heroui/react"
+import type { IconComponent } from "@/components/atoms/chips/Chip"
 import { ElementCloseButton } from "@/components/blocks/buttons/ElementCloseButton"
 
 /**
@@ -14,9 +15,8 @@ export type StatusChipTone = "neutral" | "success" | "warning" | "danger" | "acc
  *
  * Does NOT take `className` (BLOCK-4 — a block hands out no escape hatch; a
  * caller that needs a specific placement uses a frame, not a hole in this
- * component). `icon` stays a rendered `ReactNode` — see the note on
- * {@link StatusChipProps.icon} for why the atom `Chip`'s `icon` slot (a
- * component reference, not an element) isn't a drop-in replacement here.
+ * component). `icon` is an {@link IconComponent} reference this block mounts
+ * at chip scale (contract E).
  */
 export interface StatusChipProps {
     /**
@@ -24,16 +24,12 @@ export interface StatusChipProps {
      */
     tone?: StatusChipTone
     /**
-     * Optional leading icon (typically a Phosphor icon) rendered before the label.
-     * A rendered element (`<VerifiedIcon .../>`), not a component reference — the
-     * atom `Chip`'s `icon` slot takes an `IconComponent` (a component the atom
-     * instantiates itself) instead, so it can't stand in for this prop without
-     * changing every call site that renders its own icon element today
-     * (`missingVocabulary`: no atom/composite offers an element-shaped leading
-     * icon slot on a `Chip`-family component). Root stays HeroUI `Chip` directly
-     * for that reason — see the class docstring.
+     * Optional leading icon — a component reference (`CheckCircleIcon`), not a
+     * rendered element. This block mounts it at `size-4`. When {@link onCancel}
+     * is set, the leading icon is dropped (removable chips carry a trailing ×
+     * instead).
      */
-    icon?: ReactNode
+    icon?: IconComponent
     /**
      * Label content rendered inside the chip.
      */
@@ -68,25 +64,26 @@ const toneToColor: Record<StatusChipTone, "default" | "success" | "warning" | "d
 
 /**
  * Generic, presentational status chip. A thin pill-shaped wrapper over the
- * HeroUI Chip that maps a semantic tone to a chip color and optionally renders
- * a leading icon before the label. Presentational: the only callback it takes is
- * {@link StatusChipProps.onCancel} for a removable/filter chip (a trailing cancel-X).
+ * HeroUI Chip that maps a semantic tone to a chip color and optionally mounts a
+ * leading {@link IconComponent} before the label. Presentational: the only
+ * callback it takes is {@link StatusChipProps.onCancel} for a removable/filter
+ * chip (a trailing cancel-X).
  *
- * Root stays raw HeroUI `Chip` rather than the design system's `Chip` atom
- * (`@/components/atoms/chips/Chip`) — the atom's `icon` slot takes an
- * `IconComponent` it instantiates itself, not a rendered element, so it can't
- * carry this block's `icon` prop without breaking every existing call site
- * (see the prop's own docstring). `onCancel` still routes through
- * {@link ElementCloseButton} for the same reason: swapping to the atom's
- * built-in `onRemove` would mean dropping `ElementCloseButton` only on the
- * no-icon branch, splitting the chip's trailing-× styling across two
- * different implementations for no behavioural gain.
+ * Root stays raw HeroUI `Chip` rather than the design system's `Chip` atom so
+ * {@link ElementCloseButton} can keep tonal cancel styling on the removable
+ * branch without splitting close-affordance implementations.
  *
  * Does not take `className` (BLOCK-4) — a caller that needs a specific
  * placement composes a frame (`StackH`/`Cluster`/…) around the chip instead.
  * @see Story: .storybook/stories/blocks/chips/StatusChip/StatusChip.stories
  */
-export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelLabel }: StatusChipProps) => {
+export const StatusChip = ({
+    tone = "neutral",
+    icon: Icon,
+    children,
+    onCancel,
+    cancelLabel,
+}: StatusChipProps) => {
     return (
         <Chip
             data-tier="block"
@@ -107,7 +104,9 @@ export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelL
             {/* leading status icon — DROPPED when the chip is removable (has a
                 trailing cancel-X): a chip carries EITHER a status icon OR a cancel-X,
                 never both. Icon forced to size-4 so it reads uniformly. */}
-            {icon && !onCancel ? <span className="shrink-0 [&_svg]:size-4">{icon}</span> : null}
+            {Icon && !onCancel ? (
+                <Icon className="size-4 shrink-0" aria-hidden focusable="false" />
+            ) : null}
             <Chip.Label>{children}</Chip.Label>
             {onCancel ? (
                 // shared close × — bakes transparent-at-rest + tonal hover (same

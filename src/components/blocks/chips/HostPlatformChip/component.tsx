@@ -32,10 +32,10 @@ export const _HostPlatformChip = ({ hostPlatform, labels }: HostPlatformChipProp
     // `Other` is intentionally unhandled — EnumChip throws on it, matching the
     // original switch `default` throw. Hence Partial rather than a full Record.
     const map: Partial<Record<VideoHostPlatform, EnumChipEntry>> = {
-        [VideoHostPlatform.Youtube]: { color: "accent", icon: <SiYoutube size={16} />, label: labels[VideoHostPlatform.Youtube] ?? "" },
-        [VideoHostPlatform.GoogleDrive]: { color: "accent", icon: <SiGoogledrive size={16} />, label: labels[VideoHostPlatform.GoogleDrive] ?? "" },
-        [VideoHostPlatform.Vimeo]: { color: "accent", icon: <SiVimeo size={16} />, label: labels[VideoHostPlatform.Vimeo] ?? "" },
-        [VideoHostPlatform.CloudflareStream]: { color: "accent", icon: <SiCloudflare size={16} />, label: labels[VideoHostPlatform.CloudflareStream] ?? "" },
+        [VideoHostPlatform.Youtube]: { color: "accent", icon: SiYoutube, label: labels[VideoHostPlatform.Youtube] ?? "" },
+        [VideoHostPlatform.GoogleDrive]: { color: "accent", icon: SiGoogledrive, label: labels[VideoHostPlatform.GoogleDrive] ?? "" },
+        [VideoHostPlatform.Vimeo]: { color: "accent", icon: SiVimeo, label: labels[VideoHostPlatform.Vimeo] ?? "" },
+        [VideoHostPlatform.CloudflareStream]: { color: "accent", icon: SiCloudflare, label: labels[VideoHostPlatform.CloudflareStream] ?? "" },
     }
     return <EnumChip value={hostPlatform} map={map} />
 }

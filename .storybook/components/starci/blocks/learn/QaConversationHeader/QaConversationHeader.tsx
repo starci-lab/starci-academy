@@ -3,6 +3,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { AvatarGroup } from "@sb-components/composites/lists/AvatarGroup/AvatarGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -18,6 +19,24 @@ export interface QaConversationHeaderPerson {
     displayName: string
     /** Avatar image url. Omitted → generated/initials fallback. */
     avatarUrl?: string
+}
+
+/** Finite copy vocabulary for {@link QaConversationHeader} — never ReactNode. */
+export interface QaConversationHeaderLabels {
+    /** Accessible label for the collapse control. */
+    collapse: string
+    /** Formats the asker identity line from a display name. */
+    askedBy: (displayName: string) => string
+    /** Formats the reply-count fact when `replyCount > 0`. */
+    replies: (count: number) => string
+    /** Nudge shown when nobody has answered yet. */
+    beFirst: string
+    /** Accessible label for the founder seal beside the asker. */
+    founderBadge: string
+    /** Follow control label when the viewer is not following. */
+    follow: string
+    /** Follow control label when the viewer is already following. */
+    following: string
 }
 
 /** Props for {@link QaConversationHeader}. */
@@ -42,11 +61,23 @@ export interface QaConversationHeaderProps {
     isFollowPending?: boolean
     /** `true` → every part draws its own shimmer mirror. */
     isSkeleton?: boolean
+    /**
+     * Optional copy override. Omitted → English defaults owned inside the block.
+     * Named strings/formatters only — not ReactNode.
+     */
+    labels?: QaConversationHeaderLabels
 }
 
-/** The block's own count → label vocabulary (§14d.1) — never handed in pre-formatted. */
-const replyLabel = (replyCount: number): string =>
-    replyCount > 0 ? `${replyCount} people have answered` : "Be the first to answer"
+/** English defaults — match prior Storybook copy when `labels` is omitted. */
+const DEFAULT_LABELS: QaConversationHeaderLabels = {
+    collapse: "Collapse conversation",
+    askedBy: (displayName) => displayName,
+    replies: (count) => `${count} people have answered`,
+    beFirst: "Be the first to answer",
+    founderBadge: "Founder",
+    follow: "Follow",
+    following: "Following",
+}
 
 /**
  * Collapse control + asker identity + who joined in + reply-count nudge, atop
@@ -65,7 +96,11 @@ const QaConversationHeader = ({
     onToggleFollow,
     isFollowPending,
     isSkeleton = false,
+    labels,
 }: QaConversationHeaderProps) => {
+    const L = labels ?? DEFAULT_LABELS
+    const replyLine = replyCount > 0 ? L.replies(replyCount) : L.beFirst
+
     const nameRow = (
         <StackH
             gap={2}
@@ -73,37 +108,46 @@ const QaConversationHeader = ({
             explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
             align="center"
             isSkeleton={isSkeleton}
-
             items={isSkeleton
                 ? [() => <Typography size="sm" weight="medium" isSkeleton />]
                 : [
-                    () => <Typography size="sm" weight="medium" text={asker.displayName} />,
+                    () => <Typography size="sm" weight="medium" text={L.askedBy(asker.displayName)} />,
                     ...(isFounderAsker ? [() => (
-                        <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                        <SealCheckIcon
+                            weight="fill"
+                            aria-label={L.founderBadge}
+                            focusable="false"
+                            className="size-3.5 shrink-0 text-accent-soft-foreground"
+                        />
                     )] : []),
                 ]}
         />
     )
 
     const identityColumn = (
-        <StackV
-            gap={1}
-            classNames={["min-w-0", "flex-1"]}
+        <FillAvailable
+            at="base"
             isSkeleton={isSkeleton}
-
-            items={[
-                () => nameRow,
-                () => (isSkeleton ? (
-                    <Typography size="xs" color="muted" isSkeleton />
-                ) : (
-                    <Typography size="xs" color="muted" text={replyLabel(replyCount)} />
-                )),
-            ]}
+            body={() => (
+                <StackV
+                    gap={1}
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => nameRow,
+                        () => (isSkeleton ? (
+                            <Typography size="xs" color="muted" isSkeleton />
+                        ) : (
+                            <Typography size="xs" color="muted" text={replyLine} />
+                        )),
+                    ]}
+                />
+            )}
         />
     )
 
     return (
         <StackH
+            identity={{ tier: "block", component: "QaConversationHeader" }}
             gap={4}
             principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
@@ -116,10 +160,9 @@ const QaConversationHeader = ({
                         variant="ghost"
                         size="sm"
                         prefixIcon={ArrowLeftIcon}
-                        ariaLabel="Collapse conversation"
+                        ariaLabel={L.collapse}
                         onPress={onCollapse}
                         isDisabled={isSkeleton}
-
                     />
                 ),
                 () => (
@@ -129,7 +172,6 @@ const QaConversationHeader = ({
                         seed={asker.id}
                         size="sm"
                         isSkeleton={isSkeleton}
-
                     />
                 ),
                 () => identityColumn,
@@ -138,22 +180,19 @@ const QaConversationHeader = ({
                         items={participants.map((p) => ({ key: p.id, src: p.avatarUrl, name: p.displayName, seed: p.id }))}
                         size="sm"
                         isSkeleton={isSkeleton}
-
                     />
                 )] : []),
                 ...(canFollow ? [() => (
                     <Button
                         variant={isFollowing ? "secondary" : "primary"}
                         size="sm"
-                        label={isFollowing ? "Following" : "Follow"}
+                        label={isFollowing ? L.following : L.follow}
                         onPress={onToggleFollow}
                         isDisabled={isSkeleton || isFollowPending}
-
                     />
                 )] : []),
             ]}
         />
-
     )
 }
 

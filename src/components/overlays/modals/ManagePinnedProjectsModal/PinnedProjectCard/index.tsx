@@ -36,7 +36,7 @@ const PinnedProjectMeta = ({ pin, labels }: Pick<PinnedProjectCardProps, "pin" |
             ...(pin.isVerified ? [() => (
                 <StatusChip
                     tone="success"
-                    icon={<VerifiedIcon className="size-3" aria-hidden="true" focusable="false" />}
+                    icon={VerifiedIcon}
                 >
                     {labels.verified}
                 </StatusChip>

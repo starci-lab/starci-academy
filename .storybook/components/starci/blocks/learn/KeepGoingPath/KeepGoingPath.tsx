@@ -1,6 +1,6 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckCircleIcon, CircleIcon, LockIcon, PlayCircleIcon } from "@phosphor-icons/react"
+import { GlyphMark, type GlyphMarkTone, type IconComponent } from "@sb-components/atoms/display/GlyphMark/GlyphMark"
 import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 /**
@@ -39,20 +39,20 @@ export interface KeepGoingContent {
  * (`PlayIcon`) — its two siblings `CheckCircleIcon`/`CircleIcon` are both circles, so one
  * shape breaking the mould breaks the row's reading rhythm.
  *
- * `size-5` — the row's leading icon size (heading icon = 5;
- * the icon inside the chip follows the font instead).
+ * Glyph scale/colour live on `GlyphMark` (`size-5` + tone); the table only picks
+ * which icon and which tone.
  */
 /** The leading mark one content state resolves to: which glyph, and how it is coloured. */
 interface ContentLeadingStyle {
     /** Phosphor glyph component for this state. */
-    Icon: typeof CircleIcon
-    /** Size + colour classes; every state stays on one round shape (see the note above). */
-    glyphClass: string
+    Icon: IconComponent
+    /** GlyphMark colour tone; every state stays on one round shape (see the note above). */
+    tone: GlyphMarkTone
 }
 const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
-    active: { Icon: PlayCircleIcon, glyphClass: "size-5 text-accent-soft-foreground" },
-    done: { Icon: CheckCircleIcon, glyphClass: "size-5 text-success-soft-foreground" },
-    todo: { Icon: CircleIcon, glyphClass: "size-5 text-foreground" },
+    active: { Icon: PlayCircleIcon, tone: "accent" },
+    done: { Icon: CheckCircleIcon, tone: "success" },
+    todo: { Icon: CircleIcon, tone: "default" },
 }
 /**
  * A LOCKED content item → the lock icon **REPLACES** the state icon at the head of
@@ -68,7 +68,7 @@ const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
  * nobody reads. And semantically: for a not-yet-unlocked item, "read / reading /
  * unread" is meaningless — **the lock IS its state**.
  */
-const LOCKED_LEADING = { Icon: LockIcon, glyphClass: "size-5 text-warning-soft-foreground" }
+const LOCKED_LEADING: ContentLeadingStyle = { Icon: LockIcon, tone: "warning" }
 /**
  * The MODULE this path belongs to.
  *
@@ -95,17 +95,11 @@ export interface KeepGoingPathBaseProps {
     /**
      * `true` → mirror shimmer INSTEAD OF waiting on `contents`. The flag FLOWS
      * DOWN into `SurfaceCardList` (keeps the box/row/divider, only the text turns
-     * to shimmer) and into `VariantChipDifficulty` — both the atom and the frame
-     * already own their own `isSkeleton`.
+     * to shimmer), into `VariantChipDifficulty`, and into the leading `GlyphMark` —
+     * each already owns its own `isSkeleton`.
      *
      * Empty while loading (`contents.length === 0`) → guesses **3** rows, matching
      * this pass's convention for repeating lists.
-     *
-     * NOTE: the leading icon (play/check/circle/lock) is chosen DIRECTLY by the block
-     * itself from the `CONTENT_LEADING`/`LOCKED_LEADING` table — it doesn't go
-     * through any atom — so this is exactly the §12c case that allows hand-rolling
-     * ONE shimmer dot in place of the icon, instead of branching off to build a
-     * whole separate row.
      */
     isSkeleton?: boolean
 }
@@ -142,24 +136,18 @@ const KeepGoingPathBase = ({
             isSkeleton={isSkeleton}
             items={rows.map((content) => {
                 // A lock REPLACES the state icon, it isn't added on top at the row's tail.
-                const { Icon, glyphClass } = content.locked
+                const { Icon, tone } = content.locked
                     ? LOCKED_LEADING
                     : CONTENT_LEADING[content.state]
                 return {
                     key: content.id,
-                    leading: isSkeleton ? (
-                        // The icon is chosen DIRECTLY by the block itself (no atom in between) —
-                        // hand-roll a single shimmer dot in place of the state/lock icon.
-                        () => <HeroSkeleton className="size-5 shrink-0 rounded-full" />
-                    ) : (
-                        () => (
-                            <Icon
-                                aria-label={content.locked ? "Paid content" : undefined}
-                                aria-hidden={content.locked ? undefined : true}
-                                focusable="false"
-                                className={glyphClass}
-                            />
-                        )
+                    leading: () => (
+                        <GlyphMark
+                            icon={Icon}
+                            tone={tone}
+                            isSkeleton={isSkeleton}
+                            ariaLabel={content.locked ? "Paid content" : undefined}
+                        />
                     ),
                     title: content.title,
                     subtitle: `${content.minutes} min read`,

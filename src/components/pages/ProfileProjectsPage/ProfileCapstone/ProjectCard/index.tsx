@@ -105,7 +105,7 @@ export const ProjectCard = ({
                                                             ? [() => (
                                                                 <StatusChip
                                                                     tone="success"
-                                                                    icon={<SealCheckIcon aria-hidden focusable="false" className="size-4" />}
+                                                                    icon={SealCheckIcon}
                                                                 >
                                                                     {t("pinnedProjects.verified")}
                                                                 </StatusChip>

@@ -1,20 +1,24 @@
 "use client"
 
 import React from "react"
-import { Chip, Tooltip } from "@heroui/react"
+import { Tooltip } from "@heroui/react"
 import type { ReactNode } from "react"
+import { Chip, type ChipTone, type IconComponent } from "@/components/atoms/chips/Chip"
 
-/** HeroUI soft-chip colors usable by an {@link EnumChip}. */
-export type EnumChipColor = "default" | "success" | "warning" | "danger" | "accent"
+/** Soft-chip tones usable by an {@link EnumChip} (mirrors house {@link ChipTone}). */
+export type EnumChipColor = ChipTone
 
 /** One enum value's chip presentation. */
 export interface EnumChipEntry {
-    /** Soft chip color. Omit to use the Chip default. */
+    /** Soft chip tone. Omit to use the Chip default. */
     color?: EnumChipColor
     /** Visible label (already localized by the caller). */
     label: ReactNode
-    /** Optional leading icon — the CALLER sizes it (this primitive never forces a size). */
-    icon?: ReactNode
+    /**
+     * Optional leading icon — a component reference (`SiYoutube`), not a rendered
+     * element. The house {@link Chip} atom mounts it at chip scale (contract E).
+     */
+    icon?: IconComponent
     /** Optional tooltip (already localized); wraps the chip in a Tooltip when set. */
     tooltip?: ReactNode
 }
@@ -34,9 +38,9 @@ export interface EnumChipProps<E extends string> {
 
 /**
  * Legacy block-tier "enum → soft chip" primitive still used by domain badges that pass
- * rendered icon elements (LessonVideoKindChip, HostPlatformChip). Appearance lives on
- * `entry.color`; no public className door. Prefer the composites `EnumChip` when the
- * leading glyph is a closed check/cross symbol.
+ * brand {@link IconComponent} refs (LessonVideoKindChip, HostPlatformChip). Appearance
+ * lives on `entry.color`; no public className door. Prefer the composites `EnumChip`
+ * when the leading glyph is a closed check/cross symbol.
  *
  * @param props - {@link EnumChipProps}
  */
@@ -47,10 +51,11 @@ export const EnumChip = <E extends string>({ value, map }: EnumChipProps<E>) => 
         throw new Error(`EnumChip: no map entry for value "${value}"`)
     }
     const chip = (
-        <Chip color={entry.color} size="sm" variant="soft">
-            {entry.icon}
-            <Chip.Label>{entry.label}</Chip.Label>
-        </Chip>
+        <Chip
+            tone={entry.color ?? "default"}
+            text={entry.label}
+            icon={entry.icon}
+        />
     )
     if (entry.tooltip == null) {
         return chip

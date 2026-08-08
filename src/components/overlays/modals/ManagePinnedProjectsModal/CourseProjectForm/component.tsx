@@ -115,7 +115,7 @@ export const _CourseProjectForm = ({
                                             () => (
                                                 <StatusChip
                                                     tone="success"
-                                                    icon={<CheckCircleIcon className="size-3" aria-hidden="true" focusable="false" />}
+                                                    icon={CheckCircleIcon}
                                                 >
                                                     {labels.verified}
                                                 </StatusChip>

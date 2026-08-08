@@ -19,6 +19,21 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /** How much room the document gets. */
 export type MarkdownMeasure = "reading" | "compact"
 
+/** Intrinsic type scale on the prose root (independent of {@link MarkdownMeasure}). */
+export type MarkdownDensity = "default" | "compact" | "caption"
+
+/** Foreground colour role on the prose root. */
+export type MarkdownTone = "default" | "muted"
+
+/** Whether paragraphs keep document rhythm or sit flush as an embedded passenger. */
+export type MarkdownFlow = "document" | "embedded"
+
+/** Italic emphasis on the whole prose root. */
+export type MarkdownEmphasis = "normal" | "italic"
+
+/** Clamp each paragraph to this many visible lines (preview / list snip). */
+export type MarkdownPreviewLines = 1 | 2
+
 /**
  * A directive node as `remark-directive` parses it — shared shape for the
  * `:::muted` / `:::tab`/`:::code`/`:::preview` / `::::accordion`/`:::panel`
@@ -296,6 +311,16 @@ export interface MarkdownContentProps {
     source: string
     /** How much room the document gets. Defaults to `"reading"`. */
     measure?: MarkdownMeasure
+    /** Intrinsic type scale on the prose root. Defaults to `"default"`. */
+    density?: MarkdownDensity
+    /** Foreground colour role on the prose root. Defaults to `"default"`. */
+    tone?: MarkdownTone
+    /** Document rhythm vs flush embedded paragraphs. Defaults to `"document"`. */
+    flow?: MarkdownFlow
+    /** Italic emphasis on the prose root. Defaults to `"normal"`. */
+    emphasis?: MarkdownEmphasis
+    /** Clamp each paragraph to 1 or 2 visible lines (omit for no clamp). */
+    previewLines?: MarkdownPreviewLines
     /**
      * `true` -> render a 2-line shimmer mirror instead of the real document
      * (the owner of the shape owns the skeleton).
@@ -315,6 +340,11 @@ export const meta = { tier: "composite", name: "MarkdownContent" } as const
 const MarkdownContent = ({
     source,
     measure = "reading",
+    density = "default",
+    tone = "default",
+    flow = "document",
+    emphasis = "normal",
+    previewLines,
     isSkeleton = false,
 }: MarkdownContentProps) => {
     const reading = measure === "reading"
@@ -354,8 +384,16 @@ const MarkdownContent = ({
     return (
         <article
             ref={rootRef}
-
-            className={cn("first:*:mt-0 last:*:mb-0")}
+            className={cn(
+                "first:*:mt-0 last:*:mb-0",
+                density === "compact" && "text-sm",
+                density === "caption" && "text-xs",
+                tone === "muted" && "text-muted",
+                flow === "embedded" && "[&_p]:m-0",
+                emphasis === "italic" && "italic",
+                previewLines === 1 && "[&_p]:line-clamp-1",
+                previewLines === 2 && "[&_p]:line-clamp-2",
+            )}
             data-tier="composite"
             data-component="MarkdownContent"
         >

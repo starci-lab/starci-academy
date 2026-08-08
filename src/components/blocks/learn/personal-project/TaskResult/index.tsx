@@ -28,6 +28,7 @@ import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Score } from "@/components/blocks/stats/Score"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackV } from "@/components/frames/Stack"
 import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { ModelByline, VerdictIcon } from "@/components/blocks/grading/GradingByline"
@@ -98,9 +99,17 @@ const FindingAccordionItem = ({
                 <Accordion.Trigger className="w-full">
                     <div className="flex w-full items-center gap-3 text-start">
                         <Icon aria-hidden focusable="false" className={cn("size-4 shrink-0", visual.text)} />
-                        <MarkdownContent
-                            markdown={feedback.message}
-                            className="min-w-0 flex-1 text-sm [&_p]:m-0 [&_p]:line-clamp-1"
+                        <FillAvailable
+                            at="base"
+                            explain="Feedback title takes remaining trigger width beside severity icon and optional location chip so the message truncates instead of shoving peers."
+                            body={() => (
+                                <MarkdownContent
+                                    markdown={feedback.message}
+                                    density="compact"
+                                    flow="embedded"
+                                    previewLines={1}
+                                />
+                            )}
                         />
                         {feedback.location ? (
                             <Chip size="sm" className="hidden max-w-[34%] shrink-0 @app-sm:inline-flex">
@@ -129,7 +138,12 @@ const FindingAccordionItem = ({
                         {feedback.suggestion ? (
                             <div className="flex items-start gap-2">
                                 <LightbulbIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
-                                <MarkdownContent markdown={feedback.suggestion} className="text-sm text-muted [&_p]:m-0" />
+                                <MarkdownContent
+                                    markdown={feedback.suggestion}
+                                    density="compact"
+                                    tone="muted"
+                                    flow="embedded"
+                                />
                             </div>
                         ) : null}
                     </div>

@@ -95,7 +95,7 @@ export const _CommunityPostCard = ({
                         ) : null}
                     </div>
 
-                    <MarkdownContent markdown={post.body} className="[&_p]:m-0" />
+                    <MarkdownContent markdown={post.body} flow="embedded" />
 
                     <div className="flex items-center gap-6">
                         <ReactionBar

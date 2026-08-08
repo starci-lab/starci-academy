@@ -27,19 +27,19 @@ export const LessonVideoKindChip = ({ kind}: LessonVideoKindChipProps) => {
     const map: Record<LessonVideoKind, EnumChipEntry> = {
         [LessonVideoKind.RawStream]: {
             color: "warning",
-            icon: <TwitchLogoIcon className="size-5" />,
+            icon: TwitchLogoIcon,
             label: t("lessonVideoKind.rawStream.label"),
             tooltip: t("lessonVideoKind.rawStream.tooltip"),
         },
         [LessonVideoKind.EditedStream]: {
             color: "warning",
-            icon: <SparkleIcon className="size-5" />,
+            icon: SparkleIcon,
             label: t("lessonVideoKind.editedStream.label"),
             tooltip: t("lessonVideoKind.editedStream.tooltip"),
         },
         [LessonVideoKind.PremiumRecord]: {
             color: "warning",
-            icon: <FilmReelIcon className="size-5" />,
+            icon: FilmReelIcon,
             label: t("lessonVideoKind.premiumRecord.label"),
             tooltip: t("lessonVideoKind.premiumRecord.tooltip"),
         },

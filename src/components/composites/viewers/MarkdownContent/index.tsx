@@ -38,16 +38,31 @@ import { Typography } from "@/components/atoms/text/Typography"
  * `compact` is for markdown quoted inside another surface, such as a chat answer
  * or a card, where the document is a passenger rather than the page.
  *
- * COMPOSITE-4: no public className/classNames door — placement is parent-owned.
- * A caller that needs an arbitrary-selector reset (e.g. `[&_p]:m-0`) wraps this
- * component in its own `<div>` carrying that class instead of handing this
- * composite a free string — the selector reaches the same descendant `p`
- * elements either way, one level higher.
+ * PRESENTATION AXES (contract D). Finite intrinsic props on the prose root —
+ * `density` / `tone` / `flow` / `emphasis` / `previewLines` — replace free
+ * className strings for type scale, mute, flush paragraphs, italic, and line
+ * clamp. COMPOSITE-4: no public className/classNames door — placement remains
+ * parent-owned; Wave B migrates live className callers onto these axes.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** How much room the document gets. */
 export type MarkdownMeasure = "reading" | "compact"
+
+/** Intrinsic type scale on the prose root (independent of {@link MarkdownMeasure}). */
+export type MarkdownDensity = "default" | "compact" | "caption"
+
+/** Foreground colour role on the prose root. */
+export type MarkdownTone = "default" | "muted"
+
+/** Whether paragraphs keep document rhythm or sit flush as an embedded passenger. */
+export type MarkdownFlow = "document" | "embedded"
+
+/** Italic emphasis on the whole prose root. */
+export type MarkdownEmphasis = "normal" | "italic"
+
+/** Clamp each paragraph to this many visible lines (preview / list snip). */
+export type MarkdownPreviewLines = 1 | 2
 
 /**
  * A directive node as `remark-directive` parses it — shared shape for the
@@ -325,6 +340,16 @@ export interface MarkdownContentProps {
     source: string
     /** How much room the document gets. Defaults to `"reading"`. */
     measure?: MarkdownMeasure
+    /** Intrinsic type scale on the prose root. Defaults to `"default"`. */
+    density?: MarkdownDensity
+    /** Foreground colour role on the prose root. Defaults to `"default"`. */
+    tone?: MarkdownTone
+    /** Document rhythm vs flush embedded paragraphs. Defaults to `"document"`. */
+    flow?: MarkdownFlow
+    /** Italic emphasis on the prose root. Defaults to `"normal"`. */
+    emphasis?: MarkdownEmphasis
+    /** Clamp each paragraph to 1 or 2 visible lines (omit for no clamp). */
+    previewLines?: MarkdownPreviewLines
     /**
      * `true` -> render a 2-line shimmer mirror instead of the real document
      * (§12c: the owner of the shape owns the skeleton). Added 2026-07-29 —
@@ -347,7 +372,13 @@ export const meta = { tier: "composite", name: "MarkdownContent" } as const
 const MarkdownContent = ({
     source,
     measure = "reading",
-    isSkeleton = false}: MarkdownContentProps) => {
+    density = "default",
+    tone = "default",
+    flow = "document",
+    emphasis = "normal",
+    previewLines,
+    isSkeleton = false,
+}: MarkdownContentProps) => {
     const reading = measure === "reading"
     const rootRef = useRef<HTMLDivElement>(null)
     const isDark = useIsDarkTheme(rootRef)
@@ -361,8 +392,9 @@ const MarkdownContent = ({
     const renderedSource = useMemo(() => stripMermaidCaptions(stableSource), [stableSource])
 
     const components = useMemo(
-        () => buildMarkdownRenderers({ isDark, reading, mermaidCaptions}),
-        [isDark, reading, mermaidCaptions])
+        () => buildMarkdownRenderers({ isDark, reading, mermaidCaptions }),
+        [isDark, reading, mermaidCaptions],
+    )
 
     // Skeleton mirror owned by THIS composite (§12c) — AFTER every hook above has run
     // (rules of hooks: an early return before a hook call would skip it conditionally).
@@ -383,7 +415,16 @@ const MarkdownContent = ({
     return (
         <article
             ref={rootRef}
-            className={cn("first:*:mt-0 last:*:mb-0")}
+            className={cn(
+                "first:*:mt-0 last:*:mb-0",
+                density === "compact" && "text-sm",
+                density === "caption" && "text-xs",
+                tone === "muted" && "text-muted",
+                flow === "embedded" && "[&_p]:m-0",
+                emphasis === "italic" && "italic",
+                previewLines === 1 && "[&_p]:line-clamp-1",
+                previewLines === 2 && "[&_p]:line-clamp-2",
+            )}
             data-tier="composite"
             data-component="MarkdownContent"
         >

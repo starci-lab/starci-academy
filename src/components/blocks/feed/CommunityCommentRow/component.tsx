@@ -86,7 +86,7 @@ export const _CommunityCommentRow = ({
                             {timeAgoLabel}
                         </Typography>
                     </div>
-                    <MarkdownContent markdown={comment.body} className="[&_p]:m-0" />
+                    <MarkdownContent markdown={comment.body} flow="embedded" />
                     <div className="flex items-center gap-3">
                         <ReactionBar
                             count={comment.reactions.total}

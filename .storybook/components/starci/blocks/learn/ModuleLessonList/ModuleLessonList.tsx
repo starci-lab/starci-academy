@@ -1,6 +1,6 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckIcon, CircleIcon, LockIcon, PlayIcon } from "@phosphor-icons/react"
+import { GlyphMark, type GlyphMarkTone, type IconComponent } from "@sb-components/atoms/display/GlyphMark/GlyphMark"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
@@ -46,7 +46,8 @@ export interface ModuleLessonListProps {
     /**
      * `true` → the list draws its own row mirror. `lessons` empty while loading
      * (§12c) → guesses 3 rows, the SSOT convention this composite's siblings
-     * (`KeepGoingPath`, `LearnNudges`) already use.
+     * (`KeepGoingPath`, `LearnNudges`) already use. Leading status glyphs shimmer
+     * through `GlyphMark.isSkeleton`.
      */
     isSkeleton?: boolean
 }
@@ -62,16 +63,16 @@ const lessonStatus = (lesson: ModuleLessonListLesson, resumeLessonId?: string): 
 /** The leading mark one lesson status resolves to: which glyph, and how it is coloured. */
 interface LessonLeadingStyle {
     /** Phosphor glyph component for this status. */
-    Icon: typeof CircleIcon
-    /** Size + colour classes. */
-    glyphClass: string
+    Icon: IconComponent
+    /** GlyphMark colour tone. */
+    tone: GlyphMarkTone
 }
 
-/** Leading glyph + colour per status — the block owns this table, the caller never picks an icon. */
+/** Leading glyph + tone per status — the block owns this table, the caller never picks an icon. */
 const STATUS_LEADING: Record<LessonStatus, LessonLeadingStyle> = {
-    resume: { Icon: PlayIcon, glyphClass: "size-5 text-accent-soft-foreground" },
-    read: { Icon: CheckIcon, glyphClass: "size-5 text-success-soft-foreground" },
-    unread: { Icon: CircleIcon, glyphClass: "size-5 text-foreground" },
+    resume: { Icon: PlayIcon, tone: "accent" },
+    read: { Icon: CheckIcon, tone: "success" },
+    unread: { Icon: CircleIcon, tone: "default" },
 }
 
 /** Placeholder rows for the guessed skeleton count (§12c) — never carry a press handler. */
@@ -104,17 +105,16 @@ const ModuleLessonList = ({
     const source = usingPlaceholders ? SKELETON_LESSONS : lessons
 
     const rows: Array<SurfaceCardListItem> = source.map((lesson) => {
-        const { Icon, glyphClass } = STATUS_LEADING[lessonStatus(lesson, resumeLessonId)]
+        const { Icon, tone } = STATUS_LEADING[lessonStatus(lesson, resumeLessonId)]
         return {
             key: lesson.id,
-            leading: () => (isSkeleton ? (
-                // The status icon is chosen DIRECTLY by the block from `STATUS_LEADING`,
-                // never through an atom in between — hand-roll a single shimmer dot in
-                // its place instead of branching off to build a whole separate row (§12c).
-                <HeroSkeleton className="size-5 shrink-0 rounded-full" />
-            ) : (
-                <Icon aria-hidden focusable="false" className={glyphClass} />
-            )),
+            leading: () => (
+                <GlyphMark
+                    icon={Icon}
+                    tone={tone}
+                    isSkeleton={isSkeleton}
+                />
+            ),
             title: lesson.title,
             // The subtitle sentence is assembled HERE — the caller hands over two
             // numbers, never a pre-formatted string (§14d.1).

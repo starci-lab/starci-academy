@@ -214,7 +214,7 @@ const MockInterviewQuestionReviewCard = ({
                                             <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
                                         ),
                                         () => (
-                                            <MarkdownContent plain markdown={review.candidateAnswer} className="text-muted" />
+                                            <MarkdownContent plain markdown={review.candidateAnswer} tone="muted" />
                                         ),
                                     ]}
                                 />
@@ -237,6 +237,8 @@ const MockInterviewQuestionReviewCard = ({
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="icon-text"
+                                    explain="Icon beside its label — not name-handle, because this pairs a glyph with feedback text rather than a name/handle identity."
                                     items={[
                                         () => (
                                             <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
@@ -514,12 +516,20 @@ export const MockInterviewScorecard = ({
                                         <SurfaceListCardItem key={position}>
                                             <StackH
                                                 gap={3}
+                                                principle="icon-text"
+                                                explain="Icon beside its label — not name-handle, because this pairs a glyph with gap markdown rather than a name/handle identity."
                                                 items={[
                                                     () => (
                                                         <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
                                                     ),
                                                     () => (
-                                                        <MarkdownContent plain markdown={gap} className="min-w-0 flex-1" />
+                                                        <FillAvailable
+                                                            at="base"
+                                                            explain="Gap prose takes remaining row width beside the warning glyph so long markdown wraps without overflow."
+                                                            body={() => (
+                                                                <MarkdownContent plain markdown={gap} />
+                                                            )}
+                                                        />
                                                     ),
                                                 ]}
                                             />
@@ -534,12 +544,24 @@ export const MockInterviewScorecard = ({
                             <LabeledCard label={t("mockInterview.followUpTitle")}>
                                 <StackH
                                     gap={3}
+                                    principle="icon-text"
+                                    explain="Icon beside its label — not name-handle, because this pairs a glyph with follow-up markdown rather than a name/handle identity."
                                     items={[
                                         () => (
                                             <ChatCircleIcon className="size-4 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
                                         ),
                                         () => (
-                                            <MarkdownContent plain markdown={grade.followUpQuestion ?? ""} className="min-w-0 flex-1 italic" />
+                                            <FillAvailable
+                                                at="base"
+                                                explain="Follow-up question takes remaining row width beside the chat glyph so italic prose wraps without overflow."
+                                                body={() => (
+                                                    <MarkdownContent
+                                                        plain
+                                                        markdown={grade.followUpQuestion ?? ""}
+                                                        emphasis="italic"
+                                                    />
+                                                )}
+                                            />
                                         ),
                                     ]}
                                 />

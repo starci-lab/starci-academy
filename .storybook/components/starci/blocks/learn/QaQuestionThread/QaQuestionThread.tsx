@@ -12,6 +12,7 @@ import { QaChatBubble } from "@sb-components/starci/blocks/learn/QaChatBubble/Qa
 import { QaReactionBar } from "@sb-components/starci/blocks/learn/QaReactionBar/QaReactionBar"
 import { QaMessageBubble } from "@sb-components/starci/blocks/learn/QaMessageBubble/QaMessageBubble"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/frames/_slot"
 
@@ -309,32 +310,34 @@ const QaQuestionThread = ({
                 ]}
             />
         ) : (
-            <div className="[&_p]:m-0 [&_p]:line-clamp-2">
-                <MarkdownContent
-                    source={question.body}
-                    measure="compact"
-
-                />
-            </div>
+            <MarkdownContent
+                source={question.body}
+                measure="compact"
+                flow="embedded"
+                previewLines={2}
+            />
         )
 
         const previewColumn = (
-            <StackV
-                gap={2}
-                classNames={["min-w-0", "flex-1"]}
+            <FillAvailable
+                at="base"
                 isSkeleton={isSkeleton}
-
-                items={[
-                    () => askerNameRow,
-                    () => questionPreview,
-                    () => (
-                        <Cluster
-                            gap={3}
-                            items={buildQuestionChips(question, { isSkeleton, includeReplyCount: true })}
-
-                        />
-                    ),
-                ]}
+                body={() => (
+                    <StackV
+                        gap={2}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => askerNameRow,
+                            () => questionPreview,
+                            () => (
+                                <Cluster
+                                    gap={3}
+                                    items={buildQuestionChips(question, { isSkeleton, includeReplyCount: true })}
+                                />
+                            ),
+                        ]}
+                    />
+                )}
             />
         )
 
@@ -453,13 +456,11 @@ const QaQuestionThread = ({
                         () => questionMetaRow,
                         ({ isSkeleton }: SkeletonProps) => (
                             <QaChatBubble role={isMineQuestion ? "user" : "assistant"} isSkeleton={isSkeleton}>
-                                <div className="[&_p]:m-0">
-                                    <MarkdownContent
-                                        source={question.body}
-                                        measure="compact"
-
-                                    />
-                                </div>
+                                <MarkdownContent
+                                    source={question.body}
+                                    measure="compact"
+                                    flow="embedded"
+                                />
                             </QaChatBubble>
                         ),
                         () => questionFooterRow,
@@ -517,7 +518,11 @@ const QaQuestionThread = ({
                             avatarUrl: question.author.avatarUrl,
                         }}
                         isFounderAsker={question.isFounderAuthor}
-                        participants={participants}
+                        participants={participants.map((p) => ({
+                            id: p.id,
+                            displayName: p.displayName,
+                            avatarUrl: p.avatarUrl,
+                        }))}
                         replyCount={question.replyCount}
                         onCollapse={() => setIsExpanded(false)}
                         isSkeleton={isSkeleton}

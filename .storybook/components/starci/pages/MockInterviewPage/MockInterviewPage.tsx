@@ -287,12 +287,16 @@ const MockInterviewPage = ({
     const interviewBody = (
         <StackV
             gap={7}
+            principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
             items={[
                 ...(phase === "setup"
                     ? [
                         () => (
                             <StackV
                                 gap={6}
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 isSkeleton={isSkeleton}
                                 items={[
                                     () => (
@@ -336,6 +340,8 @@ const MockInterviewPage = ({
                         () => (
                             <StackV
                                 gap={6}
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 items={[
                                     () => (
                                         <WorkSessionHeader
@@ -404,6 +410,8 @@ const MockInterviewPage = ({
                         () => (
                             <StackV
                                 gap={6}
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 isSkeleton={isResultSkeleton}
                                 items={[
                                     () => (
@@ -446,7 +454,15 @@ const MockInterviewPage = ({
         />
     )
 
-    return <Container size="md" padding={6} body={() => interviewBody} />
+    return (
+        <Container
+            size="md"
+            padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+            body={() => interviewBody}
+        />
+    )
 }
 
 export { MockInterviewPage }

@@ -228,7 +228,8 @@ const InterviewerPresence = ({
     const questionRegion = hasQuestion ? (
         <StackV
             gap={2}
-
+            principle="sibling-stack"
+            explain="Same-kind peer stack of question markdown and typing cue — not group-boundary, because both are sequential presence peers rather than labelled section groups."
             items={[
                 () => (
                     <MarkdownContent
@@ -245,8 +246,10 @@ const InterviewerPresence = ({
 
     return (
         <StackV
+            identity={{ tier: "block", component: "InterviewerPresence" }}
             gap={3}
-
+            principle="sibling-stack"
+            explain="Same-kind peer stack of presence header and question region — not group-boundary, because both are sequential parts of one interviewer presence unit."
             items={[
                 () => headerRow,
                 () => questionRegion,

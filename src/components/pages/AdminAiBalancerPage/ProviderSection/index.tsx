@@ -89,11 +89,11 @@ export const ProviderSection = ({
         <Card className="border border-white/10 bg-white/5 backdrop-blur-xl">
             {/* ps-admin-1: p-5 has no house token (dropped from padding scale) — teacher-hold */}
             <CardContent data-principle="ps-admin-1" className="p-5">
-                <StackV gap={4} principle="card-caption"
+                <StackV principle="card-caption"
                     explain="Holds caption text under card media so the caption stays attached to the image above it."
                     items={[
                         () => (
-                            <StackH gap={4} principle="content-row" align="start" justify="between"
+                            <StackH principle="content-row"
                                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 items={[
                                     () => (

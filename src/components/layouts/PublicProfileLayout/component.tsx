@@ -209,6 +209,8 @@ const _PublicProfileLayout = ({
                 />
             )}
             body={() => <BodySlot />}
+            principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
         />
     )
 
@@ -228,7 +230,8 @@ const _PublicProfileLayout = ({
             <Container
                 size="xl"
                 padding={6}
-
+                principle="page-pad"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
                 body={profileShell}
             />
         ),

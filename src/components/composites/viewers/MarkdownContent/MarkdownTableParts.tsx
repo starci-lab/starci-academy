@@ -1,5 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import {
     TableBody,
     TableCell,
@@ -14,7 +13,6 @@ import {
     flattenMarkdownTableHeaderChildren,
     isMarkdownHeaderTableRowNode,
 } from "@/components/composites/viewers/MarkdownContent/markdown-table"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `MarkdownTableParts` — renders a markdown GFM table for `MarkdownContent` via
@@ -55,20 +53,18 @@ export interface MarkdownTablePartProps {
     children?: React.ReactNode
     /** HAST element for the markdown row (react-markdown always threads this through). */
     node?: unknown
-    /** Where this sits inside its parent, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
  * Header row: columns must be direct children of `TableHeader` (fragment, not `TableRow`).
  * Body row: wrapped in house `TableRow`.
  */
-export const MarkdownTableRow = ({ children, node, classNames }: MarkdownTablePartProps) => {
+export const MarkdownTableRow = ({ children, node }: MarkdownTablePartProps) => {
     if (isMarkdownHeaderTableRowNode(node)) {
         return <>{children}</>
     }
 
-    return <TableRow className={cn(classNames)}>{children}</TableRow>
+    return <TableRow>{children}</TableRow>
 }
 
 /**
@@ -76,11 +72,11 @@ export const MarkdownTableRow = ({ children, node, classNames }: MarkdownTablePa
  * Rebuilds columns with `isRowHeader` on the first column (required by HeroUI / React Aria).
  * Renders a screen-reader-only column when the header row is empty so the table still mounts.
  */
-export const MarkdownTableHead = ({ children, classNames }: MarkdownTablePartProps) => {
+export const MarkdownTableHead = ({ children }: MarkdownTablePartProps) => {
     const columns = flattenMarkdownTableHeaderChildren(children)
 
     return (
-        <TableHeader className={cn(classNames)}>
+        <TableHeader>
             {columns.length === 0 ? (
                 <TableColumn isRowHeader className="sr-only">
                     {" "}
@@ -98,13 +94,6 @@ export interface MarkdownTableProps {
     children?: React.ReactNode
     /** Accessible name for `TableContent`. */
     ariaLabel: string
-    /**
-     * Where this sits inside its parent, from the closed positioning union.
-     * `map.tsx` owns the block-rhythm margin between fences by wrapping this
-     * component's output in a plain `<div>` — margins have no slot in
-     * `AllowedClassName` (see `principles/margin.md`).
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -112,7 +101,7 @@ export interface MarkdownTableProps {
  * Some markdown tables only emit `tbody`; the first body row is promoted to `thead` in that case.
  * @param props - {@link MarkdownTableProps}
  */
-export const MarkdownTable = ({ children, ariaLabel, classNames }: MarkdownTableProps) => {
+export const MarkdownTable = ({ children, ariaLabel }: MarkdownTableProps) => {
     const parts = React.Children.toArray(children)
     const hasThead = parts.some(
         (child) => React.isValidElement(child) && child.type === MarkdownTableHead,
@@ -150,7 +139,7 @@ export const MarkdownTable = ({ children, ariaLabel, classNames }: MarkdownTable
     // shrinking). Wrap in a PLAIN BLOCK x-scroll box — a block scroll container has min-content
     // 0, so the column shrinks and the table scrolls inside instead of blocking the layout.
     return (
-        <div className={cn("max-w-full overflow-x-auto", classNames)}>
+        <div className="max-w-full overflow-x-auto">
             <TableRoot variant="primary">
                 <TableScrollContainer>
                     <TableContent aria-label={ariaLabel}>
@@ -163,16 +152,16 @@ export const MarkdownTable = ({ children, ariaLabel, classNames }: MarkdownTable
 }
 
 /** Maps markdown `tbody` to house `TableBody`. */
-export const MarkdownTableBody = ({ children, classNames }: MarkdownTablePartProps) => (
-    <TableBody className={cn(classNames)}>{children}</TableBody>
+export const MarkdownTableBody = ({ children }: MarkdownTablePartProps) => (
+    <TableBody>{children}</TableBody>
 )
 
 /** Maps markdown `th` to house `TableColumn`. */
-export const MarkdownTableColumn = ({ children, classNames }: MarkdownTablePartProps) => (
-    <TableColumn className={cn(classNames)}>{children}</TableColumn>
+export const MarkdownTableColumn = ({ children }: MarkdownTablePartProps) => (
+    <TableColumn>{children}</TableColumn>
 )
 
 /** Maps markdown `td` to house `TableCell` — exported for `map.tsx`. */
-export const MarkdownTableCell = ({ children, classNames }: MarkdownTablePartProps) => (
-    <TableCell className={cn(classNames)}>{children}</TableCell>
+export const MarkdownTableCell = ({ children }: MarkdownTablePartProps) => (
+    <TableCell>{children}</TableCell>
 )

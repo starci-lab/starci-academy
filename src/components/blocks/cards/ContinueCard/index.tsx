@@ -171,7 +171,6 @@ export const ContinueCard = ({
                         label={ctaLabel}
                         suffixIcon={ArrowRightIcon}
                         onPress={onPress}
-                        classNames={["w-fit", "shrink-0"]}
                     />
                 )
             : (

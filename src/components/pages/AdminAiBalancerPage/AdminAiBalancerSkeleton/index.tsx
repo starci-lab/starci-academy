@@ -36,15 +36,15 @@ export const AdminAiBalancerSkeleton = ({
                 >
                     {/* ps-admin-1: p-5 has no house token (dropped from padding scale) — teacher-hold */}
                     <CardContent data-principle="ps-admin-1" className="p-5">
-                        <StackV gap={4} principle="card-caption"
+                        <StackV principle="card-caption"
                             explain="Holds caption text under card media so the caption stays attached to the image above it."
                             items={[
                                 () => (
-                                    <StackH gap={4} principle="content-row" align="start" justify="between"
+                                    <StackH principle="content-row"
                                         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                         items={[
                                             () => (
-                                                <StackV gap={3} principle="sibling-stack"
+                                                <StackV principle="sibling-stack"
                                                     explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                                     items={[
                                                         () => <Skeleton className="h-5 w-32 rounded" />,
@@ -66,7 +66,7 @@ export const AdminAiBalancerSkeleton = ({
                                     <Box principle="cell-pad" className="rounded-lg border border-white/5"
                                         explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
                                     >
-                                        <StackV gap={3} principle="sibling-stack"
+                                        <StackV principle="sibling-stack"
                                             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                             items={
                                                 Array.from({ length: 3 }).map((_unusedRow, rowIndex) =>

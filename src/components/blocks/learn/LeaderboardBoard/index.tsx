@@ -62,50 +62,46 @@ const LeaderboardBoard = ({
     meLabel,
     isSkeleton = false,
 }: LeaderboardBoardProps) => (
-    <div>
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={() => (
+    <AsyncContent
+        isLoading={isLoading}
+        skeleton={() => (
+            <Board
+                standing={LOADING_STANDING}
+                podiumEntries={LOADING_PODIUM}
+                rows={LOADING_ROWS}
+                meLabel=""
+                isSkeleton
+            />
+        )}
+        isEmpty={isEmpty}
+        emptyContent={{
+            title: "The leaderboard has no one yet",
+            description: "Complete a lesson to claim the first spot.",
+        }}
+        error={error}
+        errorContent={{
+            title: "Couldn't load the leaderboard",
+            description: "Try again to see the latest standings.",
+            onRetry,
+            retryLabel: "Try again",
+        }}
+        content={() => (
+            <>
+                {/* Only the CONTENT branch celebrates — there is nothing worth confetting
+                    over loading chrome, an empty board, or an error message. */}
+                <Confetti celebrateKey={celebrateKey} />
                 <Board
-                    standing={LOADING_STANDING}
-                    podiumEntries={LOADING_PODIUM}
-                    rows={LOADING_ROWS}
-                    meLabel=""
-                    isSkeleton
-
+                    standing={standing}
+                    podiumEntries={podiumEntries}
+                    rows={rows}
+                    selfRow={selfRow}
+                    hiddenBetweenCount={hiddenBetweenCount}
+                    meLabel={meLabel}
+                    isSkeleton={isSkeleton}
                 />
-            )}
-            isEmpty={isEmpty}
-            emptyContent={{
-                title: "The leaderboard has no one yet",
-                description: "Complete a lesson to claim the first spot.",
-            }}
-            error={error}
-            errorContent={{
-                title: "Couldn't load the leaderboard",
-                description: "Try again to see the latest standings.",
-                onRetry,
-                retryLabel: "Try again",
-            }}
-            content={() => (
-                <>
-                    {/* Only the CONTENT branch celebrates — there is nothing worth confetting
-                        over loading chrome, an empty board, or an error message. */}
-                    <Confetti celebrateKey={celebrateKey} />
-                    <Board
-                        standing={standing}
-                        podiumEntries={podiumEntries}
-                        rows={rows}
-                        selfRow={selfRow}
-                        hiddenBetweenCount={hiddenBetweenCount}
-                        meLabel={meLabel}
-                        isSkeleton={isSkeleton}
-
-                    />
-                </>
-            )}
-        />
-    </div>
+            </>
+        )}
+    />
 )
 
 export { LeaderboardBoard }

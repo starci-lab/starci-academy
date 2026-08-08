@@ -50,6 +50,8 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
         <StackV
             identity={{ tier: "block", component: "AiQuotaLane" }}
             gap={4}
+            principle="sibling-stack"
+            explain="Same-kind peer stack of rolling-window quota bars — not group-boundary, because both bars are repeating window siblings rather than section groups."
             items={[
                 () => (
                     <QuotaBar

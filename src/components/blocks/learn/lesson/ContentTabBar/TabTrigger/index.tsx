@@ -31,8 +31,6 @@ export const TabTrigger = ({
     return (
         <StackH
             identity={{ tier: "block", component: "TabTrigger" }}
-            gap={2}
-            align="center"
             principle="icon-text"
             explain="Icon beside its label on one baseline — not title-subtitle, because these sit on one horizontal line rather than a stacked title voice; not label-field, because the text is not a form control label."
             items={[

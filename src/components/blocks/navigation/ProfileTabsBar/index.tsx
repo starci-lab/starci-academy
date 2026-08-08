@@ -1,5 +1,4 @@
 import React from "react"
-import { Tabs as HeroTabs } from "@heroui/react"
 import {
     CodeIcon,
     FileTextIcon,
@@ -8,8 +7,14 @@ import {
     PuzzlePieceIcon,
     RocketIcon,
 } from "@phosphor-icons/react"
-import { TabsExtended } from "@/components/atoms/navigation/Tabs"
-import type { IconComponent } from "@/components/atoms/navigation/Tabs"
+import {
+    TabsExtended,
+    TabsIndicator,
+    TabsList,
+    TabsListContainer,
+    TabsTab,
+    type IconComponent,
+} from "@/components/atoms/navigation/Tabs"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"
 
@@ -94,56 +99,51 @@ const ProfileTabsBar = ({
     hiddenTabs,
     ariaLabel,
 }: ProfileTabsBarProps) => {
+    // TabsExtended size md already owns full-width stretch — no wrapper host.
     return (
-        <div className="w-full">
-            <TabsExtended
-                selectedKey={activeTab}
-                onSelectionChange={(key) => onTabChange(key as ProfileTab)}
-                classNames={["w-full"]}
-
-            >
-                <HeroTabs.ListContainer>
-                    <HeroTabs.List aria-label={ariaLabel}>
-                        {visibleTabs.map((tabId) => {
-                            const Icon = TAB_ICON[tabId]
-                            const isHidden = hiddenTabs?.includes(tabId) ?? false
-                            return (
-                                <HeroTabs.Tab
-                                    key={tabId}
-                                    id={tabId}
-
-                                >
-                                    <StackH
-                                        gap={2}
-                                        principle="icon-text"
-                                        explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
-                                        align="center"
-
-                                        items={[
-                                            () => <Icon aria-hidden focusable="false" className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />,
-                                            // Icon-only below @app-md — label (and its marker) only
-                                            // from a tablet-wide profile strip up.
-                                            () => (
-                                                <span className="hidden @app-md:inline">
-                                                    <Typography size="sm" text={TAB_LABEL[tabId]} />
-                                                    {isHidden ? (
-                                                        <>
-                                                            {" "}
-                                                            <Typography size="sm" color="muted" text={HIDDEN_MARKER} />
-                                                        </>
-                                                    ) : null}
-                                                </span>
-                                            ),
-                                        ]}
-                                    />
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                            )
-                        })}
-                    </HeroTabs.List>
-                </HeroTabs.ListContainer>
-            </TabsExtended>
-        </div>
+        <TabsExtended
+            selectedKey={activeTab}
+            onSelectionChange={(key) => onTabChange(key as ProfileTab)}
+        >
+            <TabsListContainer>
+                <TabsList aria-label={ariaLabel}>
+                    {visibleTabs.map((tabId) => {
+                        const Icon = TAB_ICON[tabId]
+                        const isHidden = hiddenTabs?.includes(tabId) ?? false
+                        return (
+                            <TabsTab
+                                key={tabId}
+                                id={tabId}
+                            >
+                                <StackH
+                                    gap={2}
+                                    principle="icon-text"
+                                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                    align="center"
+                                    items={[
+                                        () => <Icon aria-hidden focusable="false" className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />,
+                                        // Icon-only below @app-md — label (and its marker) only
+                                        // from a tablet-wide profile strip up.
+                                        () => (
+                                            <span className="hidden @app-md:inline">
+                                                <Typography size="sm" text={TAB_LABEL[tabId]} />
+                                                {isHidden ? (
+                                                    <>
+                                                        {" "}
+                                                        <Typography size="sm" color="muted" text={HIDDEN_MARKER} />
+                                                    </>
+                                                ) : null}
+                                            </span>
+                                        ),
+                                    ]}
+                                />
+                                <TabsIndicator />
+                            </TabsTab>
+                        )
+                    })}
+                </TabsList>
+            </TabsListContainer>
+        </TabsExtended>
     )
 }
 

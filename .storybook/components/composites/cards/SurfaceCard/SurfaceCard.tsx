@@ -20,6 +20,7 @@ import { PADDING_CLASS, type AllowedPadding } from "@sb-components/frames/_spaci
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import type { PrincipleToken, ExplainReason } from "@sb-components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 import {
@@ -1157,7 +1158,7 @@ const SelectableGroup = <T extends string>({
                         // width and selection chrome ride plain wrappers around them.
                         <div className="w-full">
                             <Radio value={item.value} isDisabled={item.isDisabled}>
-                                <RadioContent className="block w-full">
+                                <RadioContent>
                                     {({ isSelected, isDisabled, isFocusVisible }) => {
                                         const optionRow = (
                                             <>
@@ -1689,11 +1690,6 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      */
     isSkeleton?: boolean
     /**
-     * Where the outer section / surface sits inside its parent. Appearance is not
-     * passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * Caller identity to wear on this composite's root instead of its own — pass this
      * when a block/layout/overlay/page uses this composite as its root element.
      * Omitted → this composite keeps emitting its own data-tier/data-component.
@@ -1728,44 +1724,57 @@ const AccordionCard = ({
     emptyState: EmptyState,
     description,
     isSkeleton = false,
-    classNames,
     identity,
 }: SurfaceCardAccordionProps) => {
     const bare = label == null && description == null
     const atomItems: Array<AccordionAtomItem> = items.map((item) => ({
         key: item.id,
         title: (
-            <StackH
-                gap={2}
-                classNames={["min-w-0", "flex-1"]}
+            <FillAvailable
+                at="base"
                 isSkeleton={isSkeleton}
-                items={[
-                    ...(item.titleStart ? [() => {
-                        const TitleStart = item.titleStart
-                        return TitleStart ? <TitleStart /> : null
-                    }] : []),
-                    () => (
-                        <div className="text-left">
-                            <StackV
-                                gap={1}
-                                classNames={["min-w-0", "flex-1"]}
-                                isSkeleton={isSkeleton}
-                                items={[
-                                    // title does NOT render markdown, not even backtick-only via `parseInlineCode`.
-                                    // Title tier is plain, absolutely.
-                                    () => <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} text={item.title} />,
-                                    ...(item.subtitle != null ? [() => (
-                                        <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={item.subtitle} />
-                                    )] : []),
-                                ]}
-                            />
-                        </div>
-                    ),
-                    ...(item.titleEnd ? [() => {
-                        const TitleEnd = item.titleEnd
-                        return TitleEnd ? <TitleEnd /> : null
-                    }] : []),
-                ]}
+                body={() => (
+                    <StackH
+                        gap={2}
+                        principle="content-row"
+                        explain="Keeps accordion title peers on one baseline so start/end slots do not drop under the title."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            ...(item.titleStart ? [() => {
+                                const TitleStart = item.titleStart
+                                return TitleStart ? <TitleStart /> : null
+                            }] : []),
+                            () => (
+                                <FillAvailable
+                                    at="base"
+                                    isSkeleton={isSkeleton}
+                                    body={() => (
+                                        <div className="text-left">
+                                            <StackV
+                                                gap={1}
+                                                principle="title-subtitle"
+                                                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                                isSkeleton={isSkeleton}
+                                                items={[
+                                                    // title does NOT render markdown, not even backtick-only via `parseInlineCode`.
+                                                    // Title tier is plain, absolutely.
+                                                    () => <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} text={item.title} />,
+                                                    ...(item.subtitle != null ? [() => (
+                                                        <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={item.subtitle} />
+                                                    )] : []),
+                                                ]}
+                                            />
+                                        </div>
+                                    )}
+                                />
+                            ),
+                            ...(item.titleEnd ? [() => {
+                                const TitleEnd = item.titleEnd
+                                return TitleEnd ? <TitleEnd /> : null
+                            }] : []),
+                        ]}
+                    />
+                )}
             />
         ),
         content: <item.body isSkeleton={isSkeleton} />,
@@ -1793,11 +1802,13 @@ const AccordionCard = ({
         </div>
     )
     // bare = no header AND no caption → render the frame directly
-    if (bare) return <div className={cn(classNames)} {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })}>{frame}</div>
+    if (bare) return <div {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })}>{frame}</div>
     // description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface
     const withCaption = description != null ? (
         <StackV
             gap={3}
+            principle="label-field"
+            explain="Caption under the accordion face is label-field — not title-subtitle (no paired title/supporting lines), not name-handle, not icon-text; the caption labels the surface the way a field label labels its control."
             isSkeleton={isSkeleton}
             items={[
                 () => frame,
@@ -1809,7 +1820,7 @@ const AccordionCard = ({
         <section
 
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
-            className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
+            className={cn("flex flex-col", surfaceSectionGap(subtleLabel))}
             {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })}
         >
             <div>

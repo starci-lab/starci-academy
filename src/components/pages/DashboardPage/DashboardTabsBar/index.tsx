@@ -59,10 +59,8 @@ export const DashboardTabsBar = () => {
                                         aria-controls={`DashboardPage-panel-${tabId}`}
                                     >
                                         <StackH
-                                            gap={2}
                                             principle="icon-text"
                                             explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
-                                            align="center"
                                             items={[
                                                 () => (
                                                     <TabIcon

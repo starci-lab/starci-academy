@@ -6,8 +6,6 @@ import { cn } from "@heroui/react"
 import { buildMarkdownRenderers } from "@/components/composites/viewers/MarkdownContent/map"
 import { StackV } from "@/components/frames/Stack"
 import { Typography } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * VIEWER — `MarkdownContent`: paint an authored markdown document faithfully.
@@ -40,7 +38,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * `compact` is for markdown quoted inside another surface, such as a chat answer
  * or a card, where the document is a passenger rather than the page.
  *
- * COMPOSITE-4: only `classNames: Array<AllowedClassName>` is a public prop here.
+ * COMPOSITE-4: no public className/classNames door — placement is parent-owned.
  * A caller that needs an arbitrary-selector reset (e.g. `[&_p]:m-0`) wraps this
  * component in its own `<div>` carrying that class instead of handing this
  * composite a free string — the selector reaches the same descendant `p`
@@ -327,8 +325,6 @@ export interface MarkdownContentProps {
     source: string
     /** How much room the document gets. Defaults to `"reading"`. */
     measure?: MarkdownMeasure
-    /** Where the article wrapper sits inside its parent, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /**
      * `true` -> render a 2-line shimmer mirror instead of the real document
      * (§12c: the owner of the shape owns the skeleton). Added 2026-07-29 —
@@ -351,7 +347,6 @@ export const meta = { tier: "composite", name: "MarkdownContent" } as const
 const MarkdownContent = ({
     source,
     measure = "reading",
-    classNames,
     isSkeleton = false}: MarkdownContentProps) => {
     const reading = measure === "reading"
     const rootRef = useRef<HTMLDivElement>(null)
@@ -375,10 +370,11 @@ const MarkdownContent = ({
         return (
             <StackV
                 gap={3}
-                classNames={classNames}
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these shimmer lines are repeating siblings rather than section groups."
                 items={[
-                    () => <Typography isSkeleton size="base" classNames={["w-full"]} />,
-                    () => <Typography isSkeleton size="base" classNames={["w-2/3"]} />,
+                    () => <Typography isSkeleton size="base" />,
+                    () => <Typography isSkeleton size="base" />,
                 ]}
             />
         )
@@ -387,7 +383,7 @@ const MarkdownContent = ({
     return (
         <article
             ref={rootRef}
-            className={cn("first:*:mt-0 last:*:mb-0", classNames)}
+            className={cn("first:*:mt-0 last:*:mb-0")}
             data-tier="composite"
             data-component="MarkdownContent"
         >

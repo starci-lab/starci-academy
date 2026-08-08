@@ -151,6 +151,8 @@ export const _ContentPage = ({
         <Container
             size="full"
             padding={1}
+            principle="center-measure"
+            explain="Centers the lesson reading region on its measure — not page-pad, because this caps measure rather than padding a page region."
             body={() => (
                 // `id` scopes the "on this page" rail's heading scan; `data-ai-selectable`
                 // marks the region for "ask AI about this passage" — no frame/atom carries
@@ -164,6 +166,8 @@ export const _ContentPage = ({
         <Container
             size="md"
             padding={1}
+            principle="center-measure"
+            explain="Centers the lesson reading region on its measure — not page-pad, because this caps measure rather than padding a page region."
             body={() => (
                 <div id="lesson-article" data-ai-selectable>
                     <Body />
@@ -174,11 +178,15 @@ export const _ContentPage = ({
         <Container
             size="md"
             padding={1}
+            principle="center-measure"
+            explain="Centers the lesson reading region on its measure — not page-pad, because this caps measure rather than padding a page region."
             body={() => (
                 <SurfaceCard
                     body={() => (
                         <StackV
                             gap={5}
+                            principle="group-boundary"
+                            explain="Nested section group spacing — not block-boundary, because this groups related surfaces inside one card rather than major page blocks."
                             items={[
                                 ...(!isLocked ? [() => <SelectionHintCallout />] : []),
                                 () => (
@@ -213,6 +221,8 @@ export const _ContentPage = ({
                             <Container
                                 size="md"
                                 padding={1}
+                                principle="center-measure"
+                                explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
                                 body={() => <SurfaceCard body={() => <ContentReactionBar />} />}
                             />
                         ),
@@ -226,6 +236,8 @@ export const _ContentPage = ({
                                     <Container
                                         size="md"
                                         padding={1}
+                                        principle="center-measure"
+                                        explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
                                         body={() => (
                                             <UpNextCard
                                                 showCheck
@@ -244,6 +256,8 @@ export const _ContentPage = ({
                             <Container
                                 size="md"
                                 padding={1}
+                                principle="center-measure"
+                                explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
                                 body={() => (
                                     <RelatedContentList
                                         courseId={relatedContent.courseId}
@@ -256,13 +270,31 @@ export const _ContentPage = ({
                             />
                         )] : []),
                         () => (
-                            <Container size="md" padding={1} body={() => <ContentDiscussion />} />
+                            <Container
+                                size="md"
+                                padding={1}
+                                principle="center-measure"
+                                explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
+                                body={() => <ContentDiscussion />}
+                            />
                         ),
                         () => (
-                            <Container size="md" padding={1} body={() => <LessonPager />} />
+                            <Container
+                                size="md"
+                                padding={1}
+                                principle="center-measure"
+                                explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
+                                body={() => <LessonPager />}
+                            />
                         ),
                         ...(hasE2e ? [() => (
-                            <Container size="md" padding={1} body={() => <E2eResultButton />} />
+                            <Container
+                                size="md"
+                                padding={1}
+                                principle="center-measure"
+                                explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
+                                body={() => <E2eResultButton />}
+                            />
                         )] : []),
                     ]}
                 />
@@ -282,6 +314,8 @@ export const _ContentPage = ({
                     <Container
                         size="md"
                         padding={1}
+                        principle="center-measure"
+                        explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
                         body={() => (isSkeleton ? <ContentHeaderSkeleton /> : <ContentHeader />)}
                     />
                 ),
@@ -312,6 +346,8 @@ export const _ContentPage = ({
                                 <Container
                                     size="md"
                                     padding={1}
+                                    principle="center-measure"
+                                    explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
                                     body={() => (
                                         <SurfaceCard body={() => <ContentBodySkeleton variant="v2" />} />
                                     )}
@@ -321,7 +357,13 @@ export const _ContentPage = ({
                             ...(!isSkeleton && inlineAd && !isFullWidthTab ? [() => (
                                 <PageEndPad
                                     body={() => (
-                                        <Container size="md" padding={1} body={() => <AdBanner ad={inlineAd} />} />
+                                        <Container
+                                            size="md"
+                                            padding={1}
+                                            principle="center-measure"
+                                            explain="Centers the lesson chrome on the reading measure — not page-pad, because this caps measure rather than padding a page region."
+                                            body={() => <AdBanner ad={inlineAd} />}
+                                        />
                                     )}
                                 />
                             )] : []),

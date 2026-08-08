@@ -6,7 +6,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Chip,
     Typography,
 } from "@heroui/react"
 import {
@@ -19,6 +18,7 @@ import {
 import {
     ReadBadge,
 } from "../ReadBadge"
+import { Chip } from "@/components/atoms/chips/Chip"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
@@ -79,12 +79,11 @@ export const ContentHeader = () => {
                 meta={(
                     <div className="flex flex-wrap items-center gap-2">
                         <ReadBadge />
-                        <Chip color="default">
-                            <ClockIcon className="size-4" />
-                            <Chip.Label>
-                                {t("content.minutesRead", { minutes: minutesRead })}
-                            </Chip.Label>
-                        </Chip>
+                        <Chip
+                            tone="default"
+                            icon={ClockIcon}
+                            text={t("content.minutesRead", { minutes: minutesRead })}
+                        />
                         <Typography type="body-xs" color="muted" className="flex items-center gap-1">
                             <FlameIcon className="size-4" />
                             {t("content.challengeCount", { count: challengeCount })}

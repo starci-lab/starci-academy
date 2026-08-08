@@ -1,5 +1,4 @@
 import React from "react"
-import { Tabs as HeroTabs } from "@heroui/react"
 import {
     CodeIcon,
     FileTextIcon,
@@ -8,8 +7,14 @@ import {
     PuzzlePieceIcon,
     RocketIcon,
 } from "@phosphor-icons/react"
-import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
-import type { IconComponent } from "@sb-components/atoms/navigation/Tabs/Tabs"
+import {
+    TabsExtended,
+    TabsIndicator,
+    TabsList,
+    TabsListContainer,
+    TabsTab,
+    type IconComponent,
+} from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
@@ -100,13 +105,13 @@ const ProfileTabsBar = ({
             selectedKey={activeTab}
             onSelectionChange={(key) => onTabChange(key as ProfileTab)}
         >
-            <HeroTabs.ListContainer>
-                <HeroTabs.List aria-label={ariaLabel}>
+            <TabsListContainer>
+                <TabsList aria-label={ariaLabel}>
                     {visibleTabs.map((tabId) => {
                         const Icon = TAB_ICON[tabId]
                         const isHidden = hiddenTabs?.includes(tabId) ?? false
                         return (
-                            <HeroTabs.Tab
+                            <TabsTab
                                 key={tabId}
                                 id={tabId}
                             >
@@ -132,12 +137,12 @@ const ProfileTabsBar = ({
                                         ),
                                     ]}
                                 />
-                                <HeroTabs.Indicator />
-                            </HeroTabs.Tab>
+                                <TabsIndicator />
+                            </TabsTab>
                         )
                     })}
-                </HeroTabs.List>
-            </HeroTabs.ListContainer>
+                </TabsList>
+            </TabsListContainer>
         </TabsExtended>
     )
 }

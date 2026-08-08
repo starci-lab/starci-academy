@@ -162,7 +162,6 @@ const ToolbarBase = ({
                             )}
                         >
                             <StackH
-                                gap={3}
                                 principle="icon-text"
                                 explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                                 items={[
@@ -285,8 +284,6 @@ const ToolbarBase = ({
         : null
     return (
         <StackH
-            gap={4}
-            justify="between"
             principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
 

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { Box } from "@/components/frames/Box"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { resolveComponentStatusVisual } from "../map"
 import type { SystemHealthComponent } from "@/modules/api/graphql/queries/types/system-health-status"
@@ -42,38 +43,37 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
                 <Box principle="card-padding" className="p-4"
                     explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                     <StackV
-                        gap={3}
                         principle="sibling-stack"
                         explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                         items={[
                             () => (
                                 <StackH
-                                    gap={3}
-                                    principle="flex-action"
-                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                                    align="center"
-                                    justify="between"
+                                    principle="flex-action-between"
+                                    explain="Identity and status chip shoved apart on one control row — not plain flex-action, because the status reads as the trailing commit."
                                     items={[
                                         () => (
-                                            <StackH
-                                                gap={3}
-                                                principle="identity"
-                                                explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
-                                                align="center"
-                                                classNames={["min-w-0"]}
-                                                items={[
-                                                    () => (
-                                                        <span
-                                                            className={`size-2.5 shrink-0 rounded-full ${visual.dotClassName}`}
-                                                            aria-hidden
-                                                        />
-                                                    ),
-                                                    () => (
-                                                        <span className="truncate font-mono text-sm font-medium text-foreground">
-                                                            {component.name}
-                                                        </span>
-                                                    ),
-                                                ]}
+                                            <FillAvailable
+                                                at="base"
+                                                explain="Component name takes remaining header width beside the status chip so long service ids truncate."
+                                                body={() => (
+                                                    <StackH
+                                                        principle="identity"
+                                                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                                        items={[
+                                                            () => (
+                                                                <span
+                                                                    className={`size-2.5 shrink-0 rounded-full ${visual.dotClassName}`}
+                                                                    aria-hidden
+                                                                />
+                                                            ),
+                                                            () => (
+                                                                <span className="truncate font-mono text-sm font-medium text-foreground">
+                                                                    {component.name}
+                                                                </span>
+                                                            ),
+                                                        ]}
+                                                    />
+                                                )}
                                             />
                                         ),
                                         () => (
@@ -86,11 +86,8 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
                             ),
                             () => (
                                 <StackH
-                                    gap={3}
-                                    principle="flex-action"
-                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                                    align="center"
-                                    justify="between"
+                                    principle="flex-action-between"
+                                    explain="Latency and checked-ago meta shoved apart on one control row — not plain flex-action, because the pair reads as escape/commit ends."
                                     items={[
                                         () => (
                                             <span className="tabular-nums text-xs text-muted">

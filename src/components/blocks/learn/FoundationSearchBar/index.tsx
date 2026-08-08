@@ -79,55 +79,48 @@ const FoundationSearchBar = ({
     }))
 
     return (
-        <div>
-            <StackH
-                gap={3}
-                justify="between"
-                principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                isSkeleton={isSkeleton}
-
-                items={[
-                    () => (
-                        <SearchAutocomplete
-                            items={items}
-                            inputValue={query}
-                            onInputChange={onQueryChange}
-                            onSelect={onSelectSuggestion}
-                            placeholder={placeholder}
-                            isSkeleton={isSkeleton}
-
-                        />
-                    ),
-                    ...(isSkeleton || isCountLoading
+        <StackH
+            gap={3}
+            justify="between"
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            isSkeleton={isSkeleton}
+            identity={{ tier: "block", component: "FoundationSearchBar" }}
+            items={[
+                () => (
+                    <SearchAutocomplete
+                        items={items}
+                        inputValue={query}
+                        onInputChange={onQueryChange}
+                        onSelect={onSelectSuggestion}
+                        placeholder={placeholder}
+                        isSkeleton={isSkeleton}
+                    />
+                ),
+                ...(isSkeleton || isCountLoading
+                    ? [
+                        () => (
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                isSkeleton
+                            />
+                        ),
+                    ]
+                    : resultCount !== undefined
                         ? [
                             () => (
                                 <Typography
                                     size="sm"
                                     color="muted"
-                                    isSkeleton
-                                    classNames={["shrink-0"]}
-
+                                    tabularNums
+                                    text={resultCountLabel(resultCount)}
                                 />
                             ),
                         ]
-                        : resultCount !== undefined
-                            ? [
-                                () => (
-                                    <Typography
-                                        size="sm"
-                                        color="muted"
-                                        tabularNums
-                                        text={resultCountLabel(resultCount)}
-                                        classNames={["shrink-0"]}
-
-                                    />
-                                ),
-                            ]
-                            : []),
-                ]}
-            />
-        </div>
+                        : []),
+            ]}
+        />
     )
 }
 

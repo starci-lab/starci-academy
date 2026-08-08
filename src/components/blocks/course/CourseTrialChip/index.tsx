@@ -28,6 +28,6 @@ export const CourseTrialChip = ({ isEnrolled }: CourseTrialChipProps) => {
         return null
     }
     return (
-        <Chip tone="warning" text={t("course.trial")} classNames={["shrink-0"]} />
+        <Chip tone="warning" text={t("course.trial")} />
     )
 }

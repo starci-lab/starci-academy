@@ -17,24 +17,18 @@ const ComponentCardSkeleton = () => (
     <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface"
         explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
         <StackV
-            gap={3}
             principle="sibling-stack"
             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             items={[
                 () => (
                     <StackH
-                        gap={3}
-                        principle="flex-action"
-                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                        align="center"
-                        justify="between"
+                        principle="flex-action-between"
+                        explain="Identity and status chip shoved apart on one control row — not plain flex-action, because the status reads as the trailing commit."
                         items={[
                             () => (
                                 <StackH
-                                    gap={3}
                                     principle="identity"
                                     explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
-                                    align="center"
                                     items={[
                                         () => <Skeleton className="size-2.5 rounded-full" />,
                                         () => <Skeleton className="h-4 w-20 rounded" />,
@@ -47,11 +41,8 @@ const ComponentCardSkeleton = () => (
                 ),
                 () => (
                     <StackH
-                        gap={3}
-                        principle="flex-action"
-                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                        align="center"
-                        justify="between"
+                        principle="flex-action-between"
+                        explain="Latency and checked-ago meta shoved apart on one control row — not plain flex-action, because the pair reads as escape/commit ends."
                         items={[
                             () => <Skeleton className="h-3 w-10 rounded" />,
                             () => <Skeleton className="h-3 w-24 rounded" />,
@@ -68,7 +59,6 @@ const AiKeyGroupSkeleton = () => (
     <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface"
         explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
         <StackV
-            gap={4}
             principle="label-field"
             explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
             items={[
@@ -97,7 +87,6 @@ export const SystemStatusSkeleton = ({ aiOnly = false }: SystemStatusSkeletonPro
     if (aiOnly) {
         return (
             <StackV identity={{ tier: "page", component: "SystemStatusSkeleton" }}
-                gap={4}
                 principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={Array.from({ length: 2 }, (_, index) => () => (
@@ -114,14 +103,12 @@ export const SystemStatusSkeleton = ({ aiOnly = false }: SystemStatusSkeletonPro
 
     return (
         <StackV identity={{ tier: "page", component: "SystemStatusSkeleton" }}
-            gap={6}
             principle="block-boundary"
             explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             items={[
                 () => <Skeleton className="h-14 w-full rounded-2xl" />,
                 () => (
                     <StackV
-                        gap={4}
                         principle="label-field"
                         explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                         items={[

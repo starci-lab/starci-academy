@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Chip } from "@heroui/react"
+import { Chip } from "@/components/atoms/chips/Chip"
 import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { CodeImplementationEntity } from "@/modules/types/entities/code-implementation"
@@ -16,14 +16,12 @@ export interface ImplementationCardProps {
  * Renders guide and example for one target language.
  * @param props.item - Code implementation entity for this card.
  */
-export const ImplementationCard = ({ item}: ImplementationCardProps) => {
+export const ImplementationCard = ({ item }: ImplementationCardProps) => {
     const t = useTranslations()
 
     return (
         <article className={"rounded-xl border border-default-200 p-4 flex flex-col gap-6"}>
-            <Chip variant="secondary" color="accent" size="sm" className="w-fit">
-                <Chip.Label>{item.lang}</Chip.Label>
-            </Chip>
+            <Chip tone="accent" text={item.lang} />
             <div>
                 <h3 className="text-sm font-semibold mb-2">
                     {t("content.codeImplementation.guideHeading")}

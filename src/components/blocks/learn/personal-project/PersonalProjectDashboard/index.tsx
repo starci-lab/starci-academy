@@ -1,11 +1,11 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Chip, Typography } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import {
+    GithubLogoIcon,
     PlayIcon,
 } from "@phosphor-icons/react"
-import { GithubIcon } from "@/components/svg/GithubIcon"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import {
@@ -24,6 +24,7 @@ import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
+import { Chip } from "@/components/atoms/chips/Chip"
 import { Grid } from "@/components/frames/Grid"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
 
@@ -180,19 +181,15 @@ export const PersonalProjectDashboard = () => {
                 title={t("finalProject.dashboard.title")}
                 description={t("finalProject.dashboard.subtitle")}
                 meta={(
-                    <div className="flex flex-wrap items-center gap-2">
-                        <Chip
-                            color={isConnected ? "success" : "default"}
-                            className={isConnected ? "bg-success-soft text-success-soft-foreground" : undefined}
-                        >
-                            <GithubIcon className="size-5" />
-                            <Chip.Label>
-                                {isConnected
-                                    ? `${toRepoLabel(githubUrl)} · ${githubBranch || "main"}`
-                                    : t("finalProject.dashboard.notConnected")}
-                            </Chip.Label>
-                        </Chip>
-                    </div>
+                    <Chip
+                        tone={isConnected ? "success" : "default"}
+                        icon={GithubLogoIcon}
+                        text={
+                            isConnected
+                                ? `${toRepoLabel(githubUrl)} · ${githubBranch || "main"}`
+                                : t("finalProject.dashboard.notConnected")
+                        }
+                    />
                 )}
             />
             {/* content */}

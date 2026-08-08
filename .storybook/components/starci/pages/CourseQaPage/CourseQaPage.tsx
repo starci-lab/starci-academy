@@ -140,6 +140,8 @@ const CourseQaPage = ({
     const courseQaBody = (
         <StackV
             gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             isSkeleton={isSkeleton}
             items={[
                 () => (
@@ -170,6 +172,8 @@ const CourseQaPage = ({
                         () => (
                             <StackV
                                 gap={6}
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 isSkeleton={isSkeleton}
                                 items={[
                                     () => (
@@ -232,7 +236,15 @@ const CourseQaPage = ({
         />
     )
 
-    return <Container size="md" padding={6} body={() => courseQaBody} />
+    return (
+        <Container
+            size="md"
+            padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+            body={() => courseQaBody}
+        />
+    )
 }
 
 export { CourseQaPage }

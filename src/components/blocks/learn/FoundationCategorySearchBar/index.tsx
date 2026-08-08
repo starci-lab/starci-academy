@@ -88,7 +88,7 @@ const FoundationCategorySearchBar = ({
                         </div>
                     ),
                     ...(isSkeleton
-                        ? [() => <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} />]
+                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
                         : count !== undefined
                             ? [
                                 ({ isSkeleton }: SkeletonProps) => (
@@ -97,7 +97,6 @@ const FoundationCategorySearchBar = ({
                                         size="sm"
                                         color="muted"
                                         text={countLabel(count)}
-                                        classNames={["shrink-0"]}
 
                                     />
                                 ),

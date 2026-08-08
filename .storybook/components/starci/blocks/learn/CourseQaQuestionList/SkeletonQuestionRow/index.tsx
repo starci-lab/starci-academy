@@ -17,12 +17,12 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  */
 export const SkeletonQuestionRow = () => {
     return (
-        <StackH identity={{ tier: "block", component: "SkeletonQuestionRow" }}
+        <StackH
+            identity={{ tier: "block", component: "SkeletonQuestionRow" }}
             gap={4}
             principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             align="start"
-
             items={[
                 () => (
                     <Avatar isSkeleton size="sm" />
@@ -31,6 +31,8 @@ export const SkeletonQuestionRow = () => {
                     <StackV
                         gap={2}
                         classNames={["min-w-0", "flex-1"]}
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack of asker line, preview, and chip row — not group-boundary, because these are repeating row sections rather than labelled groups."
                         items={[
                             // asker + time line
                             () => <Typography size="xs" isSkeleton />,
@@ -38,6 +40,8 @@ export const SkeletonQuestionRow = () => {
                             () => (
                                 <StackV
                                     gap={2}
+                                    principle="sibling-stack"
+                                    explain="Same-kind peer stack of preview shimmer lines — not group-boundary, because both lines are repeating skeleton peers rather than labelled section groups."
                                     items={[
                                         () => <Typography size="sm" isSkeleton />,
                                         () => <Typography size="sm" isSkeleton />,
@@ -50,6 +54,8 @@ export const SkeletonQuestionRow = () => {
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="chip-row"
+                                    explain="Status chip and scope shimmer share one wrapping meta row — not flex-action, because neither peer is a control."
                                     items={[
                                         () => <Typography size="xs" isSkeleton />,
                                         () => <Chip isSkeleton />,

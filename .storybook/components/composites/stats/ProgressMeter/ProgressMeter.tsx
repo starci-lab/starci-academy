@@ -4,7 +4,6 @@ import { ProgressBar } from "@sb-components/atoms/display/Progress/Progress"
 import { ProgressMeterTargetMark } from "./TargetMark"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ProgressMeter" } as const
@@ -46,11 +45,6 @@ interface ProgressMeterOwnProps {
      * may be passed alone; the row renders whichever side(s) are set.
      */
     trailing?: ComponentTypeWithSkeleton
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this meter. */
 }
 
@@ -85,7 +79,6 @@ export const ProgressMeter = ({
     leading: Leading,
     trailing: Trailing,
     isSkeleton = false,
-    classNames,
 }: ProgressMeterProps) => {
     const safeMax = max > 0 ? max : 1
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
@@ -180,7 +173,8 @@ export const ProgressMeter = ({
     return (
         <StackV
             gap={3}
-            classNames={classNames}
+            principle="label-field"
+            explain="Optional label/value row sits above the track — not title-subtitle, because the top row is meter chrome rather than a heading pair."
             isSkeleton={isSkeleton}
             items={[
                 () => topRow,

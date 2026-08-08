@@ -2,7 +2,6 @@
 
 import React from "react"
 import {
-    Chip,
     Typography,
 } from "@heroui/react"
 import {
@@ -21,6 +20,7 @@ import type {
     LearnNavBadge,
     LearnNavGroup,
 } from "@/components/layouts/LearnShellLayout/types"
+import { Chip } from "@/components/atoms/chips/Chip"
 import { ResumeRail } from "../ResumeRail"
 import { CollapsibleSidebar } from "@/components/blocks/navigation/CollapsibleSidebar"
 import { SidebarNavGroup } from "@/components/blocks/navigation/SidebarNavGroup"
@@ -53,9 +53,7 @@ const renderBadge = (badge: LearnNavBadge): React.ReactNode => {
         )
     }
     return (
-        <Chip size="sm" className="bg-warning-soft text-warning-soft-foreground">
-            <Chip.Label>{badge.value}</Chip.Label>
-        </Chip>
+        <Chip tone="warning" text={String(badge.value)} />
     )
 }
 

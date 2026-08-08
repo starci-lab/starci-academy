@@ -1,6 +1,5 @@
 import React from "react"
 import { CircleIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ContinueCardHero } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
@@ -54,8 +53,6 @@ export interface PersonalProjectGatePreviewProps {
      * each task row's `Typography` (§12c) — no parallel skeleton tree built here.
      */
     isSkeleton?: boolean
-    /** Placement class only (§14d.1) — not for restyling. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -70,7 +67,6 @@ const PersonalProjectGatePreview = ({
     progress,
     items,
     isSkeleton = false,
-    classNames,
 }: PersonalProjectGatePreviewProps) => {
     // Depends on the loop variable, so it cannot be hoisted to a const above the
     // return — a small named helper instead, in the style this file already uses.
@@ -110,7 +106,6 @@ const PersonalProjectGatePreview = ({
     return (
         <StackV identity={{ tier: "block", component: "PersonalProjectGatePreview" }}
             gap={6}
-            classNames={classNames}
             isSkeleton={isSkeleton}
 
             items={[

@@ -7,6 +7,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH } from "@/components/frames/Stack"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
@@ -168,12 +169,23 @@ export const PressableCard = ({
     return (
         <div className={cn("relative w-full", surface)} {...identityAttrs}>
             <StackH
-                gap={4}
+                principle="content-row"
+                explain="Card body and trailing actions share one content row — not flex-action, because the body is content rather than a control peer."
                 items={[
-                    () => <div className="min-w-0 flex-1">{children}</div>,
+                    () => (
+                        <FillAvailable
+                            at="base"
+                            explain="Card body takes remaining row width beside the actions cluster so long titles truncate instead of shoving the actions."
+                            body={() => <>{children}</>}
+                        />
+                    ),
                     () => (
                         <div className="relative z-10">
-                            <StackH gap={3} principle="flex-action" explain="Groups action controls on one horizontal peer row so they share a single hit baseline." classNames={["shrink-0"]} items={[() => <Actions />]} />
+                            <StackH
+                                principle="flex-action"
+                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                items={[() => <Actions />]}
+                            />
                         </div>
                     ),
                 ]}

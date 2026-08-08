@@ -1,8 +1,9 @@
 "use client"
 
 import React from "react"
-import { Chip, Typography } from "@heroui/react"
 import type { ReactNode } from "react"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
 import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
 
 /** One selectable recall grade in a {@link RatingBar}. */
@@ -86,14 +87,10 @@ export const RatingBar = ({ options, onRate, ariaLabel, isPending = false}: Rati
                 <>
                     <span className="flex items-center justify-between gap-2">
                         <span className="text-sm font-medium text-foreground">{option.label}</span>
-                        <Chip size="sm" variant="soft" color="default">
-                            <Chip.Label>{position + 1}</Chip.Label>
-                        </Chip>
+                        <Chip tone="default" text={String(position + 1)} />
                     </span>
                     {option.hint !== undefined ? (
-                        <Typography type="body-xs" color="muted">
-                            {option.hint}
-                        </Typography>
+                        <Typography size="xs" color="muted" text={option.hint} />
                     ) : null}
                 </>
             ),

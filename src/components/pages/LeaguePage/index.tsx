@@ -50,7 +50,6 @@ export const LeaguePage = () => {
     return (
         <div className={"mx-auto w-full max-w-2xl p-3"} data-principle="cell-pad">
             <StackV
-                gap={7}
                 principle="layout-split"
                 explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                 items={[
@@ -74,7 +73,6 @@ export const LeaguePage = () => {
                     // tabs + board grouped at block-boundary; only the active board mounts
                     () => (
                         <StackV
-                            gap={6}
                             principle="block-boundary"
                             explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                             items={[

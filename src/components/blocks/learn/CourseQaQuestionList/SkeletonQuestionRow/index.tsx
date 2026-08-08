@@ -16,47 +16,55 @@ import { StackV, StackH } from "@/components/frames/Stack"
  * own a seam).
  */
 export const SkeletonQuestionRow = () => {
-    const previewLines = (
-        <>
-            <Typography size="sm" isSkeleton classNames={["w-full"]} />
-            <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
-        </>
-    )
-
-    const chipRow = (
-        <>
-            <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-            <Chip isSkeleton />
-        </>
-    )
-
-    const textColumn = (
-        <>
-            {/* asker + time line */}
-            <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-            {/* two-line preview */}
-            <StackV gap={2} items={[() => previewLines]} />
-            {/* chip-pill row — ONE chip (status, the classification axis) + the scope
- as a plain shimmer bar, matching the real row's own text-inline treatment
- (eslint `starci-fe/no-adjacent-chip`, *7 below). */}
-            <StackH gap={3} items={[() => chipRow]} />
-        </>
-    )
-
     return (
-        <StackH identity={{ tier: "block", component: "SkeletonQuestionRow" }}
+        <StackH
+            identity={{ tier: "block", component: "SkeletonQuestionRow" }}
             gap={4}
             principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             align="start"
-
             items={[
                 () => (
-                    <div className="shrink-0">
-                        <Avatar isSkeleton size="sm" />
-                    </div>
+                    <Avatar isSkeleton size="sm" />
                 ),
-                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
+                () => (
+                    <StackV
+                        gap={2}
+                        classNames={["min-w-0", "flex-1"]}
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack of asker line, preview, and chip row — not group-boundary, because these are repeating row sections rather than labelled groups."
+                        items={[
+                            // asker + time line
+                            () => <Typography size="xs" isSkeleton />,
+                            // two-line preview
+                            () => (
+                                <StackV
+                                    gap={2}
+                                    principle="sibling-stack"
+                                    explain="Same-kind peer stack of preview shimmer lines — not group-boundary, because both lines are repeating skeleton peers rather than labelled section groups."
+                                    items={[
+                                        () => <Typography size="sm" isSkeleton />,
+                                        () => <Typography size="sm" isSkeleton />,
+                                    ]}
+                                />
+                            ),
+                            // chip-pill row — ONE chip (status, the classification axis) + the scope
+                            // as a plain shimmer bar, matching the real row's own text-inline treatment
+                            // (eslint `starci-fe/no-adjacent-chip`, *7 below).
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    principle="chip-row"
+                                    explain="Status chip and scope shimmer share one wrapping meta row — not flex-action, because neither peer is a control."
+                                    items={[
+                                        () => <Typography size="xs" isSkeleton />,
+                                        () => <Chip isSkeleton />,
+                                    ]}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
                 // status dot — no home atom (*3), same escape hatch `Pagination` uses for its own shimmer squares
                 () => <Skeleton className="size-2 shrink-0 rounded-full" />,
             ]}

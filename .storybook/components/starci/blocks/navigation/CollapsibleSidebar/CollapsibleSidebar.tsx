@@ -125,8 +125,11 @@ export const CollapsibleSidebar = ({
                 )}
             >
                 <StackV
+                    identity={{ tier: "block", component: "CollapsibleSidebar" }}
                     gap={6}
                     classNames={["min-h-0", "flex-1"]}
+                    principle="group-boundary"
+                    explain="Separates header, pinned top slot, and scrollable nav so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
                     items={[
                         () => (
                             <StackH
@@ -190,7 +193,12 @@ export const CollapsibleSidebar = ({
                         () => (
                             <nav className="flex min-h-0 flex-1 flex-col">
                                 <DragScrollArea size={40} className="flex-1">
-                                    <StackV gap={4} items={[() => children]} />
+                                    <StackV
+                                        gap={4}
+                                        principle="sibling-stack"
+                                        explain="Same-kind peer stack of nav rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                        items={[() => children]}
+                                    />
                                 </DragScrollArea>
                             </nav>
                         ),

@@ -57,7 +57,6 @@ export const RelatedPosts = ({ category, currentSlug }: RelatedPostsProps) => {
     return (
         <section className="border-t border-default pt-6">
             <StackV
-                gap={4}
                 principle="card-caption"
                 explain="Holds caption text under card media so the caption stays attached to the image above it."
                 items={[

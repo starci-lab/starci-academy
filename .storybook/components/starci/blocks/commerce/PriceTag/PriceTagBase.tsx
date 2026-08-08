@@ -1,7 +1,6 @@
 import React from "react"
 import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { Popover } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackV } from "@sb-components/frames/Stack/Stack"
@@ -75,8 +74,6 @@ export interface PriceTagProps {
  * the percent). Defaults to `true`; set `false` where space is tight (dense cards).
  */
     showSavingLine?: boolean
-    /** Where the root sits inside its parent. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -121,7 +118,6 @@ export const PriceTagBase = ({
     isSkeleton = false,
     breakdown,
     showSavingLine = true,
-    classNames,
 }: PriceTagProps & { emphasis: PriceEmphasis }) => {
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
@@ -302,7 +298,6 @@ export const PriceTagBase = ({
             // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
             // inside a lower-tier component — the saving line read as if it were glued under the number.
             gap={4}
-            classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
                 () => priceRow,

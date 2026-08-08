@@ -9,6 +9,7 @@ import {
 } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import type { VerdictBandVariant } from "@sb-components/composites/cards/verdict-band"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -174,27 +175,30 @@ const MindMapRail = ({
     return (
         <StackV
             identity={{ tier: "block", component: "MindMapRail" }}
-            gap={3}
+            principle="sibling-stack"
+            explain="Search row and result region are same-kind peers in the rail column — not group-boundary, because they are repeating rail sections rather than nested groups."
             isSkeleton={isSkeleton}
             items={[
                 () => (
                     <StackH
-                        gap={3}
                         principle="flex-action"
                         explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                         at="sm"
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
-                                <div className="min-w-0 flex-1">
-                                    <InputSearch
-                                        value={query}
-                                        onValueChange={onQuery}
-                                        placeholder={SEARCH_PLACEHOLDER}
-                                        ariaLabel={ariaLabel}
-
-                                    />
-                                </div>
+                                <FillAvailable
+                                    at="base"
+                                    explain="Search field takes remaining header width beside the filter trigger so the query input can truncate instead of shoving the funnel."
+                                    body={() => (
+                                        <InputSearch
+                                            value={query}
+                                            onValueChange={onQuery}
+                                            placeholder={SEARCH_PLACEHOLDER}
+                                            ariaLabel={ariaLabel}
+                                        />
+                                    )}
+                                />
                             ),
                             () => (
                                 <div>

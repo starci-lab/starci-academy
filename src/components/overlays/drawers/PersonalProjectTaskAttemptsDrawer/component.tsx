@@ -104,7 +104,7 @@ const AttemptRow = ({ attempt, isSkeleton = false }: AttemptRowProps) => {
                 size="sm"
                 weight="medium"
                 isSkeleton={isSkeleton}
-                classNames={isSkeleton ? ["w-1/4"] : undefined}
+
                 text={attempt != null ? `Attempt ${attempt.attemptNumber}` : undefined}
             />
         ),
@@ -136,7 +136,7 @@ const AttemptRow = ({ attempt, isSkeleton = false }: AttemptRowProps) => {
                 size="sm"
                 color="muted"
                 isSkeleton={isSkeleton}
-                classNames={isSkeleton ? ["w-2/3"] : undefined}
+
                 text={attempt?.shortFeedback ?? undefined}
             />
         )] : []),

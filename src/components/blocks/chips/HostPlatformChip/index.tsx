@@ -14,7 +14,7 @@ export type HostPlatformChipConnectedProps = Omit<HostPlatformChipProps, "labels
  *
  * @param props - {@link HostPlatformChipConnectedProps}
  */
-export const HostPlatformChip = ({ hostPlatform, className }: HostPlatformChipConnectedProps) => {
+export const HostPlatformChip = ({ hostPlatform }: HostPlatformChipConnectedProps) => {
     const t = useTranslations()
     const labels: Partial<Record<VideoHostPlatform, string>> = {
         [VideoHostPlatform.Youtube]: t("videoHostPlatform.youtube"),
@@ -22,5 +22,5 @@ export const HostPlatformChip = ({ hostPlatform, className }: HostPlatformChipCo
         [VideoHostPlatform.Vimeo]: t("videoHostPlatform.vimeo"),
         [VideoHostPlatform.CloudflareStream]: t("videoHostPlatform.cloudflareStream"),
     }
-    return <_HostPlatformChip hostPlatform={hostPlatform} labels={labels} className={className} />
+    return <_HostPlatformChip hostPlatform={hostPlatform} labels={labels} />
 }

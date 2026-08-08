@@ -89,7 +89,7 @@ const ContentDiscussion = ({
     const labelLines = (
         <>
             {isSkeleton ? (
-                <Typography weight="medium" isSkeleton classNames={["w-1/4"]} />
+                <Typography weight="medium" isSkeleton />
             ) : (
                 <Typography weight="medium" text={`${label} · ${total}`} />
             )}
@@ -98,7 +98,6 @@ const ContentDiscussion = ({
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-2/3"] : undefined}
                     text={`${answeredCount}/${total} questions answered, accumulated over time`}
 
                 />

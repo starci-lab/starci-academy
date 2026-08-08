@@ -225,7 +225,6 @@ const checkoutLineRow = (
                         currency={currency}
                         isSkeleton={isSkeleton}
                         showSavingLine={false}
-                        classNames={["shrink-0"]}
                     />
                 )]
                 : []),
@@ -268,7 +267,6 @@ const summaryContent = (props: PaymentModalProps) => {
                         currency={currency}
                         isSkeleton={isSkeleton}
                         showSavingLine={false}
-                        classNames={["shrink-0"]}
                     />
                 )]
                 : []),

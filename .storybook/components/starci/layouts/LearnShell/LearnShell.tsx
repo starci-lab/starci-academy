@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { ResizableRail } from "@sb-components/behaviors/ResizableRail/ResizableRail"
 import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { EnrollGate, type EnrollGateProps } from "@sb-components/starci/blocks/learn/EnrollGate/EnrollGate"
 import { ContentAiFab } from "@sb-components/starci/blocks/learn/ContentAiFab/ContentAiFab"
@@ -115,21 +116,19 @@ const LearnShell = ({
 
             >
                 <StackV
-                    gap={1}
                     principle="sibling-stack"
                     explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                    align="center"
-                    justify="center"
-                    classNames={["h-full"]}
 
                     items={[() => <Spinner label={RAIL_LOADING_LABEL} />]}
                 />
             </ResizableRail>
         )] : []),
         () => (
-            <div className="min-w-0 flex-1">
-                {children}
-            </div>
+            <FillAvailable
+                at="base"
+                explain="Learn content column takes remaining width beside the optional rail so lesson chrome can shrink without overflowing the shell."
+                body={() => <>{children}</>}
+            />
         ),
     ]
 

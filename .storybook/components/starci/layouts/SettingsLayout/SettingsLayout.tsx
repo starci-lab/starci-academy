@@ -69,6 +69,8 @@ const SettingsLayout = ({
         <Container
             size="md"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={() => children}
         />
     )

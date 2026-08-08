@@ -123,9 +123,14 @@ export const MockInterviewPage = ({ resumeSessionId, resultSessionId }: MockInte
         <Container
             identity={{ tier: "block", component: "MockInterviewPage" }}
             size="md"
+            padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={() => (
                 <StackV
                     gap={7}
+                    principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                     items={[
                         () => (
                             <PageHeader

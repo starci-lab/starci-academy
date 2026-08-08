@@ -10,6 +10,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV, StackH } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { Grid, type GridItem } from "@/components/frames/Grid"
 import { Container } from "@/components/frames/Container"
 import type { SkeletonProps } from "@/components/frames/_slot"
@@ -238,9 +239,15 @@ export const _FlashcardSessionStats = ({
                                                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                     isSkeleton={isSkeleton} items={[
                                                         () => <Typography size="sm" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={row.label} />,
-                                                        () => (isSkeleton
-                                                            ? <ProgressMeter isSkeleton color={row.color} classNames={["flex-1"]} />
-                                                            : <ProgressMeter value={row.count} max={gradeTotal} color={row.color} classNames={["flex-1"]} />),
+                                                        () => (
+                                                            <FillAvailable
+                                                                at="base"
+                                                                isSkeleton={isSkeleton}
+                                                                body={() => (isSkeleton
+                                                                    ? <ProgressMeter isSkeleton color={row.color} />
+                                                                    : <ProgressMeter value={row.count} max={gradeTotal} color={row.color} />)}
+                                                            />
+                                                        ),
                                                         () => <Typography size="sm" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={row.countPercentLabel} />,
                                                     ]} />
                                             ))} />

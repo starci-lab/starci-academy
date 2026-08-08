@@ -1,17 +1,14 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { ChipTone, IconComponent } from "@sb-components/atoms/chips/Chip/Chip"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `EnumChip` — a `Chip` whose tone / label / optional tooltip / optional leading icon come
  * from a per-value lookup (`map[value]`), so a domain badge shrinks to just its map table plus
- * this delegate. Props: `value`, `map` (two halves of one lookup), `isSkeleton`,
- * `className`/`classNames`.
+ * this delegate. Props: `value`, `map` (two halves of one lookup), `isSkeleton`.
  */
 
 /**
@@ -64,19 +61,6 @@ export interface EnumChipProps<E extends string> {
     value: E
     /** Map from enum value to presentation (accepts Partial — unhandled values throw). */
     map: Partial<Record<E, EnumChipEntry>>
-    /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     * Kept only for the two `_legacy` callers (`HostPlatformChip`, `EntityResultRow`)
-     * that still pass a free-form string; `_legacy` is off-limits to edit, so this
-     * escape stays until those callers are retired.
-     */
-    className?: string
-    /**
-     * Extra classes on the chip. Prefer this over `className`; the string form is going
-     * away. This value is handed straight to `Chip`'s own closed `classNames` union, so
-     * an unconstrained string here would only fail one tier down.
-     */
-    classNames?: Array<AllowedClassName>
     /** When `true`, renders the skeleton placeholder (a chip-shaped pill) instead of the real chip. */
     isSkeleton?: boolean
 }
@@ -96,27 +80,23 @@ export interface EnumChipProps<E extends string> {
 export const meta = { tier: "composite", name: "EnumChip" } as const
 
 /** Chip whose tone, label, tooltip, and icon come from `map[value]`. */
-export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton }: EnumChipProps<E>) => {
-    const wrapChip = (chip: React.ReactElement) => {
-        const cls = cn(className, classNames)
-        return cls ? <div className={cls}>{chip}</div> : chip
-    }
+export const EnumChip = <E extends string>({ value, map, isSkeleton }: EnumChipProps<E>) => {
     if (isSkeleton) {
         // The atom's shimmer matches the real chip box, so no `h-6` patch is needed
         // here — a call site having to patch the atom's shape is the sign the atom is
-        // wrong, not this spot. `Chip` no longer takes placement classes; wrap instead.
-        return wrapChip(<Chip isSkeleton />)
+        // wrong, not this spot.
+        return <Chip isSkeleton />
     }
     const entry = map[value]
     if (!entry) {
         throw new Error(`EnumChip: no map entry for value "${value}"`)
     }
-    const chip = wrapChip(
+    const chip = (
         <Chip
             tone={entry.color ?? "default"}
             text={entry.label}
             icon={entry.icon != null ? ENUM_CHIP_ICON_MAP[entry.icon] : undefined}
-        />,
+        />
     )
     if (entry.tooltip == null) {
         return chip

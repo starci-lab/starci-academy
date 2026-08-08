@@ -19,6 +19,7 @@ import {
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { rankInfo, resolveSeniorityRank } from "@/modules/utils/rank"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ProfileMenuCard}. */
@@ -88,11 +89,8 @@ export const ProfileMenuCard = () => {
         >
             {/* avatar + name = left cluster; caret pinned right by justify-between */}
             <StackH
-                gap={4}
                 principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                align="center"
-                classNames={["min-w-0"]}
                 items={[
                     () => (
                         // avatar with a thin 2px seniority ring — beginner/unranked → neutral `--border` token
@@ -109,23 +107,27 @@ export const ProfileMenuCard = () => {
                         </div>
                     ),
                     () => (
-                        <StackV
-                            gap={1}
-                            principle="name-handle"
-                            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
-                            classNames={["min-w-0"]}
-                            items={[
-                                () => (
-                                    <span className="truncate text-sm font-semibold text-foreground">
-                                        {displayName}
-                                    </span>
-                                ),
-                                () => (
-                                    <span className="truncate text-xs text-muted">
-                                        @{user.username}
-                                    </span>
-                                ),
-                            ]}
+                        <FillAvailable
+                            at="base"
+                            explain="Name/handle column takes remaining row width beside the avatar so long display names truncate instead of shoving the caret."
+                            body={() => (
+                                <StackV
+                                    principle="name-handle"
+                                    explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                    items={[
+                                        () => (
+                                            <span className="truncate text-sm font-semibold text-foreground">
+                                                {displayName}
+                                            </span>
+                                        ),
+                                        () => (
+                                            <span className="truncate text-xs text-muted">
+                                                @{user.username}
+                                            </span>
+                                        ),
+                                    ]}
+                                />
+                            )}
                         />
                     ),
                 ]}

@@ -6,6 +6,7 @@ import { UserCell } from "@/components/composites/lists/UserCell"
 import { IconTile } from "@/components/atoms/display/IconTile"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV, StackH } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { Podium } from "../Podium"
 import { type BoardProps, type LeaderboardRow } from "../types"
 
@@ -29,30 +30,30 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
                         align="center"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `#${row.rank}`}
-                        classNames={["w-1/4", "shrink-0"]}
-
                     />
                 ),
                 () => (
-                    <div className="min-w-0 flex-1">
-                        <UserCell
-                            username={row.username}
-                            avatar={row.avatar}
-                            isOwnRow={row.isMe}
-                            trailing={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
-                                <Typography
-                                    size="sm"
-                                    weight="medium"
-                                    tabularNums
-                                    isSkeleton={slotSkeleton}
-                                    text={slotSkeleton ? undefined : row.valueLabel}
-
-                                />
-                            )}
-                            isSkeleton={isSkeleton}
-
-                        />
-                    </div>
+                    <FillAvailable
+                        at="base"
+                        isSkeleton={isSkeleton}
+                        body={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
+                            <UserCell
+                                username={row.username}
+                                avatar={row.avatar}
+                                isOwnRow={row.isMe}
+                                trailing={({ isSkeleton: trailingSkeleton }: SkeletonProps) => (
+                                    <Typography
+                                        size="sm"
+                                        weight="medium"
+                                        tabularNums
+                                        isSkeleton={trailingSkeleton}
+                                        text={trailingSkeleton ? undefined : row.valueLabel}
+                                    />
+                                )}
+                                isSkeleton={slotSkeleton}
+                            />
+                        )}
+                    />
                 ),
                 ...(row.isMe ? [() => <span className="sr-only">{meLabel}</span>] : []),
             ]}
@@ -87,7 +88,6 @@ const buildListItems = (
                         align="center"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `⋯ ${hiddenBetweenCount} more in between`}
-
                     />
                 ),
             }
@@ -110,7 +110,6 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
                         tabularNums
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `Rank #${standing.rank}`}
-
                     />
                 ),
                 () => (
@@ -118,7 +117,6 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
                         size="sm"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : standing.primaryLabel}
-
                     />
                 ),
                 ...(standing.secondaryLabel ? [() => (
@@ -127,7 +125,6 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : standing.secondaryLabel}
-
                     />
                 )] : []),
             ]}
@@ -136,7 +133,6 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
 
     const standingCard = standing ? (
         <SurfaceCard
-
             body={() => (
                 <StackH
                     gap={3}

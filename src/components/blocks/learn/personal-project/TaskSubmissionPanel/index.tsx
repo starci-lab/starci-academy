@@ -52,7 +52,6 @@ export const TaskSubmissionPanel = () => {
                 label={t("finalProject.page.submitGithub.title")}
             >
                 <StackV
-                    gap={6}
                     principle="block-boundary"
                     explain="Github config group and submit CTA are separate sections in the submit panel — not sibling-stack, because the CTA is a distinct action block."
                     items={[

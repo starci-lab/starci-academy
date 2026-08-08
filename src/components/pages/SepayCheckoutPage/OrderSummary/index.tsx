@@ -62,7 +62,7 @@ export const OrderSummary = () => {
     )
 
     return (
-        <StackV identity={{ tier: "page", component: "OrderSummary" }} gap={6} principle="block-boundary"
+        <StackV identity={{ tier: "page", component: "OrderSummary" }} principle="block-boundary"
             explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             items={[
                 () => (
@@ -71,7 +71,7 @@ export const OrderSummary = () => {
                             explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                             <Card.Content>
                                 <h3 className="mb-4 text-lg font-medium">{courseTitle}</h3>
-                                <StackH gap={3} principle="value-row" align="baseline"
+                                <StackH principle="value-row"
                                     explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                                     items={[
                                         () => (
@@ -91,7 +91,7 @@ export const OrderSummary = () => {
                         <Box principle="card-padding" className="p-6"
                             explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                             <Card.Content>
-                                <StackV gap={4} principle="content-row"
+                                <StackV principle="content-row"
                                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                     items={[
                                         () => <DetailRow label={t("payment.sepay.bank")} value={bankDetails.bank} />,

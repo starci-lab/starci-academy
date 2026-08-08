@@ -2,6 +2,7 @@ import React from "react"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 
 const scoreColorOf = (score: number, max: number): "success" | "warning" | "danger" => {
     const ratio = max > 0 ? score / max : 0
@@ -15,6 +16,7 @@ type ScoreRowProps = {
     isSkeleton?: boolean
 }
 
+/** One labeled score meter row inside a mock-interview scorecard. */
 export const ScoreRow = ({
     label,
     score,
@@ -26,16 +28,22 @@ export const ScoreRow = ({
         align="center"
         principle="content-row"
         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+        identity={{ tier: "block", component: "ScoreRow" }}
         isSkeleton={isSkeleton}
         items={[
             () => <Typography size="sm" truncate isSkeleton={isSkeleton} text={label} />,
             () => (
-                <ProgressMeter
-                    value={score}
-                    max={max}
-                    color={isSkeleton ? "accent" : scoreColorOf(score, max)}
+                <FillAvailable
+                    at="base"
                     isSkeleton={isSkeleton}
-                    classNames={["flex-1"]}
+                    body={() => (
+                        <ProgressMeter
+                            value={score}
+                            max={max}
+                            color={isSkeleton ? "accent" : scoreColorOf(score, max)}
+                            isSkeleton={isSkeleton}
+                        />
+                    )}
                 />
             ),
             () => (

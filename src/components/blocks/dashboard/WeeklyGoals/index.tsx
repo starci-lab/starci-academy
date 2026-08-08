@@ -190,22 +190,22 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }:
         content: () => goalCellContent(item, defaultTargets, isSkeleton),
     }))
     return (
-        <StackV gap={4} isSkeleton={isSkeleton} items={[
-            () => (
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    isSkeleton={isSkeleton}
-                    text={summary}
-
-                />
-            ),
-            () => (
-                <div>
-                    <StatGridCard items={gridItems} />
-                </div>
-            ),
-        ]} />
+        <StackV
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because the summary and metric grid are repeating siblings in one card."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <Typography
+                        size="sm"
+                        weight="medium"
+                        isSkeleton={isSkeleton}
+                        text={summary}
+                    />
+                ),
+                () => <StatGridCard items={gridItems} />,
+            ]}
+        />
     )
 }
 

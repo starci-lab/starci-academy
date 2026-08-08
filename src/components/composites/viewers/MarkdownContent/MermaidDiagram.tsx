@@ -130,11 +130,8 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                         >
                                             <StackV
                                                 as="figure"
-                                                gap={3}
                                                 principle="sibling-stack"
                                                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                                align="center"
-                                                justify="center"
                                                 items={[
                                                     () => (
                                                         <div className="flex w-full flex-1 items-center justify-center overflow-auto">

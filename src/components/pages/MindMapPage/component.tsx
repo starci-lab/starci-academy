@@ -151,11 +151,8 @@ const MindMapWorkspaceEmpty = ({ labels, onBrowseModules }: MindMapWorkspaceEmpt
         identity={MIND_MAP_PAGE_IDENTITY}
         canvas={() => (
             <StackV
-                gap={1}
                 principle="sibling-stack"
                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                align="center"
-                justify="center"
                 items={[() => (
                     <AsyncContentEmpty
 
@@ -237,10 +234,8 @@ const _MindMapPage = ({
         const topCenterSlot = showOverlays
             ? ({ isSkeleton }: SkeletonProps) => (
                 <StackV
-                    gap={1}
                     principle="sibling-stack"
                     explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                    align="center"
                     isSkeleton={isSkeleton}
                     items={[() => (
                         <MindMapContinueButton
@@ -322,11 +317,8 @@ const _MindMapPage = ({
                     isSkeleton={isSkeleton}
                     body={({ isSkeleton }: SkeletonProps) => (
                         <StackV
-                            padding={6}
                             principle="page-pad"
                             explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
-                            gap={1}
-                            classNames={["h-full"]}
                             isSkeleton={isSkeleton}
                             items={[() => railSection]}
                         />

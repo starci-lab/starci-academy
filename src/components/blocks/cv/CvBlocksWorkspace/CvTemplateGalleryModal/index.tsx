@@ -2,7 +2,6 @@
 
 import React from "react"
 import {
-    Chip,
     Modal,
     Typography,
     cn,
@@ -13,6 +12,7 @@ import {
     type CvDocument,
     type CvTemplate,
 } from "@/modules/types/entities/cv"
+import { Chip } from "@/components/atoms/chips/Chip"
 import { CvHtmlDocument } from "../CvHtmlDocument"
 
 /** The templates the gallery offers, in display order. */
@@ -109,16 +109,9 @@ export const CvTemplateGalleryModal = ({
                                                     ) : null}
                                                 </div>
                                                 <Chip
-                                                    size="sm"
-                                                    className={cn(
-                                                        "shrink-0",
-                                                        isTwoColumn ? "bg-warning-soft text-warning-soft-foreground" : "bg-success-soft text-success-soft-foreground",
-                                                    )}
-                                                >
-                                                    <Chip.Label>
-                                                        {isTwoColumn ? t("cv.builder.template.atsRisk") : t("cv.builder.template.atsSafe")}
-                                                    </Chip.Label>
-                                                </Chip>
+                                                    tone={isTwoColumn ? "warning" : "success"}
+                                                    text={isTwoColumn ? t("cv.builder.template.atsRisk") : t("cv.builder.template.atsSafe")}
+                                                />
                                             </div>
                                         </div>
                                     )

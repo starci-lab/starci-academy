@@ -25,6 +25,7 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { StackH, StackV } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { Cluster } from "@/components/frames/Cluster"
 import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr"
 import { pathConfig } from "@/resources/path"
@@ -423,11 +424,15 @@ export const MockInterviewScorecard = ({
                                                 </Typography>
                                             ),
                                             () => (
-                                                <ProgressMeter
-                                                    value={phaseScore.score}
-                                                    max={phaseScore.max}
-                                                    color={scoreColorOf(phaseScore.score, phaseScore.max)}
-                                                    classNames={["flex-1"]}
+                                                <FillAvailable
+                                                    at="base"
+                                                    body={() => (
+                                                        <ProgressMeter
+                                                            value={phaseScore.score}
+                                                            max={phaseScore.max}
+                                                            color={scoreColorOf(phaseScore.score, phaseScore.max)}
+                                                        />
+                                                    )}
                                                 />
                                             ),
                                         ]}
@@ -470,11 +475,15 @@ export const MockInterviewScorecard = ({
                                                     </Typography>
                                                 ),
                                                 () => (
-                                                    <ProgressMeter
-                                                        value={attribute.score}
-                                                        max={100}
-                                                        color={scoreColorOf(attribute.score, 100)}
-                                                        classNames={["flex-1"]}
+                                                    <FillAvailable
+                                                        at="base"
+                                                        body={() => (
+                                                            <ProgressMeter
+                                                                value={attribute.score}
+                                                                max={100}
+                                                                color={scoreColorOf(attribute.score, 100)}
+                                                            />
+                                                        )}
                                                     />
                                                 ),
                                             ]}

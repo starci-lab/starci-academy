@@ -16,6 +16,7 @@ import {
     type PlaygroundDeviceSpec,
     type PlaygroundAgentLogLine,
 } from "@sb-components/starci/blocks/learn/PlaygroundConnectSheet/PlaygroundConnectSheet"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -127,25 +128,25 @@ const PlaygroundSessionPage = ({
 
     const guidePane = (
         <div className="overflow-y-auto">
-            <StackV
-                gap={1}
-                padding={6}
-                principle="page-pad"
-                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
-                classNames={["min-w-0", "flex-1"]}
-
-                items={[
-                    () => (
-                        <PlaygroundStepGuide
-
-                            step={step}
-                            verifyState={verifyState}
-                            onVerify={onVerify}
-                            onLeaveComplete={onLeaveGuideComplete}
-
-                        />
-                    ),
-                ]}
+            <FillAvailable
+                at="base"
+                explain="Guide pane takes remaining workspace width beside the resource column so step copy can shrink without overflowing the split."
+                body={() => (
+                    <StackV
+                        principle="page-pad"
+                        explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+                        items={[
+                            () => (
+                                <PlaygroundStepGuide
+                                    step={step}
+                                    verifyState={verifyState}
+                                    onVerify={onVerify}
+                                    onLeaveComplete={onLeaveGuideComplete}
+                                />
+                            ),
+                        ]}
+                    />
+                )}
             />
         </div>
     )
@@ -153,11 +154,8 @@ const PlaygroundSessionPage = ({
     const resourcePane = (
         <div className="overflow-y-auto @app-xl:w-[24rem]">
             <StackV
-                gap={1}
-                padding={6}
                 principle="page-pad"
                 explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
-                classNames={["w-full", "shrink-0"]}
 
                 items={[
                     () => (

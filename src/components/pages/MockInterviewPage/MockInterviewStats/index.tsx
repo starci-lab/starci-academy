@@ -14,6 +14,7 @@ import { VerdictHeroCard } from "@/components/blocks/stats/VerdictHeroCard"
 import type { VerdictHeroBand } from "@/components/blocks/stats/VerdictHeroCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackH, StackV } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { useQueryMyMockInterviewStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewStatsSwr"
 import type { MockInterviewStatsBreakdownItem } from "@/modules/api/graphql/queries/types/my-mock-interview-stats"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
@@ -121,12 +122,16 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                             />
                         ),
                         () => (
-                            <ProgressMeter
-                                value={Math.round(item.avgScore)}
-                                max={Math.round(item.avgMax) || 100}
-                                color={scoreColorOf(item.avgScore, item.avgMax)}
-                                showValue
-                                classNames={["flex-1"]}
+                            <FillAvailable
+                                at="base"
+                                body={() => (
+                                    <ProgressMeter
+                                        value={Math.round(item.avgScore)}
+                                        max={Math.round(item.avgMax) || 100}
+                                        color={scoreColorOf(item.avgScore, item.avgMax)}
+                                        showValue
+                                    />
+                                )}
                             />
                         ),
                     ]}

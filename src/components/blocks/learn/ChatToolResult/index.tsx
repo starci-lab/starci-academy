@@ -1,16 +1,15 @@
 "use client"
 
 import React from "react"
-import { Typography, cn } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for the {@link ChatToolResult} block. */
-export interface ChatToolResultProps extends WithClassNames<undefined> {
+export interface ChatToolResultProps {
     /** The matched sources to render as pickable rows. */
     items: Array<SearchCourseContentItem>
     /** Header label (e.g. "Flashcard", "Related lesson") — translated by the caller. */
@@ -33,10 +32,9 @@ export interface ChatToolResultProps extends WithClassNames<undefined> {
  * In-chat tool-result widget — a labeled, pickable list of RAG hits rendered
  * INLINE inside an assistant {@link import("@/components/blocks/feed/ChatBubble").ChatBubble}
  * (generative-UI message part). Surface-in-surface on the chat popover: a
- * border-only card (no stacked fill — [[card]] §4), a quiet header (eyebrow icon
- * + kind label + count), then shared {@link EntityResultRow}s. Loading mirrors
- * the row shape with skeletons; the caller renders a text fallback (not an empty
- * card) when nothing matched.
+ * border-only card (no stacked fill), a quiet header (eyebrow icon + kind label
+ * + count), then shared {@link EntityResultRow}s. Loading mirrors the row shape
+ * with skeletons; the caller renders a text fallback when nothing matched.
  */
 export const ChatToolResult = ({
     items,
@@ -47,10 +45,9 @@ export const ChatToolResult = ({
     onSelect,
     onViewAll,
     viewAllLabel,
-    className,
 }: ChatToolResultProps) => {
     return (
-        <div className={cn("overflow-hidden rounded-xl border border-default bg-transparent", className)}>
+        <div className="overflow-hidden rounded-xl border border-default bg-transparent">
             <div className="flex items-center justify-between gap-2 border-b border-default px-3 py-2">
                 <span className="flex min-w-0 items-center gap-2 text-muted">
                     {icon}

@@ -55,7 +55,6 @@ export interface QuotaBarProps {
     resetLabel?: string | null
     /** `true` → the block draws its own row mirror (label, bar, caption all shimmer). */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
 }
 
 /**
@@ -100,7 +99,6 @@ const QuotaBar = ({
                         size="sm"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/4"] : undefined}
 
                         text={label}
                     />
@@ -111,7 +109,6 @@ const QuotaBar = ({
                         weight="medium"
                         tabularNums
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/3"] : undefined}
 
                         text={(
                             <>
@@ -158,7 +155,6 @@ const QuotaBar = ({
                         size="xs"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/2"] : undefined}
 
                         text={resetLabel ?? undefined}
                     />

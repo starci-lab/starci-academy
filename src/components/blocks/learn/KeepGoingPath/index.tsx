@@ -47,12 +47,12 @@ interface ContentLeadingStyle {
     /** Phosphor glyph component for this state. */
     Icon: typeof CircleIcon
     /** Size + colour classes; every state stays on one round shape (see the note above). */
-    className: string
+    glyphClass: string
 }
 const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
-    active: { Icon: PlayCircleIcon, className: "size-5 text-accent-soft-foreground" },
-    done: { Icon: CheckCircleIcon, className: "size-5 text-success-soft-foreground" },
-    todo: { Icon: CircleIcon, className: "size-5 text-foreground" },
+    active: { Icon: PlayCircleIcon, glyphClass: "size-5 text-accent-soft-foreground" },
+    done: { Icon: CheckCircleIcon, glyphClass: "size-5 text-success-soft-foreground" },
+    todo: { Icon: CircleIcon, glyphClass: "size-5 text-foreground" },
 }
 /**
  * A LOCKED content item → the lock icon **REPLACES** the state icon at the head of
@@ -68,7 +68,7 @@ const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
  * nobody reads. And semantically: for a not-yet-unlocked item, "read / reading /
  * unread" is meaningless — **the lock IS its state**.
  */
-const LOCKED_LEADING = { Icon: LockIcon, className: "size-5 text-warning-soft-foreground" }
+const LOCKED_LEADING = { Icon: LockIcon, glyphClass: "size-5 text-warning-soft-foreground" }
 /**
  * The MODULE this path belongs to.
  *
@@ -143,7 +143,7 @@ const KeepGoingPathBase = ({
             isSkeleton={isSkeleton}
             items={rows.map((content) => {
                 // A lock REPLACES the state icon, it isn't added on top at the row's tail.
-                const { Icon, className } = content.locked
+                const { Icon, glyphClass } = content.locked
                     ? LOCKED_LEADING
                     : CONTENT_LEADING[content.state]
                 return {
@@ -158,7 +158,7 @@ const KeepGoingPathBase = ({
                                 aria-label={content.locked ? "Paid content" : undefined}
                                 aria-hidden={content.locked ? undefined : true}
                                 focusable="false"
-                                className={className}
+                                className={glyphClass}
                             />
                         )
                     ),

@@ -99,10 +99,8 @@ export const LeagueTierBadge = ({
     return (
         <div className={"shrink-0"}>
             <StackH
-                gap={3}
                 principle="identity"
                 explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
-                align="center"
                 items={[
                     () => (
                         // real art from MinIO (badges/league/<tier>.png) once uploaded; until

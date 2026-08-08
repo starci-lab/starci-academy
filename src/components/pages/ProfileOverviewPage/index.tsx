@@ -3,7 +3,6 @@
 import React from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { ProfileJobReadiness } from "./ProfileJobReadiness"
 import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
@@ -11,6 +10,7 @@ import { OverviewChallengeSkills } from "./OverviewChallengeSkills"
 import { OverviewCodeSkills } from "./OverviewCodeSkills"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { Grid } from "@/components/frames/Grid"
 import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
@@ -53,72 +53,74 @@ export const ProfileOverviewPage = () => {
         router.push(target)
     }
 
-    const classNames: Array<AllowedClassName> = ["min-w-0", "flex-1"]
-
     return (
-        <StackV
-            identity={{ tier: "page", component: "ProfileOverviewPage" }}
-            gap={6}
-            principle="block-boundary"
-            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-            classNames={classNames}
-            items={[
-                // headline recruiter signal — per-track depth, no blended composite.
-                // Each section below now owns its own LabeledCard (frameless computed
-                // internally) so loading/empty/error states get a real Card instead of
-                // rendering bare under a hardcoded `frameless`.
-                () => (
-                    <ProfileJobReadiness
-                        label={t("jobReadiness.title")}
-                    />
-                ),
-                () => (
-                    <OverviewCourses
-                        label={t("publicProfile.overview.courses")}
-                        onSeeMore={() => goToTab("activity")}
-                        seeMoreLabel={t("publicProfile.overview.seeMore")}
-                    />
-                ),
-                () => (
-                    <LabeledCard
-                        label={t("publicProfile.contributions.heading")}
-                    >
-                        <OverviewContributions />
-                    </LabeledCard>
-                ),
-                // two skill cards side by side on desktop
-                () => (
-                    <Grid
-                        principle="block-boundary"
-                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-                        columns={{ base: 1, md: 2 }}
-                        items={[
-                            {
-                                key: "challenge-skills",
-                                content: () => (
-                                    <OverviewChallengeSkills
-                                        label={t("publicProfile.overview.challengeSkills")}
-                                        onSeeMore={() => goToTab("challenges")}
-                                        seeMoreLabel={t("publicProfile.overview.seeMore")}
-                                        fillHeight
-                                    />
-                                ),
-                            },
-                            {
-                                key: "code-skills",
-                                content: () => (
-                                    <OverviewCodeSkills
-                                        label={t("publicProfile.overview.codeSkills")}
-                                        onSeeMore={() => goToTab("skills")}
-                                        seeMoreLabel={t("publicProfile.overview.seeMore")}
-                                        fillHeight
-                                    />
-                                ),
-                            },
-                        ]}
-                    />
-                ),
-            ]}
+        <FillAvailable
+            at="base"
+            explain="Overview column takes remaining width beside the profile aside so section cards can shrink without overflowing the shell."
+            body={() => (
+                <StackV
+                    identity={{ tier: "page", component: "ProfileOverviewPage" }}
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        // headline recruiter signal — per-track depth, no blended composite.
+                        // Each section below now owns its own LabeledCard (frameless computed
+                        // internally) so loading/empty/error states get a real Card instead of
+                        // rendering bare under a hardcoded `frameless`.
+                        () => (
+                            <ProfileJobReadiness
+                                label={t("jobReadiness.title")}
+                            />
+                        ),
+                        () => (
+                            <OverviewCourses
+                                label={t("publicProfile.overview.courses")}
+                                onSeeMore={() => goToTab("activity")}
+                                seeMoreLabel={t("publicProfile.overview.seeMore")}
+                            />
+                        ),
+                        () => (
+                            <LabeledCard
+                                label={t("publicProfile.contributions.heading")}
+                            >
+                                <OverviewContributions />
+                            </LabeledCard>
+                        ),
+                        // two skill cards side by side on desktop
+                        () => (
+                            <Grid
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                columns={{ base: 1, md: 2 }}
+                                items={[
+                                    {
+                                        key: "challenge-skills",
+                                        content: () => (
+                                            <OverviewChallengeSkills
+                                                label={t("publicProfile.overview.challengeSkills")}
+                                                onSeeMore={() => goToTab("challenges")}
+                                                seeMoreLabel={t("publicProfile.overview.seeMore")}
+                                                fillHeight
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        key: "code-skills",
+                                        content: () => (
+                                            <OverviewCodeSkills
+                                                label={t("publicProfile.overview.codeSkills")}
+                                                onSeeMore={() => goToTab("skills")}
+                                                seeMoreLabel={t("publicProfile.overview.seeMore")}
+                                                fillHeight
+                                            />
+                                        ),
+                                    },
+                                ]}
+                            />
+                        ),
+                    ]}
+                />
+            )}
         />
     )
 }

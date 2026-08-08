@@ -31,10 +31,8 @@ import { AiSubTier } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { StackH, StackV } from "@/components/frames/Stack"
-import {
-    QuotaLaneVariant,
-    useQuotaLaneData,
-} from "./hooks"
+import { QuotaLaneVariant } from "@/hooks/quota-lane-variant"
+import { useQuotaLaneData } from "@/hooks/useQuotaLaneData"
 
 /**
  * Full AI quota / usage page — Auto + Premium lanes and usage history.

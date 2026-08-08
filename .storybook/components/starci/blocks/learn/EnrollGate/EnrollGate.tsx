@@ -98,12 +98,13 @@ const EnrollGateBase = ({
     // `AsyncContent` content branch below.
     const priceGroup = price != null ? (
         <>
-            <PriceTagProminent
-                discounted={price.discountedVnd}
-                original={price.originalVnd}
-                breakdown={price.breakdown}
-                classNames={["self-center"]}
-            />
+            <Box className="self-center">
+                <PriceTagProminent
+                    discounted={price.discountedVnd}
+                    original={price.originalVnd}
+                    breakdown={price.breakdown}
+                />
+            </Box>
             {price.currentPhase != null ? (
                 <Box className="self-center">
                     <PhaseScarcityNote

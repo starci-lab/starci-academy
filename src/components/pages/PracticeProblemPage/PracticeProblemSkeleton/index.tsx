@@ -21,12 +21,12 @@ export const PracticeProblemSkeleton = () => {
             <div className="flex min-h-0 flex-col overflow-hidden border-r border-default">
                 <Box principle="page-pad" className="flex flex-col border-b border-default px-6 py-3"
                     explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
-                    <StackV gap={4} principle="card-caption"
+                    <StackV principle="card-caption"
                         explain="Holds caption text under card media so the caption stays attached to the image above it."
                         items={[
                             () => <SkeletonText size="sm" width="w-24" />,
                             () => (
-                                <StackH gap={5} principle="group-boundary"
+                                <StackH principle="group-boundary"
                                     explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                                     items={[
                                         () => <SkeletonText size="sm" width="w-16" />,
@@ -38,11 +38,11 @@ export const PracticeProblemSkeleton = () => {
                 </Box>
                 <Box principle="page-pad" className="flex flex-col px-6 py-5"
                     explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
-                    <StackV gap={6} principle="block-boundary"
+                    <StackV principle="block-boundary"
                         explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                         items={[
                             () => (
-                                <StackV gap={3} principle="sibling-stack"
+                                <StackV principle="sibling-stack"
                                     explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                     items={[
                                         () => <SkeletonText size="xl" width="w-1/2" />,
@@ -51,7 +51,7 @@ export const PracticeProblemSkeleton = () => {
                             ),
                             () => <SkeletonParagraph size="sm" lines={6} />,
                             () => (
-                                <StackV gap={4} principle="card-caption"
+                                <StackV principle="card-caption"
                                     explain="Holds caption text under card media so the caption stays attached to the image above it."
                                     items={[
                                         () => <Skeleton className="h-20 w-full rounded-2xl" />,
@@ -67,7 +67,7 @@ export const PracticeProblemSkeleton = () => {
                 {/* language selector + reset */}
                 <Box principle="pill-pad" className="flex flex-wrap items-center justify-between border-b border-default px-4 py-2"
                     explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
-                    <StackH gap={3} principle="flex-action"
+                    <StackH principle="flex-action"
                         explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                         items={[
                             () => <Skeleton className="h-8 w-20 rounded-xl" />,
@@ -86,7 +86,7 @@ export const PracticeProblemSkeleton = () => {
                 <div className="flex h-[42%] flex-col border-t border-default">
                     <Box principle="row-pad" className="flex items-center border-b border-default px-4 py-3"
                         explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
-                        <StackH gap={5} principle="group-boundary"
+                        <StackH principle="group-boundary"
                             explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                             items={[
                                 () => <SkeletonText size="sm" width="w-20" />,
@@ -99,7 +99,7 @@ export const PracticeProblemSkeleton = () => {
                     </Box>
                     <Box principle="control-pad" className="flex items-center justify-end border-t border-default px-3 py-2"
                         explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
-                        <StackH gap={3} principle="flex-action"
+                        <StackH principle="flex-action"
                             explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                             items={[
                                 () => <Skeleton className="h-8 w-24 rounded-xl" />,

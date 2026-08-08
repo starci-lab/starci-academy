@@ -77,7 +77,7 @@ export const PracticeHubPage = () => {
                         description={t("codingPractice.subtitle")}
                     />
 
-                    <StackV gap={6} principle="block-boundary"
+                    <StackV principle="block-boundary"
                         explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                         items={[
                             () => <PracticeMobileNav />,

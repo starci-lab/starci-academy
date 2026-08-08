@@ -1,5 +1,4 @@
 import type { ComponentType, SVGProps } from "react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import {
     SurfaceCardNested,
     type SurfaceCardNestedSection,
@@ -32,8 +31,6 @@ export interface NestedCardProps {
     bordered?: boolean
     /** `true` → every part this card owns mirrors itself as a shimmer. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -48,7 +45,7 @@ export interface NestedCardProps {
  *
  * @param props - See {@link NestedCardProps}.
  */
-export const NestedCard = ({ title, icon, items, bordered = false, isSkeleton = false, classNames }: NestedCardProps) => (
+export const NestedCard = ({ title, icon, items, bordered = false, isSkeleton = false }: NestedCardProps) => (
     <SurfaceCardNested
         identity={{ tier: "block", component: "NestedCard" }}
         title={title}
@@ -56,6 +53,5 @@ export const NestedCard = ({ title, icon, items, bordered = false, isSkeleton = 
         items={items}
         variant={bordered ? "nested" : "surface"}
         isSkeleton={isSkeleton}
-        classNames={classNames}
     />
 )

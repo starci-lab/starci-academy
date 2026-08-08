@@ -6,7 +6,6 @@ import { cn } from "@heroui/react"
 import { buildMarkdownRenderers } from "@sb-components/composites/viewers/MarkdownContent/map"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `MarkdownContent` — a viewer that paints an authored markdown document faithfully. Unlike
@@ -297,8 +296,6 @@ export interface MarkdownContentProps {
     source: string
     /** How much room the document gets. Defaults to `"reading"`. */
     measure?: MarkdownMeasure
-    /** Where the article wrapper sits inside its parent, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /**
      * `true` -> render a 2-line shimmer mirror instead of the real document
      * (the owner of the shape owns the skeleton).
@@ -318,7 +315,6 @@ export const meta = { tier: "composite", name: "MarkdownContent" } as const
 const MarkdownContent = ({
     source,
     measure = "reading",
-    classNames,
     isSkeleton = false,
 }: MarkdownContentProps) => {
     const reading = measure === "reading"
@@ -344,9 +340,9 @@ const MarkdownContent = ({
         return (
             <StackV
                 gap={3}
-                classNames={classNames}
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these shimmer lines are repeating siblings rather than section groups."
                 isSkeleton={isSkeleton}
-
                 items={[
                     () => <Typography isSkeleton size="base" />,
                     () => <Typography isSkeleton size="base" />,

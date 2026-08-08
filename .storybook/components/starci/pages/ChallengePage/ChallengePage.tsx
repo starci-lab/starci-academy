@@ -162,12 +162,39 @@ const ChallengePage = ({
     const challengeBody = ({ isSkeleton }: SkeletonProps) => (
         <SplitWorkspace
             isSkeleton={isSkeleton}
-            main={({ isSkeleton }: SkeletonProps) => <StackV gap={7} isSkeleton={isSkeleton} items={readColumn} />}
-            aside={({ isSkeleton }: SkeletonProps) => <StackV gap={6} isSkeleton={isSkeleton} items={actColumn} />}
+            principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+            main={({ isSkeleton }: SkeletonProps) => (
+                <StackV
+                    gap={7}
+                    principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                    isSkeleton={isSkeleton}
+                    items={readColumn}
+                />
+            )}
+            aside={({ isSkeleton }: SkeletonProps) => (
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    isSkeleton={isSkeleton}
+                    items={actColumn}
+                />
+            )}
         />
     )
 
-    return <Container size="xl" padding={6} isSkeleton={isSkeleton} body={challengeBody} />
+    return (
+        <Container
+            size="xl"
+            padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+            isSkeleton={isSkeleton}
+            body={challengeBody}
+        />
+    )
 }
 
 export { ChallengePage }

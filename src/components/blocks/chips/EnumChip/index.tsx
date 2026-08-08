@@ -1,9 +1,8 @@
 "use client"
 
 import React from "react"
-import { Chip, Tooltip, cn } from "@heroui/react"
+import { Chip, Tooltip } from "@heroui/react"
 import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** HeroUI soft-chip colors usable by an {@link EnumChip}. */
 export type EnumChipColor = "default" | "success" | "warning" | "danger" | "accent"
@@ -21,7 +20,7 @@ export interface EnumChipEntry {
 }
 
 /** Props for {@link EnumChip}. */
-export interface EnumChipProps<E extends string> extends WithClassNames<undefined> {
+export interface EnumChipProps<E extends string> {
     /** The current enum value; looked up in {@link map}. */
     value: E
     /**
@@ -34,24 +33,21 @@ export interface EnumChipProps<E extends string> extends WithClassNames<undefine
 }
 
 /**
- * The canonical "enum → soft chip" primitive: a `Chip variant="soft" size="sm"` whose
- * color / label / optional leading icon / optional tooltip come from a per-value map.
- * Domain badges (AI-model category, difficulty, video host, video kind …) shrink to
- * just their map table + this delegate instead of each re-implementing the same
- * Chip / Tooltip / Label JSX. It deliberately does NOT force width or icon size — the
- * caller controls those via `className` and the icon node, so every domain keeps its
- * exact rendering.
+ * Legacy block-tier "enum → soft chip" primitive still used by domain badges that pass
+ * rendered icon elements (LessonVideoKindChip, HostPlatformChip). Appearance lives on
+ * `entry.color`; no public className door. Prefer the composites `EnumChip` when the
+ * leading glyph is a closed check/cross symbol.
  *
  * @param props - {@link EnumChipProps}
  */
-export const EnumChip = <E extends string>({ value, map, className }: EnumChipProps<E>) => {
+export const EnumChip = <E extends string>({ value, map }: EnumChipProps<E>) => {
     const entry = map[value]
     if (!entry) {
         // exhaustive Record makes this unreachable in typed code; guards a bad runtime value
         throw new Error(`EnumChip: no map entry for value "${value}"`)
     }
     const chip = (
-        <Chip color={entry.color} size="sm" variant="soft" className={cn(className)}>
+        <Chip color={entry.color} size="sm" variant="soft">
             {entry.icon}
             <Chip.Label>{entry.label}</Chip.Label>
         </Chip>

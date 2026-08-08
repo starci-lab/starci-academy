@@ -72,13 +72,13 @@ export const LoginPage = () => {
         <Box principle="center-measure"
             explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             className={"mx-auto max-w-2xl p-6 py-16"}>
-            <StackV gap={6} principle="block-boundary"
+            <StackV principle="block-boundary"
                 explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[
                     () => (
-                        <StackH gap={1} principle="name-handle"
+                        <StackH principle="name-handle"
                             explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
-                            justify="center" items={[
+                            items={[
                                 () => (
                                     <Link
                                         href={pathConfig().locale(locale).home().build()}

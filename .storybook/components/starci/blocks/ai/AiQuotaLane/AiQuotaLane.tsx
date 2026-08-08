@@ -47,31 +47,32 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
     const showSkeleton = isLoading || !data
 
     return (
-        <StackV gap={4} items={[
-            () => (
-                <QuotaBar
-                    label="Next 5 hours"
-                    used={data?.window5h.used ?? 0}
-                    limit={data?.window5h.limit ?? 0}
-                    resetLabel={data?.window5h.resetLabel}
-                    isSkeleton={showSkeleton}
-
-
-                />
-            ),
-            () => (
-                <QuotaBar
-                    label="This week"
-                    used={data?.windowWeek.used ?? 0}
-                    limit={data?.windowWeek.limit ?? 0}
-                    resetLabel={data?.windowWeek.resetLabel}
-                    isSkeleton={showSkeleton}
-
-
-                />
-            ),
-        ]} />
-
+        <StackV
+            identity={{ tier: "block", component: "AiQuotaLane" }}
+            gap={4}
+            principle="sibling-stack"
+            explain="Same-kind peer stack of rolling-window quota bars — not group-boundary, because both bars are repeating window siblings rather than section groups."
+            items={[
+                () => (
+                    <QuotaBar
+                        label="Next 5 hours"
+                        used={data?.window5h.used ?? 0}
+                        limit={data?.window5h.limit ?? 0}
+                        resetLabel={data?.window5h.resetLabel}
+                        isSkeleton={showSkeleton}
+                    />
+                ),
+                () => (
+                    <QuotaBar
+                        label="This week"
+                        used={data?.windowWeek.used ?? 0}
+                        limit={data?.windowWeek.limit ?? 0}
+                        resetLabel={data?.windowWeek.resetLabel}
+                        isSkeleton={showSkeleton}
+                    />
+                ),
+            ]}
+        />
     )
 }
 

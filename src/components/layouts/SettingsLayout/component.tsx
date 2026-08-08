@@ -76,8 +76,8 @@ const _SettingsLayout = ({
         <Container
             size="md"
             padding={6}
-            principle="center-measure"
-            explain="Settings reading column beside the nav rail — not page-pad alone, because this caps measure width rather than only insetting chrome."
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={Body}
         />
     )

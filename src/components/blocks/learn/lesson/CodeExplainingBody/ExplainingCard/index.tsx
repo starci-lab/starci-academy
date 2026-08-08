@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Chip } from "@heroui/react"
+import { Chip } from "@/components/atoms/chips/Chip"
 import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { CodeExplainingEntity } from "@/modules/types/entities/code-explaining"
@@ -16,19 +16,18 @@ export interface ExplainingCardProps {
  * Renders one critical code snippet and its explanation.
  * @param props.item - Code explaining entity for this card.
  */
-export const ExplainingCard = ({ item}: ExplainingCardProps) => {
+export const ExplainingCard = ({ item }: ExplainingCardProps) => {
     const t = useTranslations()
 
     return (
         <article className={"rounded-xl border border-default-200 p-4 flex flex-col gap-3"}>
             <div className="flex items-center gap-2">
-                <Chip variant="secondary" color="accent" size="sm">
-                    <Chip.Label>{t("content.codeExplainings.indexLabel", { index: item.sortIndex })}</Chip.Label>
-                </Chip>
+                <Chip
+                    tone="accent"
+                    text={t("content.codeExplainings.indexLabel", { index: item.sortIndex })}
+                />
                 {item.lang ? (
-                    <Chip variant="secondary" size="sm">
-                        <Chip.Label>{item.lang}</Chip.Label>
-                    </Chip>
+                    <Chip tone="default" text={item.lang} />
                 ) : null}
             </div>
             <MarkdownContent markdown={item.code} />

@@ -114,8 +114,8 @@ const _FoundationsCategoryPage = ({
     const categoryBody = (
         <StackV
             gap={7}
-            principle="block-boundary"
-            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
             isSkeleton={isSkeleton}
             items={[
                 () => (

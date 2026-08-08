@@ -140,39 +140,34 @@ const SubmissionAttemptSelector = ({
     }))
 
     return (
-        <div>
-            <AsyncContent
-                // A parent-forced skeleton and this row's own in-flight fetch share the
-                // one loading branch `AsyncContent` exposes (see file header).
-                isLoading={isLoading || isSkeleton}
-                skeleton={() => <AttemptRowSkeleton />}
-                isEmpty={isEmpty}
-                emptyContent={emptyContent}
-                error={error}
-                errorContent={errorContent}
-
-                content={() => (
-                    <ButtonRadioGroup
-                        ariaLabel={ariaLabel}
-                        value={selectedId ?? NONE_SELECTED}
-                        onChange={onSelect}
-                        items={items}
-
-                        trailing={
-                            hasOverflow ? (
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    label={overflowLabel ?? `+${overflowCount}`}
-                                    onPress={onOverflowPress}
-
-                                />
-                            ) : undefined
-                        }
-                    />
-                )}
-            />
-        </div>
+        <AsyncContent
+            // A parent-forced skeleton and this row's own in-flight fetch share the
+            // one loading branch `AsyncContent` exposes (see file header).
+            isLoading={isLoading || isSkeleton}
+            skeleton={() => <AttemptRowSkeleton />}
+            isEmpty={isEmpty}
+            emptyContent={emptyContent}
+            error={error}
+            errorContent={errorContent}
+            content={() => (
+                <ButtonRadioGroup
+                    ariaLabel={ariaLabel}
+                    value={selectedId ?? NONE_SELECTED}
+                    onChange={onSelect}
+                    items={items}
+                    trailing={
+                        hasOverflow ? (
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                label={overflowLabel ?? `+${overflowCount}`}
+                                onPress={onOverflowPress}
+                            />
+                        ) : undefined
+                    }
+                />
+            )}
+        />
     )
 }
 

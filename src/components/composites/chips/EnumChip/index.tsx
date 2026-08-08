@@ -4,7 +4,6 @@ import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Tooltip } from "@/components/atoms/overlay/Tooltip"
 import { Chip } from "@/components/atoms/chips/Chip"
 import type { ChipTone, IconComponent } from "@/components/atoms/chips/Chip"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -66,19 +65,6 @@ export interface EnumChipProps<E extends string> {
     value: E
     /** Map from enum value to presentation (accepts Partial — unhandled values throw). */
     map: Partial<Record<E, EnumChipEntry>>
-    /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     * Kept only for the two `_legacy` callers (`HostPlatformChip`, `EntityResultRow`)
-     * that still pass a free-form string; `_legacy` is off-limits to edit, so this
-     * escape stays until those callers are retired (ATOM-5 narrowing pass, 2026-07-31).
-     */
-    className?: string
-    /**
-     * Extra classes on the chip. Prefer this over `className`; the string form is going
-     * away. This value is handed straight to `Chip`'s own closed `classNames` union, so
-     * an unconstrained string here would only fail one tier down.
-     */
-    classNames?: Array<AllowedClassName>
     /** When `true`, renders the skeleton placeholder (a chip-shaped pill) instead of the real chip. */
     isSkeleton?: boolean
 }
@@ -103,16 +89,13 @@ export interface EnumChipProps<E extends string> {
 export const meta = { tier: "composite", name: "EnumChip" } as const
 
 /** Renders a `Chip` whose tone, label, icon and tooltip come from a per-enum-value map. */
-export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton}: EnumChipProps<E>) => {
+export const EnumChip = <E extends string>({ value, map, isSkeleton}: EnumChipProps<E>) => {
     if (isSkeleton) {
         // NO LONGER patching on a `h-6` here: the atom's shimmer used to be `h-7` tall,
         // 4px off from the real chip box, so the call site had to patch the shape for it.
         // The atom has since been fixed (2026-07-26) — a call site having to patch the
         // atom's shape is a sign the atom is wrong, not that this spot is wrong.
-        // `Chip` no longer takes a free `className`; the legacy string (kept only for
-        // the two `_legacy` callers) wraps a div instead.
-        const skeletonChip = <Chip isSkeleton classNames={classNames} />
-        return className ? <div className={className}>{skeletonChip}</div> : skeletonChip
+        return <Chip isSkeleton />
     }
     const entry = map[value]
     if (!entry) {
@@ -121,16 +104,14 @@ export const EnumChip = <E extends string>({ value, map, className, classNames, 
     const chip = (
         <Chip
             tone={entry.color ?? "default"}
-            classNames={classNames}
             text={entry.label}
             icon={entry.icon != null ? ENUM_CHIP_ICON_MAP[entry.icon] : undefined}
         />
     )
-    const wrappedChip = className ? <div className={className}>{chip}</div> : chip
     if (entry.tooltip == null) {
-        return wrappedChip
+        return chip
     }
     return (
-        <Tooltip label={entry.tooltip}>{wrappedChip}</Tooltip>
+        <Tooltip label={entry.tooltip}>{chip}</Tooltip>
     )
 }

@@ -10,7 +10,6 @@ import {
     TabsTab,
 } from "@/components/atoms/navigation/Tabs"
 import { StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -26,8 +25,6 @@ export interface CodePreviewTabsProps {
     preview: React.ReactNode
     /** Source code panel (Shiki-highlighted). */
     code: React.ReactNode
-    /** Where this sits inside its parent. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -38,7 +35,7 @@ export interface CodePreviewTabsProps {
  * identical and depends on NO layout component.
  * @param props - {@link CodePreviewTabsProps}
  */
-export const CodePreviewTabs = ({ preview, code, classNames }: CodePreviewTabsProps) => {
+export const CodePreviewTabs = ({ preview, code }: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
     const panes = [
         () => (
@@ -77,8 +74,8 @@ export const CodePreviewTabs = ({ preview, code, classNames }: CodePreviewTabsPr
     ]
     return (
         <StackV
-            gap={3}
-            classNames={classNames}
+            principle="sibling-stack"
+            explain="Preview and code panes are same-kind peers under the tab strip — not group-boundary, because they are alternating views rather than section groups."
             items={panes}
         />
     )

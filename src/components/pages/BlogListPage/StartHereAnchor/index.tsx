@@ -27,12 +27,12 @@ export const StartHereAnchor = ({ post }: StartHereAnchorProps) => {
         >
             <Box principle="row-pad" className="px-4 py-3"
                 explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
-                <StackH gap={4} principle="content-row"
+                <StackH principle="content-row"
                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                    align="center" items={[
+                    items={[
                         () => <MapPinIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden />,
                         () => (
-                            <StackV gap={1} principle="name-handle"
+                            <StackV principle="name-handle"
                                 explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                                 items={[
                                     () => <span className="text-xs font-medium text-accent-soft-foreground">{t("startHere")}</span>,

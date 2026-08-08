@@ -12,7 +12,6 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { TitledText } from "@/components/composites/text/TitledText"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { QueryCoursePricePreviewData } from "@/modules/api/graphql/queries/types/course-price-preview"
 
 /** Props for {@link _TrialConversionStrip} — presentational; all text + price resolved, no fetch/store/i18n. */
@@ -34,8 +33,6 @@ export interface TrialConversionStripProps {
     isSkeleton?: boolean
     /** Open the shared payment modal in the course-enroll flow. */
     onEnroll: () => void
-    /** Where this strip sits inside its parent. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -53,7 +50,6 @@ export const _TrialConversionStrip = ({
     price,
     isSkeleton = false,
     onEnroll,
-    classNames,
 }: TrialConversionStripProps) => {
     const breakdown: PriceBreakdown | undefined = price
         ? {
@@ -118,7 +114,6 @@ export const _TrialConversionStrip = ({
                     <Button
                         variant="primary"
                         size="lg"
-                        classNames={["shrink-0"]}
                         label={cta}
                         suffixIcon={ArrowRightIcon}
                         iconSlide
@@ -131,7 +126,6 @@ export const _TrialConversionStrip = ({
     return (
         // The frame owns radius/shadow/padding from ONE source: `SurfaceCard`.
         <SurfaceCard identity={{ tier: "block", component: "TrialConversionStrip" }}
-            classNames={classNames}
             body={() => (
                 <StackV gap={6} items={[
                     () => headerRow,

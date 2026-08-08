@@ -107,13 +107,8 @@ interface MindMapCanvasGapProps {
  */
 const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
     <StackV
-        gap={1}
         principle="sibling-stack"
         explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-        align="center"
-        justify="center"
-        classNames={["h-full"]}
-
         items={[() => (
             <AsyncContentEmpty
 
@@ -133,11 +128,8 @@ const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
 const MindMapWorkspaceEmpty = () => (
     <div className="h-[calc(100dvh-4rem)]">
         <StackV
-            gap={1}
             principle="sibling-stack"
             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-            align="center"
-            justify="center"
             items={[() => (
                 <AsyncContentEmpty
 
@@ -216,10 +208,8 @@ const MindMapPage = ({
             () => (
                 <div className="absolute inset-x-0 top-4 z-10">
                     <StackV
-                        gap={1}
                         principle="sibling-stack"
                         explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                        align="center"
                         isSkeleton={isSkeleton}
                         items={[() => (
                             <MindMapContinueButton
@@ -280,11 +270,8 @@ const MindMapPage = ({
         >
             <div className="overflow-y-auto">
                 <StackV
-                    padding={6}
                     principle="page-pad"
                     explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
-                    gap={1}
-                    classNames={["h-full"]}
                     isSkeleton={isSkeleton}
                     items={[() => railSection]}
                 />

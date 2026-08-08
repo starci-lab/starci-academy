@@ -154,7 +154,6 @@ export const PricingTable = ({
                         variant={tier.isHighlighted ? "primary" : "secondary"}
                         label={tier.ctaLabel}
                         onPress={() => onSelectTier?.(tier.id)}
-                        classNames={["w-full"]}
                     />
                 )}
             />

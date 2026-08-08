@@ -50,7 +50,7 @@ export const RewardsPage = () => {
         <div className={""}>
             <Box principle="center-measure" className="mx-auto w-full max-w-3xl p-6"
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
-                <StackV gap={7} principle="layout-split"
+                <StackV principle="layout-split"
                     explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                     items={[
                         () => (
@@ -83,7 +83,7 @@ export const RewardsPage = () => {
                             />
                         ),
                         () => (
-                            <StackV gap={6} principle="block-boundary"
+                            <StackV principle="block-boundary"
                                 explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 items={[
                                     () => (

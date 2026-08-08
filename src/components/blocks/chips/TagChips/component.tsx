@@ -2,15 +2,11 @@
 
 import { Chip, ScrollShadow, Tooltip } from "@heroui/react"
 import React, { useMemo, useState } from "react"
-import { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link _TagChips} — presentational; the overflow label already resolved.
  */
-export interface TagChipsProps extends WithClassNames<{
-    trigger: string
-    content: string
-}> {
+export interface TagChipsProps {
     /** Tag labels to render (e.g. hashtags). */
     tags: Array<string>
     /**
@@ -26,12 +22,12 @@ export interface TagChipsProps extends WithClassNames<{
 
 /**
  * Renders tags as `Chip`s; if there are more than `maxVisible` tags, shows only the first
- * `maxVisible` and a +N chip. Hovering the row opens a HeroUI `Dropdown` listing every tag
+ * `maxVisible` and a +N chip. Hovering the row opens a HeroUI `Tooltip` listing every tag
  * (controlled open + short close delay so the pointer can move into the menu).
  *
  * @param props - {@link TagChipsProps}
  */
-export const _TagChips = ({ tags, maxVisible = 3, variant = "soft", overflowLabel, classNames }: TagChipsProps) => {
+export const _TagChips = ({ tags, maxVisible = 3, variant = "soft", overflowLabel }: TagChipsProps) => {
     const [menuOpen, setMenuOpen] = useState(false)
     const visibleTags = useMemo(() => tags.slice(0, maxVisible), [tags, maxVisible])
     // How many tags were folded away; only when > 0 is there a real "overflow" worth a +N chip (avoids a negative/zero count when empty or not overflowing).
@@ -45,12 +41,12 @@ export const _TagChips = ({ tags, maxVisible = 3, variant = "soft", overflowLabe
             ))}
             {overflowCount > 0 && (
                 <Tooltip isOpen={menuOpen} onOpenChange={setMenuOpen}>
-                    <Tooltip.Trigger className={classNames?.trigger}>
+                    <Tooltip.Trigger>
                         <Chip color="default" variant={variant}>
                             <Chip.Label>{overflowLabel}</Chip.Label>
                         </Chip>
                     </Tooltip.Trigger>
-                    <Tooltip.Content className={classNames?.content}>
+                    <Tooltip.Content>
                         <ScrollShadow className="max-h-[200px]" hideScrollBar={true} orientation="horizontal">
                             <div className="flex flex-col gap-2 text-sm">
                                 {tags.map((tag) => (

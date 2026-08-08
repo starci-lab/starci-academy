@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import { PaymentFlow } from "@/modules/types/payment"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { _TrialConversionStrip } from "./component"
 
 /** Props for {@link TrialConversionStrip}. */
@@ -14,8 +13,6 @@ export interface TrialConversionStripProps {
     courseId: string
     /** FREE lessons the trial viewer hasn't read yet — powers the goal-gradient line. */
     freeLessonsRemaining: number
-    /** Where this strip sits inside its parent. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -28,7 +25,6 @@ export interface TrialConversionStripProps {
 export const TrialConversionStrip = ({
     courseId,
     freeLessonsRemaining,
-    classNames,
 }: TrialConversionStripProps) => {
     const t = useTranslations()
     const { open } = usePaymentOverlayState()
@@ -54,7 +50,6 @@ export const TrialConversionStrip = ({
             price={priceSwr.data}
             isSkeleton={priceSwr.isLoading}
             onEnroll={onEnroll}
-            classNames={classNames}
         />
     )
 }

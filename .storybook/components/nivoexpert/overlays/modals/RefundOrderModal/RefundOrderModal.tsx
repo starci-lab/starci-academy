@@ -111,7 +111,6 @@ const RefundOrderModal = ({ isOpen, onOpenChange, order, onConfirm, isConfirming
                     : () => (
                         <ButtonGroup
                             principle="flex-action-end"
-                            classNames={["w-full"]}
                             items={[
                                 {
                                     key: "cancel",

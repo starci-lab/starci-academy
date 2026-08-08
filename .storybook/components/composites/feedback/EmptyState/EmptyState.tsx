@@ -1,7 +1,6 @@
 import type { ComponentType, SVGProps } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
@@ -65,10 +64,6 @@ interface EmptyStateOwnProps {
      *   larger title and room for a `code` numeral above it.
      */
     size?: "default" | "compact" | "page"
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -101,7 +96,6 @@ export const EmptyState = (props: EmptyStateProps) => {
         action: Action,
         tone = "neutral",
         size = "default",
-        classNames,
     } = props
     const isSkeleton = props.isSkeleton ?? false
     // Narrowed off the discriminant so `title` stays required in the live branch —
@@ -120,7 +114,7 @@ export const EmptyState = (props: EmptyStateProps) => {
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
             <span
-                className={cn("block", classNames)}
+                className={cn("block")}
 
                 data-tier="composite"
                 data-component="EmptyState"
@@ -139,7 +133,6 @@ export const EmptyState = (props: EmptyStateProps) => {
                 isPage
                     ? "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-8 text-center"
                     : "flex flex-col items-center gap-3 py-6 text-center",
-                classNames,
             )}
             data-tier="composite"
             data-component="EmptyState"

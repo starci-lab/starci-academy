@@ -1,4 +1,3 @@
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { type ButtonSize, type ButtonVariant, type IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
@@ -59,10 +58,6 @@ export interface ButtonGroupProps {
      * Default `sm` — a button row needs far less room than a page split to pack.
      */
     at?: ResponsiveRowSwitch
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Component-tier metadata for `ButtonGroup` — registers it as a composite named `ButtonGroup`. */
@@ -76,7 +71,6 @@ export const ButtonGroup = ({
     principle = "flex-action",
     explain,
     at = "sm",
-    classNames,
 }: ButtonGroupProps) => {
     const entry = PRINCIPLE_STYLE[principle]
     const gap: AllowedGap = entry.kind === "gap" ? entry.step : 3
@@ -90,7 +84,6 @@ export const ButtonGroup = ({
             principle={principle}
             explain={explain}
             justify={justify}
-            classNames={classNames}
             isSkeleton={isSkeleton}
             items={items.map((item): ResponsiveClusterItem => {
                 const shared = {

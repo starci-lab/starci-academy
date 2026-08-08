@@ -1,7 +1,6 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ProgressMeterTargetMark" } as const
@@ -22,11 +21,6 @@ export interface ProgressMeterTargetMarkProps {
      * wraps it in `Typography` itself.
      */
     label?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -54,9 +48,9 @@ export interface ProgressMeterTargetMarkProps {
  *
  * @param props - {@link ProgressMeterTargetMarkProps}
  */
-export const ProgressMeterTargetMark = ({ percent, label, classNames }: ProgressMeterTargetMarkProps) => (
+export const ProgressMeterTargetMark = ({ percent, label }: ProgressMeterTargetMarkProps) => (
     <div
-        className={cn("pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2", classNames)}
+        className={cn("pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2")}
         style={{ left: `${percent}%` }}
         data-tier="composite"
         data-component="ProgressMeterTargetMark"

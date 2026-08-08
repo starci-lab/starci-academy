@@ -251,30 +251,29 @@ const FlashcardStudyCard = ({
     )
 
     return (
-        <div>
-            <SurfaceCard
-                isSkeleton={isSkeleton}
+        <SurfaceCard
+            isSkeleton={isSkeleton}
 
-                body={() => (
-                    <StackV
-                        gap={6}
-                        isSkeleton={isSkeleton}
-                        items={[
-                            () => metaRow,
-                            () => (
-                                <MarkdownContent
-                                    source={question}
-                                    measure="compact"
+            body={() => (
+                <StackV
+                    gap={6}
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => metaRow,
+                        () => (
+                            <MarkdownContent
+                                source={question}
+                                measure="compact"
 
-                                />
-                            ),
-                            ...(revealed ? [() => (isLocked ? lockNotice : answerBody)] : []),
-                            () => navRow,
-                        ]}
-                    />
-                )}
-            />
-        </div>
+                            />
+                        ),
+                        ...(revealed ? [() => (isLocked ? lockNotice : answerBody)] : []),
+                        () => navRow,
+                    ]}
+                />
+            )}
+        />
+
     )
 }
 

@@ -1091,11 +1091,6 @@ export interface SurfaceCardSelectableGroupProps<T extends string> {
     /** Grid column count. Defaults to `2`. */
     columns?: 1 | 2 | 3
     /**
-     * Where the grid sits inside its parent. Appearance is not passable — it is
-     * already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * Caller identity to wear on this composite's root instead of its own — pass this
      * when a block/layout/overlay/page uses this composite as its root element.
      * Omitted → this composite keeps emitting its own data-tier/data-component.
@@ -1144,7 +1139,6 @@ const SelectableGroup = <T extends string>({
     onChange,
     ariaLabel,
     columns = 2,
-    classNames,
     identity,
 }: SurfaceCardSelectableGroupProps<T>) => (
         <RadioGroup
@@ -1156,7 +1150,6 @@ const SelectableGroup = <T extends string>({
             <Grid
                 principle="sibling-stack"
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
-                classNames={classNames}
                 items={items.map((item) => ({
                     key: item.value,
                     content: () => (

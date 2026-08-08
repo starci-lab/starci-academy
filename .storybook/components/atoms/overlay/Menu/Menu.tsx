@@ -14,7 +14,6 @@ import {
 // `DropdownSection` (react-aria MenuSection) does not expose a `title` prop, so the
 // header is composed as its first child — exactly how HeroUI builds sections internally.
 import { Header as HeroMenuHeader } from "react-aria-components"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `Menu`: the one menu atom, wrapping HeroUI `Dropdown` directly (Trigger · Popover ·
@@ -93,8 +92,6 @@ export interface MenuBaseProps {
     onOpenChange?: (isOpen: boolean) => void
     /** Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown; the atom owns its own skeleton. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -115,7 +112,6 @@ const MenuBase = ({
     defaultOpen,
     onOpenChange,
     isSkeleton = false,
-    classNames,
 }: MenuBaseProps) => {
     /** Render one menu row (shared by flat + sectioned modes). */
     const renderItem = (item: MenuItemModel) => {
@@ -147,7 +143,7 @@ const MenuBase = ({
             ? sections.reduce((total, section) => total + section.items.length, 0)
             : (items?.length ?? 4)
         return (
-            <div data-tier="atom" data-component="Menu" className={cn("flex w-full flex-col gap-1 p-1", classNames)}>
+            <div data-tier="atom" data-component="Menu" className="flex w-full flex-col gap-1 p-1">
                 {Array.from({ length: rowCount || 4 }).map((_, index) => (
                     <div key={index} className="flex items-center gap-2 px-2 py-2">
                         <HeroSkeleton className="size-5 shrink-0 rounded-full" />
@@ -159,7 +155,7 @@ const MenuBase = ({
     }
     return (
         <HeroDropdown data-tier="atom" data-component="Menu" isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroDropdownTrigger className={cn(classNames)}>
+            <HeroDropdownTrigger>
                 <HeroButton variant={triggerVariant}>
                     {TriggerIcon ? (
                         // `!` needed: HeroUI's `.button svg` rule has higher specificity.

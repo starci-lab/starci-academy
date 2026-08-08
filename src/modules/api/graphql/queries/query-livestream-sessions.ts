@@ -48,6 +48,7 @@ const queryMap: Record<QueryLivestreamSessions, DocumentNode> = {
     [QueryLivestreamSessions.Query1]: query1,
 }
 
+/** Default sort: livestream sessions by `sortIndex` ascending. */
 export const defaultLivestreamSessionsListSorts: Array<SortInput<LivestreamSessionsSortBy>> = [
     {
         by: LivestreamSessionsSortBy.SortIndex,

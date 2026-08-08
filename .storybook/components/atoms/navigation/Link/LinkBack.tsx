@@ -1,8 +1,9 @@
 import React from "react"
 import { Link as HeroUILink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
-import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
+import type { SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
 import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
+
 
 /**
  * ATOM — `LinkBack`: the only "← Back" button in the system, wrapping HeroUI `Link`
@@ -36,8 +37,6 @@ interface LinkBackOwnProps {
      * before `target` is known.
      */
     skeletonWidth?: SkeletonWidth
-    /** Position within the parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -65,7 +64,6 @@ export const LinkBack = ({
     onPress,
     isSkeleton = false,
     skeletonWidth,
-    classNames,
 }: LinkBackProps) => {
     if (isSkeleton) {
         // Same `flex items-center gap-1` (icon-text) row as the real render; icon box
@@ -74,7 +72,7 @@ export const LinkBack = ({
         // not change when the real label lands. No ``
         // here since nothing HeroUI-Link-shaped renders in this branch.
         return (
-            <div data-tier="atom" data-component="LinkBack" data-principle="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
+            <div data-tier="atom" data-component="LinkBack" data-principle="icon-text" className="flex w-fit items-center gap-1">
                 <HeroSkeleton className="size-3.5 rounded-full" />
                 <HeroSkeleton
                     className={cn(SKELETON_TEXT_BAR_SM, skeletonWidth ?? "w-1/4")}
@@ -95,7 +93,6 @@ export const LinkBack = ({
             data-principle="icon-text"
             className={cn(
                 "group flex w-fit cursor-pointer items-center gap-1 text-sm text-muted no-underline transition-colors hover:text-foreground",
-                classNames,
             )}
         >
             {/*

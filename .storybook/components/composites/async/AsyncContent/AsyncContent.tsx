@@ -10,7 +10,6 @@ import { EmptyState, type EmptyStateIcon } from "@sb-components/composites/feedb
 // is FORBIDDEN from touching `_legacy` — an import at the composite tier would drag the
 // whole dead branch back into the screen.
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
@@ -50,10 +49,6 @@ interface MessageProps {
     onRetry?: () => void
     /** Shorthand: the (already translated) label of the retry button — required for the button to appear. `string`, not `ReactNode` (COMPOSITE-8). */
     retryLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -194,11 +189,9 @@ export type AsyncContentEmptyProps = MessageProps
  * @param props - {@link AsyncContentEmptyProps}
  */
 const Empty = (props: AsyncContentEmptyProps) => {
-    const { title, description, icon, classNames } = props
+    const { title, description, icon } = props
     return (
         <EmptyState
-
-            classNames={classNames}
             icon={withDuotone(icon ?? TrayIcon)}
             title={title}
             description={description}
@@ -224,11 +217,9 @@ export type AsyncContentErrorProps = MessageProps
  * @param props - {@link AsyncContentErrorProps}
  */
 const ErrorMessage = (props: AsyncContentErrorProps) => {
-    const { title, description, icon, classNames } = props
+    const { title, description, icon } = props
     return (
         <EmptyState
-
-            classNames={classNames}
             tone="danger"
             icon={withDuotone(icon ?? WarningIcon)}
             title={title}

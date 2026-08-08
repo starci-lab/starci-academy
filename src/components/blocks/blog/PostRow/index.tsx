@@ -28,9 +28,9 @@ export const PostRow = ({ post, formattedDate }: PostRowProps) => {
             className="group cursor-pointer border-b border-default py-4 last:border-b-0"
         >
             <StackV
-                gap={2}
                 principle="title-subtitle"
                 explain="Title over excerpt/meta — not label-field (no form control), not name-handle (not an identity pair), not icon-text (no leading icon)."
+                identity={{ tier: "block", component: "PostRow" }}
                 items={[
                     () => (
                         <h3 className="text-lg font-semibold text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">

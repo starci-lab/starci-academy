@@ -30,6 +30,10 @@ const queryMap: Record<QueryFoundationCategorySuggestions, DocumentNode> = {
     [QueryFoundationCategorySuggestions.Query1]: query1,
 }
 
+/**
+ * Fetches foundation-category suggestion labels for typeahead.
+ * Mirrors backend `foundationCategorySuggestions`.
+ */
 export const queryFoundationCategorySuggestions = async ({
     query = QueryFoundationCategorySuggestions.Query1,
     request,

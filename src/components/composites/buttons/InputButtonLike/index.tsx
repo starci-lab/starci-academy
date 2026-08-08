@@ -98,12 +98,8 @@ export const InputButtonLike = ({
 
     const label = !isSkeleton && Suffix ? (
         <StackH
-            gap={4}
             principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-            justify="between"
-            align="center"
-            classNames={["w-full", "min-w-0"]}
             items={[
                 () => placeholderLabel,
                 () => (

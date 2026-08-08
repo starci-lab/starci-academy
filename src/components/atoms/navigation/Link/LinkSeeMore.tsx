@@ -2,8 +2,9 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Link as HeroUILink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { AllowedClassName, SkeletonWidth } from "@/components/atoms/_allowed-class-name"
+import type { SkeletonWidth } from "@/components/atoms/_allowed-class-name"
 import { SKELETON_TEXT_BAR_SM } from "@/components/atoms/_skeleton-bar"
+
 
 /**
  * Storybook-local port of `@/components/blocks/navigation/SeeMoreLink`.
@@ -49,8 +50,6 @@ interface LinkSeeMoreOwnProps {
      * Defaults to `"w-1/4"`, matching short labels like "See more".
      */
     skeletonWidth?: SkeletonWidth
-    /** Position within the parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -64,11 +63,10 @@ export type LinkSeeMoreProps = LinkSeeMoreOwnProps &
     )
 
 /** Shared look — semibold accent text with `gap-1` (icon-text) to the arrow, matching {@link LinkBack}. */
-const baseClassName = (size: LinkSeeMoreSize, classNames?: Array<AllowedClassName>) =>
+const baseClassName = (size: LinkSeeMoreSize) =>
     cn(
         "inline-flex w-fit shrink-0 items-center gap-1 font-semibold text-accent-soft-foreground no-underline",
         TEXT_CLASS[size],
-        classNames,
     )
 
 /** `size` → text size. Kept as its own table next to {@link ARROW_CLASS} so the two can't drift apart. */
@@ -122,7 +120,6 @@ export const LinkSeeMore = ({
     size = "sm",
     isSkeleton = false,
     skeletonWidth,
-    classNames,
 }: LinkSeeMoreProps) => {
     if (isSkeleton) {
         // Same `inline-flex items-center gap-1` (icon-text) row as the real render; arrow
@@ -131,7 +128,7 @@ export const LinkSeeMore = ({
         // label lands. `decorative`/`href`/`onPress` don't affect this shape —
         // they only change what happens on press.
         return (
-            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className={cn("inline-flex w-fit shrink-0 items-center gap-1", classNames)}>
+            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className="inline-flex w-fit shrink-0 items-center gap-1">
                 <HeroSkeleton
                     className={cn(SKEL_TEXT_BAR[size], skeletonWidth ?? "w-1/4")}
                 />
@@ -167,14 +164,14 @@ export const LinkSeeMore = ({
         // anywhere on that surface, not a hover zone of this span alone. Untagged:
         // this is a plain `<span>`, not the HeroUI `Link`, so "Link" would be inaccurate here.
         return (
-            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className={baseClassName(size, classNames)}>
+            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className={baseClassName(size)}>
                 {text}
                 {arrow}
             </span>
         )
     }
 
-    const interactiveClassName = cn(baseClassName(size, classNames), "group cursor-pointer")
+    const interactiveClassName = cn(baseClassName(size), "group cursor-pointer")
 
     if (href) {
         // Untagged for the same reason as the `decorative` branch above: a plain

@@ -44,21 +44,20 @@ const SubmissionResultHeader = ({
     isSkeleton = false,
 }: SubmissionResultHeaderProps) => {
     return (
-        <div>
-            <PageHeader
+        <PageHeader
 
-                isSkeleton={isSkeleton}
-                breadcrumb={() =>
-                    isSkeleton ? (
-                        <Typography size="sm" isSkeleton />
-                    ) : (
-                        <LinkBack label={backLabel} onPress={onBack} />
-                    )
-                }
-                title={title}
-                description={description}
-            />
-        </div>
+            isSkeleton={isSkeleton}
+            breadcrumb={() =>
+                isSkeleton ? (
+                    <Typography size="sm" isSkeleton />
+                ) : (
+                    <LinkBack label={backLabel} onPress={onBack} />
+                )
+            }
+            title={title}
+            description={description}
+        />
+
     )
 }
 

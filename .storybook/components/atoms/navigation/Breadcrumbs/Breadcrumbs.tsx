@@ -2,7 +2,6 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Breadcrumbs as HeroBreadcrumbs, Link as HeroLink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `Breadcrumbs` wraps HeroUI `Breadcrumbs` directly, composing no other atom with a
@@ -59,10 +58,6 @@ export interface BreadcrumbsBaseProps {
      * the loading shape matches what the real trail is about to become.
      */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** The collapsed placeholder key (stable, never collides with a real crumb key). */
@@ -80,7 +75,6 @@ const BreadcrumbsBase = ({
     collapseFrom,
     backLabel = "Back",
     isSkeleton = false,
-    classNames,
 }: BreadcrumbsBaseProps) => {
     if (isSkeleton) {
         // Collapse shape is known ahead of load (driven by `collapseFrom`/
@@ -94,14 +88,14 @@ const BreadcrumbsBase = ({
         const collapseMobile = canCollapse && collapseOnMobile && !collapseAlways
 
         const trailBars = (
-            <div data-tier="atom" data-component="Breadcrumbs" className={cn("flex items-center gap-2", classNames)}>
+            <div data-tier="atom" data-component="Breadcrumbs" className="flex items-center gap-2">
                 <HeroSkeleton className="h-4 w-1/4 rounded-md" />
                 <HeroSkeleton className="h-4 w-1/3 rounded-md" />
                 <HeroSkeleton className="h-4 w-1/2 rounded-md" />
             </div>
         )
         const backBar = (
-            <div data-tier="atom" data-component="Breadcrumbs" data-principle="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
+            <div data-tier="atom" data-component="Breadcrumbs" data-principle="icon-text" className="flex w-fit items-center gap-1">
                 <HeroSkeleton className="size-3.5 rounded-full" />
                 <HeroSkeleton className="h-4 w-1/3 rounded-md" />
             </div>
@@ -140,7 +134,7 @@ const BreadcrumbsBase = ({
             data-tier="atom"
             data-component="Breadcrumbs"
 
-            className={cn(collapseMobile && "hidden @app-sm:flex", classNames)}
+            className={cn(collapseMobile && "hidden @app-sm:flex")}
         >
             {rendered.map((entry) =>
                 entry === ELLIPSIS_KEY ? (
@@ -179,7 +173,6 @@ const BreadcrumbsBase = ({
                 className={cn(
                     "group text-muted hover:text-foreground flex w-fit cursor-pointer items-center gap-1 text-sm no-underline transition-colors",
                     collapseMobile && "@app-sm:hidden",
-                    classNames,
                 )}
             >
                 <ArrowLeftIcon

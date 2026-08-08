@@ -123,7 +123,6 @@ const ConfirmDialog = ({
                         <AlertDialog.Footer className="w-full">
                             <ButtonGroup
                                 principle="flex-action-end"
-                                classNames={["w-full"]}
                                 items={[
                                     {
                                         key: "cancel",

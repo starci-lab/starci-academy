@@ -30,6 +30,10 @@ const queryMap: Record<QueryModuleSuggestions, DocumentNode> = {
     [QueryModuleSuggestions.Query1]: query1,
 }
 
+/**
+ * Fetches module suggestion labels for typeahead.
+ * Mirrors backend `moduleSuggestions`.
+ */
 export const queryModuleSuggestions = async ({
     query = QueryModuleSuggestions.Query1,
     request,

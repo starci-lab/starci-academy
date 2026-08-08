@@ -1,8 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Disclosure as HeroDisclosure, DisclosureGroup as HeroDisclosureGroup, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import { Disclosure as HeroDisclosure, DisclosureGroup as HeroDisclosureGroup, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `Accordion` wraps HeroUI `DisclosureGroup` + `Disclosure` directly; it composes no
@@ -44,11 +43,6 @@ export interface AccordionBaseProps {
     defaultExpandedKeys?: Array<string>
     /** Render the collapsed-row skeleton (stacked trigger bars) instead of the panels. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -61,12 +55,11 @@ const AccordionBase = ({
     allowsMultiple = false,
     defaultExpandedKeys,
     isSkeleton = false,
-    classNames,
 }: AccordionBaseProps) => {
     if (isSkeleton) {
         // One collapsed trigger row per item.
         return (
-            <div data-tier="atom" data-component="Accordion" className={cn("flex flex-col gap-2", classNames)}>
+            <div data-tier="atom" data-component="Accordion" className="flex flex-col gap-2">
                 {items.map((item) => (
                     <div key={item.key} className="flex items-center justify-between rounded-xl border border-default-200 px-4 py-3">
                         <HeroSkeleton
@@ -89,7 +82,6 @@ const AccordionBase = ({
             data-component="Accordion"
             allowsMultipleExpanded={allowsMultiple}
             defaultExpandedKeys={defaultExpandedKeys}
-            className={cn(classNames)}
 
         >
             {items.map((item) => (

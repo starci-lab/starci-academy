@@ -47,6 +47,7 @@ const queryMap: Record<QueryUserPersonalTaskAttemptFeedbacks, DocumentNode> = {
     [QueryUserPersonalTaskAttemptFeedbacks.Query1]: query1,
 }
 
+/** Default sort: personal-task attempt feedbacks by `sortIndex` ascending. */
 export const defaultUserPersonalTaskAttemptFeedbacksListSorts: Array<SortInput<UserPersonalTaskAttemptFeedbacksSortBy>> = [
     {
         by: UserPersonalTaskAttemptFeedbacksSortBy.SortIndex,

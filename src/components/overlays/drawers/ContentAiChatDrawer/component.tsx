@@ -6,6 +6,7 @@ import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { StackH } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 
 /**
  * `ContentAiChatDrawer` — the global "ask StarCi AI" chat panel in drawer
@@ -95,11 +96,15 @@ const _ContentAiChatDrawer = ({
 
     const titleAndModeSwitch = [
         () => (
-            <Typography
-                text={title ?? FALLBACK_TITLE}
-                weight="bold"
-                truncate
-                classNames={["min-w-0", "flex-1"]}
+            <FillAvailable
+                at="base"
+                body={() => (
+                    <Typography
+                        text={title ?? FALLBACK_TITLE}
+                        weight="bold"
+                        truncate
+                    />
+                )}
             />
         ),
         ...(hasModeSwitch ? [() => (
@@ -118,7 +123,11 @@ const _ContentAiChatDrawer = ({
     // caller-built header uses. `Box` is the frame tier's own escape hatch for
     // exactly this: a single-side padding no `Stack`/`Flex` prop can express.
     const header = () => (
-        <Box className="pr-8">
+        <Box
+            className="pr-8"
+            principle="control-pad"
+            explain="Reserves room for DrawerShell close trigger — not card-padding, because this is chrome inset beside the dismiss control rather than card body pad; not page-pad, because the inset is single-sided."
+        >
             <StackH
                 gap={3}
                 principle="sibling-stack"

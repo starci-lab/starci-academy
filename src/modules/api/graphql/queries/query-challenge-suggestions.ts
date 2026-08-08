@@ -30,6 +30,10 @@ const queryMap: Record<QueryChallengeSuggestions, DocumentNode> = {
     [QueryChallengeSuggestions.Query1]: query1,
 }
 
+/**
+ * Fetches challenge suggestion labels for typeahead.
+ * Mirrors backend `challengeSuggestions`.
+ */
 export const queryChallengeSuggestions = async ({
     query = QueryChallengeSuggestions.Query1,
     request,

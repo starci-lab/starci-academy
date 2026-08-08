@@ -93,6 +93,10 @@ const queryMap: Record<QueryAutocompleteGlobalSearch, DocumentNode> = {
     [QueryAutocompleteGlobalSearch.Query1]: query1,
 }
 
+/**
+ * Runs global autocomplete search across courses, contents, and foundations.
+ * Mirrors backend `autocompleteGlobalSearch`.
+ */
 export const queryAutocompleteGlobalSearch = async ({
     query = QueryAutocompleteGlobalSearch.Query1,
     request,

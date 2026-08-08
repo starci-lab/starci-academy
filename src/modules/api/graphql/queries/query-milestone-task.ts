@@ -53,6 +53,7 @@ const queryMap: Record<QueryMilestoneTask, DocumentNode> = {
     [QueryMilestoneTask.Query1]: query1,
 }
 
+/** Apollo params for {@link queryMilestoneTask}. */
 export type QueryMilestoneTaskParams = QueryParams<
     QueryMilestoneTask,
     MilestoneTaskQueryRequest

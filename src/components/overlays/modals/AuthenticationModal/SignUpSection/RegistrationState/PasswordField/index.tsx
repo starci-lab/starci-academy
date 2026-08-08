@@ -3,6 +3,7 @@
 import { InputPassword } from "@/components/atoms/forms"
 import React from "react"
 import { useTranslations } from "next-intl"
+import { Box } from "@/components/frames/Box"
 
 
 /** Which sign-up password field this row renders — picks the i18n key prefix. */
@@ -45,15 +46,21 @@ export const PasswordField = ({
     const hideLabel = kind === "password" ? t("auth.signUp.password.hide") : t("auth.signUp.confirmPassword.hide")
     const showError = Boolean(touched && error)
     return (
-        <InputPassword
-            label={label}
-            placeholder={placeholder}
-            isInvalid={showError}
-            errorMessage={showError ? error : undefined}
-            value={value}
-            onValueChange={onChangeValue}
-            revealLabel={revealLabel}
-            hideLabel={hideLabel}
-        />
+        <Box
+            identity={{ tier: "overlay", component: "PasswordField" }}
+            principle="label-field"
+            explain="Single labelled field root — not title-subtitle, because the caption names a form control rather than a heading pair; not icon-text, because there is no leading glyph."
+        >
+            <InputPassword
+                label={label}
+                placeholder={placeholder}
+                isInvalid={showError}
+                errorMessage={showError ? error : undefined}
+                value={value}
+                onValueChange={onChangeValue}
+                revealLabel={revealLabel}
+                hideLabel={hideLabel}
+            />
+        </Box>
     )
 }

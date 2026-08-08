@@ -25,9 +25,7 @@ export const SkeletonQuestionRow = () => {
 
             items={[
                 () => (
-                    <div className="shrink-0">
-                        <Avatar isSkeleton size="sm" />
-                    </div>
+                    <Avatar isSkeleton size="sm" />
                 ),
                 () => (
                     <StackV

@@ -11,7 +11,6 @@ import {
     TableCell,
 } from "@sb-components/atoms/data/Table/Table"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { Box } from "@sb-components/frames/Box/Box"
 
@@ -74,10 +73,6 @@ export interface TableBaseProps {
     isSkeleton?: boolean
     /** A handler set → every row becomes a press target (react-aria row action), receiving `item.key`. */
     onRowPress?: (key: string) => void
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -119,7 +114,6 @@ const TableBase = ({
     emptyContent: EmptyContent,
     isSkeleton = false,
     onRowPress,
-    classNames,
 }: TableBaseProps) => {
     // The header is CONFIGURATION (known before any data arrives) → the skeleton keeps
     // the REAL header, only cells become bars; the frame/column widths never jump once data lands (§8).
@@ -194,7 +188,7 @@ const TableBase = ({
 
     return (
         // House `TableRoot` omits `className` — placement classes ride a plain wrapper.
-        <div className={cn(classNames)} data-tier="composite" data-component="Table">
+        <div data-tier="composite" data-component="Table">
             <TableRoot variant="primary">
                 <TableScrollContainer>
                     <TableContent aria-label={ariaLabel}>

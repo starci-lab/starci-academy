@@ -47,6 +47,7 @@ const queryMap: Record<QueryUserMilestoneTaskFeedbacks, DocumentNode> = {
     [QueryUserMilestoneTaskFeedbacks.Query1]: query1,
 }
 
+/** Default sort: user milestone-task feedbacks by `sortIndex` ascending. */
 export const defaultUserMilestoneTaskFeedbacksListSorts: Array<SortInput<UserMilestoneTaskFeedbacksSortBy>> = [
     {
         by: UserMilestoneTaskFeedbacksSortBy.SortIndex,

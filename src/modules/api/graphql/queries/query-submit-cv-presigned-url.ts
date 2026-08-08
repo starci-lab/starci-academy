@@ -24,6 +24,10 @@ const queryMap: Record<QuerySubmitCvPresignedUrl, DocumentNode> = {
     [QuerySubmitCvPresignedUrl.Query1]: query1,
 }
 
+/**
+ * Fetches a presigned URL for submitting a CV upload.
+ * Mirrors backend `submitCvPresignedUrl`.
+ */
 export const querySubmitCvPresignedUrl = async ({
     query = QuerySubmitCvPresignedUrl.Query1,
     request,

@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { GAP_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutJustify } from "@/components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
@@ -48,8 +47,6 @@ export interface ResponsiveClusterProps {
     at: ResponsiveRowSwitch
     /** Main-axis distribution once packed into a row. Left out means the browser default. */
     justify?: LayoutJustify
-    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
-    classNames?: Array<AllowedClassName>
     /**
      * Permanent contract marker (not anatomy tooling) -- hard-coded by whoever calls this
      * frame, because the frame has no public identity of its own yet. See the blueprint.
@@ -100,7 +97,6 @@ const ResponsiveClusterBase = ({
     gap,
     at,
     justify,
-    classNames,
     "data-tier": dataTier,
     "data-component": dataComponent,
     principle,
@@ -117,7 +113,6 @@ const ResponsiveClusterBase = ({
             GAP_CLASS[gap],
             DIRECTION_SWITCH_CLASS[at],
             justify != null && JUSTIFY_CLASS[justify],
-            classNames,
         )}
     >
         {items.map((item) => {

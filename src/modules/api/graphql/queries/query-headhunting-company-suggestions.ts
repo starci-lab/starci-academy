@@ -30,6 +30,10 @@ const queryMap: Record<QueryHeadhuntingCompanySuggestions, DocumentNode> = {
     [QueryHeadhuntingCompanySuggestions.Query1]: query1,
 }
 
+/**
+ * Fetches headhunting-company suggestion labels for typeahead.
+ * Mirrors backend `headhuntingCompanySuggestions`.
+ */
 export const queryHeadhuntingCompanySuggestions = async ({
     query = QueryHeadhuntingCompanySuggestions.Query1,
     request,

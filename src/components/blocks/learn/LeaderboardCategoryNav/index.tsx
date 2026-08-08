@@ -2,7 +2,6 @@ import React from "react"
 import { BookOpenIcon, FlagIcon, PuzzlePieceIcon, TrophyIcon } from "@phosphor-icons/react"
 import { ButtonRadioGroup } from "@/components/composites/buttons/ButtonRadioGroup"
 import { Typography, type TypographyIcon } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `LeaderboardCategoryNav` — the mobile chip row for switching which XP category
@@ -57,8 +56,6 @@ export interface LeaderboardCategoryNavProps {
      * and could not be converted.
      */
     className?: string
-    /** Extra classes on the row. Prefer this over `className`; the string form is going away. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -74,7 +71,6 @@ const LeaderboardCategoryNav = ({
     onSelect,
     ariaLabel,
     className,
-    classNames,
 }: LeaderboardCategoryNavProps) => (
     <div className={className}>
         <div>
@@ -82,8 +78,6 @@ const LeaderboardCategoryNav = ({
                 ariaLabel={ariaLabel}
                 value={selected}
                 onChange={onSelect}
-                classNames={classNames}
-
                 items={items.map((item) => ({
                     value: item.key,
                     content: (

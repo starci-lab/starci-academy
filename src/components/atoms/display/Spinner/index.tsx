@@ -1,5 +1,4 @@
-import { Spinner as HeroSpinner, cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Spinner as HeroSpinner } from "@heroui/react"
 
 /**
  * @noSkeleton the spinner IS the loading indicator — a shimmer standing in for one is circular.
@@ -21,11 +20,6 @@ export interface SpinnerBaseProps {
     tone?: SpinnerTone
     /** Accessible name, announced by screen readers. Default `"Loading"`. */
     label?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -37,7 +31,6 @@ const SpinnerBase = ({
     size = "md",
     tone = "accent",
     label = "Loading",
-    classNames,
 }: SpinnerBaseProps) => (
     <HeroSpinner
         data-tier="atom"
@@ -45,7 +38,6 @@ const SpinnerBase = ({
         aria-label={label}
         size={size}
         color={tone}
-        className={cn(classNames)}
     />
 )
 

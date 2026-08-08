@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { Badge as HeroBadge, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `Badge`: the ONE constrained badge atom over HeroUI Badge.
@@ -43,11 +42,6 @@ export interface BadgeBaseProps {
     placement?: BadgePlacement
     /** Render the leaf skeleton (a small pill/dot shimmer) instead of the badge. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -65,7 +59,6 @@ const BadgeBase = ({
     size = "md",
     placement = "top-right",
     isSkeleton = false,
-    classNames,
 }: BadgeBaseProps) => {
     if (isSkeleton) {
         // Leaf skeleton: a dot shimmer when `dot`, otherwise a short count pill.
@@ -73,7 +66,7 @@ const BadgeBase = ({
             <HeroSkeleton
                 data-tier="atom"
                 data-component="Badge"
-                className={cn(dot ? "size-2.5 rounded-full" : "h-4 w-6 rounded-full", classNames)}
+                className={cn(dot ? "size-2.5 rounded-full" : "h-4 w-6 rounded-full")}
             />
         )
     }
@@ -91,7 +84,7 @@ const BadgeBase = ({
             color={color}
             size={size}
             placement={placement}
-            className={cn(dot && "min-w-0 p-0", !children && "static", classNames)}
+            className={cn(dot && "min-w-0 p-0", !children && "static")}
         >
             {label}
         </HeroBadge>

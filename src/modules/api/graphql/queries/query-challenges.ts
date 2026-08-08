@@ -48,6 +48,7 @@ const queryMap: Record<QueryChallenges, DocumentNode> = {
     [QueryChallenges.Query1]: query1,
 }
 
+/** Default sort: challenges by `sortIndex` ascending. */
 export const defaultChallengesListSorts: Array<SortInput<ChallengesSortBy>> = [
     {
         by: ChallengesSortBy.SortIndex,

@@ -27,7 +27,7 @@ export interface CourseEnrollRequest {
     payosCancelUrl?: string
     /** Optional Coin-shop voucher code applied on top of the loyalty discount. */
     voucherCode?: string
-    /** Pay in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */
+    /** Pay in installments over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */
     installmentMonths?: number
 }
 

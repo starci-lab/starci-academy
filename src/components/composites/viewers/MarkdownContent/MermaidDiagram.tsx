@@ -135,7 +135,6 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                                 align="center"
                                                 justify="center"
-                                                classNames={["h-full"]}
                                                 items={[
                                                     () => (
                                                         <div className="flex w-full flex-1 items-center justify-center overflow-auto">

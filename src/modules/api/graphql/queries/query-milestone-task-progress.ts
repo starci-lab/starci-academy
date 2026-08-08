@@ -40,6 +40,10 @@ const queryMap: Record<QueryMilestoneTaskProgress, DocumentNode> = {
     [QueryMilestoneTaskProgress.Query1]: query1,
 }
 
+/**
+ * Fetches the viewer's progress on a milestone task.
+ * Mirrors backend `milestoneTaskProgress`.
+ */
 export const queryMilestoneTaskProgress = async ({
     query = QueryMilestoneTaskProgress.Query1,
     request,

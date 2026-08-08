@@ -44,7 +44,7 @@ const queryMap: Record<QueryMyInstallmentPlans, DocumentNode> = {
 }
 
 /**
- * Fetches the current user's non-completed installment (trả góp) plans via Apollo.
+ * Fetches the current user's non-completed installment plans via Apollo.
  *
  * Mirrors `myInstallmentPlans` (queries/installment-plans/my-installment-plans.resolver.ts);
  * the plan list is at `data.myInstallmentPlans.data.plans`.

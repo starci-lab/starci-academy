@@ -183,6 +183,8 @@ export const _GlobalSearchModal = ({
     const body = () => (
         <StackV
             gap={5}
+            principle="block-boundary"
+            explain="Results above keyboard hints — not sibling-stack, because these are complementary regions rather than repeating peers."
             items={[
                 () => (
                     <GlobalSearchContent
@@ -202,6 +204,8 @@ export const _GlobalSearchModal = ({
                     // every locale (`search.hint.close`), so it needs no glyph prefix.
                     <Cluster
                         gap={5}
+                        principle="chip-row"
+                        explain="Keyboard hint chips share one wrapping row so related shortcuts stay together without stacking as a column."
                         items={[
                             () => <Typography size="xs" color="muted" text={`↑↓ ${labels.hintMove}`} />,
                             () => <Typography size="xs" color="muted" text={`↵ ${labels.hintOpen}`} />,

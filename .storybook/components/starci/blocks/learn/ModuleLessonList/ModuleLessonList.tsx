@@ -64,14 +64,14 @@ interface LessonLeadingStyle {
     /** Phosphor glyph component for this status. */
     Icon: typeof CircleIcon
     /** Size + colour classes. */
-    className: string
+    glyphClass: string
 }
 
 /** Leading glyph + colour per status — the block owns this table, the caller never picks an icon. */
 const STATUS_LEADING: Record<LessonStatus, LessonLeadingStyle> = {
-    resume: { Icon: PlayIcon, className: "size-5 text-accent-soft-foreground" },
-    read: { Icon: CheckIcon, className: "size-5 text-success-soft-foreground" },
-    unread: { Icon: CircleIcon, className: "size-5 text-foreground" },
+    resume: { Icon: PlayIcon, glyphClass: "size-5 text-accent-soft-foreground" },
+    read: { Icon: CheckIcon, glyphClass: "size-5 text-success-soft-foreground" },
+    unread: { Icon: CircleIcon, glyphClass: "size-5 text-foreground" },
 }
 
 /** Placeholder rows for the guessed skeleton count (§12c) — never carry a press handler. */
@@ -104,7 +104,7 @@ const ModuleLessonList = ({
     const source = usingPlaceholders ? SKELETON_LESSONS : lessons
 
     const rows: Array<SurfaceCardListItem> = source.map((lesson) => {
-        const { Icon, className } = STATUS_LEADING[lessonStatus(lesson, resumeLessonId)]
+        const { Icon, glyphClass } = STATUS_LEADING[lessonStatus(lesson, resumeLessonId)]
         return {
             key: lesson.id,
             leading: () => (isSkeleton ? (
@@ -113,7 +113,7 @@ const ModuleLessonList = ({
                 // its place instead of branching off to build a whole separate row (§12c).
                 <HeroSkeleton className="size-5 shrink-0 rounded-full" />
             ) : (
-                <Icon aria-hidden focusable="false" className={className} />
+                <Icon aria-hidden focusable="false" className={glyphClass} />
             )),
             title: lesson.title,
             // The subtitle sentence is assembled HERE — the caller hands over two

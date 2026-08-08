@@ -57,6 +57,10 @@ const queryMap: Record<QueryMilestones, DocumentNode> = {
     [QueryMilestones.Query1]: query1,
 }
 
+/**
+ * Fetches milestones for a course (paginated / filtered as requested).
+ * Mirrors backend `milestones`.
+ */
 export const queryMilestones = async ({
     query = QueryMilestones.Query1,
     request,

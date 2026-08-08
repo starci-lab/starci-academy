@@ -5,7 +5,6 @@ import {
     Skeleton as HeroSkeleton,
     cn,
 } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `Progress.*` — the progress-indicator atom namespace, wrapping HeroUI.
@@ -49,11 +48,6 @@ interface ProgressTrackProps {
      * omit for the atom's own preset size.
      */
     trackDensity?: "default" | "compact"
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Per-size circle diameter (skeleton match + `ProgressCircle` doesn't force a box). */
@@ -69,14 +63,13 @@ const ProgressBar = ({
     ariaLabel = "Progress",
     isSkeleton = false,
     trackDensity = "default",
-    classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
         return (
             <HeroSkeleton
                 data-tier="atom"
                 data-component="ProgressBar"
-                className={cn(trackDensity === "compact" ? "h-1" : "h-2", "w-full rounded-full", classNames)}
+                className={cn(trackDensity === "compact" ? "h-1" : "h-2", "w-full rounded-full")}
 
             />
         )
@@ -91,7 +84,7 @@ const ProgressBar = ({
             isIndeterminate={isIndeterminate}
             color={color}
             size={size}
-            className={cn("w-full", classNames)}
+            className="w-full"
         >
             <HeroProgressBar.Track className={trackDensity === "compact" ? "h-1" : undefined}>
                 <HeroProgressBar.Fill />
@@ -109,14 +102,13 @@ const ProgressCircle = ({
     size = "md",
     ariaLabel = "Progress",
     isSkeleton = false,
-    classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
         return (
             <HeroSkeleton
                 data-tier="atom"
                 data-component="ProgressCircle"
-                className={cn("rounded-full", CIRCLE_BOX[size], classNames)}
+                className={cn("rounded-full", CIRCLE_BOX[size])}
 
             />
         )
@@ -131,7 +123,6 @@ const ProgressCircle = ({
             isIndeterminate={isIndeterminate}
             color={color}
             size={size}
-            className={cn(classNames)}
         >
             <HeroProgressCircle.Track
 
@@ -155,11 +146,6 @@ interface MeterOwnProps {
     size?: ProgressSize
     /** Accessible name (announced by screen readers). */
     ariaLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -180,14 +166,13 @@ const Meter = ({
     size = "md",
     ariaLabel = "Meter",
     isSkeleton = false,
-    classNames,
 }: MeterProps) => {
     if (isSkeleton) {
         return (
             <HeroSkeleton
                 data-tier="atom"
                 data-component="ProgressGauge"
-                className={cn("h-2 w-full rounded-full", classNames)}
+                className="h-2 w-full rounded-full"
 
             />
         )
@@ -201,7 +186,7 @@ const Meter = ({
             maxValue={max}
             color={color}
             size={size}
-            className={cn("w-full", classNames)}
+            className="w-full"
         >
             <HeroMeter.Track
 

@@ -1,6 +1,6 @@
 import type { GraphQLResponse } from "../../types"
 
-/** One completed flashcard review ("Học thẻ") session in the learner's history. */
+/** One completed flashcard review (Study cards) session in the learner's history. */
 export interface QueryFlashcardReviewHistoryItem {
     /** Id of the completed session. */
     id: string

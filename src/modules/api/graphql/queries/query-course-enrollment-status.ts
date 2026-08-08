@@ -32,6 +32,7 @@ const queryMap: Record<QueryCourseEnrollmentStatus, DocumentNode> = {
     [QueryCourseEnrollmentStatus.Query1]: query1,
 }
 
+/** Apollo params for {@link queryCourseEnrollmentStatus}. */
 export type QueryCourseEnrollmentStatusParams = QueryParams<QueryCourseEnrollmentStatus, QueryCourseEnrollmentStatusRequest>
 
 /**

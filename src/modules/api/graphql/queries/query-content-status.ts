@@ -25,6 +25,10 @@ const queryMap: Record<QueryContentStatus, DocumentNode> = {
     [QueryContentStatus.Query1]: query1,
 }
 
+/**
+ * Fetches content status for the viewer (progress / completion flags).
+ * Mirrors backend `contentStatus`.
+ */
 export const queryContentStatus = async ({
     query = QueryContentStatus.Query1,
     request,

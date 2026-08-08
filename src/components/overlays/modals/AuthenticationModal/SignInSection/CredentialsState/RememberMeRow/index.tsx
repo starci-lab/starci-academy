@@ -31,7 +31,12 @@ export const RememberMeRow = ({
 }: RememberMeRowProps) => {
     const t = useTranslations()
     return (
-        <Box identity={{ tier: "overlay", component: "RememberMeRow" }} className="flex items-center justify-between">
+        <Box
+            identity={{ tier: "overlay", component: "RememberMeRow" }}
+            className="flex items-center justify-between"
+            principle="flex-action-between"
+            explain="Pushes remember-me and forgot-password to opposite ends — not content-row, because these are peer actions rather than label|value."
+        >
             <ChoiceCheckbox
                 isSelected={isSelected}
                 onValueChange={onChangeSelected}

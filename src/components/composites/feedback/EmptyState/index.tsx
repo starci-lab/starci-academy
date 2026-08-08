@@ -1,7 +1,6 @@
 import type { ComponentType, SVGProps } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
@@ -78,10 +77,6 @@ interface EmptyStateOwnProps {
      */
     size?: "default" | "compact" | "page"
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * Caller identity to wear on this composite's root instead of its own — pass this when a
      * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
      * using this composite AS its root element, instead of wrapping it in a raw `<div
@@ -121,7 +116,6 @@ export const EmptyState = (props: EmptyStateProps) => {
         action: Action,
         tone = "neutral",
         size = "default",
-        classNames,
         identity,
     } = props
     const isSkeleton = props.isSkeleton ?? false
@@ -141,7 +135,7 @@ export const EmptyState = (props: EmptyStateProps) => {
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
             <span
-                className={cn("block", classNames)}
+                className={cn("block")}
                 {...resolveIdentity(identity, { tier: "composite", name: "EmptyState" })}
             >
                 <Typography size="sm" color="muted" {...titleContent} />
@@ -157,7 +151,6 @@ export const EmptyState = (props: EmptyStateProps) => {
                 isPage
                     ? "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-8 text-center"
                     : "flex flex-col items-center gap-3 py-6 text-center",
-                classNames,
             )}
             {...resolveIdentity(identity, { tier: "composite", name: "EmptyState" })}
         >

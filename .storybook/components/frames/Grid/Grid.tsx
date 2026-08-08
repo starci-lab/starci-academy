@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
@@ -28,7 +27,7 @@ import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_ide
  *
  * `gap` is a {@link Responsive}<{@link AllowedGap}> — REQUIRED when there is no
  * `principle`. When `principle` is set, the resolver owns the gap seam and the
- * public `gap` / `classNames` props are not forwarded (strict principle-only).
+ * public `gap` prop is not forwarded (strict principle-only).
  * §13: no domain content, no behaviour -- placement only.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -120,15 +119,10 @@ export interface GridBaseProps {
      */
     gap?: Responsive<AllowedGap>
     /**
-     * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
-     * Ignored when `principle` is set (strict principle-only contract).
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * Query as `[data-principle="token"]`. When set, owns gap CSS — do not also pass `gap`/`classNames`.
+     * Query as `[data-principle="token"]`. When set, owns gap CSS — do not also pass `gap`.
      */
     principle?: PrincipleToken
     /**
@@ -154,7 +148,7 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, principle, explain, isSkeleton, identity }: GridBaseProps) => {
+const GridBase = ({ items, columns, gap, principle, explain, isSkeleton, identity }: GridBaseProps) => {
     const resolved = resolvePrincipleSpacing(principle, gap, undefined)
     const gapClasses = resolved.principleOwnsLayout
         ? resolvedSpacingClassNames(resolved)
@@ -173,9 +167,7 @@ const GridBase = ({ items, columns, gap, classNames, principle, explain, isSkele
                 // Ascending order: a later (wider) step must be able to win.
                 columns.sm != null && SM_COLUMNS_CLASS[columns.sm],
                 columns.md != null && MD_COLUMNS_CLASS[columns.md],
-                columns.lg != null && LG_COLUMNS_CLASS[columns.lg],
-                // Strict: principle owns layout CSS — do not forward caller classNames.
-                !resolved.principleOwnsLayout && classNames)}
+                columns.lg != null && LG_COLUMNS_CLASS[columns.lg])}
         >
             {items.map((item) => {
                 const Content = item.content

@@ -145,7 +145,11 @@ const _AiQuotaModal = ({
     ]
 
     const header = () => (
-        <Box className="pr-8">
+        <Box
+            className="pr-8"
+            principle="control-pad"
+            explain="Reserves room for ModalShell close trigger — not card-padding, because this is chrome inset beside the dismiss control rather than card body pad; not page-pad, because the inset is single-sided."
+        >
             <StackH
                 gap={3}
                 principle="identity"
@@ -212,7 +216,14 @@ const _AiQuotaModal = ({
 
                 />
             )}
-            body={() => <StackV gap={6} items={tabsAndPanel} />}
+            body={() => (
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    explain="Tabs above the active panel — not sibling-stack, because these are complementary regions rather than repeating peers."
+                    items={tabsAndPanel}
+                />
+            )}
         />
     )
 }

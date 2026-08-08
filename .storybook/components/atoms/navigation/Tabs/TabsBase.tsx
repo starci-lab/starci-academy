@@ -1,7 +1,6 @@
 import React from "react"
 import type { ComponentType, ReactNode, SVGProps } from "react"
-import { Tabs as HeroTabs, Badge as HeroBadge, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { Tabs as HeroTabs, Badge as HeroBadge, Skeleton as HeroSkeleton } from "@heroui/react"
 
 /**
  * `Tabs` — the single tab-strip atom wrapping HeroUI `Tabs`.
@@ -64,8 +63,6 @@ export interface TabsBaseProps {
      * loading shape matches what the real strip is about to become.
      */
     isSkeleton?: boolean
-    /** Position within the parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -80,7 +77,6 @@ export const TabsBase = ({
     ariaLabel,
     variant = "primary",
     isSkeleton = false,
-    classNames,
 }: TabsBaseProps) => {
     if (isSkeleton) {
         // Shape follows `variant`, known ahead of load: `primary` is a filled
@@ -89,7 +85,7 @@ export const TabsBase = ({
         // matching shapes avoids a layout jump once the real tabs mount.
         if (variant === "secondary") {
             return (
-                <div data-tier="atom" data-component="Tabs" className={cn("flex items-center gap-2", classNames)}>
+                <div data-tier="atom" data-component="Tabs" className="flex items-center gap-2">
                     {items.map((item) => (
                         <div key={item.key} className="flex flex-col items-center gap-2 px-1 py-2">
                             <HeroSkeleton className="h-4 w-1/3 rounded-md" />
@@ -100,7 +96,7 @@ export const TabsBase = ({
             )
         }
         return (
-            <div data-tier="atom" data-component="Tabs" className={cn("flex items-center gap-2", classNames)}>
+            <div data-tier="atom" data-component="Tabs" className="flex items-center gap-2">
                 {items.map((item) => (
                     <HeroSkeleton key={item.key} className="h-9 w-1/3 rounded-xl" />
                 ))}
@@ -114,7 +110,7 @@ export const TabsBase = ({
             variant={variant}
             selectedKey={selectedKey}
             onSelectionChange={(key) => onSelectionChange(String(key))}
-            className={cn("whitespace-nowrap", classNames)}
+            className="whitespace-nowrap"
         >
             <HeroTabs.ListContainer>
                 <HeroTabs.List aria-label={ariaLabel}>

@@ -1,6 +1,8 @@
 import React from "react"
 import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH } from "@/components/frames/Stack"
 import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 
 /** Props for {@link VerdictIcon}. */
@@ -45,15 +47,37 @@ export const _ModelByline = ({ model, category, gradedByPrefix }: ModelBylinePro
         return null
     }
     return (
-        <>
-            <span className="flex items-center gap-2 text-sm text-muted">
-                <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" />
-                <span>
-                    {gradedByPrefix ?? null}
-                    <span className="text-foreground">{model}</span>
-                </span>
-            </span>
-            {category ? <AiCategoryChip category={category} /> : null}
-        </>
+        <StackH
+            identity={{ tier: "block", component: "GradingByline" }}
+            principle="chip-row"
+            explain="Model attribution text and its tier chip share one wrapping row — not flex-action, because the chip is display metadata rather than a control."
+            align="center"
+            items={[
+                () => (
+                    <StackH
+                        principle="icon-text"
+                        explain="Sparkle glyph hugging the graded-by copy — not title-subtitle (no title/subtitle voice), not label-field (no form control), not name-handle (not an identity pair)."
+                        align="center"
+                        items={[
+                            () => (
+                                <SparkleIcon
+                                    aria-hidden
+                                    focusable="false"
+                                    className="size-4 shrink-0 text-accent-soft-foreground"
+                                />
+                            ),
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    color="muted"
+                                    text={`${gradedByPrefix ?? ""}${model}`}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+                ...(category ? [() => <AiCategoryChip category={category} />] : []),
+            ]}
+        />
     )
 }

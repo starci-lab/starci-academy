@@ -12,7 +12,7 @@ export interface RewriteCvBlockRequest {
      * capstone data instead of only the block's own free text.
      */
     capstoneAttemptId?: string
-    /** Optional free-text steering for the rewrite (e.g. "làm ngắn gọn hơn"). */
+    /** Optional free-text steering for the rewrite (e.g. "make it shorter"). */
     instruction?: string
     /** Pinned model name, or omitted for the Auto lane. */
     selectedModel?: string | null

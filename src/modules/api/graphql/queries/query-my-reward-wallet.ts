@@ -33,7 +33,7 @@ const queryMap: Record<QueryMyRewardWallet, DocumentNode> = {
 }
 
 /**
- * Fetches the viewer's reward wallet (điểm quà balance + redemption history).
+ * Fetches the viewer's reward wallet (reward-points balance + redemption history).
  *
  * Mirrors `myRewardWallet` (queries/rewards/my-reward-wallet).
  */

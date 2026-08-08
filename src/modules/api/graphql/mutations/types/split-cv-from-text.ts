@@ -3,7 +3,7 @@ import type { CvBlock } from "@/modules/types/entities/cv"
 
 /** GraphQL `SplitCvFromTextRequest` body. */
 export interface SplitCvFromTextRequest {
-    /** Raw pasted CvGalleryPage text (from an existing résumé) to parse into blocks. */
+    /** Raw pasted CvGalleryPage text (from an existing CV) to parse into blocks. */
     text: string
 }
 

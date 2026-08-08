@@ -10,7 +10,6 @@ import { EmptyState, type EmptyStateIcon } from "@/components/composites/feedbac
 // is FORBIDDEN from touching `_legacy` — an import at the composite tier would drag the
 // whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
 import { Button } from "@/components/atoms/buttons/Button"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import type { CallerIdentity } from "@/components/frames/_identity"
 
@@ -74,10 +73,6 @@ interface MessageProps {
     onRetry?: () => void
     /** Shorthand: the (already translated) label of the retry button — required for the button to appear. `string`, not `ReactNode` (COMPOSITE-8). */
     retryLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
     /**
      * Caller identity to wear on this message frame's root instead of its own — pass this when
      * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
@@ -227,13 +222,12 @@ export type AsyncContentEmptyProps = MessageProps
  * @param props - {@link AsyncContentEmptyProps}
  */
 const Empty = (props: AsyncContentEmptyProps) => {
-    const { title, description, icon, classNames, identity } = props
+    const { title, description, icon, identity } = props
     // The caller's identity is FORWARDED to `EmptyState` — the element actually drawn here —
     // never wrapped in a div of our own. A wrapper would be a shape this tier must not draw.
     return (
         <EmptyState
             identity={identity}
-            classNames={classNames}
             icon={withDuotone(icon ?? TrayIcon)}
             title={title}
             description={description}
@@ -259,12 +253,11 @@ export type AsyncContentErrorProps = MessageProps
  * @param props - {@link AsyncContentErrorProps}
  */
 const ErrorMessage = (props: AsyncContentErrorProps) => {
-    const { title, description, icon, classNames, identity } = props
+    const { title, description, icon, identity } = props
     // Forwarded, not wrapped — same reasoning as `Empty` above.
     return (
         <EmptyState
             identity={identity}
-            classNames={classNames}
             tone="danger"
             icon={withDuotone(icon ?? WarningIcon)}
             title={title}

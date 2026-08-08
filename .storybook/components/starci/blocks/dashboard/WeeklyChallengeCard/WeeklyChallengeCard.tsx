@@ -129,23 +129,19 @@ const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean) => {
 const finisherItem = (entry: WeeklyChallengeLeaderboardEntry, isSkeleton: boolean): SurfaceCardListItem => ({
     key: entry.key,
     content: () => (
-        <div>
-            <UserCell
-                username={entry.username}
-                avatar={entry.avatar}
-                trailing={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        isSkeleton={slotSkeleton}
-                        text={slotSkeleton ? undefined : entry.passedAtLabel}
-
-                    />
-                )}
-                isSkeleton={isSkeleton}
-
-            />
-        </div>
+        <UserCell
+            username={entry.username}
+            avatar={entry.avatar}
+            trailing={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    isSkeleton={slotSkeleton}
+                    text={slotSkeleton ? undefined : entry.passedAtLabel}
+                />
+            )}
+            isSkeleton={isSkeleton}
+        />
     ),
 })
 
@@ -166,46 +162,61 @@ interface ContentProps {
 }
 
 const Content = ({ data, isSkeleton }: ContentProps) => {
+    const showEndsIn = data.endsInLabel != null || isSkeleton
     const statusRow = (
-        <StackH gap={4} principle="content-row"
-            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-            justify="between" align="center" items={[
-                () => (data.endsInLabel != null || isSkeleton ? (
+        <StackH
+            principle={showEndsIn ? "flex-action-between" : "flex-action-end"}
+            explain={
+                showEndsIn
+                    ? "Countdown and status controls share one action row with escape left and commit right."
+                    : "Status control alone anchors to the trailing edge when no countdown is present."
+            }
+            align="center"
+            items={[
+                ...(showEndsIn
+                    ? [
+                        () => (
+                            <Typography
+                                size="xs"
+                                color="muted"
+                                isSkeleton={isSkeleton}
+                                text={isSkeleton ? undefined : data.endsInLabel}
+                            />
+                        ),
+                    ]
+                    : []),
+                () => statusSlot(data, isSkeleton),
+            ]}
+        />
+    )
+
+    return (
+        <StackV
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because title, status, count, and finishers are repeating siblings in one card."
+            items={[
+                () => titleText(data, isSkeleton),
+                () => statusRow,
+                () => (
                     <Typography
                         size="xs"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : data.endsInLabel}
-
+                        text={isSkeleton ? undefined : `${data.passedCount} people have passed`}
                     />
-                ) : <span />),
-                () => statusSlot(data, isSkeleton),
-            ]} />
-    )
-
-    return (
-        <StackV gap={4} items={[
-            () => titleText(data, isSkeleton),
-            () => statusRow,
-            () => (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    text={isSkeleton ? undefined : `${data.passedCount} people have passed`}
-
-                />
-            ),
-            ...(data.leaderboard.length > 0 ? [() => (
-                <div>
-                    <SurfaceCardList
-                        variant="nested"
-                        items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton))}
-
-                    />
-                </div>
-            )] : []),
-        ]} />
+                ),
+                ...(data.leaderboard.length > 0
+                    ? [
+                        () => (
+                            <SurfaceCardList
+                                variant="nested"
+                                items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton))}
+                            />
+                        ),
+                    ]
+                    : []),
+            ]}
+        />
     )
 }
 

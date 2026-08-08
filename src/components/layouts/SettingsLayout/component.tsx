@@ -73,7 +73,13 @@ const _SettingsLayout = ({
     )
 
     const contentSlot: ComponentTypeWithSkeleton = () => (
-        <Container size="md" padding={6} body={Body} />
+        <Container
+            size="md"
+            padding={6}
+            principle="center-measure"
+            explain="Settings reading column beside the nav rail — not page-pad alone, because this caps measure width rather than only insetting chrome."
+            body={Body}
+        />
     )
 
     return (

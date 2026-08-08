@@ -281,7 +281,8 @@ export const PDFView = ({
                 // bordered page frame `PdfViewportPage` draws for a page not yet scrolled
                 // into view, each one handed `isSkeleton` `Typography` lines.
                 <StackV
-                    gap={4}
+                    principle="sibling-stack"
+                    explain="Skeleton page frames are peer sheets — not group-boundary, because each page is a repeating sibling, not a section wrapping the next."
                     items={Array.from({ length: SKELETON_PAGE_COUNT }, () => () => (
                         <Box
                             principle="title-subtitle" className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
@@ -304,7 +305,8 @@ export const PDFView = ({
                     onLoadSuccess={(pdf) => setNumPages(pdf.numPages)}
                 >
                     <StackV
-                        gap={4}
+                        principle="sibling-stack"
+                        explain="Rendered PDF pages are peer sheets — not group-boundary, because each page is a repeating sibling, not a section wrapping the next."
                         items={Array.from({ length: pageCount }, (_, index) => {
                             const pageNumber = index + 1
                             const eager = !showAllPages || pageNumber <= 2

@@ -40,7 +40,7 @@ export interface QueryFlashcardLeechFocusCard {
 
 /** Payload inside `myFlashcardReviewStats.data` after the standard API wrapper. */
 export interface QueryMyFlashcardReviewStatsData {
-    /** Reason-tagged leech cards (lapsed vs stuck-on-Hard), worst first — the "viết lại" fix-list. */
+    /** Reason-tagged leech cards (lapsed vs stuck-on-Hard), worst first — the rewrite fix-list. */
     leechFocus: Array<QueryFlashcardLeechFocusCard>
     /** EVERY tag's review retention, worst first. */
     weakTags: Array<QueryFlashcardWeakTag>

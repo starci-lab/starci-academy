@@ -102,7 +102,14 @@ export const _CookieConsentModal = ({
             onOpenChange={onOpenChange}
             title={labels.modalTitle}
             description={labels.modalBody}
-            body={() => <StackV gap={6} items={switchRows} />}
+            body={() => (
+                <StackV
+                    gap={6}
+                    principle="sibling-stack"
+                    explain="Preference toggles as same-kind peers — not group-boundary, because each row is a repeating control rather than a section group."
+                    items={switchRows}
+                />
+            )}
             footer={() => (
                 <>
                     <Button

@@ -52,7 +52,7 @@ const ContinueLearningBase = ({
     // is — it only receives an already-worded `title` + `meta` (§14d.1: design receives a
     // node, never a domain concept).
     <ContinueCardHero
-
+        identity={{ tier: "block", component: "ContinueLearning" }}
         title={`Lesson ${lessonIndex} · ${lessonTitle}`}
         meta={[
             `Read ${lessonsRead}/${lessonsTotal} lessons`,

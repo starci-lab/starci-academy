@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { IconTile, type IconComponent, type IconTileTone } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { Box } from "@sb-components/frames/Box/Box"
 
@@ -58,10 +57,6 @@ export interface UserCellProps {
      */
     isOwnRow?: boolean
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * Render the leaf skeleton (shimmer) instead of the cell. Every shimmer is
      * delegated to the atom it stands for — `Avatar isSkeleton size={size}` for
      * the circle, `Typography isSkeleton` for the name/handle bars — so none of
@@ -95,7 +90,6 @@ const UserCellBase = ({
     trailing: Trailing,
     leadingIcon: LeadingIcon,
     leadingTone = "accent",
-    classNames,
     isOwnRow = false,
     isSkeleton = false,
 }: UserCellProps) => {
@@ -106,8 +100,11 @@ const UserCellBase = ({
     // (COMPOSITE-8) — forwarding `isSkeleton` lets it shimmer in place instead
     // of vanishing during loading and jumping the row's width once data lands.
     const trailingSlot = Trailing ? (
-        <Box principle="push-end" className="shrink-0">
-        explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row."
+        <Box
+            principle="push-end"
+            className="shrink-0"
+            explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row."
+        >
             <Trailing isSkeleton={isSkeleton} />
         </Box>
     ) : null
@@ -122,7 +119,7 @@ const UserCellBase = ({
                 data-tier="composite"
                 data-component="UserCell"
 
-                className={cn("flex min-w-0 items-center gap-2", classNames)}
+                className={cn("flex min-w-0 items-center gap-2")}
             >
                 {LeadingIcon ? (
                     <IconTile isSkeleton size="sm" />
@@ -145,7 +142,7 @@ const UserCellBase = ({
             data-tier="composite"
             data-component="UserCell"
 
-            className={cn("flex min-w-0 items-center gap-2", classNames)}
+            className={cn("flex min-w-0 items-center gap-2")}
         >
             {LeadingIcon ? (
                 <IconTile

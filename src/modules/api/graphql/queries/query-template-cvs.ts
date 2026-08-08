@@ -26,6 +26,10 @@ const queryMap: Record<QueryTemplateCvs, DocumentNode> = {
     [QueryTemplateCvs.Query1]: query1,
 }
 
+/**
+ * Fetches template CVs available to the viewer.
+ * Mirrors backend `templateCvs`.
+ */
 export const queryTemplateCvs = async ({
     query = QueryTemplateCvs.Query1,
     debug,

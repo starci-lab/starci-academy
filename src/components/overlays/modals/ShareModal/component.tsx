@@ -60,7 +60,7 @@ interface SharePlatform {
     /** Brand glyph, rendered at a fixed size + the brand's own colour. */
     icon: ComponentType<SVGProps<SVGSVGElement>>
     /** Brand colour class — fixed per platform, not a house token (brand marks keep their own colour). */
-    colorClassName: string
+    colorClass: string
     /** Builds the platform's share-intent URL from the resolved `shareUrl`/`shareTitle`. */
     buildHref: (shareUrl: string, shareTitle: string) => string
 }
@@ -75,28 +75,28 @@ const SHARE_PLATFORMS: ReadonlyArray<SharePlatform> = [
         key: "facebook",
         label: "Facebook",
         icon: FacebookLogoIcon,
-        colorClassName: "text-[#1877F2]",
+        colorClass: "text-[#1877F2]",
         buildHref: (shareUrl) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
     },
     {
         key: "twitter",
         label: "Twitter",
         icon: TwitterLogoIcon,
-        colorClassName: "text-[#1DA1F2]",
+        colorClass: "text-[#1DA1F2]",
         buildHref: (shareUrl, shareTitle) => `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
     },
     {
         key: "telegram",
         label: "Telegram",
         icon: TelegramLogoIcon,
-        colorClassName: "text-[#0088cc]",
+        colorClass: "text-[#0088cc]",
         buildHref: (shareUrl, shareTitle) => `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
     },
     {
         key: "linkedin",
         label: "LinkedIn",
         icon: LinkedinLogoIcon,
-        colorClassName: "text-[#0A66C2]",
+        colorClass: "text-[#0A66C2]",
         buildHref: (shareUrl) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
     },
 ]
@@ -124,7 +124,11 @@ export const _ShareModal = ({
                 align="center"
                 items={[
                     () => (
-                        <Box className="rounded-xl border-default p-2">
+                        <Box
+                            className="rounded-xl border-default p-2"
+                            principle="card-padding"
+                            explain="QR mount inset — not cell-pad, because this frames a media tile rather than a dense list cell."
+                        >
                             <QRCode size={160} data={shareUrl} />
                         </Box>
                     ),
@@ -159,7 +163,7 @@ export const _ShareModal = ({
                         aria-label={platform.label}
                         className="inline-flex focus-visible:ring-2 ring-accent rounded-full"
                     >
-                        <platform.icon className={`size-6 ${platform.colorClassName}`} />
+                        <platform.icon className={`size-6 ${platform.colorClass}`} />
                     </a>
                 ))}
             />

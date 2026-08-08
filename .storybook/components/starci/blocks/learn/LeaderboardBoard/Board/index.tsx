@@ -6,6 +6,7 @@ import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { Podium } from "../Podium"
 import { type BoardProps, type LeaderboardRow } from "../types"
 
@@ -34,25 +35,28 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
                     />
                 ),
                 () => (
-                    <div className="min-w-0 flex-1">
-                        <UserCell
-                            username={row.username}
-                            avatar={row.avatar}
-                            isOwnRow={row.isMe}
-                            trailing={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
-                                <Typography
-                                    size="sm"
-                                    weight="medium"
-                                    tabularNums
-                                    isSkeleton={slotSkeleton}
-                                    text={slotSkeleton ? undefined : row.valueLabel}
+                    <FillAvailable
+                        at="base"
+                        isSkeleton={isSkeleton}
+                        body={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
+                            <UserCell
+                                username={row.username}
+                                avatar={row.avatar}
+                                isOwnRow={row.isMe}
+                                trailing={({ isSkeleton: trailingSkeleton }: SkeletonProps) => (
+                                    <Typography
+                                        size="sm"
+                                        weight="medium"
+                                        tabularNums
+                                        isSkeleton={trailingSkeleton}
+                                        text={trailingSkeleton ? undefined : row.valueLabel}
 
-                                />
-                            )}
-                            isSkeleton={isSkeleton}
-
-                        />
-                    </div>
+                                    />
+                                )}
+                                isSkeleton={slotSkeleton}
+                            />
+                        )}
+                    />
                 ),
                 ...(row.isMe ? [() => <span className="sr-only">{meLabel}</span>] : []),
             ]}

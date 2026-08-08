@@ -166,43 +166,42 @@ const QuizQuestion = ({
     )
 
     return (
-        <div>
-            <SurfaceCard
-                isSkeleton={isSkeleton}
+        <SurfaceCard
+            isSkeleton={isSkeleton}
 
-                body={() => (
-                    <StackV
-                        gap={6}
-                        items={[
-                            ...(levelRow != null ? [() => levelRow] : []),
-                            () => (
-                                <MarkdownContent
-                                    source={question}
-                                    measure="reading"
+            body={() => (
+                <StackV
+                    gap={6}
+                    items={[
+                        ...(levelRow != null ? [() => levelRow] : []),
+                        () => (
+                            <MarkdownContent
+                                source={question}
+                                measure="reading"
 
-                                />
-                            ),
-                            // Read-only rather than emptied: the whole value of a drill is comparing
-                            // what you SAID with what was expected, and clearing the field takes that
-                            // comparison away exactly when it becomes useful.
-                            () => (
-                                <InputTextarea
-                                    value={answer}
-                                    onValueChange={onAnswerChange}
-                                    placeholder="Answer as if you're speaking to the interviewer"
-                                    ariaLabel="Answer"
-                                    rows={4}
-                                    isDisabled={isGraded}
+                            />
+                        ),
+                        // Read-only rather than emptied: the whole value of a drill is comparing
+                        // what you SAID with what was expected, and clearing the field takes that
+                        // comparison away exactly when it becomes useful.
+                        () => (
+                            <InputTextarea
+                                value={answer}
+                                onValueChange={onAnswerChange}
+                                placeholder="Answer as if you're speaking to the interviewer"
+                                ariaLabel="Answer"
+                                rows={4}
+                                isDisabled={isGraded}
 
-                                />
-                            ),
-                            ...(gradedDetails != null ? [() => gradedDetails] : []),
-                            () => actionRow,
-                        ]}
-                    />
-                )}
-            />
-        </div>
+                            />
+                        ),
+                        ...(gradedDetails != null ? [() => gradedDetails] : []),
+                        () => actionRow,
+                    ]}
+                />
+            )}
+        />
+
     )
 }
 

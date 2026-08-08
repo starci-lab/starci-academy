@@ -22,6 +22,17 @@ test("no-frame-fragment-item rejects fragment laundering", () => {
       {
         code: "const View = () => <StackV items={[() => <StackV items={[() => <Title />, () => <Body />]} />]} />",
       },
+      {
+        // One child inside a fragment is still one typed item.
+        code: "const View = () => <StackH items={[() => <><Title /></>]} />",
+      },
+      {
+        code: "const View = () => <Grid items={[() => <Title />, () => <Body />]} />",
+      },
+      {
+        // Documented gap: React.Fragment JSX member is not a JSXFragment node.
+        code: "const View = () => <StackV items={[() => <React.Fragment><Title /><Body /></React.Fragment>]} />",
+      },
     ],
     invalid: [
       {
@@ -30,6 +41,14 @@ test("no-frame-fragment-item rejects fragment laundering", () => {
       },
       {
         code: "const offer = <><Title /><Body /></>; const View = () => <Grid items={[() => offer]} />",
+        errors: [{ messageId: "fragment" }],
+      },
+      {
+        code: "const View = () => <StackH items={[() => <><Left /><Right /></>]} />",
+        errors: [{ messageId: "fragment" }],
+      },
+      {
+        code: "const pair = <><A /><B /></>; const View = () => <StackV items={[() => pair]} />",
         errors: [{ messageId: "fragment" }],
       },
     ],

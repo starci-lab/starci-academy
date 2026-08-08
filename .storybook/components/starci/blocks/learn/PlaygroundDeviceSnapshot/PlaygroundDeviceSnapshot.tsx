@@ -119,14 +119,13 @@ const PlaygroundDeviceSnapshot = ({
     ]
 
     return (
-        <div>
-            <StatRibbon
-                valueType="body"
-                isSkeleton={isSkeleton}
-                items={items}
+        <StatRibbon
+            valueType="body"
+            isSkeleton={isSkeleton}
+            items={items}
 
-            />
-        </div>
+        />
+
     )
 }
 

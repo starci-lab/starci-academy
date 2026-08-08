@@ -48,6 +48,7 @@ const queryMap: Record<QueryLessonVideos, DocumentNode> = {
     [QueryLessonVideos.Query1]: query1,
 }
 
+/** Default sort: lesson videos by `sortIndex` ascending. */
 export const defaultLessonVideosListSorts: Array<SortInput<LessonVideosSortBy>> = [
     {
         by: LessonVideosSortBy.SortIndex,

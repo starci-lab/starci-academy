@@ -110,7 +110,8 @@ const Base = ({
     // region stays unmounted while loading, exactly like the collapsed real state.
     return (
         <StackV
-            gap={4}
+            principle="label-field"
+            explain="Trigger names the revealed body like a control label — not title-subtitle, because the body is a separate region that mounts and unmounts, not a continuing voice under the title."
             items={[
                 () => (
                     <button
@@ -137,7 +138,11 @@ const Base = ({
                     </button>
                 ),
                 ...(open && !isSkeleton && Content ? [() => (
-                    <StackV gap={4} items={[() => <Content isSkeleton={isSkeleton} />]} />
+                    <StackV
+                        principle="label-field"
+                        explain="Body fills the named revealed region — not title-subtitle, because it is the control's payload, not a subtitle continuing the trigger."
+                        items={[() => <Content isSkeleton={isSkeleton} />]}
+                    />
                 )] : []),
             ]}
         />

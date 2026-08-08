@@ -35,6 +35,10 @@ const queryMap: Record<QueryHeadhuntingCompany, DocumentNode> = {
     [QueryHeadhuntingCompany.Query1]: query1,
 }
 
+/**
+ * Fetches one headhunting company by id.
+ * Mirrors backend `headhuntingCompany`.
+ */
 export const queryHeadhuntingCompany = async ({
     query = QueryHeadhuntingCompany.Query1,
     request,

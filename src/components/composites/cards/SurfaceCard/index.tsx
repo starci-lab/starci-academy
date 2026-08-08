@@ -1097,11 +1097,6 @@ export interface SurfaceCardSelectableGroupProps<T extends string> {
     /** Grid column count. Defaults to `2`. */
     columns?: 1 | 2 | 3
     /**
-     * Where the grid sits inside its parent. Appearance is not passable — it is
-     * already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * Dev/spec: tag each card's own direct parts (`Icon` / `Label` / `Badge`) so a
      * BlockAnatomy panel can badge them.
      */
@@ -1151,7 +1146,6 @@ const SelectableGroup = <T extends string>({
     onChange,
     ariaLabel,
     columns = 2,
-    classNames,
     identity,
 }: SurfaceCardSelectableGroupProps<T>) => (
         <RadioGroup
@@ -1164,7 +1158,6 @@ const SelectableGroup = <T extends string>({
                 principle="sibling-stack"
                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
-                classNames={classNames}
                 items={items.map((item) => ({
                     key: item.value,
                     content: () => (

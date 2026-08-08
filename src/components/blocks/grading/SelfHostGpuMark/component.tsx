@@ -1,6 +1,7 @@
 import React from "react"
-import { Tooltip } from "@heroui/react"
 import { CpuIcon } from "@phosphor-icons/react"
+import { Tooltip } from "@/components/atoms/overlay/Tooltip"
+import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link _SelfHostGpuMark} — presentational; labels already resolved. */
 export interface SelfHostGpuMarkProps {
@@ -15,15 +16,20 @@ export interface SelfHostGpuMarkProps {
  * (e.g. RTX 5060). Icon only on the row; detail lives in the tooltip (no extra chip).
  */
 export const _SelfHostGpuMark = ({ ariaLabel, tooltipLabel }: SelfHostGpuMarkProps) => (
-    <Tooltip>
-        <Tooltip.Trigger
-            aria-label={ariaLabel}
-            className="inline-flex shrink-0 cursor-default"
-        >
-            <CpuIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" />
-        </Tooltip.Trigger>
-        <Tooltip.Content>
-            <span className="text-sm">{tooltipLabel}</span>
-        </Tooltip.Content>
-    </Tooltip>
+    <StackH
+        identity={{ tier: "block", component: "SelfHostGpuMark" }}
+        principle="icon-text"
+        explain="GPU glyph hugging its accessible name — not title-subtitle (no title/subtitle voice), not label-field (no form control), not name-handle (not an identity pair)."
+        items={[
+            () => (
+                <Tooltip label={tooltipLabel}>
+                    <CpuIcon
+                        aria-label={ariaLabel}
+                        focusable="false"
+                        className="size-4 text-accent-soft-foreground"
+                    />
+                </Tooltip>
+            ),
+        ]}
+    />
 )

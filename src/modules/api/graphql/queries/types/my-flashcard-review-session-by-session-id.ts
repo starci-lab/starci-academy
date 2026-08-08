@@ -2,7 +2,7 @@ import type { GraphQLResponse } from "../../types"
 
 /**
  * Payload inside `myFlashcardReviewSessionBySessionId.data` — a flashcard
- * "Học thẻ" session resolved by its id ALONE, whichever kind it is. Absent/null
+ * Study-cards session resolved by its id ALONE, whichever kind it is. Absent/null
  * when the id is not found/not owned by the caller.
  */
 export interface MyFlashcardReviewSessionBySessionIdData {

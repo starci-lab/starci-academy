@@ -106,7 +106,13 @@ export const SurfaceCardHeader = ({
             principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             items={[
-                () => <StackH gap={3} classNames={["min-w-0"]} items={[() => labelSlot]} />,
+                () => (
+                    <StackH
+                        principle="flex-fill-base"
+                        explain="Label column takes remaining width so truncate can clip before the trailing action."
+                        items={[() => labelSlot]}
+                    />
+                ),
                 () => endSlot,
             ]}
         />

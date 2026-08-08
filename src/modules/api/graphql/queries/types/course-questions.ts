@@ -47,7 +47,7 @@ export interface CourseQuestionNode {
     author: CourseQuestionAuthor
     /** Id of the lesson (content) this question belongs to; null for a course-general question. */
     contentId: string | null
-    /** Title of the lesson this question belongs to (for the "Bài: …" tag); null for a course-general question. */
+    /** Title of the lesson this question belongs to (for the "Lesson: …" tag); null for a course-general question. */
     contentTitle: string | null
     /** Id of the module owning the lesson (used to build the lesson route); null for a course-general question. */
     moduleId: string | null

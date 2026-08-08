@@ -5,6 +5,7 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
+import { Box } from "@/components/frames/Box"
 
 
 /** Props for {@link PasswordField}. */
@@ -36,15 +37,21 @@ export const PasswordField = ({
     const t = useTranslations()
     const invalid = !!(touched && error)
     return (
-        <InputPassword
-            label={t("auth.signIn.password.label")}
-            placeholder={t("auth.signIn.password.placeholder")}
-            value={value}
-            onValueChange={onChangeValue}
-            isInvalid={invalid}
-            errorMessage={invalid ? error : undefined}
-            revealLabel={t("auth.signIn.password.show")}
-            hideLabel={t("auth.signIn.password.hide")}
-        />
+        <Box
+            identity={{ tier: "overlay", component: "PasswordField" }}
+            principle="label-field"
+            explain="Single labelled field root — not title-subtitle, because the caption names a form control rather than a heading pair; not icon-text, because there is no leading glyph."
+        >
+            <InputPassword
+                label={t("auth.signIn.password.label")}
+                placeholder={t("auth.signIn.password.placeholder")}
+                value={value}
+                onValueChange={onChangeValue}
+                isInvalid={invalid}
+                errorMessage={invalid ? error : undefined}
+                revealLabel={t("auth.signIn.password.show")}
+                hideLabel={t("auth.signIn.password.hide")}
+            />
+        </Box>
     )
 }

@@ -3,9 +3,6 @@
 import React, {
     useEffect,
 } from "react"
-import {
-    Card,
-} from "@heroui/react"
 import type {
     CvSubmissionFormValues,
 } from "@/types"
@@ -13,6 +10,7 @@ import {
     CvSubmissionFields,
 } from "./CvSubmissionFields"
 import { useCvSubmissionForm } from "@/hooks/rhf/useCvSubmissionForm"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 
 /** Props for {@link CVSubmissionForm}. */
 export interface CVSubmissionFormProps {
@@ -69,20 +67,23 @@ export const CVSubmissionForm = ({
     }, [uploadedFileName, uploadedS3Key, reset])
 
     return (
-        <Card>
-            <CvSubmissionFields
-                cv={watch("cv")}
-                cvError={errors.cv?.message}
-                isSubmitting={isSubmitting}
-                onCvChange={(file) => setValue("cv", file, { shouldValidate: true, shouldTouch: true })}
-                onSubmit={handleFormSubmit}
-                isUploading={isUploading}
-                isProcessing={isProcessing}
-                uploadProgress={uploadProgress}
-                uploadedFileName={uploadedFileName}
-                uploadedS3Key={uploadedS3Key}
-                onProcess={onProcess}
-            />
-        </Card>
+        <SurfaceCard
+            identity={{ tier: "block", component: "CVSubmissionForm" }}
+            body={() => (
+                <CvSubmissionFields
+                    cv={watch("cv")}
+                    cvError={errors.cv?.message}
+                    isSubmitting={isSubmitting}
+                    onCvChange={(file) => setValue("cv", file, { shouldValidate: true, shouldTouch: true })}
+                    onSubmit={handleFormSubmit}
+                    isUploading={isUploading}
+                    isProcessing={isProcessing}
+                    uploadProgress={uploadProgress}
+                    uploadedFileName={uploadedFileName}
+                    uploadedS3Key={uploadedS3Key}
+                    onProcess={onProcess}
+                />
+            )}
+        />
     )
 }

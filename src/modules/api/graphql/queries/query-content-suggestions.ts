@@ -30,6 +30,10 @@ const queryMap: Record<QueryContentSuggestions, DocumentNode> = {
     [QueryContentSuggestions.Query1]: query1,
 }
 
+/**
+ * Fetches content suggestion labels for typeahead.
+ * Mirrors backend `contentSuggestions`.
+ */
 export const queryContentSuggestions = async ({
     query = QueryContentSuggestions.Query1,
     request,

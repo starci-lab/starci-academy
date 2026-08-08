@@ -40,11 +40,11 @@ export interface MyFlashcardReviewSessionBySessionIdRequest {
 }
 
 /**
- * Fetches a flashcard "Học thẻ" session by its id alone (whichever kind it
+ * Fetches a flashcard Study-cards session by its id alone (whichever kind it
  * is) — `null` when not found/not owned by the caller. Mirrors backend
  * `queries/flashcard/my-flashcard-review-session-by-session-id`; this is the
- * unified live route's resolve step (thầy 2026-07-11: "bỏ deck đi, only
- * session thôi" — no `deckId` query hint needed, the session already
+ * unified live route's resolve step (teacher 2026-07-11: drop the deck hint,
+ * resolve by session only — no `deckId` query hint needed, the session already
  * persists that context).
  */
 export const queryMyFlashcardReviewSessionBySessionId = async ({

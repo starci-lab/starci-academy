@@ -60,11 +60,23 @@ test("no-host-element-at-sentence-tier rejects raw structural hosts", () => {
           code: "export const Footer = () => <span className=\"inline-flex\">ok</span>",
         },
         {
+          filename: "D:/repo/src/components/blocks/navigation/Footer/index.tsx",
+          code: "export const Footer = () => <p className=\"text-sm\">ok</p>",
+        },
+        {
+          filename: "D:/repo/src/components/blocks/navigation/Footer/index.tsx",
+          code: "export const Footer = () => <ul><li>ok</li></ul>",
+        },
+        {
           filename: "D:/repo/.storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
           code: `
             import { FooterFrame } from "@sb-components/frames/FooterFrame/FooterFrame"
             export const Footer = () => <FooterFrame body={() => null} />
           `,
+        },
+        {
+          filename: "D:\\repo\\src\\components\\atoms\\display\\Badge\\index.tsx",
+          code: "export const Badge = () => <div className=\"inline-flex\" />",
         },
       ],
       invalid: [
@@ -105,6 +117,16 @@ test("no-host-element-at-sentence-tier rejects raw structural hosts", () => {
           filename: "D:/repo/src/components/blocks/navigation/Navbar/index.tsx",
           code: "export const Navbar = () => <header />",
           errors: [{ messageId: "host", data: { tag: "header" } }],
+        },
+        {
+          filename: "D:\\repo\\src\\components\\blocks\\navigation\\Footer\\index.tsx",
+          code: "export const Footer = () => <div />",
+          errors: [{ messageId: "host", data: { tag: "div" } }],
+        },
+        {
+          filename: "D:/repo/.storybook/components/nivo/blocks/landing/Footer/Footer.tsx",
+          code: "export const Footer = () => <section />",
+          errors: [{ messageId: "host", data: { tag: "section" } }],
         },
       ],
     },

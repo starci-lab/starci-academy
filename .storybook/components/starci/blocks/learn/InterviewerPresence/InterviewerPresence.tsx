@@ -244,16 +244,15 @@ const InterviewerPresence = ({
     ) : null
 
     return (
-        <div>
-            <StackV
-                gap={3}
+        <StackV
+            gap={3}
 
-                items={[
-                    () => headerRow,
-                    () => questionRegion,
-                ]}
-            />
-        </div>
+            items={[
+                () => headerRow,
+                () => questionRegion,
+            ]}
+        />
+
     )
 }
 

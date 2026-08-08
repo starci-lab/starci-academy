@@ -21,7 +21,7 @@ export interface CvBlocksDocumentPayload {
     pdfCdnKey: string | null
     /** The CvGalleryPage's LaTeX (`.tex`) source — user-editable; null until the first compile. */
     texSource: string | null
-    /** Whether this CvGalleryPage is the user's ONE public résumé (single-public-per-user). */
+    /** Whether this CvGalleryPage is the user's ONE public CV (single-public-per-user). */
     isPublic: boolean
     /** ISO 8601 creation timestamp. */
     createdAt: string

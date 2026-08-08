@@ -103,58 +103,57 @@ const QaConversationHeader = ({
     )
 
     return (
-        <div>
-            <StackH
-                gap={4}
-                principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                align="center"
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <Button
-                            isIconOnly
-                            variant="ghost"
-                            size="sm"
-                            prefixIcon={ArrowLeftIcon}
-                            ariaLabel="Collapse conversation"
-                            onPress={onCollapse}
-                            isDisabled={isSkeleton}
+        <StackH
+            gap={4}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            align="center"
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <Button
+                        isIconOnly
+                        variant="ghost"
+                        size="sm"
+                        prefixIcon={ArrowLeftIcon}
+                        ariaLabel="Collapse conversation"
+                        onPress={onCollapse}
+                        isDisabled={isSkeleton}
 
-                        />
-                    ),
-                    () => (
-                        <Avatar
-                            src={asker.avatarUrl}
-                            name={asker.displayName}
-                            seed={asker.id}
-                            size="sm"
-                            isSkeleton={isSkeleton}
+                    />
+                ),
+                () => (
+                    <Avatar
+                        src={asker.avatarUrl}
+                        name={asker.displayName}
+                        seed={asker.id}
+                        size="sm"
+                        isSkeleton={isSkeleton}
 
-                        />
-                    ),
-                    () => identityColumn,
-                    ...(participants.length > 0 ? [() => (
-                        <AvatarGroup
-                            items={participants.map((p) => ({ key: p.id, src: p.avatarUrl, name: p.displayName, seed: p.id }))}
-                            size="sm"
-                            isSkeleton={isSkeleton}
+                    />
+                ),
+                () => identityColumn,
+                ...(participants.length > 0 ? [() => (
+                    <AvatarGroup
+                        items={participants.map((p) => ({ key: p.id, src: p.avatarUrl, name: p.displayName, seed: p.id }))}
+                        size="sm"
+                        isSkeleton={isSkeleton}
 
-                        />
-                    )] : []),
-                    ...(canFollow ? [() => (
-                        <Button
-                            variant={isFollowing ? "secondary" : "primary"}
-                            size="sm"
-                            label={isFollowing ? "Following" : "Follow"}
-                            onPress={onToggleFollow}
-                            isDisabled={isSkeleton || isFollowPending}
+                    />
+                )] : []),
+                ...(canFollow ? [() => (
+                    <Button
+                        variant={isFollowing ? "secondary" : "primary"}
+                        size="sm"
+                        label={isFollowing ? "Following" : "Follow"}
+                        onPress={onToggleFollow}
+                        isDisabled={isSkeleton || isFollowPending}
 
-                        />
-                    )] : []),
-                ]}
-            />
-        </div>
+                    />
+                )] : []),
+            ]}
+        />
+
     )
 }
 

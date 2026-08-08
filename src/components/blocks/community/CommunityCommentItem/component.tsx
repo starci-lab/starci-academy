@@ -113,20 +113,23 @@ export const _CommunityCommentItem = ({
 
     const actions = showReplyToggle || showViewReplies
         ? (
-            <StackH gap={4} items={[
-                ...(showReplyToggle ? [() => (
-                    <Typography size="xs" color="muted" isButton text={labels.replyToggle} onPress={onToggleReplyOpen} />
-                )] : []),
-                ...(showViewReplies ? [() => (
-                    <Typography
-                        size="xs"
-                        color="accent-soft"
-                        isButton
-                        text={repliesOpen ? labels.hideReplies : labels.viewReplies}
-                        onPress={onToggleReplies}
-                    />
-                )] : []),
-            ]} />
+            <StackH
+                principle="flex-action"
+                explain="Reply and view-replies are peer controls the reader acts on — not chip-row, because these are press targets rather than display tags."
+                items={[
+                    ...(showReplyToggle ? [() => (
+                        <Typography size="xs" color="muted" isButton text={labels.replyToggle} onPress={onToggleReplyOpen} />
+                    )] : []),
+                    ...(showViewReplies ? [() => (
+                        <Typography
+                            size="xs"
+                            color="accent-soft"
+                            isButton
+                            text={repliesOpen ? labels.hideReplies : labels.viewReplies}
+                            onPress={onToggleReplies}
+                        />
+                    )] : []),
+                ]} />
         )
         : undefined
 
@@ -153,7 +156,13 @@ export const _CommunityCommentItem = ({
                         onReact={authenticated ? (type: ReactionType | null) => onReactReply?.(reply.id, type) : undefined}
                     />
                 ))
-            repliesContent = <StackV gap={4} items={rows} />
+            repliesContent = (
+                <StackV
+                    principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because reply rows are repeating siblings rather than section groups."
+                    items={rows}
+                />
+            )
         }
     }
 

@@ -359,7 +359,7 @@ const MarkdownContent = ({
         <article
             ref={rootRef}
 
-            className={cn("first:*:mt-0 last:*:mb-0", classNames)}
+            className={cn("first:*:mt-0 last:*:mb-0")}
             data-tier="composite"
             data-component="MarkdownContent"
         >

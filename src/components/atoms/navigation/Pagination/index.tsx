@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from "react"
-import { Pagination as HeroPagination, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Pagination as HeroPagination, Skeleton as HeroSkeleton } from "@heroui/react"
 
 /**
  * `Pagination` — the single page-nav atom wrapping HeroUI `Pagination`.
@@ -36,11 +35,6 @@ export interface PaginationBaseProps {
     siblings?: number
     /** Render the control skeleton (a row of square shimmers) instead of the pager. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -81,7 +75,6 @@ const PaginationBase = ({
     onPageChange,
     siblings = 1,
     isSkeleton = false,
-    classNames,
 }: PaginationBaseProps) => {
     const slots = useMemo(() => buildSlots(currentPage, totalPages, siblings), [currentPage, totalPages, siblings])
 
@@ -93,7 +86,7 @@ const PaginationBase = ({
     if (isSkeleton) {
         // Prev + a few page squares + next.
         return (
-            <div data-tier="atom" data-component="Pagination" className={cn("flex items-center justify-center gap-1", classNames)}>
+            <div data-tier="atom" data-component="Pagination" className="flex items-center justify-center gap-1">
                 {Array.from({ length: 5 }, (_, index) => (
                     <HeroSkeleton
                         key={index}
@@ -105,7 +98,7 @@ const PaginationBase = ({
     }
 
     return (
-        <div data-tier="atom" data-component="Pagination" className={cn("flex justify-center", classNames)}>
+        <div data-tier="atom" data-component="Pagination" className="flex justify-center">
             <HeroPagination aria-label="Pagination" size="sm">
                 <HeroPagination.Content className="flex flex-wrap justify-center gap-1">
                     <HeroPagination.Item>

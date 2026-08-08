@@ -17,7 +17,7 @@ export interface StartFlashcardQuizSessionRequest {
      *  (nullable) on the backend; persisted so history/stats can show it. */
     level: string | null
     /**
-     * Learner-chosen name for this session, set at setup ("Cấu hình luyện").
+     * Learner-chosen name for this session, set at practice setup.
      * Optional — omitted/blank falls back to a TIME-BASED display name derived
      * from the session's `createdAt` (see `sessionDisplayName`), never
      * random-generated.

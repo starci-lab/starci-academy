@@ -2,6 +2,7 @@ import React from "react"
 import { ContinueCardItem } from "@/components/blocks/learn/ContinueCard"
 import { AsyncContent } from "@/components/composites/async/AsyncContent"
 import { Grid, type GridItem } from "@/components/frames/Grid"
+import { StackV } from "@/components/frames/Stack"
 import { Button } from "@/components/atoms/buttons/Button"
 
 /**
@@ -81,36 +82,51 @@ const ContinueLearning = ({
     }))
 
     return (
-        <div>
-            <AsyncContent
-                isLoading={isLoading && items.length === 0}
-                skeleton={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                />}
-                isEmpty={!isLoading && items.length === 0}
-                emptyContent={{
-                    title: hasCourses
-                        ? "You haven't read any lessons or attempted any challenges yet."
-                        : "You haven't joined any courses yet.",
-                    description: hasCourses
-                        ? "Start a lesson so it shows up here under \"Continue learning\"."
-                        : undefined,
-                    action: () => (
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            label="Browse courses"
-                            onPress={onBrowseCourses}
-
-                        />
-                    ),
-
-                }}
-                content={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                />}
-            />
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "ContinueLearning" }}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because this block is one async region with a single content branch."
+            items={[
+                () => (
+                    <AsyncContent
+                        isLoading={isLoading && items.length === 0}
+                        skeleton={() => (
+                            <Grid
+                                items={tiles}
+                                columns={{ base: 1, sm: 2, lg: 3 }}
+                                principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            />
+                        )}
+                        isEmpty={!isLoading && items.length === 0}
+                        emptyContent={{
+                            title: hasCourses
+                                ? "You haven't read any lessons or attempted any challenges yet."
+                                : "You haven't joined any courses yet.",
+                            description: hasCourses
+                                ? "Start a lesson so it shows up here under \"Continue learning\"."
+                                : undefined,
+                            action: () => (
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    label="Browse courses"
+                                    onPress={onBrowseCourses}
+                                />
+                            ),
+                        }}
+                        content={() => (
+                            <Grid
+                                items={tiles}
+                                columns={{ base: 1, sm: 2, lg: 3 }}
+                                principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            />
+                        )}
+                    />
+                ),
+            ]}
+        />
     )
 }
 

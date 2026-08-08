@@ -32,16 +32,13 @@ export const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: 
         isSkeleton={isSkeleton}
         items={[
             () => (
-                <div>
-                    <Avatar
-                        name={name}
-                        src={avatarUrl}
-                        size="lg"
-                        isSkeleton={isSkeleton}
-
-                        ring={isSkeleton ? undefined : rankRingTone(rank)}
-                    />
-                </div>
+                <Avatar
+                    name={name}
+                    src={avatarUrl}
+                    size="lg"
+                    isSkeleton={isSkeleton}
+                    ring={isSkeleton ? undefined : rankRingTone(rank)}
+                />
             ),
             ...(isSkeleton || rank != null
                 ? [

@@ -85,7 +85,6 @@ export const MetaDotRow = ({
                     <Typography
                         size="xs"
                         color={isSkeleton ? undefined : "muted"}
-                        classNames={isSkeleton ? ["w-1/4"] : undefined}
                         isSkeleton={isSkeleton}
                         text={fragment.text}
                     />

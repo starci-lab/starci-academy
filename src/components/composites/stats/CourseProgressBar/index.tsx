@@ -78,7 +78,8 @@ export const CourseProgressBar = ({
 
     return (
         <StackV
-            gap={3}
+            principle="sibling-stack"
+            explain="Track and legend are peer chart chrome — not group-boundary, because neither owns the other as a section."
             items={[
                 /* ATOM GAP: equal-width multi-lane track has no atom counterpart (see
                         file header note), so it stays a hand-drawn real element — the SAME

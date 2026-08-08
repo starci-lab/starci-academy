@@ -1,6 +1,5 @@
 import type { ComponentType, ReactNode } from "react"
 import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `FieldFrame` — the label / hint / control / error scaffold every form atom
@@ -42,8 +41,6 @@ export interface FieldFrameProps {
     children?: ReactNode
     /** The control's `id` so the label's `htmlFor` points correctly — the atom passes the same id down to the control. */
     id?: string
-    /** Where this sits inside its parent (the outer column). Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -95,7 +92,6 @@ const FieldFrameBase = ({
     skeletonControl,
     children,
     id,
-    classNames,
 }: FieldFrameProps) => {
     const hasFrame = label != null || hint != null || errorMessage != null
 
@@ -106,7 +102,7 @@ const FieldFrameBase = ({
             return <>{renderSkeletonControl(skeletonControl)}</>
         }
         return (
-            <div data-tier="composite" data-component="FieldFrame" data-principle="label-field" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
+            <div data-tier="composite" data-component="FieldFrame" data-principle="label-field" className={cn("flex flex-col", FIELD_SEAM)}>
                 {label != null ? (
                     // label-bar look), not the slot word "Label" it stands in for.
                     <HeroSkeleton className="h-4 w-1/3 rounded-md" />
@@ -123,7 +119,7 @@ const FieldFrameBase = ({
 
     // ── Full field ─────────────────────────────────────────────────────────────
     return (
-        <div data-tier="composite" data-component="FieldFrame" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
+        <div data-tier="composite" data-component="FieldFrame" className={cn("flex flex-col", FIELD_SEAM)}>
             {label != null ? (
                 <Label htmlFor={id} isDisabled={isDisabled} className="text-sm font-medium">
                     {withRequired(label, isRequired)}

@@ -3,6 +3,7 @@
 import React from "react"
 import { UserCell } from "@/components/composites/lists/UserCell"
 import { useAppSelector } from "@/redux/hooks"
+import { Box } from "@/components/frames/Box"
 
 /**
  * Props for {@link UserSummary}.
@@ -16,10 +17,16 @@ import { useAppSelector } from "@/redux/hooks"
 export const UserSummary = () => {
     const user = useAppSelector((state) => state.user.user)
     return (
-        <UserCell
-            username={user?.username ?? ""}
-            avatar={user?.avatar}
-            handle={user?.email ?? undefined}
-        />
+        <Box
+            identity={{ tier: "layout", component: "UserSummary" }}
+            principle="identity"
+            explain="Account menu identity row — carries layout identity on the frame that owns avatar|name."
+        >
+            <UserCell
+                username={user?.username ?? ""}
+                avatar={user?.avatar}
+                handle={user?.email ?? undefined}
+            />
+        </Box>
     )
 }

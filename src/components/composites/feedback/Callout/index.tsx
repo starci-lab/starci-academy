@@ -1,7 +1,6 @@
 import type { ComponentType, SVGProps } from "react"
 import { Alert, type AlertStatus } from "@/components/atoms/feedback/Alert"
 import { Button } from "@/components/atoms/buttons/Button"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
@@ -82,10 +81,6 @@ interface CalloutOwnProps {
     onClose?: () => void
     /** Accessible label for the close button. */
     closeAriaLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -123,7 +118,6 @@ export const Callout = (props: CalloutProps) => {
         onAction,
         onClose,
         closeAriaLabel,
-        classNames,
     } = props
     // Narrowed off the discriminant so `title` stays required in the live branch —
     // destructuring it straight off `props` above would widen it to `string | undefined`
@@ -150,7 +144,6 @@ export const Callout = (props: CalloutProps) => {
             }
             onClose={onClose}
             closeAriaLabel={closeAriaLabel}
-            classNames={classNames}
         />
     )
 }

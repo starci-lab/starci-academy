@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import type { ReactionDescriptor } from "./constants"
 
 /** Visual size for {@link ReactionEmoji}. */
@@ -32,12 +31,12 @@ export interface ReactionEmojiProps {
  *
  * @param props - {@link ReactionEmojiProps}
  */
-export const ReactionEmoji = ({ descriptor, size = "xs"}: ReactionEmojiProps) => (
+export const ReactionEmoji = ({ descriptor, size = "xs" }: ReactionEmojiProps) => (
     <img
         src={`/reactions/${descriptor.type}.svg`}
         alt=""
         aria-hidden
         draggable={false}
-        className={cn("inline-block select-none", SIZE_CLASS[size])}
+        className={`inline-block select-none ${SIZE_CLASS[size]}`}
     />
 )

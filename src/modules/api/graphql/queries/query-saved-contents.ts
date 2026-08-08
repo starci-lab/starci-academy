@@ -44,6 +44,10 @@ const queryMap: Record<QuerySavedContents, DocumentNode> = {
     [QuerySavedContents.Query1]: query1,
 }
 
+/**
+ * Fetches the viewer's saved contents (paginated).
+ * Mirrors backend `savedContents`.
+ */
 export const querySavedContents = async ({
     query = QuerySavedContents.Query1,
     request,

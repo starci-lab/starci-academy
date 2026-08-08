@@ -53,7 +53,7 @@ export interface QueryMyFlashcardReviewStatsRequest {
 }
 
 /**
- * Fetches the learner's aggregate flashcard review ("Học thẻ") stats for one
+ * Fetches the learner's aggregate flashcard review (Study cards) stats for one
  * course (reviewed-count/XP trend, per-deck progress — no per-tag breakdown,
  * review sessions carry no per-card correctness data to derive one from).
  * Mirrors `myFlashcardReviewStats` (queries/flashcard/my-flashcard-review-stats).

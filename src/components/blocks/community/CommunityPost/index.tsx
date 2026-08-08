@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { CommunityCommentThread } from "@/components/blocks/community/CommunityCommentThread"
 import { CommunityPostCard } from "@/components/blocks/feed/CommunityPostCard"
+import { StackV } from "@/components/frames/Stack"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityFeedItemData } from "@/modules/api/graphql/queries/types/community-feed"
 
@@ -33,18 +34,27 @@ export const CommunityPost = ({
     const [commentsOpen, setCommentsOpen] = useState(false)
 
     return (
-        <CommunityPostCard
-            post={post}
-            onReact={onReact}
-            onToggleComments={() => setCommentsOpen((previous) => !previous)}
-        >
-            {commentsOpen ? (
-                <CommunityCommentThread
-                    postId={post.id}
-                    authenticated={authenticated}
-                    onChanged={onChanged}
-                />
-            ) : null}
-        </CommunityPostCard>
+        <StackV
+            identity={{ tier: "block", component: "CommunityPost" }}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because the post card and its optional thread are repeating siblings in one feed unit."
+            items={[
+                () => (
+                    <CommunityPostCard
+                        post={post}
+                        onReact={onReact}
+                        onToggleComments={() => setCommentsOpen((previous) => !previous)}
+                    >
+                        {commentsOpen ? (
+                            <CommunityCommentThread
+                                postId={post.id}
+                                authenticated={authenticated}
+                                onChanged={onChanged}
+                            />
+                        ) : null}
+                    </CommunityPostCard>
+                ),
+            ]}
+        />
     )
 }

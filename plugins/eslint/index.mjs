@@ -507,7 +507,7 @@ const requireIdentityRoot = {
     docs: { description: "sentence-tier component.tsx/index.tsx with JSX must pass identity={{ tier, component }} to the root frame/composite — the ROOT carries identity; no hand-rolled wrapper div. [[canon components/frames/_identity.ts]]" },
     schema: [],
     messages: {
-      identity: "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+      identity: "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
     },
   },
   create(context) {

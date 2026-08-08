@@ -41,8 +41,6 @@ export interface ChangelogListProps {
     error?: unknown
     /** Fired when the reader presses "Retry" on the error branch. Omit to render the error with no action. */
     onRetry?: () => void
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /** The block's own section label — matches `dashboard.changelog` in `vi.json`. */
@@ -100,37 +98,35 @@ const ChangelogList = ({
     isLoading,
     error,
     onRetry,
-    className,
 }: ChangelogListProps) => {
     const errorContent: AsyncContentErrorProps = {
         title: ERROR_TITLE,
         onRetry,
         retryLabel: onRetry ? RETRY_LABEL : undefined,
-
     }
 
     return (
-        <div className={className}>
-            <AsyncContent
-                isLoading={isLoading}
-                skeleton={() => (
-                    <SurfaceCardNested
-                        title={TITLE}
-                        items={skeletonItems()}
-                        isSkeleton
-                    />
-                )}
-                isEmpty={entries.length === 0}
-                error={error}
-                errorContent={errorContent}
-                content={() => (
-                    <SurfaceCardNested
-                        title={TITLE}
-                        items={entries.map(entryItem)}
-                    />
-                )}
-            />
-        </div>
+        <AsyncContent
+            isLoading={isLoading}
+            skeleton={() => (
+                <SurfaceCardNested
+                    identity={{ tier: "block", component: "ChangelogList" }}
+                    title={TITLE}
+                    items={skeletonItems()}
+                    isSkeleton
+                />
+            )}
+            isEmpty={entries.length === 0}
+            error={error}
+            errorContent={errorContent}
+            content={() => (
+                <SurfaceCardNested
+                    identity={{ tier: "block", component: "ChangelogList" }}
+                    title={TITLE}
+                    items={entries.map(entryItem)}
+                />
+            )}
+        />
     )
 }
 

@@ -1,6 +1,6 @@
 import type { GraphQLResponse } from "../../types"
 
-/** One recorded card outcome of an in-progress "Hỏi nhanh" run so far. Mirrors
+/** One recorded card outcome of an in-progress Quick quiz run so far. Mirrors
  *  backend `MyInProgressFlashcardQuizSessionResultItem`. */
 export interface MyInProgressFlashcardQuizSessionResultItem {
     /** The flashcard this outcome belongs to. */

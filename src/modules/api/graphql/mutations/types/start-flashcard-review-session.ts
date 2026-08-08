@@ -10,7 +10,7 @@ export interface StartFlashcardReviewSessionRequest {
     /** The deck's card ids, in the order they will be reviewed. */
     cardIds: Array<string>
     /**
-     * Which cards to persist into the session (thầy 2026-07-13 "modal chọn mode"):
+     * Which cards to persist into the session (teacher 2026-07-13 mode-selection modal):
      * `"full"` (default) keeps the whole deck; `"due"` keeps only the cards
      * needing review (no review row yet or past due). Omit for the full deck.
      */

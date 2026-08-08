@@ -18,7 +18,7 @@ export type FoundationResourceEmptyProps = Record<string, never>
  */
 const FoundationResourceEmpty = () => (
     <AsyncContentEmpty
-
+        identity={{ tier: "block", component: "FoundationResourceEmpty" }}
         title="This category doesn't have any resources yet."
     />
 )

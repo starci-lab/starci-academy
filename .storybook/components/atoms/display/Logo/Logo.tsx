@@ -3,15 +3,12 @@
  * ATOM — `Logo`: the system's one and only brand mark (a "C" glyph in pink stroke
  * plus two dotted corner marks), inline SVG, no background, one fixed colour.
  *
- * Its only prop is `className`, which produces no shape of its own — so the atom has
- * no leaf other than `Default`, no union to enumerate. The side-by-side tiles (three
- * heights + a dark background) are `states[]` entries of that one leaf, not separate
- * leaves.
+ * Its only appearance prop is `size` (`navbar` | `footer`). Placement CSS doors are
+ * not public. Side-by-side tiles (heights + dark background) are `states[]` of
+ * `Default`, not separate leaves.
  */
 import React from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/Logo`. Authored in Storybook (not `src`);
@@ -38,14 +35,9 @@ export interface LogoProps {
      * Which host bar this mark sits in — drives the root height (width follows,
      * `w-auto`). Defaults to `"navbar"` (`h-8 w-auto`), matching the prior
      * hard-coded size. Height is a `size` prop rather than a `classNames`
-     * utility — `h-8`/`h-10` are not in {@link AllowedClassName}.
+     * utility — `h-8`/`h-10` are not placement utilities.
      */
     size?: LogoSize
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -61,9 +53,8 @@ export interface LogoProps {
  * ratio — such callers add `self-start` themselves.
  *
  * @param props.size - which host bar this sits in; picks the root height.
- * @param props.classNames - additional positioning utilities for the root svg.
  */
-const LogoBase = ({ size = "navbar", classNames }: LogoProps) => {
+const LogoBase = ({ size = "navbar" }: LogoProps) => {
     return (
         <svg
             data-tier="atom"
@@ -72,7 +63,7 @@ const LogoBase = ({ size = "navbar", classNames }: LogoProps) => {
             viewBox="0 0 512 512"
             width="512"
             height="512"
-            className={cn(sizeClassName[size], "shrink-0", classNames)}
+            className={cn(sizeClassName[size], "shrink-0")}
             role="img"
             aria-label="StarCi Academy"
         >

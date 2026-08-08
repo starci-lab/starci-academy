@@ -107,11 +107,19 @@ const IdentityContentRow = ({
             ),
             () => (
                 <StackV
-                    gap={2}
-                    classNames={["min-w-0", "flex-1"]}
+                    principle="flex-fill-base"
+                    explain="Text column takes remaining row width so the byline truncates instead of shoving the avatar."
                     items={[
-                        () => <Byline isSkeleton={isSkeleton} />,
-                        () => <Body isSkeleton={isSkeleton} />,
+                        () => (
+                            <StackV
+                                principle="title-subtitle"
+                                explain="Byline continues into the body as one voice — not label-field, because neither line names a control."
+                                items={[
+                                    () => <Byline isSkeleton={isSkeleton} />,
+                                    () => <Body isSkeleton={isSkeleton} />,
+                                ]}
+                            />
+                        ),
                     ]}
                 />
             ),

@@ -43,6 +43,10 @@ const queryMap: Record<QueryModules, DocumentNode> = {
     [QueryModules.Query1]: query1,
 }
 
+/**
+ * Fetches course modules (paginated / filtered as requested).
+ * Mirrors backend `modules`.
+ */
 export const queryModules = async ({
     query = QueryModules.Query1,
     request,

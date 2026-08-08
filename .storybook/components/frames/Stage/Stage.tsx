@@ -1,7 +1,5 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
-import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
@@ -37,6 +35,10 @@ import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_ide
  * FRAME API LAW (§13b): FOUR distinct roles ⇒ FOUR named slots -- one required
  * (`canvas`), three optional floating anchors (`topCenter`/`bottomStart`/
  * `bottomEnd`) -- never a single `children`.
+ *
+ * Named-frame contract: structure is intrinsic (`fill` + slots + hard-owned
+ * anchors). No public `principle` / `classNames` door — callers do not restyle
+ * or re-token the stage.
  *
  * `fill` NAMES THE SHAPE, THE INSET STAYS HARD-OWNED (§6c, same discipline as
  * `SplitWorkspace`'s `w-[360px]`/`top-24`). `MindMapPage` hand-wrote
@@ -74,20 +76,6 @@ export interface StageProps {
     fill?: StageFill
     /** Renders `canvas` and every floating slot in their skeleton state. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
-    classNames?: Array<AllowedClassName>
-    /**
-     * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
-     * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * Query as `[data-principle="token"]`. A frame does not KNOW its pattern - the caller does - so it is passed in.
-     */
-    principle?: PrincipleToken
-    /**
-     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
-     * A reason, never a restatement of `principle`.
-     */
-    explain?: ExplainReason
     /**
      * Caller identity to wear on this stage's root instead of the frame's own -- pass this when
      * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
@@ -116,15 +104,10 @@ const Stage = ({
     bottomEnd: BottomEnd,
     fill = "parent",
     isSkeleton,
-    classNames,
-    principle,
-    explain,
     identity}: StageProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "Stage" })}
-        data-principle={principleAttr(principle)}
-        data-explain={explainAttr(explain)}
-        className={cn("relative", FILL_CLASS[fill], classNames)}
+        className={cn("relative", FILL_CLASS[fill])}
     >
         {/* `canvas`/`topCenter`/`bottomStart`/`bottomEnd` are CALLER SLOTS -- the node
             inside belongs to whoever passed it, not to this frame, so none gets a

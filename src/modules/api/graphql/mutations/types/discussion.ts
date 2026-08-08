@@ -7,8 +7,8 @@ import type {
 
 /**
  * GraphQL `CreateCommentRequest` body. A top-level comment must set exactly one of
- * `contentId` (a lesson question) or `courseId` (a course-general "hỏi chung khóa"
- * question); a reply only needs `parentCommentId` (it inherits the parent's scope).
+ * `contentId` (a lesson question) or `courseId` (a course-general Q&A question);
+ * a reply only needs `parentCommentId` (it inherits the parent's scope).
  */
 export interface CreateCommentRequest {
     /** Content the comment is attached to; omit for a course-general question or a reply. */

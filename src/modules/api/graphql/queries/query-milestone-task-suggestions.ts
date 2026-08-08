@@ -30,6 +30,10 @@ const queryMap: Record<QueryMilestoneTaskSuggestions, DocumentNode> = {
     [QueryMilestoneTaskSuggestions.Query1]: query1,
 }
 
+/**
+ * Fetches milestone-task suggestion labels for typeahead.
+ * Mirrors backend `milestoneTaskSuggestions`.
+ */
 export const queryMilestoneTaskSuggestions = async ({
     query = QueryMilestoneTaskSuggestions.Query1,
     request,

@@ -118,7 +118,14 @@ export const _CommunityCommentThread = ({
     } else if (!isSkeleton && isEmpty) {
         listBody = <AsyncContentEmpty title={labels.emptyTitle} />
     } else {
-        listBody = <StackV gap={3} isSkeleton={isSkeleton} items={rows} />
+        listBody = (
+            <StackV
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because top-level comments are repeating siblings rather than section groups."
+                isSkeleton={isSkeleton}
+                items={rows}
+            />
+        )
     }
 
     return (
@@ -130,31 +137,34 @@ export const _CommunityCommentThread = ({
             items={[
                 () => <Divider />,
                 ...(authenticated ? [() => (
-                    <StackV gap={2} items={[
-                        () => (
-                            <InputTextarea
-                                variant="secondary"
-                                rows={2}
-                                value={composerValue}
-                                onValueChange={setComposerValue}
-                                placeholder={labels.composerPlaceholder}
-                                ariaLabel={labels.composerPlaceholder}
-                            />
-                        ),
-                        () => (
-                            <Box principle="push-end" className="ml-auto w-fit"
-                                explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
-                                <Button
-                                    variant="primary"
-                                    size="sm"
-                                    label={labels.send}
-                                    isPending={isSubmitting}
-                                    isDisabled={!composerValue.trim()}
-                                    onPress={() => void onComposerSubmit()}
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because the composer field and send control are repeating siblings in one unit."
+                        items={[
+                            () => (
+                                <InputTextarea
+                                    variant="secondary"
+                                    rows={2}
+                                    value={composerValue}
+                                    onValueChange={setComposerValue}
+                                    placeholder={labels.composerPlaceholder}
+                                    ariaLabel={labels.composerPlaceholder}
                                 />
-                            </Box>
-                        ),
-                    ]} />
+                            ),
+                            () => (
+                                <Box principle="push-end" className="ml-auto w-fit"
+                                    explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        label={labels.send}
+                                        isPending={isSubmitting}
+                                        isDisabled={!composerValue.trim()}
+                                        onPress={() => void onComposerSubmit()}
+                                    />
+                                </Box>
+                            ),
+                        ]} />
                 )] : []),
                 () => listBody,
             ]}

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import type { ComponentType, SVGProps } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `IconTile`: the avatar frame of a thing (course, project, section…).
@@ -54,11 +53,6 @@ interface IconTileOwnProps {
     tone?: IconTileTone
     /** Tile size. Defaults to "md" (64px). */
     size?: IconTileSize
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -139,7 +133,6 @@ const IconTileBase = ({
     tone = "accent",
     size = "sm",
     isSkeleton = false,
-    classNames,
 }: IconTileProps) => {
     // a broken cover URL (404 / unsynced asset) falls back to the icon instead of a
     // broken-image glyph; reset when the src changes.
@@ -156,7 +149,7 @@ const IconTileBase = ({
                 data-tier="atom"
                 data-component="IconTile"
 
-                className={cn("shrink-0", SIZE_BOX[size], SHAPE_CLASS, classNames)}
+                className={cn("shrink-0", SIZE_BOX[size], SHAPE_CLASS)}
             />
         )
     }
@@ -176,7 +169,6 @@ const IconTileBase = ({
                 SHAPE_CLASS,
                 // skip the tint when a cover image fills the tile
                 showImage ? null : TONE[tone],
-                classNames,
             )}
         >
             {showImage ? (

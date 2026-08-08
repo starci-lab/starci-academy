@@ -44,7 +44,7 @@ export interface QueryMyFlashcardReviewHistoryRequest {
 }
 
 /**
- * Fetches the learner's completed flashcard review ("Học thẻ") session
+ * Fetches the learner's completed flashcard review (Study cards) session
  * history for one course (paginated). Mirrors `myFlashcardReviewHistory`
  * (queries/flashcard/my-flashcard-review-history).
  */

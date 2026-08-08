@@ -92,7 +92,6 @@ export const PricePeriod = ({
                 weight="semibold"
                 color="default"
                 isSkeleton={isSkeleton}
-                classNames={isSkeleton ? ["w-1/3"] : undefined}
                 text={amount}
             />
             {/* Struck-through original — only rendered for a real value; no skeleton
@@ -111,7 +110,6 @@ export const PricePeriod = ({
                     size={tokens.period}
                     color={isSkeleton ? undefined : "muted"}
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/4"] : undefined}
                     text={period}
                 />
             ) : null}

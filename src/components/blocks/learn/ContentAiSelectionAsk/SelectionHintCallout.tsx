@@ -4,7 +4,6 @@ import React, { useEffect } from "react"
 import { CursorClickIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { Callout } from "@/components/composites/feedback/Callout"
-import { Box } from "@/components/frames/Box"
 import { useSelectionHintStore } from "./hintStore"
 
 /**
@@ -32,16 +31,14 @@ export const SelectionHintCallout = () => {
     }
 
     return (
-        <Box className="mb-4">
-            <Callout
-                status="accent"
-                icon={CursorClickIcon}
-                title={t("contentAi.selectionHintTitle")}
-                description={t("contentAi.selectionHint")}
-                onClose={markSeen}
-                closeAriaLabel={t("contentAi.dismissHint")}
-            />
-        </Box>
+        <Callout
+            status="accent"
+            icon={CursorClickIcon}
+            title={t("contentAi.selectionHintTitle")}
+            description={t("contentAi.selectionHint")}
+            onClose={markSeen}
+            closeAriaLabel={t("contentAi.dismissHint")}
+        />
     )
 }
 

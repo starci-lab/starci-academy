@@ -12,6 +12,7 @@ import { UserCell } from "@/components/composites/lists/UserCell"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH } from "@/components/frames/Stack"
 
 /** Max ranked users to pull for the board (backend caps this too). */
@@ -73,14 +74,25 @@ const LeaderboardRow = ({ rank, entry, isViewer = false, solvedLabel, youLabel, 
                 () => (isSkeleton
                     ? <Skeleton.Avatar size="sm" />
                     : (
-                        <UserCell
-                            username={entry?.username ?? ""}
-                            size="sm"
-                            classNames={["flex-1"]}
-                            trailing={isViewer ? () => <Chip tone="accent" text={youLabel} /> : undefined}
+                        <FillAvailable
+                            at="base"
+                            explain="Name cell takes remaining row width beside rank and metric — not a fixed peer column."
+                            body={() => (
+                                <UserCell
+                                    username={entry?.username ?? ""}
+                                    size="sm"
+                                    trailing={isViewer ? () => <Chip tone="accent" text={youLabel} /> : undefined}
+                                />
+                            )}
                         />
                     )),
-                ...(isSkeleton ? [() => <Typography size="sm" isSkeleton classNames={["flex-1"]} />] : []),
+                ...(isSkeleton ? [() => (
+                    <FillAvailable
+                        at="base"
+                        explain="Skeleton name placeholder takes remaining row width beside rank and metric."
+                        body={() => <Typography size="sm" isSkeleton />}
+                    />
+                )] : []),
                 // the ranking metric — distinct problems solved (NOT points)
                 () => (
                     <Typography

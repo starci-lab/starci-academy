@@ -5,6 +5,7 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
+import { Box } from "@/components/frames/Box"
 
 
 /** Props for {@link EmailField}. */
@@ -35,14 +36,20 @@ export const EmailField = ({
     const t = useTranslations()
     const invalid = !!(touched && error)
     return (
-        <InputText
-            variant="secondary"
-            label={t("auth.signIn.email.label")}
-            placeholder={t("auth.signIn.email.placeholder")}
-            value={value}
-            onValueChange={onChangeValue}
-            isInvalid={invalid}
-            errorMessage={invalid ? error : undefined}
-        />
+        <Box
+            identity={{ tier: "overlay", component: "EmailField" }}
+            principle="label-field"
+            explain="Single labelled field root — not title-subtitle, because the caption names a form control rather than a heading pair; not icon-text, because there is no leading glyph."
+        >
+            <InputText
+                variant="secondary"
+                label={t("auth.signIn.email.label")}
+                placeholder={t("auth.signIn.email.placeholder")}
+                value={value}
+                onValueChange={onChangeValue}
+                isInvalid={invalid}
+                errorMessage={invalid ? error : undefined}
+            />
+        </Box>
     )
 }

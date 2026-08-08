@@ -36,14 +36,13 @@ const PlaygroundHubHeader = ({
     isSkeleton = false,
 }: PlaygroundHubHeaderProps) => {
     return (
-        <div>
-            <PageHeader
+        <PageHeader
 
-                isSkeleton={isSkeleton}
-                title={title}
-                description={description}
-            />
-        </div>
+            isSkeleton={isSkeleton}
+            title={title}
+            description={description}
+        />
+
     )
 }
 

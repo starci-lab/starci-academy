@@ -32,7 +32,11 @@ const SectionCard = ({
         } as CardProps)}
     >
         <CardContent>
-            <StackV gap={4} items={[() => body]} />
+            <StackV
+                principle="group-boundary"
+                explain="Card chrome wraps the metric stack as one surface group — not sibling-stack, because the card is a section boundary around the lines, not a peer among them."
+                items={[() => body]}
+            />
         </CardContent>
     </Card>
 )
@@ -99,7 +103,8 @@ export const MetricCard = ({
         // SectionCard provides the framed card shell (border + bg + radius)
         <SectionCard body={
             <StackV
-                gap={3}
+                principle="sibling-stack"
+                explain="Value, label, and optional hint are peer lines of one metric — not group-boundary, because none of them is a section wrapping the others."
                 isSkeleton={isSkeleton}
                 items={[
                     // Primary metric value — large and visually prominent

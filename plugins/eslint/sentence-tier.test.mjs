@@ -32,6 +32,23 @@ test("no-raw-shape-at-sentence-tier rejects private raw layout after a CSS door 
           filename: "D:/repo/src/components/atoms/display/Badge/index.tsx",
           code: "export const Badge = () => <span className=\"inline-flex items-center\" />",
         },
+        {
+          filename: "D:/repo/src/components/blocks/example/Example/index.tsx",
+          code: "export const Example = () => <span className=\"sr-only\">label</span>",
+        },
+        {
+          filename: "D:/repo/src/components/blocks/example/Example/index.tsx",
+          code: "export const Example = () => <span className=\"size-4\" />",
+        },
+        {
+          filename: "D:/repo/src/components/blocks/example/Example/index.tsx",
+          code: "export const Example = () => <div className=\"rounded-md bg-surface\" />",
+        },
+        {
+          // componentTier() is src-only today — Storybook sentence files are out of scope.
+          filename: "D:/repo/.storybook/components/starci/blocks/example/Example.tsx",
+          code: "export const Example = () => <div className=\"flex gap-3\" />",
+        },
       ],
       invalid: [
         {
@@ -41,6 +58,21 @@ test("no-raw-shape-at-sentence-tier rejects private raw layout after a CSS door 
               <div className="flex flex-col gap-3">{items}</div>
             )
           `,
+          errors: [{ messageId: "shape" }],
+        },
+        {
+          filename: "D:/repo/src/components/pages/HomePage/component.tsx",
+          code: "export const HomePage = () => <section className=\"grid gap-6\" />",
+          errors: [{ messageId: "shape" }],
+        },
+        {
+          filename: "D:\\repo\\src\\components\\layouts\\InnerLayout\\component.tsx",
+          code: "export const InnerLayout = () => <div className=\"md:flex absolute inset-0\" />",
+          errors: [{ messageId: "shape" }],
+        },
+        {
+          filename: "D:/repo/src/components/overlays/modals/Confirm/index.tsx",
+          code: "export const Confirm = () => <div className=\"items-center justify-between\" />",
           errors: [{ messageId: "shape" }],
         },
       ],

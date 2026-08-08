@@ -36,6 +36,10 @@ const queryMap: Record<QueryFoundationCategories, DocumentNode> = {
     [QueryFoundationCategories.Query1]: query1,
 }
 
+/**
+ * Fetches foundation categories (optionally filtered).
+ * Mirrors backend `foundationCategories`.
+ */
 export const queryFoundationCategories = async ({
     query = QueryFoundationCategories.Query1,
     request,

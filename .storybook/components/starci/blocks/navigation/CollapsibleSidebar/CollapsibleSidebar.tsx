@@ -9,6 +9,7 @@ import { ButtonBase } from "@sb-components/atoms/buttons/Button/ButtonBase"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { DragScrollArea } from "@sb-components/behaviors/DragScrollArea/DragScrollArea"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 
 /**
  * `CollapsibleSidebar` — a content-agnostic shell for a left navigation sidebar
@@ -174,9 +175,10 @@ export const CollapsibleSidebar = ({
                         // hard-clipped by overflow-hidden instead of shrinking so its own
                         // `truncate` text can ellipsize.
                         () => (
-                            <div className="min-w-0">
-                                {topSlot}
-                            </div>
+                            <FillAvailable
+                                at="base"
+                                body={() => <>{topSlot}</>}
+                            />
                         ),
                         // body: the nav — ALWAYS rendered; row content decides its own icon-only
                         // look off `useSidebarCollapsed`. `DragScrollArea` owns the overflow
@@ -184,6 +186,7 @@ export const CollapsibleSidebar = ({
                         // column its `gap={4}` rhythm and default `align="stretch"` (rows
                         // fill the rail's width whether expanded or collapsed), since the scroll
                         // frame itself lays out nothing.
+                        // HOLD: no house NavLandmark frame owns `<nav>` + column flex-fill yet.
                         () => (
                             <nav className="flex min-h-0 flex-1 flex-col">
                                 <DragScrollArea size={40} className="flex-1">

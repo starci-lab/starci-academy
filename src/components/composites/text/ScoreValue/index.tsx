@@ -54,7 +54,6 @@ export const ScoreValue = ({ points, unit = "points", isSkeleton = false}: Score
         weight="medium"
         tabularNums
         isSkeleton={isSkeleton}
-        classNames={isSkeleton ? ["w-1/4"] : undefined}
         text={`${points} ${unit}`}
     />
 )

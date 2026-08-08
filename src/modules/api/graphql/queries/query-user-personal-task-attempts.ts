@@ -50,6 +50,7 @@ const queryMap: Record<QueryUserPersonalTaskAttempts, DocumentNode> = {
     [QueryUserPersonalTaskAttempts.Query1]: query1,
 }
 
+/** Default sort: personal-task attempts by `attemptNumber` descending. */
 export const defaultUserPersonalTaskAttemptsListSorts: Array<SortInput<UserPersonalTaskAttemptsSortBy>> = [
     {
         by: UserPersonalTaskAttemptsSortBy.AttemptNumber,

@@ -1,5 +1,4 @@
 import { Callout } from "@/components/composites/feedback/Callout"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * BLOCK — `TaskLockedAlert`: warning shown while previewing a personal-project
@@ -37,8 +36,6 @@ export interface TaskLockedAlertProps {
      * where "the current task" is (mirrors the real `canGoToCurrentTask` gate).
      */
     onGoToCurrentTask?: () => void
-    /** Placement utilities only, from the closed positioning union — NOT for restyling the alert. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -51,7 +48,6 @@ const TaskLockedAlertBase = ({
     message,
     ctaLabel = DEFAULT_CTA_LABEL,
     onGoToCurrentTask,
-    classNames,
 }: TaskLockedAlertProps) => (
     <Callout
         status="warning"
@@ -59,7 +55,6 @@ const TaskLockedAlertBase = ({
         description={message}
         actionLabel={onGoToCurrentTask ? ctaLabel : undefined}
         onAction={onGoToCurrentTask}
-        classNames={classNames}
     />
 )
 

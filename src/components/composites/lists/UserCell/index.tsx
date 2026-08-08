@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { Avatar } from "@/components/atoms/display/Avatar"
 import { IconTile, type IconComponent, type IconTileTone } from "@/components/atoms/display/IconTile"
 import { Typography } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Box } from "@/components/frames/Box"
 
@@ -66,10 +65,6 @@ export interface UserCellProps {
      */
     isOwnRow?: boolean
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * Render the leaf skeleton (shimmer) instead of the cell. Every shimmer is
      * delegated to the atom it stands for — `Avatar isSkeleton size={size}` for
      * the circle, `Typography isSkeleton` for the name/handle bars — so none of
@@ -103,7 +98,6 @@ const UserCellBase = ({
     trailing: Trailing,
     leadingIcon: LeadingIcon,
     leadingTone = "accent",
-    classNames,
     isOwnRow = false,
     isSkeleton = false,
 }: UserCellProps) => {
@@ -129,7 +123,7 @@ const UserCellBase = ({
             <div
                 data-tier="composite"
                 data-component="UserCell"
-                className={cn("flex min-w-0 items-center gap-2", classNames)}
+                className={cn("flex min-w-0 items-center gap-2")}
             >
                 {LeadingIcon ? (
                     <IconTile isSkeleton size="sm" />
@@ -139,7 +133,7 @@ const UserCellBase = ({
                 <div className="flex min-w-0 flex-col gap-0">
                     <Typography size="sm" isSkeleton />
                     {handle ? (
-                        <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                        <Typography size="xs" isSkeleton />
                     ) : null}
                 </div>
                 {trailingSlot}
@@ -151,7 +145,7 @@ const UserCellBase = ({
         <div
             data-tier="composite"
             data-component="UserCell"
-            className={cn("flex min-w-0 items-center gap-2", classNames)}
+            className={cn("flex min-w-0 items-center gap-2")}
         >
             {LeadingIcon ? (
                 <IconTile

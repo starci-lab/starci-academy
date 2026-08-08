@@ -1,10 +1,7 @@
 import type { ComponentType, SVGProps } from "react"
 import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
-import { Box } from "@sb-components/frames/Box/Box"
-import { cn } from "@heroui/react"
 
 /**
  * `Callout` — a flat tint strip placed inside a surface (surface-in-surface), not a floating
@@ -69,10 +66,6 @@ interface CalloutOwnProps {
     onClose?: () => void
     /** Accessible label for the close button. */
     closeAriaLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -110,7 +103,6 @@ export const Callout = (props: CalloutProps) => {
         onAction,
         onClose,
         closeAriaLabel,
-        classNames,
     } = props
     // Narrowed off the discriminant so `title` stays required in the live branch —
     // destructuring it straight off `props` above would widen it to `string | undefined`
@@ -118,7 +110,7 @@ export const Callout = (props: CalloutProps) => {
     const content = props.isSkeleton
         ? ({ isSkeleton: true, title: props.title } as const)
         : ({ isSkeleton: false, title: props.title } as const)
-    const alert = (
+    return (
         <Alert
             status={status}
             tone="soft"
@@ -139,5 +131,4 @@ export const Callout = (props: CalloutProps) => {
             closeAriaLabel={closeAriaLabel}
         />
     )
-    return classNames?.length ? <Box className={cn(classNames)}>{alert}</Box> : alert
 }

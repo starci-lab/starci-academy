@@ -63,6 +63,10 @@ const queryMap: Record<QueryAiModels, DocumentNode> = {
     [QueryAiModels.Query1]: query1,
 }
 
+/**
+ * Fetches the catalog of AI models (tiers, gradable models, task kinds).
+ * Mirrors backend `aiModels`.
+ */
 export const queryAiModels = async ({
     query = QueryAiModels.Query1,
     headers,

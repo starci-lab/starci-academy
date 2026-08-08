@@ -49,6 +49,8 @@ export const _AiSubscriptionPage = ({
     <StackV
         identity={{ tier: "page", component: "AiSubscriptionPage" }}
         gap={8}
+        principle="block-boundary"
+        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
         items={[
             () => (
                 <PageHeader

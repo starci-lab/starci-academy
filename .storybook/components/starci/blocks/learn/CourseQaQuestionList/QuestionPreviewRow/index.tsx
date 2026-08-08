@@ -89,15 +89,12 @@ export const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewR
 
             items={[
                 () => (
-                    <div className="shrink-0">
-                        <Avatar
-                            src={question.author.avatarUrl}
-                            name={question.author.displayName}
-                            seed={question.author.id}
-                            size="sm"
-
-                        />
-                    </div>
+                    <Avatar
+                        src={question.author.avatarUrl}
+                        name={question.author.displayName}
+                        seed={question.author.id}
+                        size="sm"
+                    />
                 ),
                 () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={textColumnItems} />,
                 () => (

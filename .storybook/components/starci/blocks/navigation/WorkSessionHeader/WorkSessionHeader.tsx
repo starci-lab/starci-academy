@@ -4,6 +4,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { Box } from "@sb-components/frames/Box/Box"
 import { principleAttr } from "@sb-components/frames/_principles"
 
 /**
@@ -78,7 +79,10 @@ const WorkSessionHeader = ({
 }: WorkSessionHeaderProps) => {
     if (isSkeleton) {
         return (
-            <div className="border-b border-default bg-surface">
+            <Box
+                className="border-b border-default bg-surface"
+                identity={{ tier: "block", component: "WorkSessionHeader" }}
+            >
                 <StackH
                     principle="content-row"
                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
@@ -97,7 +101,7 @@ const WorkSessionHeader = ({
                     isSkeleton={isSkeleton}
                     items={[() => <HeroSkeleton className="h-1 w-full rounded-full" />]}
                 />
-            </div>
+            </Box>
         )
     }
     const done = new Set(doneSteps ?? [])
@@ -139,7 +143,10 @@ const WorkSessionHeader = ({
     })
 
     return (
-        <div className="border-b border-default bg-surface">
+        <Box
+            className="border-b border-default bg-surface"
+            identity={{ tier: "block", component: "WorkSessionHeader" }}
+        >
             <StackH
                 principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
@@ -169,7 +176,7 @@ const WorkSessionHeader = ({
                 isSkeleton={isSkeleton}
                 items={[() => railSegments]}
             />
-        </div>
+        </Box>
     )
 }
 

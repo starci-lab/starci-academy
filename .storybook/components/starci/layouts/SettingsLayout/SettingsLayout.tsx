@@ -1,7 +1,8 @@
 import React from "react"
 import { SettingsSidebarNav, type SettingsNavGroup } from "@sb-components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav"
 import { Container } from "@sb-components/frames/Container/Container"
-import { StackV } from "@sb-components/frames/Stack/Stack"
+import { RailShell } from "@sb-components/frames/RailShell/RailShell"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * `SettingsLayout` — the chrome around every `/profile/(settings)` route: a nav
@@ -10,6 +11,9 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * active page changes underneath. One leaf: the nav-plus-content arrangement
  * never loses a region on data, so which page is active and what it renders are
  * states.
+ *
+ * Mirrored from src `layouts/SettingsLayout`: `RailShell` owns the stacked→row
+ * switch and the growing content column.
  */
 
 /** Props for {@link SettingsLayout}. */
@@ -35,7 +39,7 @@ export interface SettingsLayoutProps {
 /**
  * The settings shell: nav beside content, column-first, row from `@app-md`.
  * See the file header for why this is a `layouts/` file, why it has only two
- * leaves, and why the outer switch is `StackV` rather than `Split`.
+ * leaves, and why the outer switch is `RailShell` rather than a raw host.
  *
  * @param props - {@link SettingsLayoutProps}
  */
@@ -49,39 +53,35 @@ const SettingsLayout = ({
     expandLabel,
     storageKey,
 }: SettingsLayoutProps) => {
-    const navAndContent = [
-        () => (
-            <SettingsSidebarNav
+    const navSlot: ComponentTypeWithSkeleton = () => (
+        <SettingsSidebarNav
+            groups={groups}
+            activeHref={activeHref}
+            onNavigate={onNavigate}
+            title={title}
+            collapseLabel={collapseLabel}
+            expandLabel={expandLabel}
+            storageKey={storageKey}
+        />
+    )
 
-                groups={groups}
-                activeHref={activeHref}
-                onNavigate={onNavigate}
-                title={title}
-                collapseLabel={collapseLabel}
-                expandLabel={expandLabel}
-                storageKey={storageKey}
-            />
-        ),
-        () => (
-            <Container
-
-                size="md"
-                padding={6}
-                classNames={["min-w-0", "flex-1"]}
-                body={() => children}
-            />
-        ),
-    ]
+    const contentSlot: ComponentTypeWithSkeleton = () => (
+        <Container
+            size="md"
+            padding={6}
+            body={() => children}
+        />
+    )
 
     return (
-        <div>
-            <div className="@app-md:flex-row @app-md:items-start">
-                <StackV
-                    gap={1}
-                    items={navAndContent}
-                />
-            </div>
-        </div>
+        <RailShell
+            rail={navSlot}
+            body={contentSlot}
+            at="md"
+            principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+            identity={{ tier: "layout", component: "SettingsLayout" }}
+        />
     )
 }
 

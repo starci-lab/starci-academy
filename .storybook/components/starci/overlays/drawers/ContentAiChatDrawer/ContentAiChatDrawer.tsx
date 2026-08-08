@@ -5,6 +5,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { StackH } from "@sb-components/frames/Stack/Stack"
+import { Box } from "@sb-components/frames/Box/Box"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 
 /**
  * `ContentAiChatDrawer` — the global "ask StarCi AI" chat panel in drawer
@@ -15,6 +17,9 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * (caller-supplied vs the block's fallback) is a data state. The chat body is a
  * placeholder (`SurfaceCard` + `EmptyState`) standing in for the real
  * `ChatThread`/`ChatComposer` blocks.
+ *
+ * Mirrored from src twin: `FillAvailable` owns the title column; `Box` owns the
+ * close-button `pr-8` clearance on the custom header path.
  */
 
 /** Fixed accessible name for the mode switch — see the file header on why this is not a prop. */
@@ -94,25 +99,33 @@ const ContentAiChatDrawer = ({
 
     const titleAndModeSwitch = [
         () => (
-            <span className="min-w-0 flex-1">
-                <Typography text={title ?? FALLBACK_TITLE} weight="bold" truncate />
-            </span>
+            <FillAvailable
+                at="base"
+                body={() => (
+                    <Typography text={title ?? FALLBACK_TITLE} weight="bold" truncate />
+                )}
+            />
         ),
         ...(hasModeSwitch ? [() => (
-            <span>
-                <ButtonRadioGroup
-                    items={MODE_ITEMS}
-                    value={mode as ContentAiChatDrawerMode}
-                    onChange={(next) => onModeChange?.(next)}
-                    ariaLabel={MODE_SWITCH_ARIA_LABEL}
-
-                />
-            </span>
+            <ButtonRadioGroup
+                items={MODE_ITEMS}
+                value={mode as ContentAiChatDrawerMode}
+                onChange={(next) => onModeChange?.(next)}
+                ariaLabel={MODE_SWITCH_ARIA_LABEL}
+            />
         )] : []),
     ]
 
+    // `DrawerShell.header` only carries ONE Typography node, so a second element
+    // beside it (the mode switch) has to compose its own wrapper — which then
+    // owns its own `pr-8` for the close button, same contract the src twin uses.
+    // `Box` is the frame tier's escape hatch for single-side padding no Stack prop expresses.
     const header = () => (
-        <div className="pr-8">
+        <Box
+            className="pr-8"
+            principle="control-pad"
+            explain="Reserves room for DrawerShell close trigger — not sibling-stack, because this is chrome inset beside the close button rather than a peer seam."
+        >
             <StackH
                 gap={3}
                 principle="sibling-stack"
@@ -120,32 +133,28 @@ const ContentAiChatDrawer = ({
                 justify="between"
                 items={titleAndModeSwitch}
             />
-        </div>
+        </Box>
     )
 
     return (
-        <div>
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                header={header}
-                body={() => (
-                    <SurfaceCard
-
-
-                        body={() => (
-                            <EmptyState
-                                icon={ChatsCircleIcon}
-                                title={BODY_GAP_TITLE}
-                                description={BODY_GAP_DESCRIPTION}
-
-                            />
-                        )}
-                    />
-                )}
-            />
-        </div>
+        <DrawerShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={placement}
+            header={header}
+            body={() => (
+                <SurfaceCard
+                    identity={{ tier: "overlay", component: "ContentAiChatDrawer" }}
+                    body={() => (
+                        <EmptyState
+                            icon={ChatsCircleIcon}
+                            title={BODY_GAP_TITLE}
+                            description={BODY_GAP_DESCRIPTION}
+                        />
+                    )}
+                />
+            )}
+        />
     )
 }
 

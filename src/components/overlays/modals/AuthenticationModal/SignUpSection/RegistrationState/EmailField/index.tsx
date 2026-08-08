@@ -3,6 +3,7 @@
 import { InputText } from "@/components/atoms/forms"
 import React from "react"
 import { useTranslations } from "next-intl"
+import { Box } from "@/components/frames/Box"
 
 
 /** Props for {@link EmailField}. */
@@ -33,14 +34,20 @@ export const EmailField = ({
     const t = useTranslations()
     const showError = Boolean(touched && error)
     return (
-        <InputText
-            variant="secondary"
-            label={t("auth.signUp.email.label")}
-            placeholder={t("auth.signUp.email.placeholder")}
-            isInvalid={showError}
-            errorMessage={showError ? error : undefined}
-            value={value}
-            onValueChange={onChangeValue}
-        />
+        <Box
+            identity={{ tier: "overlay", component: "EmailField" }}
+            principle="label-field"
+            explain="Single labelled field root — not title-subtitle, because the caption names a form control rather than a heading pair; not icon-text, because there is no leading glyph."
+        >
+            <InputText
+                variant="secondary"
+                label={t("auth.signUp.email.label")}
+                placeholder={t("auth.signUp.email.placeholder")}
+                isInvalid={showError}
+                errorMessage={showError ? error : undefined}
+                value={value}
+                onValueChange={onChangeValue}
+            />
+        </Box>
     )
 }

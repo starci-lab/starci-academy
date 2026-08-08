@@ -47,32 +47,31 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
     const showSkeleton = isLoading || !data
 
     return (
-        <div>
-            <StackV gap={4} items={[
-                () => (
-                    <QuotaBar
-                        label="Next 5 hours"
-                        used={data?.window5h.used ?? 0}
-                        limit={data?.window5h.limit ?? 0}
-                        resetLabel={data?.window5h.resetLabel}
-                        isSkeleton={showSkeleton}
+        <StackV gap={4} items={[
+            () => (
+                <QuotaBar
+                    label="Next 5 hours"
+                    used={data?.window5h.used ?? 0}
+                    limit={data?.window5h.limit ?? 0}
+                    resetLabel={data?.window5h.resetLabel}
+                    isSkeleton={showSkeleton}
 
 
-                    />
-                ),
-                () => (
-                    <QuotaBar
-                        label="This week"
-                        used={data?.windowWeek.used ?? 0}
-                        limit={data?.windowWeek.limit ?? 0}
-                        resetLabel={data?.windowWeek.resetLabel}
-                        isSkeleton={showSkeleton}
+                />
+            ),
+            () => (
+                <QuotaBar
+                    label="This week"
+                    used={data?.windowWeek.used ?? 0}
+                    limit={data?.windowWeek.limit ?? 0}
+                    resetLabel={data?.windowWeek.resetLabel}
+                    isSkeleton={showSkeleton}
 
 
-                    />
-                ),
-            ]} />
-        </div>
+                />
+            ),
+        ]} />
+
     )
 }
 

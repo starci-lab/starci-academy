@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { ChoiceCheckbox } from "@/components/atoms/forms"
 import { Typography } from "@/components/atoms/text/Typography"
 import { pathConfig } from "@/resources/path"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link AgreeToTermsRow}. */
 export interface AgreeToTermsRowProps {
@@ -46,12 +47,18 @@ export const AgreeToTermsRow = ({
     )
 
     return (
-        <ChoiceCheckbox
-            isSelected={isSelected}
-            onValueChange={onChangeSelected}
-            label={label}
-            isInvalid={showError}
-            errorMessage={showError ? error : undefined}
-        />
+        <Box
+            identity={{ tier: "overlay", component: "AgreeToTermsRow" }}
+            principle="label-field"
+            explain="Agreement control root — not title-subtitle, because the caption names a form control rather than a heading pair; not icon-text, because there is no leading glyph."
+        >
+            <ChoiceCheckbox
+                isSelected={isSelected}
+                onValueChange={onChangeSelected}
+                label={label}
+                isInvalid={showError}
+                errorMessage={showError ? error : undefined}
+            />
+        </Box>
     )
 }

@@ -6,7 +6,6 @@ import {
     ButtonGroupRoot,
     ButtonGroupSeparator,
 } from "@sb-components/atoms/buttons/ButtonGroup/ButtonGroup"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `Button.RadioGroup` — a flex-wrap row of selectable buttons, single- or multi-select.
@@ -48,10 +47,6 @@ interface ButtonRadioGroupBaseProps<T extends string> {
      * `key`s) so each is an individual segment. Omit for a plain single-select row.
      */
     itemAction?: (item: ButtonRadioGroupItem<T>) => ReactNode
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Single-select mode (default) — exactly one value selected at a time. */
@@ -107,7 +102,7 @@ export const meta = { tier: "composite", name: "ButtonRadioGroup" } as const
  * @param props - {@link ButtonRadioGroupProps}
  */
 export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<T>) => {
-    const { items, ariaLabel, trailing, itemAction, classNames } = props
+    const { items, ariaLabel, trailing, itemAction } = props
     // narrow the discriminated union once — selection state + the press handler are
     // the only things that differ between single- and multi-select.
     const isSelected = (candidate: T): boolean =>
@@ -123,7 +118,7 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
         <div
             role="group"
             aria-label={ariaLabel}
-            className={cn("flex flex-wrap items-center gap-2", classNames)}
+            className={cn("flex flex-wrap items-center gap-2")}
             data-tier="composite"
             data-component="ButtonRadioGroup"
             data-principle="flex-action"

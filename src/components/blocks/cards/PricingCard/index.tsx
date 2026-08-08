@@ -4,7 +4,8 @@ import React, { type ComponentType } from "react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
-import { StackH, StackV } from "@/components/frames/Stack"
+import { StackH } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 
 /** Props for {@link PricingCard}. */
 export interface PricingCardProps {
@@ -117,9 +118,7 @@ export const PricingCard = ({
             />
 
             {/* Feature list — grows to fill available vertical space; caller controls markup */}
-            <StackV gap={1} classNames={["flex-1"]} body={() => <Features />} />
-
-            {/* CTA pinned to the bottom of the card */}
+            <FillAvailable at="base" body={Features} />            {/* CTA pinned to the bottom of the card */}
             <Cta />
         </SectionCard>
     )

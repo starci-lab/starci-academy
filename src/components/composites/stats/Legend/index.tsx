@@ -15,9 +15,9 @@ import { StackH } from "@/components/frames/Stack"
  * `rgb(…)`, …) is applied as an inline `backgroundColor` — same dual-mode
  * handling as the dot of `Chip` (`dotClassName` vs `dotColor`).
  */
-const resolveDotColor = (color: string): { className?: string; style?: React.CSSProperties } =>
+const resolveDotColor = (color: string): { bgClass?: string; style?: React.CSSProperties } =>
     color.startsWith("bg-")
-        ? { className: color }
+        ? { bgClass: color }
         : { style: { backgroundColor: color } }
 
 /** One legend entry: a colour swatch + its label (+ an optional trailing value). */
@@ -93,7 +93,8 @@ export const Legend = ({
                 ? Array.from({ length: skeletonCount }, (_unused, index) => (
                     <StackH
                         key={index}
-                        gap={3}
+                        principle="icon-text"
+                        explain="Swatch hugs its legend label — not name-handle, because this is a colour key not an identity pair."
                         items={[
                             /* ATOM GAP: no swatch/dot atom exists yet, so the dot stays a
                                     real plain span in both states — a neutral flat fill (no
@@ -115,13 +116,14 @@ export const Legend = ({
                     return (
                         <StackH
                             key={item.key}
-                            gap={3}
+                            principle="icon-text"
+                            explain="Swatch hugs its legend label — not name-handle, because this is a colour key not an identity pair."
                             items={[
                                 () => (
                                     <span
                                         aria-hidden
                                         style={dot.style}
-                                        className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
+                                        className={cn("size-2.5 shrink-0 rounded-full", dot.bgClass)}
                                     />
                                 ),
                                 () => <Typography size="xs" color="muted" text={`${item.label}${item.suffix ?? ""}`} />,

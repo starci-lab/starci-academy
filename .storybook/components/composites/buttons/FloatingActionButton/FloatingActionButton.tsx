@@ -2,7 +2,6 @@
 
 import { cn } from "@heroui/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -29,10 +28,6 @@ export interface FloatingActionButtonProps {
     icon?: IconComponent
     /** `true` → skeleton mirror (round FAB box, same placement) while loading. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -48,14 +43,10 @@ export const FloatingActionButton = ({
     ariaLabel,
     icon: Icon,
     isSkeleton = false,
-    classNames,
 }: FloatingActionButtonProps) => {
     return (
         <div
-            className={cn(
-                "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40",
-                classNames,
-            )}
+            className={cn("fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40")}
         >
             <Button
                 isIconOnly

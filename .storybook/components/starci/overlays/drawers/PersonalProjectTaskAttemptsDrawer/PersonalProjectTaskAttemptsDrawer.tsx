@@ -200,27 +200,26 @@ const PersonalProjectTaskAttemptsDrawer = ({
     const loading = isLoading || isSkeleton
 
     return (
-        <div>
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                title={DRAWER_TITLE}
-                body={() => (
-                    // One list owns all four states — error → skeleton → empty → content.
-                    // While loading it renders placeholder rows (the real items are still
-                    // empty) with the shimmer flowing down through `isSkeleton`; empty and
-                    // error are the shared `AsyncContent*` frames dropped in as its own slots.
-                    <SurfaceCardList
-                        items={loading ? skeletonItems : items}
-                        isSkeleton={loading}
-                        error={error}
-                        errorState={() => <AsyncContentError {...errorContent} />}
-                        emptyState={() => <AsyncContentEmpty {...emptyContent} />}
-                    />
-                )}
-            />
-        </div>
+        <DrawerShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={placement}
+            title={DRAWER_TITLE}
+            body={() => (
+                // One list owns all four states — error → skeleton → empty → content.
+                // While loading it renders placeholder rows (the real items are still
+                // empty) with the shimmer flowing down through `isSkeleton`; empty and
+                // error are the shared `AsyncContent*` frames dropped in as its own slots.
+                <SurfaceCardList
+                    items={loading ? skeletonItems : items}
+                    isSkeleton={loading}
+                    error={error}
+                    errorState={() => <AsyncContentError {...errorContent} />}
+                    emptyState={() => <AsyncContentEmpty {...emptyContent} />}
+                    identity={{ tier: "overlay", component: "PersonalProjectTaskAttemptsDrawer" }}
+                />
+            )}
+        />
     )
 }
 

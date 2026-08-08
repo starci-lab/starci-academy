@@ -85,7 +85,6 @@ export const Dropzone = ({
                                 principle="sibling-stack"
                                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                 align="center"
-                                classNames={["w-full"]}
                                 items={[
                                     ...(isSkeleton
                                         ? []

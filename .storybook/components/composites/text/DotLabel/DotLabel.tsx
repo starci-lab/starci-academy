@@ -34,13 +34,13 @@ const TONE_TO_TYPOGRAPHY: Record<DotLabelTone, TypographyColor> = {
  */
 /** The resolved dot paint channel — a Tailwind `bg-*` className, or a raw-colour inline style, never both. */
 interface ResolvedDotColor {
-    className?: string
+    bgClass?: string
     style?: React.CSSProperties
 }
 
 const resolveDotColor = (color: string): ResolvedDotColor => {
     if (color.startsWith("bg-")) {
-        return { className: color }
+        return { bgClass: color }
     }
     return { style: { backgroundColor: color } }
 }
@@ -112,7 +112,7 @@ export const DotLabel = ({
                 <span
                     aria-hidden
                     style={dot?.style}
-                    className={cn("size-2.5 shrink-0 rounded-full", dot?.className)}
+                    className={cn("size-2.5 shrink-0 rounded-full", dot?.bgClass)}
 
                 />
             )}

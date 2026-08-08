@@ -214,216 +214,213 @@ const ProfileHero = ({
     const hasMetaList = isSkeleton || socialEntries.length > 0 || Boolean(joinedAt)
 
     return (
-        <div>
-            <SurfaceCard
-
-
-                body={() => (
-                    <StackV
-                        gap={6}
-                        isSkeleton={isSkeleton}
-                        items={[
-                            () => (
-                                <StackV
-                                    principle="card-caption"
-                                    explain="Holds caption text under card media so the caption stays attached to the image above it."
-                                    isSkeleton={isSkeleton}
-                                    items={[
-                                        () => (
-                                            <ProfileRankAvatar
-                                                name={fullName}
-                                                avatarUrl={avatarUrl}
-                                                rank={rank}
-                                                isSkeleton={isSkeleton}
-
-                                            />
-                                        ),
-                                        () => (
-                                            <StackV
-                                                principle="name-handle"
-                                                explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
-                                                isSkeleton={isSkeleton}
-                                                items={[
-                                                    () => (
-                                                        <Typography
-                                                            size="h5"
-                                                            weight="bold"
-                                                            align="center"
-                                                            isSkeleton={isSkeleton}
-                                                            text={fullName}
-
-                                                        />
-                                                    ),
-                                                    () => (
-                                                        <Typography
-                                                            size="sm"
-                                                            color="muted"
-                                                            align="center"
-                                                            isSkeleton={isSkeleton}
-                                                            text={isSkeleton ? undefined : `@${handle}`}
-
-                                                        />
-                                                    ),
-                                                    ...(isSkeleton || roleTitle
-                                                        ? [
-                                                            () => (
-                                                                <Typography
-                                                                    size="sm"
-                                                                    weight="medium"
-                                                                    align="center"
-                                                                    isSkeleton={isSkeleton}
-                                                                    text={roleTitle}
-
-                                                                />
-                                                            ),
-                                                        ]
-                                                        : []),
-                                                ]}
-                                            />
-                                        ),
-                                    ]}
-                                />
-                            ),
-
-                            ...(isSkeleton || bio
-                                ? [
+        <SurfaceCard
+            identity={{ tier: "block", component: "ProfileHero" }}
+            body={() => (
+                <StackV
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major profile hero sections rather than nested groups."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <StackV
+                                principle="card-caption"
+                                explain="Holds caption text under card media so the caption stays attached to the image above it."
+                                isSkeleton={isSkeleton}
+                                items={[
                                     () => (
-                                        <Typography
-                                            size="sm"
-                                            color="muted"
-                                            align="center"
-                                            lineClamp={3}
+                                        <ProfileRankAvatar
+                                            name={fullName}
+                                            avatarUrl={avatarUrl}
+                                            rank={rank}
                                             isSkeleton={isSkeleton}
-                                            text={bio}
-
                                         />
                                     ),
-                                ]
-                                : []),
-
-                            ...(hasLocationRow
-                                ? [
-                                    () => (
-                                        <Cluster
-                                            gap={3}
-                                            principle="chip-row"
-                                            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
-                                            items={[
-                                                ...(isSkeleton || location
-                                                    ? [
-                                                        () => (
-                                                            <InlineIconLabel
-                                                                icon={MapPinIcon}
-                                                                isSkeleton={isSkeleton}
-                                                                label={location}
-                                                            />
-                                                        ),
-                                                    ]
-                                                    : []),
-                                                ...(isSkeleton || workMode
-                                                    ? [
-                                                        () => (
-                                                            <EnumChip
-                                                                value={(workMode ?? "remote") as ProfileWorkMode}
-                                                                map={WORK_MODE_MAP}
-                                                                isSkeleton={isSkeleton}
-                                                            />
-                                                        ),
-                                                    ]
-                                                    : []),
-                                            ]}
-                                        />
-                                    ),
-                                ]
-                                : []),
-
-                            () => (
-                                <StackH
-                                    principle="sibling-stack"
-                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                    divider
-                                    isSkeleton={isSkeleton}
-                                    items={[
-                                        () => <ProfileFollowers followersCount={followersCount} isSkeleton={isSkeleton} />,
-                                        ...(hasBadgesRow
-                                            ? [() => <ProfileBadges badges={badges} isSkeleton={isSkeleton} />]
-                                            : []),
-                                    ]}
-                                />
-                            ),
-
-                            () => (
-                                <StackH
-                                    gap={3}
-                                    isSkeleton={isSkeleton}
-                                    items={[
-                                        () => (
-                                            <Button
-
-                                                variant={action.variant}
-                                                label={action.label}
-                                                prefixIcon={action.prefixIcon}
-                                                onPress={action.onPress}
-                                                isPending={action.isPending}
-                                                isSkeleton={isSkeleton}
-
-                                            />
-                                        ),
-                                        () => <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} />,
-                                    ]}
-                                />
-                            ),
-
-                            ...(hasMetaList
-                                ? [
-                                    () => <Divider />,
                                     () => (
                                         <StackV
-                                            gap={4}
+                                            principle="name-handle"
+                                            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                                             isSkeleton={isSkeleton}
                                             items={[
-                                                ...(isSkeleton ? SOCIAL_META : socialEntries).map((entry) => () => (
-                                                    <StackH
-                                                        gap={2}
-                                                        isSkeleton={isSkeleton}
-                                                        items={[
-                                                            () => (
-                                                                <span aria-hidden className="inline-flex shrink-0 text-muted [&_svg]:size-4">
-                                                                    <entry.icon />
-                                                                </span>
-                                                            ),
-                                                            () => (
-                                                                <Typography
-                                                                    size="xs"
-                                                                    isLink={!isSkeleton}
-                                                                    href={isSkeleton ? undefined : socialLinks[entry.key]}
-                                                                    isSkeleton={isSkeleton}
-                                                                    truncate
-                                                                    text={isSkeleton ? undefined : entry.label}
-
-                                                                />
-                                                            ),
-                                                        ]}
-                                                    />
-                                                )),
                                                 () => (
-                                                    <InlineIconLabel
-                                                        icon={CalendarBlankIcon}
-                                                        tone="default"
+                                                    <Typography
+                                                        size="h5"
+                                                        weight="bold"
+                                                        align="center"
                                                         isSkeleton={isSkeleton}
-                                                        label={isSkeleton ? undefined : `Joined ${formatJoinedDate(joinedAt)}`}
+                                                        text={fullName}
+
                                                     />
                                                 ),
+                                                () => (
+                                                    <Typography
+                                                        size="sm"
+                                                        color="muted"
+                                                        align="center"
+                                                        isSkeleton={isSkeleton}
+                                                        text={isSkeleton ? undefined : `@${handle}`}
+
+                                                    />
+                                                ),
+                                                ...(isSkeleton || roleTitle
+                                                    ? [
+                                                        () => (
+                                                            <Typography
+                                                                size="sm"
+                                                                weight="medium"
+                                                                align="center"
+                                                                isSkeleton={isSkeleton}
+                                                                text={roleTitle}
+
+                                                            />
+                                                        ),
+                                                    ]
+                                                    : []),
                                             ]}
                                         />
                                     ),
-                                ]
-                                : []),
-                        ]}
-                    />
-                )}
-            />
-        </div>
+                                ]}
+                            />
+                        ),
+
+                        ...(isSkeleton || bio
+                            ? [
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        align="center"
+                                        lineClamp={3}
+                                        isSkeleton={isSkeleton}
+                                        text={bio}
+
+                                    />
+                                ),
+                            ]
+                            : []),
+
+                        ...(hasLocationRow
+                            ? [
+                                () => (
+                                    <Cluster
+                                        gap={3}
+                                        principle="chip-row"
+                                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                        items={[
+                                            ...(isSkeleton || location
+                                                ? [
+                                                    () => (
+                                                        <InlineIconLabel
+                                                            icon={MapPinIcon}
+                                                            isSkeleton={isSkeleton}
+                                                            label={location}
+                                                        />
+                                                    ),
+                                                ]
+                                                : []),
+                                            ...(isSkeleton || workMode
+                                                ? [
+                                                    () => (
+                                                        <EnumChip
+                                                            value={(workMode ?? "remote") as ProfileWorkMode}
+                                                            map={WORK_MODE_MAP}
+                                                            isSkeleton={isSkeleton}
+                                                        />
+                                                    ),
+                                                ]
+                                                : []),
+                                        ]}
+                                    />
+                                ),
+                            ]
+                            : []),
+
+                        () => (
+                            <StackH
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                divider
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => <ProfileFollowers followersCount={followersCount} isSkeleton={isSkeleton} />,
+                                    ...(hasBadgesRow
+                                        ? [() => <ProfileBadges badges={badges} isSkeleton={isSkeleton} />]
+                                        : []),
+                                ]}
+                            />
+                        ),
+
+                        () => (
+                            <StackH
+                                gap={3}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <Button
+
+                                            variant={action.variant}
+                                            label={action.label}
+                                            prefixIcon={action.prefixIcon}
+                                            onPress={action.onPress}
+                                            isPending={action.isPending}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                    () => <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} />,
+                                ]}
+                            />
+                        ),
+
+                        ...(hasMetaList
+                            ? [
+                                () => <Divider />,
+                                () => (
+                                    <StackV
+                                        gap={4}
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            ...(isSkeleton ? SOCIAL_META : socialEntries).map((entry) => () => (
+                                                <StackH
+                                                    gap={2}
+                                                    isSkeleton={isSkeleton}
+                                                    items={[
+                                                        () => (
+                                                            <span aria-hidden className="inline-flex shrink-0 text-muted [&_svg]:size-4">
+                                                                <entry.icon />
+                                                            </span>
+                                                        ),
+                                                        () => (
+                                                            <Typography
+                                                                size="xs"
+                                                                isLink={!isSkeleton}
+                                                                href={isSkeleton ? undefined : socialLinks[entry.key]}
+                                                                isSkeleton={isSkeleton}
+                                                                truncate
+                                                                text={isSkeleton ? undefined : entry.label}
+
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            )),
+                                            () => (
+                                                <InlineIconLabel
+                                                    icon={CalendarBlankIcon}
+                                                    tone="default"
+                                                    isSkeleton={isSkeleton}
+                                                    label={isSkeleton ? undefined : `Joined ${formatJoinedDate(joinedAt)}`}
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                            ]
+                            : []),
+                    ]}
+                />
+            )}
+        />
     )
 }
 

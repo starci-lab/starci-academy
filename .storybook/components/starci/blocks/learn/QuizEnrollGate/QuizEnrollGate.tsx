@@ -33,20 +33,19 @@ const QuizEnrollGate = ({
     ctaLabel,
     onEnroll,
 }: QuizEnrollGateProps) => (
-    <div>
-        <EmptyState
-            icon={LockIcon}
-            title={title}
-            description={description}
-            body={() => (
-                <Button
-                    label={ctaLabel}
-                    variant="primary"
-                    onPress={onEnroll}
-                />
-            )}
-        />
-    </div>
+    <EmptyState
+        icon={LockIcon}
+        title={title}
+        description={description}
+        body={() => (
+            <Button
+                label={ctaLabel}
+                variant="primary"
+                onPress={onEnroll}
+            />
+        )}
+    />
+
 )
 
 export { QuizEnrollGate }

@@ -52,6 +52,7 @@ const queryMap: Record<QuerySubmissionFeedbacks, DocumentNode> = {
     [QuerySubmissionFeedbacks.Query1]: query1,
 }
 
+/** Default sort: submission feedbacks by `createdAt` ascending. */
 export const defaultSubmissionFeedbacksListSorts: Array<SortInput<SubmissionFeedbacksSortBy>> = [
     {
         by: SubmissionFeedbacksSortBy.CreatedAt,

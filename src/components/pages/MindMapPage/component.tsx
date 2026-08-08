@@ -10,6 +10,7 @@ import { ResizableRail } from "@/components/behaviors/ResizableRail"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Stage } from "@/components/frames/Stage"
 import { ScrollArea } from "@/components/frames/ScrollArea"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -290,13 +291,18 @@ const _MindMapPage = ({
         // children. `Stage` owns the positioning context and the three floating anchors —
         // no page-level `relative`/`absolute` left.
         const canvasStage = (
-            <Stage
-                canvas={Canvas}
-                topCenter={topCenterSlot}
-                bottomStart={bottomStartSlot}
-                bottomEnd={bottomEndSlot}
-                isSkeleton={isSkeleton}
-                classNames={["min-w-0", "flex-1"]}
+            <FillAvailable
+                at="base"
+                explain="Canvas stage consumes remaining workspace width beside the resizable rail — not a fixed-size peer."
+                body={() => (
+                    <Stage
+                        canvas={Canvas}
+                        topCenter={topCenterSlot}
+                        bottomStart={bottomStartSlot}
+                        bottomEnd={bottomEndSlot}
+                        isSkeleton={isSkeleton}
+                    />
+                )}
             />
         )
 

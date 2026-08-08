@@ -99,6 +99,7 @@ export default defineConfig([
             // Warn while legacy debt is being migrated; changed files run with
             // --max-warnings=0 and therefore cannot introduce new violations.
             "starci-fe/no-public-classname-prop": "warn",
+            "starci-fe/no-frame-fragment-item": "warn",
         },
     },
     {

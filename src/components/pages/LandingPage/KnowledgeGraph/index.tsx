@@ -7,6 +7,7 @@ import {
     type Edge,
     type Node,
     type NodeMouseHandler,
+    type OnNodeDrag,
     Panel,
     ReactFlow,
     ReactFlowProvider,
@@ -169,7 +170,7 @@ const KnowledgeGraphFlow = () => {
     }, [setCenter, reduce, setNodes])
 
     // Drag pins the node (fx/fy) and reheats the sim; release lets it flow back.
-    const onNodeDragStart: NodeMouseHandler = useCallback((_, node) => {
+    const onNodeDragStart: OnNodeDrag = useCallback((_, node) => {
         draggingRef.current = node.id
         const simNode = simNodesRef.current.get(node.id)
         if (simNode) {
@@ -178,14 +179,14 @@ const KnowledgeGraphFlow = () => {
         }
         simRef.current?.alphaTarget(0.3).restart()
     }, [])
-    const onNodeDrag: NodeMouseHandler = useCallback((_, node) => {
+    const onNodeDrag: OnNodeDrag = useCallback((_, node) => {
         const simNode = simNodesRef.current.get(node.id)
         if (simNode) {
             simNode.fx = node.position.x
             simNode.fy = node.position.y
         }
     }, [])
-    const onNodeDragStop: NodeMouseHandler = useCallback((_, node) => {
+    const onNodeDragStop: OnNodeDrag = useCallback((_, node) => {
         draggingRef.current = null
         const simNode = simNodesRef.current.get(node.id)
         if (simNode) {

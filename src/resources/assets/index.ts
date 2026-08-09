@@ -1,5 +1,6 @@
 
 // we represent as a function to ensure optional loading or logic processing
+/** Asset path helpers (icons, payment marks, submission glyphs). */
 export const assetConfig = () => {
     const icon = () => {
         const iconsPath = "/icons"

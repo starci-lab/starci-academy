@@ -8,7 +8,7 @@ import { Callout } from "@/components/composites/feedback/Callout"
  * `Button`) rather than hand-rolled — see the component's file header for why
  * (the `CourseTeamGate` precedent + the `ContentTabBar` cautionary tale).
  *
- * 📐 LEAF by STRUCTURE: whether the CTA button exists is a real structural
+ * LEAF by STRUCTURE: whether the CTA button exists is a real structural
  * difference (`Callout` renders no action node at all without it), so
  * "with CTA" vs "no CTA" are two leaves, not one leaf with a toggled prop.
  */
@@ -50,6 +50,7 @@ const TaskLockedAlertBase = ({
     onGoToCurrentTask,
 }: TaskLockedAlertProps) => (
     <Callout
+        identity={{ tier: "block", component: "TaskLockedAlert" }}
         status="warning"
         title={TITLE}
         description={message}

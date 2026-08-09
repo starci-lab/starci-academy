@@ -7,6 +7,7 @@ import { stex } from "@codemirror/legacy-modes/mode/stex"
 import { whiteLight } from "@uiw/codemirror-theme-white"
 import { vscodeDark } from "@uiw/codemirror-theme-vscode"
 import { useTheme } from "next-themes"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link CvTexEditor}. */
 export interface CvTexEditorProps {
@@ -23,12 +24,20 @@ export interface CvTexEditorProps {
  * Editing hand-edits the `.tex` that the compiled-PDF preview then renders (and
  * that `renderCvBlocks` persists BE-side as `tex_source`).
  *
+ * Root is {@link Box} — escape-hatch foreign mount for CodeMirror (third-party
+ * surface no named frame can carry).
+ *
  * @param props - {@link CvTexEditorProps}
  */
 export const CvTexEditor = ({ value, onChange }: CvTexEditorProps) => {
     const { theme } = useTheme()
     return (
-        <div className={"h-full min-h-0 overflow-hidden rounded-xl"}>
+        <Box
+            identity={{ tier: "block", component: "CvTexEditor" }}
+            principle="flex-fill-base"
+            explain="Foreign CodeMirror mount fills the editor pane so LaTeX source can scroll inside the workspace split without overflowing the shell."
+            className={"h-full min-h-0 overflow-hidden rounded-xl"}
+        >
             <CodeMirror
                 height="100%"
                 theme={theme === "dark" ? vscodeDark : whiteLight}
@@ -37,6 +46,6 @@ export const CvTexEditor = ({ value, onChange }: CvTexEditorProps) => {
                 onChange={onChange}
                 style={{ height: "100%", fontSize: 14 }}
             />
-        </div>
+        </Box>
     )
 }

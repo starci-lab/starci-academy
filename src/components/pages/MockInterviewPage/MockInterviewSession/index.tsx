@@ -1312,7 +1312,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     }, [listening, stop, goToMockInterviewHome])
 
     // mirror the whiteboard's plain-object snapshot into a ref (read only at grade time)
-    const handleDiagramChange = useCallback(
+    const onDiagramChange = useCallback(
         (nodes: Array<MockInterviewDiagramNodeSnapshot>, edges: Array<MockInterviewDiagramEdgeSnapshot>) => {
             diagramRef.current = { nodes, edges }
         },
@@ -2072,7 +2072,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             <MockInterviewWorkspace
                                 className="min-h-0 flex-1"
                                 tool={workspaceTool}
-                                onDiagramChange={handleDiagramChange}
+                                onDiagramChange={onDiagramChange}
                                 codeState={codeState}
                                 onCodeStateChange={setCodeState}
                                 givenCodeVariants={currentSeedTopic?.givenCodes ?? []}
@@ -2339,7 +2339,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     <MockInterviewWorkspace
                         className="min-h-0 flex-1"
                         tool={workspaceTool}
-                        onDiagramChange={handleDiagramChange}
+                        onDiagramChange={onDiagramChange}
                         codeState={codeState}
                         onCodeStateChange={setCodeState}
                     />

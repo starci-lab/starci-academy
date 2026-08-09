@@ -29,7 +29,7 @@ export interface QueryRecommendedCourseData {
     discountedPriceUsd: number | null
     /** Why the discount applies (drives the personalised copy). */
     discountReason: DiscountReason
-    /** Courses the viewer already owns (for the "đã học N khóa" copy). */
+    /** Courses the viewer already owns (for the "already studied N courses" copy). */
     enrolledCount: number
 }
 

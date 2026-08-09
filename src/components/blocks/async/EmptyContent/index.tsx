@@ -46,8 +46,10 @@ export const EmptyContent = ({
     ]
 
     return (
-        <StackV identity={{ tier: "block", component: "EmptyContent" }}
-            gap={4}
+        <StackV
+            identity={{ tier: "block", component: "EmptyContent" }}
+            principle="sibling-stack"
+            explain="Same-kind peer stack of empty-state parts (glyph, copy, optional retry) — not group-boundary, because these are peers of one empty unit rather than section groups."
             align="center"
             justify="center"
             padding={6}

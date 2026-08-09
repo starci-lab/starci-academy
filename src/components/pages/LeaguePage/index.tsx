@@ -19,6 +19,7 @@ import {
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 /** The two leaderboard scopes the page can show. */
@@ -38,8 +39,6 @@ export type LeaguePageProps = Record<string, never>
  * segmented pill (`tabs.md §0b`), not a filter underline. Each board
  * self-fetches; only the active one mounts (the inactive leaf query stays
  * idle). `"use client"` for tab state + breadcrumb nav.
- *
- * @param props - optional className for the root element.
  */
 export const LeaguePage = () => {
     const t = useTranslations()
@@ -48,54 +47,61 @@ export const LeaguePage = () => {
     const [tab, setTab] = useState<LeagueTab>(LeagueTab.Weekly)
 
     return (
-        <div className={"mx-auto w-full max-w-2xl p-3"} data-principle="cell-pad">
-            <StackV
-                principle="layout-split"
-                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
-                items={[
-                    () => (
-                        <PageHeader
-                            breadcrumb={(
-                                <ResponsiveBreadcrumb
-                                    items={[
-                                        {
-                                            key: "home",
-                                            label: t("nav.home"),
-                                            onPress: () => router.push(pathConfig().locale(locale).build()),
-                                        },
-                                        { key: "league", label: t("dashboard.league.pageTitle") },
-                                    ]}
-                                />
-                            )}
-                            title={t("dashboard.league.pageTitle")}
-                        />
-                    ),
-                    // tabs + board grouped at block-boundary; only the active board mounts
-                    () => (
-                        <StackV
-                            principle="block-boundary"
-                            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-                            items={[
-                                () => (
-                                    <TabsCard
-                                        variant="primary"
-                                        leftTabs={{
-                                            items: [
-                                                { key: LeagueTab.Weekly, label: t("dashboard.league.tabWeekly") },
-                                                { key: LeagueTab.Global, label: t("dashboard.league.tabGlobal") },
-                                            ],
-                                            selectedKey: tab,
-                                            ariaLabel: t("dashboard.league.pageTitle"),
-                                            onSelectionChange: (key) => setTab(String(key) as LeagueTab),
-                                        }}
+        <Container
+            identity={{ tier: "page", component: "LeaguePage" }}
+            size="sm"
+            padding={4}
+            principle="cell-pad"
+            explain="Dense page inset at p-3 — not page-pad, because this board keeps the compact cell measure rather than the web p-6 chrome."
+            body={() => (
+                <StackV
+                    principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                    items={[
+                        () => (
+                            <PageHeader
+                                breadcrumb={(
+                                    <ResponsiveBreadcrumb
+                                        items={[
+                                            {
+                                                key: "home",
+                                                label: t("nav.home"),
+                                                onPress: () => router.push(pathConfig().locale(locale).build()),
+                                            },
+                                            { key: "league", label: t("dashboard.league.pageTitle") },
+                                        ]}
                                     />
-                                ),
-                                () => (tab === LeagueTab.Weekly ? <WeeklyBoard /> : <GlobalBoard />),
-                            ]}
-                        />
-                    ),
-                ]}
-            />
-        </div>
+                                )}
+                                title={t("dashboard.league.pageTitle")}
+                            />
+                        ),
+                        // tabs + board grouped at block-boundary; only the active board mounts
+                        () => (
+                            <StackV
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                items={[
+                                    () => (
+                                        <TabsCard
+                                            variant="primary"
+                                            leftTabs={{
+                                                items: [
+                                                    { key: LeagueTab.Weekly, label: t("dashboard.league.tabWeekly") },
+                                                    { key: LeagueTab.Global, label: t("dashboard.league.tabGlobal") },
+                                                ],
+                                                selectedKey: tab,
+                                                ariaLabel: t("dashboard.league.pageTitle"),
+                                                onSelectionChange: (key) => setTab(String(key) as LeagueTab),
+                                            }}
+                                        />
+                                    ),
+                                    () => (tab === LeagueTab.Weekly ? <WeeklyBoard /> : <GlobalBoard />),
+                                ]}
+                            />
+                        ),
+                    ]}
+                />
+            )}
+        />
     )
 }

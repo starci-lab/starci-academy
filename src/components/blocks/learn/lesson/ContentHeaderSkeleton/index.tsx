@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
  */
 export const ContentHeaderSkeleton = () => {
     return (
-        // mirror PageHeader: breadcrumb ↔ title-block ↔ meta at gap-3; title ↔ description gap-2
+        // mirror PageHeader: breadcrumb, title-block, and meta use gap-3; title and description use gap-2
         <div className="flex flex-col gap-3">
             <Skeleton.Breadcrumbs count={4} />
             <div className="flex flex-col gap-2">

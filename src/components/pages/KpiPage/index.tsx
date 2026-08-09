@@ -26,7 +26,6 @@ import { useMutateSetKpiTargetSwr } from "@/hooks/swr/api/graphql/mutations/useM
 import { useMutateClaimKpiRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimKpiRewardSwr"
 import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { _KpiPage, type KpiRowData } from "./component"
 
 /**
@@ -34,12 +33,9 @@ import { _KpiPage, type KpiRowData } from "./component"
  * self-fetches. Renamed from the old `className: string` to the house
  * `classNames: Array<AllowedClassName>` convention every frame/atom already uses.
  */
-export interface KpiPageProps {
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
-}
-
-/**
+export type KpiPageProps = Record<string, never>
+/** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+/*
  * The `/kpi` editor page: the connected half of {@link _KpiPage}. Self-fetches the
  * weekly KPIs, owns the set-target + claim-reward mutations, resolves every
  * label (incl. interpolation), and hands them to the presentational `_KpiPage`.
@@ -47,9 +43,8 @@ export interface KpiPageProps {
  *
  * @param props - {@link KpiPageProps}
  */
-export const KpiPage = ({
-    classNames,
-}: KpiPageProps) => {
+export const KpiPage = (_props: KpiPageProps) => {
+    void _props
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -212,7 +207,6 @@ export const KpiPage = ({
             }}
             onNavigateHome={onNavigateHome}
             rows={rows}
-            classNames={classNames}
             labels={{
                 title: t("DashboardPage.kpi.title"),
                 tooltipDescription: t("DashboardPage.kpi.help"),

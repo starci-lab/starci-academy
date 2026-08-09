@@ -155,7 +155,7 @@ const usePalette = (): Palette => {
     React.useEffect(() => {
         const read = () => setPalette(build((cssVar, fallback) => readToken(cssVar, fallback)))
         read()
-        // re-read tokens when the theme flips (html class / data-theme) → live light↔dark
+        // re-read tokens when the theme flips (html class / data-theme) for live light/dark updates
         const observer = new MutationObserver(read)
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-theme"] })
         return () => observer.disconnect()
@@ -580,7 +580,7 @@ const Bar = ({ node, cell, shade, reduce, selected, onClick }: {
         >
             <KindMesh kind={node.kind} shade={shade} />
             {/* label = a surface chip with a border in the node's own colour; selected → thicker
-                accent ring so the click ↔ rail sync reads at a glance */}
+                accent ring so the click-to-rail sync reads at a glance */}
             <Html position={[0, LABEL_Y, 0]} center zIndexRange={[120, 0]} style={{ pointerEvents: "none" }}>
                 <div
                     className={cn(

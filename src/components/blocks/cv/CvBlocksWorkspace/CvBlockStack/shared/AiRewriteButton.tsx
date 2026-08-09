@@ -15,7 +15,7 @@ export interface AiRewriteButtonProps {
 }
 
 /**
- * "✨ AI rewrite" — a tertiary button with its OWN spinner/retry-in-place
+ * "AI rewrite" — a tertiary button with its own spinner/retry-in-place
  * state, so one block/item's AI failure never blocks the rest of the form
  * (per `CvBlockEditorProps.onAiRewrite` contract).
  *

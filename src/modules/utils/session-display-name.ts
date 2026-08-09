@@ -22,7 +22,7 @@ const formatSessionTime = (createdAt: string, locale: string): string => {
 /**
  * Display name for a mock-interview / flashcard-quiz session — the learner's own
  * name when they set one at setup, else a TIME-BASED fallback derived from the
- * session's own `createdAt` ("Phiên 14:30 · 12/7"). Never random-generated: an
+ * session's own `createdAt` ("Session 14:30 · 12/7"). Never random-generated: an
  * unnamed session always reads by exactly when it was started.
  * @param name - the session's stored `name` (optional field, BE nullable).
  * @param createdAt - ISO timestamp the fallback is derived from — the session's

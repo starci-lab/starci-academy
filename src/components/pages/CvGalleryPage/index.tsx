@@ -3,7 +3,6 @@
 import React, {
     useMemo,
 } from "react"
-import { Breadcrumbs } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -12,17 +11,9 @@ import {
     useRouter,
 } from "next/navigation"
 import { CvGallery } from "./CvGallery"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import { Container } from "@/components/frames/Container"
 import { pathConfig } from "@/resources/path"
-
-/** One breadcrumb row for the CvGalleryPage page. */
-type CvBreadcrumbItem = {
-    /** Stable React key. */
-    key: string
-    /** Visible label. */
-    label: string
-    /** Optional navigation handler when the segment is clickable. */
-    onPress?: () => void
-}
 
 /** Props for {@link CvGalleryPage}. */
 export type CvGalleryPageProps = Record<string, never>
@@ -40,7 +31,7 @@ export const CvGalleryPage = () => {
     const locale = useLocale()
     const router = useRouter()
 
-    const breadcrumbItems = useMemo((): Array<CvBreadcrumbItem> => [
+    const breadcrumbItems = useMemo(() => [
         {
             key: "home",
             label: t("nav.home"),
@@ -62,21 +53,19 @@ export const CvGalleryPage = () => {
     ])
 
     return (
-        <div className={"mx-auto flex w-full max-w-[1280px] flex-col px-6 py-6"}>
-            <CvGallery
-                breadcrumb={(
-                    <Breadcrumbs>
-                        {breadcrumbItems.map((item) => (
-                            <Breadcrumbs.Item
-                                key={item.key}
-                                onPress={item.onPress}
-                            >
-                                {item.label}
-                            </Breadcrumbs.Item>
-                        ))}
-                    </Breadcrumbs>
-                )}
-            />
-        </div>
+        <Container
+            identity={{ tier: "page", component: "CvGalleryPage" }}
+            size="xl"
+            padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+            body={() => (
+                <CvGallery
+                    breadcrumb={(
+                        <ResponsiveBreadcrumb items={breadcrumbItems} />
+                    )}
+                />
+            )}
+        />
     )
 }

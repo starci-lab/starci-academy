@@ -1,6 +1,8 @@
 import React from "react"
-import { Typography } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Cluster } from "@/components/frames/Cluster"
 
 /** Props for the {@link ArchitectureFlow} block. */
 export interface ArchitectureFlowProps {
@@ -17,20 +19,27 @@ export interface ArchitectureFlowProps {
  * @param props - {@link ArchitectureFlowProps}
  */
 export const ArchitectureFlow = ({ nodes}: ArchitectureFlowProps) => {
+    const items = nodes.flatMap((node, index) => [
+        ...(index > 0
+            ? [() => (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    prefixIcon={CaretRightIcon}
+                    text=""
+                />
+            )]
+            : []),
+        () => <Chip text={node} />,
+    ])
+
     return (
-        <div className={"flex flex-wrap items-center gap-2"}>
-            {nodes.map((node, index) => (
-                <React.Fragment key={`${node}-${index}`}>
-                    {index > 0 ? (
-                        <CaretRightIcon aria-hidden focusable="false" className="size-3 shrink-0 text-muted" />
-                    ) : null}
-                    <span className="rounded-md border border-default bg-default px-2 py-1">
-                        <Typography type="code" className="text-xs">
-                            {node}
-                        </Typography>
-                    </span>
-                </React.Fragment>
-            ))}
-        </div>
+        <Cluster
+            identity={{ tier: "block", component: "ArchitectureFlow" }}
+            align="center"
+            principle="chip-row"
+            explain="Wrapping flow of node chips — not content-row, because these are repeating same-kind chips that wrap rather than a fixed primary/meta pair."
+            items={items}
+        />
     )
 }

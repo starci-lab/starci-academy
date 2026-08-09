@@ -98,6 +98,7 @@ export const PRINCIPLE_STYLE: { readonly [K in PrincipleToken]: PrincipleStyleEn
     "push-end": { kind: "margin", classes: ["ml-auto"] },
     "pin-bottom": { kind: "margin", classes: ["mt-auto"] },
     "center-measure": { kind: "margin", classes: ["mx-auto", "w-full"] },
+    "page-measure": { kind: "structural", classes: ["mx-auto", "w-full", "max-w-app-md", "p-6"] },
     "reel": { kind: "structural", classes: ["overflow-x-auto"] },
     "sticky-top": { kind: "structural", classes: ["sticky", "top-0"] },
     "fixed-bar": { kind: "structural", classes: ["fixed"] },

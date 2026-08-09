@@ -11,7 +11,7 @@ export type SummaryBlockEditorProps = CvBlockEditorProps
 
 /**
  * Summary/objective paragraph editor — singleton, non-repeatable, holds its
- * one `text` field on `block.items[0]`. Has the "✨ AI write for me" affordance
+ * one `text` field on `block.items[0]`. Has an AI-assisted rewrite affordance
  * (`onAiRewrite`, no `itemId` — the whole block's single fields set).
  *
  * @param props - {@link SummaryBlockEditorProps}

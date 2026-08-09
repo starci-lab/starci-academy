@@ -107,11 +107,13 @@ const INITIAL_ZOOM = 0.8
  * close to the course · course name flush left · small enough to render many, big enough to read"). Not `fitView` (which
  * centres the whole tree's bbox → an empty middle). Must live INSIDE the flow.
  */
+interface InitialFrameProps {
+    nodes: CourseMindMapData["nodes"]
+}
+
 const InitialFrame = ({
     nodes,
-}: {
-    nodes: CourseMindMapData["nodes"]
-}) => {
+}: InitialFrameProps) => {
     const { setViewport } = useReactFlow()
     const paneHeight = useStore((state) => state.height)
     const framed = useRef(false)
@@ -138,13 +140,15 @@ const InitialFrame = ({
 }
 
 /** Recentres the viewport on the selected node whenever it changes (must live INSIDE the flow). */
+interface FocusOnSelectProps {
+    selectedId: string | null
+    nodes: CourseMindMapData["nodes"]
+}
+
 const FocusOnSelect = ({
     selectedId,
     nodes,
-}: {
-    selectedId: string | null
-    nodes: CourseMindMapData["nodes"]
-}) => {
+}: FocusOnSelectProps) => {
     const { setCenter } = useReactFlow()
     useEffect(() => {
         if (!selectedId) {

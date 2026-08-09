@@ -7,7 +7,6 @@ import {
     useTranslations,
 } from "next-intl"
 import { Callout } from "@/components/composites/feedback/Callout"
-import { Box } from "@/components/frames/Box"
 import { useAppSelector } from "@/redux/hooks"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
@@ -45,14 +44,13 @@ export const TrialEnrollHook = () => {
     }
 
     return (
-        <Box identity={{ tier: "block", component: "TrialEnrollHook" }}>
-            <Callout
-                status="accent"
-                title={t("enrollGate.hookTitle")}
-                description={t("enrollGate.hookDesc")}
-                actionLabel={t("enrollGate.hookCta")}
-                onAction={onEnroll}
-            />
-        </Box>
+        <Callout
+            identity={{ tier: "block", component: "TrialEnrollHook" }}
+            status="accent"
+            title={t("enrollGate.hookTitle")}
+            description={t("enrollGate.hookDesc")}
+            actionLabel={t("enrollGate.hookCta")}
+            onAction={onEnroll}
+        />
     )
 }

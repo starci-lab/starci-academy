@@ -4,6 +4,7 @@ import Decimal from "decimal.js"
 import dayjs from "dayjs"
 import { Dayjs } from "dayjs"
 
+/** Shared SuperJSON instance with BN, Decimal, and Dayjs codecs registered. */
 export const superjson = new SuperJSON()
 // extends bn
 superjson.registerCustom<BN, string>(

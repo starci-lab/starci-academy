@@ -16,7 +16,7 @@ export type ExperienceBlockEditorProps = CvBlockEditorProps
 
 /**
  * Work-experience block editor — repeatable entries (company / role / dates /
- * bullets), each with its OWN "✨ AI write it for me" (rewrites that one item's
+ * bullets), each with its own AI-assisted rewrite action (rewrites that one item's
  * `bullets` text) and reorder/remove.
  *
  * @param props - {@link ExperienceBlockEditorProps}

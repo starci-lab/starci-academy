@@ -146,7 +146,11 @@ export const CredentialsState = () => {
 
     const bodyItems = [
         () => (
-            <Box className="pr-8">
+            <Box
+                className="pr-8"
+                principle="control-pad"
+                explain="Reserves room for ModalShell close trigger — not card-padding, because this is chrome inset beside the dismiss control rather than card body pad; not page-pad, because the inset is single-sided."
+            >
                 <StackV
                     gap={2}
                     principle="title-subtitle"
@@ -160,7 +164,8 @@ export const CredentialsState = () => {
         ),
         () => (
             <StackV
-                gap={4}
+                principle="group-boundary"
+                explain="Section group spacing — not sibling-stack, because OAuth shortcuts and the divider are distinct groups rather than nested section groups."
                 items={[
                     () => <OauthButtons items={oauthButtons} onOauthPress={onOauthPress} />,
                     () => <Divider label={t("auth.signIn.or")} />,
@@ -169,7 +174,8 @@ export const CredentialsState = () => {
         ),
         () => (
             <StackV
-                gap={4}
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these form controls are repeating siblings rather than section groups."
                 items={[
                     () => (
                         <EmailField
@@ -206,7 +212,6 @@ export const CredentialsState = () => {
         () => (
             <Button
                 variant="primary"
-                classNames={["w-full"]}
                 isPending={isSubmitting}
                 isDisabled={isSubmitDisabled}
                 label={t("auth.signIn.submit")}
@@ -219,7 +224,8 @@ export const CredentialsState = () => {
     return (
         <StackV
             identity={{ tier: "block", component: "CredentialsState" }}
-            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major auth panel sections rather than nested section groups."
             items={bodyItems}
         />
     )

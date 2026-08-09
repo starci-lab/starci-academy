@@ -82,7 +82,13 @@ interface CvBlockRenderProps {
 }
 
 /** Renders one section heading (the block's own title). */
-const SectionTitle = ({ title, accent, scale }: { title: string, accent: string, scale: number }) => (
+interface SectionTitleProps {
+    title: string
+    accent: string
+    scale: number
+}
+
+const SectionTitle = ({ title, accent, scale }: SectionTitleProps) => (
     <div style={sectionTitleStyle(accent, scale)}>{title}</div>
 )
 

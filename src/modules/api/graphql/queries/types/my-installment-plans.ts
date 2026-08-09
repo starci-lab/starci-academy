@@ -8,7 +8,7 @@ export interface InstallmentPlanCourseItem {
     title: string
 }
 
-/** One of the current user's installment ("trả góp") plans (mirrors backend `InstallmentPlanItem`). */
+/** One of the current user's installment (pay-over-time) plans (mirrors backend `InstallmentPlanItem`). */
 export interface InstallmentPlanItem {
     /** Plan id — pass to `payNextInstallment`. */
     id: string

@@ -38,7 +38,11 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
  * the map (per-module nodes show a count, not a bar).
  * @param percent — Completion percent, 0-100.
  */
-const CompletionRing = ({ percent }: { percent: number }) => {
+interface CompletionRingProps {
+    percent: number
+}
+
+const CompletionRing = ({ percent }: CompletionRingProps) => {
     const clamped = Math.max(0, Math.min(100, percent))
     const offset = RING_CIRCUMFERENCE * (1 - clamped / 100)
     return (

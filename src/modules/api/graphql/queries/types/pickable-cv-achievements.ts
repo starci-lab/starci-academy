@@ -2,7 +2,7 @@ import type { GraphQLResponse } from "../../types"
 
 /**
  * One passed capstone/milestone task attempt the learner can pick into a CV
- * "Dự án" block. Existence of this row is the Verified trust signal — mirrors
+ * Project block. Existence of this row is the Verified trust signal — mirrors
  * the BE `PickableMilestoneAchievement` GraphQL type.
  *
  * CAPSTONE ONLY: challenges and StarCi "achievements" (leaderboard/coding/

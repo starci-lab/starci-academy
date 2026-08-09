@@ -5,11 +5,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Button,
-    Chip,
-    Typography,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -31,6 +26,9 @@ import { AiSubTier } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { StackH, StackV } from "@/components/frames/Stack"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
 import { QuotaLaneVariant } from "@/hooks/quota-lane-variant"
 import { useQuotaLaneData } from "@/hooks/useQuotaLaneData"
 
@@ -75,16 +73,11 @@ export const AiUsagePage = () => {
                 label={t("aiQuota.creditPool")}
                 action={() => (
                     <Chip
-                        size="sm"
-                        variant="soft"
-                        color={quota?.tier === "max" ? "warning" : "default"}
-                    >
-                        <Chip.Label>
-                            {quota?.tier
-                                ? quota.tier.toUpperCase()
-                                : t("aiQuota.freeTier")}
-                        </Chip.Label>
-                    </Chip>
+                        tone={quota?.tier === "max" ? "warning" : "default"}
+                        text={quota?.tier
+                            ? quota.tier.toUpperCase()
+                            : t("aiQuota.freeTier")}
+                    />
                 )}
                 body={() => (
                     <AiQuotaLane data={premiumLane} isLoading={isPremiumLaneLoading} />
@@ -94,26 +87,25 @@ export const AiUsagePage = () => {
         ...(showUpsell
             ? [() => (
                 <StackH
-                    gap={4}
+                    at="sm"
                     justify="between"
                     align="center"
-                    at="sm"
                     principle="content-row"
                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     items={[
                         () => (
-                            <Typography type="body-sm" className="text-warning-soft-foreground">
-                                {upsellText}
-                            </Typography>
+                            <Typography
+                                size="sm"
+                                color="warning"
+                                text={upsellText}
+                            />
                         ),
                         () => (
                             <Button
                                 variant="primary"
+                                label={upsellCta}
                                 onPress={onSubscribe}
-                                className="@app-sm:shrink-0"
-                            >
-                                {upsellCta}
-                            </Button>
+                            />
                         ),
                     ]}
                 />
@@ -123,13 +115,26 @@ export const AiUsagePage = () => {
     ]
 
     return (
-        <div className="flex flex-col gap-10">
-            <PageHeader
-                breadcrumb={<SettingsBreadcrumb current={t("aiQuota.fullPageTitle")} />}
-                title={t("aiQuota.fullPageTitle")}
-                description={t("aiQuota.fullPageDescription")}
-            />
-            <StackV gap={6} items={bodyItems} />
-        </div>
+        <StackV
+            identity={{ tier: "page", component: "AiUsagePage" }}
+            principle="layout-split"
+            explain="Layout seam between header and body — not block-boundary, because this is the page chrome split rather than stacked content blocks."
+            items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={<SettingsBreadcrumb current={t("aiQuota.fullPageTitle")} />}
+                        title={t("aiQuota.fullPageTitle")}
+                        description={t("aiQuota.fullPageDescription")}
+                    />
+                ),
+                () => (
+                    <StackV
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={bodyItems}
+                    />
+                ),
+            ]}
+        />
     )
 }

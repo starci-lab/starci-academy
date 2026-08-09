@@ -44,7 +44,7 @@ export const ReactionBar = ({ summary, onReact, disabled}: ReactionBarProps) => 
     const myDescriptor = myReaction ? REACTION_BY_TYPE[myReaction] : REACTION_BY_TYPE[ReactionType.Like]
 
     // picking an emotion toggles it off when it's already the user's pick, then closes
-    const handlePick = (type: ReactionType) => {
+    const onPick = (type: ReactionType) => {
         setOpen(false)
         onReact(myReaction === type ? null : type)
     }
@@ -69,7 +69,7 @@ export const ReactionBar = ({ summary, onReact, disabled}: ReactionBarProps) => 
                     </Button>
                 </Popover.Trigger>
                 <Popover.Content className="overflow-visible rounded-full px-2 py-1">
-                    <FacebookReactionSelector active={myReaction} onSelect={handlePick} />
+                    <FacebookReactionSelector active={myReaction} onSelect={onPick} />
                 </Popover.Content>
             </Popover>
 

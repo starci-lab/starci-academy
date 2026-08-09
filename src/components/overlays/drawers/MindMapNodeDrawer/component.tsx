@@ -3,10 +3,8 @@ import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import { EntityResultRow, ENTITY_RESULT_PLACEHOLDER } from "@/components/blocks/learn/EntityResultRow"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
@@ -65,14 +63,40 @@ export interface MindMapNodeDrawerProps {
 const SKELETON_SECTION_COUNT = 2
 const SKELETON_ROW_COUNT = 2
 
+/** One RAG hit (or placeholder) as a free-form {@link SurfaceCardListItem} content body. */
+const toListItem = (
+    item: SearchCourseContentItem,
+    index: number,
+    options: {
+        isSkeleton?: boolean
+        onSelectItem?: (item: SearchCourseContentItem) => void
+    } = {},
+): SurfaceCardListItem => {
+    const { isSkeleton = false, onSelectItem } = options
+    return {
+        key: isSkeleton
+            ? `skeleton-${index}`
+            : `${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`,
+        content: () => (
+            <EntityResultRow
+                item={item}
+                showSnippet
+                isSkeleton={isSkeleton}
+            />
+        ),
+        onPress: isSkeleton || onSelectItem == null ? undefined : () => onSelectItem(item),
+        hover: "underline",
+    }
+}
+
 /**
  * PRESENTATIONAL drawer — the mind-map keyword's related-surfaces view, driven by plain props (no
  * store/SWR/i18n) so it is fully story-able. Renders the relevance-ordered RAG hits already bucketed
  * into kind sections (lessons / flashcards / challenges / capstone), each a jump link. Branches in
  * priority order error → skeleton → empty → content (`AsyncContentError`/`AsyncContentEmpty` for the
- * message branches; the skeleton is a small inline mirror of the group/row shape, per
- * `authoring/loading-and-skeleton.md`). See `tiers/split.md` — the connected `index.tsx` owns the
- * fetch, the bucketing, and i18n.
+ * message branches; the skeleton is the same {@link SurfaceCardList} + {@link EntityResultRow} tree
+ * with `isSkeleton` placeholder items, per `authoring/loading-and-skeleton.md`). See `tiers/split.md`
+ * — the connected `index.tsx` owns the fetch, the bucketing, and i18n.
  *
  * @param props - {@link MindMapNodeDrawerProps}
  * @see Story: .storybook/stories/drawers/MindMapNodeDrawer/MindMapNodeDrawer.stories
@@ -107,34 +131,21 @@ export const _MindMapNodeDrawer = ({
         />
     )
 
-    // small inline mirror of the [group label + bordered row list] shape — one Skeleton.Typography
-    // per text node, the same structural nodes (SurfaceListCard, SurfaceListCardItem) real content
-    // renders through, so the box doesn't jump when the data lands.
+    // same SurfaceCardList + EntityResultRow tree as content — placeholder items + isSkeleton, so the
+    // box doesn't jump when the data lands (no parallel skeleton twin).
     const skeletonSections: Array<ComponentTypeWithSkeleton> = Array.from(
         { length: SKELETON_SECTION_COUNT },
-        () => () => (
-            <StackV
-                principle="sibling-stack"
-                explain="Skeleton section label over its row list — not group-boundary, because these are peer pieces of one loading section."
-                items={[
-                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                    () => (
-                        <SurfaceListCard bordered>
-                            {Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
-                                <SurfaceListCardItem key={index}>
-                                    <StackV
-                                        principle="title-subtitle"
-                                        explain="Skeleton title over subtitle bars — not label-field, because neither bar is a form control label."
-                                        items={[
-                                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                            () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                                        ]}
-                                    />
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
-                    ),
-                ]}
+        (_section, sectionIndex) => () => (
+            <SurfaceCardList
+                label=""
+                labelEnd=""
+                subtleLabel
+                variant="nested"
+                isSkeleton
+                items={Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) =>
+                    toListItem(ENTITY_RESULT_PLACEHOLDER, sectionIndex * SKELETON_ROW_COUNT + index, {
+                        isSkeleton: true,
+                    }))}
             />
         ),
     )
@@ -160,21 +171,16 @@ export const _MindMapNodeDrawer = ({
                 principle="content-row"
                 explain="Eyebrow over related-content groups — not sibling-stack, because these are related content regions rather than repeating peers."
                 items={[
-                    // section label over the related-content groups (each an interactive nav list)
                     () => <Typography size="sm" weight="semibold" text={labels.eyebrow} />,
                     ...groups.map((group) => () => (
-                        <LabeledCard frameless subtleLabel label={group.label} labelEnd={group.countLabel}>
-                            <SurfaceListCard bordered>
-                                {group.items.map((item, index) => (
-                                    <EntityResultRow
-                                        key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                                        item={item}
-                                        showSnippet
-                                        onSelect={onSelectItem}
-                                    />
-                                ))}
-                            </SurfaceListCard>
-                        </LabeledCard>
+                        <SurfaceCardList
+                            label={group.label}
+                            labelEnd={group.countLabel}
+                            subtleLabel
+                            variant="nested"
+                            items={group.items.map((item, index) =>
+                                toListItem(item, index, { onSelectItem }))}
+                        />
                     )),
                 ]}
             />

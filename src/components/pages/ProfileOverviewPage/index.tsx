@@ -3,7 +3,7 @@
 import React from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
-import { ProfileJobReadiness } from "./ProfileJobReadiness"
+import { ProfileJobReadiness } from "@/components/blocks/profile/ProfileJobReadiness"
 import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
 import { OverviewChallengeSkills } from "./OverviewChallengeSkills"

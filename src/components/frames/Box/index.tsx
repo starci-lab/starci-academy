@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
@@ -32,17 +33,18 @@ export interface BoxProps {
      * other frame. Do not treat this as a general styling door.
      */
     className?: string
+    /** Buildable body mounted by this wrapper. */
+    body?: ComponentTypeWithSkeleton
+    /** Threaded into the body so real and skeleton trees share one topology. */
+    isSkeleton?: boolean
+    /** @deprecated Migrate to a named `body` component slot. */
+    children?: ReactNode
     /** The HTML element to render. */
     as?: "div" | "span" | "section" | "figure" | "article" | "aside" | "header" | "footer" | "code"
     /** Inline style -- for a value that cannot be a class (a computed pixel size). */
     style?: CSSProperties
     /** Native `aria-hidden`, forwarded straight to the rendered tag. */
     "aria-hidden"?: boolean
-    /**
-     * ESCAPE HATCH: foreign content or an empty mount point. Not a house
-     * composition slot. Do not copy `children` onto any other frame.
-     */
-    children?: ReactNode
     /**
      * Caller identity to wear on this element instead of `Box`'s own -- pass this when a
      * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
@@ -67,8 +69,10 @@ export const Box = ({
     as: Tag = "div",
     style,
     "aria-hidden": ariaHidden,
-    children,
+    body: Body,
+    isSkeleton,
     identity,
+    children,
 }: BoxProps) => (
     <Tag
         {...resolveIdentity(identity, meta)}
@@ -78,6 +82,6 @@ export const Box = ({
         style={style}
         aria-hidden={ariaHidden}
     >
-        {children}
+        {Body ? <Body isSkeleton={isSkeleton} /> : children}
     </Tag>
 )

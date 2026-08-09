@@ -100,6 +100,8 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
     const standingLabels = standing ? (
         <StackV
             gap={1}
+            principle="title-subtitle"
+            explain="Title over supporting line — not label-field, because neither line is a form control label."
             isSkeleton={isSkeleton}
             items={[
                 // The rank NUMBER is typed data; "Rank #N" is the block's own wording (§14d.1).
@@ -152,6 +154,8 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
     return (
         <StackV identity={{ tier: "block", component: "Board" }}
             gap={6}
+            principle="sibling-stack"
+            explain="Standing card, podium, and ranked list are peer sections of one board — not group-boundary, because they share one leaderboard unit."
             isSkeleton={isSkeleton}
             items={[
                 () => standingCard,

@@ -1,6 +1,7 @@
 import { generateChallenge } from "./generate"
 import { publicEnv } from "@/resources/env/public"
 
+/** Starts the GitHub IdP OIDC flow via Keycloak (PKCE + sessionStorage state). */
 export const redirectToGithubAuthentication = async () => {
     const { url: keycloakUrl, realm, clientId } = publicEnv().keycloak
     

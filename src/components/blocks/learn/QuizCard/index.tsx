@@ -153,7 +153,11 @@ const resolveOptionState = (
  * The trailing result glyph for a post-submit row: a success check on correct
  * answers, a danger cross on a wrongly-picked answer, nothing otherwise.
  */
-const OptionResultIcon = ({ state }: { state: OptionVisualState }) => {
+interface OptionResultIconProps {
+    state: OptionVisualState
+}
+
+const OptionResultIcon = ({ state }: OptionResultIconProps) => {
     if (state === "correct" || state === "correctUnselected") {
         return (
             <CheckCircleIcon

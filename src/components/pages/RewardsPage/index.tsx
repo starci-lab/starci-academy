@@ -13,7 +13,7 @@ import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryM
 import { pathConfig } from "@/resources/path"
 import { MyVouchers } from "./MyVouchers"
 import { RewardCatalog } from "./RewardCatalog"
-import { Box } from "@/components/frames/Box"
+import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 
 /** The Coin shop's two tabs: buying new rewards vs owning/using them. */
@@ -31,7 +31,7 @@ export type RewardsPageProps = Record<string, never>
  * into from elsewhere, so URL state isn't needed. See `fe/features/rewards.md`
  * (canon) for the shell/CTA/state rationale.
  *
- * @param props - optional className for the root element.
+ * @param props - {@link RewardsPageProps}
  */
 export const RewardsPage = () => {
     const t = useTranslations()
@@ -46,10 +46,13 @@ export const RewardsPage = () => {
         (voucher) => voucher.status === "unused",
     ).length
 
+    // Empty host wrapper removed — Box is the real page root and wears identity.
     return (
-        <div className={""}>
-            <Box principle="center-measure" className="mx-auto w-full max-w-3xl p-6"
-                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+        <Container
+            identity={{ tier: "page", component: "RewardsPage" }}
+            principle="page-measure"
+            explain="Uses the standard page reading measure: wider than a card, inset from the viewport, and centered for long-form content."
+            body={() => (
                 <StackV principle="layout-split"
                     explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                     items={[
@@ -111,7 +114,7 @@ export const RewardsPage = () => {
                                 ]} />
                         ),
                     ]} />
-            </Box>
-        </div>
+            )}
+        />
     )
 }

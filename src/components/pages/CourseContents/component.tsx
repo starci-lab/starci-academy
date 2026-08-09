@@ -18,6 +18,7 @@ import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Container } from "@/components/frames/Container"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import { GithubTeamGate } from "@/components/blocks/auth/GithubTeamGate"
@@ -136,7 +137,8 @@ interface CourseContentsMetaChipsProps {
 
 const CourseContentsMetaChips = ({ meta, labels }: CourseContentsMetaChipsProps) => (
     <StackH
-        gap={3}
+        principle="chip-row"
+        explain="Catalog meta chips share one wrap row so module, hours, and learners stay on a single peer baseline."
         items={[
             () => <HighlightChip icon={StackIcon} value={meta.moduleCount} label={labels.metaModulesLabel} />,
             () => <HighlightChip icon={ClockIcon} value={meta.hoursText} label={labels.metaHoursLabel} />,
@@ -187,7 +189,8 @@ export const _CourseContents = ({
         const metaSlot = difficulty != null || isPremium
             ? () => (
                 <StackH
-                    gap={3}
+                    principle="chip-row"
+                    explain="Difficulty and premium lock stay on one trailing meta baseline so the lock does not drop under the chip."
                     items={[
                         ...(difficulty != null ? [() => <DifficultyChip difficulty={difficulty} />] : []),
                         ...(isPremium ? [() => (
@@ -263,21 +266,24 @@ export const _CourseContents = ({
                                                 () => (
                                                     <StackH
                                                         align="start"
-                                                        justify="between"
-                                                        gap={4}
                                                         principle="content-row"
                                                         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                         items={[
                                                             () => (
-                                                                <StackV
-                                                                    gap={1}
-                                                                    classNames={["min-w-0"]}
-                                                                    items={[
-                                                                        () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.eyebrow} />,
-                                                                        ...(isSkeleton || resumeTitle ? [() => (
-                                                                            <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text={resumeTitle} />
-                                                                        )] : []),
-                                                                    ]}
+                                                                <FillAvailable
+                                                                    at="base"
+                                                                    body={() => (
+                                                                        <StackV
+                                                                            principle="title-subtitle"
+                                                                            explain="Eyebrow over resume title — not label-field, because the upper line captions a heading rather than an input."
+                                                                            items={[
+                                                                                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.eyebrow} />,
+                                                                                ...(isSkeleton || resumeTitle ? [() => (
+                                                                                    <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text={resumeTitle} />
+                                                                                )] : []),
+                                                                            ]}
+                                                                        />
+                                                                    )}
                                                                 />
                                                             ),
                                                             // Button carries no `isSkeleton` — a resting screen shows no CTA yet.
@@ -289,7 +295,6 @@ export const _CourseContents = ({
                                                                     suffixIcon={ArrowRightIcon}
                                                                     iconSlide
                                                                     onPress={onResume}
-                                                                    classNames={["shrink-0"]}
                                                                 />
                                                             )] : []),
                                                         ]}
@@ -315,7 +320,8 @@ export const _CourseContents = ({
                                     // While loading it shimmers the SAME list with placeholder rows.
                                     ...((isSkeleton || lessons.length > 0) ? [() => (
                                         <StackV
-                                            gap={4}
+                                            principle="sibling-stack"
+                                            explain="Same-kind path peers — not group-boundary, because the heading and lesson list are stacked siblings rather than nested section groups."
                                             items={[
                                                 () => (
                                                     <Typography

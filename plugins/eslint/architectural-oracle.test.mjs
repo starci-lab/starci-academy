@@ -98,6 +98,74 @@ test("require-frame-self-declare demands principle + explain above atoms/frames"
   )
 })
 
+test("no-inline-component-slot requires named skeleton-aware slot components", () => {
+  tester.run(
+    "no-inline-component-slot",
+    starciFe.rules["no-inline-component-slot"],
+    {
+      valid: [
+        {
+          filename: "D:/repo/src/components/blocks/example/Example/index.tsx",
+          code: "const Body = ({ isSkeleton }: SkeletonProps) => <div />; const X = () => <Container body={Body} />",
+        },
+        {
+          filename: "D:/repo/src/components/blocks/example/Example/index.tsx",
+          code: "const X = () => <Button onPress={() => doThing()} />",
+        },
+        {
+          filename: "D:/repo/src/components/atoms/display/Badge/index.tsx",
+          code: "const X = () => <StackV body={() => <div />} />",
+        },
+      ],
+      invalid: [
+        {
+          filename: "D:/repo/src/components/blocks/example/Example/index.tsx",
+          code: "const X = () => <Container body={() => <div />} />",
+          errors: [{ messageId: "inline", data: { prop: "body" } }],
+        },
+        {
+          filename: "D:/repo/src/components/composites/example/Example/index.tsx",
+          code: "const X = () => <StackV items={[() => <div />]} />",
+          errors: [{ messageId: "inline", data: { prop: "items" } }],
+        },
+      ],
+    },
+  )
+})
+
+test("no-unregistered-principle requires a closed registry token", () => {
+  tester.run(
+    "no-unregistered-principle",
+    starciFe.rules["no-unregistered-principle"],
+    {
+      valid: [{ code: "const X = () => <StackV principle=\"content-row\" />" }],
+      invalid: [{
+        code: "const X = () => <StackV principle=\"invented-row\" />",
+        errors: [{ messageId: "unknown", data: { token: "invented-row" } }],
+      }],
+    },
+  )
+})
+
+test("Box mounts named body slots and FillAvailable is retired", () => {
+  tester.run(
+    "no-box-children",
+    starciFe.rules["no-box-children"],
+    {
+      valid: [{ filename: "D:/repo/src/components/blocks/example/index.tsx", code: "const X = () => <Box body={Body} />" }],
+      invalid: [{ filename: "D:/repo/src/components/blocks/example/index.tsx", code: "const X = () => <Box><Body /></Box>", errors: [{ messageId: "children" }] }],
+    },
+  )
+  tester.run(
+    "no-fill-available-consumer",
+    starciFe.rules["no-fill-available-consumer"],
+    {
+      valid: [{ filename: "D:/repo/src/components/frames/FillAvailable/index.tsx", code: "const X = () => <FillAvailable />" }],
+      invalid: [{ filename: "D:/repo/src/components/blocks/example/index.tsx", code: "import { FillAvailable } from '@/components/frames/FillAvailable'; const X = () => <FillAvailable />", errors: [{ messageId: "retired" }, { messageId: "retired" }] }],
+    },
+  )
+})
+
 test("require-identity-root demands identity on sentence component.tsx / lone index.tsx", () => {
   tester.run(
     "require-identity-root",

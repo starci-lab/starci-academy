@@ -5,7 +5,7 @@ import type { UserEntity } from "./user"
 import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /**
- * Join row user ↔ challenge submission (`user_submissions`).
+ * Join row user <-> challenge submission (`user_submissions`).
  * Mirrors `ref/user-challenge-submission.entity.ts`.
  */
 export interface UserChallengeSubmissionEntity extends AbstractEntity {

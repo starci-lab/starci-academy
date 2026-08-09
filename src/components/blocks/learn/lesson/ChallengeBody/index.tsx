@@ -47,7 +47,7 @@ export const ChallengeBody = () => {
     // gate on first-load only (NOT isValidating) — a background revalidate on page
     // change keeps the current cards on screen instead of flashing the skeleton
     const isLoading = queryChallengesSwr.isLoading
-    // surface fetch failures (e.g. the FE↔BE schema drift that broke this tab) as a
+    // surface fetch failures, including FE-to-BE schema drift, as a
     // distinct error+retry state instead of an indistinguishable "no challenges" empty
     const error = queryChallengesSwr.error
     const isEmpty = !isLoading && !error && !challenges?.length

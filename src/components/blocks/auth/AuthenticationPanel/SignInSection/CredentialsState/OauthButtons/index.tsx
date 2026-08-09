@@ -36,9 +36,15 @@ export const OauthButtons = ({
             variant="outline"
             label={t(item.labelKey)}
             prefixIcon={item.icon}
-            classNames={["w-full"]}
             onPress={() => onOauthPress(item.provider)}
         />
     ))
-    return <StackV identity={{ tier: "block", component: "OauthButtons" }} gap={3} items={buttonItems} />
+    return (
+        <StackV
+            identity={{ tier: "block", component: "OauthButtons" }}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these OAuth shortcuts are repeating siblings rather than section groups."
+            items={buttonItems}
+        />
+    )
 }

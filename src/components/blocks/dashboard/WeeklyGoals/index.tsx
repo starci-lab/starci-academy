@@ -21,7 +21,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
  * breakdown. See the component's own file header for the full contract; this
  * file only adds the states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): the six metrics never change the SHAPE of the
+ * LEAF by STRUCTURE (§14d.2): the six metrics never change the SHAPE of the
  * tree, only the numbers inside it, so this block has exactly ONE leaf
  * ("Content") — loading / error / content are states of that one leaf, the
  * same shape `ChallengeScoreCard`'s single leaf uses. No `isEmpty` state:
@@ -100,23 +100,28 @@ const goalCellContent = (
     const effectiveTarget = item.target ?? defaultTargets[item.key]
 
     const iconLabel = (
-        <StackH gap={2} isSkeleton={isSkeleton} items={[
-            () => (
-                <GlyphMark
-                    icon={Icon}
-                    tone="muted"
-                    isSkeleton={isSkeleton}
-                />
-            ),
-            () => (
-                <Typography
-                    size="sm"
-                    isSkeleton={isSkeleton}
-                    text={item.label}
+        <StackH
+            principle="icon-text"
+            explain="Icon beside its metric label — not title-subtitle, because the glyph labels the word rather than continuing a title; not name-handle, because this is not a person identity pair."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <GlyphMark
+                        icon={Icon}
+                        tone="muted"
+                        isSkeleton={isSkeleton}
+                    />
+                ),
+                () => (
+                    <Typography
+                        size="sm"
+                        isSkeleton={isSkeleton}
+                        text={item.label}
 
-                />
-            ),
-        ]} />
+                    />
+                ),
+            ]}
+        />
     )
 
     const labelRow = (
@@ -138,25 +143,30 @@ const goalCellContent = (
     )
 
     return (
-        <StackV gap={3} isSkeleton={isSkeleton} items={[
-            () => labelRow,
-            () => (
-                <ProgressMeter
-                    value={item.current}
-                    max={effectiveTarget > 0 ? effectiveTarget : 1}
-                    isSkeleton={isSkeleton}
-                />
-            ),
-            ...(!isSkeleton && item.coinReward != null ? [() => (
-                <Typography
-                    size="xs"
-                    color={item.canClaim ? "accent" : "muted"}
-                    isSkeleton={isSkeleton}
-                    text={`+${item.coinReward} coins when met`}
+        <StackV
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because the label row, meter, and coin hint are repeating cell peers rather than section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => labelRow,
+                () => (
+                    <ProgressMeter
+                        value={item.current}
+                        max={effectiveTarget > 0 ? effectiveTarget : 1}
+                        isSkeleton={isSkeleton}
+                    />
+                ),
+                ...(!isSkeleton && item.coinReward != null ? [() => (
+                    <Typography
+                        size="xs"
+                        color={item.canClaim ? "accent" : "muted"}
+                        isSkeleton={isSkeleton}
+                        text={`+${item.coinReward} coins when met`}
 
-                />
-            )] : []),
-        ]} />
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 

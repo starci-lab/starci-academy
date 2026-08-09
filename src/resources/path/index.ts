@@ -1,6 +1,7 @@
 import { Locale } from "next-intl"
 
 // represent as a function to ensure optional loading or logic processing
+/** App route builders scoped by optional locale prefix. */
 export const pathConfig = () => {
     const locale = (locale?: Locale) => {
         const localePath = locale ? `/${locale}` : ""

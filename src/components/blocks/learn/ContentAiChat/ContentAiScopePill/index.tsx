@@ -72,9 +72,7 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
                                 : "global"
     const isCourseScope = scope === "course"
     const isGlobalScope = scope === "global"
-    // a task uses a distinct 🎯 icon; a challenge its 🧩 puzzle piece and a quiz its
-    // 🃏 cards (matching their retrieval-skill icons); a lesson and a foundation
-    // (which reads like a single lesson) share the 📖 book
+    // Each scope uses its matching retrieval-skill icon.
     const NonCourseIcon = scope === "task"
         ? TargetIcon
         : scope === "challenge"

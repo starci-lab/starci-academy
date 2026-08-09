@@ -4,7 +4,6 @@ import React, {
     useCallback,
     useMemo,
 } from "react"
-import { Alert, Button } from "@heroui/react"
 import {
     useTranslations,
     useLocale,
@@ -12,6 +11,7 @@ import {
 import {
     useRouter,
 } from "next/navigation"
+import { Callout } from "@/components/composites/feedback/Callout"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -31,7 +31,6 @@ export type TaskLockedAlertProps = Record<string, never>
  * navigation handler. Renders nothing when the action is unlocked, so the task
  * container just drops `<TaskLockedAlert />` in place. `"use client"` for redux,
  * routing and i18n.
- * @param props - optional className (unused; alert shape is fixed)
  */
 export const TaskLockedAlert = () => {
     const t = useTranslations()
@@ -104,26 +103,13 @@ export const TaskLockedAlert = () => {
     }
 
     return (
-        <>
-            <Alert status="warning" className={"shadow-none bg-warning-soft"}>
-                <Alert.Indicator />
-                <Alert.Content className="gap-2">
-                    <Alert.Title>{t("task.previewLockedAlertTitle")}</Alert.Title>
-                    <Alert.Description>
-                        {t("task.previewLockedAlertDescription")}
-                    </Alert.Description>
-                    {canGoToCurrentTask ? (
-                        <Button
-                            size="sm"
-                            variant="secondary"
-                            className="w-fit shrink-0 bg-background text-warning-soft-foreground"
-                            onPress={onGoToCurrentTask}
-                        >
-                            {t("task.previewLockedGoToCurrentTaskButton")}
-                        </Button>
-                    ) : null}
-                </Alert.Content>
-            </Alert>
-        </>
+        <Callout
+            identity={{ tier: "block", component: "TaskLockedAlert" }}
+            status="warning"
+            title={t("task.previewLockedAlertTitle")}
+            description={t("task.previewLockedAlertDescription")}
+            actionLabel={canGoToCurrentTask ? t("task.previewLockedGoToCurrentTaskButton") : undefined}
+            onAction={canGoToCurrentTask ? onGoToCurrentTask : undefined}
+        />
     )
 }

@@ -1,35 +1,36 @@
 import React from "react"
-import { cn } from "@heroui/react"
-import type { ReactNode } from "react"
 
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 
 /**
  * Props for the {@link SimpleEmptyState} block.
  */
-export interface SimpleEmptyStateProps extends WithClassNames<undefined> {
+export interface SimpleEmptyStateProps {
     /**
      * Translated copy explaining why the area is empty. The caller supplies
      * the message — this block never calls a translation hook itself.
+     * Proven string at every live consumer (`t(...)`); ReactNode was unused.
      */
-    children: ReactNode
+    children: string
 }
 
 /**
  * Minimal inline empty-state message: a single muted, small line of text.
  *
- * Use this for lightweight "nothing here yet" placeholders inside a tab or
- * panel body. For a richer placeholder with an icon, title, description, and
- * action, use {@link EmptyState} instead.
+ * Exact collapse onto {@link EmptyState} `size="compact"` — same muted title-only
+ * line the composite already owns. Prefer calling `EmptyState` directly for new
+ * call sites; this block remains as a thin identity root for existing children API.
  *
  * @param props - See {@link SimpleEmptyStateProps}.
  * @returns The rendered empty-state element.
  * @see Story: .storybook/stories/blocks/feedback/SimpleEmptyState/SimpleEmptyState.stories
  */
-export const SimpleEmptyState = ({ children, className }: SimpleEmptyStateProps) => {
+export const SimpleEmptyState = ({ children }: SimpleEmptyStateProps) => {
     return (
-        <p className={cn("text-sm text-muted", className)}>
-            {children}
-        </p>
+        <EmptyState
+            identity={{ tier: "block", component: "SimpleEmptyState" }}
+            size="compact"
+            title={children}
+        />
     )
 }

@@ -11,7 +11,6 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { ProgressBar } from "@/components/atoms/display/Progress"
 import { Container } from "@/components/frames/Container"
 import { StackV, StackH } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 
 /** Leading glyph a KPI row carries — matches `KPI_META`'s own `Icon` field shape. */
@@ -90,7 +89,6 @@ export interface KpiPageProps {
     rows: Array<KpiRowData>
     labels: KpiLabels
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -216,7 +214,6 @@ export const _KpiPage = ({
     onNavigateHome,
     rows,
     labels,
-    classNames,
 }: KpiPageProps) => {
     // error beats a stale loading flag (BLOCK-8) — the shared `AsyncContentError`
     // frame, not hand-written JSX (loading-and-skeleton.md §6).
@@ -271,7 +268,6 @@ export const _KpiPage = ({
             size="sm"
             padding={6}
             isSkeleton={isSkeleton}
-            classNames={classNames}
             body={() => (
                 <StackV gap={7} items={[
                     headerZone,

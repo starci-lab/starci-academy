@@ -168,7 +168,11 @@ const RowSkeleton = () => (
 )
 
 /** One resolved rank 4+ row: rank cell · profile-linked user cell · points · movement caret. */
-const Row = ({ row }: { row: WeeklyBoardRowEntry }) => (
+interface RowProps {
+    row: WeeklyBoardRowEntry
+}
+
+const Row = ({ row }: RowProps) => (
     <StackH gap={4} principle="content-row"
         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
         items={[

@@ -4,20 +4,18 @@ export type ReactionType = "like" | "love" | "haha" | "wow" | "sad" | "angry"
 /** One reaction kind's fixed vocabulary — the block's own table (§14d.1), never caller-supplied. */
 interface ReactionDescriptor {
     type: ReactionType
-    /** Native emoji glyph — `alt` text for the real SVG asset. */
-    emoji: string
     /** Accessible + summary label, matches `src/messages/vi.json`'s `discussion.reactions.*`. */
     label: string
 }
 
 /** Public export `REACTIONS` for this module. */
 export const REACTIONS: ReadonlyArray<ReactionDescriptor> = [
-    { type: "like", emoji: "👍", label: "Like" },
-    { type: "love", emoji: "❤️", label: "Love" },
-    { type: "haha", emoji: "😂", label: "Haha" },
-    { type: "wow", emoji: "😮", label: "Wow" },
-    { type: "sad", emoji: "😢", label: "Sad" },
-    { type: "angry", emoji: "😡", label: "Angry" },
+    { type: "like", label: "Like" },
+    { type: "love", label: "Love" },
+    { type: "haha", label: "Haha" },
+    { type: "wow", label: "Wow" },
+    { type: "sad", label: "Sad" },
+    { type: "angry", label: "Angry" },
 ]
 
 /** Public export `REACTION_BY_TYPE` for this module. */

@@ -1,5 +1,7 @@
 import React from "react"
-import { Chip, cn, Typography } from "@heroui/react"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for the {@link SectionHeading} block. */
 export interface SectionHeadingProps {
@@ -35,45 +37,60 @@ export const SectionHeading = ({
     align = "center",
     anchorId}: SectionHeadingProps) => {
     const centered = align === "center"
+    const headingSize = level === 2 ? "h2" : "h3"
+
     return (
-        <div
-            className={cn("flex flex-col gap-3",
-                centered ? "items-center" : "items-start")}
-        >
-            {eyebrow ? (
-                <Chip variant="soft" color="accent" size="sm">
-                    <Chip.Label>{eyebrow}</Chip.Label>
-                </Chip>
-            ) : null}
-            <div className={cn("flex items-center gap-2", centered && "justify-center")}>
-                <Typography.Heading
-                    level={level}
-                    weight="bold"
-                    align={centered ? "center" : "start"}
-                >
-                    {title}
-                </Typography.Heading>
-                {anchorId ? (
-                    // "#" deep-link to this section (ref-able). Quiet by default, accent on hover.
-                    <a
-                        href={`#${anchorId}`}
-                        aria-label={`#${anchorId}`}
-                        className="text-xl leading-none text-muted opacity-50 transition hover:text-accent-soft-foreground hover:opacity-100"
-                    >
-                        #
-                    </a>
-                ) : null}
-            </div>
-            {intro ? (
-                <Typography
-                    type="body-sm"
-                    color="muted"
-                    align={centered ? "center" : "start"}
-                    className="max-w-2xl"
-                >
-                    {intro}
-                </Typography>
-            ) : null}
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "SectionHeading" }}
+            align={centered ? "center" : "start"}
+            principle="label-field"
+            explain="Eyebrow-to-title-to-intro is a label-to-field stack — not title-subtitle, because three layers exceed a two-line title pair."
+            items={[
+                ...(eyebrow
+                    ? [() => (
+                        <Chip tone="accent" text={eyebrow} />
+                    )]
+                    : []),
+                () => (
+                    <StackH
+                        align="center"
+                        justify={centered ? "center" : "start"}
+                        principle="icon-text"
+                        explain="Title hugs its optional deep-link hash — not name-handle, because the hash is a glyph adjunct rather than a secondary identity line."
+                        items={[
+                            () => (
+                                <Typography
+                                    size={headingSize}
+                                    weight="bold"
+                                    align={centered ? "center" : "start"}
+                                    text={title}
+                                />
+                            ),
+                            ...(anchorId
+                                ? [() => (
+                                    <Typography
+                                        size="lg"
+                                        color="muted"
+                                        isLink
+                                        href={`#${anchorId}`}
+                                        text="#"
+                                    />
+                                )]
+                                : []),
+                        ]}
+                    />
+                ),
+                ...(intro
+                    ? [() => (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            align={centered ? "center" : "start"}
+                            text={intro}
+                        />
+                    )]
+                    : []),
+            ]}
+        />
     )
 }

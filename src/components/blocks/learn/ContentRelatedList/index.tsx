@@ -96,19 +96,23 @@ const ContentRelatedList = ({
         // matches the real row's own affordance (no accent, no arrow).
         hover: "underline",
         content: () => (
-            <StackV gap={2} isSkeleton={isSkeleton} items={[() => relatedItemBody(item, enrollToOpenLabel)]} />
+            <StackV
+                gap={2}
+                principle="title-subtitle"
+                explain="Keeps breadcrumb and title in one continuing voice at 4px — not name-handle, because these lines still need a readable seam rather than a zero-gap identity pair."
+                isSkeleton={isSkeleton}
+                items={[() => relatedItemBody(item, enrollToOpenLabel)]}
+            />
         ),
     }))
 
     return (
-        <div>
-            <SurfaceCardList
-                label={label}
-                items={rows}
-                isSkeleton={isSkeleton}
-
-            />
-        </div>
+        <SurfaceCardList
+            identity={{ tier: "block", component: "ContentRelatedList" }}
+            label={label}
+            items={rows}
+            isSkeleton={isSkeleton}
+        />
     )
 }
 

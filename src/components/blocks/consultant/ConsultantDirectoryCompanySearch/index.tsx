@@ -52,10 +52,11 @@ const ConsultantDirectoryCompanySearch = ({
         label: company.label,
     }))
 
-    // Sole root is SearchAutocomplete — inert host wrappers removed. Identity
-    // stays held until the atom accepts CallerIdentity (CourseTrialChip pattern).
+    // Sole root is SearchAutocomplete — inert host wrappers removed. Atom accepts
+    // CallerIdentity (Contract C), so the block stamps its own name on that root.
     return (
         <SearchAutocomplete
+            identity={{ tier: "block", component: "ConsultantDirectoryCompanySearch" }}
             items={items}
             inputValue={query}
             onInputChange={onQueryChange}

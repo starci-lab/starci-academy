@@ -196,9 +196,11 @@ const PlaygroundResourcePanel = ({
     )
 
     return (
-        <StackV identity={{ tier: "block", component: "PlaygroundResourcePanel" }}
+        <StackV
+            identity={{ tier: "block", component: "PlaygroundResourcePanel" }}
+            principle="block-boundary"
+            explain="Panel root seam for header over resource body — not sibling-stack, because header and accordion are different kinds of content, and not group-boundary, because this is the block's sole major seam rather than a mid-sized inner group."
             gap={4}
-
             items={[
                 () => headerRow,
                 () => body,

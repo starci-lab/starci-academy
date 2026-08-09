@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
@@ -110,7 +109,6 @@ export interface ContainerBaseProps {
     /** `true` → passes `isSkeleton` down to `body` so the measure's content shimmers. */
     isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
-    classNames?: Array<AllowedClassName>
     /**
      * Caller identity to wear on this measure's OUTER root instead of the frame's own -- pass
      * this when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of
@@ -160,10 +158,11 @@ const ContainerBase = ({
     padding = 6,
     body: Body,
     isSkeleton,
-    classNames,
     principle,
     explain,
     identity}: ContainerBaseProps) => {
+    const resolvedSize: ContainerSize = principle === "page-measure" ? "md" : size
+    const resolvedPadding = principle === "page-measure" ? 6 : padding
     return (
         // TWO layers, not one (teacher 2026-07-29, "shouldn't desktop render as
         // flex?" -- traced to here). A `@container` measures its QUERY CONTAINER'S
@@ -182,11 +181,10 @@ const ContainerBase = ({
             {...resolveIdentity(identity, { tier: "frame", name: "Container" })}
             className={cn(
                 "@container mx-auto w-full",
-                SIZE_CLASS[size],
-                classNames)}
+                SIZE_CLASS[resolvedSize])}
         >
             <div data-principle={principleAttr(principle)}
-                data-explain={explainAttr(explain)} className={cn(...paddingClassNames(padding))}>
+                data-explain={explainAttr(explain)} className={cn(...paddingClassNames(resolvedPadding))}>
                 {Body && <Body isSkeleton={isSkeleton} />}
             </div>
         </div>

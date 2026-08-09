@@ -15,6 +15,7 @@ interface EvaluateActionRowProps {
 /** The evaluate CTA + an optional AI status line beside it. */
 export const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton }: EvaluateActionRowProps) => (
     <StackH
+        identity={{ tier: "block", component: "EvaluateActionRow" }}
         gap={3}
         principle="flex-action"
         explain="Groups action controls on one horizontal peer row so they share a single hit baseline."

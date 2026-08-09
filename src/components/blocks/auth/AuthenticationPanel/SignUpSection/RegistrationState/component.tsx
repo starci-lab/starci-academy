@@ -93,7 +93,8 @@ export const _RegistrationState = ({
 }: RegistrationStateProps) => (
     <StackV
         identity={{ tier: "block", component: "RegistrationState" }}
-        gap={6}
+        principle="block-boundary"
+        explain="Block-to-block spacing — not group-boundary, because this separates major auth panel sections rather than nested section groups."
         items={[
             () => (
                 <StackV
@@ -102,7 +103,11 @@ export const _RegistrationState = ({
                     explain="Title over supporting line — not label-field, because neither line is a form control label."
                     items={[
                         () => (
-                            <Box className="pr-8">
+                            <Box
+                                className="pr-8"
+                                principle="control-pad"
+                                explain="Reserves room for ModalShell close trigger — not card-padding, because this is chrome inset beside the dismiss control rather than card body pad; not page-pad, because the inset is single-sided."
+                            >
                                 <Typography weight="semibold" align="center" text={labels.title} />
                             </Box>
                         ),
@@ -116,11 +121,13 @@ export const _RegistrationState = ({
                     gap={6}
                     body={() => (
                         <StackV
-                            gap={6}
+                            principle="block-boundary"
+                            explain="Block-to-block spacing — not group-boundary, because the field cluster and captcha are major form sections rather than nested section groups."
                             items={[
                                 () => (
                                     <StackV
-                                        gap={3}
+                                        principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these form controls are repeating siblings rather than section groups."
                                         items={[
                                             () => (
                                                 <EmailField
@@ -173,12 +180,12 @@ export const _RegistrationState = ({
                     )}
                     actions={() => (
                         <StackV
-                            gap={6}
+                            principle="block-boundary"
+                            explain="Block-to-block spacing — not group-boundary, because the submit CTA and sign-in prompt are major action sections rather than nested section groups."
                             items={[
                                 () => (
                                     <Button
                                         variant="primary"
-                                        classNames={["w-full"]}
                                         isDisabled={isSubmitDisabled}
                                         isPending={isSubmitting}
                                         label={labels.submit}

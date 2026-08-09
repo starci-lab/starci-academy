@@ -125,7 +125,7 @@ export const LeaderboardListCard = ({
         return (
             <SurfaceListCardItem key={row.key} withVerdict={row.verdict}>
                 <div className="flex items-center gap-3">
-                    {/* top-3 → place medal (🥇🥈🥉); rank 4+ → plain number. Number matches the
+                    {/* top-3 uses medal icons; rank 4+ uses a plain number. Number matches the
                         medal's w-6 CENTERED slot (teacher 2026-07-17 "4 and 5 still misaligned") at the same
                         text-sm foreground as the name (same-row same-size, `visual-hierarchy`). */}
                     {row.rank <= 3 ? (

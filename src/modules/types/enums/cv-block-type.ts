@@ -1,7 +1,7 @@
 /**
  * The kind of a CV block (`cv_blocks.blocks[].type`) — drives which per-block
  * editor component + PDF template partial renders it. Mirrors the frozen block
- * table in `CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md` ("CHỐT CUỐI").
+ * table in `CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md` (final lock).
  */
 export enum CvBlockType {
     /** Name / contact row — required, always present, not repeatable. */

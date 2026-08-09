@@ -6,9 +6,10 @@ import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
+import { IdentityTile } from "@/components/atoms/display/IdentityTile"
 import { StackH, StackV } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { CartLine } from "@/components/blocks/commerce/CartLine"
@@ -139,29 +140,49 @@ export const _MiniCartDrawer = ({
         () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.comboHint} />,
     ]
     const comboMeterSection: ComponentTypeWithSkeleton = () => (
-        <StackV gap={3} items={comboMeterItems} />
+        <StackV
+            gap={3}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            items={comboMeterItems}
+        />
     )
 
     // Line list — reuses the SAME `CartLine` as the `/cart` page. `variant="nested"`:
     // this list is NESTED inside the drawer surface, where `shadow-surface` renders
     // invisible against the parent (dark mode) — nested cards need a border to
     // delineate (`card.md` §surface-in-surface). The `/cart` PAGE keeps the default
-    // surface variant (top-level on `bg-background`, shadow shows). `CartLine` has no
-    // co-located skeleton of its own, so the loading rows are mirrored by hand,
-    // same shape (leading tile · two text lines · trailing action).
+    // surface variant (top-level on `bg-background`, shadow shows). Loading rows
+    // mirror CartLine via the same IdentityTile / FillAvailable / Button vocabulary
+    // with `isSkeleton` (no hand-rolled Skeleton className bars).
     const cartLineSkeletonItems = [
-        () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+        () => <IdentityTile size="sm" tone="accent" isSkeleton />,
         () => (
-            <StackV
-                gap={3}
-                classNames={["min-w-0", "flex-1"]}
-                items={[
-                    () => <Skeleton className="h-4 w-1/2 rounded-lg" />,
-                    () => <Skeleton className="h-4 w-24 rounded-lg" />,
-                ]}
+            <FillAvailable
+                at="base"
+                isSkeleton
+                body={({ isSkeleton: rowSkeleton }) => (
+                    <StackV
+                        gap={1}
+                        isSkeleton={rowSkeleton}
+                        principle="name-handle"
+                        explain="Title over price at the tight name-handle step — not title-subtitle, because the second line is a price control rather than a descriptive subtitle."
+                        items={[
+                            () => <Typography size="sm" weight="medium" truncate isSkeleton text="" />,
+                            () => <PriceTagInline discounted={0} currency="VND" isSkeleton />,
+                        ]}
+                    />
+                )}
             />
         ),
-        () => <Skeleton className="size-9 shrink-0 rounded-lg" />,
+        () => (
+            <Button
+                isIconOnly
+                isSkeleton
+                variant="danger-soft"
+                ariaLabel={labels.checkout}
+            />
+        ),
     ]
     const cartListSection: ComponentTypeWithSkeleton = () => {
         const listItems: Array<SurfaceCardListItem> = isSkeleton
@@ -169,9 +190,9 @@ export const _MiniCartDrawer = ({
                 key: `skeleton-${index}`,
                 content: () => (
                     <StackH
-                        gap={4}
-                        principle="content-row"
-                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        gap={3}
+                        principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                         align="center"
                         items={cartLineSkeletonItems}
                     />
@@ -216,12 +237,20 @@ export const _MiniCartDrawer = ({
                 />
             )
         }
-        return <StackV gap={6} isSkeleton={isSkeleton} items={[comboMeterSection, cartListSection]} />
+        return (
+            <StackV
+                gap={6}
+                isSkeleton={isSkeleton}
+                principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[comboMeterSection, cartListSection]}
+            />
+        )
     }
 
     const previewSkeletonTotalRow = [
-        () => <Skeleton className="h-5 w-20 rounded-lg" />,
-        () => <Skeleton className="h-7 w-32 rounded-lg" />,
+        () => <Typography size="base" weight="semibold" isSkeleton text={labels.total} />,
+        () => <PriceTagInline discounted={0} currency="VND" isSkeleton />,
     ]
     const totalPriceRow = [
         () => <Typography size="base" weight="semibold" text={labels.total} />,
@@ -267,31 +296,55 @@ export const _MiniCartDrawer = ({
                     items={previewSkeletonTotalRow}
                 />
             ) : (
-                <StackV gap={2} items={totalSummaryItems} />
+                <StackV
+                    gap={2}
+                    principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                    items={totalSummaryItems}
+                />
             )
         ),
         () => (
-            <Button
-                variant="primary"
-                size="lg"
-                suffixIcon={ArrowRightIcon}
-                isDisabled={isMutating}
-                onPress={onCheckout}
-                label={labels.checkout}
-                classNames={["w-full"]}
+            <StackV
+                principle="center-measure"
+                explain="Stretches the checkout CTA across the drawer footer so it matches peer full-width cart actions."
+                items={[
+                    () => (
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            suffixIcon={ArrowRightIcon}
+                            isDisabled={isMutating}
+                            onPress={onCheckout}
+                            label={labels.checkout}
+                        />
+                    ),
+                ]}
             />
         ),
         () => (
-            <Button
-                variant="tertiary"
-                onPress={onViewFullCart}
-                label={labels.viewFullCart}
-                classNames={["w-full"]}
+            <StackV
+                principle="center-measure"
+                explain="Stretches the view-cart link across the drawer footer so it aligns with the checkout CTA above."
+                items={[
+                    () => (
+                        <Button
+                            variant="tertiary"
+                            onPress={onViewFullCart}
+                            label={labels.viewFullCart}
+                        />
+                    ),
+                ]}
             />
         ),
     ]
     const footerSection: ComponentTypeWithSkeleton = () => (
-        <StackV gap={4} items={footerItems} />
+        <StackV
+            gap={5}
+            principle="group-boundary"
+            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+            items={footerItems}
+        />
     )
 
     return (

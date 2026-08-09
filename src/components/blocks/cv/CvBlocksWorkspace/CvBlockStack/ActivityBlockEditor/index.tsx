@@ -16,7 +16,7 @@ export type ActivityBlockEditorProps = CvBlockEditorProps
 
 /**
  * Extracurricular / volunteering activity block editor — repeatable entries
- * (title / description), each with its OWN "✨ AI writes it for you" (rewrites that
+ * (title / description), each with its own AI-assisted rewrite action (rewrites that
  * one item's `description`) and reorder/remove — mirrors
  * `AchievementBlockEditor` but AI-assisted (per `CV_BLOCK_TYPE_REGISTRY[Activity]`).
  *

@@ -120,6 +120,8 @@ export const _TalentDirectoryPage = ({
                 identity={{ tier: "block", component: "TalentDirectoryPage" }}
                 size="lg"
                 padding={6}
+                principle="center-measure"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport — not page-pad, because Container size/padding already own the inset."
                 body={() => (
                     <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
                 )}
@@ -132,6 +134,8 @@ export const _TalentDirectoryPage = ({
                 identity={{ tier: "block", component: "TalentDirectoryPage" }}
                 size="lg"
                 padding={6}
+                principle="center-measure"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport — not page-pad, because Container size/padding already own the inset."
                 body={() => (
                     <AsyncContentEmpty
                         icon={ChartLineUpIcon}
@@ -152,58 +156,92 @@ export const _TalentDirectoryPage = ({
             key: `pending-${index}`,
             isDisabled: true,
             content: () => (
-                <StackV gap={3} items={[
-                    () => (
-                        <StackH gap={3} items={[
-                            () => <Skeleton.Avatar size="lg" />,
-                            () => (
-                                <StackV gap={1} classNames={["min-w-0"]} items={[
-                                    () => <Typography size="sm" weight="semibold" isSkeleton />,
-                                    () => <Typography size="xs" color="muted" isSkeleton />,
-                                ]} />
-                            ),
-                        ]} />
-                    ),
-                    () => <StackH gap={2} items={[() => <Chip isSkeleton />]} />,
-                ]} />
+                <StackV
+                    principle="sibling-stack"
+                    explain="Identity, badges, and bio as peer card regions — not group-boundary, because these are repeating card peers rather than nested section groups."
+                    items={[
+                        () => (
+                            <StackH
+                                principle="identity"
+                                explain="Avatar beside name/role — not icon-text, because this is a person identity unit rather than a glyph labeling a word; not content-row, because there is no trailing action segment."
+                                items={[
+                                    () => <Skeleton.Avatar size="lg" />,
+                                    () => (
+                                        <StackV
+                                            principle="title-subtitle"
+                                            explain="Display name over role title — not name-handle, because the second line is a role subtitle rather than an @handle; not label-field, because neither line labels a control."
+                                            items={[
+                                                () => <Typography size="sm" weight="semibold" isSkeleton />,
+                                                () => <Typography size="xs" color="muted" isSkeleton />,
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <StackH
+                                principle="chip-row"
+                                explain="Same-kind qualification chips on one row — not flex-action, because these are display tags rather than controls a person acts on."
+                                items={[() => <Chip isSkeleton />]}
+                            />
+                        ),
+                    ]}
+                />
             ),
         }))
         : candidates.map((candidate) => ({
             key: candidate.key,
             href: candidate.href,
             content: () => (
-                <StackV gap={3} items={[
-                    () => (
-                        <StackH gap={3} items={[
-                            () => (
-                                <UserAvatar
-                                    username={candidate.displayName}
-                                    avatar={candidate.avatar}
-                                    seed={candidate.seed}
-                                    className="size-12"
-                                />
-                            ),
-                            () => (
-                                <StackV gap={1} classNames={["min-w-0"]} items={[
-                                    () => <Typography size="sm" weight="semibold" truncate text={candidate.displayName} />,
-                                    () => <Typography size="xs" color="muted" truncate text={candidate.roleTitle} />,
-                                ]} />
-                            ),
-                        ]} />
-                    ),
-                    // qualitative track badges ONLY — no blended score, no raw number
-                    () => (
-                        <StackH gap={2} items={[
-                            ...(candidate.isQualified ? [() => (
-                                <Chip tone="success" icon={RocketLaunchIcon} text={labels.qualified} />
-                            )] : []),
-                            () => <Chip tone={bandToneOf(candidate.band)} text={labels.band[candidate.band]} />,
-                        ]} />
-                    ),
-                    ...(candidate.bio?.trim() ? [() => (
-                        <Typography size="xs" color="muted" lineClamp={2} text={candidate.bio ?? ""} />
-                    )] : []),
-                ]} />
+                <StackV
+                    principle="sibling-stack"
+                    explain="Identity, badges, and bio as peer card regions — not group-boundary, because these are repeating card peers rather than nested section groups."
+                    items={[
+                        () => (
+                            <StackH
+                                principle="identity"
+                                explain="Avatar beside name/role — not icon-text, because this is a person identity unit rather than a glyph labeling a word; not content-row, because there is no trailing action segment."
+                                items={[
+                                    () => (
+                                        <UserAvatar
+                                            username={candidate.displayName}
+                                            avatar={candidate.avatar}
+                                            seed={candidate.seed}
+                                            size="lg"
+                                        />
+                                    ),
+                                    () => (
+                                        <StackV
+                                            principle="title-subtitle"
+                                            explain="Display name over role title — not name-handle, because the second line is a role subtitle rather than an @handle; not label-field, because neither line labels a control."
+                                            items={[
+                                                () => <Typography size="sm" weight="semibold" truncate text={candidate.displayName} />,
+                                                () => <Typography size="xs" color="muted" truncate text={candidate.roleTitle} />,
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        // qualitative track badges ONLY — no blended score, no raw number
+                        () => (
+                            <StackH
+                                principle="chip-row"
+                                explain="Same-kind qualification chips on one row — not flex-action, because these are display tags rather than controls a person acts on."
+                                items={[
+                                    ...(candidate.isQualified ? [() => (
+                                        <Chip tone="success" icon={RocketLaunchIcon} text={labels.qualified} />
+                                    )] : []),
+                                    () => <Chip tone={bandToneOf(candidate.band)} text={labels.band[candidate.band]} />,
+                                ]}
+                            />
+                        ),
+                        ...(candidate.bio?.trim() ? [() => (
+                            <Typography size="xs" color="muted" lineClamp={2} text={candidate.bio ?? ""} />
+                        )] : []),
+                    ]}
+                />
             ),
         }))
 
@@ -215,6 +253,8 @@ export const _TalentDirectoryPage = ({
             size="lg"
             padding={6}
             isSkeleton={isSkeleton}
+            principle="center-measure"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport — not page-pad, because Container size/padding already own the inset."
             body={() => (
                 <StackV gap={6} principle="block-boundary"
                     explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."

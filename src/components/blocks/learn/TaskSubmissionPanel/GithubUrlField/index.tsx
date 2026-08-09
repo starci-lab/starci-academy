@@ -51,10 +51,12 @@ export const GithubUrlField = ({
 }: GithubUrlFieldProps) => {
     const AutosaveIcon = autosaveStatus === "idle" ? null : AUTOSAVE_ICON[autosaveStatus]
     return (
-        <StackV identity={{ tier: "block", component: "GithubUrlField" }}
+        <StackV
+            identity={{ tier: "block", component: "GithubUrlField" }}
+            principle="block-boundary"
+            explain="Repo URL field stacked over its autosave status as one control unit — not sibling-stack, because the status line is a mark under the field rather than a same-kind peer, and not group-boundary, because this is one field unit rather than two section groups."
             gap={2}
             isSkeleton={isSkeleton}
-
             items={[
                 () => (
                     <InputText

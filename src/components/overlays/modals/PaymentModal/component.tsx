@@ -13,6 +13,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Spinner } from "@/components/atoms/display/Spinner"
 
 import { StackV, StackH } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { PaymentType } from "@/modules/types/enums/payment-type"
 
 /**
@@ -210,11 +211,15 @@ const checkoutLineRow = (
                 />
             ),
             () => (
-                <Typography
-                    size="sm"
-                    truncate
-                    classNames={["min-w-0", "flex-1"]}
-                    text={line.title}
+                <FillAvailable
+                    at="base"
+                    body={() => (
+                        <Typography
+                            size="sm"
+                            truncate
+                            text={line.title}
+                        />
+                    )}
                 />
             ),
             ...(isSkeleton || line.discounted != null
@@ -272,7 +277,14 @@ const summaryContent = (props: PaymentModalProps) => {
                 : []),
         ]
         const checkoutSummaryItems = [
-            () => <StackV gap={4} items={checkoutLineItems} />,
+            () => (
+                <StackV
+                    gap={3}
+                    principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    items={checkoutLineItems}
+                />
+            ),
             () => (
                 <StackH
                     gap={4}
@@ -319,13 +331,19 @@ const summaryContent = (props: PaymentModalProps) => {
             />
         ),
         () => (
-            <StackV
-                gap={3}
-                classNames={["min-w-0", "flex-1"]}
-                items={[
-                    () => <Typography size="xs" color="muted" truncate text={orderName} />,
-                    () => priceRegion,
-                ]}
+            <FillAvailable
+                at="base"
+                body={() => (
+                    <StackV
+                        gap={3}
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={[
+                            () => <Typography size="xs" color="muted" truncate text={orderName} />,
+                            () => priceRegion,
+                        ]}
+                    />
+                )}
             />
         ),
     ]
@@ -344,6 +362,8 @@ const summaryContent = (props: PaymentModalProps) => {
             ? [() => (
                 <StackV
                     gap={3}
+                    principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     items={loyaltyRows.map((row) => () => (
                         <InlineIconLabel icon={row.icon} label={row.label} tone="success" size="xs" />
                     ))}
@@ -351,19 +371,33 @@ const summaryContent = (props: PaymentModalProps) => {
             )]
             : []),
         () => (
-            <Button
-                variant="primary"
-                size="lg"
-                suffixIcon={ArrowRightIcon}
-                iconSlide
-                classNames={["w-full"]}
-                label={labels.continueToPayment}
-                onPress={() => onSelectedTabChange("payment")}
+            <StackV
+                principle="center-measure"
+                explain="Stretches the continue CTA across the summary panel so it matches peer full-width payment actions."
+                items={[
+                    () => (
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            suffixIcon={ArrowRightIcon}
+                            iconSlide
+                            label={labels.continueToPayment}
+                            onPress={() => onSelectedTabChange("payment")}
+                        />
+                    ),
+                ]}
             />
         ),
     ]
 
-    return <StackV gap={4} items={singleSummaryItems} />
+    return (
+        <StackV
+            gap={5}
+            principle="group-boundary"
+            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+            items={singleSummaryItems}
+        />
+    )
 }
 
 /** Trailing control for a gateway row - spinner while pending, else a chevron. */
@@ -488,10 +522,24 @@ const paymentContent = (props: PaymentModalProps) => {
 
     const paymentPanelItems = [
         ...(installmentAvailable
-            ? [() => <StackV gap={4} items={installmentSectionItems} />]
+            ? [() => (
+                <StackV
+                    gap={4}
+                    principle="label-field"
+                    explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                    items={installmentSectionItems}
+                />
+            )]
             : []),
         ...(showVoucher
-            ? [() => <StackV gap={4} items={voucherSectionItems} />]
+            ? [() => (
+                <StackV
+                    gap={4}
+                    principle="label-field"
+                    explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                    items={voucherSectionItems}
+                />
+            )]
             : []),
         ...(hasUsd
             ? [() => (
@@ -529,7 +577,14 @@ const paymentContent = (props: PaymentModalProps) => {
         ),
     ]
 
-    return <StackV gap={4} items={paymentPanelItems} />
+    return (
+        <StackV
+            gap={5}
+            principle="group-boundary"
+            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+            items={paymentPanelItems}
+        />
+    )
 }
 
 /**
@@ -544,6 +599,8 @@ const _PaymentModal = (props: PaymentModalProps) => {
     const body = () => (
         <StackV
             gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             items={[
                 () => (
                     <Toolbar

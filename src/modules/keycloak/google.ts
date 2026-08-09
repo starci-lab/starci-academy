@@ -1,6 +1,7 @@
 import { generateChallenge } from "./generate"
 import { publicEnv } from "@/resources/env/public"
 
+/** Starts the Google IdP OIDC flow via Keycloak (PKCE + sessionStorage state). */
 export const redirectToGoogleAuthentication = async () => {
     const { url: keycloakUrl, realm, clientId } = publicEnv().keycloak
     

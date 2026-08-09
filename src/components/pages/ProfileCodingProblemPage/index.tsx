@@ -34,7 +34,6 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { Cluster } from "@/components/frames/Cluster"
 import { Container } from "@/components/frames/Container"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /** Props for {@link ProfileCodingProblemPage}. */
 export type ProfileCodingProblemPageProps = Record<string, never>
@@ -73,10 +72,8 @@ export const ProfileCodingProblemPage = () => {
         ? dayjs(submission.firstSolvedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
         : undefined
 
-    const rootClassNames: Array<AllowedClassName> = []
-
     return (
-        <Container identity={{ tier: "page", component: "ProfileCodingProblemPage" }} size="lg" padding={1} classNames={rootClassNames} body={() => (
+        <Container identity={{ tier: "page", component: "ProfileCodingProblemPage" }} size="lg" padding={1} body={() => (
             <StackV gap={6} principle="block-boundary"
                 explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[

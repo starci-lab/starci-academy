@@ -2,6 +2,7 @@ import Decimal from "decimal.js"
 import numeral from "numeral"
 import { publicEnv } from "@/resources/env/public"
 
+/** Rounds a Decimal for display, truncating or abbreviating to fit `maxLength`. */
 export const round = (
     decimal: Decimal,
     fractionDigits = publicEnv().computation.round.fractionDigits,

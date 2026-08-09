@@ -4,6 +4,7 @@ import type { CodeExplainingEntity } from "@/modules/types/entities/code-explain
 /** Languages treated as renderable React/TSX. */
 export const REACT_LANGS = new Set(["tsx", "jsx", "react"])
 
+/** True when a code-explaining item should render as a React/TSX Sandpack file. */
 export const isReactItem = (item: CodeExplainingEntity): boolean =>
     REACT_LANGS.has(item.lang?.toLowerCase())
 

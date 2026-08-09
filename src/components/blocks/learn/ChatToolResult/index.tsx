@@ -1,21 +1,24 @@
 "use client"
 
 import React from "react"
-import { Typography } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
-import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
-import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { EntityResultRow, ENTITY_RESULT_PLACEHOLDER } from "@/components/blocks/learn/EntityResultRow"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import { Typography } from "@/components/atoms/text/Typography"
 
 /** Props for the {@link ChatToolResult} block. */
 export interface ChatToolResultProps {
     /** The matched sources to render as pickable rows. */
     items: Array<SearchCourseContentItem>
     /** Header label (e.g. "Flashcard", "Related lesson") — translated by the caller. */
-    label: React.ReactNode
-    /** Header eyebrow icon (phosphor) — signals the result kind at a glance. */
-    icon?: React.ReactNode
+    label: string
+    /**
+     * Optional kind icon from older callers. SurfaceCardList owns chrome now;
+     * accepted and unused so ContentAiChat can stay on its held vertical.
+     * Typed as `unknown` (not ReactNode) so this is not a content escape slot.
+     */
+    icon?: unknown
     /** While the tool runs, mirror the list shape with skeleton rows (no spinner). */
     isLoading?: boolean
     /** Show a kind chip per row — for a MIXED-kind list; off when the header already names one kind. */
@@ -25,86 +28,87 @@ export interface ChatToolResultProps {
     /** Optional "see all" affordance below the list (opens the full search view). */
     onViewAll?: () => void
     /** Label for the view-all footer (translated by the caller). */
-    viewAllLabel?: React.ReactNode
+    viewAllLabel?: string
 }
+
+/** How many placeholder rows mirror the list while the tool is in flight. */
+const SKELETON_ROW_COUNT = 2
 
 /**
  * In-chat tool-result widget — a labeled, pickable list of RAG hits rendered
  * INLINE inside an assistant {@link import("@/components/blocks/feed/ChatBubble").ChatBubble}
- * (generative-UI message part). Surface-in-surface on the chat popover: a
- * border-only card (no stacked fill), a quiet header (eyebrow icon + kind label
- * + count), then shared {@link EntityResultRow}s. Loading mirrors the row shape
- * with skeletons; the caller renders a text fallback when nothing matched.
+ * (generative-UI message part). Surface-in-surface on the chat popover:
+ * {@link SurfaceCardList} `variant="nested"` owns the face + separators; each
+ * row body is the shared {@link EntityResultRow} (press on the list item).
+ * Loading uses the same tree with `isSkeleton` placeholder items.
+ *
+ * @param props - {@link ChatToolResultProps}
  */
 export const ChatToolResult = ({
     items,
     label,
-    icon,
+    icon: _icon,
     isLoading = false,
     showKindChip = false,
     onSelect,
     onViewAll,
     viewAllLabel,
 }: ChatToolResultProps) => {
-    return (
-        <div className="overflow-hidden rounded-xl border border-default bg-transparent">
-            <div className="flex items-center justify-between gap-2 border-b border-default px-3 py-2">
-                <span className="flex min-w-0 items-center gap-2 text-muted">
-                    {icon}
-                    <Typography type="body-xs" color="muted" truncate>
-                        {label}
-                    </Typography>
-                </span>
-                {!isLoading && items.length > 0 ? (
-                    <Typography type="body-xs" color="muted" className="shrink-0">
-                        {items.length}
-                    </Typography>
-                ) : null}
-            </div>
+    void _icon
+    const resultItems: Array<SurfaceCardListItem> = isLoading
+        ? Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => ({
+            key: `skeleton-${index}`,
+            content: () => (
+                <EntityResultRow
+                    item={ENTITY_RESULT_PLACEHOLDER}
+                    showKindChip={showKindChip}
+                    showSnippet
+                    isSkeleton
+                />
+            ),
+            hover: "underline",
+        }))
+        : items.map((item, index) => ({
+            key: `${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`,
+            content: () => (
+                <EntityResultRow
+                    item={item}
+                    showKindChip={showKindChip}
+                    showSnippet
+                />
+            ),
+            onPress: () => onSelect(item),
+            hover: "underline" as const,
+        }))
 
-            {isLoading ? (
-                <>
-                    {[0, 1].map((row) => (
-                        <SurfaceListCardItem key={row}>
-                            <div className="flex flex-col gap-2">
-                                {showKindChip ? (
-                                    <Skeleton.Chip />
-                                ) : (
-                                    <Skeleton.Typography type="body-xs" width="1/3" />
-                                )}
-                                <Skeleton.Typography type="body-sm" width="3/4" />
-                                <Skeleton.Typography type="body-xs" width="full" />
-                            </div>
-                        </SurfaceListCardItem>
-                    ))}
-                </>
-            ) : (
-                <>
-                    {items.map((item, index) => (
-                        <EntityResultRow
-                            key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                            item={item}
-                            onSelect={onSelect}
-                            showKindChip={showKindChip}
-                            showSnippet
-                        />
-                    ))}
-                    {onViewAll ? (
-                        <button
-                            type="button"
-                            onClick={onViewAll}
-                            className="group flex w-full cursor-pointer items-center gap-1 px-4 py-2 text-left text-sm font-medium text-accent-soft-foreground"
-                        >
-                            {viewAllLabel}
-                            <ArrowRightIcon
-                                aria-hidden
-                                focusable="false"
-                                className="size-4 transition-transform group-hover:translate-x-0.5"
-                            />
-                        </button>
-                    ) : null}
-                </>
-            )}
-        </div>
+    const listItems: Array<SurfaceCardListItem> = onViewAll && !isLoading
+        ? [
+            ...resultItems,
+            {
+                key: "view-all",
+                content: () => (
+                    <Typography
+                        size="sm"
+                        weight="medium"
+                        color="accent"
+                        suffixIcon={ArrowRightIcon}
+                        text={viewAllLabel ?? ""}
+                    />
+                ),
+                onPress: onViewAll,
+                hover: "underline",
+            },
+        ]
+        : resultItems
+
+    return (
+        <SurfaceCardList
+            identity={{ tier: "block", component: "ChatToolResult" }}
+            label={label}
+            labelEnd={!isLoading && items.length > 0 ? String(items.length) : undefined}
+            variant="nested"
+            isSkeleton={isLoading}
+            items={listItems}
+        />
     )
 }

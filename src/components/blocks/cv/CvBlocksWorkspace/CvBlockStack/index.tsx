@@ -26,7 +26,7 @@ export interface CvBlockStackProps {
     /** Append a new block of this type. */
     onAddBlock: (type: CvBlockType) => void
     /**
-     * "✨ AI writes it for you" for ONE block/item — omit to render every block WITHOUT
+     * an AI-assisted rewrite action for one block/item — omit to render every block WITHOUT
      * the AI affordance (e.g. while the mutation isn't wired yet). Resolves to
      * the rewritten item's `fields` (or the block's own single fields set for
      * `summary`, `itemId` undefined).

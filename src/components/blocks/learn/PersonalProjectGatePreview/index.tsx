@@ -97,6 +97,8 @@ const PersonalProjectGatePreview = ({
     const taskList = (
         <StackV
             gap={4}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             isSkeleton={isSkeleton}
 
             items={items.map((item, index) => () => renderTaskRow(item, index))}
@@ -106,6 +108,8 @@ const PersonalProjectGatePreview = ({
     return (
         <StackV identity={{ tier: "block", component: "PersonalProjectGatePreview" }}
             gap={6}
+            principle="sibling-stack"
+            explain="Hero, progress meter, and task card are peer sections of the gate teaser — not group-boundary, because they read as one capstone preview."
             isSkeleton={isSkeleton}
 
             items={[

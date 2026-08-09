@@ -92,7 +92,11 @@ export default defineConfig([
             // Public house components must not expose CSS placement doors.
             // Warn while legacy debt is being migrated; changed files run with
             // --max-warnings=0 and therefore cannot introduce new violations.
-            "starci-fe/no-public-classname-prop": "warn",
+            "starci-fe/no-public-classname-prop": "error",
+            "starci-fe/no-inline-component-slot": "error",
+            "starci-fe/no-unregistered-principle": "error",
+            "starci-fe/no-box-children": "error",
+            "starci-fe/no-fill-available-consumer": "error",
             "starci-fe/no-frame-fragment-item": "warn",
             // Sentence tiers compose vocabulary; raw structural hosts are forbidden.
             // Warn while legacy debt migrates; changed files use --max-warnings=0.

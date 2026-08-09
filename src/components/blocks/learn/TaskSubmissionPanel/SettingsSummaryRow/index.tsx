@@ -16,6 +16,7 @@ interface SettingsSummaryRowProps {
 /** Compact "what am I grading against" line + the gear that opens the settings drawer. */
 export const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: SettingsSummaryRowProps) => (
     <StackH
+        identity={{ tier: "block", component: "SettingsSummaryRow" }}
         gap={3}
         principle="flex-action"
         explain="Groups action controls on one horizontal peer row so they share a single hit baseline."

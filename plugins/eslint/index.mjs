@@ -1010,7 +1010,7 @@ const noHelperFolderInComponents = {
  * Diagnostics refer to singular `principle` / `data-principle` (never plural).
  * Box remains the documented foreign-mount escape hatch. Flex is internal.
  */
-const PUBLIC_FRAMES = new Set(["StackH", "StackV", "Grid", "Form", "FormActions", "SurfaceCardPressableGroup"])
+const PUBLIC_FRAMES = new Set(["StackH", "StackV", "Grid", "Form", "FormActions", "SurfaceCardPressableGroup", "Container"])
 const FORBIDDEN_FRAME_CSS_PROPS = new Set([
   "gap",
   "padding",
@@ -1022,6 +1022,7 @@ const FORBIDDEN_FRAME_CSS_PROPS = new Set([
   "inline",
   "nested",
 ])
+const CONTAINER_FORBIDDEN_PROPS = new Set(["size", "padding", "classNames", "className"])
 
 const noPublicFrameCssProps = {
   meta: {
@@ -1043,6 +1044,7 @@ const noPublicFrameCssProps = {
     if (/\/composites\/form\/Form\//.test(file)) return {}
     if (/\/composites\/cards\/SurfaceCard\//.test(file)) return {}
     if (/\/composites\/buttons\/ButtonGroup\//.test(file)) return {}
+    if (/\/frames\/Container\//.test(file)) return {}
     const stackPilot = /\/AcademySettingsForm\//.test(file)
     return {
       JSXOpeningElement(node) {
@@ -1052,6 +1054,16 @@ const noPublicFrameCssProps = {
         // Stack pilot: always strict in AcademySettingsForm.
         // Grid/Form: strict when principle is declared.
         // FormActions / SurfaceCardPressableGroup: always strict (principle owns layout).
+        if (name === "Container") {
+          for (const attr of node.attributes || []) {
+            if (attr.type !== "JSXAttribute" || !attr.name || attr.name.type !== "JSXIdentifier") continue
+            const prop = attr.name.name
+            if (CONTAINER_FORBIDDEN_PROPS.has(prop)) {
+              context.report({ node: attr, messageId: "cssProp", data: { prop, frame: name } })
+            }
+          }
+          return
+        }
         if (name === "StackH" || name === "StackV") {
           if (!stackPilot) return
         } else if (name === "Grid" || name === "Form") {
@@ -1063,6 +1075,125 @@ const noPublicFrameCssProps = {
           if (!FORBIDDEN_FRAME_CSS_PROPS.has(prop)) continue
           context.report({ node: attr, messageId: "cssProp", data: { prop, frame: name } })
         }
+      },
+    }
+  },
+}
+
+const PRINCIPLE_TOKENS = new Set([
+  "name-handle", "icon-text", "separator-dot", "title-subtitle", "flex-action", "flex-action-center",
+  "flex-action-end", "flex-action-start", "flex-action-between", "identity", "identity-end", "value-row",
+  "chip-row", "sibling-stack", "label-field", "content-row", "card-caption", "group-boundary",
+  "block-boundary", "layout-split", "marketing-beat", "cell-pad", "card-padding", "page-pad",
+  "control-pad", "row-pad", "pill-pad", "push-end", "pin-bottom", "center-measure", "page-measure",
+  "reel", "sticky-top", "fixed-bar", "stack-below", "flex-fill", "flex-fill-base",
+])
+
+const noUnregisteredPrinciple = {
+  meta: {
+    type: "problem",
+    docs: { description: "Every literal principle must exist in the closed principle contract registry." },
+    schema: [],
+    messages: {
+      unknown: "Principle `{{token}}` is not registered. Add it to the principle contract registry before using it.",
+    },
+  },
+  create(context) {
+    return {
+      JSXAttribute(node) {
+        if (node.name?.type !== "JSXIdentifier" || node.name.name !== "principle") return
+        const value = node.value?.type === "Literal" ? node.value.value : null
+        if (typeof value === "string" && !PRINCIPLE_TOKENS.has(value)) {
+          context.report({ node, messageId: "unknown", data: { token: value } })
+        }
+      },
+    }
+  },
+}
+
+const noBoxChildren = {
+  meta: {
+    type: "problem",
+    docs: { description: "Box mounts a buildable body; JSX children are not a public composition API." },
+    schema: [],
+    messages: {
+      children: "Box must receive `body={NamedComponent}`. JSX children are deprecated; use a ComponentTypeWithSkeleton body slot.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/components/") || file.includes("/src/components/frames/Box/")) return {}
+    return {
+      JSXElement(node) {
+        if (node.openingElement?.name?.type !== "JSXIdentifier" || node.openingElement.name.name !== "Box") return
+        if ((node.children || []).some((child) => child.type !== "JSXText" || child.value.trim() !== "")) {
+          context.report({ node: node.openingElement, messageId: "children" })
+        }
+      },
+    }
+  },
+}
+
+const noFillAvailableConsumer = {
+  meta: {
+    type: "problem",
+    docs: { description: "FillAvailable is retired; parent Stack childPrinciples own flex participation." },
+    schema: [],
+    messages: {
+      retired: "FillAvailable is retired. Declare the required child principle on the parent Stack and mount the child through its named body slot.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/") || file.includes("/src/components/frames/FillAvailable/")) return {}
+    return {
+      ImportDeclaration(node) {
+        if (node.source?.value === "@/components/frames/FillAvailable") {
+          context.report({ node, messageId: "retired" })
+        }
+      },
+      JSXOpeningElement(node) {
+        if (node.name?.type === "JSXIdentifier" && node.name.name === "FillAvailable") {
+          context.report({ node, messageId: "retired" })
+        }
+      },
+    }
+  },
+}
+
+/** Named render slots must receive a component reference so the host can own
+ * the skeleton contract. Inline JSX factories hide the child topology and
+ * make `isSkeleton` impossible to thread consistently. Event handlers are not
+ * slots and are intentionally outside this rule. */
+const SLOT_PROPS = new Set(["body", "items", "content", "main", "aside", "start", "end", "header", "footer", "canvas", "primary", "secondary", "leading", "trailing"])
+const noInlineComponentSlot = {
+  meta: {
+    type: "problem",
+    docs: { description: "Named render slots must receive component references, not inline JSX factories." },
+    schema: [],
+    messages: {
+      inline: "Named slot `{{prop}}` must receive a named component reference with SkeletonProps; do not use an inline `() => <...>` factory.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/components/") || file.includes("/src/components/atoms/")) return {}
+    const reportExpression = (node, prop) => {
+      if (!node) return
+      if (node.type === "ArrowFunctionExpression" || node.type === "FunctionExpression") {
+        context.report({ node, messageId: "inline", data: { prop } })
+        return
+      }
+      if (node.type === "ArrayExpression") {
+        for (const element of node.elements || []) reportExpression(element, prop)
+      }
+    }
+    return {
+      JSXAttribute(node) {
+        const prop = node.name?.type === "JSXIdentifier" ? node.name.name : null
+        if (!prop || !SLOT_PROPS.has(prop)) return
+        const value = node.value?.type === "JSXExpressionContainer" ? node.value.expression : null
+        reportExpression(value, prop)
       },
     }
   },
@@ -1099,6 +1230,10 @@ export default {
     "no-parallel-skeleton": noParallelSkeleton,
     "no-hardcoded-user-text-in-vocabulary": noHardcodedUserTextInVocabulary,
     "no-public-frame-css-props": noPublicFrameCssProps,
+    "no-inline-component-slot": noInlineComponentSlot,
+    "no-unregistered-principle": noUnregisteredPrinciple,
+    "no-box-children": noBoxChildren,
+    "no-fill-available-consumer": noFillAvailableConsumer,
     "no-inline-parameter-type": noInlineParameterType,
     "no-emoji-in-source": noEmojiInSource,
     "no-vietnamese-in-source-authoring": noVietnameseInSourceAuthoring,

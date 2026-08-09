@@ -19,7 +19,7 @@ export type PrincipleToken =
     // padding
     | "cell-pad" | "card-padding" | "page-pad" | "control-pad" | "row-pad" | "pill-pad"
     // margin / alignment
-    | "push-end" | "pin-bottom" | "center-measure"
+    | "push-end" | "pin-bottom" | "center-measure" | "page-measure"
     // structural (frame-emitted)
     | "reel" | "sticky-top" | "fixed-bar" | "stack-below" | "flex-fill" | "flex-fill-base"
 

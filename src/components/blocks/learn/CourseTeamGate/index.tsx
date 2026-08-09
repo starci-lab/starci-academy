@@ -27,7 +27,7 @@ export interface CourseTeamGateProps {
      * (not knowing yet means we can't decide whether to SELF-HIDE — the mirror must
      * show to hold the slot in the loading tree).
      *
-     * ⚠️ `Callout` (the frame this block still uses on the live branch) does
+     * NOTE: `Callout` (the frame this block still uses on the live branch) does
      * NOT have `isSkeleton` yet and sits OUTSIDE the 4 files touched this pass, so the
      * flag can't be forwarded through it. But `Callout` is just a thin wrapper
      * over the `Alert` atom — and THAT atom already has `isSkeleton` (§12c). The
@@ -57,6 +57,7 @@ const CourseTeamGateBase = ({
     if (isSkeleton) {
         return (
             <Alert
+                identity={{ tier: "block", component: "CourseTeamGate" }}
                 isSkeleton
                 status="warning"
                 icon={GithubLogoIcon}
@@ -71,6 +72,7 @@ const CourseTeamGateBase = ({
 
     return (
         <Callout
+            identity={{ tier: "block", component: "CourseTeamGate" }}
             status="warning"
             icon={GithubLogoIcon}
             title="You haven't joined the course's GitHub team yet"

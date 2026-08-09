@@ -29,7 +29,7 @@ const RANK_BY_TIER: Record<number, AchievementRank> = {
     4: "senior",
 }
 
-/** Ring colour per rank: xám → đồng → bạc → vàng. */
+/** Ring colour per rank: grey → bronze → silver → gold. */
 const RING_BY_RANK: Record<AchievementRank, string> = {
     beginner: "#8C95A1",
     junior: "#B06A2C",

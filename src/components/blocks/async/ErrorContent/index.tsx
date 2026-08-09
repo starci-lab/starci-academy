@@ -30,6 +30,9 @@ export interface ErrorContentProps {
  * entity, only already-resolved strings and a handler, so it never fetches and
  * never resolves i18n itself — the caller always hands it translated text.
  *
+ * Shell mirrors {@link import("../EmptyContent").EmptyContent}: StackV identity root,
+ * no hand-rolled host wrapper.
+ *
  * @see Story: .storybook/stories/blocks/async/ErrorContent/ErrorContent.stories
  * @param props - {@link ErrorContentProps}
  */
@@ -40,32 +43,32 @@ export const ErrorContent = ({
     onRetry,
     retryLabel,
 }: ErrorContentProps) => (
-    <div data-tier="composite" data-component="ErrorContent">
-        <StackV
-            gap={4}
-            align="center"
-            padding={6}
-            items={[
-                () => <Icon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />,
-                () => (
-                    <StackV
-                        gap={2}
-                        principle="title-subtitle"
-                        explain="Title over supporting line — not label-field, because neither line is a form control label."
-                        items={[
-                            () => <Typography size="sm" weight="medium" align="center" text={title} />,
-                            ...(description
-                                ? [() => <Typography size="xs" color="muted" align="center" text={description} />]
-                                : []),
-                        ]}
-                    />
-                ),
-                ...(onRetry && retryLabel
-                    ? [() => <Button variant="secondary" size="sm" onPress={onRetry} label={retryLabel} />]
-                    : []),
-            ]}
-        />
-    </div>
+    <StackV
+        identity={{ tier: "block", component: "ErrorContent" }}
+        principle="sibling-stack"
+        explain="Same-kind peer stack of error-state parts (glyph, copy, optional retry) — not group-boundary, because these are peers of one error unit rather than section groups."
+        align="center"
+        padding={6}
+        items={[
+            () => <Icon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />,
+            () => (
+                <StackV
+                    gap={2}
+                    principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                    items={[
+                        () => <Typography size="sm" weight="medium" align="center" text={title} />,
+                        ...(description
+                            ? [() => <Typography size="xs" color="muted" align="center" text={description} />]
+                            : []),
+                    ]}
+                />
+            ),
+            ...(onRetry && retryLabel
+                ? [() => <Button variant="secondary" size="sm" onPress={onRetry} label={retryLabel} />]
+                : []),
+        ]}
+    />
 )
 
 /** Tier metadata for `ErrorContent`, used by the component registry/Storybook lookup. */

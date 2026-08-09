@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-06",
+  "updated": "2026-08-09",
   "decisions": [
     {
       "id": "fieldframe-stay-until-labeled-controls-re-tier",
@@ -2011,6 +2011,90 @@
       "hostHitsBefore": 1799,
       "hostHitsAfter": 1774,
       "next": "Continue mass host slices with ShowFrom/Measure/InlineLink; unlock page-folder files in a dedicated batch."
+    },
+    {
+      "id": "b32-button-group-nivoexpert-transitive-repair",
+      "date": "2026-08-08",
+      "status": "applied",
+      "classification": "coordinator-required-consumer-repair",
+      "summary": "B32 coordinator removed classNames={[\"w-full\"]} from two nivoexpert Storybook consumers after ButtonGroup.classNames was deleted.",
+      "reason": "Required transitive compile repair for a deleted house API. No Nivo behavior, structure, identity, principle, styling, or public contract was redesigned. Does not broaden the Nivo unlock.",
+      "paths": [
+        ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+      ],
+      "batch": "B32c",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b32c-ready-to-commit.md",
+      "next": "None. Keep Nivo/nivoexpert architectural debt locked except identical compile-break consumer repairs."
+    },
+    {
+      "id": "b38-profile-challenges-labeled-surface",
+      "date": "2026-08-09",
+      "status": "open",
+      "summary": "B38 held ProfileChallenges Exact A LabeledCard+SurfaceListCard shell — zero-warning ratchet blocked page-nested AsyncContent vertical.",
+      "reason": "Collapse to SurfaceCardList is semantically Exact A, but retained edits under ProfileChallengesPage/ cannot reach eslint --max-warnings=0 without moving sections to blocks/profile/ and retiring AsyncContent/parallel skeleton/classname debt.",
+      "paths": [
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx"
+      ],
+      "batch": "B38",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b38-status.md",
+      "next": "Dedicated ProfileChallenges page→blocks relocation + AsyncContent retirement, then Exact A collapse."
+    },
+    {
+      "id": "b38-content-ai-chat-search-surface",
+      "date": "2026-08-09",
+      "status": "open",
+      "summary": "B38 left ContentAiChat search on EntityResultRow.onSelect bridge; SurfaceCardList search co-migration retracted for warning ratchet.",
+      "reason": "ContentAiChat carries large pre-existing HeroUI/host/classname debt. Retaining a search-only SurfaceCardList edit would fail max-warnings=0 on the whole file.",
+      "paths": [
+        "src/components/blocks/learn/ContentAiChat/index.tsx"
+      ],
+      "batch": "B38",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b38-handoff.md",
+      "next": "Own ContentAiChat shell debt, then migrate search view to SurfaceCardList + body-only EntityResultRow."
+    },
+    {
+      "id": "principle-topology-contract-2026-08-09",
+      "date": "2026-08-09",
+      "status": "open",
+      "summary": "A principle is a complete topology contract, not only a spacing label.",
+      "reason": "A generic principle such as content-row must have one deterministic child shape. If the shape requires FillAvailable plus a trailing action, callers must not choose alternate render trees. Promote that topology to a named composite or define an explicit typed slot contract; do not make generic StackH infer domain children.",
+      "contract": [
+        "One principle has one deterministic render topology.",
+        "Named render slots receive ComponentTypeWithSkeleton references, never inline JSX factories.",
+        "FillAvailable owns parent-owned flex participation such as min-w-0 flex-1.",
+        "Atoms own intrinsic variants; parent frames own placement.",
+        "Component tests verify data-principle, child order, slot shape, and skeleton/real parity."
+      ],
+      "next": "Add topology schemas/tests to named composites and migrate generic Stack consumers without inventing CSS-door props."
+    },
+    {
+      "id": "b39-reactnode-nav-marketing-2026-08-09",
+      "date": "2026-08-09",
+      "status": "partial",
+      "summary": "BATCH 39: ReactNode contract inventory for blocks/navigation + blocks/marketing. Applied only ratchet-safe dead closures: PitchCard title/body/footer deleted; orphan TopicLane/MicroservicesScene/MicroservicesDiagram modules deleted. All other migrations/deletes retracted under zero-warn-ratchet ∩ pre-existing architecture debt ∩ no-heroui-migration.",
+      "reason": "Touched TS/TSX must finish at eslint --max-warnings=0; every live ReactNode host except PitchCard carries HeroUI/cn/host/identity debt that B39 forbids clearing via HeroUI migration.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b39-status.md",
+      "deletedProps": [
+        "PitchCard.title",
+        "PitchCard.body",
+        "PitchCard.footer",
+        "TopicLane.icon",
+        "MicroservicesScene.caption",
+        "MicroservicesDiagram.caption"
+      ],
+      "richRetained": [
+        "TruthList.byline",
+        "HeroBanner.headline"
+      ],
+      "mixedHeld": [
+        "FlexWrapButtonRadio.content",
+        "SidebarNavItem.endContent",
+        "TabsCardItem.label",
+        "WorkSessionHeader.rightSlot"
+      ],
+      "next": "Unlock nav/marketing ReactNode hosts only after HeroUI-outside-vocabulary / cn-above-vocabulary debt is cleared in a dedicated vocabulary batch; then re-apply string/ComponentType/dead deletes atomically."
     }
   ]
 }

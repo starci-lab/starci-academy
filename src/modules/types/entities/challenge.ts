@@ -20,7 +20,7 @@ export interface ChallengeEntity extends AbstractEntity {
     score: number
     /** Relative difficulty. */
     difficulty: ChallengeDifficulty
-    /** Optional hint text (markdown) — when present the card shows a "có gợi ý" tag. */
+    /** Optional hint text (markdown) — when present the card shows a "has hint" tag. */
     hint?: string | null
     /** Optional card thumbnail. */
     thumbnailUrl: string | null

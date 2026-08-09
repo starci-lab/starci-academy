@@ -105,7 +105,11 @@ export const OtpState = () => {
 
     const bodyItems = [
         () => (
-            <Box className="pr-8">
+            <Box
+                className="pr-8"
+                principle="control-pad"
+                explain="Reserves room for ModalShell close trigger — not card-padding, because this is chrome inset beside the dismiss control rather than card body pad; not page-pad, because the inset is single-sided."
+            >
                 <Typography weight="semibold" align="center" text={t("auth.signIn.otp.title")} />
             </Box>
         ),
@@ -132,7 +136,6 @@ export const OtpState = () => {
         () => (
             <Button
                 variant="primary"
-                classNames={["w-full"]}
                 isPending={isSubmitting}
                 label={t("auth.signIn.otp.submit")}
                 onPress={() => submitForm()}

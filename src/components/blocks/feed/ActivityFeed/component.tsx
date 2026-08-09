@@ -16,8 +16,10 @@ import { ActivityAvatar } from "../ActivityAvatar"
 import { EntityLink } from "../EntityLink"
 import { FeedItem } from "../FeedItem"
 import { ReactionBar } from "../ReactionBar"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import {
+    SurfaceCardList,
+    type SurfaceCardListItem,
+} from "@/components/composites/cards/SurfaceCard"
 import { StackV } from "@/components/frames/Stack"
 import { ActivityType } from "@/modules/api/graphql/queries/types/my-feed"
 import type { QueryMyFeedItemData } from "@/modules/api/graphql/queries/types/my-feed"
@@ -75,9 +77,9 @@ export interface ActivityFeedProps {
      */
     onReact?: (activityId: string, type: ReactionType | null) => void
     /**
-     * Renders each day's {@link SurfaceListCard} with a border instead of a
-     * shadow — pass `true` when the feed sits NESTED inside another surface.
-     * Defaults to `false`.
+     * Renders each day's {@link SurfaceCardList} as `variant="nested"` (border
+     * instead of shadow) — pass `true` when the feed sits NESTED inside another
+     * surface. Defaults to `false` (`variant="surface"`).
      */
     bordered?: boolean
     /** Active locale — only used for the timestamp's `title` attribute (a native `Date` format, not `t()`). */
@@ -100,8 +102,8 @@ export const _ActivityFeed = ({
     bordered = false,
     locale,
 }: ActivityFeedProps) => {
-    /** Render one feed row as a FeedItem (avatar+badge · sentence · relative time). */
-    const renderRow = (row: ActivityFeedRow) => {
+    /** One feed row as a free-form {@link SurfaceCardListItem} content body. */
+    const toListItem = (row: ActivityFeedRow, index: number): SurfaceCardListItem => {
         const { head, message, relativeLabel } = row
         const Icon = TYPE_ICON[head.type] ?? PulseIcon
         // a "followed someone" row leads with the FOLLOWED user's avatar (the
@@ -112,33 +114,36 @@ export const _ActivityFeed = ({
         const avatarUsername = followedUser ?? head.actorUsername
         // followed user's avatar isn't in the feed payload → generated from username
         const avatarUrl = followedUser ? null : head.actorAvatar
-        return (
-            <FeedItem
-                leading={(
-                    <ActivityAvatar
-                        username={avatarUsername}
-                        avatar={avatarUrl}
-                        icon={<Icon aria-hidden focusable="false" weight="bold" />}
-                    />
-                )}
-                timestamp={<span title={formatDateTime(head.at, locale)}>{relativeLabel}</span>}
-                footer={(
-                    <ReactionBar
-                        count={head.reactionCount}
-                        myReaction={head.myReaction}
-                        // can't react to your own activity → read-only on own items
-                        onReact={onReact && !head.isMine
-                            ? (type) => onReact(head.id, type)
-                            : undefined}
-                    />
-                )}
-            >
-                {message}
-            </FeedItem>
-        )
+        return {
+            key: `${row.head.actorGlobalId}-${row.head.at}-${index}`,
+            content: () => (
+                <FeedItem
+                    leading={(
+                        <ActivityAvatar
+                            username={avatarUsername}
+                            avatar={avatarUrl}
+                            icon={<Icon aria-hidden focusable="false" weight="bold" />}
+                        />
+                    )}
+                    timestamp={<span title={formatDateTime(head.at, locale)}>{relativeLabel}</span>}
+                    footer={(
+                        <ReactionBar
+                            count={head.reactionCount}
+                            myReaction={head.myReaction}
+                            // can't react to your own activity → read-only on own items
+                            onReact={onReact && !head.isMine
+                                ? (type) => onReact(head.id, type)
+                                : undefined}
+                        />
+                    )}
+                >
+                    {message}
+                </FeedItem>
+            ),
+        }
     }
 
-    // categorized-list: each day is its own labeled surface card (label = day
+    // categorized-list: each day is its own labeled SurfaceCardList (label = day
     // header outside the card, rows joined edge-to-edge with inset separators).
     return (
         <StackV
@@ -146,15 +151,12 @@ export const _ActivityFeed = ({
             principle="group-boundary"
             explain="Day groups are section boundaries in the feed — not sibling-stack, because each labeled day is a group rather than a repeating peer row."
             items={dayGroups.map((group) => () => (
-                <LabeledCard key={group.key} label={group.label} frameless subtleLabel>
-                    <SurfaceListCard bordered={bordered}>
-                        {group.rows.map((row, index) => (
-                            <SurfaceListCardItem key={`${row.head.actorGlobalId}-${row.head.at}-${index}`}>
-                                {renderRow(row)}
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
-                </LabeledCard>
+                <SurfaceCardList
+                    label={group.label}
+                    subtleLabel
+                    variant={bordered ? "nested" : "surface"}
+                    items={group.rows.map(toListItem)}
+                />
             ))}
         />
     )

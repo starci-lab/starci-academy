@@ -147,7 +147,17 @@ A composite is a reusable semantic shape made from atoms and frames.
 
 ## Block
 
-A block is a domain sentence.
+A block is a domain sentence with an explicit connected/presentational seam.
+
+Every block that reads anything outside props has exactly two halves:
+
+```text
+index.tsx       X   - connected: reads request, catalogue, store, session, router or context
+component.tsx  _X  - presentational: receives resolved state, copy and actions; renders the tree
+```
+
+The connected half must import the exact `_${FolderName}` from `./component`, and every JSX
+render path in that half must render that twin. Thin blocks are not exempt.
 
 ### Owns
 
@@ -156,6 +166,10 @@ A block is a domain sentence.
 - domain-specific labels and finite branches;
 - block root identity.
 
+The connected `index.tsx` owns world reads and mapping them into resolved props. The pure
+`component.tsx` owns every presentation decision and must render without request, catalogue,
+store, session or router providers.
+
 ### Must not
 
 - draw raw structural hosts;
@@ -163,8 +177,12 @@ A block is a domain sentence.
 - import HeroUI;
 - invent spacing or principles;
 - expose CSS doors;
-- fetch data;
+- fetch, translate or read runtime state from `component.tsx`;
+- render leaves, branches or alternate trees directly from a connected `index.tsx`;
 - maintain a parallel skeleton tree.
+
+Inline ESLint config is disabled in both block halves. There is no `eslint-disable`, allowlist,
+warning-level rollout or pass-through exception for this seam.
 
 A block answers "what does this domain say?", not "how many pixels separate it?"
 

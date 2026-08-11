@@ -36,6 +36,7 @@ The detailed generated evidence remains in:
 
 - no-heroui-outside-vocabulary
 - presentational-purity
+- connected-block-has-presentational-twin
 - require-identity-root
 - no-identity-wrapper-div
 - require-frame-self-declare

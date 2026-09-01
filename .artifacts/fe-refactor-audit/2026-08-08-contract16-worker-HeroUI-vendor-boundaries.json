@@ -1,0 +1,16 @@
+{
+  "partition": "HeroUI-vendor-boundaries",
+  "changed": [],
+  "skipped": [
+    "30 files from heroui-vendor-boundary-batch13-2026-08-08 — non-identical APIs"
+  ],
+  "holds": [
+    "heroui-vendor-boundary-batch13-2026-08-08"
+  ],
+  "evidence": {
+    "action": "document only — no migrations",
+    "ledgerId": "heroui-vendor-boundary-batch13-2026-08-08"
+  },
+  "verification": { "note": "no product edits" },
+  "regressions": []
+}

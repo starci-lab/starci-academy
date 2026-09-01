@@ -1,0 +1,244 @@
+[
+  {
+    "file": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+    "before": 3,
+    "after": 0,
+    "delta": -3,
+    "beforeRules": {
+      "starci-fe/no-host-element-at-sentence-tier": 3
+    },
+    "afterRules": {}
+  },
+  {
+    "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryCompanySearch/ConsultantDirectoryCompanySearch.tsx",
+    "before": 2,
+    "after": 0,
+    "delta": -2,
+    "beforeRules": {
+      "starci-fe/no-host-element-at-sentence-tier": 2
+    },
+    "afterRules": {}
+  },
+  {
+    "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+    "before": 3,
+    "after": 1,
+    "delta": -2,
+    "beforeRules": {
+      "starci-fe/no-host-element-at-sentence-tier": 3
+    },
+    "afterRules": {
+      "starci-fe/no-host-element-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+    "before": 3,
+    "after": 0,
+    "delta": -3,
+    "beforeRules": {
+      "starci-fe/no-host-element-at-sentence-tier": 3
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+    "before": 8,
+    "after": 0,
+    "delta": -8,
+    "beforeRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 3,
+      "starci-fe/no-raw-shape-at-sentence-tier": 3
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+    "before": 3,
+    "after": 1,
+    "delta": -2,
+    "beforeRules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 2
+    },
+    "afterRules": {
+      "starci-fe/require-identity-root": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+    "before": 4,
+    "after": 2,
+    "delta": -2,
+    "beforeRules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 3
+    },
+    "afterRules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+    "before": 4,
+    "after": 1,
+    "delta": -3,
+    "beforeRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    },
+    "afterRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+    "before": 4,
+    "after": 1,
+    "delta": -3,
+    "beforeRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    },
+    "afterRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+    "before": 4,
+    "after": 0,
+    "delta": -4,
+    "beforeRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+    "before": 4,
+    "after": 0,
+    "delta": -4,
+    "beforeRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+    "before": 13,
+    "after": 3,
+    "delta": -10,
+    "beforeRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 6,
+      "starci-fe/no-raw-shape-at-sentence-tier": 4,
+      "starci-fe/no-cn-above-vocabulary": 1
+    },
+    "afterRules": {
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+    "before": 3,
+    "after": 0,
+    "delta": -3,
+    "beforeRules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/profile/CvSubmission/index.tsx",
+    "before": 2,
+    "after": 1,
+    "delta": -1,
+    "beforeRules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1
+    },
+    "afterRules": {
+      "starci-fe/require-identity-root": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/profile/ProfileHero/ProfileBadges/index.tsx",
+    "before": 2,
+    "after": 0,
+    "delta": -2,
+    "beforeRules": {
+      "starci-fe/require-export-jsdoc": 1,
+      "starci-fe/require-frame-self-declare": 1
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/profile/ProfileHero/ShareProfileButton/index.tsx",
+    "before": 2,
+    "after": 1,
+    "delta": -1,
+    "beforeRules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/require-export-jsdoc": 1
+    },
+    "afterRules": {
+      "starci-fe/require-identity-root": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+    "before": 14,
+    "after": 0,
+    "delta": -14,
+    "beforeRules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-frame-fragment-item": 7,
+      "starci-fe/no-public-classname-prop": 1,
+      "starci-fe/require-frame-self-declare": 4,
+      "starci-fe/no-host-element-at-sentence-tier": 1
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+    "before": 56,
+    "after": 0,
+    "delta": -56,
+    "beforeRules": {
+      "starci-fe/require-frame-self-declare": 20,
+      "starci-fe/no-frame-fragment-item": 19,
+      "starci-fe/no-public-classname-prop": 17
+    },
+    "afterRules": {}
+  },
+  {
+    "file": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+    "before": 3,
+    "after": 0,
+    "delta": -3,
+    "beforeRules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    },
+    "afterRules": {}
+  }
+]

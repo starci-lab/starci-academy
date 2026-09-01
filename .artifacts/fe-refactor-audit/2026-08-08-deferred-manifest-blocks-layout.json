@@ -1,0 +1,3838 @@
+{
+  "partition": "blocks-layout",
+  "generatedAt": "2026-08-06T21:49:03.286Z",
+  "checkpoint": "27127bb5",
+  "fileCount": 45,
+  "totalPartitionFiles": 273,
+  "totalPartitionMessages": 1071,
+  "capped": true,
+  "allowedClassifications": [
+    "safe-mechanical",
+    "safe-structural"
+  ],
+  "holdClassifications": [
+    "semantic-hold",
+    "vendor-hold",
+    "teacher-hold",
+    "locked-path",
+    "ambiguous"
+  ],
+  "files": [
+    {
+      "path": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "twin": ".storybook/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "twinExists": false,
+      "candidateCount": 19,
+      "messageCount": 19,
+      "byClass": {
+        "safe-structural": 18,
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 34,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 74,
+          "column": 30,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 131,
+          "column": 2,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 140,
+          "column": 20,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 145,
+          "column": 15,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 148,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 155,
+          "column": 15,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 160,
+          "column": 39,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 322,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 326,
+          "column": 42,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 334,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 342,
+          "column": 27,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 347,
+          "column": 36,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 358,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 360,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 361,
+          "column": 31,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 373,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 391,
+          "column": 56,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "twin": ".storybook/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "twinExists": false,
+      "candidateCount": 15,
+      "messageCount": 15,
+      "byClass": {
+        "safe-structural": 15
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 28,
+          "column": 44,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 67,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 70,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 74,
+          "column": 40,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 89,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 90,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 91,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 92,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 95,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 104,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 105,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 106,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 109,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "twin": ".storybook/components/blocks/auth/GithubTeamGate/index.tsx",
+      "twinExists": false,
+      "candidateCount": 12,
+      "messageCount": 12,
+      "byClass": {
+        "safe-structural": 12
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 29,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 134,
+          "column": 15,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 191,
+          "column": 46,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 197,
+          "column": 50,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 201,
+          "column": 66,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 208,
+          "column": 45,
+          "message": "`flex` on <ol> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 209,
+          "column": 49,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 211,
+          "column": 54,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 227,
+          "column": 49,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 231,
+          "column": 49,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 233,
+          "column": 54,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/grading/DiffViewer/index.tsx",
+      "twin": ".storybook/components/blocks/grading/DiffViewer/index.tsx",
+      "twinExists": false,
+      "candidateCount": 11,
+      "messageCount": 11,
+      "byClass": {
+        "safe-structural": 8,
+        "safe-mechanical": 3
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 8,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 40,
+          "column": 42,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 67,
+          "column": 30,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 74,
+          "column": 29,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 75,
+          "column": 21,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 86,
+          "column": 34,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 88,
+          "column": 20,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 134,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 149,
+          "column": 18,
+          "message": "`overflow-x-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 164,
+          "column": 41,
+          "message": "`grid` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/OutlineRail/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/OutlineRail/index.tsx",
+      "twinExists": false,
+      "candidateCount": 11,
+      "messageCount": 11,
+      "byClass": {
+        "safe-structural": 11
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 10,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 40,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 121,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 181,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 184,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 185,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 207,
+          "column": 52,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 241,
+          "column": 50,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 242,
+          "column": 54,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 269,
+          "column": 50,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 304,
+          "column": 22,
+          "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/TabsCard/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/TabsCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 10,
+      "messageCount": 10,
+      "byClass": {
+        "safe-structural": 10
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 7,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 21,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 48,
+          "column": 40,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 153,
+          "column": 40,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 159,
+          "column": 35,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 165,
+          "column": 54,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 217,
+          "column": 35,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 238,
+          "column": 39,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 251,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 253,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "twin": ".storybook/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "twinExists": false,
+      "candidateCount": 9,
+      "messageCount": 9,
+      "byClass": {
+        "safe-structural": 9
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 21,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 37,
+          "column": 48,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 90,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 104,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 124,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 132,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 141,
+          "column": 44,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 146,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Navbar/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/Navbar/index.tsx",
+      "twinExists": false,
+      "candidateCount": 9,
+      "messageCount": 18,
+      "byClass": {
+        "safe-structural": 9,
+        "ambiguous": 9
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 49,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 176,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 245,
+          "column": 17,
+          "message": "`items-center` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 249,
+          "column": 19,
+          "message": "`@app-md:flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 321,
+          "column": 33,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 331,
+          "column": 26,
+          "message": "`overflow-y-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 332,
+          "column": 25,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 365,
+          "column": 17,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 374,
+          "column": 19,
+          "message": "`@app-md:flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 395,
+          "column": 18,
+          "message": "`@app-md:flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 396,
+          "column": 17,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 510,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 511,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 563,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 565,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 572,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 596,
+          "column": 29,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "twin": ".storybook/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "twinExists": false,
+      "candidateCount": 9,
+      "messageCount": 9,
+      "byClass": {
+        "safe-structural": 9
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 8,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 16,
+          "column": 49,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 135,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 160,
+          "column": 31,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 184,
+          "column": 31,
+          "message": "`items-center` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 217,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 222,
+          "column": 42,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 237,
+          "column": 58,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "twin": ".storybook/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "twinExists": false,
+      "candidateCount": 9,
+      "messageCount": 9,
+      "byClass": {
+        "safe-structural": 9
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 27,
+          "column": 42,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 43,
+          "column": 34,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 55,
+          "column": 34,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 68,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 118,
+          "column": 14,
+          "message": "`overflow-x-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 119,
+          "column": 49,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 132,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 137,
+          "column": 30,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "twin": ".storybook/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "twinExists": false,
+      "candidateCount": 8,
+      "messageCount": 8,
+      "byClass": {
+        "safe-structural": 8
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 13,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 13,
+          "column": 40,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 52,
+          "column": 30,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 63,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 74,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 87,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 89,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/notifications/NotificationItem/index.tsx",
+      "twin": ".storybook/components/blocks/notifications/NotificationItem/index.tsx",
+      "twinExists": false,
+      "candidateCount": 8,
+      "messageCount": 8,
+      "byClass": {
+        "safe-structural": 8
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 15,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 18,
+          "column": 48,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 118,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 127,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 128,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 151,
+          "column": 27,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 172,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "twin": ".storybook/components/blocks/rendering/MarkdownContent/map.tsx",
+      "twinExists": false,
+      "candidateCount": 8,
+      "messageCount": 8,
+      "byClass": {
+        "safe-structural": 8
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 49,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 279,
+          "column": 50,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 306,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 314,
+          "column": 30,
+          "message": "`space-y-2` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 364,
+          "column": 49,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 410,
+          "column": 35,
+          "message": "`space-y-2` on <ol> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 411,
+          "column": 35,
+          "message": "`space-y-2` on <ul> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "twin": ".storybook/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 21,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 21,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 70,
+          "column": 46,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 71,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 89,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 90,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/code/CodeConsole/index.tsx",
+      "twin": ".storybook/components/blocks/code/CodeConsole/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 57,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 73,
+          "column": 18,
+          "message": "`overflow-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 77,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 79,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/index.tsx",
+      "twin": ".storybook/components/blocks/layout/shell/Navbar/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 30,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 30,
+          "column": 27,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 57,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 58,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 59,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 64,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/lists/LabeledList/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/lists/LabeledList/index.tsx",
+      "twin": ".storybook/components/blocks/lists/LabeledList/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 6,
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 7,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 21,
+          "column": 1,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 38,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 39,
+          "column": 14,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 43,
+          "column": 14,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/lists/ListRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/lists/ListRow/index.tsx",
+      "twin": ".storybook/components/blocks/lists/ListRow/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 8,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 8,
+          "column": 39,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 77,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 88,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 96,
+          "column": 27,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 124,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "twin": ".storybook/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 15,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 18,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 96,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 108,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 109,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 128,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "twin": ".storybook/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 28,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 40,
+          "column": 55,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 50,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 94,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 122,
+          "column": 39,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 125,
+          "column": 52,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 9,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 25,
+          "column": 69,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 78,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 86,
+          "column": 44,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 99,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 105,
+          "column": 43,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 21,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 33,
+          "column": 56,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 65,
+          "column": 49,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 69,
+          "column": 36,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 94,
+          "column": 48,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 104,
+          "column": 52,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/notifications/NotificationList/index.tsx",
+      "twin": ".storybook/components/blocks/notifications/NotificationList/index.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 15,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 26,
+          "column": 48,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 96,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 98,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 119,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 122,
+          "column": 51,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "twin": ".storybook/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "twinExists": false,
+      "candidateCount": 7,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 7
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 7,
+          "column": 46,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 37,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 52,
+          "column": 29,
+          "message": "`overflow-x-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 56,
+          "column": 31,
+          "message": "`absolute` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 75,
+          "column": 50,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/code/IOExampleCard/index.tsx",
+      "twin": ".storybook/components/blocks/code/IOExampleCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 22,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 47,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 51,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 53,
+          "column": 37,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "twin": ".storybook/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 41,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 82,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 83,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 91,
+          "column": 40,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "twin": ".storybook/components/blocks/feedback/ErrorPageState/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 7,
+          "column": 46,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 38,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 44,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 51,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/Dropzone/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/Dropzone/index.tsx",
+      "twin": ".storybook/components/blocks/form/Dropzone/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 40,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 59,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 62,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 69,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/SchedulePicker/index.tsx",
+      "twin": ".storybook/components/blocks/form/SchedulePicker/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 32,
+          "column": 46,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 107,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 154,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 159,
+          "column": 21,
+          "message": "`grid` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/SearchInput/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/SearchInput/component.tsx",
+      "twin": ".storybook/components/blocks/form/SearchInput/component.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 10,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 15,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 26,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 133,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 135,
+          "column": 22,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 247,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "twin": ".storybook/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 7,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 38,
+          "column": 26,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 53,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 60,
+          "column": 29,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/grading/GradingByline/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/grading/GradingByline/component.tsx",
+      "twin": ".storybook/components/blocks/grading/GradingByline/component.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 5,
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 13,
+          "column": 48,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 13,
+          "column": 67,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 15,
+          "column": 67,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 17,
+          "column": 63,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 44,
+          "column": 19,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/identity/ImageDropzone/index.tsx",
+      "twin": ".storybook/components/blocks/identity/ImageDropzone/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 22,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 22,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 60,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 69,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 77,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/identity/SnippetIcon/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/identity/SnippetIcon/index.tsx",
+      "twin": ".storybook/components/blocks/identity/SnippetIcon/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 7,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 11,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 31,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 43,
+          "column": 53,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 53,
+          "column": 46,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/PageHeader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/PageHeader/index.tsx",
+      "twin": ".storybook/components/blocks/layout/PageHeader/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 42,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 84,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 91,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 93,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "twin": ".storybook/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 11,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 31,
+          "column": 21,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 32,
+          "column": 14,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 39,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "twin": ".storybook/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 13,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 13,
+          "column": 44,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 26,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 27,
+          "column": 15,
+          "message": "`items-center` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 31,
+          "column": 14,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/ContentMapRow/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 22,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 22,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 81,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 88,
+          "column": 60,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 91,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Footer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Footer/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/Footer/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 12,
+      "byClass": {
+        "safe-structural": 6,
+        "ambiguous": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 23,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 57,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 90,
+          "column": 18,
+          "message": "`@app-md:flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 91,
+          "column": 17,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 113,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 120,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 135,
+          "column": 17,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 171,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 186,
+          "column": 18,
+          "message": "`items-start` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 207,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 208,
+          "column": 13,
+          "message": "`<Container>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 13,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 16,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 39,
+          "column": 5,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 75,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 86,
+          "column": 34,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 6,
+        "ambiguous": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 33,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 141,
+          "column": 18,
+          "message": "`@app-md:sticky` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 158,
+          "column": 29,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 177,
+          "column": 59,
+          "message": "`sticky` on <nav> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 178,
+          "column": 22,
+          "message": "`overflow-x-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 198,
+          "column": 48,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+      "twin": ".storybook/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 9,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 13,
+          "column": 52,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 34,
+          "column": 29,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 40,
+          "column": 69,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/PDFView/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/PDFView/index.tsx",
+      "twin": ".storybook/components/blocks/rendering/PDFView/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 12,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 20,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 39,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 26,
+          "column": 5,
+          "message": "`heightClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 122,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 138,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "twin": ".storybook/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 6,
+      "byClass": {
+        "safe-structural": 6
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 8,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 8,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 10,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 33,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 34,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "twin": ".storybook/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "twinExists": false,
+      "candidateCount": 6,
+      "messageCount": 7,
+      "byClass": {
+        "safe-structural": 6,
+        "semantic-hold": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "holdRules": [
+        "starci-fe/no-arbitrary-token"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 6,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 6,
+          "column": 49,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 23,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 25,
+          "column": 34,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 27,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-arbitrary-token",
+          "line": 28,
+          "column": 35,
+          "message": "Arbitrary spacing 'my-[5px]' — use the 0·2·3·6·8 scale; a real exception needs eslint-disable + reason.",
+          "severity": 1,
+          "classification": "semantic-hold"
+        }
+      ]
+    }
+  ]
+}

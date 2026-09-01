@@ -1,0 +1,1518 @@
+[
+  {
+    "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+    "importSpecs": [
+      "{ Alert, Button, Modal, Typography, cn }"
+    ],
+    "named": [
+      "Alert",
+      "Button",
+      "Modal",
+      "Typography",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Alert",
+        "local": "Alert",
+        "jsx": [
+          {
+            "tag": "Alert",
+            "props": [
+              "status",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Alert.Indicator",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Alert.Content",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Alert.Title",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Alert.Description",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Alert.Indicator",
+          "Alert.Content",
+          "Alert.Title",
+          "Alert.Description"
+        ]
+      },
+      {
+        "name": "Button",
+        "local": "Button",
+        "jsx": [
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "className",
+              "onPress"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "size",
+              "className",
+              "isDisabled",
+              "onPress"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "size",
+              "className",
+              "isDisabled",
+              "onPress"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "Modal",
+        "local": "Modal",
+        "jsx": [
+          {
+            "tag": "Modal",
+            "props": [
+              "isOpen",
+              "onOpenChange"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Modal.Backdrop",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Modal.Container",
+            "props": [
+              "size"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Modal.Dialog",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Modal.CloseTrigger",
+            "props": [],
+            "childrenLikely": false
+          },
+          {
+            "tag": "Modal.Header",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Modal.Body",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Modal.Backdrop",
+          "Modal.Container",
+          "Modal.Dialog",
+          "Modal.CloseTrigger",
+          "Modal.Header",
+          "Modal.Body"
+        ]
+      },
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/auth/Turnstile/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+    "importSpecs": [
+      "{ CloseButton as HeroCloseButton, cn }"
+    ],
+    "named": [
+      "CloseButton as HeroCloseButton",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "CloseButton",
+        "local": "HeroCloseButton",
+        "jsx": [
+          {
+            "tag": "HeroCloseButton",
+            "props": [
+              "tier",
+              "component",
+              "label",
+              "onPress",
+              "className"
+            ],
+            "childrenLikely": false
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+    "importSpecs": [
+      "{ Button, cn }"
+    ],
+    "named": [
+      "Button",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Button",
+        "local": "Button",
+        "jsx": [
+          {
+            "tag": "Button",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "label",
+              "onPress",
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+    "importSpecs": [
+      "{ Chip, Typography }"
+    ],
+    "named": [
+      "Chip",
+      "Typography"
+    ],
+    "usages": [
+      {
+        "name": "Chip",
+        "local": "Chip",
+        "jsx": [
+          {
+            "tag": "Chip",
+            "props": [
+              "size",
+              "variant",
+              "color"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Chip.Label"
+        ]
+      },
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+    "importSpecs": [
+      "{ Card, cn, }"
+    ],
+    "named": [
+      "Card",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Card",
+        "local": "Card",
+        "jsx": [
+          {
+            "tag": "Card",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Card.Content",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Card.Footer",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Card.Content",
+          "Card.Footer"
+        ]
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/CourseCard/component.tsx",
+    "importSpecs": [
+      "{ Button, Card, Chip, Typography, cn, }"
+    ],
+    "named": [
+      "Button",
+      "Card",
+      "Chip",
+      "Typography",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Button",
+        "local": "Button",
+        "jsx": [
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "onPress",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "onPress",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "onPress",
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "Card",
+        "local": "Card",
+        "jsx": [
+          {
+            "tag": "Card",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Card",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Card.Content",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Card.Footer",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Card.Content",
+          "Card.Footer"
+        ]
+      },
+      {
+        "name": "Chip",
+        "local": "Chip",
+        "jsx": [
+          {
+            "tag": "Chip",
+            "props": [
+              "variant",
+              "color",
+              "size",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip",
+            "props": [
+              "variant",
+              "color",
+              "size",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Chip.Label"
+        ]
+      },
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight",
+              "align",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/FlipCard/index.tsx",
+    "importSpecs": [
+      "{ ScrollShadow, cn }"
+    ],
+    "named": [
+      "ScrollShadow",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "ScrollShadow",
+        "local": "ScrollShadow",
+        "jsx": [
+          {
+            "tag": "ScrollShadow",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+    "importSpecs": [
+      "{ Accordion, Typography, cn }"
+    ],
+    "named": [
+      "Accordion",
+      "Typography",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Accordion",
+        "local": "Accordion",
+        "jsx": [
+          {
+            "tag": "Accordion",
+            "props": [
+              "variant",
+              "style",
+              "allowsMultipleExpanded",
+              "defaultExpandedKeys"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Accordion.Item",
+            "props": [
+              "key",
+              "id",
+              "label"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Accordion.Heading",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Accordion.Trigger",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Accordion.Indicator",
+            "props": [],
+            "childrenLikely": false
+          },
+          {
+            "tag": "Accordion.Panel",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Accordion.Body",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "AccordionFrame",
+            "props": [
+              "items",
+              "allowsMultipleExpanded",
+              "defaultExpandedKeys",
+              "bordered"
+            ],
+            "childrenLikely": false
+          }
+        ],
+        "compounds": [
+          "Accordion.Item",
+          "Accordion.Heading",
+          "Accordion.Trigger",
+          "Accordion.Indicator",
+          "Accordion.Panel",
+          "Accordion.Body"
+        ]
+      },
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+    "importSpecs": [
+      "{ Button, Card, Chip, Typography, cn, }"
+    ],
+    "named": [
+      "Button",
+      "Card",
+      "Chip",
+      "Typography",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Button",
+        "local": "Button",
+        "jsx": [
+          {
+            "tag": "Button",
+            "props": [
+              "variant",
+              "className",
+              "onPress"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "Card",
+        "local": "Card",
+        "jsx": [
+          {
+            "tag": "Card",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Card.Content",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Card.Footer",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Card.Content",
+          "Card.Footer"
+        ]
+      },
+      {
+        "name": "Chip",
+        "local": "Chip",
+        "jsx": [
+          {
+            "tag": "Chip",
+            "props": [
+              "size",
+              "variant",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Chip.Label"
+        ]
+      },
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/PressableCard/index.tsx",
+    "importSpecs": [
+      "{ cn, }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/SectionCard/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+    "importSpecs": [
+      "{ cn, }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/cards/verdict-band.ts",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+    "importSpecs": [
+      "{ Button, ProgressBar, Spinner, Typography, cn, }"
+    ],
+    "named": [
+      "Button",
+      "ProgressBar",
+      "Spinner",
+      "Typography",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Button",
+        "local": "Button",
+        "jsx": [
+          {
+            "tag": "Button",
+            "props": [
+              "type",
+              "isDisabled",
+              "variant"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Button",
+            "props": [
+              "type",
+              "isDisabled",
+              "variant",
+              "onPress"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "ProgressBar",
+        "local": "ProgressBar",
+        "jsx": [
+          {
+            "tag": "ProgressBar",
+            "props": [
+              "className",
+              "maxValue",
+              "minValue",
+              "value"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "ProgressBar.Track",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "ProgressBar.Fill",
+            "props": [],
+            "childrenLikely": false
+          }
+        ],
+        "compounds": [
+          "ProgressBar.Track",
+          "ProgressBar.Fill"
+        ]
+      },
+      {
+        "name": "Spinner",
+        "local": "Spinner",
+        "jsx": [
+          {
+            "tag": "Spinner",
+            "props": [
+              "size"
+            ],
+            "childrenLikely": false
+          },
+          {
+            "tag": "Spinner",
+            "props": [
+              "size"
+            ],
+            "childrenLikely": false
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "weight"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+    "importSpecs": [
+      "{ Card, cn, }"
+    ],
+    "named": [
+      "Card",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Card",
+        "local": "Card",
+        "jsx": [
+          {
+            "tag": "Card",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+    "importSpecs": [
+      "{ Typography, cn }"
+    ],
+    "named": [
+      "Typography",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/chips/EnumChip/index.tsx",
+    "importSpecs": [
+      "{ Chip, Tooltip, cn }"
+    ],
+    "named": [
+      "Chip",
+      "Tooltip",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Chip",
+        "local": "Chip",
+        "jsx": [
+          {
+            "tag": "Chip",
+            "props": [
+              "color",
+              "size",
+              "variant",
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Chip.Label"
+        ]
+      },
+      {
+        "name": "Tooltip",
+        "local": "Tooltip",
+        "jsx": [
+          {
+            "tag": "Tooltip",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Tooltip.Trigger",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Tooltip.Content",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Tooltip.Trigger",
+          "Tooltip.Content"
+        ]
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+    "importSpecs": [
+      "{ Typography, cn }"
+    ],
+    "named": [
+      "Typography",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Typography",
+        "local": "Typography",
+        "jsx": [
+          {
+            "tag": "Typography",
+            "props": [
+              "type",
+              "color"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/chips/StatusChip/index.tsx",
+    "importSpecs": [
+      "{ Chip }"
+    ],
+    "named": [
+      "Chip"
+    ],
+    "usages": [
+      {
+        "name": "Chip",
+        "local": "Chip",
+        "jsx": [
+          {
+            "tag": "Chip",
+            "props": [
+              "tier",
+              "component",
+              "color",
+              "variant",
+              "size"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Chip.Label"
+        ]
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/chips/TagChips/component.tsx",
+    "importSpecs": [
+      "{ Chip, ScrollShadow, Tooltip }"
+    ],
+    "named": [
+      "Chip",
+      "ScrollShadow",
+      "Tooltip"
+    ],
+    "usages": [
+      {
+        "name": "Chip",
+        "local": "Chip",
+        "jsx": [
+          {
+            "tag": "Chip",
+            "props": [
+              "key",
+              "variant"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip",
+            "props": [
+              "color",
+              "variant"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Chip.Label",
+            "props": [],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Chip.Label"
+        ]
+      },
+      {
+        "name": "ScrollShadow",
+        "local": "ScrollShadow",
+        "jsx": [
+          {
+            "tag": "ScrollShadow",
+            "props": [
+              "className",
+              "hideScrollBar",
+              "orientation"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": []
+      },
+      {
+        "name": "Tooltip",
+        "local": "Tooltip",
+        "jsx": [
+          {
+            "tag": "Tooltip",
+            "props": [
+              "isOpen",
+              "onOpenChange"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Tooltip.Trigger",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Tooltip.Content",
+            "props": [
+              "className"
+            ],
+            "childrenLikely": true
+          }
+        ],
+        "compounds": [
+          "Tooltip.Trigger",
+          "Tooltip.Content"
+        ]
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/code/CodeConsole/index.tsx",
+    "importSpecs": [
+      "{ Tabs, cn }"
+    ],
+    "named": [
+      "Tabs",
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "Tabs",
+        "local": "Tabs",
+        "jsx": [
+          {
+            "tag": "Tabs.ListContainer",
+            "props": [],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Tabs.List",
+            "props": [
+              "label"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Tabs.Tab",
+            "props": [
+              "key",
+              "id"
+            ],
+            "childrenLikely": true
+          },
+          {
+            "tag": "Tabs.Indicator",
+            "props": [],
+            "childrenLikely": false
+          }
+        ],
+        "compounds": [
+          "Tabs.ListContainer",
+          "Tabs.List",
+          "Tabs.Tab",
+          "Tabs.Indicator"
+        ]
+      },
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  },
+  {
+    "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+    "importSpecs": [
+      "{ cn }"
+    ],
+    "named": [
+      "cn"
+    ],
+    "usages": [
+      {
+        "name": "cn",
+        "local": "cn",
+        "jsx": [],
+        "compounds": []
+      }
+    ]
+  }
+]

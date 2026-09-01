@@ -1,0 +1,37 @@
+{
+  "partition": "heroui-boundary-classification",
+  "changed": [],
+  "skipped": [
+    "all 30 files from heroui-vendor-boundary-batch13-2026-08-08"
+  ],
+  "holds": [
+    {
+      "id": "heroui-vendor-boundary-batch13-2026-08-08",
+      "classification": "vendor-boundary",
+      "count": 30,
+      "identicalAccidentalWrappers": 0
+    }
+  ],
+  "evidence": {
+    "sourceArtifact": ".artifacts/fe-refactor-audit/2026-08-08-contract-worker-heroui-boundaries.json",
+    "buckets": {
+      "cn-vocabulary-only": ["InfiniteScrollSentinel", "Turnstile", "CheckListCard", "HighlightCard", "PressableCard", "SectionCard"],
+      "Button-nonidentical": ["FloatingActionButton", "CourseCard", "PlaygroundCard", "CVSubmissionForm"],
+      "ChipBase-hard-hold": ["RatingBar", "StatusChip", "EnumChip", "TagChips", "AiCategoryChip"],
+      "Card-compound": ["CourseCardSkeleton", "CourseCard", "PlaygroundCard"],
+      "Accordion-compound": ["LabeledAccordionCard"],
+      "missing-atom": ["ElementCloseButton/CloseButton", "FlipCard/ScrollShadow"],
+      "multi-compound": ["GithubTeamGate"]
+    },
+    "possiblyIdenticalWorthMigrating": []
+  },
+  "proposals": [
+    {
+      "id": "migrate-only-when-atom-API-identical",
+      "summary": "Re-check when new atoms land (CloseButton, ScrollShadow, ChipBase parity). Until then keep HeroUI at vendor boundary.",
+      "doNotInventNow": true
+    }
+  ],
+  "verification": { "note": "classification only — zero migrations" },
+  "regressions": []
+}

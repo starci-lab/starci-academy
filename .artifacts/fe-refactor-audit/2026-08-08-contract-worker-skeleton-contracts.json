@@ -1,0 +1,835 @@
+{
+  "partition": "skeleton-contracts",
+  "batch": 13,
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "classification": "ambiguous+identity-decision+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-cn-above-vocabulary",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-cn-above-vocabulary",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "ambiguous": [
+          "starci-fe/no-emoji-in-source",
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "byClass": {
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "classification": "ambiguous+identity-decision+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-cn-above-vocabulary",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "classification": "ambiguous+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "ambiguous": [
+          "starci-fe/no-retired-async-content",
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-emoji-in-source",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-cn-above-vocabulary",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier",
+          "starci-fe/no-cn-above-vocabulary"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "byClass": {
+        "ambiguous": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "byClass": {
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-emoji-in-source",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "classification": "ambiguous+identity-decision+vendor-boundary",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "byClass": {
+        "vendor-boundary": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ],
+        "identity-decision": [
+          "starci-fe/require-identity-root"
+        ],
+        "ambiguous": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-cn-above-vocabulary"
+        ]
+      },
+      "reason": "Co-located non-skeleton findings on skeleton-contracts exclusive claim; outside allowedApply (safe-api-removal/safe-consumer-migration). Left unchanged."
+    }
+  ],
+  "decisions": [
+    {
+      "path": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        18,
+        19
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Storybook twin imports CommandSkeleton/OsTabsSkeleton parallels — same redesign as src PlaygroundSetupSteps. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        91,
+        106,
+        123
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Inline branches swap Skeleton for Icon/Price/CTA (different elements). Leaves are render-props/slots without proven isSkeleton ownership; threading would redesign TierCardBase contract. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        104
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Icon slot branches Skeleton vs KPI Icon component — not same-component; Icon is component-type from map, no proven isSkeleton API to thread. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        167
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Flagged branch is empty-state EmptyState vs loaded comment list (error→loading→empty→content). Not a safe same-component isSkeleton thread; changing it would alter empty invitation behavior. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        98
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Meta row branches one skeleton Typography vs multi-node loaded fragment (minutes/challenges). Structure differs; not same-component threading. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        303
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Callout has no isSkeleton (file comment); bare Skeleton bar stands in. Needs Callout isSkeleton or composite redesign — not safe-consumer-migration. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        96
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Author comment: leading color/icon chosen directly by block with no atom between — intentional hand-rolled Skeleton dot vs PuzzlePieceIcon. Redesign needs icon leaf isSkeleton. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        110
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Author comment: STATUS_LEADING icon chosen directly by block — intentional Skeleton vs status Icon branch. Not same-component thread. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        206
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "isSkeleton||currentTask picks ContinueCardHero vs empty hero arm — empty-vs-content ownership mixed with loading. ContinueCardHero already takes isSkeleton; collapsing empty arm needs deliberate empty contract, not mechanical migrate. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        18,
+        19,
+        175,
+        197,
+        243
+      ],
+      "kinds": [
+        "parallel-skeleton",
+        "inline-branch"
+      ],
+      "reason": "CommandSkeleton/OsTabsSkeleton parallel twins + MarkdownContent/TabsExtended branches. MarkdownContent/Tabs lack proven co-located isSkeleton mirror; twin redesign required. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        189
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "BriefMarkdown skeleton uses Typography line StackV instead of MarkdownContent (viewer needs real payload). Intentional different resting shape; not same-component thread. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        8,
+        81
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Legacy AsyncContent + ChallengeCardSkeleton parallel tree. Retiring AsyncContent and folding ChallengeCard isSkeleton is a redesign (also no-retired-async-content). Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        4
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Early-return CodeBodySkeleton twin instead of ExplainingCard tree with isSkeleton. Fold requires card isSkeleton + empty priority rewrite. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        4
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Early-return CodeBodySkeleton twin instead of ImplementationCard tree with isSkeleton. Fold requires card isSkeleton + empty priority rewrite. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        11
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Imports ContentBodySkeleton parallel twin. Fold into ContentBodyV2 leaf tree with isSkeleton — article/markdown redesign. Prefer hold."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    }
+  ],
+  "verification": {
+    "productEdits": 0,
+    "eslintQuiet": "skipped-no-changed-files",
+    "filesReviewed": 25,
+    "skeletonDecisionMessages": 33,
+    "safeConsumerMigrationApplied": 0,
+    "note": "Reviewed all 25 claimed files. No case had provable loading ownership for safe-consumer-migration / clear same-component isSkeleton threading. Twin/parallel redesigns and different-element inline branches recorded as skeleton-decision; loading behavior preserved exactly."
+  },
+  "regressions": []
+}

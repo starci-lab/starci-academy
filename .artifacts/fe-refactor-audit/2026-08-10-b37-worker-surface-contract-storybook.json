@@ -1,0 +1,133 @@
+{
+  "batch": "B37",
+  "wave": "surface-contract",
+  "agent": "surface-contract-storybook",
+  "checkpoint": "84b92cd77",
+  "scope": ".storybook SurfaceCard blueprint + stories only — src twin / consumers owned elsewhere",
+  "ownedFiles": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCard.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardCrossList.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardNested.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPlaceholder.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardSelectableGroup.stories.tsx"
+  ],
+  "edited": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx"
+  ],
+  "untouchedOwned": [
+    ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCard.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardCrossList.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardNested.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPlaceholder.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardSelectableGroup.stories.tsx"
+  ],
+  "decisions": {
+    "A": "SurfaceCardList already extends SurfaceLabelProps — retained as collapse target for LabeledCard+list",
+    "B": "emptyState / error / errorState remain ComponentType slots; description remains string caption (DATA path)",
+    "C": "isSkeleton forwards into owned header/rows/caption — no parallel skeleton trees; free-form row content now receives isSkeleton",
+    "D": "No new add-ons. Accordion gets no error/errorState (topology class D=0). No new variants, ReactNode/children/className doors"
+  },
+  "api": {
+    "SurfaceLabelProps": [
+      "label?",
+      "labelEnd?",
+      "onSeeMore?",
+      "seeMoreLabel?",
+      "action?",
+      "subtleLabel?",
+      "isSkeleton?"
+    ],
+    "SurfaceCardList": {
+      "extends": "SurfaceLabelProps",
+      "props": [
+        "items",
+        "emptyState?",
+        "error?",
+        "errorState?",
+        "variant?",
+        "description?",
+        "isSkeleton?",
+        "classNames?",
+        "identity?"
+      ],
+      "propsAdded": [],
+      "propsRemoved": [],
+      "notes": "classNames pre-existing (held lint warning); not introduced this wave"
+    },
+    "SurfaceCardAccordion": {
+      "extends": "SurfaceLabelProps",
+      "props": [
+        "items",
+        "allowsMultipleExpanded?",
+        "defaultExpandedKeys?",
+        "variant?",
+        "emptyState?",
+        "description?",
+        "isSkeleton?",
+        "identity?"
+      ],
+      "propsAdded": [],
+      "errorBranch": false,
+      "reason": "Decision D — LabeledCard+Accordion pairing count is 0"
+    }
+  },
+  "contractFixes": [
+    {
+      "member": "SurfaceCardList",
+      "action": "Identity stamps one root only (bare → surface div; labeled → section). Removed double resolveIdentity on labeled path."
+    },
+    {
+      "member": "SurfaceCardList / ListFreeRow",
+      "action": "Forward isSkeleton into free-form item.content (ComponentTypeWithSkeleton) — same tree, no FooSkeleton mirror."
+    },
+    {
+      "member": "SurfaceCardAccordion",
+      "action": "Identity on bare surface frame (no wrapper div). Labeled path identity stays on section only."
+    },
+    {
+      "member": "SurfaceCardAccordion",
+      "action": "description caption uses RichText with isSkeleton (parity with List/Base) instead of raw text node."
+    }
+  ],
+  "storyUpdates": [
+    {
+      "file": "SurfaceCardList.stories.tsx",
+      "actions": [
+        "WithLabel expanded to canonical labeled collapse pattern: label+description, onSeeMore/seeMoreLabel, labelEnd, action, subtleLabel — documents no LabeledCard wrapper",
+        "Added WithError leaf for error + errorState ComponentType slots",
+        "Loading leaf shows labeled + description shimmer path"
+      ]
+    },
+    {
+      "file": "SurfaceCardAccordion.stories.tsx",
+      "actions": [
+        "WithLabel expanded to shared SurfaceLabelProps header contract (label+description, see-more, labelEnd, action, subtleLabel)",
+        "Documents D=0 — no error branch",
+        "Loading leaf shows labeled header + caption shimmer + accordion atom mirror"
+      ]
+    }
+  ],
+  "holds": [
+    {
+      "item": "public classNames on SurfaceCard members",
+      "status": "pre-existing lint warnings; not burned this wave (Decision D — do not invent CSS doors or remove held ones mid-collapse)"
+    }
+  ],
+  "srcUntouchedByThisAgent": true,
+  "verification": {
+    "eslintOwned": "pass (0 errors; 19 pre-existing classNames/fragment warnings on SurfaceCard.tsx)",
+    "tscOwned": "pass (no SurfaceCard diagnostics after renaming Error story → WithError)",
+    "gitDiffCheck": "pass",
+    "committed": false
+  },
+  "status": "done"
+}

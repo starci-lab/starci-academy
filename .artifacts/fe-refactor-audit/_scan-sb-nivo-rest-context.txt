@@ -1,0 +1,230 @@
+﻿\n### .storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx
+--- L135 StackH gap=3 dec=j,at ---
+
+--- L208 StackV gap=3 dec= ---
+
+--- L232 StackV gap=3 dec= ---
+
+--- L261 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx
+--- L108 StackV gap=2 dec= ---
+
+--- L112 StackH gap=2 dec=j ---
+
+--- L171 StackV gap=3 dec= ---
+
+--- L204 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx
+--- L96 StackH gap=4 dec=j,at ---
+
+--- L187 StackH gap=4 dec=j,at ---
+
+\n### .storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx
+--- L111 StackV gap=3 dec= ---
+
+--- L116 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx
+--- L133 StackV gap=2 dec= ---
+
+--- L138 StackH gap=2 dec=j ---
+
+--- L179 StackH gap=2 dec=at ---
+
+--- L325 Grid gap=4 dec=c ---
+
+\n### .storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx
+--- L80 StackV gap=3 dec= ---
+
+--- L96 StackH gap=3 dec=j ---
+
+--- L136 StackV gap=3 dec= ---
+
+--- L153 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/expert-site/ExpertSiteOfferingsEditor/ExpertSiteOfferingsEditor.tsx
+--- L91 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/expert-site/LeadDetail/LeadDetail.tsx
+--- L138 StackV gap=6 dec= ---
+
+--- L142 StackH gap=3 dec=j,at ---
+
+\n### .storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx
+--- L92 StackV gap=3 dec= ---
+
+--- L97 StackH gap=3 dec=j ---
+
+--- L137 StackH gap=2 dec=at ---
+
+\n### .storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx
+--- L78 StackV gap=4 dec= ---
+
+--- L83 StackH gap=3 dec=a ---
+
+\n### .storybook/components/nivo/blocks/agent-os/AgentDetailDrawer/AgentDetailDrawer.tsx
+--- L129 StackV gap=6 dec= ---
+
+--- L143 StackH gap=3 dec=j,a ---
+
+\n### .storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx
+--- L95 StackH gap=4 dec=j,at ---
+
+--- L189 StackH gap=4 dec=j,at ---
+
+\n### .storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx
+--- L79 StackV gap=5 dec=a ---
+
+--- L87 Grid gap=4 dec=c ---
+
+\n### .storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx
+--- L105 StackH gap=3 dec=a ---
+
+--- L112 StackV gap=1 dec= ---
+
+--- L118 StackH gap=2 dec=a ---
+
+\n### .storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx
+--- L120 StackH gap=3 dec=j,a ---
+
+--- L127 StackH gap=3 dec=a ---
+
+\n### .storybook/components/nivo/blocks/agent-os/HealthCard/HealthCard.tsx
+--- L61 StackH gap=4 dec= ---
+
+\n### .storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx
+--- L98 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/agent-os/ModelsSection/ModelsSection.tsx
+--- L84 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/agent-os/PlaygroundPanel/PlaygroundPanel.tsx
+--- L97 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/agent-os/ProvisioningState/ProvisioningState.tsx
+--- L150 StackV gap=5 dec=a ---
+
+\n### .storybook/components/nivo/blocks/agent-os/ThreadDrawer/ThreadDrawer.tsx
+--- L107 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/agent-os/ToolsSection/ToolsSection.tsx
+--- L91 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/catalog/BuyConfirmModal/BuyConfirmModal.tsx
+--- L120 StackV gap=4 dec= ---
+
+--- L144 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx
+--- L106 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx
+--- L138 StackV gap=4 dec= ---
+
+--- L143 StackH gap=3 dec=j ---
+
+--- L172 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/pages/CatalogView/CatalogView.tsx
+--- L182 StackV gap=8 dec= ---
+
+--- L187 StackV gap=4 dec= ---
+
+--- L200 Grid gap=4 dec=c ---
+
+--- L228 StackV gap=8 dec= ---
+
+--- L233 StackV gap=4 dec= ---
+
+--- L257 Grid gap=4 dec=c ---
+
+\n### .storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx
+--- L123 StackV gap=8 dec= ---
+
+--- L127 StackV gap=3 dec=a ---
+
+--- L139 Grid gap=3 dec=c ---
+
+--- L173 StackV gap=3 dec=a ---
+
+--- L196 StackV gap=3 dec= ---
+
+--- L202 Grid gap=3 dec=c ---
+
+\n### .storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx
+--- L100 StackH gap=3 dec=j ---
+
+--- L149 StackV gap=4 dec= ---
+
+--- L158 StackV gap=3 dec= ---
+
+--- L181 StackV gap=2 dec= ---
+
+--- L187 StackH gap=2 dec=at ---
+
+\n### .storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx
+--- L66 StackV gap=4 dec= ---
+
+--- L109 StackV gap=3 dec= ---
+
+\n### .storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx
+--- L181 StackV gap=3 dec= ---
+
+--- L186 StackH gap=3 dec=a ---
+
+\n### .storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx
+--- L37 Grid gap=4 dec=c ---
+
+\n### .storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx
+--- L91 StackV gap=3 dec= ---
+
+--- L96 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/dashboard/ProductQuickSelector/ProductQuickSelector.tsx
+--- L43 StackV gap=2 dec=a ---
+
+\n### .storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx
+--- L105 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx
+--- L110 StackH gap=3 dec=j ---
+
+--- L172 StackV gap=4 dec= ---
+
+--- L177 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/billing/InvoiceDetailModal/InvoiceDetailModal.tsx
+--- L89 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx
+--- L165 StackH gap=3 dec=j ---
+
+--- L183 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/pages/Dashboard/Dashboard.tsx
+--- L75 StackV gap=6 dec= ---
+
+--- L101 StackV gap=2 dec= ---
+
+--- L110 StackH gap=3 dec=j ---
+
+\n### .storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx
+--- L410 Grid gap=4 dec=c ---
+
+--- L611 StackH gap=4 dec=a ---
+
+\n### .storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx
+--- L106 StackV gap=6 dec= ---
+
+--- L138 Grid gap=4 dec=c ---
+
+\n### .storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx
+--- L242 StackV gap=6 dec= ---
+
+--- L262 Grid gap=4 dec=c ---
+
+\n### .storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx
+--- L104 StackH gap=3 dec=j ---
+

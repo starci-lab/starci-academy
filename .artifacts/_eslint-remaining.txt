@@ -1,0 +1,69 @@
+
+node.exe : Warning: React version not specified in eslint-plugin-react settings. See 
+https://github.com/jsx-eslint/eslint-plugin-react#configuration .
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: React ...configuration .:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+D:\Repositories\starci-academy\src\components\pages\CvEditorPage\index.tsx
+  723:29  error  Use one semantic `principle` (emitted as `data-principle`). CSS layout props are not public frame decisions (forbid `classNames` on Grid)  starci-fe/no-public-frame-css-props
+
+G£û 1 problem (1 error, 0 warnings)
+
+
+node.exe : Warning: React version not specified in eslint-plugin-react settings. See 
+https://github.com/jsx-eslint/eslint-plugin-react#configuration .
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: React ...configuration .:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+D:\Repositories\starci-academy\src\components\pages\DashboardPage\OverviewTab\OverviewContributions\OverviewContributionsSkeleton\index.tsx
+  11:18  error  'StackV' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Repositories\starci-academy\src\components\pages\FlashcardsPage\FlashcardDeckList\FlashcardDeckListSkeleton\index.tsx
+  27:68  error  '_unused' is defined but never used  @typescript-eslint/no-unused-vars
+  27:77  error  'index' is defined but never used    @typescript-eslint/no-unused-vars
+
+G£û 3 problems (3 errors, 0 warnings)
+
+
+node.exe : Warning: React version not specified in eslint-plugin-react settings. See 
+https://github.com/jsx-eslint/eslint-plugin-react#configuration .
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: React ...configuration .:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+D:\Repositories\starci-academy\src\components\pages\LearningHistoryPage\CourseDetail\CourseDayTimeline\index.tsx
+  161:83  error  'group' is defined but never used  @typescript-eslint/no-unused-vars
+
+G£û 1 problem (1 error, 0 warnings)
+
+
+node.exe : Warning: React version not specified in eslint-plugin-react settings. See 
+https://github.com/jsx-eslint/eslint-plugin-react#configuration .
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: React ...configuration .:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+D:\Repositories\starci-academy\src\components\pages\ProfileActivityPage\ProfileAchievements\index.tsx
+  238:37  error  'groupIndex' is defined but never used  @typescript-eslint/no-unused-vars
+  243:59  error  'cellIndex' is defined but never used   @typescript-eslint/no-unused-vars
+
+D:\Repositories\starci-academy\src\components\pages\ProfileActivityPage\ProfileActivity\index.tsx
+  122:37  error  'group' is defined but never used  @typescript-eslint/no-unused-vars
+
+G£û 3 problems (3 errors, 0 warnings)
+
+

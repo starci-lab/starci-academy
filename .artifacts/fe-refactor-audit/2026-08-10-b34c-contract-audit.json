@@ -1,0 +1,87 @@
+{
+  "batch": "B34c",
+  "checkpoint": "6ff21c66",
+  "generatedAt": "2026-08-08T14:30:00.000Z",
+  "failures": [],
+  "GlyphMark": {
+    "parity": "pass",
+    "proof": {
+      "sb": ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx",
+      "src": "src/components/atoms/display/GlyphMark/index.tsx",
+      "tones": ["default", "accent", "success", "warning"],
+      "icon": "IconComponent (ComponentType)",
+      "box": "size-5 shrink-0",
+      "skeleton": "HeroSkeleton/Skeleton via isSkeleton + rounded-full",
+      "noPublicClassName": true,
+      "noPublicSkeletonTwin": true
+    },
+    "consumers": {
+      "KeepGoingPath": "no glyphClass; GlyphMark isSkeleton; SB+src",
+      "ModuleLessonList": "no glyphClass; GlyphMark isSkeleton; SB+src",
+      "WeeklyGoals": "unchanged — still text-muted size-5; no muted tone added"
+    }
+  },
+  "NavigationRail": {
+    "parity": "pass",
+    "proof": {
+      "host": "<nav className=\"flex min-h-0 flex-1 flex-col\">",
+      "body": "ComponentTypeWithSkeleton",
+      "noReactNodeChildren": true,
+      "noPublicPrincipleOrCssProps": true
+    },
+    "CollapsibleSidebar": {
+      "usesNavigationRail": true,
+      "DragScrollAreaOwnsScrolling": true,
+      "StackOwnsNavRowRhythm": "principle sibling-stack",
+      "sbClassName": "absent",
+      "srcClassName": "retained for mia-mia DashboardSidebar",
+      "miaMiaEdited": false
+    }
+  },
+  "QaConversationHeader": {
+    "parity": "pass",
+    "person": ["id", "displayName", "avatarUrl?"],
+    "labels": ["collapse", "askedBy", "replies", "beFirst", "founderBadge", "follow", "following"],
+    "houseVocabulary": true,
+    "noHeroUI": true,
+    "noFollowButtonBlock": true,
+    "noPublicCssDoor": true,
+    "srcLocalizedDefaults": "next-intl when labels omitted",
+    "QaQuestionThread": {
+      "asker": "id + displayName||username + avatarUrl",
+      "participants": "id + displayName from author username + avatarUrl",
+      "markdownAxes": "density/flow/previewLines as applicable"
+    }
+  },
+  "MarkdownPresentation": {
+    "axes": ["density", "tone", "flow", "emphasis", "previewLines"],
+    "blocksRenderingClassNameDoor": "removed",
+    "noPlacementBakedIn": true,
+    "FillAvailableForMinW0Flex1": ["TaskResult", "MockInterviewPage Scorecard"],
+    "consumerMappings": {
+      "CommunityPostCard": "flow=embedded",
+      "CommunityCommentRow": "flow=embedded",
+      "QaMessageBubble": "density=compact flow=embedded",
+      "QaInboxRow": "density=compact flow=embedded previewLines=2",
+      "ChallengeCard": "density=caption tone=muted flow=embedded previewLines=2",
+      "TaskResult": "FillAvailable + density/flow/previewLines or muted compact",
+      "MockInterviewScorecard": "tone/emphasis/flow + FillAvailable"
+    }
+  },
+  "TypedChipIcons": {
+    "StatusChip.icon": "IconComponent",
+    "EnumChip.icon": "IconComponent",
+    "noIconClassName": true,
+    "noJsxApiFallback": true,
+    "onCancelPreserved": true,
+    "forbiddenConsumersEdited": false,
+    "callSitesUpdated": [
+      "HostPlatformChip",
+      "LessonVideoKindChip",
+      "SystemStatusPage/ComponentCard",
+      "ManagePinnedProjectsModal",
+      "ProfileProjectRoadmapPage",
+      "ProfileCapstone/ProjectCard"
+    ]
+  }
+}

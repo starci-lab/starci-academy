@@ -1,0 +1,314 @@
+{
+  "batch": "B32c",
+  "phase": 4,
+  "generatedAt": "2026-08-08T12:28:43.331Z",
+  "summary": {
+    "findings": 46,
+    "byVerdict": {
+      "false-positive": 46
+    },
+    "twinDrift": 1,
+    "realRegressionsRepaired": 0,
+    "realRegressionsOpen": 0
+  },
+  "findings": [
+    {
+      "file": ".storybook/components/atoms/display/Badge/Badge.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/display/Logo/Logo.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/composites/form/_field/FieldFrame.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "no new raw CSS host; internal className churn only",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": ".storybook/components/frames/Stage/Stage.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "plugins/eslint/sentence-hosts.test.mjs",
+      "kind": "raw-host-with-classname-added",
+      "sample": [
+        "          code: \"export const Badge = () => <div className=\\\"inline-flex\\\" />\","
+      ],
+      "verdict": "false-positive",
+      "note": "eslint fixture strings only"
+    },
+    {
+      "file": "plugins/eslint/sentence-tier.test.mjs",
+      "kind": "raw-host-with-classname-added",
+      "sample": [
+        "          code: \"export const Example = () => <div className=\\\"rounded-md bg-surface\\\" />\",",
+        "          code: \"export const Example = () => <div className=\\\"flex gap-3\\\" />\",",
+        "          code: \"export const HomePage = () => <section className=\\\"grid gap-6\\\" />\","
+      ],
+      "verdict": "false-positive",
+      "note": "eslint fixture strings only"
+    },
+    {
+      "file": "src/components/atoms/display/Badge/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/display/IconTile/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/display/Logo/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/display/Progress/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/media/QRCode/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/navigation/Accordion/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkBack.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/navigation/Pagination/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/atoms/overlay/Menu/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/form/_field/FieldFrame.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames door removed; fixed internal className string retained (cn(door)→literal). Not raw-CSS laundering.",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "no new raw CSS host; internal className churn only",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/lists/UserCell/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/frames/Stage/index.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "dead classNames/className prop removed; internal cn() retained without new raw host door",
+      "verdict": "false-positive"
+    },
+    {
+      "file": "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+      "kind": "possible-css-door-to-raw",
+      "note": "no new raw CSS host; internal className churn only",
+      "verdict": "false-positive"
+    }
+  ],
+  "twinClassNameDrift": [
+    {
+      "sb": ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+      "src": "src/components/composites/stats/ProgressMeter/index.tsx",
+      "sbHasClass": false,
+      "srcHasClass": true,
+      "kind": "classname-api-drift",
+      "verdict": "false-positive-wrong-twin",
+      "note": "TargetMark twin incorrectly resolved to ProgressMeter/index"
+    }
+  ],
+  "nivoLockedEdits": [],
+  "regressionCandidates": [],
+  "triageNote": "Heuristic host-className adds were false positives for door→literal conversion on atom roots."
+}

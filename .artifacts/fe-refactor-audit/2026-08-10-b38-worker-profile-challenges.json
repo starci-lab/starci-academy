@@ -1,0 +1,60 @@
+{
+  "batch": "B38",
+  "agent": "profile-challenges",
+  "status": "retracted",
+  "completedAt": "2026-08-08T19:10:00.000Z",
+  "checkpoint": "2a096210a",
+  "class": "A",
+  "residual": {
+    "id": "ProfileChallenges",
+    "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "hits": 1,
+    "status": "open-held"
+  },
+  "anatomy": {
+    "before": "LabeledCard frameless + SurfaceListCard + ChallengeCourseRow (SurfaceListCardItem root)",
+    "attempted": "SurfaceCardList label + body-only ChallengeCourseRow",
+    "after": "reverted to checkpoint anatomy — residual shell remains"
+  },
+  "filesChanged": [],
+  "retractedBecause": {
+    "touchedFileRatchet": "eslint --max-warnings=0 unreachable while nested under ProfileChallengesPage/",
+    "blockers": [
+      {
+        "ruleId": "starci-fe/page-folder-two-files-only",
+        "note": "ProfileChallenges/ and ChallengeCourseRow/ are extra files under a page folder. Clearing requires a blocks/ move outside residual-only scope plus Overview/page import graph."
+      },
+      {
+        "ruleId": "starci-fe/no-retired-async-content",
+        "note": "Tab still uses AsyncContent for multi-section loading; retiring rewrites metrics+stats+repo as one tree."
+      },
+      {
+        "ruleId": "starci-fe/no-parallel-skeleton",
+        "note": "Follows from AsyncContent skeleton=."
+      },
+      {
+        "ruleId": "starci-fe/no-public-classname-prop",
+        "note": "Parallel skeleton size classes + row flex classes."
+      }
+    ]
+  },
+  "holds": [
+    {
+      "id": "b38-profile-challenges-labeled-surface",
+      "classification": "A",
+      "action": "held",
+      "reason": "Exact A collapse is correct, but zero-warning ratchet cannot clear without relocating page-nested sections and retiring AsyncContent — out of residual shell scope."
+    },
+    {
+      "id": "ProfileChallenges-metrics-StatRibbon",
+      "classification": "E",
+      "action": "left",
+      "reason": "LabeledCard frameless + StatRibbon is non-list (not this residual)."
+    }
+  ],
+  "verification": {
+    "productDiff": "none (reverted to 2a096210a)",
+    "residualStillOpen": true,
+    "committed": false
+  }
+}

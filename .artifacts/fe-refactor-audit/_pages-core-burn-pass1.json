@@ -1,0 +1,64 @@
+{
+  "changed": [
+    "src/modules/types/utils/challenge-section.ts",
+    "src/app/InnerLayout.tsx",
+    "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+    "src/modules/utils/computations/amount.ts",
+    "src/modules/utils/computations/operation.ts",
+    "src/modules/utils/truncate.ts",
+    "src/modules/api/graphql/clients/links/attach-access-token.ts",
+    "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+    "src/modules/api/graphql/queries/query-consultants.ts",
+    "src/modules/api/graphql/queries/query-sandbox-repo-url.ts",
+    "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+    "src/modules/api/graphql/types.ts",
+    "src/modules/types/entities/content-body.ts",
+    "src/modules/types/entities/content.ts",
+    "src/modules/types/utils/programming-language.ts",
+    "src/modules/utils/regression.ts",
+    "src/types/index.ts",
+    "src/app/[locale]/architecture/page.tsx",
+    "src/app/[locale]/blog/[slug]/page.tsx",
+    "src/app/[locale]/contact/page.tsx",
+    "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+    "src/app/[locale]/courses/[courseId]/page.tsx",
+    "src/app/[locale]/error.tsx",
+    "src/app/[locale]/home/page.tsx",
+    "src/app/[locale]/status/page.tsx",
+    "src/components/svg/GithubIcon/index.tsx",
+    "src/components/svg/GoogleIcon/index.tsx",
+    "src/components/svg/Logo/index.tsx",
+    "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+    "src/modules/api/graphql/clients/links/refresh-token/mutation.ts",
+    "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+    "src/modules/types/entities/cv.ts",
+    "src/modules/utils/computations/adjustment.ts",
+    "src/modules/utils/computations/bps.ts",
+    "src/modules/utils/computations/percentage.ts",
+    "src/modules/utils/computations/pow-10.ts"
+  ],
+  "skipped": [
+    {
+      "path": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "rules": [],
+      "reason": "no-op-after-pass"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "rules": [],
+      "reason": "no-op-after-pass"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "rules": [],
+      "reason": "no-op-after-pass"
+    },
+    {
+      "path": "src/modules/dayjs/index.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "product-locale-format-literal"
+    }
+  ]
+}

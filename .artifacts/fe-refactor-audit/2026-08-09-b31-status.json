@@ -1,0 +1,30 @@
+{
+  "batch": "B31",
+  "complete": false,
+  "status": "blocked-at-inventory",
+  "head": "18f84f5b15528163e9fca10cfb7252323f02f013",
+  "headSubject": "refactor(fe): enforce semantic closure ratchet",
+  "phase": 1,
+  "sourceEdits": [],
+  "publicDoorsRemoved": [],
+  "retainedInDiff": [],
+  "retracted": [],
+  "warningsBefore": {
+    "LeaderboardListCard": 15,
+    "TopLearnersComponent": 10,
+    "TopLearnersIndex": 1,
+    "LeagueCardComponent": 10,
+    "LeagueCardContent": 3,
+    "CommunityTab": 3
+  },
+  "warningsAfter": null,
+  "blockers": [
+    "page-folder-two-files-only on every TopLearners/LeagueCard/CommunityTab page-folder file required for vertical consumer closure",
+    "LeaderboardListCard internal raw-shape payloads lack honest existing principles/composites at exact seams",
+    "HeroUI Link vocabulary gap",
+    "B30c already retracted the same vertical attempt under identical ratchet"
+  ],
+  "overlapCheck": "pass-no-locked-nivo-overlap",
+  "inventoryArtifact": ".artifacts/fe-refactor-audit/2026-08-09-b31-inventory.json",
+  "next": "Await coordinator/user approval. Recommend empty edit manifests unless page-folder + vocabulary gaps are unblocked out of band. Do not claim door closure."
+}

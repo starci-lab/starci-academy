@@ -1,0 +1,34 @@
+{
+  "partition": "pressable-group-contract",
+  "changed": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+    "src/components/blocks/learn/ContentPager/index.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx"
+  ],
+  "skipped": [],
+  "holds": [
+    "item.classNames residual retained (AllowedClassName tweaks / skeleton); not deleted this batch",
+    "SurfaceCard.contentClassName still funnels verdictBand + residual classNames"
+  ],
+  "evidence": [
+    "Grid already owns span?: 1|2 with intentional min-w-0 wrapper for span=2",
+    "Sole live col-span-2 consumers: ContentPager SB+src + PagerFullWidth story",
+    "Press/focus stay on Base; wrapper is non-interactive — matches ExpertSiteOverview Grid.span usage",
+    "Prior path put col-span-2 on Base via contentClassName; new path uses GridItem.span (canonical)"
+  ],
+  "handoff": {
+    "applied": "SurfaceCardPressableGroupItem.span?: 1 | 2 → GridItem.span",
+    "consumersMigrated": [
+      "ContentPager",
+      "PagerFullWidth story"
+    ],
+    "notClaimed": "item.classNames door still live until zero residual consumers"
+  },
+  "ratchetReady": false,
+  "verification": {
+    "twinParity": "SB↔src PressableGroup + ContentPager"
+  },
+  "regressions": []
+}

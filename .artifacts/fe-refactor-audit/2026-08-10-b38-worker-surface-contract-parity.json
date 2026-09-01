@@ -1,0 +1,151 @@
+{
+  "batch": "B38",
+  "agent": "surface-contract-parity",
+  "status": "complete",
+  "contractSufficient": true,
+  "checkpoint": "2a096210a",
+  "completedAt": "2026-08-08T18:34:00.000Z",
+  "owns": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    "src/components/composites/cards/SurfaceCard/surface-card-header.tsx"
+  ],
+  "inventory": {
+    "source": ".artifacts/fe-refactor-audit/2026-08-10-b38-inventory.json",
+    "classB": [],
+    "residuals": [
+      "ActivityFeed",
+      "RelatedContentList",
+      "MindMapNodeDrawer",
+      "ProfileChallenges",
+      "ProfileJobReadiness-A",
+      "ProfileJobReadiness-B"
+    ],
+    "note": "Inventory contractGap.classB empty — no Storybook contract change required unless workers prove otherwise."
+  },
+  "edits": [],
+  "residualNeedCoverage": {
+    "label": {
+      "supported": true,
+      "via": "SurfaceCardListProps extends SurfaceLabelProps.label"
+    },
+    "subtleLabel": {
+      "supported": true,
+      "via": "SurfaceLabelProps.subtleLabel"
+    },
+    "labelEnd": {
+      "supported": true,
+      "via": "SurfaceLabelProps.labelEnd"
+    },
+    "variant": {
+      "supported": true,
+      "values": ["surface", "nested"],
+      "via": "SurfaceCardListProps.variant?: SurfaceCardVariant"
+    },
+    "isSkeleton": {
+      "supported": true,
+      "via": "SurfaceCardListProps.isSkeleton"
+    },
+    "emptyState": {
+      "supported": true,
+      "via": "SurfaceCardListProps.emptyState?: ComponentType"
+    },
+    "errorState": {
+      "supported": true,
+      "via": "SurfaceCardListProps.error + errorState?: ComponentType"
+    },
+    "identity": {
+      "supported": true,
+      "via": "SurfaceCardListProps.identity?: CallerIdentity"
+    },
+    "freeFormContentRows": {
+      "supported": true,
+      "via": "SurfaceCardListItem.content?: ComponentTypeWithSkeleton"
+    },
+    "itemOnPress": {
+      "supported": true,
+      "via": "SurfaceCardListItem.onPress"
+    },
+    "itemHref": {
+      "supported": true,
+      "via": "SurfaceCardListItem.href"
+    },
+    "itemHover": {
+      "supported": true,
+      "values": ["fill", "underline"],
+      "via": "SurfaceCardListItem.hover"
+    }
+  },
+  "parityProof": {
+    "method": "Extracted public field names from SurfaceCardListItem, SurfaceCardListProps, and SurfaceLabelProps in SB and src; compared JSON-serialized ordered field lists.",
+    "listItemEqual": true,
+    "listPropsEqual": true,
+    "surfaceLabelEqual": true,
+    "SurfaceLabelProps": [
+      "label",
+      "labelEnd",
+      "onSeeMore",
+      "seeMoreLabel",
+      "action",
+      "subtleLabel",
+      "isSkeleton"
+    ],
+    "SurfaceCardListProps": [
+      "items",
+      "emptyState",
+      "error",
+      "errorState",
+      "variant",
+      "description",
+      "isSkeleton",
+      "classNames",
+      "fillHeight",
+      "identity"
+    ],
+    "SurfaceCardListItem": [
+      "key",
+      "title",
+      "subtitle",
+      "leading",
+      "leadingIcon",
+      "leadingIconColor",
+      "meta",
+      "metaText",
+      "trailing",
+      "trailingIcon",
+      "content",
+      "href",
+      "onPress",
+      "isDisabled",
+      "selected",
+      "tone",
+      "withVerdict",
+      "hover",
+      "classNames"
+    ],
+    "verdict": "SB and src List contracts are field-identical; no mirror edit required."
+  },
+  "propGate": {
+    "newPropsConsidered": false,
+    "reason": "Every B38 residual need maps to an existing typed prop. Inventory classB is empty. Adding a prop would violate prefer-zero-edits and the ≥2-consumer proof gate."
+  },
+  "eslint": {
+    "touched": false,
+    "command": "npx eslint --max-warnings=0 <four owned SurfaceCard paths>",
+    "exitCode": 1,
+    "errors": 0,
+    "warnings": 56,
+    "maxWarningsGate": "n/a — zero product edits; gate applies to touched files only",
+    "note": "Pre-existing held findings (chiefly starci-fe/no-public-classname-prop on classNames doors + require-frame-self-declare on src). Header twins clean. Not burned this wave — inventing no CSS doors / no rule churn.",
+    "filesWithFindings": [
+      ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "src/components/composites/cards/SurfaceCard/index.tsx"
+    ],
+    "filesClean": [
+      ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+      "src/components/composites/cards/SurfaceCard/surface-card-header.tsx"
+    ]
+  },
+  "summary": "SurfaceCardList already covers all B38 residual collapses (label/subtleLabel/labelEnd, nested|surface, isSkeleton, empty/error, identity, content rows, onPress/href/hover). SB↔src parity holds. No contract edits."
+}

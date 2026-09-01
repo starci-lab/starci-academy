@@ -1,0 +1,134 @@
+{
+  "batch": "B32",
+  "agent": "agent-3-composites",
+  "checkpoint": "9e86cbdf",
+  "before": {
+    "focusedMessages": 83,
+    "byRule": {
+      "starci-fe/no-public-classname-prop": 72,
+      "starci-fe/require-frame-self-declare": 11
+    }
+  },
+  "after": {
+    "focusedMessages": 16,
+    "byRule": {
+      "starci-fe/no-public-classname-prop": 16
+    }
+  },
+  "closed": [
+    {
+      "cluster": "dead-public-classNames-doors",
+      "evidence": "Zero live <Component classNames=> / className= consumers across src+.storybook for AsyncContent, ButtonGroup, ButtonRadioGroup, FloatingActionButton, Table, Callout, EmptyState, FieldFrame, UserCell, TargetMark, Legend/DotLabel paint helper renamed bgClass",
+      "files": [
+        ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+        "src/components/composites/async/AsyncContent/index.tsx",
+        ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+        "src/components/composites/buttons/ButtonGroup/index.tsx",
+        ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+        "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+        ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+        "src/components/composites/buttons/FloatingActionButton/index.tsx",
+        ".storybook/components/composites/data/Table/Table.tsx",
+        "src/components/composites/data/Table/index.tsx",
+        ".storybook/components/composites/feedback/Callout/Callout.tsx",
+        "src/components/composites/feedback/Callout/index.tsx",
+        ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+        "src/components/composites/feedback/EmptyState/index.tsx",
+        ".storybook/components/composites/form/_field/FieldFrame.tsx",
+        "src/components/composites/form/_field/FieldFrame.tsx",
+        ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+        "src/components/composites/lists/UserCell/index.tsx",
+        ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+        "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+        ".storybook/components/composites/stats/Legend/Legend.tsx",
+        "src/components/composites/stats/Legend/index.tsx",
+        ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+        "src/components/composites/text/DotLabel/index.tsx"
+      ]
+    },
+    {
+      "cluster": "internal-typography-skeleton-classNames",
+      "evidence": "Removed w-1/3|w-1/4 skeleton width doors; Typography owns default skeleton geometry. SB DotLabel/ScoreValue already clean.",
+      "files": [
+        "src/components/composites/text/ScoreValue/index.tsx",
+        "src/components/composites/text/DotLabel/index.tsx",
+        "src/components/composites/text/MetaDotRow/index.tsx",
+        "src/components/composites/text/PricePeriod/index.tsx",
+        "src/components/composites/lists/AuthorByline/index.tsx"
+      ]
+    },
+    {
+      "cluster": "frame-self-declare-principles",
+      "evidence": "Added principle+explain naming rejected siblings; flex-fill-base for min-w-0 flex-1; IconLabelValueRow rebuilt on StackH",
+      "files": [
+        "src/components/composites/layout/Disclosure/index.tsx",
+        "src/components/composites/stats/CourseProgressBar/index.tsx",
+        "src/components/composites/stats/MetricCard/index.tsx",
+        "src/components/composites/lists/IdentityContentRow/index.tsx",
+        "src/components/composites/lists/IconLabelValueRow/index.tsx",
+        "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+        "src/components/composites/viewers/PDFView/index.tsx",
+        "src/components/composites/stats/Legend/index.tsx",
+        ".storybook/components/composites/stats/Legend/Legend.tsx",
+        "src/components/composites/buttons/InputButtonLike/index.tsx",
+        "src/components/composites/form/Dropzone/index.tsx",
+        "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx"
+      ]
+    }
+  ],
+  "holds": [
+    {
+      "id": "b32-a3-enumchip-classname-legacy",
+      "files": [".storybook/components/composites/chips/EnumChip/EnumChip.tsx"],
+      "reason": "Public className/classNames kept for legacy HostPlatformChip-style free-string callers; blocks EnumChip still forwards className. Do not invent a placement variant.",
+      "proposal": "Migrate HostPlatformChip/EntityResultRow off free className, then delete both doors on SB+src EnumChip twins together."
+    },
+    {
+      "id": "b32-a3-progressmeter-public-classnames",
+      "files": [".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx"],
+      "reason": "Public classNames still declared; src ProgressMeter/index.tsx not in this agent manifest so twin delete deferred.",
+      "proposal": "Assign src ProgressMeter twin in a follow-up and delete dead door on both."
+    },
+    {
+      "id": "b32-a3-titledtext-public-classnames",
+      "files": [".storybook/components/composites/text/TitledText/TitledText.tsx"],
+      "reason": "Public classNames + internal min-w-0 root; src TitledText not in manifest.",
+      "proposal": "Mirror delete with src twin; use flex-fill-base for min-w-0 if still needed."
+    },
+    {
+      "id": "b32-a3-markdown-viewer-classnames",
+      "files": [
+        ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+        ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+        ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+        "src/components/composites/viewers/MarkdownContent/map.tsx"
+      ],
+      "reason": "map.tsx MarkdownCodeRuntimeProps.className is the react-markdown fenceClass rename boundary, not a house placement door. CodePreviewTabs/MarkdownContent public classNames need consumer+src twin pass.",
+      "proposal": "Keep fenceClass rename; delete house classNames on CodePreviewTabs/MarkdownContent after consumer proof with src twins."
+    },
+    {
+      "id": "b32-a3-domain-refile-proposals",
+      "files": [
+        "src/components/composites/stats/CourseProgressBar/index.tsx",
+        "src/components/composites/text/ScoreValue/index.tsx",
+        "src/components/composites/text/PricePeriod/index.tsx",
+        "src/components/composites/stats/MetricCard/index.tsx"
+      ],
+      "reason": "Domain-flavoured composites (course progress, grading score, commerce price period, metric card). No new shelves invented; lint closed without moving.",
+      "proposal": "Teacher: refile CourseProgressBar→blocks/learn or blocks/stats; ScoreValue→blocks/grading; PricePeriod→blocks/commerce; MetricCard stay composite or blocks/stats if domain-locked. Do not invent shelves."
+    }
+  ],
+  "unrelatedOk": [
+    "No HeroUI layout bypasses remained in-manifest (ButtonRadioGroup already on house Button).",
+    "No frame-fragment items in-manifest.",
+    "No require-identity-root on these composite roots (identity forwarded where present).",
+    "ReactNode slots in ButtonRadioGroup content/trailing/itemAction left — text/control payload, not ConditionallyMounted owner slots; ComponentTypeWithSkeleton already used on Disclosure/IdentityContentRow/EmptyState/AsyncContent."
+  ],
+  "verification": {
+    "focusedEslintBefore": 83,
+    "focusedEslintAfter": 16,
+    "closedClustersMaxWarnings0": "pass on Disclosure, CourseProgressBar, MetricCard, IdentityContentRow, IconLabelValueRow, AuthorByline, ScoreValue, DotLabel, EmptyState twins, ButtonGroup twins, FieldFrame twins, PDFView, Callout twins, Table twins, UserCell twins, FAB twins, ButtonRadioGroup twins, AsyncContent twins, Legend twins, TargetMark twins",
+    "delta": -67
+  },
+  "summary": "Closed dead CSS doors and frame self-declare on most agent-3 composites (83→16). Held EnumChip legacy className, ProgressMeter/TitledText/Markdown viewer doors needing out-of-manifest twins, and domain refile proposals without inventing shelves."
+}

@@ -1,0 +1,85 @@
+{
+  "partition": "live-prop-consumer-proof",
+  "changed": [],
+  "skipped": [
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/overlays/modals/CvPreviewModal/component.tsx",
+    "src/components/composites/viewers/PDFView/index.tsx",
+    "src/components/composites/layout/DrawerShell/index.tsx",
+    "src/components/composites/layout/ModalShell/index.tsx"
+  ],
+  "holds": [
+    {
+      "id": "MiniCart-dialogClassName-footerClassName",
+      "classification": "API-hold",
+      "live": true
+    },
+    {
+      "id": "CvPreview-containerClassName",
+      "classification": "API-hold",
+      "live": true
+    },
+    {
+      "id": "PDFView-heightClassName",
+      "classification": "API-hold",
+      "live": true
+    },
+    {
+      "id": "SurfaceCard-contentClassName",
+      "classification": "API-hold",
+      "live": true,
+      "note": "ContinueCard and many others — redesign hold for bodyVariant"
+    }
+  ],
+  "evidence": {
+    "dialogClassName": {
+      "consumers": ["src/components/overlays/drawers/MiniCartDrawer/component.tsx:302 sm:max-w-md"],
+      "otherProductConsumers": []
+    },
+    "footerClassName": {
+      "consumers": ["src/components/overlays/drawers/MiniCartDrawer/component.tsx:310 flex-col! items-stretch! justify-start! gap-3! border-t"],
+      "otherProductConsumers": []
+    },
+    "containerClassName": {
+      "consumers": ["src/components/overlays/modals/CvPreviewModal/component.tsx:44 h-[92vh] w-[96vw] max-w-[96vw]"],
+      "otherProductConsumers": []
+    },
+    "heightClassName": {
+      "consumers": [
+        "src/components/overlays/modals/CvPreviewModal/component.tsx:51 h-[84vh]",
+        ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx (demo heights)"
+      ]
+    },
+    "deadPassthrough": false
+  },
+  "proposals": [
+    {
+      "id": "DrawerShell-dialogWidth",
+      "mapsFrom": "dialogClassName=\"sm:max-w-md\"",
+      "doNotInventNow": true
+    },
+    {
+      "id": "DrawerShell-footerVariant-stacked",
+      "mapsFrom": "footerClassName flex-col stretch + border-t",
+      "doNotInventNow": true
+    },
+    {
+      "id": "ModalShell-viewportFit-near-fullscreen",
+      "mapsFrom": "containerClassName h-[92vh] w-[96vw]",
+      "note": "HeroUI cover/full are not equivalent",
+      "doNotInventNow": true
+    },
+    {
+      "id": "PDFView-height-token-or-enum",
+      "mapsFrom": "heightClassName h-[560px]|h-[84vh]|story px",
+      "doNotInventNow": true
+    },
+    {
+      "id": "SurfaceCard-bodyVariant",
+      "mapsFrom": "contentClassName stack/clip/grid variants",
+      "doNotInventNow": true
+    }
+  ],
+  "verification": { "note": "no product edits — proof only" },
+  "regressions": []
+}

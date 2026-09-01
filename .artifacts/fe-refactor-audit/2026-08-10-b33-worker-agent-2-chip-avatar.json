@@ -1,0 +1,162 @@
+{
+  "batch": "B33",
+  "date": "2026-08-10",
+  "worker": "agent-2-chip-avatar",
+  "manifest": "agent-2-chip-avatar",
+  "checkpoint": "139391b6",
+  "status": "partial",
+  "focus": "Chip/Avatar consumer chains",
+  "clusterIds": [],
+  "changedCount": 20,
+  "changed": [
+    ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+    ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+    "src/components/blocks/buttons/RatingBar/index.tsx",
+    "src/components/blocks/chips/EnumChip/index.tsx",
+    "src/components/blocks/chips/HostPlatformChip/component.tsx",
+    "src/components/blocks/chips/HostPlatformChip/index.tsx",
+    "src/components/blocks/chips/TagChips/component.tsx",
+    "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    "src/components/blocks/course/CourseTrialChip/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/EntityResultRow/component.tsx",
+    "src/components/blocks/learn/LearnSidebar/index.tsx",
+    "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+    "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+    "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+    "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/overlays/modals/PaymentModal/component.tsx"
+  ],
+  "consumersScanned": 40,
+  "consumersMigrated": [
+    "CourseTrialChip — dropped Chip classNames shrink-0 (placement; Chip owns w-fit)",
+    "AiQuotaHistoryPanel SB — removed dead public classNames door; mirrored src identity StackV root",
+    "PriceTagBase SB+src — removed dead public classNames door",
+    "EnrollGate SB — PriceTag self-center moved to Box parent (transitive after door burn)",
+    "PaymentModal — dropped PriceTag shrink-0 classNames (transitive; Chip/PriceTag intrinsic width)",
+    "EnumChip block — removed dead WithClassNames/className door",
+    "HostPlatformChip — transitive stop-passing className after EnumChip door burn",
+    "TagChips — removed dead per-part classNames door",
+    "EntityResultRow — removed WithClassNames; HeroUI Chip+w-fit → house Chip tone",
+    "ChatToolResult — removed dead className door",
+    "ReadBadge — HeroUI Chip soft-tint className → house Chip tone=success + icon",
+    "LearnSidebar badge — HeroUI soft-tint className → house Chip tone=warning",
+    "ImplementationCard — HeroUI Chip+w-fit → house Chip tone=accent",
+    "ExplainingCard — HeroUI Chip → house Chip tone",
+    "RatingBar — HeroUI Chip/Typography → house Chip + Typography",
+    "ContentHeader minutes chip — HeroUI Chip → house Chip + ClockIcon",
+    "PersonalProjectDashboard github chip — HeroUI soft-tint → house Chip + GithubLogoIcon (SB parity)",
+    "CvTemplateGalleryModal ATS chip — soft-tint/cn appearance → house Chip tone warning|success"
+  ],
+  "sharedApiRemovedOrRetained": {
+    "Chip.classNames": {
+      "action": "retained",
+      "reason": "Atom declaration out of manifest; live StarCi consumers in this partition migrated off placement classNames. EnumChip composite still forwards classNames (agent-6). No nivo/nivoexpert Chip.classNames consumers found."
+    },
+    "Avatar.classNames": {
+      "action": "retained",
+      "reason": "No Avatar classNames consumers in this partition; door stays on atom."
+    },
+    "PriceTag.classNames": {
+      "action": "removed",
+      "reason": "Proven dead after migrating EnrollGate + PaymentModal placement to parent Box / intrinsic width."
+    },
+    "AiQuotaHistoryPanel.classNames": {
+      "action": "removed",
+      "reason": "Proven dead; src twin already had no door."
+    },
+    "blocks/EnumChip.className": {
+      "action": "removed",
+      "reason": "Dead after HostPlatformChip transitive cleanup; LessonVideoKindChip never passed it."
+    },
+    "TagChips.classNames": {
+      "action": "removed",
+      "reason": "Proven dead per-part trigger/content door."
+    },
+    "EntityResultRow.className": {
+      "action": "removed",
+      "reason": "Proven dead WithClassNames door."
+    },
+    "ChatToolResult.className": {
+      "action": "removed",
+      "reason": "Proven dead WithClassNames door."
+    }
+  },
+  "beforeAfterMessages": {
+    "manifestEslintBefore": 191,
+    "manifestEslintAfter": 157,
+    "delta": -34,
+    "doorRules": {
+      "starci-fe/no-public-classname-prop": { "before": 20, "after": 3 },
+      "starci-fe/no-classname-at-sentence-tier": { "before": 5, "after": 0 },
+      "starci-fe/no-cn-above-vocabulary": { "before": 5, "after": 1 }
+    }
+  },
+  "closedClusters": [
+    "CourseTrialChip Chip.classNames shrink-0 consumer",
+    "AiQuotaHistoryPanel public classNames door (SB)",
+    "PriceTag public classNames door (SB+src) + EnrollGate/PaymentModal consumers",
+    "EnumChip/TagChips/EntityResultRow/ChatToolResult dead CSS doors",
+    "ReadBadge/LearnSidebar/ImplementationCard/ExplainingCard/RatingBar/ContentHeader/PersonalProjectDashboard/CvTemplateGalleryModal HeroUI Chip appearance → house Chip tone"
+  ],
+  "partialClusters": [
+    "ContentHeader src still uses host flex meta row + HeroUI Typography for challenges (SB twin uses StackH + muted Typography only) — chip door closed, full twin port held",
+    "PersonalProjectDashboard chip closed; rest of page still HeroUI hosts / parallel skeleton / retired AsyncContent",
+    "PriceTag Typography skeletonWidth classNames remain (agent-3 typography door)",
+    "CvTemplateGalleryModal Chip appearance closed; card-tile cn()/hosts remain",
+    "ExplainingCard adjacent Chip pair retained (no-adjacent-chip redesign out of vocabulary)"
+  ],
+  "holds": [
+    {
+      "files": ["src/components/blocks/chips/StatusChip/index.tsx"],
+      "reason": "Documented ReactNode icon + ElementCloseButton cancel contract cannot map to Chip atom IconComponent/onRemove without call-site redesign; no className door today."
+    },
+    {
+      "files": ["src/components/blocks/chips/EnumChip/index.tsx", "src/components/blocks/chips/LessonVideoKindChip/index.tsx", "src/components/blocks/chips/HostPlatformChip/component.tsx"],
+      "reason": "Legacy block EnumChip still wraps HeroUI for arbitrary ReactNode brand icons; composite EnumChip only allows check/cross. Hold full house-Chip migration."
+    },
+    {
+      "files": ["src/components/blocks/chips/TagChips/component.tsx"],
+      "reason": "Still HeroUI Chip list + Tooltip overflow; ChipGroup composite migration out of scope; CSS door removed."
+    },
+    {
+      "files": ["src/components/atoms/chips/Chip/ChipBase.tsx", ".storybook/components/atoms/chips/Chip/ChipBase.tsx"],
+      "reason": "Shared Chip.classNames placement door retained (declaration not in manifest; composite EnumChip still forwards)."
+    },
+    {
+      "files": ["src/components/atoms/display/Avatar/AvatarBase.tsx", ".storybook/components/atoms/display/Avatar/AvatarBase.tsx"],
+      "reason": "No Avatar classNames consumers in partition; door retained."
+    },
+    {
+      "files": ["src/components/blocks/commerce/PriceTag/PriceTagBase.tsx"],
+      "reason": "Typography isSkeleton classNames skeleton-fraction widths remain — typography agent door."
+    },
+    {
+      "files": ["src/components/blocks/learn/ChatToolResult/index.tsx", "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx"],
+      "reason": "Sentence host/raw/cn chrome for card shells held (agent-9); Chip appearance doors closed."
+    }
+  ],
+  "forbiddenConsumers": {
+    "nivo": "none using Chip/Avatar classNames",
+    "nivoexpert": "none using Chip/Avatar classNames",
+    "mia-mia": "not edited"
+  },
+  "parity": {
+    "AiQuotaHistoryPanel": "SB classNames door removed to match src",
+    "PriceTagBase": "SB+src public classNames door removed together",
+    "PersonalProjectDashboard github chip": "src chip API aligned to SB house Chip + GithubLogoIcon",
+    "ContentHeader": "minutes chip only; full SB PageHeader/StackH twin still diverges",
+    "PlaygroundExerciseGrid w-fit": "already clean in SB; src twin out of this manifest"
+  },
+  "tests": {
+    "eslintManifest": "191 → 157 (−34); door rules 20/5/5 → 3/0/1",
+    "tscTouched": "clean for agent-2 files after EnrollGate/PaymentModal/HostPlatformChip transitive repairs",
+    "tscRepoRemaining": "2 pre-existing CollapsibleSidebar.className errors (mia-mia + SettingsSidebarNav) — not this partition",
+    "gitDiffCheck": "pass"
+  },
+  "regressions": [],
+  "summary": "Migrated StarCi Chip appearance/placement consumers off className/classNames and soft-tint CSS onto house Chip tone; removed dead PriceTag/AiQuotaHistoryPanel/EnumChip/TagChips/EntityResultRow/ChatToolResult CSS doors. Retained Chip/Avatar atom classNames declarations. Held StatusChip icon contract, legacy EnumChip ReactNode icons, TagChips→ChipGroup, and non-Chip sentence hosts. Manifest lint 191→157 (−34)."
+}

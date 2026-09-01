@@ -1,0 +1,104 @@
+{
+  "agentKey": "dashboard-admin-system-architecture",
+  "checkpoint": "02011807",
+  "focus": "Dashboard, admin, system/status, architecture, AI panels — identity roots",
+  "changed": [
+    {
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "rules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "reason": "SB-first: dropped public className door and wrapper divs; stamped CallerIdentity on SurfaceCard/StackV export roots"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Mirrored SB: identity on each branch root; removed host wrappers; sibling-stack/content-row self-declare"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "reason": "Removed useless ProgressBar host wrapper; label-field principle on identity root"
+    },
+    {
+      "path": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Mirrored SB: ProgressBar direct; label-field + neighbour-contrast explain on identity root"
+    },
+    {
+      "path": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "AsyncContent export without wrapper div; identity on CrossList/Empty/Error/StackV roots; dropped Button classNames; ASCII authoring"
+    }
+  ],
+  "closedZeroWarning": [
+    ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+    ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+    "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+    "src/components/blocks/ai/QuotaBar/index.tsx",
+    "src/components/blocks/dashboard/DailyQuest/index.tsx"
+  ],
+  "holds": [
+    {
+      "path": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "reason": "Locked product path — hold only"
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "reason": "GlyphMark migration held: icon uses text-muted; GlyphMarkTone has no muted (default|accent|success|warning only) — do not invent muted tone"
+    },
+    {
+      "path": "src/components/blocks/dashboard/Confetti/index.tsx",
+      "reason": "Unclear identity host: fixed overlay + absolute pieces + inline keyframes; no honest frame root without reinventing confetti chrome"
+    },
+    {
+      "path": "src/components/blocks/dashboard/Podium/index.tsx",
+      "reason": "HeroUI Typography + raw flex host root + UserAvatar className/cn — unclear identity host without vocabulary redesign"
+    },
+    {
+      "path": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "reason": "HeroUI Button/Typography + raw flex card host (p-5 ledger) — unclear identity host"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "reason": "Identity already stamped; remaining HeroUI/host/classname/raw-shape cluster not a clear root-only close"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "reason": "Identity already present; chart sizing host + overflow-y scroll host need chart/scroll vocabulary owners"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "reason": "Identity already present; chart/scroll hosts + undeclared inner StackV held with SB twin"
+    }
+  ],
+  "skipped": [
+    {
+      "path": ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+      "reason": "Not in this agent manifest (SB twin already lacks wrapper div; src stamped identity)"
+    }
+  ],
+  "newVariants": [],
+  "verification": {
+    "tsc": "pass",
+    "eslintMaxWarnings0": "pass on all five changed files",
+    "gitDiffCheck": "pass"
+  },
+  "summary": "Closed identity roots on AiQuotaSubscriptionPanel (SB→src), QuotaBar host/self-declare, and DailyQuest. ArchitectureScene locked. WeeklyGoals→GlyphMark held (no muted tone). Confetti/Podium/StandingHeroCard/LeaderboardListCard/HistoryPanel hosts held as unclear or non-root debt."
+}

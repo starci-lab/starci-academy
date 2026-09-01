@@ -1,0 +1,22 @@
+{
+  "partition": "atoms-navigation-overlay",
+  "files": [
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    "src/components/atoms/navigation/Accordion/index.tsx",
+    "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+    "src/components/atoms/navigation/Link/LinkBack.tsx",
+    "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    "src/components/atoms/navigation/Pagination/index.tsx",
+    "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+    "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    "src/components/atoms/overlay/Menu/index.tsx"
+  ],
+  "count": 16
+}

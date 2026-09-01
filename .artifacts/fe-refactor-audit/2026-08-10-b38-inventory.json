@@ -1,0 +1,83 @@
+{
+  "batch": "B38",
+  "checkpoint": "2a096210a",
+  "generatedAt": "2026-08-08T19:15:00.000Z",
+  "baseline": {
+    "eslint": { "warnings": 6174, "files": 1084, "errors": 0, "a11y": 11 },
+    "source": "B36+B37d certified"
+  },
+  "residuals": [
+    {
+      "id": "ActivityFeed",
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "hits": 1,
+      "class": "A",
+      "status": "closed",
+      "compositeOwner": "SurfaceCardList",
+      "worker": "activity-feed"
+    },
+    {
+      "id": "RelatedContentList",
+      "file": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "hits": 1,
+      "class": "A",
+      "status": "closed",
+      "compositeOwner": "SurfaceCardList",
+      "requires": ["EntityResultRow body-only", "ChatToolResult co-consumer"],
+      "worker": "related-content"
+    },
+    {
+      "id": "MindMapNodeDrawer",
+      "file": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "hits": 1,
+      "class": "A",
+      "status": "closed",
+      "compositeOwner": "SurfaceCardList (per group)",
+      "worker": "mind-map-drawer"
+    },
+    {
+      "id": "ProfileChallenges",
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "hits": 1,
+      "class": "A",
+      "status": "held",
+      "blocker": "zero-warning ratchet: page-folder-two-files-only + AsyncContent + parallel-skeleton + classname",
+      "worker": "profile-challenges"
+    },
+    {
+      "id": "ProfileJobReadiness-A",
+      "file": "src/components/blocks/profile/ProfileJobReadiness/index.tsx",
+      "hits": 1,
+      "class": "A",
+      "status": "closed",
+      "movedFrom": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "compositeOwner": "SurfaceCardList",
+      "worker": "profile-job-readiness"
+    },
+    {
+      "id": "ProfileJobReadiness-B",
+      "file": "src/components/blocks/profile/ProfileJobReadiness/index.tsx",
+      "hits": 1,
+      "class": "A",
+      "status": "closed",
+      "compositeOwner": "SurfaceCardList",
+      "worker": "profile-job-readiness"
+    }
+  ],
+  "contractGap": {
+    "classB": [],
+    "note": "No SurfaceCardList contract change. Storybook twin: none required."
+  },
+  "closed": 5,
+  "held": 1,
+  "agents": [
+    { "name": "surface-contract-parity", "edits": 0 },
+    { "name": "activity-feed", "status": "closed" },
+    { "name": "related-content", "status": "closed-with-ContentAiChat-hold" },
+    { "name": "mind-map-drawer", "status": "closed" },
+    { "name": "profile-challenges", "status": "retracted-held" },
+    { "name": "profile-job-readiness", "status": "closed-moved-to-blocks" },
+    { "name": "coordinator-certification", "owns": "artifacts+ledger" }
+  ],
+  "overlapPass": true
+}

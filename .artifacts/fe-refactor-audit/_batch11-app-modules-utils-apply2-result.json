@@ -1,0 +1,31 @@
+{
+  "changed": [
+    "src/hooks/effects/useSyncReduxTaskId.ts",
+    "src/hooks/rhf/useCvSubmissionForm.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+    "src/i18n/navigation.ts",
+    "src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+    "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+    "src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+    "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+    "src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+    "src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+    "src/modules/api/graphql/mutations/mutation-start-trial.ts",
+    "src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+    "src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts"
+  ],
+  "skipped": []
+}

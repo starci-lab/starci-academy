@@ -1,0 +1,169 @@
+{
+  "batch": "B32",
+  "agent": "agent-10-eslint-oracle",
+  "checkpoint": "9e86cbdf",
+  "wave": 1,
+  "status": "complete",
+  "command": "node --test plugins/eslint/*.test.mjs",
+  "testResult": {
+    "passed": 22,
+    "failed": 0,
+    "durationMs": 882.5
+  },
+  "changed": [
+    "plugins/eslint/architectural-oracle.test.mjs",
+    "plugins/eslint/sentence-hosts.test.mjs",
+    "plugins/eslint/frame-items.test.mjs",
+    "plugins/eslint/sentence-tier.test.mjs",
+    "plugins/eslint/index.mjs"
+  ],
+  "testsAdded": {
+    "newFile": "plugins/eslint/architectural-oracle.test.mjs",
+    "rulesNewlyCovered": [
+      "require-frame-self-declare",
+      "require-identity-root",
+      "no-heroui-outside-vocabulary",
+      "page-folder-two-files-only",
+      "no-parallel-skeleton",
+      "no-inline-skeleton-branch",
+      "no-skeleton-twin-component"
+    ],
+    "rulesExtended": [
+      "no-host-element-at-sentence-tier",
+      "no-raw-shape-at-sentence-tier",
+      "no-frame-fragment-item"
+    ],
+    "rulesVerifiedUnchanged": [
+      "no-css-door-type-laundering"
+    ],
+    "skeletonRulesExportableFromIndex": [
+      "no-parallel-skeleton",
+      "no-inline-skeleton-branch",
+      "no-skeleton-twin-component"
+    ]
+  },
+  "coverageNotes": {
+    "require-frame-self-declare": {
+      "valid": [
+        "principle + explain present",
+        "spread treated as present (no false positive)",
+        "atoms/frames/Storybook out of scope"
+      ],
+      "invalid": [
+        "missing both",
+        "explain without principle",
+        "principle without explain",
+        "Windows path"
+      ],
+      "diagnostics": "singular principle in messageIds missing/noPrinciple/noExplain"
+    },
+    "require-identity-root": {
+      "valid": [
+        "identity present",
+        "map.ts out of scope",
+        "vocabulary out of scope",
+        "null body",
+        "block-body bare fragment",
+        "index.tsx with real sibling component.tsx"
+      ],
+      "invalid": [
+        "missing identity on component.tsx",
+        "pages/layouts/overlays",
+        "Windows path",
+        "expression-body bare fragment (documented FP)"
+      ]
+    },
+    "no-heroui-outside-vocabulary": {
+      "valid": [
+        "atoms/frames/composites (vocabulary)",
+        "hooks outside components",
+        "Storybook sentence (src-only componentTier)"
+      ],
+      "invalid": [
+        "blocks/pages/layouts/overlays under src"
+      ]
+    },
+    "page-folder-two-files-only": {
+      "valid": [
+        "component.tsx",
+        "index.tsx",
+        "blocks map.ts not in scope"
+      ],
+      "invalid": [
+        "pages/map.ts",
+        "layouts/helpers.ts",
+        "overlays nested SignInSection"
+      ]
+    },
+    "no-host-element-at-sentence-tier": {
+      "extended": [
+        "span/p/ul allowed",
+        "Windows path",
+        "Storybook nivo block host"
+      ]
+    },
+    "no-raw-shape-at-sentence-tier": {
+      "extended": [
+        "sr-only skip",
+        "size-* skip",
+        "non-layout classes allowed",
+        "Storybook out of componentTier scope",
+        "pages/layouts/overlays + Windows path"
+      ]
+    },
+    "no-frame-fragment-item": {
+      "extended": [
+        "single-child fragment valid",
+        "StackH/Grid coverage",
+        "React.Fragment member gap documented as valid today"
+      ]
+    }
+  },
+  "falsePositives": [
+    {
+      "rule": "require-identity-root",
+      "case": "export const X = () => <></>",
+      "why": "Expression-body arrow returning a bare JSXFragment sets hasJsx but never hits ReturnStatement, so the bare-return skip does not run and identity is demanded for a file with no real root element.",
+      "action": "Documented via invalid regression case; rule not disabled."
+    }
+  ],
+  "falseNegativesOrGaps": [
+    {
+      "rule": "no-frame-fragment-item",
+      "case": "<React.Fragment><A/><B/></React.Fragment> inside items",
+      "why": "Only JSXFragment (`<>`) is detected; JSXMemberExpression React.Fragment is not.",
+      "action": "Documented as valid case (current behavior); not expanded in this wave."
+    },
+    {
+      "rule": "no-heroui-outside-vocabulary",
+      "case": "composites and frames under src may import @heroui/react",
+      "why": "Rule gates tier === 'sentence' only. TOPOLOGY forbids HeroUI on composites, but this rule does not enforce that.",
+      "action": "Recorded as scope vs topology tension; not changed."
+    },
+    {
+      "rule": "no-raw-shape-at-sentence-tier / require-identity-root / no-heroui-outside-vocabulary / require-frame-self-declare",
+      "case": "Storybook sentence trees",
+      "why": "componentTier() and several monolith rules are src/components-only; sentence-hosts is the broader Storybook-aware sibling.",
+      "action": "Encoded in valid cases as current scope policy."
+    }
+  ],
+  "diagnosticFix": {
+    "file": "plugins/eslint/index.mjs",
+    "rule": "require-identity-root",
+    "change": "Rewrote identity message to avoid ESLint mustache `{{...}}` placeholders colliding with the identity object-literal example. Severity and enforcement unchanged. English; no plural principle.",
+    "reason": "RuleTester (and message interpolation) rejected unsubstituted placeholders in the prior string."
+  },
+  "holds": [],
+  "didNot": [
+    "commit",
+    "push",
+    "reset",
+    "checkout",
+    "stash",
+    "branch",
+    "weaken severity",
+    "add allowlists",
+    "blanket exclusions",
+    "aggregate other workers"
+  ]
+}

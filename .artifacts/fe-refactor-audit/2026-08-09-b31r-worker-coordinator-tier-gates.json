@@ -1,0 +1,35 @@
+{
+  "changed": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r-status.md",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "held": [
+    "IconTile held",
+    "no proven moves"
+  ],
+  "retracted": [],
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r-status.md",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "candidateEvidence": "inventory",
+  "beforeTier": null,
+  "afterTier": null,
+  "destination": null,
+  "consumersBefore": {},
+  "consumersAfter": null,
+  "publicDoorsBefore": {},
+  "publicDoorsAfter": null,
+  "skeletonBefore": {},
+  "skeletonAfter": null,
+  "storybookParity": "unchanged"
+}

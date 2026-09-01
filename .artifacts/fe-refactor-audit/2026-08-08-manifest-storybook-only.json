@@ -1,0 +1,82 @@
+{
+  "partition": "storybook-only",
+  "generatedAt": "2026-08-06T21:05:14.780Z",
+  "fileCount": 7,
+  "files": [
+    {
+      "path": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "safeCount": 5,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/utils/block-anatomy.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/utils/block-anatomy.tsx",
+      "safeCount": 5,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/story-kit.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/story-kit.tsx",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring",
+        "starci-fe/require-export-jsdoc",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/main.ts",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/main.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/test-runner.ts",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/test-runner.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/preview.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/preview.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    }
+  ]
+}

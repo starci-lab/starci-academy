@@ -1,0 +1,58 @@
+{
+  "batch": "B31r1",
+  "complete": false,
+  "status": "blocked",
+  "checkpoint": "18f84f5b",
+  "reattempt": "2026-08-08-continuation",
+  "productEdits": false,
+  "retracted": true,
+  "blockers": [
+    "COMPOSITE-3: composites must not import vendor (@heroui Skeleton)",
+    "COMPOSITE-10: composites must not draw own shimmer — forward isSkeleton to atoms",
+    "COMPOSITE-8: isSkeleton + ReactNode icon forbidden; ComponentType required on composite",
+    "Approved path composites/identity/IdentityTile + owning isSkeleton chrome conflicts with composite gates unless a leaf atom exists first",
+    "Unlocked block consumers fail zero-warn ratchet (pre-existing warnings); import-only edits still fail verification",
+    "blocks/identity/IconTile cannot be deleted while page-folder + LeaderboardListCard + warning consumers remain",
+    "Retract law: no partial IdentityTile while block path stays live"
+  ],
+  "recommendation": {
+    "optionA": "Amend filing to atoms/display/IdentityTile (atom with isSkeleton like IconTile)",
+    "optionB": "Add leaf atom for square identity chrome; composites/identity/IdentityTile forwards isSkeleton; ComponentType icon; then migrate after zero-warn unlock"
+  },
+  "sizeContracts": {
+    "IconTile": "atoms/display/IconTile — sm40/md64/lg80 rounded-full — KEEP",
+    "IdentityTile": "composites/identity/IdentityTile — sm48/xl md64/2xl lg80/2xl — NOT LANDED"
+  },
+  "inventorySummary": {
+    "totalOpenTagConsumers": 65,
+    "blockPathImportFiles": 35,
+    "byAction": {
+      "migrate-candidate-identity": 17,
+      "hold-leaderboard-list-card": 1,
+      "review": 4,
+      "hold-page-folder": 28,
+      "hold-nivo": 6,
+      "migrate-candidate-storybook-starci": 9
+    },
+    "byOldKind": {
+      "block-IconTile": 36,
+      "atom-IconTile": 29
+    }
+  },
+  "atomIconTile": "unchanged",
+  "blockIconTile": "unchanged — still live",
+  "identityTile": "not landed",
+  "storybookSrcParity": "n/a — no IdentityTile",
+  "warningCounts": {
+    "unlockedMigrateCandidatesSample": "42 warnings across 7 block consumers (GithubTeamGate, PlaygroundCard, CartLine, ReadinessChecklist, EnrollGate, PremiumPaywall, PitchCard)",
+    "atomIconTile": "2 warnings (classNames) — not touched",
+    "blockIconTile": "6 warnings — not touched"
+  },
+  "regressions": [],
+  "verification": {
+    "tsc": "not run — no product edits",
+    "eslintChanged": "n/a",
+    "auditFe": "n/a — no IdentityTile to audit",
+    "gitDiffCheck": "n/a"
+  }
+}

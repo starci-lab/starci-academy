@@ -1,0 +1,36 @@
+{
+  "partition": "pages-and-overlays",
+  "changed": [
+    "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStatsStrip/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+    "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+    "src/components/pages/ContactPage/ContactFaq/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+    "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+    "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx"
+  ],
+  "skipped": [
+    "locked QuizSession/MockInterviewSession/LearnLoopScroll untouched"
+  ],
+  "holds": [
+    "page-level className usage mass — deferred beyond LabeledCard chain"
+  ],
+  "evidence": [
+    "Removed dead className={className} forwards into LabeledCard"
+  ],
+  "newVariants": [],
+  "vendorBoundaries": [],
+  "verification": {
+    "tsc": "pass"
+  },
+  "regressions": []
+}

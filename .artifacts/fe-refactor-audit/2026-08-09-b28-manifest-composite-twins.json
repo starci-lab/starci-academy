@@ -1,0 +1,143 @@
+{
+  "worker": "composite-twins",
+  "manifest": [
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/composites/buttons/ButtonGroup/index.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "ButtonGroup",
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "composite twin; multi door"
+      },
+      "consumerCount": 4,
+      "valueSet": [
+        "w-fit",
+        "!top-0 !h-full !bg-border !opacity-100",
+        "w-full"
+      ],
+      "ownerships": [
+        "parent-placement",
+        "ambiguous"
+      ]
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "passthrough from ContentAiFab (locked) / dynamic"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "className",
+        "classNames"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "blockMy AllowedClassName — markdown spacing contract"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "blockMy"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "blockMy markdown spacing"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "blockMy"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "ButtonGroup",
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "composite twin; multi door"
+      },
+      "consumerCount": 4,
+      "valueSet": [
+        "w-fit",
+        "!top-0 !h-full !bg-border !opacity-100",
+        "w-full"
+      ],
+      "ownerships": [
+        "parent-placement",
+        "ambiguous"
+      ]
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "passthrough from ContentAiFab (locked) / dynamic"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "className",
+        "classNames"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "CodeToHtml",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "blockMy AllowedClassName — markdown spacing contract"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "blockMy"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "blockMy markdown spacing"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "blockMy"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    }
+  ]
+}

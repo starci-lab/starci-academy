@@ -1,0 +1,1079 @@
+﻿.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(288,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(335,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(350,14): error TS17008: JSX element 'div' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(359,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(383,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(384,18): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(385,15): error TS17002: Expected corresponding JSX closing tag for 'button'.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(431,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(436,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(440,34): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(440,35): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(440,52): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(443,8): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(446,119): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(446,120): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(446,150): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(450,55): error TS17008: JSX element 'button' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(451,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(452,53): error TS17008: JSX element 'a' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(458,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(459,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(460,21): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(460,22): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(460,39): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(463,11): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(468,5): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(468,50): error TS1003: Identifier expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(468,61): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(468,83): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(478,27): error TS17008: JSX element 'SurfaceCardNestedSection' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(504,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(505,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(511,15): error TS17008: JSX element 'a' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(511,21): error TS17008: JSX element 'button' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(513,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(515,49): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(515,106): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(515,138): error TS1003: Identifier expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(515,145): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(515,162): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(515,176): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(516,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(541,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(549,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(553,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(555,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(564,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(568,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(574,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(582,25): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(582,26): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(582,48): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(586,9): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(596,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(596,29): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(597,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(603,29): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(603,40): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(603,44): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(616,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(661,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(667,6): error TS17008: JSX element 'button' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(667,17): error TS17008: JSX element 'a' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(670,24): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(670,69): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(671,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(673,23): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(674,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(675,61): error TS1003: Identifier expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(675,65): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(676,46): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(680,36): error TS17008: JSX element 'HTMLElement' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(680,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(681,13): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(685,32): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(691,22): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(693,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(698,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(699,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(703,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(705,31): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(705,32): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(705,38): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(708,12): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(708,20): error TS17008: JSX element 'RippleItem' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(710,29): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(711,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(712,53): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(713,6): error TS17008: JSX element 'AnimatePresence' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(728,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(730,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(730,11): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(731,7): error TS17002: Expected corresponding JSX closing tag for 'motion.span'.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(948,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(971,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1139,45): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1380,12): error TS17008: JSX element 'Typography' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1381,50): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1434,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1435,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1437,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1438,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1440,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1446,31): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1446,32): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1446,43): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1449,9): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1450,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1451,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1452,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1452,20): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1452,93): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1468,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1469,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1471,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1472,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1474,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1475,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1477,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1483,25): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1483,26): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1483,46): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1487,15): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1500,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1500,27): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1501,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1505,36): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1531,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1555,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1571,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1575,40): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1575,41): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1575,61): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1578,7): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1584,82): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1584,83): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1584,113): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1601,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1602,21): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1602,22): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1602,42): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1605,10): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1605,26): error TS17008: JSX element 'SurfaceCardAccordionItem' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1609,31): error TS17008: JSX element 'string' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1629,10): error TS17008: JSX element 'Typography' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1646,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1647,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1650,27): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1650,28): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1650,43): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1660,25): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1660,26): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1660,51): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1673,15): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1677,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1677,32): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1678,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1679,28): error TS17008: JSX element 'AccordionAtomItem' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1679,67): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1680,12): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1716,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1725,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1759,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1775,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1790,32): error TS1003: Identifier expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1790,40): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1791,12): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1795,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1796,11): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1796,12): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1796,20): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1798,82): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1799,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1800,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1808,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1810,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1818,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1820,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1828,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1830,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1831,24): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1831,25): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1831,45): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1834,8): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1850,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1851,21): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1851,22): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1851,42): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1854,10): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1854,26): error TS17008: JSX element 'SurfaceCardCrossListItem' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1866,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1867,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1869,23): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1869,24): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1869,44): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1872,34): error TS17008: JSX element 'li' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1887,1): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1887,33): error TS1003: Identifier expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1887,49): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1887,60): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1887,68): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1887,91): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1887,95): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1889,20): error TS17008: JSX element 'li' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1889,43): error TS17008: JSX element 'div' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1889,68): error TS17008: JSX element 'ul' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1889,75): error TS17008: JSX element 'li' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1918,61): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1918,62): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1918,77): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1921,55): error TS17008: JSX element 'Skeleton' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1923,25): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1923,26): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1923,51): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1931,1): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1931,32): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1937,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1956,21): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1956,22): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1956,44): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1963,10): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1965,5): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1967,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1983,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1984,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1993,25): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1993,26): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1993,53): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(1996,9): error TS1005: '}' expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2003,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2003,34): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2010,5): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2027,9): error TS1109: Expression expected.
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2033,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2037,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2048,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2052,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx(2069,290): error TS1005: '</' expected.
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(138,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(245,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(250,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(262,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(263,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(264,7): error TS17002: Expected corresponding JSX closing tag for 'KeyValueRow'.
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(271,1): error TS1005: ',' expected.
+.storybook/components/composites/data/KeyValue/KeyValue.tsx(272,1): error TS1005: '</' expected.
+.storybook/components/composites/feedback/EmptyState/EmptyState.tsx(127,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/feedback/EmptyState/EmptyState.tsx(146,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(57,71): error TS1138: Parameter declaration expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(57,86): error TS1005: ',' expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(57,90): error TS1109: Expression expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(58,26): error TS1005: ';' expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(60,10): error TS1128: Declaration or statement expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(60,14): error TS1128: Declaration or statement expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(60,15): error TS1128: Declaration or statement expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(62,17): error TS1005: ';' expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(63,5): error TS1109: Expression expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(63,6): error TS1128: Declaration or statement expected.
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(81,25): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/form/Dropzone/Dropzone.tsx(118,1): error TS1128: Declaration or statement expected.
+.storybook/components/composites/form/Form/Form.tsx(120,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/form/Form/Form.tsx(190,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/form/Form/Form.tsx(269,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/layout/Section/Section.tsx(220,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/lists/List/List.tsx(197,64): error TS1127: Invalid character.
+.storybook/components/composites/lists/List/List.tsx(199,25): error TS1005: '}' expected.
+.storybook/components/composites/lists/List/List.tsx(200,21): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/lists/List/List.tsx(201,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/lists/List/List.tsx(201,18): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/lists/List/List.tsx(206,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/lists/UserCell/UserCell.tsx(127,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/lists/UserCell/UserCell.tsx(150,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(75,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(108,5): error TS1109: Expression expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(109,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(117,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(123,17): error TS1109: Expression expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(133,25): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(154,26): error TS17008: JSX element 'React.Fragment' has no corresponding closing tag.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(162,38): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(164,37): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(170,33): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(180,27): error TS17002: Expected corresponding JSX closing tag for 'span'.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(182,17): error TS1005: ':' expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(218,54): error TS1109: Expression expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(223,85): error TS1109: Expression expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(224,33): error TS1109: Expression expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(225,30): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(226,33): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(227,23): error TS1003: Identifier expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(229,17): error TS1005: ':' expected.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(246,33): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(258,13): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(258,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(259,11): error TS17015: Expected corresponding closing tag for JSX fragment.
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(259,14): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(261,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/navigation/Stepper/Stepper.tsx(269,1): error TS1005: '</' expected.
+.storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx(163,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/stats/StatRibbon/StatRibbon.tsx(106,25): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/FlowDiagram/FlowDiagram.tsx(129,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(145,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+.storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(154,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(166,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(173,14): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(176,1): error TS1005: ':' expected.
+.storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(177,1): error TS1005: '</' expected.
+.storybook/components/composites/viewers/MarkdownContent/map.tsx(182,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(88,10): error TS17008: JSX element 'figure' has no corresponding closing tag.
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(113,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(135,38): error TS17008: JSX element 'ModalBody' has no corresponding closing tag.
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(151,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(154,53): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(159,46): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(160,42): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(161,39): error TS17002: Expected corresponding JSX closing tag for 'div'.
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(162,33): error TS1005: ')' expected.
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(166,19): error TS1003: Identifier expected.
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(171,14): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(172,11): error TS17015: Expected corresponding closing tag for JSX fragment.
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(172,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(174,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(175,1): error TS1005: '</' expected.
+.storybook/components/composites/viewers/PDFView/PDFView.tsx(111,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/PDFView/PDFView.tsx(273,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/PDFView/PDFView.tsx(309,29): error TS1109: Expression expected.
+.storybook/components/composites/viewers/RichText/RichText.tsx(113,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/composites/viewers/RichText/RichText.tsx(148,66): error TS1109: Expression expected.
+.storybook/components/composites/viewers/RichText/RichText.tsx(149,18): error TS1005: ';' expected.
+.storybook/components/composites/viewers/RichText/RichText.tsx(196,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(177,79): error TS1005: '>' expected.
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(177,82): error TS1136: Property assignment expected.
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(178,9): error TS1005: ',' expected.
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(178,20): error TS1003: Identifier expected.
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(178,29): error TS1005: ':' expected.
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(178,38): error TS1003: Identifier expected.
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(178,47): error TS1005: ':' expected.
+.storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx(180,1): error TS1128: Declaration or statement expected.
+.storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx(51,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(17,27): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(18,9): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(105,22): error TS17008: JSX element 'span' has no corresponding closing tag.
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(108,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(110,14): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(111,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(113,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx(114,1): error TS1005: '</' expected.
+.storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx(96,10): error TS17008: JSX element 'span' has no corresponding closing tag.
+.storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx(101,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx(102,21): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx(113,5): error TS1005: ':' expected.
+.storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx(258,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx(261,1): error TS1005: '</' expected.
+.storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx(13,1): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(61,41): error TS1005: ',' expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(61,42): error TS17008: JSX element 'PlaygroundResourceEntry' has no corresponding closing tag.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(61,68): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(63,9): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(65,13): error TS1005: '}' expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(66,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(68,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(69,30): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(69,50): error TS1005: '}' expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(69,75): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(70,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(73,47): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(83,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(84,5): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(88,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(91,90): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(92,7): error TS1005: '}' expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(94,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(101,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(108,18): error TS17008: JSX element 'ListRow' has no corresponding closing tag.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(119,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(120,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(121,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(123,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(129,25): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(129,26): error TS1005: '}' expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(129,54): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(134,1): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(134,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(135,5): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(136,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(208,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx(211,1): error TS1005: '</' expected.
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(122,27): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(123,9): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(214,5): error TS1109: Expression expected.
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(364,26): error TS17008: JSX element 'span' has no corresponding closing tag.
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(367,26): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(369,18): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(370,14): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(385,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(481,31): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(551,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx(554,1): error TS1005: '</' expected.
+.storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx(120,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx(171,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx(195,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(241,64): error TS1127: Invalid character.
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(242,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(242,18): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(244,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(279,10): error TS17008: JSX element 'ListRow' has no corresponding closing tag.
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(291,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(513,48): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(571,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(598,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx(601,1): error TS1005: '</' expected.
+.storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx(63,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx(53,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx(202,33): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx(129,14): error TS17008: JSX element 'span' has no corresponding closing tag.
+.storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx(137,14): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx(149,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx(155,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx(169,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx(172,1): error TS1005: '</' expected.
+.storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx(16,1): error TS1109: Expression expected.
+.storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx(309,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx(35,71): error TS1005: '>' expected.
+.storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx(35,74): error TS1109: Expression expected.
+.storybook/components/starci/pages/CourseContents/_shared.tsx(110,146): error TS1005: '>' expected.
+.storybook/components/starci/pages/CourseContents/_shared.tsx(149,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(251,24): error TS17008: JSX element 'Typography' has no corresponding closing tag.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(252,62): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(254,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(256,34): error TS1005: '}' expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(256,57): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(256,78): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(256,85): error TS1005: '}' expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(256,138): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(256,145): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(259,28): error TS17008: JSX element 'SurfaceCardAccordionItem' has no corresponding closing tag.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(260,57): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(261,15): error TS1005: '}' expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(263,23): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(264,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(266,34): error TS1005: '}' expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(266,57): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(266,78): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(266,85): error TS1005: '}' expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(266,134): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(266,141): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(347,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(355,10): error TS1005: '}' expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(357,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(359,69): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(360,5): error TS1109: Expression expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(451,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(457,25): error TS1109: Expression expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(457,26): error TS1005: '}' expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(457,54): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(470,1): error TS1109: Expression expected.
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(470,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+.storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx(495,1): error TS1005: '</' expected.
+src/components/blocks/cards/CrossListCard/index.tsx(49,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/cards/CrossListCard/index.tsx(78,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/cards/LabeledCard/index.tsx(156,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/cards/PressableCard/index.tsx(143,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/cards/PressableCard/index.tsx(162,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/blocks/cards/PressableCard/index.tsx(185,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/cards/PressableCard/index.tsx(186,14): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/cards/PressableCard/index.tsx(187,11): error TS17002: Expected corresponding JSX closing tag for 'button'.
+src/components/blocks/cards/PressableCard/index.tsx(190,1): error TS1005: '</' expected.
+src/components/blocks/cards/SurfaceListCard/index.tsx(104,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/cards/SurfaceListCard/index.tsx(251,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/cards/SurfaceListCard/index.tsx(346,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/commerce/PricingTable/index.tsx(77,5): error TS1109: Expression expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(178,79): error TS1005: '>' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(178,82): error TS1136: Property assignment expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(179,9): error TS1005: ',' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(179,20): error TS1003: Identifier expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(179,29): error TS1005: ':' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(179,38): error TS1003: Identifier expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(179,47): error TS1005: ':' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(181,1): error TS1128: Declaration or statement expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(206,3): error TS1109: Expression expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(209,14): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(210,20): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(211,5): error TS1109: Expression expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(211,6): error TS1128: Declaration or statement expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(214,14): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(215,20): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(216,5): error TS1109: Expression expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(216,6): error TS1128: Declaration or statement expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(219,14): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(220,20): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(221,5): error TS1109: Expression expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(221,6): error TS1128: Declaration or statement expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(224,14): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(225,20): error TS1005: ';' expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(226,5): error TS1109: Expression expected.
+src/components/blocks/learn/ChallengeDeliverableList/index.tsx(226,6): error TS1128: Declaration or statement expected.
+src/components/blocks/learn/InterviewerPresence/index.tsx(96,10): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/components/blocks/learn/InterviewerPresence/index.tsx(101,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/InterviewerPresence/index.tsx(102,21): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/InterviewerPresence/index.tsx(113,5): error TS1005: ':' expected.
+src/components/blocks/learn/InterviewerPresence/index.tsx(258,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/InterviewerPresence/index.tsx(261,1): error TS1005: '</' expected.
+src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx(13,1): error TS1109: Expression expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(61,41): error TS1005: ',' expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(61,42): error TS17008: JSX element 'PlaygroundResourceEntry' has no corresponding closing tag.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(61,68): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(63,9): error TS1109: Expression expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(65,13): error TS1005: '}' expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(66,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(68,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(69,30): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(69,50): error TS1005: '}' expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(69,75): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(70,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(73,47): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(83,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(84,5): error TS1109: Expression expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(88,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(91,90): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(92,7): error TS1005: '}' expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(94,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(101,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(108,18): error TS17008: JSX element 'ListRow' has no corresponding closing tag.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(119,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(120,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(121,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(123,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(129,25): error TS1109: Expression expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(129,26): error TS1005: '}' expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(129,54): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(134,1): error TS1109: Expression expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(134,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(135,5): error TS1109: Expression expected.
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(136,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(208,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/learn/PlaygroundResourcePanel/index.tsx(211,1): error TS1005: '</' expected.
+src/components/blocks/navigation/CollapsibleSidebar/index.tsx(120,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/CollapsibleSidebar/index.tsx(171,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/CollapsibleSidebar/index.tsx(195,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/Navbar/index.tsx(238,64): error TS1127: Invalid character.
+src/components/blocks/navigation/Navbar/index.tsx(239,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/navigation/Navbar/index.tsx(239,18): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/navigation/Navbar/index.tsx(241,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/Navbar/index.tsx(276,10): error TS17008: JSX element 'ListRow' has no corresponding closing tag.
+src/components/blocks/navigation/Navbar/index.tsx(288,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/Navbar/index.tsx(510,48): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/Navbar/index.tsx(568,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/Navbar/index.tsx(595,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/blocks/navigation/Navbar/index.tsx(598,1): error TS1005: '</' expected.
+src/components/blocks/navigation/NavLinks/index.tsx(63,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx(53,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/navigation/SettingsSidebarNav/index.tsx(202,33): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx(16,1): error TS1109: Expression expected.
+src/components/blocks/rendering/RagSourceGraph/index.tsx(209,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(296,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(343,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(358,14): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(367,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(391,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(392,18): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(393,15): error TS17002: Expected corresponding JSX closing tag for 'button'.
+src/components/composites/cards/SurfaceCard/index.tsx(438,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(443,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(447,34): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(447,35): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(447,52): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(450,8): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(453,119): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(453,120): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(453,150): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(457,55): error TS17008: JSX element 'button' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(458,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(459,53): error TS17008: JSX element 'a' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(465,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(466,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(467,21): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(467,22): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(467,39): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(470,11): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(475,5): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(475,50): error TS1003: Identifier expected.
+src/components/composites/cards/SurfaceCard/index.tsx(475,61): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(475,83): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(485,27): error TS17008: JSX element 'SurfaceCardNestedSection' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(511,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(519,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(525,15): error TS17008: JSX element 'a' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(525,21): error TS17008: JSX element 'button' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(527,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(529,49): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(529,106): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(529,138): error TS1003: Identifier expected.
+src/components/composites/cards/SurfaceCard/index.tsx(529,145): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(529,162): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(529,176): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(530,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(555,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(563,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(567,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(569,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(578,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(582,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(588,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(596,25): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(596,26): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(596,48): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(600,9): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(611,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(611,29): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(612,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(618,29): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(618,40): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(618,44): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(630,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(675,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(681,6): error TS17008: JSX element 'button' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(681,17): error TS17008: JSX element 'a' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(684,24): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(684,69): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(685,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(687,23): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(688,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(689,61): error TS1003: Identifier expected.
+src/components/composites/cards/SurfaceCard/index.tsx(689,65): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(690,46): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(694,36): error TS17008: JSX element 'HTMLElement' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(694,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(695,13): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(699,32): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(705,22): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(707,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(712,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(713,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(717,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(719,31): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(719,32): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(719,38): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(722,12): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(722,20): error TS17008: JSX element 'RippleItem' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(724,29): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(725,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(726,53): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(727,6): error TS17008: JSX element 'AnimatePresence' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(742,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(744,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(744,11): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(745,7): error TS17002: Expected corresponding JSX closing tag for 'motion.span'.
+src/components/composites/cards/SurfaceCard/index.tsx(969,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(991,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1166,45): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1414,12): error TS17008: JSX element 'Typography' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1415,50): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1468,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1469,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1471,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1472,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1474,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1480,31): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1480,32): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1480,43): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1483,9): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1484,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1485,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1486,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1486,20): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1486,93): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1502,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1503,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1505,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1506,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1508,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1509,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1511,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1517,25): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1517,26): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1517,46): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1521,15): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1535,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1535,27): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1536,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1540,36): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1565,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1588,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1604,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1608,40): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1608,41): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1608,61): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1611,7): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1617,82): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1617,83): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1617,113): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1634,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1635,21): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1635,22): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1635,42): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1638,10): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1638,26): error TS17008: JSX element 'SurfaceCardAccordionItem' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1642,31): error TS17008: JSX element 'string' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1662,10): error TS17008: JSX element 'Typography' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1679,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1687,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1690,27): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1690,28): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1690,43): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1700,25): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1700,26): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1700,51): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1713,15): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1718,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1718,32): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1719,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1720,28): error TS17008: JSX element 'AccordionAtomItem' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1720,67): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1721,12): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1757,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1766,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1799,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1815,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1830,32): error TS1003: Identifier expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1830,40): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1831,12): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1835,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1836,11): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1836,12): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1836,20): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1838,82): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1839,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1840,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1848,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1850,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1858,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1860,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1868,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1870,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1871,24): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1871,25): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1871,45): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1874,8): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1890,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1891,21): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1891,22): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1891,42): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1894,10): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1894,26): error TS17008: JSX element 'SurfaceCardCrossListItem' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1906,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1914,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1916,23): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1916,24): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1916,44): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1919,34): error TS17008: JSX element 'li' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1934,1): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1934,33): error TS1003: Identifier expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1934,49): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1934,60): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1934,68): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1934,91): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1934,95): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1936,20): error TS17008: JSX element 'li' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1936,43): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1936,68): error TS17008: JSX element 'ul' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1936,75): error TS17008: JSX element 'li' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1965,61): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1965,62): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1965,77): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1968,55): error TS17008: JSX element 'Skeleton' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(1970,25): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1970,26): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1970,51): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1979,1): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(1979,32): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(1984,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2003,21): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2003,22): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2003,44): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2010,10): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2012,5): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2014,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2030,24): error TS17008: JSX element 'AllowedClassName' has no corresponding closing tag.
+src/components/composites/cards/SurfaceCard/index.tsx(2038,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2047,25): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2047,26): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2047,53): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2050,9): error TS1005: '}' expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2058,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2058,34): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2065,5): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2082,9): error TS1109: Expression expected.
+src/components/composites/cards/SurfaceCard/index.tsx(2087,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2091,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2101,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2105,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/cards/SurfaceCard/index.tsx(2123,1): error TS1005: '</' expected.
+src/components/composites/data/KeyValue/index.tsx(154,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/data/KeyValue/index.tsx(259,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/composites/data/KeyValue/index.tsx(263,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/data/KeyValue/index.tsx(274,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/data/KeyValue/index.tsx(275,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/data/KeyValue/index.tsx(276,7): error TS17002: Expected corresponding JSX closing tag for 'KeyValueRow'.
+src/components/composites/data/KeyValue/index.tsx(283,1): error TS1005: ',' expected.
+src/components/composites/data/KeyValue/index.tsx(287,8): error TS1005: '}' expected.
+src/components/composites/data/KeyValue/index.tsx(289,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/data/KeyValue/index.tsx(290,1): error TS1005: '</' expected.
+src/components/composites/feedback/EmptyState/index.tsx(146,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/feedback/EmptyState/index.tsx(163,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/form/Dropzone/index.tsx(57,71): error TS1138: Parameter declaration expected.
+src/components/composites/form/Dropzone/index.tsx(57,86): error TS1005: ',' expected.
+src/components/composites/form/Dropzone/index.tsx(57,90): error TS1109: Expression expected.
+src/components/composites/form/Dropzone/index.tsx(58,26): error TS1005: ';' expected.
+src/components/composites/form/Dropzone/index.tsx(60,10): error TS1128: Declaration or statement expected.
+src/components/composites/form/Dropzone/index.tsx(60,14): error TS1128: Declaration or statement expected.
+src/components/composites/form/Dropzone/index.tsx(60,15): error TS1128: Declaration or statement expected.
+src/components/composites/form/Dropzone/index.tsx(62,17): error TS1005: ';' expected.
+src/components/composites/form/Dropzone/index.tsx(63,5): error TS1109: Expression expected.
+src/components/composites/form/Dropzone/index.tsx(63,6): error TS1128: Declaration or statement expected.
+src/components/composites/form/Dropzone/index.tsx(81,25): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/form/Dropzone/index.tsx(118,1): error TS1128: Declaration or statement expected.
+src/components/composites/form/Form/index.tsx(147,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/form/Form/index.tsx(216,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/form/Form/index.tsx(295,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/layout/Section/index.tsx(247,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/lists/List/index.tsx(197,64): error TS1127: Invalid character.
+src/components/composites/lists/List/index.tsx(199,25): error TS1005: '}' expected.
+src/components/composites/lists/List/index.tsx(200,21): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/lists/List/index.tsx(201,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/lists/List/index.tsx(201,18): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/lists/List/index.tsx(206,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/lists/UserCell/index.tsx(133,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/lists/UserCell/index.tsx(155,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/stats/ProgressMeter/index.tsx(163,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/stats/StatRibbon/index.tsx(108,25): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(144,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(152,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(164,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(171,14): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(174,1): error TS1005: ':' expected.
+src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx(175,1): error TS1005: '</' expected.
+src/components/composites/viewers/MarkdownContent/map.tsx(182,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(88,10): error TS17008: JSX element 'figure' has no corresponding closing tag.
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(113,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(135,38): error TS17008: JSX element 'ModalBody' has no corresponding closing tag.
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(151,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(154,53): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(159,46): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(160,42): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(161,39): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(162,33): error TS1005: ')' expected.
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(166,19): error TS1003: Identifier expected.
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(171,14): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(172,11): error TS17015: Expected corresponding closing tag for JSX fragment.
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(172,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(174,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx(175,1): error TS1005: '</' expected.
+src/components/composites/viewers/PDFView/index.tsx(110,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/PDFView/index.tsx(271,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/PDFView/index.tsx(305,29): error TS1109: Expression expected.
+src/components/composites/viewers/RichText/index.tsx(114,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/composites/viewers/RichText/index.tsx(146,66): error TS1109: Expression expected.
+src/components/composites/viewers/RichText/index.tsx(147,18): error TS1005: ';' expected.
+src/components/composites/viewers/RichText/index.tsx(199,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/drawers/ContentAiChatDrawer/component.tsx(36,71): error TS1005: '>' expected.
+src/components/overlays/drawers/ContentAiChatDrawer/component.tsx(36,74): error TS1109: Expression expected.
+src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx(47,45): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(379,10): error TS17008: JSX element 'img' has no corresponding closing tag.
+src/components/overlays/modals/PaymentModal/component.tsx(383,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(388,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(393,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(395,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/overlays/modals/PaymentModal/component.tsx(398,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(399,5): error TS1109: Expression expected.
+src/components/overlays/modals/PaymentModal/component.tsx(415,5): error TS1109: Expression expected.
+src/components/overlays/modals/PaymentModal/component.tsx(418,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(419,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(423,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(424,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(440,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(457,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(462,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(474,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(479,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(480,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(485,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(488,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(491,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(507,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(515,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(527,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/overlays/modals/PaymentModal/component.tsx(533,25): error TS1109: Expression expected.
+src/components/overlays/modals/PaymentModal/component.tsx(533,26): error TS1005: '}' expected.
+src/components/overlays/modals/PaymentModal/component.tsx(533,43): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/overlays/modals/PaymentModal/component.tsx(535,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(536,5): error TS1109: Expression expected.
+src/components/overlays/modals/PaymentModal/component.tsx(538,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/overlays/modals/PaymentModal/component.tsx(570,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/overlays/modals/PaymentModal/component.tsx(573,1): error TS1005: '</' expected.
+src/components/overlays/modals/ShareModal/component.tsx(161,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/AdminUploadVideoPage/index.tsx(79,5): error TS1109: Expression expected.
+src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx(48,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx(78,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/BlogListPage/CategoryFilter/index.tsx(47,25): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(29,10): error TS17008: JSX element 'Link' has no corresponding closing tag.
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(63,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(67,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(72,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(74,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(85,14): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(85,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(86,11): error TS17002: Expected corresponding JSX closing tag for 'img'.
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(88,1): error TS1005: ':' expected.
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(89,1): error TS1005: '/' expected.
+src/components/pages/BlogListPage/FeaturedPost/index.tsx(89,1): error TS1005: '</' expected.
+src/components/pages/BookmarksPage/index.tsx(161,37): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/ContentPage/component.tsx(186,41): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/CvEditorPage/index.tsx(374,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/pages/CvEditorPage/index.tsx(380,14): error TS17008: JSX element 'AsyncContent' has no corresponding closing tag.
+src/components/pages/CvEditorPage/index.tsx(528,54): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/CvEditorPage/index.tsx(529,51): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/CvEditorPage/index.tsx(530,46): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/CvEditorPage/index.tsx(532,38): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/CvEditorPage/index.tsx(532,41): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/CvEditorPage/index.tsx(691,54): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/CvEditorPage/index.tsx(694,81): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/CvEditorPage/index.tsx(695,49): error TS1109: Expression expected.
+src/components/pages/CvEditorPage/index.tsx(701,45): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/CvEditorPage/index.tsx(702,42): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/CvEditorPage/index.tsx(702,45): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/CvEditorPage/index.tsx(703,45): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/CvEditorPage/index.tsx(737,35): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/pages/CvEditorPage/index.tsx(738,29): error TS1005: ')' expected.
+src/components/pages/CvEditorPage/index.tsx(738,31): error TS17002: Expected corresponding JSX closing tag for 'button'.
+src/components/pages/CvEditorPage/index.tsx(739,25): error TS1005: ')' expected.
+src/components/pages/CvEditorPage/index.tsx(739,27): error TS17002: Expected corresponding JSX closing tag for 'Box'.
+src/components/pages/CvEditorPage/index.tsx(740,23): error TS17002: Expected corresponding JSX closing tag for 'Box'.
+src/components/pages/CvEditorPage/index.tsx(810,19): error TS17002: Expected corresponding JSX closing tag for 'ScrollShadow'.
+src/components/pages/CvEditorPage/index.tsx(811,15): error TS17002: Expected corresponding JSX closing tag for 'ResizableRail'.
+src/components/pages/CvEditorPage/index.tsx(838,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/CvEditorPage/index.tsx(839,1): error TS1005: '</' expected.
+src/components/pages/CvGalleryPage/CvGallery/component.tsx(110,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx(114,25): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/DashboardPage/index.tsx(69,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/DashboardPage/index.tsx(80,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/DashboardPage/index.tsx(91,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/DashboardPage/index.tsx(102,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx(291,29): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx(23,1): error TS1109: Expression expected.
+src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx(36,18): error TS17008: JSX element 'img' has no corresponding closing tag.
+src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx(40,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx(42,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx(79,10): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx(79,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx(81,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx(82,1): error TS1005: '</' expected.
+src/components/pages/InstallmentPlansPage/index.tsx(80,5): error TS1109: Expression expected.
+src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx(118,47): error TS1109: Expression expected.
+src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx(119,10): error TS1109: Expression expected.
+src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx(119,12): error TS1005: ',' expected.
+src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx(148,10): error TS1128: Declaration or statement expected.
+src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx(154,5): error TS1109: Expression expected.
+src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx(266,1): error TS1128: Declaration or statement expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(35,6): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(39,6): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(50,25): error TS1109: Expression expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(50,26): error TS1005: '}' expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(50,50): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(63,1): error TS1109: Expression expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(63,31): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(64,5): error TS1109: Expression expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(65,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(66,14): error TS17008: JSX element 'SurfaceCard' has no corresponding closing tag.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(88,50): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(90,49): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(141,42): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(142,38): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(145,44): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(155,41): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(164,30): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(165,26): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(169,23): error TS1003: Identifier expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(170,18): error TS1005: ',' expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(172,9): error TS1005: ')' expected.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(172,11): error TS17015: Expected corresponding closing tag for JSX fragment.
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(174,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx(175,1): error TS1005: '</' expected.
+src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx(63,5): error TS1109: Expression expected.
+src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx(91,1): error TS1109: Expression expected.
+src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx(39,1): error TS1109: Expression expected.
+src/components/pages/MockInterviewPage/VoiceHero/index.tsx(101,33): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/VoiceHero/index.tsx(140,29): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MockInterviewPage/VoiceHero/index.tsx(155,37): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MyAttemptsPage/index.tsx(70,14): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/pages/MyAttemptsPage/index.tsx(102,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MyAttemptsPage/index.tsx(103,19): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MyAttemptsPage/index.tsx(104,15): error TS17002: Expected corresponding JSX closing tag for 'ListRow'.
+src/components/pages/MyAttemptsPage/index.tsx(123,5): error TS1135: Argument expression expected.
+src/components/pages/MyAttemptsPage/index.tsx(165,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MyAttemptsPage/index.tsx(166,1): error TS1005: '</' expected.
+src/components/pages/MySubmissionsPage/index.tsx(81,14): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/components/pages/MySubmissionsPage/index.tsx(135,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/MySubmissionsPage/index.tsx(136,19): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MySubmissionsPage/index.tsx(137,15): error TS17002: Expected corresponding JSX closing tag for 'ListRow'.
+src/components/pages/MySubmissionsPage/index.tsx(156,5): error TS1135: Argument expression expected.
+src/components/pages/MySubmissionsPage/index.tsx(198,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/MySubmissionsPage/index.tsx(199,1): error TS1005: '</' expected.
+src/components/pages/NotificationsPage/index.tsx(136,31): error TS1109: Expression expected.
+src/components/pages/NotificationsPage/index.tsx(137,17): error TS1109: Expression expected.
+src/components/pages/NotificationsPage/index.tsx(140,43): error TS1109: Expression expected.
+src/components/pages/NotificationsPage/index.tsx(141,17): error TS1109: Expression expected.
+src/components/pages/NotificationsPage/index.tsx(380,61): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/NotificationsPage/index.tsx(440,61): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(262,24): error TS17008: JSX element 'Typography' has no corresponding closing tag.
+src/components/pages/PersonalProjectTaskPage/index.tsx(263,62): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(265,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(267,34): error TS1005: '}' expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(267,57): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(267,78): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(267,85): error TS1005: '}' expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(267,138): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(267,145): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(270,28): error TS17008: JSX element 'SurfaceCardAccordionItem' has no corresponding closing tag.
+src/components/pages/PersonalProjectTaskPage/index.tsx(271,57): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(272,15): error TS1005: '}' expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(274,23): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(275,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(277,34): error TS1005: '}' expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(277,57): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(277,78): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(277,85): error TS1005: '}' expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(277,134): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(277,141): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(362,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(370,10): error TS1005: '}' expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(372,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(372,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(373,5): error TS1109: Expression expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(464,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(470,25): error TS1109: Expression expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(470,26): error TS1005: '}' expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(470,54): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(483,1): error TS1109: Expression expected.
+src/components/pages/PersonalProjectTaskPage/index.tsx(483,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/PersonalProjectTaskPage/index.tsx(509,1): error TS1005: '</' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(34,30): error TS1005: ',' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(34,49): error TS1005: ',' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(35,3): error TS1109: Expression expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(38,18): error TS1005: ';' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(39,17): error TS1005: ';' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(40,5): error TS1109: Expression expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(40,6): error TS1128: Declaration or statement expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(43,18): error TS1005: ';' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(44,17): error TS1005: ';' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(45,5): error TS1109: Expression expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(45,6): error TS1128: Declaration or statement expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(48,18): error TS1005: ';' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(49,17): error TS1005: ';' expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(50,5): error TS1109: Expression expected.
+src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx(50,6): error TS1128: Declaration or statement expected.
+src/components/pages/PrivacySettingsPage/index.tsx(227,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/ProfileProjectRoadmapPage/index.tsx(264,129): error TS1109: Expression expected.
+src/components/pages/ProfileProjectRoadmapPage/index.tsx(265,57): error TS1109: Expression expected.
+src/components/pages/ProfileProjectRoadmapPage/index.tsx(266,53): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx(84,33): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx(161,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/ProfilePublicCvPage/index.tsx(134,30): error TS17008: JSX element 'iframe' has no corresponding closing tag.
+src/components/pages/ProfilePublicCvPage/index.tsx(138,30): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/ProfileRedirectPage/index.tsx(36,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx(50,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(43,18): error TS17008: JSX element 'Box' has no corresponding closing tag.
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(70,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(72,57): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(77,50): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(78,46): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(80,45): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(85,38): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(86,34): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(88,33): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(111,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(116,26): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(117,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(118,19): error TS17002: Expected corresponding JSX closing tag for 'span'.
+src/components/pages/SystemStatusPage/ComponentCard/index.tsx(119,13): error TS1005: ')' expected.

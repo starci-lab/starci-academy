@@ -1,0 +1,62 @@
+{
+  "worker": "layout-shells",
+  "manifest": [
+    "src/components/blocks/layout/AmbientBackground/index.tsx",
+    "src/components/blocks/layout/PageHeader/index.tsx",
+    "src/components/blocks/layout/StickyBottomBar/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "AmbientBackground",
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "layout shell"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "absolute inset-0 -z-0"
+      ],
+      "ownerships": [
+        "ambiguous"
+      ]
+    },
+    {
+      "component": "PageHeader",
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "layout shell"
+      },
+      "consumerCount": 31,
+      "valueSet": [
+        "w-fit",
+        "flex flex-wrap items-center gap-2",
+        "className",
+        "size-4",
+        "scoreToneClass(score)"
+      ],
+      "ownerships": [
+        "parent-placement",
+        "ambiguous",
+        "dynamic",
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "StickyBottomBar",
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "layout shell"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "className"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    }
+  ]
+}

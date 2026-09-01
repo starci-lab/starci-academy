@@ -1,0 +1,35 @@
+{
+  "worker": "hard-holds",
+  "manifest": [
+    "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "MockInterviewWorkspace",
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "hard-holds evidence only"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "min-h-0 flex-1"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "CvPdfPreview",
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "CvPreview-family; zero consumers"
+      },
+      "consumerCount": 0,
+      "valueSet": [],
+      "ownerships": []
+    }
+  ]
+}

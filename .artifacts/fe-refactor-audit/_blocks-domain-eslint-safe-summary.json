@@ -1,0 +1,690 @@
+{
+  "totalSafe": 119,
+  "byRule": {
+    "starci-fe/no-emoji-in-source": 54,
+    "starci-fe/handler-on-prefix": 14,
+    "starci-fe/require-export-jsdoc": 4,
+    "starci-fe/require-identity-root": 19,
+    "starci-fe/no-inline-skeleton-branch": 11,
+    "starci-fe/no-inline-parameter-type": 13,
+    "starci-fe/no-vietnamese-in-source-authoring": 4
+  },
+  "fileCount": 40,
+  "byFile": {
+    ".storybook\\components\\starci\\blocks\\commerce\\PriceTag\\PriceTagBase.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 148,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\commerce\\TrialConversionStrip\\TrialConversionStrip.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 130,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\dashboard\\DailyQuest\\DailyQuest.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 67,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\ContentAiSelectionAsk\\ContentAiSelectionAsk.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 46,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\ContentCommentComposer\\ContentCommentComposer.tsx": [
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 80,
+        "message": "`handleSubmit` ΓåÆ rename to `onSubmit` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 91,
+        "message": "`handleCancel` ΓåÆ rename to `onCancel` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\ContentDiscussion\\ContentDiscussion.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 156,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\CourseQaComposer\\CourseQaComposer.tsx": [
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 105,
+        "message": "`handleSubmit` ΓåÆ rename to `onSubmit` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 114,
+        "message": "`handleCancel` ΓåÆ rename to `onCancel` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\LearnNudges\\LearnNudges.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 41,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\MockInterviewScorecard\\ScoreRow\\index.tsx": [
+      {
+        "rule": "starci-fe/require-export-jsdoc",
+        "line": 18,
+        "message": "Add JSDoc `/** ΓÇª */` for export `ScoreRow` ΓÇö role / what it does (comments ┬º3)."
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\PlaygroundSetupSteps\\PlaygroundSetupSteps.tsx": [
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 94,
+        "message": "`handleRotateClick` ΓåÆ rename to `onRotateClick` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 102,
+        "message": "`handleConfirmRotate` ΓåÆ rename to `onConfirmRotate` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\QaMessageBubble\\MessageRow\\index.tsx": [
+      {
+        "rule": "starci-fe/require-export-jsdoc",
+        "line": 25,
+        "message": "Add JSDoc `/** ΓÇª */` for export `MessageRow` ΓÇö role / what it does (comments ┬º3)."
+      }
+    ],
+    ".storybook\\components\\starci\\blocks\\learn\\ReactionButton\\ReactionButton.tsx": [
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 47,
+        "message": "`handlePick` ΓåÆ rename to `onPick` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ],
+    ".storybook\\stories\\starci\\blocks\\commerce\\PriceTag\\PriceTag.stories.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 87,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\stories\\starci\\blocks\\commerce\\TrialConversionStrip\\TrialConversionStrip.stories.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 69,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 78,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 101,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    ".storybook\\stories\\starci\\blocks\\dashboard\\DailyQuest\\DailyQuest.stories.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 58,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\commerce\\PriceTag\\PriceTagBase.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 165,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 171,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 173,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\commerce\\TierCardBase\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 81,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 96,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 113,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      }
+    ],
+    "src\\components\\blocks\\dashboard\\WeeklyChallengeCard\\index.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 11,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 24,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 173,
+        "message": "`data.endsInLabel != null || isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it d"
+      }
+    ],
+    "src\\components\\blocks\\feed\\ReactionBar\\index.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 26,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 27,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 28,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 29,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 30,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 31,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 62,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      }
+    ],
+    "src\\components\\blocks\\grading\\DiffViewer\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 8,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 67,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 74,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 86,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ],
+    "src\\components\\blocks\\grading\\GradeModelDropdown\\component.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 34,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 131,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ],
+    "src\\components\\blocks\\learn\\ConceptMap\\index.tsx": [
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 113,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 145,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 166,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      }
+    ],
+    "src\\components\\blocks\\learn\\ContentCommentComposer\\index.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 10,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 81,
+        "message": "`handleSubmit` ΓåÆ rename to `onSubmit` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 92,
+        "message": "`handleCancel` ΓåÆ rename to `onCancel` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ],
+    "src\\components\\blocks\\learn\\ContentDiscussion\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 20,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 87,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 156,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 167,
+        "message": "`!isSkeleton && comments.length === 0 ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it dri"
+      }
+    ],
+    "src\\components\\blocks\\learn\\CourseQaComposer\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 19,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 106,
+        "message": "`handleSubmit` ΓåÆ rename to `onSubmit` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 115,
+        "message": "`handleCancel` ΓåÆ rename to `onCancel` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ],
+    "src\\components\\blocks\\learn\\CourseQaQuestionList\\SkeletonQuestionRow\\index.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 8,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 39,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 60,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\learn\\CourseQaQuestionList\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 16,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 52,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 74,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 76,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 78,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 80,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 82,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 103,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 129,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 166,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 193,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\learn\\MindMapContinueButton\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 21,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "line": 88,
+        "message": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `"
+      },
+      {
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "line": 89,
+        "message": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `"
+      },
+      {
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "line": 90,
+        "message": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `"
+      }
+    ],
+    "src\\components\\blocks\\learn\\MockInterviewScorecard\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 24,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 303,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 340,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\learn\\ModuleLessonList\\index.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 44,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 110,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 135,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\learn\\PlaygroundSetupSteps\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 22,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 94,
+        "message": "`handleRotateClick` ΓåÆ rename to `onRotateClick` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 102,
+        "message": "`handleConfirmRotate` ΓåÆ rename to `onConfirmRotate` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 175,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 197,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 243,
+        "message": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the "
+      }
+    ],
+    "src\\components\\blocks\\learn\\ReactionButton\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 10,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 12,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 47,
+        "message": "`handlePick` ΓåÆ rename to `onPick` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      },
+      {
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "line": 94,
+        "message": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `"
+      }
+    ],
+    "src\\components\\blocks\\learn\\ReactionButton\\types.ts": [
+      {
+        "rule": "starci-fe/require-export-jsdoc",
+        "line": 13,
+        "message": "Add JSDoc `/** ΓÇª */` for export `REACTIONS` ΓÇö role / what it does (comments ┬º3)."
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 14,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 15,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 16,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 17,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 18,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 19,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/require-export-jsdoc",
+        "line": 22,
+        "message": "Add JSDoc `/** ΓÇª */` for export `REACTION_BY_TYPE` ΓÇö role / what it does (comments ┬º3)."
+      }
+    ],
+    "src\\components\\blocks\\learn\\SubmissionFindingsList\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 27,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 226,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 234,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ],
+    "src\\components\\blocks\\learn\\lesson\\ContentBodySkeleton\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 11,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 47,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 79,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\learn\\personal-project\\TaskActions\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 33,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 162,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "line": 173,
+        "message": "`isPending ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the f"
+      }
+    ],
+    "src\\components\\blocks\\learn\\personal-project\\TaskResult\\index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 54,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 79,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ],
+    "src\\components\\blocks\\marketing\\MicroservicesScene\\index.tsx": [
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 17,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 31,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 43,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 54,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 101,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src\\components\\blocks\\marketing\\SitePreview\\index.tsx": [
+      {
+        "rule": "starci-fe/no-inline-parameter-type",
+        "line": 28,
+        "message": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 48,
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_ident"
+      }
+    ],
+    "src\\components\\blocks\\profile\\ProfileLoadingState\\index.tsx": [
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 145,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 256,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 301,
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1479 @@
+{
+  "ranked": [
+    {
+      "k": "src-blocks-learn",
+      "count": 260,
+      "files": 153
+    },
+    {
+      "k": "src-pages-FlashcardsPage",
+      "count": 73,
+      "files": 17
+    },
+    {
+      "k": "src-overlays",
+      "count": 51,
+      "files": 14
+    },
+    {
+      "k": "src-pages-DashboardPage",
+      "count": 45,
+      "files": 31
+    },
+    {
+      "k": "src-pages-MockInterviewPage",
+      "count": 39,
+      "files": 13
+    },
+    {
+      "k": "src-blocks-skeleton",
+      "count": 33,
+      "files": 33
+    },
+    {
+      "k": "src-blocks-marketing",
+      "count": 32,
+      "files": 12
+    },
+    {
+      "k": "src-blocks-profile",
+      "count": 30,
+      "files": 10
+    },
+    {
+      "k": "src-blocks-layout",
+      "count": 26,
+      "files": 26
+    },
+    {
+      "k": "other",
+      "count": 25,
+      "files": 23
+    },
+    {
+      "k": "src-blocks-cards",
+      "count": 23,
+      "files": 14
+    },
+    {
+      "k": "src-blocks-cv",
+      "count": 22,
+      "files": 16
+    },
+    {
+      "k": "src-pages-LeaguePage",
+      "count": 17,
+      "files": 5
+    },
+    {
+      "k": "src-blocks-auth",
+      "count": 16,
+      "files": 9
+    },
+    {
+      "k": "src-blocks-navigation",
+      "count": 15,
+      "files": 15
+    },
+    {
+      "k": "src-layouts",
+      "count": 14,
+      "files": 13
+    },
+    {
+      "k": "src-blocks-media",
+      "count": 13,
+      "files": 13
+    },
+    {
+      "k": "src-pages-BlogListPage",
+      "count": 13,
+      "files": 5
+    },
+    {
+      "k": "src-blocks-rendering",
+      "count": 12,
+      "files": 10
+    },
+    {
+      "k": "src-blocks-feed",
+      "count": 11,
+      "files": 5
+    },
+    {
+      "k": "src-composites-cards",
+      "count": 11,
+      "files": 1
+    },
+    {
+      "k": "src-pages-TalentDirectoryPage",
+      "count": 11,
+      "files": 1
+    },
+    {
+      "k": "src-pages-PersonalProjectTaskPage",
+      "count": 10,
+      "files": 1
+    },
+    {
+      "k": "src-pages-MindMapPage",
+      "count": 9,
+      "files": 2
+    },
+    {
+      "k": "src-pages-PracticeHubPage",
+      "count": 9,
+      "files": 8
+    },
+    {
+      "k": "src-pages-ProfileRedirectPage",
+      "count": 9,
+      "files": 1
+    },
+    {
+      "k": "src-blocks-identity",
+      "count": 8,
+      "files": 8
+    },
+    {
+      "k": "src-pages-JobDetailPage",
+      "count": 8,
+      "files": 1
+    },
+    {
+      "k": "src-pages-JobListPage",
+      "count": 8,
+      "files": 3
+    },
+    {
+      "k": "src-pages-ProfileActivityPage",
+      "count": 8,
+      "files": 3
+    },
+    {
+      "k": "src-blocks-chips",
+      "count": 7,
+      "files": 7
+    },
+    {
+      "k": "src-blocks-community",
+      "count": 7,
+      "files": 2
+    },
+    {
+      "k": "src-blocks-dashboard",
+      "count": 7,
+      "files": 5
+    },
+    {
+      "k": "src-pages-AdminMpegDashTestPage",
+      "count": 7,
+      "files": 7
+    },
+    {
+      "k": "src-pages-AdminUploadVideoPage",
+      "count": 7,
+      "files": 7
+    },
+    {
+      "k": "src-blocks-consultant",
+      "count": 6,
+      "files": 4
+    },
+    {
+      "k": "src-blocks-form",
+      "count": 6,
+      "files": 6
+    },
+    {
+      "k": "src-blocks-stats",
+      "count": 6,
+      "files": 6
+    },
+    {
+      "k": "src-pages-ArchitecturePage",
+      "count": 6,
+      "files": 6
+    },
+    {
+      "k": "src-pages-CourseCatalogPage",
+      "count": 6,
+      "files": 3
+    },
+    {
+      "k": "src-pages-CourseDetailPage",
+      "count": 6,
+      "files": 5
+    },
+    {
+      "k": "src-pages-ProfileOverviewPage",
+      "count": 6,
+      "files": 4
+    },
+    {
+      "k": "src-blocks-async",
+      "count": 5,
+      "files": 4
+    },
+    {
+      "k": "src-pages-AiUsagePage",
+      "count": 5,
+      "files": 2
+    },
+    {
+      "k": "src-pages-BlogPostPage",
+      "count": 5,
+      "files": 3
+    },
+    {
+      "k": "src-pages-CartPage",
+      "count": 5,
+      "files": 1
+    },
+    {
+      "k": "src-pages-CommunityChatPage",
+      "count": 5,
+      "files": 2
+    },
+    {
+      "k": "src-pages-LearningHistoryPage",
+      "count": 5,
+      "files": 5
+    },
+    {
+      "k": "src-pages-ProfileChallengesPage",
+      "count": 5,
+      "files": 3
+    },
+    {
+      "k": "src-pages-ProfileSkillsPage",
+      "count": 5,
+      "files": 2
+    },
+    {
+      "k": "src-blocks-code",
+      "count": 4,
+      "files": 4
+    },
+    {
+      "k": "src-blocks-feedback",
+      "count": 4,
+      "files": 4
+    },
+    {
+      "k": "src-pages-AdminAiBalancerPage",
+      "count": 4,
+      "files": 4
+    },
+    {
+      "k": "src-pages-ContactPage",
+      "count": 4,
+      "files": 3
+    },
+    {
+      "k": "src-pages-CourseContents",
+      "count": 4,
+      "files": 1
+    },
+    {
+      "k": "src-pages-CvGalleryPage",
+      "count": 4,
+      "files": 2
+    },
+    {
+      "k": "src-pages-HeadhuntingCompanyPage",
+      "count": 4,
+      "files": 3
+    },
+    {
+      "k": "src-pages-JobPostFormPage",
+      "count": 4,
+      "files": 4
+    },
+    {
+      "k": "src-pages-KpiPage",
+      "count": 4,
+      "files": 1
+    },
+    {
+      "k": "src-pages-PrivacySettingsPage",
+      "count": 4,
+      "files": 1
+    },
+    {
+      "k": "src-pages-ProfileProjectsPage",
+      "count": 4,
+      "files": 3
+    },
+    {
+      "k": "src-pages-RewardsPage",
+      "count": 4,
+      "files": 3
+    },
+    {
+      "k": "src-pages-SepayCheckoutPage",
+      "count": 4,
+      "files": 4
+    },
+    {
+      "k": "src-blocks-buttons",
+      "count": 3,
+      "files": 3
+    },
+    {
+      "k": "src-blocks-notifications",
+      "count": 3,
+      "files": 3
+    },
+    {
+      "k": "src-pages-CvEditorPage",
+      "count": 3,
+      "files": 2
+    },
+    {
+      "k": "src-pages-EditProfilePage",
+      "count": 3,
+      "files": 2
+    },
+    {
+      "k": "src-pages-LandingPage",
+      "count": 3,
+      "files": 3
+    },
+    {
+      "k": "src-pages-MyFeedbackPage",
+      "count": 3,
+      "files": 1
+    },
+    {
+      "k": "src-pages-SystemStatusPage",
+      "count": 3,
+      "files": 3
+    },
+    {
+      "k": "src-blocks-ai",
+      "count": 2,
+      "files": 1
+    },
+    {
+      "k": "src-blocks-commerce",
+      "count": 2,
+      "files": 2
+    },
+    {
+      "k": "src-blocks-grading",
+      "count": 2,
+      "files": 2
+    },
+    {
+      "k": "src-composites-chips",
+      "count": 2,
+      "files": 1
+    },
+    {
+      "k": "src-composites-layout",
+      "count": 2,
+      "files": 1
+    },
+    {
+      "k": "src-pages-BookmarksPage",
+      "count": 2,
+      "files": 2
+    },
+    {
+      "k": "src-pages-CommunityFeedPage",
+      "count": 2,
+      "files": 2
+    },
+    {
+      "k": "src-pages-LegalPage",
+      "count": 2,
+      "files": 1
+    },
+    {
+      "k": "src-pages-MyAttemptsPage",
+      "count": 2,
+      "files": 1
+    },
+    {
+      "k": "src-pages-MySubmissionsPage",
+      "count": 2,
+      "files": 1
+    },
+    {
+      "k": "src-pages-PracticeProblemPage",
+      "count": 2,
+      "files": 2
+    },
+    {
+      "k": "src-pages-ProfilePublicCvPage",
+      "count": 2,
+      "files": 1
+    },
+    {
+      "k": "sb-starci",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-blocks-careers",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-blocks-course",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-blocks-entity",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-blocks-lists",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-composites-navigation",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-composites-text",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-AdminLoginPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-InstallmentPlansPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-MembershipPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-OauthRedirectPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-PlaygroundSessionPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-ProfileChallengeManagePage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-ProfileChallengeSubmissionPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-ProfileCodingProblemPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-ProfileProjectRoadmapPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-PublicArticlePage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-SessionsPage",
+      "count": 1,
+      "files": 1
+    },
+    {
+      "k": "src-pages-SettingsHomePage",
+      "count": 1,
+      "files": 1
+    }
+  ],
+  "workers": [
+    {
+      "id": "w01-src-blocks-learn",
+      "primary": "src-blocks-learn",
+      "sources": [
+        "src-blocks-learn"
+      ],
+      "files": [
+        "src/components/blocks/learn/AIProcessingText/index.tsx",
+        "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+        "src/components/blocks/learn/ChallengeHeader/index.tsx",
+        "src/components/blocks/learn/ConceptMap/Canvas/index.tsx",
+        "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+        "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+        "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+        "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+        "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx",
+        "src/components/blocks/learn/ConceptMap/ModuleNode/index.tsx",
+        "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+        "src/components/blocks/learn/ConceptMap/RootNode/index.tsx",
+        "src/components/blocks/learn/ConceptMap/index.tsx",
+        "src/components/blocks/learn/ContentAiFab/index.tsx",
+        "src/components/blocks/learn/ContentAiSelectionAsk/index.tsx",
+        "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+        "src/components/blocks/learn/ContentCommentThread/index.tsx",
+        "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+        "src/components/blocks/learn/ContentMap/index.tsx",
+        "src/components/blocks/learn/ContentRelatedList/index.tsx",
+        "src/components/blocks/learn/ContinueCard/types.ts",
+        "src/components/blocks/learn/CourseBrief/index.tsx",
+        "src/components/blocks/learn/CourseQaHeader/index.tsx",
+        "src/components/blocks/learn/CourseTeamGate/index.tsx",
+        "src/components/blocks/learn/EnrollGate/index.tsx",
+        "src/components/blocks/learn/FlashcardModeSwitch/index.tsx",
+        "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+        "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+        "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+        "src/components/blocks/learn/FoundationHeader/index.tsx",
+        "src/components/blocks/learn/FoundationResourceList/index.tsx",
+        "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+        "src/components/blocks/learn/FoundationsHeader/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+        "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+        "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+        "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+        "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+        "src/components/blocks/learn/LearnMobileBar/index.tsx",
+        "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+        "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+        "src/components/blocks/learn/LearnSidebar/index.tsx",
+        "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+        "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+        "src/components/blocks/learn/MilestoneOutline/index.tsx",
+        "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+        "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+        "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+        "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+        "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+        "src/components/blocks/learn/ModuleContinueBand/index.tsx",
+        "src/components/blocks/learn/ModuleHeader/index.tsx",
+        "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+        "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+        "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+        "src/components/blocks/learn/OnThisPage/index.tsx",
+        "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+        "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+        "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+        "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+        "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+        "src/components/blocks/learn/PlaygroundDeviceSnapshot/index.tsx",
+        "src/components/blocks/learn/PlaygroundEnterBanner/index.tsx",
+        "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+        "src/components/blocks/learn/PlaygroundHeader/index.tsx",
+        "src/components/blocks/learn/PlaygroundHubHeader/index.tsx",
+        "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+        "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+        "src/components/blocks/learn/PlaygroundResourcePanel/index.tsx",
+        "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+        "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+        "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+        "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+        "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+        "src/components/blocks/learn/QaChatBubble/index.tsx",
+        "src/components/blocks/learn/QaInboxRow/index.tsx",
+        "src/components/blocks/learn/QaMessageBubble/index.tsx",
+        "src/components/blocks/learn/QaQuestionThread/index.tsx",
+        "src/components/blocks/learn/QaReactionBar/index.tsx",
+        "src/components/blocks/learn/QuizCard/index.tsx",
+        "src/components/blocks/learn/QuizRecapList/index.tsx",
+        "src/components/blocks/learn/QuizSetup/index.tsx",
+        "src/components/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+        "src/components/blocks/learn/ReactionButton/index.tsx",
+        "src/components/blocks/learn/ReactionButton/types.ts",
+        "src/components/blocks/learn/ReferenceLinks/index.tsx",
+        "src/components/blocks/learn/ResumeRail/index.tsx",
+        "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+        "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx",
+        "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+        "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+        "src/components/blocks/learn/TaskBriefBody/index.tsx",
+        "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+        "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+        "src/components/blocks/learn/TaskSubmissionPanel/GithubGradingSettingsBody/index.tsx",
+        "src/components/blocks/learn/TaskSubmissionPanel/GithubUrlField/index.tsx",
+        "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+        "src/components/blocks/learn/TaskSubmissionPanel/index.tsx",
+        "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+        "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+        "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+        "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+        "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+        "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+        "src/components/blocks/learn/lesson/AiLab/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+        "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+        "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+        "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+        "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+        "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+        "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+        "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+        "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+        "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+        "src/components/blocks/learn/lesson/E2eBody/index.tsx",
+        "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+        "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+        "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+        "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+        "src/components/blocks/learn/lesson/LessonBody/index.tsx",
+        "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+        "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+        "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+        "src/components/blocks/learn/lesson/SandboxBody/index.tsx",
+        "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+        "src/components/blocks/learn/personal-project/index.tsx"
+      ],
+      "count": 260,
+      "rules": {
+        "starci-fe/require-identity-root": 126,
+        "starci-fe/no-inline-parameter-type": 5,
+        "starci-fe/require-frame-self-declare": 109,
+        "starci-fe/no-emoji-in-source": 20
+      }
+    },
+    {
+      "id": "w02-src-pages-FlashcardsPage",
+      "primary": "src-pages-FlashcardsPage",
+      "sources": [
+        "src-pages-FlashcardsPage"
+      ],
+      "files": [
+        "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+        "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+        "src/components/pages/FlashcardsPage/index.tsx"
+      ],
+      "count": 73,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 67,
+        "starci-fe/require-identity-root": 6
+      }
+    },
+    {
+      "id": "w03-other",
+      "primary": "other",
+      "sources": [
+        "other",
+        "src-pages-PersonalProjectTaskPage",
+        "src-pages-AdminUploadVideoPage",
+        "src-pages-ProfileChallengesPage",
+        "src-pages-ProfileProjectsPage",
+        "src-pages-BookmarksPage",
+        "src-pages-MembershipPage",
+        "src-pages-SettingsHomePage"
+      ],
+      "files": [
+        ".storybook/utils/BlockAnatomy/BlockAnatomy.tsx",
+        "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/index.tsx",
+        "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+        "src/components/pages/BookmarksPage/index.tsx",
+        "src/components/pages/MembershipPage/index.tsx",
+        "src/components/pages/PersonalProjectTaskPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileChallengesPage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+        "src/components/pages/ProfileProjectsPage/index.tsx",
+        "src/components/pages/SettingsHomePage/index.tsx",
+        "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+        "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+        "src/modules/api/graphql/queries/types/recommended-courses.ts",
+        "src/modules/api/redirect/github.ts",
+        "src/modules/api/rest/keycloak/google/redirect.ts",
+        "src/modules/keycloak/github.ts",
+        "src/modules/keycloak/google.ts",
+        "src/modules/storage/session/types/oauth-idp-hint.ts",
+        "src/modules/superjson/index.ts",
+        "src/modules/types/entities/challenge.ts",
+        "src/modules/types/entities/user-challenge-submission.ts",
+        "src/modules/types/enums/cv-block-type.ts",
+        "src/modules/utils/computations/pow-10.ts",
+        "src/modules/utils/computations/round.ts",
+        "src/modules/utils/misc.ts",
+        "src/modules/utils/rank.ts",
+        "src/modules/utils/sanitize.ts",
+        "src/modules/utils/session-display-name.ts",
+        "src/resources/assets/index.ts",
+        "src/resources/constants/lang.ts",
+        "src/resources/path/index.ts",
+        "src/utils/extract-sandpack-files.ts"
+      ],
+      "count": 55,
+      "rules": {
+        "starci-fe/require-export-jsdoc": 14,
+        "starci-fe/handler-on-prefix": 1,
+        "starci-fe/no-vietnamese-in-source-authoring": 7,
+        "starci-fe/no-emoji-in-source": 2,
+        "starci-fe/prefer-arrow-export": 1,
+        "starci-fe/require-frame-self-declare": 15,
+        "starci-fe/require-identity-root": 15
+      }
+    },
+    {
+      "id": "w04-src-blocks-navigation",
+      "primary": "src-blocks-navigation",
+      "sources": [
+        "src-blocks-navigation",
+        "src-pages-BlogListPage",
+        "src-pages-JobDetailPage",
+        "src-blocks-consultant",
+        "src-pages-LearningHistoryPage",
+        "src-pages-RewardsPage",
+        "src-composites-layout",
+        "src-pages-OauthRedirectPage",
+        "src-pages-SessionsPage"
+      ],
+      "files": [
+        "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+        "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+        "src/components/blocks/navigation/BackLink/component.tsx",
+        "src/components/blocks/navigation/ContentMapRow/index.tsx",
+        "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+        "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "src/components/blocks/navigation/OutlineRail/index.tsx",
+        "src/components/blocks/navigation/Pagination/component.tsx",
+        "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+        "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+        "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+        "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+        "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+        "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+        "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+        "src/components/blocks/navigation/TabsCard/index.tsx",
+        "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+        "src/components/composites/layout/Page/index.tsx",
+        "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+        "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+        "src/components/pages/BlogListPage/Masthead/index.tsx",
+        "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+        "src/components/pages/BlogListPage/component.tsx",
+        "src/components/pages/JobDetailPage/component.tsx",
+        "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+        "src/components/pages/LearningHistoryPage/index.tsx",
+        "src/components/pages/OauthRedirectPage/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+        "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+        "src/components/pages/RewardsPage/index.tsx",
+        "src/components/pages/SessionsPage/index.tsx"
+      ],
+      "count": 55,
+      "rules": {
+        "starci-fe/require-identity-root": 32,
+        "starci-fe/require-frame-self-declare": 23
+      }
+    },
+    {
+      "id": "w05-src-blocks-auth",
+      "primary": "src-blocks-auth",
+      "sources": [
+        "src-blocks-auth",
+        "src-blocks-rendering",
+        "src-blocks-identity",
+        "src-blocks-form",
+        "src-pages-CommunityChatPage",
+        "src-pages-SepayCheckoutPage",
+        "src-composites-chips",
+        "src-pages-PlaygroundSessionPage",
+        "src-pages-PublicArticlePage"
+      ],
+      "files": [
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/OauthButtons/index.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/index.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/SignUpSection/index.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/component.tsx",
+        "src/components/blocks/auth/Turnstile/index.tsx",
+        "src/components/blocks/form/Dropzone/index.tsx",
+        "src/components/blocks/form/OtpInput/index.tsx",
+        "src/components/blocks/form/SchedulePicker/index.tsx",
+        "src/components/blocks/form/SearchAutocomplete/index.tsx",
+        "src/components/blocks/form/SearchBar/component.tsx",
+        "src/components/blocks/form/SearchInput/component.tsx",
+        "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+        "src/components/blocks/identity/BadgeImage/index.tsx",
+        "src/components/blocks/identity/BrandLockup/index.tsx",
+        "src/components/blocks/identity/BrandLogo/index.tsx",
+        "src/components/blocks/identity/IconTile/index.tsx",
+        "src/components/blocks/identity/ImageDropzone/index.tsx",
+        "src/components/blocks/identity/Logo/index.tsx",
+        "src/components/blocks/identity/UserAvatar/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+        "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+        "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/component.tsx",
+        "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+        "src/components/blocks/rendering/PDFView/index.tsx",
+        "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+        "src/components/composites/chips/RemovableToken/index.tsx",
+        "src/components/pages/CommunityChatPage/ChatPane/component.tsx",
+        "src/components/pages/CommunityChatPage/index.tsx",
+        "src/components/pages/PlaygroundSessionPage/index.tsx",
+        "src/components/pages/PublicArticlePage/index.tsx",
+        "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+        "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+        "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+        "src/components/pages/SepayCheckoutPage/index.tsx"
+      ],
+      "count": 55,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 21,
+        "starci-fe/require-identity-root": 34
+      }
+    },
+    {
+      "id": "w06-src-blocks-profile",
+      "primary": "src-blocks-profile",
+      "sources": [
+        "src-blocks-profile",
+        "src-pages-JobListPage",
+        "src-pages-CourseCatalogPage",
+        "src-blocks-feedback",
+        "src-blocks-notifications",
+        "src-blocks-grading",
+        "src-pages-ProfileChallengeManagePage",
+        "src-pages-ProfileProjectRoadmapPage"
+      ],
+      "files": [
+        "src/components/blocks/feedback/ErrorPageState/index.tsx",
+        "src/components/blocks/feedback/ErrorState/index.tsx",
+        "src/components/blocks/feedback/InfoTooltip/index.tsx",
+        "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+        "src/components/blocks/grading/DiffViewer/index.tsx",
+        "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+        "src/components/blocks/notifications/NotificationBell/index.tsx",
+        "src/components/blocks/notifications/NotificationItem/index.tsx",
+        "src/components/blocks/notifications/NotificationList/index.tsx",
+        "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+        "src/components/blocks/profile/CvSubmission/index.tsx",
+        "src/components/blocks/profile/MascotBadge/index.tsx",
+        "src/components/blocks/profile/ProfileHero/ProfileBadges/index.tsx",
+        "src/components/blocks/profile/ProfileHero/ShareProfileButton/index.tsx",
+        "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+        "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+        "src/components/blocks/profile/RankBadge/index.tsx",
+        "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+        "src/components/blocks/profile/UserStreak/index.tsx",
+        "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+        "src/components/pages/CourseCatalogPage/CatalogLineCardSkeleton/index.tsx",
+        "src/components/pages/CourseCatalogPage/component.tsx",
+        "src/components/pages/JobListPage/JobListRow/index.tsx",
+        "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+        "src/components/pages/JobListPage/component.tsx",
+        "src/components/pages/ProfileChallengeManagePage/index.tsx",
+        "src/components/pages/ProfileProjectRoadmapPage/index.tsx"
+      ],
+      "count": 55,
+      "rules": {
+        "starci-fe/require-identity-root": 22,
+        "starci-fe/require-export-jsdoc": 1,
+        "starci-fe/require-frame-self-declare": 32
+      }
+    },
+    {
+      "id": "w07-src-layouts",
+      "primary": "src-layouts",
+      "sources": [
+        "src-layouts",
+        "src-blocks-media",
+        "src-pages-PracticeHubPage",
+        "src-blocks-stats",
+        "src-pages-CartPage",
+        "src-blocks-buttons",
+        "src-pages-SystemStatusPage",
+        "src-pages-ProfileChallengeSubmissionPage",
+        "src-pages-ProfileCodingProblemPage"
+      ],
+      "files": [
+        "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+        "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+        "src/components/blocks/buttons/RatingBar/index.tsx",
+        "src/components/blocks/media/CoverImage/index.tsx",
+        "src/components/blocks/media/QRCode/index.tsx",
+        "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+        "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+        "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+        "src/components/blocks/media/VideoRenderer/index.tsx",
+        "src/components/blocks/stats/DeadlineCallout/index.tsx",
+        "src/components/blocks/stats/LanguageDonut/index.tsx",
+        "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+        "src/components/blocks/stats/Score/component.tsx",
+        "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+        "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+        "src/components/layouts/LearnShellLayout/component.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+        "src/components/layouts/Navbar/CartButton/index.tsx",
+        "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+        "src/components/layouts/Navbar/Logo/index.tsx",
+        "src/components/layouts/Navbar/NotificationBell/index.tsx",
+        "src/components/layouts/Navbar/SearchButton/index.tsx",
+        "src/components/layouts/Navbar/index.tsx",
+        "src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx",
+        "src/components/pages/CartPage/component.tsx",
+        "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+        "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+        "src/components/pages/PracticeHubPage/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+        "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+        "src/components/pages/SystemStatusPage/OverallBanner/index.tsx"
+      ],
+      "count": 55,
+      "rules": {
+        "starci-fe/require-identity-root": 45,
+        "starci-fe/require-frame-self-declare": 10
+      }
+    },
+    {
+      "id": "w08-src-blocks-layout",
+      "primary": "src-blocks-layout",
+      "sources": [
+        "src-blocks-layout",
+        "src-pages-MindMapPage",
+        "src-pages-AdminMpegDashTestPage",
+        "src-pages-ProfileSkillsPage",
+        "src-pages-PrivacySettingsPage",
+        "src-pages-CommunityFeedPage",
+        "src-pages-InstallmentPlansPage"
+      ],
+      "files": [
+        "src/components/blocks/layout/AmbientBackground/index.tsx",
+        "src/components/blocks/layout/AppSplash/component.tsx",
+        "src/components/blocks/layout/ConnectSheet/index.tsx",
+        "src/components/blocks/layout/DragScrollArea/index.tsx",
+        "src/components/blocks/layout/PageContainer/index.tsx",
+        "src/components/blocks/layout/PageHeader/index.tsx",
+        "src/components/blocks/layout/ResizableRail/index.tsx",
+        "src/components/blocks/layout/SocketConnectionStatus/component.tsx",
+        "src/components/blocks/layout/Spacer/index.tsx",
+        "src/components/blocks/layout/StickyBottomBar/index.tsx",
+        "src/components/blocks/layout/SubPageHeader/component.tsx",
+        "src/components/blocks/layout/TopLoader/index.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+        "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+        "src/components/blocks/layout/shell/Navbar/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/index.tsx",
+        "src/components/pages/CommunityFeedPage/CommunityComposer/index.tsx",
+        "src/components/pages/CommunityFeedPage/component.tsx",
+        "src/components/pages/InstallmentPlansPage/index.tsx",
+        "src/components/pages/MindMapPage/component.tsx",
+        "src/components/pages/MindMapPage/index.tsx",
+        "src/components/pages/PrivacySettingsPage/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/ProfileSkillsPage/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-identity-root": 39,
+        "starci-fe/require-frame-self-declare": 14,
+        "starci-fe/handler-on-prefix": 1
+      }
+    },
+    {
+      "id": "w09-src-pages-LeaguePage",
+      "primary": "src-pages-LeaguePage",
+      "sources": [
+        "src-pages-LeaguePage",
+        "src-blocks-feed",
+        "src-pages-ProfileRedirectPage",
+        "src-pages-ArchitecturePage",
+        "src-blocks-code",
+        "src-pages-KpiPage",
+        "src-pages-LegalPage",
+        "src-pages-AdminLoginPage"
+      ],
+      "files": [
+        "src/components/blocks/code/CodeConsole/index.tsx",
+        "src/components/blocks/code/IOExampleCard/index.tsx",
+        "src/components/blocks/code/SandpackPanel/index.tsx",
+        "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+        "src/components/blocks/feed/ActivityAvatar/index.tsx",
+        "src/components/blocks/feed/ChatBubble/index.tsx",
+        "src/components/blocks/feed/ChatPanel/index.tsx",
+        "src/components/blocks/feed/ReactionBar/index.tsx",
+        "src/components/blocks/feed/Timeline/index.tsx",
+        "src/components/pages/AdminLoginPage/index.tsx",
+        "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+        "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+        "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+        "src/components/pages/ArchitecturePage/index.tsx",
+        "src/components/pages/KpiPage/component.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+        "src/components/pages/LeaguePage/index.tsx",
+        "src/components/pages/LegalPage/index.tsx",
+        "src/components/pages/ProfileRedirectPage/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 28,
+        "starci-fe/no-inline-parameter-type": 1,
+        "starci-fe/require-identity-root": 19,
+        "starci-fe/no-emoji-in-source": 6
+      }
+    },
+    {
+      "id": "w10-src-overlays",
+      "primary": "src-overlays",
+      "sources": [
+        "src-overlays",
+        "src-pages-MyAttemptsPage",
+        "src-composites-text"
+      ],
+      "files": [
+        "src/components/composites/text/TitledText/index.tsx",
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+        "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+        "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+        "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+        "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+        "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+        "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+        "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+        "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+        "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+        "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+        "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+        "src/components/overlays/modals/ManagePinnedProjectsModal/component.tsx",
+        "src/components/overlays/modals/PaymentModal/component.tsx",
+        "src/components/pages/MyAttemptsPage/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 46,
+        "starci-fe/require-identity-root": 8
+      }
+    },
+    {
+      "id": "w11-src-blocks-cv",
+      "primary": "src-blocks-cv",
+      "sources": [
+        "src-blocks-cv",
+        "src-composites-cards",
+        "src-blocks-chips",
+        "src-blocks-async",
+        "src-pages-ContactPage",
+        "src-pages-LandingPage",
+        "sb-starci",
+        "src-composites-navigation"
+      ],
+      "files": [
+        ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+        "src/components/blocks/async/AsyncContent/index.tsx",
+        "src/components/blocks/async/EmptyContent/index.tsx",
+        "src/components/blocks/async/ErrorContent/index.tsx",
+        "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+        "src/components/blocks/chips/DifficultyChip/index.tsx",
+        "src/components/blocks/chips/EnumChip/index.tsx",
+        "src/components/blocks/chips/HostPlatformChip/component.tsx",
+        "src/components/blocks/chips/LanguageChip/index.tsx",
+        "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+        "src/components/blocks/chips/StatusChip/index.tsx",
+        "src/components/blocks/chips/TagChips/component.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        "src/components/composites/navigation/Toolbar/index.tsx",
+        "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+        "src/components/pages/ContactPage/ContactForm/index.tsx",
+        "src/components/pages/ContactPage/index.tsx",
+        "src/components/pages/LandingPage/StatStrip/component.tsx",
+        "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+        "src/components/pages/LandingPage/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-identity-root": 29,
+        "starci-fe/no-emoji-in-source": 6,
+        "starci-fe/no-inline-parameter-type": 1,
+        "starci-fe/require-frame-self-declare": 17,
+        "starci-fe/handler-on-prefix": 1
+      }
+    },
+    {
+      "id": "w12-src-pages-MockInterviewPage",
+      "primary": "src-pages-MockInterviewPage",
+      "sources": [
+        "src-pages-MockInterviewPage",
+        "src-pages-CourseDetailPage",
+        "src-pages-CourseContents",
+        "src-pages-EditProfilePage",
+        "src-blocks-careers",
+        "src-blocks-lists"
+      ],
+      "files": [
+        "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+        "src/components/blocks/lists/ListRow/index.tsx",
+        "src/components/pages/CourseContents/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+        "src/components/pages/CourseDetailPage/CoursePricingRail/PhaseRow/index.tsx",
+        "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+        "src/components/pages/CourseDetailPage/component.tsx",
+        "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+        "src/components/pages/EditProfilePage/index.tsx",
+        "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewGatePreview/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewResult/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+        "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+        "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+        "src/components/pages/MockInterviewPage/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-identity-root": 18,
+        "starci-fe/require-frame-self-declare": 36
+      }
+    },
+    {
+      "id": "w13-src-pages-DashboardPage",
+      "primary": "src-pages-DashboardPage",
+      "sources": [
+        "src-pages-DashboardPage",
+        "src-pages-CvGalleryPage",
+        "src-pages-CvEditorPage",
+        "src-blocks-course",
+        "src-blocks-entity"
+      ],
+      "files": [
+        "src/components/blocks/course/CourseTrialChip/index.tsx",
+        "src/components/blocks/entity/EntityToken/index.tsx",
+        "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+        "src/components/pages/CvEditorPage/index.tsx",
+        "src/components/pages/CvGalleryPage/CvGallery/component.tsx",
+        "src/components/pages/CvGalleryPage/index.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+        "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/component.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+        "src/components/pages/DashboardPage/DashboardIdentity/IdentityStats/component.tsx",
+        "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+        "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+        "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+        "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/FlashcardReview/component.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/component.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+        "src/components/pages/DashboardPage/QuickActions/index.tsx",
+        "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+        "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+        "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+        "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/WeeklyGoals/component.tsx",
+        "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+        "src/components/pages/DashboardPage/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 28,
+        "starci-fe/require-identity-root": 26
+      }
+    },
+    {
+      "id": "w14-src-blocks-marketing",
+      "primary": "src-blocks-marketing",
+      "sources": [
+        "src-blocks-marketing",
+        "src-pages-ProfileActivityPage",
+        "src-pages-AiUsagePage",
+        "src-pages-AdminAiBalancerPage",
+        "src-pages-MyFeedbackPage",
+        "src-pages-ProfilePublicCvPage"
+      ],
+      "files": [
+        "src/components/blocks/marketing/AdBanner/index.tsx",
+        "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+        "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+        "src/components/blocks/marketing/HeroBanner/index.tsx",
+        "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+        "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+        "src/components/blocks/marketing/SectionHeading/index.tsx",
+        "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+        "src/components/blocks/marketing/SitePreview/index.tsx",
+        "src/components/blocks/marketing/TopicLane/index.tsx",
+        "src/components/blocks/marketing/TrackCard/index.tsx",
+        "src/components/blocks/marketing/TruthList/index.tsx",
+        "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+        "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "src/components/pages/AiUsagePage/index.tsx",
+        "src/components/pages/MyFeedbackPage/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+        "src/components/pages/ProfileActivityPage/index.tsx",
+        "src/components/pages/ProfilePublicCvPage/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-identity-root": 22,
+        "starci-fe/no-emoji-in-source": 2,
+        "starci-fe/no-inline-parameter-type": 18,
+        "starci-fe/require-frame-self-declare": 12
+      }
+    },
+    {
+      "id": "w15-src-blocks-skeleton",
+      "primary": "src-blocks-skeleton",
+      "sources": [
+        "src-blocks-skeleton",
+        "src-blocks-community",
+        "src-pages-ProfileOverviewPage",
+        "src-pages-JobPostFormPage",
+        "src-blocks-ai",
+        "src-pages-PracticeProblemPage"
+      ],
+      "files": [
+        "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "src/components/blocks/community/Discussion/ReactionBar.tsx",
+        "src/components/blocks/community/Discussion/constants.ts",
+        "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/index.tsx",
+        "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+        "src/components/blocks/skeleton/SkeletonText/index.tsx",
+        "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+        "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+        "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+        "src/components/pages/JobPostFormPage/index.tsx",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+        "src/components/pages/PracticeProblemPage/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-identity-root": 42,
+        "starci-fe/handler-on-prefix": 1,
+        "starci-fe/no-emoji-in-source": 6,
+        "starci-fe/require-frame-self-declare": 5
+      }
+    },
+    {
+      "id": "w16-src-blocks-cards",
+      "primary": "src-blocks-cards",
+      "sources": [
+        "src-blocks-cards",
+        "src-pages-TalentDirectoryPage",
+        "src-blocks-dashboard",
+        "src-pages-BlogPostPage",
+        "src-pages-HeadhuntingCompanyPage",
+        "src-blocks-commerce",
+        "src-pages-MySubmissionsPage"
+      ],
+      "files": [
+        "src/components/blocks/cards/CheckListCard/index.tsx",
+        "src/components/blocks/cards/ContinueCard/index.tsx",
+        "src/components/blocks/cards/CourseCard/component.tsx",
+        "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+        "src/components/blocks/cards/CrossListCard/index.tsx",
+        "src/components/blocks/cards/FlipCard/index.tsx",
+        "src/components/blocks/cards/GroupPressableCard/index.tsx",
+        "src/components/blocks/cards/HighlightCard/index.tsx",
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/blocks/cards/MediaCard/index.tsx",
+        "src/components/blocks/cards/PressableCard/index.tsx",
+        "src/components/blocks/cards/SectionCard/index.tsx",
+        "src/components/blocks/cards/SummaryCard/index.tsx",
+        "src/components/blocks/cards/SurfaceListCard/index.tsx",
+        "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+        "src/components/blocks/commerce/TierCardBase/index.tsx",
+        "src/components/blocks/dashboard/Confetti/index.tsx",
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/blocks/dashboard/Podium/index.tsx",
+        "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+        "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+        "src/components/pages/BlogPostPage/ReadingProgress/index.tsx",
+        "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+        "src/components/pages/BlogPostPage/component.tsx",
+        "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyBreadcrumbs/index.tsx",
+        "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+        "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+        "src/components/pages/MySubmissionsPage/index.tsx",
+        "src/components/pages/TalentDirectoryPage/component.tsx"
+      ],
+      "count": 54,
+      "rules": {
+        "starci-fe/require-identity-root": 21,
+        "starci-fe/require-frame-self-declare": 31,
+        "starci-fe/no-emoji-in-source": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+{
+  "partition": "layout-shells",
+  "manifest": [
+    "src/components/blocks/layout/AmbientBackground/index.tsx",
+    "src/components/blocks/layout/PageHeader/index.tsx",
+    "src/components/blocks/layout/StickyBottomBar/index.tsx"
+  ],
+  "consumers": {
+    "AmbientBackground": [
+      {
+        "file": "src/components/pages/AppearancePage/index.tsx",
+        "line": 256,
+        "prop": "className",
+        "value": "absolute inset-0 -z-0",
+        "ownership": "ambiguous"
+      }
+    ],
+    "PageHeader": [
+      {
+        "file": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+        "line": 55,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+        "line": 125,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+        "line": 81,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/CourseQaHeader/index.tsx",
+        "line": 57,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+        "line": 58,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+        "line": 148,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/FoundationsHeader/index.tsx",
+        "line": 56,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+        "line": 53,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+        "line": 75,
+        "prop": "className",
+        "value": "flex flex-wrap items-center gap-2",
+        "ownership": "ambiguous"
+      },
+      {
+        "file": "src/components/blocks/learn/ModuleHeader/index.tsx",
+        "line": 151,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+        "line": 178,
+        "prop": "className",
+        "value": "flex flex-wrap items-center gap-2",
+        "ownership": "ambiguous"
+      },
+      {
+        "file": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+        "line": 312,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+        "line": 49,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/pages/ArchitecturePage/index.tsx",
+        "line": 74,
+        "prop": "className",
+        "value": "flex flex-wrap items-center gap-2",
+        "ownership": "ambiguous"
+      },
+      {
+        "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+        "line": 33,
+        "prop": "className",
+        "value": "className",
+        "ownership": "dynamic"
+      },
+      {
+        "file": "src/components/pages/NotificationsPage/index.tsx",
+        "line": 206,
+        "prop": "className",
+        "value": "size-4",
+        "ownership": "intrinsic"
+      },
+      {
+        "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "line": 90,
+        "prop": "className",
+        "value": "scoreToneClass(score)",
+        "ownership": "dynamic"
+      },
+      {
+        "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+        "line": 108,
+        "prop": "className",
+        "value": "size-4",
+        "ownership": "intrinsic"
+      },
+      {
+        "file": "src/components/pages/SystemStatusPage/index.tsx",
+        "line": 83,
+        "prop": "className",
+        "value": "size-4",
+        "ownership": "intrinsic"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryHeader/ConsultantDirectoryHeader.tsx",
+        "line": 55,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+        "line": 125,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+        "line": 81,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/CourseQaHeader/CourseQaHeader.tsx",
+        "line": 57,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/FoundationCategoryHeader/FoundationCategoryHeader.tsx",
+        "line": 58,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+        "line": 148,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/FoundationsHeader/FoundationsHeader.tsx",
+        "line": 56,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/LeaderboardHeader/LeaderboardHeader.tsx",
+        "line": 53,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ModuleHeader/ModuleHeader.tsx",
+        "line": 160,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard.tsx",
+        "line": 312,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupHeader/PlaygroundSetupHeader.tsx",
+        "line": 49,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+        "line": 296,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      }
+    ],
+    "StickyBottomBar": [
+      {
+        "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+        "line": 53,
+        "prop": "className",
+        "value": "className",
+        "ownership": "dynamic"
+      }
+    ]
+  },
+  "valueSet": {
+    "AmbientBackground": [
+      "absolute inset-0 -z-0"
+    ],
+    "PageHeader": [
+      "w-fit",
+      "flex flex-wrap items-center gap-2",
+      "className",
+      "size-4",
+      "scoreToneClass(score)"
+    ],
+    "StickyBottomBar": [
+      "className"
+    ]
+  },
+  "ownership": {
+    "AmbientBackground": [
+      "ambiguous"
+    ],
+    "PageHeader": [
+      "parent-placement",
+      "ambiguous",
+      "dynamic",
+      "intrinsic"
+    ],
+    "StickyBottomBar": [
+      "dynamic"
+    ]
+  },
+  "oldApi": {
+    "AmbientBackground": "className/classNames door retained",
+    "PageHeader": "className/classNames door retained",
+    "StickyBottomBar": "className/classNames door retained"
+  },
+  "newApi": {
+    "AmbientBackground": "layout shell",
+    "PageHeader": "layout shell",
+    "StickyBottomBar": "layout shell"
+  },
+  "changed": [],
+  "holds": [
+    {
+      "component": "AmbientBackground",
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "reason": "layout shell",
+      "values": [
+        "absolute inset-0 -z-0"
+      ]
+    },
+    {
+      "component": "PageHeader",
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "reason": "layout shell",
+      "values": [
+        "w-fit",
+        "flex flex-wrap items-center gap-2",
+        "className",
+        "size-4",
+        "scoreToneClass(score)"
+      ]
+    },
+    {
+      "component": "StickyBottomBar",
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "reason": "layout shell",
+      "values": [
+        "className"
+      ]
+    }
+  ],
+  "parity": "n/a — hold only",
+  "verification": {
+    "tsc": "deferred-coordinator",
+    "eslint": "n/a"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — declaration files owned once via workerFor"
+}

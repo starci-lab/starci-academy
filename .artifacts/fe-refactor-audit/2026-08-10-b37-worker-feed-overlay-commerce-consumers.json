@@ -1,0 +1,138 @@
+{
+  "batch": "B37",
+  "wave": "consumers",
+  "agent": "feed-overlay-commerce-consumers",
+  "status": "complete",
+  "completedAt": "2026-08-08T17:20:00.000Z",
+  "checkpoint": "84b92cd77",
+  "owns": [
+    "src/components/blocks/commerce/CartLine/index.tsx",
+    "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "src/components/pages/BookmarksPage/index.tsx",
+    "src/components/pages/CartPage/component.tsx",
+    "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+    "src/components/pages/ContactPage/ContactChannels/index.tsx",
+    "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+    "src/components/pages/RewardsPage/RewardCatalog/index.tsx"
+  ],
+  "requiredFirstTargets": {
+    "ActivityFeed": {
+      "class": "H",
+      "action": "hold",
+      "reason": "Day-grouped free-form ReactNode feed rows (ActivityAvatar + FeedItem message ReactNode + ReactionBar). Not exact SurfaceCardListItem data; Decision B content would still embed ReactNode message composition. Hold per brief."
+    },
+    "MindMapNodeDrawer": {
+      "class": "A",
+      "action": "hold",
+      "reason": "EntityResultRow owns free-form row chrome (button + px-4/py-3 + separator). SurfaceCardList ListFreeRow would double-frame; fixed-field flatten loses breadcrumb+snippet+enrol caption stack. Connected index.tsx / EntityResultRow outside owns. Same family as RelatedContentList H."
+    },
+    "AiUsageHistory": {
+      "class": "A",
+      "action": "migrated",
+      "detail": "Frameless LabeledCard + SurfaceListCard history list → SurfaceCardList with label + items (title/subtitle/trailing Chip). Chart + breakdown LabeledCards retained (framed non-list bodies)."
+    },
+    "ContactChannels": {
+      "class": "B",
+      "action": "migrated",
+      "detail": "Collapsed LabeledCard flushContent + nested SurfaceCardList onto SurfaceCardList label (default surface variant; no double frame)."
+    }
+  },
+  "migrated": [
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "class": "B",
+      "from": "LabeledCard flushContent + SurfaceCardList variant=nested",
+      "to": "SurfaceCardList label + items"
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "class": "A",
+      "from": "LabeledCard frameless + SurfaceListCard + SurfaceListCardRow",
+      "to": "SurfaceCardList label + items (fixed row fields)"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "class": "A",
+      "from": "LabeledCard frameless + AsyncContent + SurfaceListCard + SurfaceListCardRow (×2)",
+      "to": "SurfaceCardList label + items + isSkeleton + emptyState + errorState (×2)"
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "class": "H→body",
+      "from": "SurfaceListCardItem wrapper row",
+      "to": "bare StackH body for parent SurfaceCardList content slots"
+    },
+    {
+      "path": "src/components/pages/CartPage/component.tsx",
+      "class": "G",
+      "from": "SurfaceListCard + CartLine/SurfaceListCardItem children",
+      "to": "SurfaceCardList items[].content → CartLine"
+    },
+    {
+      "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "class": "G",
+      "from": "SurfaceListCard bordered + CartLine children",
+      "to": "SurfaceCardList variant=nested items[].content → CartLine"
+    }
+  ],
+  "held": [
+    {
+      "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "class": "H",
+      "reason": "ReactNode feed rows (message + ActivityAvatar + ReactionBar); hold unless exact"
+    },
+    {
+      "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "class": "A",
+      "reason": "EntityResultRow owns row chrome; not exact SurfaceCardListItem without outside-owns edits"
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/index.tsx",
+      "class": "G",
+      "reason": "BookmarkCard (outside owns) still emits SurfaceListCardRow; parent-only SurfaceCardList would double-frame"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "class": "F",
+      "reason": "LabeledCard legitimately owns framed non-list body"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "class": "F",
+      "reason": "LabeledCard legitimately owns framed non-list body"
+    }
+  ],
+  "notChanged": [
+    "ActivityFeed",
+    "MindMapNodeDrawer",
+    "BookmarksPage",
+    "FounderCard",
+    "RewardCatalog"
+  ],
+  "overlap": {
+    "outsideOwnsEdits": false,
+    "note": "Only owned manifest paths edited"
+  },
+  "verification": {
+    "tsc": {
+      "command": "npx tsc --noEmit",
+      "exit": 0,
+      "ownedPathErrors": 0
+    },
+    "eslint": {
+      "command": "npx eslint --max-warnings=0 <owned changed files>",
+      "exit": 1,
+      "note": "Pre-existing warnings remain (page-folder, HeroUI, frame self-declare). Delta improved 57→45 on touched set; no new warning families introduced.",
+      "beforeWarnings": 57,
+      "afterWarnings": 45
+    },
+    "gitDiffCheck": {
+      "command": "git diff --check <owned changed files>",
+      "exit": 0
+    },
+    "committed": false
+  }
+}

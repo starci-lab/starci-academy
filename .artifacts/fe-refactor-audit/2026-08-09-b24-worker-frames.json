@@ -1,0 +1,128 @@
+{
+  "partition": "frames",
+  "manifest": [
+    ".storybook/components/frames/HideAbove/HideAbove.tsx",
+    ".storybook/components/frames/PageEndPad/PageEndPad.tsx",
+    ".storybook/components/frames/RailShell/RailShell.tsx",
+    ".storybook/components/frames/ResponsiveRow/ResponsiveRow.tsx",
+    ".storybook/components/frames/ScrollArea/ScrollArea.tsx",
+    ".storybook/components/frames/Split/Split.tsx",
+    ".storybook/components/frames/SplitWorkspace/SplitWorkspace.tsx",
+    "src/components/frames/HideAbove/index.tsx",
+    "src/components/frames/PageEndPad/index.tsx",
+    "src/components/frames/RailShell/index.tsx",
+    "src/components/frames/ResponsiveRow/index.tsx",
+    "src/components/frames/ScrollArea/index.tsx",
+    "src/components/frames/Split/index.tsx",
+    "src/components/frames/SplitWorkspace/index.tsx"
+  ],
+  "changed": [
+    ".storybook/components/frames/HideAbove/HideAbove.tsx",
+    ".storybook/components/frames/PageEndPad/PageEndPad.tsx",
+    ".storybook/components/frames/RailShell/RailShell.tsx",
+    ".storybook/components/frames/ResponsiveRow/ResponsiveRow.tsx",
+    ".storybook/components/frames/ScrollArea/ScrollArea.tsx",
+    ".storybook/components/frames/Split/Split.tsx",
+    ".storybook/components/frames/SplitWorkspace/SplitWorkspace.tsx",
+    "src/components/frames/HideAbove/index.tsx",
+    "src/components/frames/PageEndPad/index.tsx",
+    "src/components/frames/RailShell/index.tsx",
+    "src/components/frames/ResponsiveRow/index.tsx",
+    "src/components/frames/ScrollArea/index.tsx",
+    "src/components/frames/Split/index.tsx",
+    "src/components/frames/SplitWorkspace/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": ".storybook/components/frames/HideAbove/HideAbove.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/frames/PageEndPad/PageEndPad.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/frames/RailShell/RailShell.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/frames/ResponsiveRow/ResponsiveRow.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/frames/ScrollArea/ScrollArea.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/frames/SplitWorkspace/SplitWorkspace.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/frames/HideAbove/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/frames/PageEndPad/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/frames/RailShell/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/frames/ResponsiveRow/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/frames/ScrollArea/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/frames/SplitWorkspace/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "PinnedTrack.classNames — restored; live consumer InnerLayout classNames={[\"flex-1\"]}",
+    "Button/Chip/Avatar/Divider/Typography/Stack/Grid classNames — live-api",
+    "SurfaceCard chrome/body + contentClassName residual",
+    "DrawerShell.contentClassName (nivoexpert LessonEditorPanel)",
+    "ShowcaseMockup.contentClassName (locked LearnLoopScroll)",
+    "MiniCart, CvPreview, PDFView, ModalShell semantic contracts",
+    "vendor-boundary Box + HeroUI wrappers",
+    "Nivo/Nivoexpert + locked paths + teacher holds",
+    "Badge/Logo/Spinner/Alert className (singular) still live at call sites"
+  ],
+  "evidence": [
+    "Fresh eslint inventory 2492 hits before edits",
+    "Revalidated zero JSX className AND classNames consumers on open-tag window",
+    "PinnedTrack demoted post-tsc (live InnerLayout consumer) and restored from HEAD",
+    "InputSearch sole remaining field classNames consumer migrated to Box className=w-full (vendor boundary)"
+  ],
+  "parity": "SB↔src twins updated together where twins exist",
+  "verification": {},
+  "regressions": []
+}

@@ -1,0 +1,181 @@
+{
+  "partition": "learn-content",
+  "manifest": [
+    "src/components/blocks/code/CodeConsole/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx"
+  ],
+  "consumers": {
+    "CodeConsole": [
+      {
+        "file": "src/components/pages/PracticeProblemPage/index.tsx",
+        "line": 751,
+        "prop": "className",
+        "value": "h-[42%]",
+        "ownership": "parent-placement"
+      }
+    ],
+    "ChatToolResult": [
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1025,
+        "prop": "className",
+        "value": "size-4",
+        "ownership": "intrinsic"
+      }
+    ],
+    "ContentMap": [
+      {
+        "file": "src/components/layouts/LearnShellLayout/index.tsx",
+        "line": 146,
+        "prop": "className",
+        "value": "min-h-0 @app-lg:flex-1",
+        "ownership": "parent-placement"
+      }
+    ],
+    "LeaderboardCategoryRail": [
+      {
+        "file": "src/components/layouts/LearnShellLayout/index.tsx",
+        "line": 168,
+        "prop": "className",
+        "value": "min-h-0 @app-lg:flex-1",
+        "ownership": "parent-placement"
+      }
+    ],
+    "MilestoneOutline": [
+      {
+        "file": "src/components/layouts/LearnShellLayout/index.tsx",
+        "line": 157,
+        "prop": "className",
+        "value": "min-h-0 @app-lg:flex-1",
+        "ownership": "parent-placement"
+      }
+    ],
+    "PlaygroundRagWorkspace": [
+      {
+        "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+        "line": 103,
+        "prop": "className",
+        "value": "h-full",
+        "ownership": "parent-placement"
+      }
+    ]
+  },
+  "valueSet": {
+    "CodeConsole": [
+      "h-[42%]"
+    ],
+    "ChatToolResult": [
+      "size-4"
+    ],
+    "ContentMap": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "LeaderboardCategoryRail": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "MilestoneOutline": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "PlaygroundRagWorkspace": [
+      "h-full"
+    ]
+  },
+  "ownership": {
+    "CodeConsole": [
+      "parent-placement"
+    ],
+    "ChatToolResult": [
+      "intrinsic"
+    ],
+    "ContentMap": [
+      "parent-placement"
+    ],
+    "LeaderboardCategoryRail": [
+      "parent-placement"
+    ],
+    "MilestoneOutline": [
+      "parent-placement"
+    ],
+    "PlaygroundRagWorkspace": [
+      "parent-placement"
+    ]
+  },
+  "oldApi": {
+    "CodeConsole": "className/classNames door retained",
+    "ChatToolResult": "className/classNames door retained",
+    "ContentMap": "className/classNames door retained",
+    "LeaderboardCategoryRail": "className/classNames door retained",
+    "MilestoneOutline": "className/classNames door retained",
+    "PlaygroundRagWorkspace": "className/classNames door retained"
+  },
+  "newApi": {
+    "CodeConsole": "arbitrary h-[42%] — no finite token",
+    "ChatToolResult": "ContentAiChat locked consumer",
+    "ContentMap": "min-h-0 @app-lg:flex-1 — no exact existing flex-fill principle",
+    "LeaderboardCategoryRail": "same flex-fill hold",
+    "MilestoneOutline": "same flex-fill hold",
+    "PlaygroundRagWorkspace": "h-full parent fill — hold without named fill wrapper"
+  },
+  "changed": [],
+  "holds": [
+    {
+      "component": "CodeConsole",
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "reason": "arbitrary h-[42%] — no finite token",
+      "values": [
+        "h-[42%]"
+      ]
+    },
+    {
+      "component": "ChatToolResult",
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "reason": "ContentAiChat locked consumer",
+      "values": [
+        "size-4"
+      ]
+    },
+    {
+      "component": "ContentMap",
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "reason": "min-h-0 @app-lg:flex-1 — no exact existing flex-fill principle",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "component": "LeaderboardCategoryRail",
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "reason": "same flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "component": "MilestoneOutline",
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "reason": "same flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "component": "PlaygroundRagWorkspace",
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "reason": "h-full parent fill — hold without named fill wrapper",
+      "values": [
+        "h-full"
+      ]
+    }
+  ],
+  "parity": "n/a — hold only",
+  "verification": {
+    "tsc": "deferred-coordinator",
+    "eslint": "n/a"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — declaration files owned once via workerFor"
+}

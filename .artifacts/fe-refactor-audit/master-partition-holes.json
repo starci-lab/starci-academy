@@ -1,0 +1,531 @@
+{
+  "src/components/pages/PracticeHubPage": [
+    {
+      "rel": "src/components/pages/PracticeHubPage/index.tsx",
+      "line": 82,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "py-2",
+      "snippet": "<PracticeFilters className=\"sticky top-16 z-40 bg-background py-2\" />"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 104,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-1",
+      "snippet": "() => <Label className=\"px-1 text-xs text-muted\">{t(\"PracticeHubPage.rail.topicsLabel\")}</Label>,"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 124,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-1",
+      "snippet": "className=\"-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1\""
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 145,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-1",
+      "snippet": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 152,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-3",
+      "snippet": "className=\"cursor-pointer rounded-2xl px-3 py-2 text-foreground data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[selected=true]:text-accent-soft-foregro"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "line": 80,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "className=\"flex gap-2 overflow-x-auto\""
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "line": 115,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-3",
+      "snippet": "<div className=\"grid grid-cols-2 gap-3 @app-sm:grid-cols-4\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "line": 136,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-3",
+      "snippet": "<div className=\"grid grid-cols-2 gap-3 @app-sm:grid-cols-4\">"
+    }
+  ],
+  "src/components/pages/PracticeProblemPage": [
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 360,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-6",
+      "snippet": "<div className=\"flex flex-col border-b border-default px-6 py-3\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 363,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-6",
+      "snippet": "<div className=\"flex min-h-0 flex-1 items-center justify-center px-6\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 608,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "p-3",
+      "snippet": "<pre className=\"whitespace-pre-wrap rounded-2xl bg-danger-soft p-3 text-xs text-danger-soft-foreground\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 624,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-6",
+      "snippet": "<div className=\"flex flex-col border-b border-default px-6 py-3\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 652,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-6",
+      "snippet": "<div className=\"min-h-0 flex-1 overflow-auto px-6 py-5\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 22,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-6",
+      "snippet": "<div className=\"flex flex-col border-b border-default px-6 py-3\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 34,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-6",
+      "snippet": "<div className=\"flex flex-col px-6 py-5\">"
+    }
+  ],
+  "src/components/pages/AdminAiBalancerPage": [],
+  "src/components/pages/AdminUploadVideoPage": [],
+  "src/components/pages/AdminLoginPage": [],
+  "src/components/pages/AdminMpegDashTestPage": [],
+  "src/components/pages/ArchitecturePage": [
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 102,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<ScrollShadow orientation=\"horizontal\" hideScrollBar className=\"flex gap-2 overflow-x-auto pb-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 117,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<ScrollShadow orientation=\"horizontal\" hideScrollBar className=\"flex gap-2 overflow-x-auto pb-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 132,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<ScrollShadow orientation=\"horizontal\" hideScrollBar className=\"flex gap-2 overflow-x-auto pb-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 114,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-1",
+      "snippet": "<ScrollShadow hideScrollBar className=\"-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 115,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-3",
+      "snippet": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 117,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-1",
+      "snippet": "<Label className=\"px-1 text-xs text-muted\">{t(\"rail.ownGroup\")}</Label>"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 123,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-1",
+      "snippet": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 130,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-3",
+      "snippet": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 139,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-1",
+      "snippet": "<Label className=\"px-1 text-xs text-muted\">{t(\"rail.externalGroup\")}</Label>"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 145,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-1",
+      "snippet": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 152,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-3",
+      "snippet": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 161,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-1",
+      "snippet": "<Label className=\"px-1 text-xs text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 169,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-1",
+      "snippet": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 176,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-3",
+      "snippet": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 61,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-4",
+      "snippet": "<CardContent className=\"flex flex-col gap-4 p-6\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 83,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-2",
+      "snippet": "<span key={name} className=\"rounded-full bg-default px-2 py-1 font-mono text-xs text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 97,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "p-6",
+      "snippet": "<CardContent className=\"p-6\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 111,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-4",
+      "snippet": "<CardContent className=\"flex flex-col gap-4 p-6\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 150,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<Link href={blogHref} className=\"group inline-flex items-center gap-2 text-accent-soft-foreground\">"
+    }
+  ],
+  "src/components/pages/LandingPage": [
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 127,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "mx-auto",
+      "snippet": "<div className=\"mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 @app-sm:px-6 @app-md:gap-20 @app-md:pb-20 @app-md:pt-10 @app-lg:px-8\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 192,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-6",
+      "snippet": "<div className=\"grid grid-cols-1 gap-6 @app-md:grid-cols-3\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 305,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-3",
+      "snippet": "<div className=\"flex items-center gap-3 @app-sm:ml-auto\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 319,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<Link href={pathConfig().locale(locale).blog().build()} className=\"inline-flex items-center gap-2 text-accent-soft-foreground\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "line": 73,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "p-3",
+      "snippet": "className=\"nodrag nopan absolute bottom-full left-1/2 z-50 mb-2 w-60 -translate-x-1/2 cursor-default rounded-2xl border border-default bg-surface p-3 text-left\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "line": 77,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<div className=\"mb-1 flex items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "line": 80,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "ml-auto",
+      "snippet": "<span className=\"ml-auto text-[10px] text-muted\">{LANDING_TRACK_TAG[track]}</span>"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ShuffleBeacon.tsx",
+      "line": 55,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-2",
+      "snippet": "className=\"nodrag nopan group flex cursor-pointer items-center gap-2 rounded-full border border-default bg-surface/80 py-2 pr-3 pl-2 text-xs text-muted backdrop-blur-sm transition-"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 138,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-2",
+      "snippet": "<div aria-hidden className=\"flex flex-col items-end gap-2 border-r border-default/70 px-3 py-4 text-muted/60 select-none\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 141,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-2",
+      "snippet": "<div className=\"flex flex-col gap-2 overflow-x-auto px-4 py-4\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 190,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-3",
+      "snippet": "className=\"flex flex-col gap-3\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 200,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-4",
+      "snippet": "<motion.div variants={childVariants} className=\"flex flex-wrap gap-4 border-b border-default text-xs\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 238,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-3",
+      "snippet": "<motion.div variants={childVariants} className=\"flex items-center gap-3 rounded-xl bg-success-soft px-3 py-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 244,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-3",
+      "snippet": "<span className=\"shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success-soft-foreground\">+120 XP</span>"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 246,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 248,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<span key={item.text} className=\"flex items-center gap-2 text-sm text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 273,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<span className=\"flex items-center gap-2 text-xs text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 278,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 287,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 289,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<span key={item.label} className=\"flex items-center gap-2 text-sm\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 308,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 341,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-2",
+      "snippet": "<div className=\"mt-1 flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 345,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-1",
+      "snippet": "<span className=\"flex items-center gap-1 text-xs text-success-soft-foreground\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 375,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-1",
+      "snippet": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "line": 146,
+      "name": "raw",
+      "class": "padding-plus-gap",
+      "raw": "gap-2",
+      "snippet": "className=\"flex flex-col items-center gap-2 px-4 @app-md:border-l @app-md:border-default @app-md:first:border-l-0\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 98,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<div className=\"flex flex-col gap-2 border-t border-default pt-3\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 112,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-2",
+      "snippet": "<div className=\"flex flex-wrap items-center gap-2 border-t border-default pt-3\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 118,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "ml-auto",
+      "snippet": "<span className=\"ml-auto inline-flex items-center gap-2 text-sm text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 172,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "gap-3",
+      "snippet": "<div className=\"flex flex-wrap items-center gap-3\">"
+    }
+  ],
+  ".storybook/components/nivo/pages/LandingPage": [],
+  ".storybook/components/composites/form": [
+    {
+      "rel": ".storybook/components/composites/form/InputTags/InputTags.tsx",
+      "line": 119,
+      "name": "raw",
+      "class": "raw-vendor-foreign",
+      "raw": "px-1",
+      "snippet": "className=\"min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none\""
+    }
+  ],
+  ".storybook/components/composites/buttons": [],
+  ".storybook/components/composites/viewers": []
+}

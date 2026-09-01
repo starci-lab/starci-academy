@@ -5,7 +5,7 @@ import { ApolloClient } from "@apollo/client"
  *
  * @see {@link https://www.apollographql.com/docs/react/api/core/ApolloClient#defaultoptions | ApolloClient defaultOptions}
  */
-export const defaultOptions: ApolloClient.DefaultOptions.Input = {
+export const defaultOptions: ApolloClient.DefaultOptions = {
     watchQuery: {
         fetchPolicy: "no-cache",
         errorPolicy: "ignore",

@@ -1,0 +1,49 @@
+{
+  "agent": "glyphmark-src-contract",
+  "batch": "B34",
+  "wave": "A",
+  "checkpoint": "6ff21c66",
+  "generatedAt": "2026-08-08T13:55:00.000Z",
+  "changed": [
+    "src/components/atoms/display/GlyphMark/index.tsx"
+  ],
+  "mirroredFrom": ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx",
+  "api": {
+    "tones": ["default", "accent", "success", "warning"],
+    "props": {
+      "icon": "IconComponent (required unless isSkeleton)",
+      "tone": "GlyphMarkTone? default=default",
+      "isSkeleton": "boolean? IconTile-style union",
+      "ariaLabel": "string? omitted → aria-hidden decorative"
+    },
+    "mapping": {
+      "box": "size-5 shrink-0",
+      "skeleton": "size-5 shrink-0 rounded-full (HeroSkeleton)",
+      "default": "text-foreground",
+      "accent": "text-accent-soft-foreground",
+      "success": "text-success-soft-foreground",
+      "warning": "text-warning-soft-foreground"
+    },
+    "exports": [
+      "GlyphMark",
+      "GlyphMarkTone",
+      "IconWeight",
+      "IconComponent",
+      "GlyphMarkIcon",
+      "GlyphMarkProps",
+      "meta"
+    ],
+    "constraints": [
+      "no className/classNames door",
+      "no ReactNode icon",
+      "no runtime namespace",
+      "no public GlyphMarkSkeleton"
+    ]
+  },
+  "verification": {
+    "tscGlyphMark": "clean (no GlyphMark diagnostics; exit 0)",
+    "eslintMaxWarnings0": "pass on owned file"
+  },
+  "regressions": [],
+  "skipped": []
+}

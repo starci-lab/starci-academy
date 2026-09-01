@@ -1,0 +1,2641 @@
+{
+  "partition": "blocks-domain",
+  "changed": [
+    {
+      "path": ".storybook/stories/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.stories.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/LearnNudges/LearnNudges.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionButton.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/commerce/PriceTag/PriceTag.stories.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/dashboard/DailyQuest/DailyQuest.stories.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/ReactionButton/types.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/handler-on-prefix",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "held-only-no-safe-mechanical-edit"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/constants.ts",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/RootNode/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/lists/LabeledList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/Composer/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QuizCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/types.ts",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseBrief/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseTeamGate/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/ShareProfileButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/AIProcessingText/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/Podium/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/UserStreak/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/stats/CourseProgressBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/CommentThread/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/lists/ListRow/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/FeedItem/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/grading/GradingByline/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/SnippetIcon/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/MascotBadge/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/entity/EntityToken/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/EntityLink/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/ModuleNode/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/EntityResultRow/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/InterviewerPresence/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ResumeRail/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/E2eBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/TruthList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/QRCode/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/stats/Score/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/feed/Timeline/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/IconTile/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/Logo/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/identity/UserAvatar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentAiFab/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/UpNextCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/SandboxBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/CoverImage/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/notifications/NotificationBell/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/RankBadge/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/community/FollowButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/Confetti/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentAiSelectionAsk/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentMap/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QaChatBubble/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QaReactionBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/ChangelogList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/Canvas/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentPager/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentRelatedList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MindMapFullscreenButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/TaskSubmissionPanel/GithubGradingSettingsBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/VoiceHero/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/ProfileBadges/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/blog/PostRow/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/community/CommunityPost/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/course/CourseTrialChip/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/dashboard/rankBadge.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentModeNav/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentReaction/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueLearning/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaInvite/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardModeSwitch/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationResourceBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationResourceEmpty/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationsHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundDeviceSnapshot/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundHubHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/QuizEnrollGate/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/RatingBar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBody/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "rules": [
+        "*"
+      ],
+      "reason": "deferred-batch-size"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/ReactionButton/types.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "product-ui-emoji-reaction-glyphs"
+    },
+    {
+      "path": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "product-ui-emoji-reaction-glyphs"
+    },
+    {
+      "path": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "semantic-isSkeleton-threading-not-mechanical"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "semantic-isSkeleton-threading-not-mechanical"
+    },
+    {
+      "path": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "inline-param-auto-extract-corrupted-jsdoc-reverted"
+    },
+    {
+      "path": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "semantic-isSkeleton-threading-not-mechanical"
+    },
+    {
+      "path": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "semantic-isSkeleton-threading-not-mechanical"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "inline-param-auto-extract-corrupted-jsdoc-reverted"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "inline-param-auto-extract-corrupted-jsdoc-reverted"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "semantic-isSkeleton-threading-not-mechanical"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "semantic-isSkeleton-threading-not-mechanical"
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "semantic-isSkeleton-threading-not-mechanical"
+    },
+    {
+      "path": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "inline-param-auto-extract-corrupted-jsdoc-reverted"
+    },
+    {
+      "path": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "inline-param-auto-extract-corrupted-jsdoc-reverted"
+    },
+    {
+      "path": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "inline-param-auto-extract-corrupted-jsdoc-reverted"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "inline-param-held-after-corruption-risk"
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity-not-clear-root"
+    }
+  ],
+  "verification": {
+    "batchSize": 40,
+    "changedCount": 32,
+    "holdCount": 35,
+    "skippedInBatch": 8,
+    "deferredCount": 297,
+    "safeHitsBeforeBatch": 119,
+    "safeHitsAfterBatch": 51,
+    "remainingByRule": {
+      "starci-fe/require-identity-root": 18,
+      "starci-fe/no-inline-skeleton-branch": 11,
+      "starci-fe/no-emoji-in-source": 12,
+      "starci-fe/no-inline-parameter-type": 10
+    },
+    "note": "Storybook-first then src twins; product reaction emoji, unclear identity roots, inline-skeleton threading, and risky inline-param extracts held; nivo/Mia-Mia/locked absent from this partition."
+  },
+  "regressions": []
+}

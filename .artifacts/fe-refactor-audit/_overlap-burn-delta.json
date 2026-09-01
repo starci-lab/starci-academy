@@ -1,0 +1,191 @@
+{
+  "baseTotals": {
+    "starci-fe/no-heroui-outside-vocabulary": 29,
+    "starci-fe/no-cn-above-vocabulary": 10,
+    "starci-fe/no-classname-at-sentence-tier": 12,
+    "starci-fe/no-raw-shape-at-sentence-tier": 23,
+    "starci-fe/no-per-part-classname-prop": 0,
+    "starci-fe/no-inline-skeleton-branch": 7
+  },
+  "afterTotals": {
+    "starci-fe/no-heroui-outside-vocabulary": 8,
+    "starci-fe/no-cn-above-vocabulary": 9,
+    "starci-fe/no-classname-at-sentence-tier": 12,
+    "starci-fe/no-raw-shape-at-sentence-tier": 22,
+    "starci-fe/no-per-part-classname-prop": 0,
+    "starci-fe/no-inline-skeleton-branch": 4
+  },
+  "residual": [
+    {
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "hits": [
+        "no-classname-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:1",
+        "no-classname-at-sentence-tier:1",
+        "no-raw-shape-at-sentence-tier:2"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "hits": [
+        "no-inline-skeleton-branch:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "hits": [
+        "no-classname-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "hits": [
+        "no-inline-skeleton-branch:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "hits": [
+        "no-inline-skeleton-branch:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "hits": [
+        "no-classname-at-sentence-tier:1",
+        "no-inline-skeleton-branch:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+      "hits": [
+        "no-raw-shape-at-sentence-tier:2"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:1",
+        "no-classname-at-sentence-tier:1",
+        "no-raw-shape-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:2",
+        "no-classname-at-sentence-tier:1",
+        "no-raw-shape-at-sentence-tier:3"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:1",
+        "no-classname-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:1",
+        "no-classname-at-sentence-tier:1",
+        "no-raw-shape-at-sentence-tier:5"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:1",
+        "no-classname-at-sentence-tier:1",
+        "no-raw-shape-at-sentence-tier:2"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:1",
+        "no-classname-at-sentence-tier:1",
+        "no-raw-shape-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "hits": [
+        "no-raw-shape-at-sentence-tier:4"
+      ]
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "hits": [
+        "no-classname-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "hits": [
+        "no-raw-shape-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "hits": [
+        "no-heroui-outside-vocabulary:1",
+        "no-cn-above-vocabulary:1",
+        "no-classname-at-sentence-tier:1"
+      ]
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/index.tsx",
+      "hits": [
+        "no-raw-shape-at-sentence-tier:1"
+      ]
+    }
+  ],
+  "edited": [
+    "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+    "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+    "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    "src/components/blocks/learn/KeepGoingPath/index.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+    "src/components/blocks/learn/ModuleLessonList/index.tsx",
+    "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+    "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+    "src/components/blocks/learn/QuizRecapList/index.tsx",
+    "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+    "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+    "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+    "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+    "src/components/blocks/blog/PostRow/index.tsx",
+    "src/components/blocks/course/CourseTrialChip/index.tsx",
+    "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+    "src/components/layouts/LearnShellLayout/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/map.tsx",
+    "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+    "src/components/pages/SepayCheckoutPage/index.tsx",
+    ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+    ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx"
+  ]
+}

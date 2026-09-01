@@ -1,0 +1,288 @@
+{
+  "ButtonBase": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "ChipBase": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "dotClassName": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "AvatarBase": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Badge": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Divider": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "IconTile": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Logo": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Spinner": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Alert": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "QRCode": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Accordion": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Breadcrumbs": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "LinkBack": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "LinkSeeMore": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Pagination": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "TabsBase": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "TabsExtended": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Menu": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Typography": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  },
+  "Progress": {
+    "className": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    },
+    "classNames": {
+      "consumerFiles": 0,
+      "inManifest": [],
+      "outOfManifest": [],
+      "actionable": true
+    }
+  }
+}

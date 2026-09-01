@@ -1,0 +1,264 @@
+{
+  "batch": "B40",
+  "worker": "w09-src-layouts",
+  "mode": "mass-safe-burn",
+  "checkpoint": "2a096210a",
+  "manifest": ".artifacts/fe-refactor-audit/b40-manifests/w09-src-layouts.json",
+  "status": "done",
+  "filesChanged": [],
+  "eslintGate": {
+    "command": "npx eslint --max-warnings=0 <touched>",
+    "policy": "Touch only when the file can reach zero warnings after allowed mechanical fixes; otherwise hold and do not edit.",
+    "touchedClean": true,
+    "note": "No owns file can reach --max-warnings=0 under allowed fixes. 20/49 keep page-folder-two-files-only (moves forbidden). Remaining mixed files keep heroui/host/raw/cn/classname/skeleton debt that safeRules cannot clear alone; identity-only TimeDisplay and PersonalProjectWorkspaceLayout lack an identity-capable root without inventing a wrapper or editing children outside owns."
+  },
+  "safeFindingsScoped": {
+    "total": 55,
+    "byRule": {
+      "starci-fe/require-identity-root": 45,
+      "starci-fe/require-frame-self-declare": 10
+    },
+    "otherSafeRules": {
+      "starci-fe/require-export-jsdoc": 0,
+      "starci-fe/no-inline-parameter-type": 0,
+      "starci-fe/handler-on-prefix": 0,
+      "starci-fe/prefer-arrow-export": 0,
+      "starci-fe/no-vietnamese-in-source-authoring": 0,
+      "starci-fe/no-emoji-in-source": 0
+    }
+  },
+  "counts": {
+    "applied": 0,
+    "hold": 55,
+    "vendor": 36,
+    "locked": 0,
+    "ambiguous": 0,
+    "filesOwned": 49,
+    "filesChanged": 0
+  },
+  "applied": [],
+  "holds": [
+    {
+      "id": "page-folder-blocks-eslint-gate",
+      "classification": "hold",
+      "rule": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "findingCount": 21,
+      "files": [
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+        "src/components/layouts/Navbar/CartButton/index.tsx",
+        "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+        "src/components/layouts/Navbar/Logo/index.tsx",
+        "src/components/layouts/Navbar/NotificationBell/index.tsx",
+        "src/components/layouts/Navbar/SearchButton/index.tsx",
+        "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+        "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+        "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+        "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+        "src/components/pages/SystemStatusPage/OverallBanner/index.tsx"
+      ],
+      "reason": "Nested owns paths under layouts/Navbar, PracticeHubPage, and SystemStatusPage report starci-fe/page-folder-two-files-only. Page-folder moves are forbidden. Any edit would leave the file failing npx eslint --max-warnings=0, forcing revert. Safe identity/frame findings on these files are subsumed.",
+      "next": "Teacher/filing wave: relocate nested UI to blocks/ or inline into the two-file shell, then re-run safe identity/frame burn."
+    },
+    {
+      "id": "identity-only-unproven-roots",
+      "classification": "hold",
+      "rule": "starci-fe/require-identity-root",
+      "findingCount": 2,
+      "files": [
+        "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+        "src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx"
+      ],
+      "reason": "Only safe findings on these files, but neither root is an identity-capable frame/composite. TimeDisplay roots on a styled <span>. PersonalProjectWorkspaceLayout is a three-leaf dispatch (Dashboard/Task/Result) with an explicit in-file hold that children do not forward CallerIdentity and inventing a wrapper div is BLOCK-2. Manifest forbids inventing wrappers solely to carry identity; child forwarding is outside owns.",
+      "next": "Forward identity on the three personal-project leaves (other ownership) or remount TimeDisplay onto an existing text/frame host that accepts identity without visual drift."
+    },
+    {
+      "id": "cartpage-frame-and-classname-gate",
+      "classification": "hold",
+      "rule": "starci-fe/require-frame-self-declare",
+      "findingCount": 5,
+      "files": [
+        "src/components/pages/CartPage/component.tsx"
+      ],
+      "reason": "Container already carries identity. Remaining require-frame-self-declare (StackH/StackV/Container sites) cannot be applied alone: nine no-public-classname-prop findings (Skeleton sizing bars, Button classNames w-full, StackV flex-1/min-w-0) keep eslint --max-warnings=0 failing. Clearing those needs vocabulary remount / stretch owners, not dead-prop or redundant-passthrough proof (classes are load-bearing).",
+      "next": "Replace Skeleton className bars with Skeleton.* members; stretch checkout/clear buttons via frame alignment rather than Button classNames; then declare unambiguous existing principles on the undeclared stacks/container."
+    },
+    {
+      "id": "profile-coding-skeleton-async-gate",
+      "classification": "hold",
+      "rule": "starci-fe/require-frame-self-declare",
+      "findingCount": 1,
+      "files": [
+        "src/components/pages/ProfileCodingProblemPage/index.tsx"
+      ],
+      "reason": "Container already has identity; missing Container principle plus empty classNames={[]} redundant door are mechanical, but no-parallel-skeleton / no-retired-async-content / HeroUI Typography / remaining classname doors keep the eslint gate closed. Skeleton redesign and AsyncContent retirement are outside this safe-burn pass (parallel-skeleton treated as redesign-adjacent per B40 exclusions).",
+      "next": "Retire AsyncContent to isSkeleton leaves + AsyncContentEmpty/Error; migrate Typography to house atom; drop empty classNames; declare Container principle."
+    },
+    {
+      "id": "verdict-herocard-sentence-debt",
+      "classification": "hold",
+      "rule": "starci-fe/require-frame-self-declare",
+      "findingCount": 1,
+      "files": [
+        "src/components/blocks/stats/VerdictHeroCard/index.tsx"
+      ],
+      "reason": "SectionCard root already identity-capable. Undeclared StackH plus host/raw overflow border shell, no-hero-heading-class, and StackV classNames flex-1 block --max-warnings=0. Host remount is not an exact proven composite collapse in this pass.",
+      "next": "Remount split row onto an existing clipped surface owner; Typography for heading; FillAvailable/flex-fill for cell stretch; then principle+explain on StackH."
+    },
+    {
+      "id": "blocks-media-stats-identity-blocked-by-sentence-debt",
+      "classification": "hold",
+      "rule": "starci-fe/require-identity-root",
+      "findingCount": 19,
+      "files": [
+        "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+        "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+        "src/components/blocks/buttons/RatingBar/index.tsx",
+        "src/components/blocks/media/CoverImage/index.tsx",
+        "src/components/blocks/media/QRCode/index.tsx",
+        "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+        "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+        "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+        "src/components/blocks/media/VideoRenderer/index.tsx",
+        "src/components/blocks/stats/DeadlineCallout/index.tsx",
+        "src/components/blocks/stats/LanguageDonut/index.tsx",
+        "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+        "src/components/blocks/stats/Score/component.tsx",
+        "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+        "src/components/layouts/LearnShellLayout/component.tsx",
+        "src/components/pages/PracticeHubPage/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx"
+      ],
+      "reason": "require-identity-root coexists with host/raw/cn/classname and/or vendor debt. Roots are raw div, HeroUI primitives, or hosts that do not accept CallerIdentity (e.g. GroupPressableCard, HeroCloseButton). Stamping identity alone would leave other warnings; remounts need existing vocabulary proof beyond this worker's safe mechanical set.",
+      "next": "Vocabulary remount wave per surface, then stamp identity only on proven frame/composite roots."
+    },
+    {
+      "id": "video-control-atoms-identity-after-heroui",
+      "classification": "hold",
+      "rule": "starci-fe/require-identity-root",
+      "findingCount": 4,
+      "files": [
+        "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx"
+      ],
+      "reason": "Only heroui + identity. Migrating Button/Slider/Popover to house atoms clears vendor but house Button/Slider atoms do not accept identity (rule demands frame/composite root). Wrapping solely for identity is forbidden. No exact composite collapse with identity slot proven inside owns.",
+      "next": "Either promote these controls to composites that own identity, or accept leaf-atom status under a parent VideoControls identity root after that host remounts."
+    },
+    {
+      "id": "navbar-index-frame-and-host",
+      "classification": "hold",
+      "rule": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "findingCount": 2,
+      "files": [
+        "src/components/layouts/Navbar/index.tsx"
+      ],
+      "reason": "Raw <nav> landmark + host/raw shape debt + heroui; prior B35 proposed NavbarFrame contract (not inventable here). Undeclared Box lacks an unambiguous existing principle without retuning sticky/nav chrome.",
+      "next": "Land approved NavbarFrame (or equivalent sticky landmark owner), then identity + principles."
+    }
+  ],
+  "vendor": [
+    {
+      "id": "heroui-outside-vocabulary-owns",
+      "classification": "vendor",
+      "rule": "starci-fe/no-heroui-outside-vocabulary",
+      "findingCount": 36,
+      "files": [
+        "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+        "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+        "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+        "src/components/blocks/stats/DeadlineCallout/index.tsx",
+        "src/components/blocks/stats/LanguageDonut/index.tsx",
+        "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+        "src/components/blocks/stats/Score/component.tsx",
+        "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+        "src/components/layouts/LearnShellLayout/component.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+        "src/components/layouts/Navbar/CartButton/index.tsx",
+        "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+        "src/components/layouts/Navbar/Logo/index.tsx",
+        "src/components/layouts/Navbar/NotificationBell/index.tsx",
+        "src/components/layouts/Navbar/SearchButton/index.tsx",
+        "src/components/layouts/Navbar/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+        "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+        "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+        "src/components/pages/SystemStatusPage/OverallBanner/index.tsx"
+      ],
+      "reason": "Direct @heroui/react imports at sentence tier. ElementCloseButton documents missing CloseButton atom. Navbar/video controls need Dropdown/Kbd/Popover/Slider/Card atoms or approved composites. New atoms/contracts forbidden in this burn; existing vocabulary migrations incomplete without API-equivalent hosts.",
+      "next": "HeroUI gap / vocabulary wave; prefer composites/buttons/FloatingActionButton collapse for the legacy block FAB once ContentAiFab migrates icon ComponentType."
+    }
+  ],
+  "locked": [],
+  "ambiguous": [
+    {
+      "id": "cartpage-undeclared-stack-principles",
+      "classification": "ambiguous",
+      "rule": "starci-fe/require-frame-self-declare",
+      "files": [
+        "src/components/pages/CartPage/component.tsx"
+      ],
+      "reason": "Skeleton-row StackH/StackV and footer StackV/Container could map to content-row / sibling-stack / block-boundary / page-pad, but multi-seam nests and classname-coupled flex make a single existing PrincipleToken unambiguous only after the classname remount — not proven this pass."
+    },
+    {
+      "id": "ratingbar-grouppressable-identity",
+      "classification": "ambiguous",
+      "rule": "starci-fe/require-identity-root",
+      "files": [
+        "src/components/blocks/buttons/RatingBar/index.tsx"
+      ],
+      "reason": "Root GroupPressableCard does not accept CallerIdentity (outside owns). Raw flex span inside tile content also fires no-raw-shape. Not a proven identity stamp target."
+    }
+  ],
+  "mechanicalAlsoScanned": {
+    "deadPropRemoval": "ProfileCodingProblemPage empty rootClassNames=[] is a redundant door but blocked by parallel-skeleton/async/heroui gate — not applied",
+    "redundantClassNamePassthrough": "CartPage/ProfileCodingProblemPage classname findings are load-bearing or gated; none cleared",
+    "provenStringProps": "none applied",
+    "componentTypeOwnerMount": "none applied (legacy FAB children→icon would require ContentAiFab edit outside owns)",
+    "exactCompositeCollapse": "blocks/buttons/FloatingActionButton → composites/buttons/FloatingActionButton not applied (API children vs icon; consumer outside owns)",
+    "existingVocabularyMigrations": "none applied without failing eslint gate or inventing hosts"
+  },
+  "exclusionsHonored": [
+    "edited only owns (zero product edits)",
+    "no commit/push/reset/checkout/branch",
+    "no eslint-disable",
+    "no new contracts/principles/rules",
+    "no page-folder moves",
+    "no a11y",
+    "no skeleton redesign",
+    "no nivo/mia-mia"
+  ]
+}

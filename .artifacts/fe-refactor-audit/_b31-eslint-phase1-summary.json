@@ -1,0 +1,560 @@
+{
+  "src\\components\\blocks\\dashboard\\LeaderboardListCard\\index.tsx": {
+    "errors": 0,
+    "warnings": 15,
+    "byRule": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-raw-shape-at-sentence-tier": 9,
+      "starci-fe/no-emoji-in-source": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    },
+    "byLine": [
+      {
+        "line": 4,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "message": "Import '@heroui/react' outside the vocabulary tier ΓÇö use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "line": 59,
+        "col": 51,
+        "sev": "warning",
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+      },
+      {
+        "line": 59,
+        "col": 51,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "line": 111,
+        "col": 5,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "line": 127,
+        "col": 22,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 128,
+        "col": 22,
+        "sev": "warning",
+        "rule": "starci-fe/no-emoji-in-source",
+        "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "line": 132,
+        "col": 31,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <span> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 136,
+        "col": 31,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <span> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 148,
+        "col": 30,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 161,
+        "col": 30,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 171,
+        "col": 22,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 173,
+        "col": 26,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 194,
+        "col": 38,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 195,
+        "col": 43,
+        "sev": "warning",
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "message": "`flex` on <span> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "line": 214,
+        "col": 29,
+        "sev": "warning",
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) ΓÇö treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ]
+  },
+  "src\\components\\pages\\DashboardPage\\LeagueCard\\LeagueCardContent\\index.tsx": {
+    "errors": 0,
+    "warnings": 3,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-public-classname-prop": 1
+    },
+    "byLine": [
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/page-folder-two-files-only",
+        "message": "`pages/DashboardPage/` contains `LeagueCard/LeagueCardContent/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+      },
+      {
+        "line": 29,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/require-identity-root",
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 105,
+        "col": 63,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `RankDeltaCaret`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ]
+  },
+  "src\\components\\pages\\DashboardPage\\LeagueCard\\LeagueCardSkeleton\\index.tsx": {
+    "errors": 0,
+    "warnings": 13,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-skeleton-twin-component": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 7,
+      "starci-fe/no-cn-above-vocabulary": 1
+    },
+    "byLine": [
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/page-folder-two-files-only",
+        "message": "`pages/DashboardPage/` contains `LeagueCard/LeagueCardSkeleton/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+      },
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/no-skeleton-twin-component",
+        "message": "`LeagueCardSkeleton` is a hand-mirrored twin: a second description of a shape that already has one. Give the component it mirrors an `isSkeleton` prop and let it rest as ITSELF ΓÇö the twin cannot be kept in step, it can only be noticed after it has already drifted. (The `Skeleton.*` primitives under `blocks/skeleton/` are the pieces you rest WITH, and are exempt.)"
+      },
+      {
+        "line": 4,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "message": "Import '@heroui/react' outside the vocabulary tier ΓÇö use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "line": 18,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/require-identity-root",
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 18,
+        "col": 39,
+        "sev": "warning",
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+      },
+      {
+        "line": 18,
+        "col": 39,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "line": 28,
+        "col": 38,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "line": 29,
+        "col": 21,
+        "sev": "warning",
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) ΓÇö treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "line": 38,
+        "col": 45,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 42,
+        "col": 37,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 56,
+        "col": 57,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 59,
+        "col": 57,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 60,
+        "col": 57,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ]
+  },
+  "src\\components\\pages\\DashboardPage\\LeagueCard\\component.tsx": {
+    "errors": 0,
+    "warnings": 10,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 7
+    },
+    "byLine": [
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/page-folder-two-files-only",
+        "message": "`pages/DashboardPage/` contains `LeagueCard/component.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+      },
+      {
+        "line": 29,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/require-identity-root",
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 49,
+        "col": 42,
+        "sev": "warning",
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+      },
+      {
+        "line": 49,
+        "col": 42,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "line": 96,
+        "col": 55,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `RankDeltaCaret`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 153,
+        "col": 53,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 157,
+        "col": 45,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 171,
+        "col": 65,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 174,
+        "col": 65,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 175,
+        "col": 65,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ]
+  },
+  "src\\components\\pages\\DashboardPage\\LeagueCard\\index.tsx": {
+    "errors": 0,
+    "warnings": 1,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 1
+    },
+    "byLine": [
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/page-folder-two-files-only",
+        "message": "`pages/DashboardPage/` contains `LeagueCard/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+      }
+    ]
+  },
+  "src\\components\\pages\\DashboardPage\\TopLearners\\TopLearnersSkeleton\\index.tsx": {
+    "errors": 0,
+    "warnings": 13,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-skeleton-twin-component": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 7,
+      "starci-fe/no-cn-above-vocabulary": 1
+    },
+    "byLine": [
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/page-folder-two-files-only",
+        "message": "`pages/DashboardPage/` contains `TopLearners/TopLearnersSkeleton/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+      },
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/no-skeleton-twin-component",
+        "message": "`TopLearnersSkeleton` is a hand-mirrored twin: a second description of a shape that already has one. Give the component it mirrors an `isSkeleton` prop and let it rest as ITSELF ΓÇö the twin cannot be kept in step, it can only be noticed after it has already drifted. (The `Skeleton.*` primitives under `blocks/skeleton/` are the pieces you rest WITH, and are exempt.)"
+      },
+      {
+        "line": 4,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "message": "Import '@heroui/react' outside the vocabulary tier ΓÇö use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "line": 18,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/require-identity-root",
+        "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 18,
+        "col": 40,
+        "sev": "warning",
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+      },
+      {
+        "line": 18,
+        "col": 40,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "line": 28,
+        "col": 39,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "line": 29,
+        "col": 21,
+        "sev": "warning",
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) ΓÇö treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "line": 38,
+        "col": 45,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 42,
+        "col": 37,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 56,
+        "col": 57,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 59,
+        "col": 57,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 60,
+        "col": 57,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ]
+  },
+  "src\\components\\pages\\DashboardPage\\TopLearners\\component.tsx": {
+    "errors": 0,
+    "warnings": 10,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 8
+    },
+    "byLine": [
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/page-folder-two-files-only",
+        "message": "`pages/DashboardPage/` contains `TopLearners/component.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+      },
+      {
+        "line": 27,
+        "col": 43,
+        "sev": "warning",
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+      },
+      {
+        "line": 27,
+        "col": 43,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "line": 70,
+        "col": 5,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "line": 91,
+        "col": 41,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 95,
+        "col": 33,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 109,
+        "col": 53,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 112,
+        "col": 53,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 113,
+        "col": 53,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "line": 133,
+        "col": 13,
+        "sev": "warning",
+        "rule": "starci-fe/no-public-classname-prop",
+        "message": "Do not pass `className` to house component `LeaderboardListCard`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ]
+  },
+  "src\\components\\pages\\DashboardPage\\TopLearners\\index.tsx": {
+    "errors": 0,
+    "warnings": 1,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 1
+    },
+    "byLine": [
+      {
+        "line": 1,
+        "col": 1,
+        "sev": "warning",
+        "rule": "starci-fe/page-folder-two-files-only",
+        "message": "`pages/DashboardPage/` contains `TopLearners/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+      }
+    ]
+  }
+}

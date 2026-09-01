@@ -1,0 +1,5649 @@
+{
+  "before": 701,
+  "unlocked": 701,
+  "safe": [
+    {
+      "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "tier": "block",
+      "component": "QuotaBar",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/async/EmptyContent/index.tsx",
+      "tier": "block",
+      "component": "EmptyContent",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/cards/MediaCard/index.tsx",
+      "tier": "block",
+      "component": "MediaCard",
+      "rootTag": "SurfaceCard",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "tier": "block",
+      "component": "TrialConversionStrip",
+      "rootTag": "SurfaceCard",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "tier": "block",
+      "component": "JobReadinessWidget",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "tier": "block",
+      "component": "WeeklyGoals",
+      "rootTag": "StackV",
+      "rootCount": 2
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "tier": "block",
+      "component": "ChallengeBrief",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "tier": "block",
+      "component": "ChallengeDeliverableList",
+      "rootTag": "StackV",
+      "rootCount": 2
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "tier": "block",
+      "component": "ChallengeScoreCard",
+      "rootTag": "SurfaceCard",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "tier": "block",
+      "component": "ContentCommentComposer",
+      "rootTag": "StackH",
+      "rootCount": 2
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "tier": "block",
+      "component": "ContinueCardHero",
+      "rootTag": "SurfaceCard",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "tier": "block",
+      "component": "ContinueCardItem",
+      "rootTag": "SurfaceCard",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "tier": "block",
+      "component": "SkeletonQuestionRow",
+      "rootTag": "StackH",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+      "tier": "block",
+      "component": "FoundationCategoryList",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "tier": "block",
+      "component": "KeepGoingPath",
+      "rootTag": "SurfaceCardList",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "tier": "block",
+      "component": "Board",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/LearnNudges/component.tsx",
+      "tier": "block",
+      "component": "LearnNudges",
+      "rootTag": "SurfaceCardList",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "tier": "block",
+      "component": "MindMapRail",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "tier": "block",
+      "component": "ModuleChallengeList",
+      "rootTag": "SurfaceCardList",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleContinueBand/index.tsx",
+      "tier": "block",
+      "component": "ModuleContinueBand",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "tier": "block",
+      "component": "ModuleLessonList",
+      "rootTag": "SurfaceCardList",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      "tier": "block",
+      "component": "PersonalProjectGatePreview",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundEnterBanner/index.tsx",
+      "tier": "block",
+      "component": "PlaygroundEnterBanner",
+      "rootTag": "SurfaceCard",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundResourcePanel/index.tsx",
+      "tier": "block",
+      "component": "PlaygroundResourcePanel",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "tier": "block",
+      "component": "TaskBriefBody",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/GithubUrlField/index.tsx",
+      "tier": "block",
+      "component": "GithubUrlField",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "tier": "block",
+      "component": "TrialEnrollHook",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "tier": "block",
+      "component": "FooterLinkColumn",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileBadges/index.tsx",
+      "tier": "block",
+      "component": "ProfileBadges",
+      "rootTag": "Cluster",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "tier": "block",
+      "component": "ProfileFollowers",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "tier": "block",
+      "component": "ProfileRankAvatar",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
+      "tier": "overlay",
+      "component": "OauthButtons",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+      "tier": "overlay",
+      "component": "RememberMeRow",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/SignUpPrompt/index.tsx",
+      "tier": "overlay",
+      "component": "SignUpPrompt",
+      "rootTag": "StackH",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/SignInPrompt/index.tsx",
+      "tier": "overlay",
+      "component": "SignInPrompt",
+      "rootTag": "StackH",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/index.tsx",
+      "tier": "page",
+      "component": "AdminAiBalancerPage",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "tier": "page",
+      "component": "ProcessResultBanner",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "tier": "page",
+      "component": "ProviderUploadRow",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "tier": "page",
+      "component": "AiSettingsPage",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/BlogListPage/TopicsStrip/index.tsx",
+      "tier": "page",
+      "component": "TopicsStrip",
+      "rootTag": "Cluster",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/index.tsx",
+      "tier": "page",
+      "component": "BookmarksPage",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/PhaseRow/index.tsx",
+      "tier": "page",
+      "component": "PhaseRow",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+      "tier": "page",
+      "component": "FlashcardReviewModeModal",
+      "rootTag": "ModalShell",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "tier": "page",
+      "component": "FlashcardSessionStats",
+      "rootTag": "StackV",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx",
+      "tier": "page",
+      "component": "HeadhuntingCompanyProfile",
+      "rootTag": "StackH",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/SubmitSuccess/index.tsx",
+      "tier": "page",
+      "component": "SubmitSuccess",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "tier": "page",
+      "component": "GlobalBoardSkeleton",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "tier": "page",
+      "component": "WeeklyBoardSkeleton",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/MembershipPage/index.tsx",
+      "tier": "page",
+      "component": "MembershipPage",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "tier": "page",
+      "component": "NotificationsPage",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "tier": "page",
+      "component": "ProfileCodingProblemPage",
+      "rootTag": "Container",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+      "tier": "page",
+      "component": "ProjectCard",
+      "rootTag": "StackH",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "tier": "page",
+      "component": "MyVouchers",
+      "rootTag": "Box",
+      "rootCount": 1
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "tier": "page",
+      "component": "SystemStatusSkeleton",
+      "rootTag": "StackV",
+      "rootCount": 2
+    }
+  ],
+  "hard": [
+    {
+      "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/async/AsyncContent/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ErrorContent"
+      ],
+      "capable": [],
+      "incapable": [
+        "ErrorContent"
+      ]
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "reason": "fragment-root"
+    },
+    {
+      "file": "src/components/blocks/auth/Turnstile/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/blog/PostRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "HeroCloseButton"
+      ],
+      "capable": [],
+      "incapable": [
+        "HeroCloseButton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/cards/FlipCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "PressableCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Accordion",
+        "div",
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "section"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/NestedCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "a",
+        "button",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/PricingCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SectionCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "PressableCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "PressableCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Link",
+        "a",
+        "RowAnchor",
+        "button",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "form"
+      ]
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/EnumChip/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Tooltip"
+      ],
+      "capable": [],
+      "incapable": [
+        "Tooltip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "EnumChip"
+      ],
+      "capable": [],
+      "incapable": [
+        "EnumChip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "EnumChip"
+      ],
+      "capable": [],
+      "incapable": [
+        "EnumChip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/StatusChip/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Chip"
+      ],
+      "capable": [],
+      "incapable": [
+        "Chip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/TagChips/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Tooltip",
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Tooltip",
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/CartLine/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "TierCardBase"
+      ],
+      "capable": [],
+      "incapable": [
+        "TierCardBase"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "HeroSkeleton",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "TierCardBase"
+      ],
+      "capable": [],
+      "incapable": [
+        "TierCardBase"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/community/CommunityPost/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "CommunityPostCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "CommunityPostCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "section"
+      ]
+    },
+    {
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/course/CourseTrialChip/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Chip"
+      ],
+      "capable": [],
+      "incapable": [
+        "Chip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "TextField"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Chip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "DatePicker",
+        "TextField"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "RepeatableItemCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Chip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "PersonalBlock",
+        "SummaryBlock",
+        "ExperienceBlock",
+        "EducationBlock",
+        "SkillsBlock",
+        "TitleDescBlock",
+        "CertificationBlock",
+        "LanguageBlock"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Modal"
+      ],
+      "capable": [],
+      "incapable": [
+        "Modal"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Modal"
+      ],
+      "capable": [],
+      "incapable": [
+        "Modal"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Modal",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/ChangelogList/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/Confetti/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "SurfaceListCardItem",
+        "div",
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/Podium/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Chip",
+        "Button",
+        "StackV"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "Chip",
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/entity/EntityToken/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "button",
+        "span",
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "FeedItem",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/CommentThread/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/EntityLink/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "span",
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/FeedItem/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/Timeline/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "StickyBottomBar"
+      ],
+      "capable": [],
+      "incapable": [
+        "StickyBottomBar"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Tooltip"
+      ],
+      "capable": [],
+      "incapable": [
+        "Tooltip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "p"
+      ]
+    },
+    {
+      "file": "src/components/blocks/form/Dropzone/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/form/OtpInput/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ComboBox"
+      ],
+      "capable": [],
+      "incapable": [
+        "ComboBox"
+      ]
+    },
+    {
+      "file": "src/components/blocks/form/SearchBar/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/form/SearchInput/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "li"
+      ]
+    },
+    {
+      "file": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button",
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Tooltip",
+        "span",
+        "Dropdown",
+        "DropdownItem"
+      ]
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "img"
+      ]
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Logo"
+      ],
+      "capable": [],
+      "incapable": [
+        "Logo"
+      ]
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/identity/Logo/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "svg"
+      ]
+    },
+    {
+      "file": "src/components/blocks/identity/SnippetIcon/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "file": "src/components/blocks/identity/UserAvatar/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Avatar"
+      ],
+      "capable": [],
+      "incapable": [
+        "Avatar"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/AppSplash/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ScrollShadow"
+      ],
+      "capable": [],
+      "incapable": [
+        "ScrollShadow"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/PageContainer/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/SocketConnectionStatus/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/Spacer/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/SubPageHeader/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/TopLoader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Switch"
+      ],
+      "capable": [],
+      "incapable": [
+        "Switch"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "nav"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Popover"
+      ],
+      "capable": [],
+      "incapable": [
+        "Popover"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "nav"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/AIProcessingText/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "QueueIcon",
+        "SparkleIcon",
+        "CheckCircleIcon",
+        "WarningOctagonIcon",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/Canvas/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Panel"
+      ],
+      "capable": [],
+      "incapable": [
+        "Panel"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "ReactFlowProvider"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Panel"
+      ],
+      "capable": [],
+      "incapable": [
+        "Panel"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Panel"
+      ],
+      "capable": [],
+      "incapable": [
+        "Panel"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Panel"
+      ],
+      "capable": [],
+      "incapable": [
+        "Panel"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/ModuleNode/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/RootNode/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "FloatingActionButton",
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "FloatingActionButton",
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiSelectionAsk/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "IdentityContentRow"
+      ],
+      "capable": [],
+      "incapable": [
+        "IdentityContentRow"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "AccordionSkeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "AccordionSkeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "OutlineRail"
+      ],
+      "capable": [],
+      "incapable": [
+        "OutlineRail"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentModeNav/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPager/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentReaction/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentRelatedList/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueLearning/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaInvite/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/CourseTeamGate/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Alert",
+        "Callout"
+      ],
+      "capable": [],
+      "incapable": [
+        "Alert",
+        "Callout"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/EntityResultRow/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ContinueCardHero",
+        "SurfaceCard"
+      ],
+      "capable": [
+        "SurfaceCard"
+      ],
+      "incapable": [
+        "ContinueCardHero"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardModeSwitch/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceBody/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceEmpty/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Cluster",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationsHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/InterviewerPresence/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ResponsiveBreadcrumb"
+      ],
+      "capable": [],
+      "incapable": [
+        "ResponsiveBreadcrumb"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Typography",
+        "Chip",
+        "CollapsibleSidebar",
+        "SidebarNavGroup"
+      ],
+      "capable": [],
+      "incapable": [
+        "Typography",
+        "Chip",
+        "CollapsibleSidebar",
+        "SidebarNavGroup"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "React"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "AccordionSkeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "AccordionSkeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "OutlineRail"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button",
+        "Box"
+      ],
+      "capable": [
+        "Box"
+      ],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapFullscreenButton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledList"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledList"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledList"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledList"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "aside"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "StackV",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+      "reason": "multi-capable-roots",
+      "tags": [
+        "SurfaceCard",
+        "Container"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundDeviceSnapshot/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "StackV",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundHubHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button",
+        "StackV"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaChatBubble/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "QaInboxRow",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaReactionBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span",
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QuizCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "CheckCircleIcon",
+        "XCircleIcon",
+        "HeroRadio",
+        "HeroCheckbox",
+        "SectionCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "CheckCircleIcon",
+        "XCircleIcon",
+        "HeroRadio",
+        "HeroCheckbox",
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QuizEnrollGate/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/RatingBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "span",
+        "StackH"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "li"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ResumeRail/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Chip"
+      ],
+      "capable": [],
+      "incapable": [
+        "Chip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Icon",
+        "StackV",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/GithubGradingSettingsBody/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Typography",
+        "StackV"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/UpNextCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SectionCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/VoiceHero/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Dropdown",
+        "DropdownItem"
+      ],
+      "capable": [],
+      "incapable": [
+        "Dropdown",
+        "DropdownItem"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SimpleEmptyState"
+      ],
+      "capable": [],
+      "incapable": [
+        "SimpleEmptyState"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "article"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SimpleEmptyState"
+      ],
+      "capable": [],
+      "incapable": [
+        "SimpleEmptyState"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "article"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Discussion"
+      ],
+      "capable": [],
+      "incapable": [
+        "Discussion"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/E2eBody/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Accordion"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SimpleEmptyState"
+      ],
+      "capable": [],
+      "incapable": [
+        "SimpleEmptyState"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Chip"
+      ],
+      "capable": [],
+      "incapable": [
+        "Chip"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/SandboxBody/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "App",
+        "AsyncContent"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "ContinueCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LearnBreadcrumb"
+      ],
+      "capable": [],
+      "incapable": [
+        "LearnBreadcrumb"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Box",
+        "LabeledAccordionCard"
+      ],
+      "capable": [
+        "Box"
+      ],
+      "incapable": [
+        "LabeledAccordionCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+      "reason": "fragment-root"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Accordion",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "a",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "img",
+        "video",
+        "div",
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "section"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "g",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SectionCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/marketing/TruthList/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/CoverImage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/QRCode/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Dropdown"
+      ],
+      "capable": [],
+      "incapable": [
+        "Dropdown"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Slider"
+      ],
+      "capable": [],
+      "incapable": [
+        "Slider"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Popover"
+      ],
+      "capable": [],
+      "incapable": [
+        "Popover"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "iframe"
+      ]
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "MpegDash",
+        "Youtube",
+        "Standard"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/BackLink/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SidebarCollapsedContext"
+      ],
+      "capable": [],
+      "incapable": [
+        "SidebarCollapsedContext"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Tabs"
+      ],
+      "capable": [],
+      "incapable": [
+        "Tabs"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Button",
+        "ButtonGroup"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "HeroUILink",
+        "footer"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/NavLinks/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Dropdown",
+        "nav"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Accordion"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/Pagination/component.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "HeroPagination"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "HeroTabs"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Tabs",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "span",
+        "a",
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Accordion"
+      ],
+      "capable": [],
+      "incapable": [
+        "Accordion"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Select",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationBell/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Popover"
+      ],
+      "capable": [],
+      "incapable": [
+        "Popover"
+      ]
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ShareProfileButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "StackH",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Tabs"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/RankBadge/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/UserStreak/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Dropdown"
+      ],
+      "capable": [],
+      "incapable": [
+        "Dropdown"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "figure"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "pre",
+        "Spinner",
+        "Content"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "CodePreviewTabs"
+      ],
+      "capable": [],
+      "incapable": [
+        "CodePreviewTabs"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/PDFView/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "PdfViewportPage"
+      ]
+    },
+    {
+      "file": "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ResponsiveBreadcrumb"
+      ],
+      "capable": [],
+      "incapable": [
+        "ResponsiveBreadcrumb"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "React"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "HeroSkeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "HeroSkeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "SkeletonText"
+      ]
+    },
+    {
+      "file": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Skeleton"
+      ],
+      "capable": [],
+      "incapable": [
+        "Skeleton"
+      ]
+    },
+    {
+      "file": "src/components/blocks/stats/CourseProgressBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "React"
+      ]
+    },
+    {
+      "file": "src/components/blocks/stats/Score/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div",
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SectionCard",
+        "StackV"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Footer/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "footer"
+      ]
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/component.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Dropdown"
+      ],
+      "capable": [],
+      "incapable": [
+        "Dropdown"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Dropdown"
+      ],
+      "capable": [],
+      "incapable": [
+        "Dropdown"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Switch"
+      ],
+      "capable": [],
+      "incapable": [
+        "Switch"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "UserCell"
+      ],
+      "capable": [],
+      "incapable": [
+        "UserCell"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Dropdown"
+      ],
+      "capable": [],
+      "incapable": [
+        "Dropdown"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Button"
+      ],
+      "capable": [],
+      "incapable": [
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Dropdown"
+      ],
+      "capable": [],
+      "incapable": [
+        "Dropdown"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/Logo/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Popover"
+      ],
+      "capable": [],
+      "incapable": [
+        "Popover"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/SearchButton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "InputButtonLike"
+      ],
+      "capable": [],
+      "incapable": [
+        "InputButtonLike"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "nav"
+      ]
+    },
+    {
+      "file": "src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "PersonalProjectDashboard",
+        "PersonalProjectTaskPage",
+        "PersonalProjectResultScreen"
+      ],
+      "capable": [],
+      "incapable": [
+        "PersonalProjectDashboard",
+        "PersonalProjectTaskPage",
+        "PersonalProjectResultScreen"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "InputText"
+      ],
+      "capable": [],
+      "incapable": [
+        "InputText"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "InputPassword"
+      ],
+      "capable": [],
+      "incapable": [
+        "InputPassword"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/OtpState/index.tsx",
+      "reason": "fragment-root"
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "CredentialsState",
+        "OtpState"
+      ],
+      "capable": [],
+      "incapable": [
+        "CredentialsState",
+        "OtpState"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ChoiceCheckbox"
+      ],
+      "capable": [],
+      "incapable": [
+        "ChoiceCheckbox"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "InputText"
+      ],
+      "capable": [],
+      "incapable": [
+        "InputText"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "InputPassword"
+      ],
+      "capable": [],
+      "incapable": [
+        "InputPassword"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "RegistrationState",
+        "OtpState"
+      ],
+      "capable": [],
+      "incapable": [
+        "RegistrationState",
+        "OtpState"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SignInSection",
+        "SignUpSection",
+        "Modal"
+      ],
+      "capable": [],
+      "incapable": [
+        "SignInSection",
+        "SignUpSection",
+        "Modal"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Typography",
+        "span",
+        "StackV",
+        "SurfaceCardList"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContentEmpty",
+        "StackV"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "GlobalSearchEmpty",
+        "StackV"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "GlobalSearchEmpty"
+      ]
+    },
+    {
+      "file": "src/components/overlays/modals/MaintenanceModal/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "MediaCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "MediaCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "reason": "teacher-hold:ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "tr"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "reason": "teacher-hold:ps-admin-4"
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminLoginPage/index.tsx",
+      "reason": "teacher-hold:ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "reason": "teacher-hold:ps-admin-6"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "reason": "teacher-hold:ps-admin-2"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "reason": "teacher-hold:ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "reason": "teacher-hold:ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "LoadingScreen",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContent"
+      ]
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/AppearancePage/index.tsx",
+      "reason": "teacher-hold:learn-appearance-five-column-effects-grid"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "button",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "reason": "teacher-hold:ps-arch-rail-sections-gap3"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "span"
+      ]
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "reason": "teacher-hold:ps-arch-node-blog-link-gap2"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "reason": "teacher-hold:ps-arch-main-gap10"
+    },
+    {
+      "file": "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/pages/BlogListPage/Masthead/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ArchitectureScene"
+      ],
+      "capable": [],
+      "incapable": [
+        "ArchitectureScene"
+      ]
+    },
+    {
+      "file": "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/ReadingProgress/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "section"
+      ]
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardRow"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardRow"
+      ]
+    },
+    {
+      "file": "src/components/pages/CommunityChatPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "PageContainer"
+      ],
+      "capable": [],
+      "incapable": [
+        "PageContainer"
+      ]
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/CommunityComposer/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/component.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "PageContainer",
+        "AsyncContentError",
+        "StackV"
+      ]
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactFaq/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Box",
+        "form"
+      ]
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "PageContainer"
+      ],
+      "capable": [],
+      "incapable": [
+        "PageContainer"
+      ]
+    },
+    {
+      "file": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "CourseCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "CourseCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseCtaButtons/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Accordion"
+      ],
+      "capable": [],
+      "incapable": [
+        "Accordion"
+      ]
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "PageHeader"
+      ],
+      "capable": [],
+      "incapable": [
+        "PageHeader"
+      ]
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "StickyBottomBar"
+      ],
+      "capable": [],
+      "incapable": [
+        "StickyBottomBar"
+      ]
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseTrustStats/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/pages/CvGalleryPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Link"
+      ],
+      "capable": [],
+      "incapable": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Tabs"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LeaderboardListCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LeaderboardListCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContentEmpty",
+        "LabeledCard",
+        "LeaderboardListCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledList"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledList"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContentError",
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardRow"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardRow"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContentError",
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SectionCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "SectionCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Modal"
+      ],
+      "capable": [],
+      "incapable": [
+        "Modal"
+      ]
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/FlashcardReviewPage/index.tsx",
+      "reason": "teacher-hold:learn-flashcard-review-four-column-grade-grid"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContentError",
+        "AsyncContentEmpty",
+        "Chip",
+        "StackV",
+        "StackH"
+      ]
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContentError",
+        "AsyncContentEmpty",
+        "StackV"
+      ]
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyBreadcrumbs/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Breadcrumbs"
+      ],
+      "capable": [],
+      "incapable": [
+        "Breadcrumbs"
+      ]
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "AsyncContentError",
+        "HeadhuntingCompanyLoadingState",
+        "div",
+        "Box"
+      ]
+    },
+    {
+      "file": "src/components/pages/InstallmentPlansPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "StackV",
+        "Card"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/pages/JobDetailPage/component.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContentError",
+        "AsyncContentEmpty",
+        "Container",
+        "StackV",
+        "Button",
+        "Callout"
+      ]
+    },
+    {
+      "file": "src/components/pages/JobListPage/JobListRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard",
+        "Typography"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SubmitSuccess",
+        "Box"
+      ],
+      "capable": [
+        "Box"
+      ],
+      "incapable": [
+        "SubmitSuccess"
+      ]
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ReactFlow"
+      ],
+      "capable": [],
+      "incapable": [
+        "ReactFlow"
+      ]
+    },
+    {
+      "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "reason": "teacher-hold:ps-landing-talent-cta"
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "reason": "teacher-hold:ps-landing-blog-link"
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "ListRow"
+      ]
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContent",
+        "ListRow"
+      ]
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContent"
+      ]
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "CourseDetail",
+        "div",
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/LegalPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "StackV",
+        "PageContainer"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "PageContainer"
+      ]
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SignInSection",
+        "SignUpSection",
+        "Box"
+      ],
+      "capable": [
+        "Box"
+      ],
+      "incapable": [
+        "SignInSection",
+        "SignUpSection"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "ReactFlowProvider"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewGatePreview/index.tsx",
+      "reason": "teacher-hold:mockinterview-gate-preview-p5"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContent"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "Accordion",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "reason": "locked-path"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContent",
+        "VerdictHeroCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Modal"
+      ],
+      "capable": [],
+      "incapable": [
+        "Modal"
+      ]
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MyFeedbackPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/OauthRedirectPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "reason": "teacher-hold:ps-practice-step4-col-no-token"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "reason": "teacher-hold:ps-practice-icon-text-8px"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "reason": "teacher-hold:ps-practice-step4-col-no-token"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "reason": "teacher-hold:ps-practice-horiz-title-chip"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "reason": "teacher-hold:ps-practice-label-field-8px"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/index.tsx",
+      "reason": "teacher-hold:ps-practice-asymmetric-pad"
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "reason": "teacher-hold:ps-practice-padded-toolbar"
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/index.tsx",
+      "reason": "teacher-hold:ps-practice-dynamic-flex-action"
+    },
+    {
+      "file": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "StackV"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Tooltip",
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "Tooltip",
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ProfileSectionGuard"
+      ],
+      "capable": [],
+      "incapable": [
+        "ProfileSectionGuard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "LanguageChip",
+        "Typography",
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContent"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ProfileSectionGuard"
+      ],
+      "capable": [],
+      "incapable": [
+        "ProfileSectionGuard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem",
+        "StackV"
+      ],
+      "capable": [
+        "StackV"
+      ],
+      "incapable": [
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "SurfaceListCardItem",
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "SurfaceListCardItem",
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "a",
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "LabeledCard"
+      ],
+      "capable": [],
+      "incapable": [
+        "LabeledCard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ProfileSectionGuard"
+      ],
+      "capable": [],
+      "incapable": [
+        "ProfileSectionGuard"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "reason": "AsyncContent-root",
+      "tags": [
+        "AsyncContent",
+        "LabeledCard",
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "ProfileSectionGuard"
+      ],
+      "capable": [],
+      "incapable": [
+        "ProfileSectionGuard"
+      ]
+    },
+    {
+      "file": "src/components/pages/PublicArticlePage/index.tsx",
+      "reason": "no-return-jsx-found"
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Box",
+        "LabeledCard",
+        "Card"
+      ],
+      "capable": [
+        "Box"
+      ],
+      "incapable": [
+        "LabeledCard",
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "reason": "teacher-hold:learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "reason": "teacher-hold:learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "reason": "teacher-hold:learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "reason": "teacher-hold:learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+      "reason": "teacher-hold:learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/index.tsx",
+      "reason": "teacher-hold:learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SessionsPage/index.tsx",
+      "reason": "mixed-host-and-component-roots",
+      "tags": [
+        "div",
+        "SurfaceListCardItem"
+      ]
+    },
+    {
+      "file": "src/components/pages/SettingsHomePage/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "reason": "incapable-or-mixed-root",
+      "tags": [
+        "Card"
+      ],
+      "capable": [],
+      "incapable": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "reason": "host-element-root",
+      "tags": [
+        "div"
+      ]
+    }
+  ],
+  "skippedLocked": [
+    "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/index.tsx",
+    "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+    "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx"
+  ],
+  "skippedHold": [
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "hold": "ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "hold": "ps-admin-4"
+    },
+    {
+      "file": "src/components/pages/AdminLoginPage/index.tsx",
+      "hold": "ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "hold": "ps-admin-6"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "hold": "ps-admin-2"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "hold": "ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "hold": "ps-admin-5"
+    },
+    {
+      "file": "src/components/pages/AppearancePage/index.tsx",
+      "hold": "learn-appearance-five-column-effects-grid"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "hold": "ps-arch-rail-sections-gap3"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "hold": "ps-arch-node-blog-link-gap2"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "hold": "ps-arch-main-gap10"
+    },
+    {
+      "file": "src/components/pages/FlashcardReviewPage/index.tsx",
+      "hold": "learn-flashcard-review-four-column-grade-grid"
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "hold": "ps-landing-talent-cta"
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "hold": "ps-landing-blog-link"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewGatePreview/index.tsx",
+      "hold": "mockinterview-gate-preview-p5"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "hold": "ps-practice-step4-col-no-token"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "hold": "ps-practice-icon-text-8px"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "hold": "ps-practice-step4-col-no-token"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "hold": "ps-practice-horiz-title-chip"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "hold": "ps-practice-label-field-8px"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/index.tsx",
+      "hold": "ps-practice-asymmetric-pad"
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "hold": "ps-practice-padded-toolbar"
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/index.tsx",
+      "hold": "ps-practice-dynamic-flex-action"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "hold": "learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "hold": "learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "hold": "learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "hold": "learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+      "hold": "learn-sepay-offscale-card-padding"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/index.tsx",
+      "hold": "learn-sepay-offscale-card-padding"
+    }
+  ],
+  "skippedAlready": [],
+  "safeByTag": {
+    "StackV": 21,
+    "SurfaceCard": 6,
+    "StackH": 6,
+    "SurfaceCardList": 4,
+    "Box": 13,
+    "Cluster": 2,
+    "ModalShell": 1,
+    "Container": 1
+  },
+  "hardByReason": {
+    "host-element-root": 278,
+    "incapable-or-mixed-root": 174,
+    "no-return-jsx-found": 70,
+    "fragment-root": 3,
+    "mixed-host-and-component-roots": 64,
+    "locked-path": 12,
+    "multi-capable-roots": 1,
+    "AsyncContent-root": 16,
+    "teacher-hold": 29
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "partition": "atoms-display-forms",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "Replacing `dotClassName` with a named prop (`dotTone` / fold into `dotColor`) is an API redesign: live importers sit outside this partition (PlaygroundConnectSheet, VariantChipDifficulty, Chip stories) and locked Nivo (AgentCard). Cannot complete a coherent patch without editing out-of-manifest / locked paths."
+    },
+    {
+      "path": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "Storybook twin of ChipBase — held in lockstep with src; same API-redesign / cross-partition importer blocker. (Rule only reports under src/, but twin must stay synced.)"
+    },
+    {
+      "path": "src/components/atoms/display/Logo/index.tsx",
+      "rules": ["starci-fe/no-hardcoded-user-text-in-vocabulary"],
+      "reason": "semantic-hold — `aria-label=\"StarCi Academy\"` needs a resolved i18n string prop; out of safe-mechanical/safe-structural scope."
+    },
+    {
+      "path": "src/components/atoms/navigation/Pagination/index.tsx",
+      "rules": ["starci-fe/no-hardcoded-user-text-in-vocabulary"],
+      "reason": "semantic-hold — hardcoded `aria-label` strings (`Previous page` / `Trang sau`) need resolved i18n props; out of safe-mechanical/safe-structural scope."
+    }
+  ],
+  "verification": {
+    "eslint": "not-run — no files changed",
+    "tsc": "not-run — no type surface changed",
+    "manifestFiles": 3,
+    "candidateBurned": 0,
+    "holdsRecorded": 4
+  },
+  "regressions": []
+}

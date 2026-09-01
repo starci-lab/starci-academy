@@ -1,0 +1,48 @@
+{
+  "partition": "commerce-dialog-contracts",
+  "consumers": {
+    "dialogClassName": [
+      {
+        "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+        "line": 302,
+        "class": "sm:max-w-md"
+      }
+    ],
+    "footerClassName": [
+      {
+        "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+        "line": 310,
+        "class": "flex-col! items-stretch! justify-start! gap-3! border-t"
+      }
+    ]
+  },
+  "currentSemantics": {
+    "dialogClassName": "Caps DrawerDialog width at max-w-md from sm up (HeroUI L/R default is w-80/sm:w-96)",
+    "footerClassName": "Forces stacked stretch footer with top border over HeroUI DrawerFooter flex-row justify-end"
+  },
+  "proposedContract": {
+    "dialogWidth": "\"md\" → bake sm:max-w-md on DrawerShell (src+SB)",
+    "footerVariant": "\"stacked\" → bake flex-col! items-stretch! justify-start! gap-3! border-t",
+    "migrate": "MiniCart in same change; then remove ClassName props",
+    "requiresTeacherApproval": true
+  },
+  "existingCanonEvidence": {
+    "DrawerShell.size": null,
+    "DrawerDialog": "owns gap-3 only",
+    "HeroUIDrawerWidths": "w-80 / sm:w-96 — not max-w-md",
+    "spacingTokenForStackedFooter": null,
+    "overlay-and-feedback.md": "drawer section stale (says no DrawerShell); no dialogWidth"
+  },
+  "storybookSrcParity": {
+    "dialogClassName": "compatible — both twins declare",
+    "footerClassName": "compatible — both twins declare",
+    "stories": "DrawerShell.stories does not exercise either prop"
+  },
+  "implementationReady": false,
+  "implementationReadyReason": "Gate #3 fails — dialogWidth/footerVariant are new named APIs, not an existing canon token or component. Single MiniCart consumer + discrete values make them APPROVAL-READY proposals, not silent invents.",
+  "changed": [],
+  "holds": [
+    "MiniCart-dialogClassName-footerClassName-live"
+  ],
+  "regressions": []
+}

@@ -1,0 +1,10 @@
+{
+  "batch": "B39",
+  "agent": "marketing-inventory-b",
+  "mode": "read-only-inventory",
+  "checkpoint": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "half": "B",
+  "props": 7,
+  "string": 2,
+  "dead": 5
+}

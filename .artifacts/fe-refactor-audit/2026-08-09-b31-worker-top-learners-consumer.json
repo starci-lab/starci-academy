@@ -1,0 +1,41 @@
+{
+  "warningsBefore": {
+    "TopLearnersComponent": 10
+  },
+  "warningsAfter": null,
+  "openTagConsumersBefore": [
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "value": "{className}"
+    }
+  ],
+  "openTagConsumersAfter": null,
+  "layoutOwnership": [
+    {
+      "payload": "className passthrough",
+      "owner": "dead — CommunityTab passes nothing",
+      "classification": "parent-placement none"
+    }
+  ],
+  "changed": [],
+  "skipped": [
+    "src/components/pages/DashboardPage/TopLearners/component.tsx"
+  ],
+  "holds": [
+    "page-folder-two-files-only",
+    "inline skeleton className props"
+  ],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [],
+  "parity": {},
+  "verification": {
+    "phase": 1,
+    "sourceEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass-no-locked-nivo-overlap",
+  "manifest": [],
+  "proposedButBlocked": [
+    "src/components/pages/DashboardPage/TopLearners/component.tsx"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "batch": "B31r3",
+  "complete": false,
+  "status": "partial",
+  "checkpoint": "8ccf8641",
+  "b31r2Commit": "94c5f8fb",
+  "contract": ".claude/fe/contracts/identity-tile.md",
+  "summary": "3/6 targets migrated to IdentityTile at zero warnings; 3 held; legacy block retained.",
+  "migrated": [
+    {
+      "file": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "size": "md",
+      "landedIn": "8ccf8641"
+    },
+    {
+      "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "size": "lg",
+      "landedIn": "8ccf8641"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      "size": "sm",
+      "landedIn": "working-tree"
+    }
+  ],
+  "held": [
+    "ReadinessChecklist",
+    "CartLine",
+    "EnrollGate"
+  ],
+  "legacyImportCount": { "before": 33, "after": 30, "blockDeleted": false },
+  "gates": {
+    "tsc": "pass",
+    "eslintChanged": "pass",
+    "pluginTests": "pass",
+    "storybookTests": "pass",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass"
+  }
+}

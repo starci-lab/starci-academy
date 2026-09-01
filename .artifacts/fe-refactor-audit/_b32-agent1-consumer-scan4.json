@@ -1,0 +1,1598 @@
+{
+  "Button": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Chip": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    },
+    "dotClassName": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Avatar": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Badge": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Divider": {
+    "classNames": {
+      "consumers": 2,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/frames/Stack/Stack.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 157
+            }
+          ]
+        },
+        {
+          "file": "src/components/frames/Stack/index.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 157
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "IconTile": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Logo": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Spinner": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Alert": {
+    "classNames": {
+      "consumers": 1,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/composites/feedback/Callout/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 135
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "QRCode": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Accordion": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Breadcrumbs": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "LinkBack": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "LinkSeeMore": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Pagination": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "TabsBase": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "TabsExtended": {
+    "classNames": {
+      "consumers": 1,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 99
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Menu": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Typography": {
+    "classNames": {
+      "consumers": 61,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/feedback/OneTimeReveal/OneTimeReveal.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 175
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/PodAccessTokensPanel/PodAccessTokensPanel.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 281
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/PodOpenclawStatusCard/PodOpenclawStatusCard.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 173
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 99
+            },
+            {
+              "tag": "Typography",
+              "line": 109
+            },
+            {
+              "tag": "Typography",
+              "line": 157
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 118
+            },
+            {
+              "tag": "Typography",
+              "line": 124
+            },
+            {
+              "tag": "Typography",
+              "line": 126
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 254
+            },
+            {
+              "tag": "Typography",
+              "line": 265
+            },
+            {
+              "tag": "Typography",
+              "line": 305
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 83
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 159
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 128
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 92
+            },
+            {
+              "tag": "Typography",
+              "line": 97
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 21
+            },
+            {
+              "tag": "Typography",
+              "line": 22
+            },
+            {
+              "tag": "Typography",
+              "line": 28
+            },
+            {
+              "tag": "Typography",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 91
+            },
+            {
+              "tag": "Typography",
+              "line": 95
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 105
+            },
+            {
+              "tag": "Typography",
+              "line": 117
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 25
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 60
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 166
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 229
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 26
+            },
+            {
+              "tag": "Typography",
+              "line": 40
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 18
+            },
+            {
+              "tag": "Typography",
+              "line": 19
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 160
+            },
+            {
+              "tag": "Typography",
+              "line": 162
+            },
+            {
+              "tag": "Typography",
+              "line": 195
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 95
+            },
+            {
+              "tag": "Typography",
+              "line": 121
+            },
+            {
+              "tag": "Typography",
+              "line": 122
+            },
+            {
+              "tag": "Typography",
+              "line": 123
+            },
+            {
+              "tag": "Typography",
+              "line": 157
+            },
+            {
+              "tag": "Typography",
+              "line": 159
+            },
+            {
+              "tag": "Typography",
+              "line": 176
+            },
+            {
+              "tag": "Typography",
+              "line": 177
+            },
+            {
+              "tag": "Typography",
+              "line": 202
+            },
+            {
+              "tag": "Typography",
+              "line": 221
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/chips/RemovableToken/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 141
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/data/KeyValue/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 116
+            },
+            {
+              "tag": "Typography",
+              "line": 128
+            },
+            {
+              "tag": "Typography",
+              "line": 147
+            },
+            {
+              "tag": "Typography",
+              "line": 149
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/lists/AuthorByline/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 86
+            },
+            {
+              "tag": "Typography",
+              "line": 111
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 96
+            },
+            {
+              "tag": "Typography",
+              "line": 105
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/lists/UserCell/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 142
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/text/DotLabel/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 143
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/text/MetaDotRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 85
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/text/PricePeriod/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 90
+            },
+            {
+              "tag": "Typography",
+              "line": 110
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/text/ScoreValue/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 52
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/text/TitledText/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 135
+            },
+            {
+              "tag": "Typography",
+              "line": 145
+            },
+            {
+              "tag": "Typography",
+              "line": 156
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/viewers/MarkdownContent/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 380
+            },
+            {
+              "tag": "Typography",
+              "line": 381
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 98
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 103
+            },
+            {
+              "tag": "Typography",
+              "line": 135
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 127
+            },
+            {
+              "tag": "Typography",
+              "line": 146
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 57
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 213
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 180
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/BlogListPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 92
+            },
+            {
+              "tag": "Typography",
+              "line": 93
+            },
+            {
+              "tag": "Typography",
+              "line": 94
+            },
+            {
+              "tag": "Typography",
+              "line": 103
+            },
+            {
+              "tag": "Typography",
+              "line": 104
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CommunityFeedPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 44
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 65
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 76
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 41
+            },
+            {
+              "tag": "Typography",
+              "line": 54
+            },
+            {
+              "tag": "Typography",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 96
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 159
+            },
+            {
+              "tag": "Typography",
+              "line": 185
+            },
+            {
+              "tag": "Typography",
+              "line": 220
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardReviewPage/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 204
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 263
+            },
+            {
+              "tag": "Typography",
+              "line": 267
+            },
+            {
+              "tag": "Typography",
+              "line": 268
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 183
+            },
+            {
+              "tag": "Typography",
+              "line": 243
+            },
+            {
+              "tag": "Typography",
+              "line": 255
+            },
+            {
+              "tag": "Typography",
+              "line": 341
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 282
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 240
+            },
+            {
+              "tag": "Typography",
+              "line": 244
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 123
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 142
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 157
+            },
+            {
+              "tag": "Typography",
+              "line": 158
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobDetailPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 230
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobListPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 276
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/KpiPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 118
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 327
+            },
+            {
+              "tag": "Typography",
+              "line": 374
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 187
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 83
+            },
+            {
+              "tag": "Typography",
+              "line": 86
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 74
+            },
+            {
+              "tag": "Typography",
+              "line": 88
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 92
+            },
+            {
+              "tag": "Typography",
+              "line": 118
+            },
+            {
+              "tag": "Typography",
+              "line": 147
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Progress": {
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "ButtonAlias": {
+    "classNames": {
+      "consumers": 44,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/blocks/cards/ContinueCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 168
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/PricingTable/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 153
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 118
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 100
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 142
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 26
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 59
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 109
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 105
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ModuleContinueBand/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 108
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 85
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 114
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundEnterBanner/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 80
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/QuizCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 323
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/Navbar/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 336
+            },
+            {
+              "tag": "Button",
+              "line": 516
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 273
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 184
+            },
+            {
+              "tag": "Button",
+              "line": 185
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/chips/RemovableToken/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 85
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 273
+            },
+            {
+              "tag": "Button",
+              "line": 284
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 203
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 35
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/OtpState/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 129
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 122
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 183
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 70
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 154
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 125
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 356
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 233
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/CurlTester/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 99
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/BlogPostPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 185
+            },
+            {
+              "tag": "Button",
+              "line": 190
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CartPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 86
+            },
+            {
+              "tag": "Button",
+              "line": 297
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CourseContents/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 285
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CourseDetailPage/CourseCtaButtons/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 42
+            },
+            {
+              "tag": "Button",
+              "line": 64
+            },
+            {
+              "tag": "Button",
+              "line": 88
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 34
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 163
+            },
+            {
+              "tag": "Button",
+              "line": 164
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 330
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 329
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 300
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 287
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobListPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 238
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewResult/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 120
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 97
+            },
+            {
+              "tag": "Button",
+              "line": 105
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "ChipAlias": {
+    "classNames": {
+      "consumers": 9,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/blocks/course/CourseTrialChip/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 31
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 99
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 143
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 31
+            },
+            {
+              "tag": "Chip",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/chips/EnumChip/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 114
+            },
+            {
+              "tag": "Chip",
+              "line": 122
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 32
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 196
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 132
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 151
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "dotClassName": {
+      "consumers": 5,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 112
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/PlaygroundConnectSheet/PlaygroundConnectSheet.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 206
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 30
+            },
+            {
+              "tag": "Chip",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 206
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 31
+            },
+            {
+              "tag": "Chip",
+              "line": 37
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "AvatarAlias": {
+    "classNames": {
+      "consumers": 1,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 123
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  }
+}

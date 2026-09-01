@@ -1,0 +1,36 @@
+{
+  "worker": "readiness-componenttype-migration",
+  "status": "done",
+  "edited": [
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/providers/PlaygroundSessionProvider/index.tsx"
+  ],
+  "warningsBefore": {
+    "ReadinessChecklist": 2,
+    "PlaygroundSessionProvider": 0
+  },
+  "warningsAfter": {
+    "ReadinessChecklist": 0,
+    "PlaygroundSessionProvider": 0
+  },
+  "consumerValues": {
+    "ListRow.className": "p-3 → density=\"comfortable\"",
+    "icon": "ReactNode → IdentityTileIcon (ComponentType)",
+    "leading": "stable ReadyLeading + WeakMap-cached pendingLeading(Icon)",
+    "trailing": "Map-cached StatusChip ComponentType"
+  },
+  "legacyIconTile": {
+    "before": "blocks/identity/IconTile",
+    "after": "atoms/display/IdentityTile size=\"sm\""
+  },
+  "providerIcons": [
+    "RobotIcon",
+    "CircuitryIcon|SiDocker|SiKubernetes",
+    "CpuIcon",
+    "Ollama",
+    "StackIcon",
+    "Qwen"
+  ],
+  "holds": [],
+  "overlap": "none"
+}

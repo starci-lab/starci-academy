@@ -1,0 +1,67 @@
+{
+  "worker": "src-pages-learning",
+  "status": "done",
+  "fixed": [],
+  "held": [
+    {
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "frag": 3,
+      "reason": "other-debt:4 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "frag": 2,
+      "reason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:56 (starci-fe/page-folder-two-files-only,starci-fe/no-heroui-outside-vocabulary,starci-fe/no-parallel-skeleton,starci-fe/no-classname-at-sentence-tier)"
+    },
+    {
+      "file": "src/components/pages/FoundationResourcePage/component.tsx",
+      "frag": 2,
+      "reason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "frag": 2,
+      "reason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/FoundationsGridPage/component.tsx",
+      "frag": 2,
+      "reason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/LeaderboardPage/component.tsx",
+      "frag": 2,
+      "reason": "other-debt:4 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "frag": 1,
+      "reason": "other-debt:11 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop,starci-fe/handler-on-prefix)"
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "frag": 7,
+      "reason": "other-debt:10 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/PlaygroundHubPage/component.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "frag": 2,
+      "reason": "other-debt:4 (starci-fe/require-frame-self-declare)"
+    }
+  ],
+  "findingsBefore": 26,
+  "findingsFixed": 0,
+  "findingsHeld": 26,
+  "note": "All files held: zero-warn ratchet — unrelated debt cannot close with frame-items contract alone.",
+  "twinParity": "SB twins may be fixed while src remains held when src has other debt."
+}

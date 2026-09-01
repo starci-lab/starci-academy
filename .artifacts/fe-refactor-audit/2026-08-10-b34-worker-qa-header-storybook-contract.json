@@ -1,0 +1,94 @@
+{
+  "agent": "qa-header-storybook-contract",
+  "batch": "B34",
+  "wave": "A",
+  "contract": "C-QaConversationHeader",
+  "checkpoint": "6ff21c66",
+  "focus": "Canonical QaConversationHeader person + labels on Storybook blueprint",
+  "ownedFiles": [
+    ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+    ".storybook/stories/starci/blocks/learn/QaConversationHeader/QaConversationHeader.stories.tsx"
+  ],
+  "srcTwin": {
+    "path": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "edited": false,
+    "note": "Wave B owns src twin; Wave A Storybook-only"
+  },
+  "api": {
+    "QaConversationHeaderPerson": {
+      "id": "string",
+      "displayName": "string",
+      "avatarUrl": "string?"
+    },
+    "QaConversationHeaderLabels": {
+      "collapse": "string",
+      "askedBy": "(displayName: string) => string",
+      "replies": "(count: number) => string",
+      "beFirst": "string",
+      "founderBadge": "string",
+      "follow": "string",
+      "following": "string"
+    },
+    "propsRetained": [
+      "asker",
+      "participants",
+      "replyCount",
+      "onCollapse",
+      "isFounderAsker",
+      "canFollow",
+      "isFollowing",
+      "onToggleFollow",
+      "isFollowPending",
+      "isSkeleton"
+    ],
+    "propsAdded": ["labels?"],
+    "defaultLabels": {
+      "collapse": "Collapse conversation",
+      "askedBy": "identity — returns displayName (prior Storybook visual)",
+      "replies": "`${count} people have answered`",
+      "beFirst": "Be the first to answer",
+      "founderBadge": "Founder",
+      "follow": "Follow",
+      "following": "Following"
+    }
+  },
+  "changes": [
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "actions": [
+        "Exported QaConversationHeaderLabels (named strings/formatters — not ReactNode)",
+        "Added optional labels? prop; omitted → DEFAULT_LABELS inside the block",
+        "Root StackH owns identity={{ tier: \"block\", component: \"QaConversationHeader\" }}",
+        "Replaced identity-column classNames={[\"min-w-0\",\"flex-1\"]} with FillAvailable at=\"base\"",
+        "Follow control remains house Button with L.follow / L.following — not FollowButton",
+        "Wired collapse/askedBy/replies/beFirst/founderBadge through labels",
+        "No HeroUI / cn / raw hosts / public CSS doors"
+      ]
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/learn/QaConversationHeader/QaConversationHeader.stories.tsx",
+      "actions": [
+        "Annotated FillAvailable; corrected AvatarGroup tier to composite",
+        "Added WithFollow leaf (canFollow + isSkeleton) documenting house Button follow"
+      ]
+    }
+  ],
+  "vocabulary": [
+    "Button",
+    "Avatar",
+    "AvatarGroup",
+    "Typography",
+    "StackH",
+    "StackV",
+    "FillAvailable"
+  ],
+  "skeleton": "preserved — per-part isSkeleton mirrors; collapse/follow disabled while skeleton",
+  "holds": [],
+  "verification": {
+    "tscStorybook": "pass (no QaConversationHeader diagnostics)",
+    "eslintOwned": "pass (exit 0)",
+    "gitDiffCheck": "pass",
+    "srcUntouched": true
+  },
+  "status": "done"
+}

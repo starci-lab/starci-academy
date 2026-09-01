@@ -1,0 +1,47 @@
+{
+  "worker": "src-blocks-commerce-dashboard-navigation",
+  "status": "done",
+  "fixed": [],
+  "held": [
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:4 (starci-fe/no-emoji-in-source,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:11 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:3 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "frag": 8,
+      "reason": "other-debt:15 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "frag": 11,
+      "reason": "other-debt:22 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:3 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-cn-above-vocabulary)"
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:8 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-raw-shape-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    }
+  ],
+  "findingsBefore": 25,
+  "findingsFixed": 0,
+  "findingsHeld": 25,
+  "note": "All files held: zero-warn ratchet — unrelated debt cannot close with frame-items contract alone.",
+  "twinParity": "SB twins may be fixed while src remains held when src has other debt."
+}

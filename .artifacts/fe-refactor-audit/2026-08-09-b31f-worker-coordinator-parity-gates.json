@@ -1,0 +1,31 @@
+{
+  "worker": "coordinator-parity-gates",
+  "status": "done",
+  "overlap": "none",
+  "findings": {
+    "before": 344,
+    "after": 207,
+    "fixed": 137,
+    "held": 207
+  },
+  "changedFiles": 67,
+  "gates": {
+    "tsc --noEmit": "pass",
+    "eslint --max-warnings=0 (changed files)": "pass",
+    "plugins/eslint/frame-items.test.mjs": "pass",
+    "plugins/eslint/public-contracts.test.mjs": "pass",
+    "plugins/eslint/sentence-tier.test.mjs": "pass",
+    "plugins/eslint/namespaces.test.mjs": "pass",
+    "plugins/eslint/authoring.test.mjs": "pass",
+    "plugins/eslint/contentpage.test.mjs": "pass",
+    ".storybook/test-runner/principle-style.test.mjs": "pass",
+    ".storybook/test-runner/semantic-contracts.test.mjs": "pass",
+    "npm run audit:fe": "pass",
+    "git diff --check": "pass"
+  },
+  "parity": {
+    "sbFixedSrcHeld": "Most SB twins fixed while src counterparts held for unrelated debt",
+    "srcFixedOnly": ["src/components/blocks/profile/ProfileLockedState/index.tsx"]
+  },
+  "ledgerUpdated": "b31f-typed-frame-item-mass-closure-2026-08-09"
+}

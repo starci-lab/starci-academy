@@ -1,0 +1,22 @@
+{
+  "partition": "skeleton-and-layout-holds",
+  "changed": [],
+  "skipped": [
+    "skeleton redesign holds from BATCH 13",
+    "MiniCart dialogWidth/footerVariant proposals",
+    "CvPreview viewportFit proposal",
+    "PDF height enum proposal",
+    "ContinueCard bodyVariant/contentStack proposal",
+    "teacher pattern holds (27)"
+  ],
+  "holds": [
+    "skeleton-contracts",
+    "stacking-layout-named-slots",
+    "teacher-holds-27"
+  ],
+  "evidence": {
+    "action": "document only — no edits; inventing slots forbidden"
+  },
+  "verification": { "note": "no product edits" },
+  "regressions": []
+}

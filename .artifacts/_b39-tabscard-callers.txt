@@ -1,0 +1,872 @@
+﻿src\components\pages\TalentDirectoryPage\component.tsx:230:                            <TabsCard
+src\components\pages\TalentDirectoryPage\component.tsx-231-                                leftTabs={{
+src\components\pages\TalentDirectoryPage\component.tsx-232-                                    items: tracks.map((track) => ({ key: track.key, label: track.label })),
+src\components\pages\TalentDirectoryPage\component.tsx-233-                                    selectedKey: selectedTrackKey,
+src\components\pages\TalentDirectoryPage\component.tsx-234-                                    ariaLabel: labels.trackFilterAria,
+src\components\pages\TalentDirectoryPage\component.tsx-235-                                    onSelectionChange,
+src\components\pages\TalentDirectoryPage\component.tsx-236-                                }}
+src\components\pages\TalentDirectoryPage\component.tsx-237-                            />
+src\components\pages\TalentDirectoryPage\component.tsx-238-                        )] : []),
+src\components\pages\TalentDirectoryPage\component.tsx-239-
+src\components\pages\TalentDirectoryPage\component.tsx-240-                        () => (
+src\components\pages\TalentDirectoryPage\component.tsx-241-                            <GroupPressableCard
+src\components\pages\TalentDirectoryPage\component.tsx-242-                                ariaLabel={labels.candidatesAria}
+src\components\pages\TalentDirectoryPage\component.tsx-243-                                // container steps, not viewport. A candidate card carries a 48px
+src\components\pages\TalentDirectoryPage\component.tsx-244-                                // avatar + name + chips, so it needs real width: two-up from 576px
+src\components\pages\TalentDirectoryPage\component.tsx-245-                                // (Γëê284px each), three-up only from 896px (Γëê293px each).
+src\components\pages\TalentDirectoryPage\component.tsx-246-                                columns={{ base: 1, xl: 2, xl4: 3 }}
+src\components\pages\TalentDirectoryPage\component.tsx-247-                                items={candidateItems}
+src\components\pages\TalentDirectoryPage\component.tsx-248-                            />
+src\components\pages\TalentDirectoryPage\component.tsx-249-                        ),
+src\components\pages\TalentDirectoryPage\component.tsx-250-                    ]} />
+src\components\pages\TalentDirectoryPage\component.tsx-251-            )}
+src\components\pages\TalentDirectoryPage\component.tsx-252-        />
+src\components\pages\TalentDirectoryPage\component.tsx-253-    )
+src\components\pages\TalentDirectoryPage\component.tsx-254-}
+--
+src\components\pages\FlashcardsPage\QuizSession\index.tsx:812:                        <TabsCard
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-813-                            variant="secondary"
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-814-                            className="w-full"
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-815-                            leftTabs={{
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-816-                                items: [
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-817-                                    { key: "begin", label: t("flashcard.quiz.setupTabBegin") },
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-818-                                    { key: "history", label: t("flashcard.quiz.setupTabHistory") },
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-819-                                    { key: "stats", label: t("flashcard.quiz.setupTabStats") },
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-820-                                ],
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-821-                                selectedKey: setupTab,
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-822-                                ariaLabel: t("flashcard.quiz.setupTabBegin"),
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-823-                                onSelectionChange: (key) => setSetupTab(key as "begin" | "history" | "stats"),
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-824-                            }}
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-825-                        />
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-826-                    ),
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-827-                    () => (
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-828-                        setupTab === "history" ? (
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-829-                            <FlashcardQuizHistory courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-830-                        ) : setupTab === "stats" ? (
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-831-                            <FlashcardQuizStats courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-832-                        ) : (
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-833-                            <StackV gap={6} items={[
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-834-                                ...(resumeData ? [() => {
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-835-                                    const resumeRemainingMinutes = Math.max(
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-836-                                        0,
+src\components\pages\FlashcardsPage\QuizSession\index.tsx-837-                                        Math.ceil((new Date(resumeData.deadlineAt).getTime() - Date.now()) / 60_000),
+--
+src\components\pages\FlashcardsPage\index.tsx:345:                                <TabsCard
+src\components\pages\FlashcardsPage\index.tsx-346-                                    variant="primary"
+src\components\pages\FlashcardsPage\index.tsx-347-                                    leftTabs={{
+src\components\pages\FlashcardsPage\index.tsx-348-                                        items: [
+src\components\pages\FlashcardsPage\index.tsx-349-                                            { key: "study", label: t("flashcard.mode.study") },
+src\components\pages\FlashcardsPage\index.tsx-350-                                            { key: "quiz", label: t("flashcard.mode.quiz") },
+src\components\pages\FlashcardsPage\index.tsx-351-                                        ],
+src\components\pages\FlashcardsPage\index.tsx-352-                                        selectedKey: mode,
+src\components\pages\FlashcardsPage\index.tsx-353-                                        ariaLabel: t("flashcard.title"),
+src\components\pages\FlashcardsPage\index.tsx-354-                                        onSelectionChange: (key) => goMode(key as FlashcardMode),
+src\components\pages\FlashcardsPage\index.tsx-355-                                    }}
+src\components\pages\FlashcardsPage\index.tsx-356-                                />
+src\components\pages\FlashcardsPage\index.tsx-357-                            </div>
+src\components\pages\FlashcardsPage\index.tsx-358-                        ),
+src\components\pages\FlashcardsPage\index.tsx-359-                        () => (
+src\components\pages\FlashcardsPage\index.tsx-360-                            mode === "study" ? (
+src\components\pages\FlashcardsPage\index.tsx-361-                                session === "due" ? (
+src\components\pages\FlashcardsPage\index.tsx-362-                                    <DueReview onExit={goOverview} />
+src\components\pages\FlashcardsPage\index.tsx-363-                                ) : deckId ? (
+src\components\pages\FlashcardsPage\index.tsx-364-                                    // keyed so switching decks resets the reviewer's local state
+src\components\pages\FlashcardsPage\index.tsx-365-                                    <FlashcardReviewer key={deckId} deckId={deckId} onBack={goOverview} />
+src\components\pages\FlashcardsPage\index.tsx-366-                                ) : (
+src\components\pages\FlashcardsPage\index.tsx-367-                                    <StackV
+src\components\pages\FlashcardsPage\index.tsx-368-                                        gap={6}
+src\components\pages\FlashcardsPage\index.tsx-369-                                        items={[
+src\components\pages\FlashcardsPage\index.tsx-370-                                            () => (
+src\components\pages\FlashcardsPage\index.tsx:371:                                                <TabsCard
+src\components\pages\FlashcardsPage\index.tsx-372-                                                    variant="secondary"
+src\components\pages\FlashcardsPage\index.tsx-373-                                                    className="w-full"
+src\components\pages\FlashcardsPage\index.tsx-374-                                                    leftTabs={{
+src\components\pages\FlashcardsPage\index.tsx-375-                                                        items: [
+src\components\pages\FlashcardsPage\index.tsx-376-                                                            { key: "overview", label: t("flashcard.review.overviewTabOverview") },
+src\components\pages\FlashcardsPage\index.tsx-377-                                                            { key: "history", label: t("flashcard.review.overviewTabHistory") },
+src\components\pages\FlashcardsPage\index.tsx-378-                                                            { key: "stats", label: t("flashcard.review.overviewTabStats") },
+src\components\pages\FlashcardsPage\index.tsx-379-                                                        ],
+src\components\pages\FlashcardsPage\index.tsx-380-                                                        selectedKey: overviewTab,
+src\components\pages\FlashcardsPage\index.tsx-381-                                                        ariaLabel: t("flashcard.review.overviewTabOverview"),
+src\components\pages\FlashcardsPage\index.tsx-382-                                                        onSelectionChange: (key) => setOverviewTab(key as "overview" | "history" | "stats"),
+src\components\pages\FlashcardsPage\index.tsx-383-                                                    }}
+src\components\pages\FlashcardsPage\index.tsx-384-                                                />
+src\components\pages\FlashcardsPage\index.tsx-385-                                            ),
+src\components\pages\FlashcardsPage\index.tsx-386-                                            () => (
+src\components\pages\FlashcardsPage\index.tsx-387-                                                overviewTab === "history" ? (
+src\components\pages\FlashcardsPage\index.tsx-388-                                                    courseId ? (
+src\components\pages\FlashcardsPage\index.tsx-389-                                                        <FlashcardReviewHistory
+src\components\pages\FlashcardsPage\index.tsx-390-                                                            courseId={courseId}
+src\components\pages\FlashcardsPage\index.tsx-391-                                                            onStartReview={() => setOverviewTab("overview")}
+src\components\pages\FlashcardsPage\index.tsx-392-                                                        />
+src\components\pages\FlashcardsPage\index.tsx-393-                                                    ) : null
+src\components\pages\FlashcardsPage\index.tsx-394-                                                ) : overviewTab === "stats" ? (
+src\components\pages\FlashcardsPage\index.tsx-395-                                                    courseId ? (
+src\components\pages\FlashcardsPage\index.tsx-396-                                                        <FlashcardReviewStats
+--
+src\components\pages\CourseCatalogPage\component.tsx:273:                                                    <TabsCard
+src\components\pages\CourseCatalogPage\component.tsx-274-                                                        variant="primary"
+src\components\pages\CourseCatalogPage\component.tsx-275-                                                        leftTabs={{
+src\components\pages\CourseCatalogPage\component.tsx-276-                                                            selectedKey: view,
+src\components\pages\CourseCatalogPage\component.tsx-277-                                                            ariaLabel: labels.viewAria,
+src\components\pages\CourseCatalogPage\component.tsx-278-                                                            onSelectionChange: (key: Key) => onChangeView(String(key) as CatalogView),
+src\components\pages\CourseCatalogPage\component.tsx-279-                                                            items: [
+src\components\pages\CourseCatalogPage\component.tsx-280-                                                                {
+src\components\pages\CourseCatalogPage\component.tsx-281-                                                                    key: "grid",
+src\components\pages\CourseCatalogPage\component.tsx-282-                                                                    label: (
+src\components\pages\CourseCatalogPage\component.tsx-283-                                                                        <SquaresFourIcon
+src\components\pages\CourseCatalogPage\component.tsx-284-                                                                            className="size-5"
+src\components\pages\CourseCatalogPage\component.tsx-285-                                                                            aria-label={labels.viewGrid}
+src\components\pages\CourseCatalogPage\component.tsx-286-                                                                            focusable="false"
+src\components\pages\CourseCatalogPage\component.tsx-287-                                                                        />
+src\components\pages\CourseCatalogPage\component.tsx-288-                                                                    ),
+src\components\pages\CourseCatalogPage\component.tsx-289-                                                                },
+src\components\pages\CourseCatalogPage\component.tsx-290-                                                                {
+src\components\pages\CourseCatalogPage\component.tsx-291-                                                                    key: "line",
+src\components\pages\CourseCatalogPage\component.tsx-292-                                                                    label: (
+src\components\pages\CourseCatalogPage\component.tsx-293-                                                                        <ListIcon
+src\components\pages\CourseCatalogPage\component.tsx-294-                                                                            className="size-5"
+src\components\pages\CourseCatalogPage\component.tsx-295-                                                                            aria-label={labels.viewLine}
+src\components\pages\CourseCatalogPage\component.tsx-296-                                                                            focusable="false"
+src\components\pages\CourseCatalogPage\component.tsx-297-                                                                        />
+src\components\pages\CourseCatalogPage\component.tsx-298-                                                                    ),
+--
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx:179:                                <TabsCard
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-180-                                    variant="primary"
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-181-                                    leftTabs={{
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-182-                                        selectedKey: mode,
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-183-                                        ariaLabel: labels.modeAria,
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-184-                                        onSelectionChange: (key) => {
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-185-                                            if (key === "study" || key === "quiz") {
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-186-                                                onModeChange(key)
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-187-                                            }
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-188-                                        },
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-189-                                        items: [
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-190-                                            {
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-191-                                                key: "study",
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-192-                                                icon: <CardsThreeIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-193-                                                label: labels.modeStudy,
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-194-                                            },
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-195-                                            {
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-196-                                                key: "quiz",
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-197-                                                icon: <MicrophoneStageIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-198-                                                label: labels.modeQuiz,
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-199-                                            },
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-200-                                        ],
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-201-                                    }}
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-202-                                />
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-203-                            ),
+src\components\pages\FlashcardsPage\FlashcardStudyRail\component.tsx-204-                            ...(mode === "study" ? [() => (
+--
+src\components\pages\RewardsPage\index.tsx:90:                                        <TabsCard
+src\components\pages\RewardsPage\index.tsx-91-                                            leftTabs={{
+src\components\pages\RewardsPage\index.tsx-92-                                                items: [
+src\components\pages\RewardsPage\index.tsx-93-                                                    {
+src\components\pages\RewardsPage\index.tsx-94-                                                        key: RewardsTab.Shop,
+src\components\pages\RewardsPage\index.tsx-95-                                                        label: t("rewards.tabs.shop"),
+src\components\pages\RewardsPage\index.tsx-96-                                                    },
+src\components\pages\RewardsPage\index.tsx-97-                                                    {
+src\components\pages\RewardsPage\index.tsx-98-                                                        key: RewardsTab.Wallet,
+src\components\pages\RewardsPage\index.tsx-99-                                                        label: unusedVoucherCount > 0
+src\components\pages\RewardsPage\index.tsx-100-                                                            ? t("rewards.tabs.walletWithCount", { count: unusedVoucherCount })
+src\components\pages\RewardsPage\index.tsx-101-                                                            : t("rewards.tabs.wallet"),
+src\components\pages\RewardsPage\index.tsx-102-                                                    },
+src\components\pages\RewardsPage\index.tsx-103-                                                ],
+src\components\pages\RewardsPage\index.tsx-104-                                                selectedKey: tab,
+src\components\pages\RewardsPage\index.tsx-105-                                                ariaLabel: t("rewards.tabsAria"),
+src\components\pages\RewardsPage\index.tsx-106-                                                onSelectionChange: (key) => setTab(key as RewardsTab),
+src\components\pages\RewardsPage\index.tsx-107-                                            }}
+src\components\pages\RewardsPage\index.tsx-108-                                        />
+src\components\pages\RewardsPage\index.tsx-109-                                    ),
+src\components\pages\RewardsPage\index.tsx-110-                                    () => (tab === RewardsTab.Shop ? <RewardCatalog /> : <MyVouchers />),
+src\components\pages\RewardsPage\index.tsx-111-                                ]} />
+src\components\pages\RewardsPage\index.tsx-112-                        ),
+src\components\pages\RewardsPage\index.tsx-113-                    ]} />
+src\components\pages\RewardsPage\index.tsx-114-            </Box>
+src\components\pages\RewardsPage\index.tsx-115-        </div>
+--
+src\components\pages\ContentPage\index.tsx:216:    const languageTabs = useMemo<TabsCardGroup | undefined>(
+src\components\pages\ContentPage\index.tsx-217-        () => {
+src\components\pages\ContentPage\index.tsx-218-            if (selectedTabKey !== ContentTab.Content || langs.length <= 1) {
+src\components\pages\ContentPage\index.tsx-219-                return undefined
+src\components\pages\ContentPage\index.tsx-220-            }
+src\components\pages\ContentPage\index.tsx-221-            return {
+src\components\pages\ContentPage\index.tsx-222-                ariaLabel: t("content.language"),
+src\components\pages\ContentPage\index.tsx-223-                selectedKey: activeLang,
+src\components\pages\ContentPage\index.tsx-224-                onSelectionChange: (key) => onSelectLang(String(key)),
+src\components\pages\ContentPage\index.tsx-225-                items: DEFAULT_PROGRAMMING_LANGUAGES.map((lang) => {
+src\components\pages\ContentPage\index.tsx-226-                    const Icon = programmingLanguageIconMap[lang]
+src\components\pages\ContentPage\index.tsx-227-                    return {
+src\components\pages\ContentPage\index.tsx-228-                        key: lang,
+src\components\pages\ContentPage\index.tsx-229-                        label: t(`programmingLanguage.${lang}`),
+src\components\pages\ContentPage\index.tsx-230-                        icon: <Icon aria-hidden className="size-4 shrink-0" />,
+src\components\pages\ContentPage\index.tsx-231-                        isDisabled: !isProgrammingLangAvailable(lang, langs),
+src\components\pages\ContentPage\index.tsx-232-                    }
+src\components\pages\ContentPage\index.tsx-233-                }),
+src\components\pages\ContentPage\index.tsx-234-            }
+src\components\pages\ContentPage\index.tsx-235-        },
+src\components\pages\ContentPage\index.tsx-236-        [selectedTabKey, langs, activeLang, onSelectLang, t],
+src\components\pages\ContentPage\index.tsx-237-    )
+src\components\pages\ContentPage\index.tsx-238-
+src\components\pages\ContentPage\index.tsx-239-    // first load, nothing in hand ΓåÆ shimmer (loading-and-skeleton.md)
+src\components\pages\ContentPage\index.tsx-240-    const isSkeleton = queryContentSwr.isLoading && !content
+src\components\pages\ContentPage\index.tsx-241-    /**
+--
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx:226:                            <TabsCard
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-227-                                variant="primary"
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-228-                                leftTabs={{
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-229-                                    selectedKey: groupMode,
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-230-                                    ariaLabel: labels.groupByDeck,
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-231-                                    onSelectionChange: (key) => setGroupMode(String(key) as FlashcardReviewHistoryGroupMode),
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-232-                                    items: [
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-233-                                        {
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-234-                                            key: "deck",
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-235-                                            label: <CardsIcon className="size-5" aria-label={labels.groupByDeck} focusable="false" />,
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-236-                                        },
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-237-                                        {
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-238-                                            key: "time",
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-239-                                            label: <ClockIcon className="size-5" aria-label={labels.groupByTime} focusable="false" />,
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-240-                                        },
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-241-                                    ],
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-242-                                }}
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-243-                            />
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-244-                        )),
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-245-                    ]} />
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-246-                ),
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-247-            ]} />
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-248-    )
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-249-
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-250-    // Flat placeholder rows ΓÇö loading shape regardless of `groupMode` (grouped shape unknown
+src\components\pages\FlashcardsPage\FlashcardReviewHistory\component.tsx-251-    // yet). Same `SurfaceCardList` + data `items` as the live time buckets; free-form `content`
+--
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx:31:            <TabsCard
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-32-                variant="primary"
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-33-                leftTabs={{
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-34-                    items: [
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-35-                        { key: "study", label: t("flashcard.mode.study") },
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-36-                        { key: "quiz", label: t("flashcard.mode.quiz") },
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-37-                    ],
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-38-                    selectedKey: mode,
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-39-                    ariaLabel: t("flashcard.title"),
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-40-                    onSelectionChange: (key) => goMode(key as FlashcardMode),
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-41-                }}
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-42-            />
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-43-        </div>
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-44-    )
+src\components\pages\FlashcardsPage\FlashcardMobileNav\index.tsx-45-}
+--
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx:349:                                                <TabsCard
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-350-                                                    variant="primary"
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-351-                                                    leftTabs={{
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-352-                                                        selectedKey: view,
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-353-                                                        ariaLabel: labels.viewAria,
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-354-                                                        onSelectionChange: (key) => onViewChange(String(key) as DeckView),
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-355-                                                        items: [
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-356-                                                            {
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-357-                                                                key: "grid",
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-358-                                                                label: (
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-359-                                                                    <SquaresFourIcon
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-360-                                                                        className="size-5"
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-361-                                                                        aria-label={labels.viewGrid}
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-362-                                                                        focusable="false"
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-363-                                                                    />
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-364-                                                                ),
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-365-                                                            },
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-366-                                                            {
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-367-                                                                key: "line",
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-368-                                                                label: (
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-369-                                                                    <ListIcon
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-370-                                                                        className="size-5"
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-371-                                                                        aria-label={labels.viewLine}
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-372-                                                                        focusable="false"
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-373-                                                                    />
+src\components\pages\FlashcardsPage\FlashcardDeckList\component.tsx-374-                                                                ),
+--
+src\components\pages\CommunityFeedPage\component.tsx:101:    channelTabs: Array<TabsCardItem>
+src\components\pages\CommunityFeedPage\component.tsx-102-    /** Currently selected channel tab key ("all" or a {@link CommunityChannel}). */
+src\components\pages\CommunityFeedPage\component.tsx-103-    selectedChannelKey: string
+src\components\pages\CommunityFeedPage\component.tsx-104-    /** Fired with the newly selected tab key. */
+src\components\pages\CommunityFeedPage\component.tsx-105-    onChannelChange: (key: Key) => void
+src\components\pages\CommunityFeedPage\component.tsx-106-    /** `true` (signed-in) ΓåÆ renders the composer above the feed. */
+src\components\pages\CommunityFeedPage\component.tsx-107-    showComposer: boolean
+src\components\pages\CommunityFeedPage\component.tsx-108-    /** Channel the composer posts to (the "all" tab defaults to General). */
+src\components\pages\CommunityFeedPage\component.tsx-109-    composerChannel: CommunityChannel
+src\components\pages\CommunityFeedPage\component.tsx-110-    /** Called after a post is created so the feature can refetch the feed. */
+src\components\pages\CommunityFeedPage\component.tsx-111-    onPosted: () => void
+src\components\pages\CommunityFeedPage\component.tsx-112-    /** Clears the active channel filter back to "all channels". */
+src\components\pages\CommunityFeedPage\component.tsx-113-    onViewAllChannels: () => void
+src\components\pages\CommunityFeedPage\component.tsx-114-    /** Sends a platform-empty visitor into the course catalog. */
+src\components\pages\CommunityFeedPage\component.tsx-115-    onBrowseCourses: () => void
+src\components\pages\CommunityFeedPage\component.tsx-116-    /** Opens the community chat route. */
+src\components\pages\CommunityFeedPage\component.tsx-117-    onChatClick: () => void
+src\components\pages\CommunityFeedPage\component.tsx-118-    /** The flattened, newest-first feed page. */
+src\components\pages\CommunityFeedPage\component.tsx-119-    items: Array<QueryCommunityFeedItemData>
+src\components\pages\CommunityFeedPage\component.tsx-120-    /** Whether the viewer is signed in ΓÇö gates reactions + the comment composer on each post. */
+src\components\pages\CommunityFeedPage\component.tsx-121-    authenticated: boolean
+src\components\pages\CommunityFeedPage\component.tsx-122-    /** React handler forwarded to each post ΓÇö reacts, then refetches. */
+src\components\pages\CommunityFeedPage\component.tsx-123-    onReact: (postId: string, type: ReactionType | null) => void
+src\components\pages\CommunityFeedPage\component.tsx-124-    /** Called when a post's thread changes (new comment) so the feed can refresh. */
+src\components\pages\CommunityFeedPage\component.tsx-125-    onChanged: () => void
+src\components\pages\CommunityFeedPage\component.tsx-126-    /** `true` iff the last loaded page still carries a next cursor. */
+--
+src\components\pages\CommunityFeedPage\component.tsx:197:                                    <TabsCard
+src\components\pages\CommunityFeedPage\component.tsx-198-                                        leftTabs={{
+src\components\pages\CommunityFeedPage\component.tsx-199-                                            items: channelTabs,
+src\components\pages\CommunityFeedPage\component.tsx-200-                                            selectedKey: selectedChannelKey,
+src\components\pages\CommunityFeedPage\component.tsx-201-                                            ariaLabel: labels.channelTabsAriaLabel,
+src\components\pages\CommunityFeedPage\component.tsx-202-                                            onSelectionChange: onChannelChange,
+src\components\pages\CommunityFeedPage\component.tsx-203-                                        }}
+src\components\pages\CommunityFeedPage\component.tsx-204-                                    />
+src\components\pages\CommunityFeedPage\component.tsx-205-                                ),
+src\components\pages\CommunityFeedPage\component.tsx-206-                                ...(showComposer ? [() => (
+src\components\pages\CommunityFeedPage\component.tsx-207-                                    <CommunityComposer channel={composerChannel} onPosted={onPosted} />
+src\components\pages\CommunityFeedPage\component.tsx-208-                                )] : []),
+src\components\pages\CommunityFeedPage\component.tsx-209-                                () => {
+src\components\pages\CommunityFeedPage\component.tsx-210-                                    // error beats a stale loading flag; empty only once settled
+src\components\pages\CommunityFeedPage\component.tsx-211-                                    if (error) {
+src\components\pages\CommunityFeedPage\component.tsx-212-                                        return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retryLabel} />
+src\components\pages\CommunityFeedPage\component.tsx-213-                                    }
+src\components\pages\CommunityFeedPage\component.tsx-214-                                    if (!isSkeleton && isEmpty) {
+src\components\pages\CommunityFeedPage\component.tsx-215-                                        // empty feed is still a conversion surface. Two distinct reasons need
+src\components\pages\CommunityFeedPage\component.tsx-216-                                        // two distinct empties (┬ºState-matrix): filtered-empty offers a way
+src\components\pages\CommunityFeedPage\component.tsx-217-                                        // back to "all channels"; platform-empty invites into courses.
+src\components\pages\CommunityFeedPage\component.tsx-218-                                        return isFilteredEmpty ? (
+src\components\pages\CommunityFeedPage\component.tsx-219-                                            <AsyncContentEmpty
+src\components\pages\CommunityFeedPage\component.tsx-220-                                                title={labels.emptyFilteredTitle}
+src\components\pages\CommunityFeedPage\component.tsx-221-                                                action={() => (
+src\components\pages\CommunityFeedPage\component.tsx-222-                                                    <Button variant="secondary" size="sm" label={labels.viewAllChannelsLabel} onPress={onViewAllChannels} />
+--
+src\components\pages\CommunityChatPage\index.tsx:79:                                    <TabsCard
+src\components\pages\CommunityChatPage\index.tsx-80-                                        leftTabs={{
+src\components\pages\CommunityChatPage\index.tsx-81-                                            items: tabs,
+src\components\pages\CommunityChatPage\index.tsx-82-                                            selectedKey: tab,
+src\components\pages\CommunityChatPage\index.tsx-83-                                            ariaLabel: t("community.chat.tabsAria"),
+src\components\pages\CommunityChatPage\index.tsx-84-                                            onSelectionChange: (key: Key) => setTab(String(key) as ChatTab),
+src\components\pages\CommunityChatPage\index.tsx-85-                                        }}
+src\components\pages\CommunityChatPage\index.tsx-86-                                    />
+src\components\pages\CommunityChatPage\index.tsx-87-                                ),
+src\components\pages\CommunityChatPage\index.tsx-88-                                () => (conversationId ? (
+src\components\pages\CommunityChatPage\index.tsx-89-                                    <ChatPane key={conversationId} conversationId={conversationId} />
+src\components\pages\CommunityChatPage\index.tsx-90-                                ) : membersOnly ? (
+src\components\pages\CommunityChatPage\index.tsx-91-                                // Signed-in but the membership gate rejected this read (or it
+src\components\pages\CommunityChatPage\index.tsx-92-                                // failed): a non-member must not sit on a perpetual skeleton ΓÇö
+src\components\pages\CommunityChatPage\index.tsx-93-                                // surface a members-only terminal with an upsell to membership.
+src\components\pages\CommunityChatPage\index.tsx-94-                                    <EmptyState
+src\components\pages\CommunityChatPage\index.tsx-95-                                        icon={UsersThreeIcon}
+src\components\pages\CommunityChatPage\index.tsx-96-                                        title={t("community.chat.membersOnly")}
+src\components\pages\CommunityChatPage\index.tsx-97-                                        description={t("community.chat.membersOnlyDescription")}
+src\components\pages\CommunityChatPage\index.tsx-98-                                        action={() => (
+src\components\pages\CommunityChatPage\index.tsx-99-                                            <Button
+src\components\pages\CommunityChatPage\index.tsx-100-                                                variant="primary"
+src\components\pages\CommunityChatPage\index.tsx-101-                                                size="sm"
+src\components\pages\CommunityChatPage\index.tsx-102-                                                onPress={() => router.push(
+src\components\pages\CommunityChatPage\index.tsx-103-                                                    pathConfig().locale(locale).profile().membership().build(),
+src\components\pages\CommunityChatPage\index.tsx-104-                                                )}
+--
+src\components\pages\EditProfilePage\index.tsx:218:                                    <TabsCard
+src\components\pages\EditProfilePage\index.tsx-219-                                        variant="primary"
+src\components\pages\EditProfilePage\index.tsx-220-                                        leftTabs={{
+src\components\pages\EditProfilePage\index.tsx-221-                                            selectedKey: workMode === "" ? WORK_MODE_NONE : workMode,
+src\components\pages\EditProfilePage\index.tsx-222-                                            ariaLabel: t("profileEdit.workMode"),
+src\components\pages\EditProfilePage\index.tsx-223-                                            onSelectionChange: (key) => {
+src\components\pages\EditProfilePage\index.tsx-224-                                                const value = String(key)
+src\components\pages\EditProfilePage\index.tsx-225-                                                setValue("workMode", value === WORK_MODE_NONE ? "" : (value as WorkMode))
+src\components\pages\EditProfilePage\index.tsx-226-                                            },
+src\components\pages\EditProfilePage\index.tsx-227-                                            items: [
+src\components\pages\EditProfilePage\index.tsx-228-                                                { key: WORK_MODE_NONE, label: t("profileEdit.workModeNone") },
+src\components\pages\EditProfilePage\index.tsx-229-                                                ...WORK_MODE_OPTIONS.map((option) => ({
+src\components\pages\EditProfilePage\index.tsx-230-                                                    key: option.value as string,
+src\components\pages\EditProfilePage\index.tsx-231-                                                    label: t(option.labelKey),
+src\components\pages\EditProfilePage\index.tsx-232-                                                })),
+src\components\pages\EditProfilePage\index.tsx-233-                                            ],
+src\components\pages\EditProfilePage\index.tsx-234-                                        }}
+src\components\pages\EditProfilePage\index.tsx-235-                                    />
+src\components\pages\EditProfilePage\index.tsx-236-                                ),
+src\components\pages\EditProfilePage\index.tsx-237-                            ]} />
+src\components\pages\EditProfilePage\index.tsx-238-                    ),
+src\components\pages\EditProfilePage\index.tsx-239-                    () => (
+src\components\pages\EditProfilePage\index.tsx-240-                        <TextField variant="secondary">
+src\components\pages\EditProfilePage\index.tsx-241-                            <Label htmlFor="profile-linkedin">{t("profileEdit.linkedinUrl")}</Label>
+src\components\pages\EditProfilePage\index.tsx-242-                            <Input
+src\components\pages\EditProfilePage\index.tsx-243-                                id="profile-linkedin"
+--
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx:108:                <TabsCard
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-109-                    variant="primary"
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-110-                    className="w-full max-w-xs"
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-111-                    leftTabs={{
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-112-                        selectedKey: era,
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-113-                        ariaLabel: t("view.eraAria"),
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-114-                        onSelectionChange: (key) => setEra(String(key) as typeof era),
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-115-                        items: [
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-116-                            { key: "present", label: t("view.present") },
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-117-                            { key: "future", label: t("view.future") },
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-118-                        ],
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-119-                    }}
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-120-                />
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-121-                {era === "future" ? (
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-122-                    <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-123-                        <Chip.Label>{t("future.comingSoon")}</Chip.Label>
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-124-                    </Chip>
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-125-                ) : null}
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-126-            </div>
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-127-
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-128-            <ArchitectureScene
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-129-                data={data}
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-130-                selectedId={highlightId}
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-131-                onSelectNode={onSelect}
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-132-                caption={caption}
+src\components\pages\ArchitecturePage\ArchitectureMap\index.tsx-133-            />
+--
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx:134:            <TabsCard leftTabs={modeTabs} />
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-135-            {mode === "paste" ? (
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-136-                <TextField variant="secondary" className="w-full">
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-137-                    <TextArea
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-138-                        id={fieldId}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-139-                        aria-label={label}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-140-                        rows={10}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-141-                        className="resize-none"
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-142-                        placeholder={placeholder}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-143-                        value={value}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-144-                        onChange={(event) => onChange(event.target.value)}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-145-                    />
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-146-                </TextField>
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-147-            ) : (
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-148-                <div className="flex flex-col gap-2">
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-149-                    <Dropzone
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-150-                        hint={t("cv.builder.uploadHint")}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-151-                        file={file}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-152-                        acceptedMimeTypes={[...ACCEPTED_MIME_TYPES]}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-153-                        maxSizeInBytes={MAX_SIZE_IN_BYTES}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-154-                        errorMessage={uploadError ?? undefined}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-155-                        onChange={onFileSelected}
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-156-                    />
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-157-                    {isExtracting ? (
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-158-                        <div className="flex items-center gap-2">
+src\components\blocks\cv\CvBlocksWorkspace\shared\CvTextOrFileInput\index.tsx-159-                            <Spinner />
+--
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx:40:            <TabsCard
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-41-                variant="primary"
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-42-                leftTabs={{
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-43-                    selectedKey: view,
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-44-                    ariaLabel: t("PracticeHubPage.rail.modeAria"),
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-45-                    onSelectionChange: (key) => setView(String(key) as PracticeView),
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-46-                    items: [
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-47-                        {
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-48-                            key: "problems",
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-49-                            label: (
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-50-                                <StackH gap={3} principle="flex-action" as="span"
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-51-                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-52-                                    items={[
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-53-                                        () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-54-                                        () => <>{t("PracticeHubPage.tabs.problems")}</>,
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-55-                                    ]} />
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-56-                            ),
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-57-                        },
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-58-                        {
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-59-                            key: "leaderboard",
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-60-                            label: (
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-61-                                <StackH gap={3} principle="flex-action" as="span"
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-62-                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-63-                                    items={[
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-64-                                        () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+src\components\pages\PracticeHubPage\PracticeRail\PracticeMobileNav\index.tsx-65-                                        () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
+--
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx:68:                        <TabsCard
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-69-                            variant="primary"
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-70-                            leftTabs={{
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-71-                                selectedKey: view,
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-72-                                ariaLabel: t("PracticeHubPage.rail.modeAria"),
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-73-                                onSelectionChange: (key) => setView(String(key) as PracticeView),
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-74-                                items: [
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-75-                                    {
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-76-                                        key: "problems",
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-77-                                        label: (
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-78-                                            <StackH gap={3} principle="flex-action" as="span"
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-79-                                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-80-                                                items={[
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-81-                                                    () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-82-                                                    () => <>{t("PracticeHubPage.tabs.problems")}</>,
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-83-                                                ]} />
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-84-                                        ),
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-85-                                    },
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-86-                                    {
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-87-                                        key: "leaderboard",
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-88-                                        label: (
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-89-                                            <StackH gap={3} principle="flex-action" as="span"
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-90-                                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-91-                                                items={[
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-92-                                                    () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+src\components\pages\PracticeHubPage\PracticeRail\index.tsx-93-                                                    () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
+--
+src\components\pages\DashboardPage\FeedTabs\index.tsx:75:    const scopeTabs = useMemo<Array<TabsCardItem>>(
+src\components\pages\DashboardPage\FeedTabs\index.tsx-76-        () => [
+src\components\pages\DashboardPage\FeedTabs\index.tsx-77-            { key: MyFeedTab.ForYou, label: t("DashboardPage.tabs.forYou") },
+src\components\pages\DashboardPage\FeedTabs\index.tsx-78-            { key: MyFeedTab.Following, label: t("DashboardPage.tabs.following") },
+src\components\pages\DashboardPage\FeedTabs\index.tsx-79-        ],
+src\components\pages\DashboardPage\FeedTabs\index.tsx-80-        [t],
+src\components\pages\DashboardPage\FeedTabs\index.tsx-81-    )
+src\components\pages\DashboardPage\FeedTabs\index.tsx-82-
+src\components\pages\DashboardPage\FeedTabs\index.tsx-83-    /** Single-select category filter chips (right group), shown under the scope tabs. */
+src\components\pages\DashboardPage\FeedTabs\index.tsx:84:    const filterTabs = useMemo<Array<TabsCardItem>>(
+src\components\pages\DashboardPage\FeedTabs\index.tsx-85-        () => [
+src\components\pages\DashboardPage\FeedTabs\index.tsx-86-            { key: MyFeedCategory.All, label: t("DashboardPage.feedFilter.all"), Icon: ListBulletsIcon },
+src\components\pages\DashboardPage\FeedTabs\index.tsx-87-            { key: MyFeedCategory.Courses, label: t("DashboardPage.feedFilter.courses"), Icon: BookOpenIcon },
+src\components\pages\DashboardPage\FeedTabs\index.tsx-88-            { key: MyFeedCategory.Achievements, label: t("DashboardPage.feedFilter.achievements"), Icon: MedalIcon },
+src\components\pages\DashboardPage\FeedTabs\index.tsx-89-            { key: MyFeedCategory.People, label: t("DashboardPage.feedFilter.people"), Icon: UsersIcon },
+src\components\pages\DashboardPage\FeedTabs\index.tsx-90-        ].map(({ key, label, Icon }) => ({
+src\components\pages\DashboardPage\FeedTabs\index.tsx-91-            key,
+src\components\pages\DashboardPage\FeedTabs\index.tsx-92-            label,
+src\components\pages\DashboardPage\FeedTabs\index.tsx-93-            icon: <Icon aria-hidden focusable="false" className="size-5 shrink-0" />,
+src\components\pages\DashboardPage\FeedTabs\index.tsx-94-        })),
+src\components\pages\DashboardPage\FeedTabs\index.tsx-95-        [t],
+src\components\pages\DashboardPage\FeedTabs\index.tsx-96-    )
+src\components\pages\DashboardPage\FeedTabs\index.tsx-97-
+src\components\pages\DashboardPage\FeedTabs\index.tsx-98-    // flatten pages ΓåÆ one newest-first list
+src\components\pages\DashboardPage\FeedTabs\index.tsx-99-    const items = useMemo(
+src\components\pages\DashboardPage\FeedTabs\index.tsx-100-        () => (pages ?? []).flatMap((page) => page.items),
+src\components\pages\DashboardPage\FeedTabs\index.tsx-101-        [pages],
+src\components\pages\DashboardPage\FeedTabs\index.tsx-102-    )
+src\components\pages\DashboardPage\FeedTabs\index.tsx-103-    const hasMore = Boolean(pages?.[pages.length - 1]?.nextCursor)
+src\components\pages\DashboardPage\FeedTabs\index.tsx-104-    const isLoadingMore = isValidating && (pages?.length ?? 0) < size
+src\components\pages\DashboardPage\FeedTabs\index.tsx-105-
+src\components\pages\DashboardPage\FeedTabs\index.tsx-106-    /** Resolve an entity's route via the index, then navigate (no-op if unroutable). */
+src\components\pages\DashboardPage\FeedTabs\index.tsx-107-    const onResolve = useCallback(
+src\components\pages\DashboardPage\FeedTabs\index.tsx-108-        (globalId: string | null | undefined): (() => void) | undefined => {
+src\components\pages\DashboardPage\FeedTabs\index.tsx-109-            if (!globalId) {
+--
+src\components\pages\DashboardPage\FeedTabs\component.tsx:103:    scopeTabs: Array<TabsCardItem>
+src\components\pages\DashboardPage\FeedTabs\component.tsx-104-    /** Currently selected scope tab key. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-105-    selectedScopeKey: string
+src\components\pages\DashboardPage\FeedTabs\component.tsx-106-    /** Fired with the newly selected scope tab key. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-107-    onScopeChange: (key: Key) => void
+src\components\pages\DashboardPage\FeedTabs\component.tsx-108-    /** Category filter chip strip, already resolved (i18n'd labels + icons). */
+src\components\pages\DashboardPage\FeedTabs\component.tsx:109:    filterTabs: Array<TabsCardItem>
+src\components\pages\DashboardPage\FeedTabs\component.tsx-110-    /** Currently selected filter chip key. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-111-    selectedFilterKey: string
+src\components\pages\DashboardPage\FeedTabs\component.tsx-112-    /** Fired with the newly selected filter chip key. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-113-    onFilterChange: (key: Key) => void
+src\components\pages\DashboardPage\FeedTabs\component.tsx-114-    /** Clears the active category filter back to "all". */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-115-    onResetFilter: () => void
+src\components\pages\DashboardPage\FeedTabs\component.tsx-116-    /** Sends a platform-empty visitor into the course catalog. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-117-    onBrowseCourses: () => void
+src\components\pages\DashboardPage\FeedTabs\component.tsx-118-    /** The flattened, newest-first feed page. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-119-    items: Array<QueryMyFeedItemData>
+src\components\pages\DashboardPage\FeedTabs\component.tsx-120-    /** Resolve a global id to a press handler that navigates to the entity, or `undefined` when unroutable. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-121-    onResolve: (globalId: string | null | undefined) => (() => void) | undefined
+src\components\pages\DashboardPage\FeedTabs\component.tsx-122-    /** React handler forwarded to each feed item. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-123-    onReact: (activityId: string, type: ReactionType | null) => void
+src\components\pages\DashboardPage\FeedTabs\component.tsx-124-    /** `true` iff the last loaded page still carries a next cursor. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-125-    hasMore: boolean
+src\components\pages\DashboardPage\FeedTabs\component.tsx-126-    /** `true` while a "load more" page is in flight. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-127-    isLoadingMore: boolean
+src\components\pages\DashboardPage\FeedTabs\component.tsx-128-    /** Requests the next page. */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-129-    onLoadMore: () => void
+src\components\pages\DashboardPage\FeedTabs\component.tsx-130-    /**
+src\components\pages\DashboardPage\FeedTabs\component.tsx-131-     * `true` ΓåÆ a "load more" page failed while existing items stayed on screen; shows
+src\components\pages\DashboardPage\FeedTabs\component.tsx-132-     * an inline retry instead of falling back to the full error branch.
+src\components\pages\DashboardPage\FeedTabs\component.tsx-133-     */
+src\components\pages\DashboardPage\FeedTabs\component.tsx-134-    hasLoadMoreError?: boolean
+--
+src\components\pages\DashboardPage\FeedTabs\component.tsx:210:            <TabsCard
+src\components\pages\DashboardPage\FeedTabs\component.tsx-211-                leftTabs={{
+src\components\pages\DashboardPage\FeedTabs\component.tsx-212-                    items: scopeTabs,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-213-                    selectedKey: selectedScopeKey,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-214-                    ariaLabel: labels.scopeTabsAria,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-215-                    onSelectionChange: onScopeChange,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-216-                }}
+src\components\pages\DashboardPage\FeedTabs\component.tsx-217-                rightTabs={{
+src\components\pages\DashboardPage\FeedTabs\component.tsx-218-                    items: filterTabs,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-219-                    selectedKey: selectedFilterKey,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-220-                    ariaLabel: labels.filterTabsAria,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-221-                    onSelectionChange: onFilterChange,
+src\components\pages\DashboardPage\FeedTabs\component.tsx-222-                }}
+src\components\pages\DashboardPage\FeedTabs\component.tsx-223-            />
+src\components\pages\DashboardPage\FeedTabs\component.tsx-224-        ),
+src\components\pages\DashboardPage\FeedTabs\component.tsx-225-        () => {
+src\components\pages\DashboardPage\FeedTabs\component.tsx-226-            // error beats a stale loading flag; empty only once settled
+src\components\pages\DashboardPage\FeedTabs\component.tsx-227-            if (error) {
+src\components\pages\DashboardPage\FeedTabs\component.tsx-228-                return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retryLabel} />
+src\components\pages\DashboardPage\FeedTabs\component.tsx-229-            }
+src\components\pages\DashboardPage\FeedTabs\component.tsx-230-            if (!isSkeleton && isEmpty) {
+src\components\pages\DashboardPage\FeedTabs\component.tsx-231-                // two distinct reasons need two distinct empties: filtered-empty
+src\components\pages\DashboardPage\FeedTabs\component.tsx-232-                // offers a way back to "all"; platform-empty invites into courses.
+src\components\pages\DashboardPage\FeedTabs\component.tsx-233-                return isFilteredEmpty ? (
+src\components\pages\DashboardPage\FeedTabs\component.tsx-234-                    <AsyncContentEmpty
+src\components\pages\DashboardPage\FeedTabs\component.tsx-235-                        title={labels.emptyFilteredTitle}
+--
+src\components\pages\NotificationsPage\index.tsx:242:                                    <TabsCard
+src\components\pages\NotificationsPage\index.tsx-243-                                        leftTabs={{
+src\components\pages\NotificationsPage\index.tsx-244-                                            items: [
+src\components\pages\NotificationsPage\index.tsx-245-                                                { key: ALL_TAB, label: t("notifications.tabs.all") },
+src\components\pages\NotificationsPage\index.tsx-246-                                                {
+src\components\pages\NotificationsPage\index.tsx-247-                                                    key: NotificationType.CommentReply,
+src\components\pages\NotificationsPage\index.tsx-248-                                                    label: t("notifications.tabs.commentReply"),
+src\components\pages\NotificationsPage\index.tsx-249-                                                    icon: <ChatCircleIcon className="size-4" aria-hidden focusable="false" />,
+src\components\pages\NotificationsPage\index.tsx-250-                                                },
+src\components\pages\NotificationsPage\index.tsx-251-                                                {
+src\components\pages\NotificationsPage\index.tsx-252-                                                    key: NotificationType.CommunityReply,
+src\components\pages\NotificationsPage\index.tsx-253-                                                    label: t("notifications.tabs.communityReply"),
+src\components\pages\NotificationsPage\index.tsx-254-                                                    icon: <UsersThreeIcon className="size-4" aria-hidden focusable="false" />,
+src\components\pages\NotificationsPage\index.tsx-255-                                                },
+src\components\pages\NotificationsPage\index.tsx-256-                                                {
+src\components\pages\NotificationsPage\index.tsx-257-                                                    key: NotificationType.MilestoneGraded,
+src\components\pages\NotificationsPage\index.tsx-258-                                                    label: t("notifications.tabs.milestoneGraded"),
+src\components\pages\NotificationsPage\index.tsx-259-                                                    icon: <FlagIcon className="size-4" aria-hidden focusable="false" />,
+src\components\pages\NotificationsPage\index.tsx-260-                                                },
+src\components\pages\NotificationsPage\index.tsx-261-                                                {
+src\components\pages\NotificationsPage\index.tsx-262-                                                    key: NotificationType.ChallengeGraded,
+src\components\pages\NotificationsPage\index.tsx-263-                                                    label: t("notifications.tabs.challengeGraded"),
+src\components\pages\NotificationsPage\index.tsx-264-                                                    icon: <PuzzlePieceIcon className="size-4" aria-hidden focusable="false" />,
+src\components\pages\NotificationsPage\index.tsx-265-                                                },
+src\components\pages\NotificationsPage\index.tsx-266-                                                {
+src\components\pages\NotificationsPage\index.tsx-267-                                                    key: NotificationType.CodingGraded,
+--
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx:245:                <TabsCard
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-246-                    leftTabs={{
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-247-                        items: IMPORT_TABS,
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-248-                        selectedKey: importKind,
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-249-                        ariaLabel: t("ragPlayground.import.tabsAria"),
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-250-                        onSelectionChange: (key) => setImportKind(key as WorkspaceImportKind),
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-251-                    }}
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-252-                />
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-253-                {importKind === RagPlaygroundSourceKind.Paste ? (
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-254-                    <TextField aria-label={t("ragPlayground.import.pastePlaceholder")}>
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-255-                        <TextArea
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-256-                            rows={5}
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-257-                            className="font-mono text-sm"
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-258-                            placeholder={t("ragPlayground.import.pastePlaceholder")}
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-259-                            value={pasteCode}
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-260-                            onChange={(event) => setPasteCode(event.target.value)}
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-261-                        />
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-262-                    </TextField>
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-263-                ) : null}
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-264-                {importKind === RagPlaygroundSourceKind.Upload ? (
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-265-                    <div className="flex flex-col gap-2">
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-266-                        <label
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-267-                            htmlFor="playground-rag-workspace-upload"
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-268-                            className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-default bg-surface px-4 py-6 text-center transition-colors hover:bg-default"
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-269-                        >
+src\components\blocks\learn\PlaygroundRagWorkspace\index.tsx-270-                            <FileArrowUpIcon aria-hidden focusable="false" className="size-6 text-muted" />
+--
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx:227:                                <TabsCard
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-228-                                    leftTabs={{
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-229-                                        items: [
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-230-                                            {
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-231-                                                key: "contents",
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-232-                                                label: t("profileSettings.learning.detail.contents"),
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-233-                                                icon: <ListBulletsIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-234-                                            },
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-235-                                            {
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-236-                                                key: "personalProject",
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-237-                                                label: t("profileSettings.learning.detail.personalProject"),
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-238-                                                icon: <FlagIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-239-                                            },
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-240-                                        ],
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-241-                                        selectedKey: tab,
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-242-                                        ariaLabel: t("profileSettings.learning.detail.viewToggle"),
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-243-                                        onSelectionChange: (key) => setTab(key as DetailTab),
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-244-                                    }}
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-245-                                />
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-246-                            ),
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-247-                            () => (tab === "contents" ? (
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-248-                                <CourseOutline search={query} />
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-249-                            ) : (
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-250-                                <CourseMilestoneOutline search={query} />
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-251-                            )),
+src\components\pages\LearningHistoryPage\CourseDetail\index.tsx-252-                        ]} />
+--
+src\components\pages\CvEditorPage\index.tsx:401:                    <TabsCard
+src\components\pages\CvEditorPage\index.tsx-402-                        variant="primary"
+src\components\pages\CvEditorPage\index.tsx-403-                        leftTabs={{
+src\components\pages\CvEditorPage\index.tsx-404-                            selectedKey: mobilePane,
+src\components\pages\CvEditorPage\index.tsx-405-                            ariaLabel: t("cv.builder.mobilePaneAria"),
+src\components\pages\CvEditorPage\index.tsx-406-                            onSelectionChange: (key) => setMobilePane(String(key) as typeof mobilePane),
+src\components\pages\CvEditorPage\index.tsx-407-                            items: [
+src\components\pages\CvEditorPage\index.tsx-408-                                { key: "edit", label: t("cv.builder.editPane") },
+src\components\pages\CvEditorPage\index.tsx-409-                                { key: "preview", label: t("cv.builder.previewPane") },
+src\components\pages\CvEditorPage\index.tsx-410-                            ],
+src\components\pages\CvEditorPage\index.tsx-411-                        }}
+src\components\pages\CvEditorPage\index.tsx-412-                    />
+src\components\pages\CvEditorPage\index.tsx-413-                </Box>
+src\components\pages\CvEditorPage\index.tsx-414-
+src\components\pages\CvEditorPage\index.tsx-415-                {/* Full-bleed shell ΓÇö flush style SIDEBAR (border-r, viewport-tall,
+src\components\pages\CvEditorPage\index.tsx-416-                    drag-resizable on desktop) + content (blocks | preview), each an
+src\components\pages\CvEditorPage\index.tsx-417-                    independent scroll region. */}
+src\components\pages\CvEditorPage\index.tsx-418-                <div className="flex flex-col @app-lg:h-[calc(100dvh-7.5rem)] @app-lg:flex-row">
+src\components\pages\CvEditorPage\index.tsx-419-                    {/* Style sidebar ΓÇö flush-left, full-height, docs-style. Resizable
+src\components\pages\CvEditorPage\index.tsx-420-                        (mirrors the learn-shell content rail); mobile stays full-width
+src\components\pages\CvEditorPage\index.tsx-421-                        (the JS-driven width + drag handle are desktop-only). */}
+src\components\pages\CvEditorPage\index.tsx-422-                    <ResizableRail
+src\components\pages\CvEditorPage\index.tsx-423-                        storageKey="starci.cv.editorSidebar.width"
+src\components\pages\CvEditorPage\index.tsx-424-                        defaultWidth={256}
+src\components\pages\CvEditorPage\index.tsx-425-                        minWidth={220}
+src\components\pages\CvEditorPage\index.tsx-426-                        maxWidth={420}
+--
+src\components\pages\CvEditorPage\index.tsx:759:                                                        <TabsCard
+src\components\pages\CvEditorPage\index.tsx-760-                                                            variant="primary"
+src\components\pages\CvEditorPage\index.tsx-761-                                                            size="sm"
+src\components\pages\CvEditorPage\index.tsx-762-                                                            leftTabs={{
+src\components\pages\CvEditorPage\index.tsx-763-                                                                selectedKey: mode,
+src\components\pages\CvEditorPage\index.tsx-764-                                                                ariaLabel: t("cv.builder.modeAria"),
+src\components\pages\CvEditorPage\index.tsx-765-                                                                onSelectionChange: (key) => onModeChange(String(key) as WorkspaceMode),
+src\components\pages\CvEditorPage\index.tsx-766-                                                                items: [
+src\components\pages\CvEditorPage\index.tsx-767-                                                                    { key: "block", label: t("cv.builder.modeBlock") },
+src\components\pages\CvEditorPage\index.tsx-768-                                                                    { key: "latex", label: t("cv.builder.modeLatex") },
+src\components\pages\CvEditorPage\index.tsx-769-                                                                ],
+src\components\pages\CvEditorPage\index.tsx-770-                                                            }}
+src\components\pages\CvEditorPage\index.tsx-771-                                                        />
+src\components\pages\CvEditorPage\index.tsx-772-                                                    ),
+src\components\pages\CvEditorPage\index.tsx-773-                                                    () => (
+src\components\pages\CvEditorPage\index.tsx-774-                                                        mode === "block" ? (
+src\components\pages\CvEditorPage\index.tsx-775-                                                            <ScrollShadow hideScrollBar className="min-h-0 flex-1 @app-lg:pr-1">
+src\components\pages\CvEditorPage\index.tsx-776-                                                                {draft ? (
+src\components\pages\CvEditorPage\index.tsx-777-                                                                    <CvBlockStack
+src\components\pages\CvEditorPage\index.tsx-778-                                                                        blocks={draft.blocks}
+src\components\pages\CvEditorPage\index.tsx-779-                                                                        onChange={onBlocksChange}
+src\components\pages\CvEditorPage\index.tsx-780-                                                                        addableTypes={addableTypes}
+src\components\pages\CvEditorPage\index.tsx-781-                                                                        onAddBlock={onAddBlock}
+src\components\pages\CvEditorPage\index.tsx-782-                                                                        onAiRewrite={onAiRewrite}
+src\components\pages\CvEditorPage\index.tsx-783-                                                                    />
+src\components\pages\CvEditorPage\index.tsx-784-                                                                ) : null}
+--
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx:49:                            <TabsCard
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-50-                                variant="primary"
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-51-                                leftTabs={{
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-52-                                    selectedKey: applyMethod,
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-53-                                    ariaLabel: t("jobs.post.applyMethod.toggleAria"),
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-54-                                    onSelectionChange: (key) => setValue("applyMethod", String(key) as JobApplyMethod),
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-55-                                    items: [
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-56-                                        { key: JobApplyMethod.ExternalUrl, label: t("jobs.post.applyMethod.externalUrl") },
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-57-                                        { key: JobApplyMethod.Email, label: t("jobs.post.applyMethod.email") },
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-58-                                    ],
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-59-                                }}
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-60-                            />
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-61-                        ),
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-62-                        () => (applyMethod === JobApplyMethod.ExternalUrl ? (
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-63-                            <TextField variant="secondary">
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-64-                                <Label htmlFor="job-post-apply-url">{t("jobs.post.applyMethod.urlLabel")}</Label>
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-65-                                <Input
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-66-                                    id="job-post-apply-url"
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-67-                                    type="url"
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-68-                                    placeholder={t("jobs.post.applyMethod.urlPlaceholder")}
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-69-                                    maxLength={URL_MAX}
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-70-                                    value={applyUrl}
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-71-                                    onChange={(event) => setValue("applyUrl", event.target.value)}
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-72-                                />
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-73-                            </TextField>
+src\components\pages\JobPostFormPage\ApplyMethodSection\index.tsx-74-                        ) : (
+--
+src\components\pages\LeaguePage\index.tsx:80:                                    <TabsCard
+src\components\pages\LeaguePage\index.tsx-81-                                        variant="primary"
+src\components\pages\LeaguePage\index.tsx-82-                                        leftTabs={{
+src\components\pages\LeaguePage\index.tsx-83-                                            items: [
+src\components\pages\LeaguePage\index.tsx-84-                                                { key: LeagueTab.Weekly, label: t("dashboard.league.tabWeekly") },
+src\components\pages\LeaguePage\index.tsx-85-                                                { key: LeagueTab.Global, label: t("dashboard.league.tabGlobal") },
+src\components\pages\LeaguePage\index.tsx-86-                                            ],
+src\components\pages\LeaguePage\index.tsx-87-                                            selectedKey: tab,
+src\components\pages\LeaguePage\index.tsx-88-                                            ariaLabel: t("dashboard.league.pageTitle"),
+src\components\pages\LeaguePage\index.tsx-89-                                            onSelectionChange: (key) => setTab(String(key) as LeagueTab),
+src\components\pages\LeaguePage\index.tsx-90-                                        }}
+src\components\pages\LeaguePage\index.tsx-91-                                    />
+src\components\pages\LeaguePage\index.tsx-92-                                ),
+src\components\pages\LeaguePage\index.tsx-93-                                () => (tab === LeagueTab.Weekly ? <WeeklyBoard /> : <GlobalBoard />),
+src\components\pages\LeaguePage\index.tsx-94-                            ]}
+src\components\pages\LeaguePage\index.tsx-95-                        />
+src\components\pages\LeaguePage\index.tsx-96-                    ),
+src\components\pages\LeaguePage\index.tsx-97-                ]}
+src\components\pages\LeaguePage\index.tsx-98-            />
+src\components\pages\LeaguePage\index.tsx-99-        </div>
+src\components\pages\LeaguePage\index.tsx-100-    )
+src\components\pages\LeaguePage\index.tsx-101-}
+--
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx:1485:                            <TabsCard
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1486-                                variant="primary"
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1487-                                leftTabs={{
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1488-                                    items: [
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1489-                                        { key: "begin", label: t("mockInterview.setupTabBegin") },
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1490-                                        { key: "history", label: t("mockInterview.setupTabHistory") },
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1491-                                        { key: "stats", label: t("mockInterview.setupTabStats") },
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1492-                                    ],
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1493-                                    selectedKey: setupTab,
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1494-                                    ariaLabel: t("mockInterview.setupTabBegin"),
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1495-                                    onSelectionChange: (key) => setSetupTab(key as "begin" | "history" | "stats"),
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1496-                                }}
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1497-                            />
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1498-                        ),
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1499-                        () => (
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1500-                            <div className={cn(setupTab !== "history" && "hidden")}>
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1501-                                <MockInterviewHistory courseId={courseId} courseDisplayId={courseDisplayId} onStartInterview={() => setSetupTab("begin")} />
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1502-                            </div>
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1503-                        ),
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1504-                        () => (
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1505-                            <div className={cn(setupTab !== "stats" && "hidden")}>
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1506-                                <MockInterviewStats courseId={courseId} courseDisplayId={courseDisplayId} onStartInterview={() => setSetupTab("begin")} />
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1507-                            </div>
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1508-                        ),
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1509-                        ...(setupTab === "begin"
+src\components\pages\MockInterviewPage\MockInterviewSession\index.tsx-1510-                            ? [
+--
+src\components\blocks\navigation\TabsCard\index.tsx:38:    items: Array<TabsCardItem>
+src\components\blocks\navigation\TabsCard\index.tsx-39-    /** Currently selected tab key. */
+src\components\blocks\navigation\TabsCard\index.tsx-40-    selectedKey: string
+src\components\blocks\navigation\TabsCard\index.tsx-41-    /** Accessible name for this group's tab list. */
+src\components\blocks\navigation\TabsCard\index.tsx-42-    ariaLabel: string
+src\components\blocks\navigation\TabsCard\index.tsx-43-    /** Fired with the newly selected tab key. */
+src\components\blocks\navigation\TabsCard\index.tsx-44-    onSelectionChange: (key: Key) => void
+src\components\blocks\navigation\TabsCard\index.tsx-45-}
+src\components\blocks\navigation\TabsCard\index.tsx-46-
+src\components\blocks\navigation\TabsCard\index.tsx-47-/** Props for the {@link TabsCard} block. */
+src\components\blocks\navigation\TabsCard\index.tsx-48-export interface TabsCardProps extends WithClassNames<undefined> {
+src\components\blocks\navigation\TabsCard\index.tsx-49-    /** Primary tab group, pinned left. */
+src\components\blocks\navigation\TabsCard\index.tsx-50-    leftTabs: TabsCardGroup
+src\components\blocks\navigation\TabsCard\index.tsx-51-    /**
+src\components\blocks\navigation\TabsCard\index.tsx-52-     * Inline cluster rendered right AFTER the left tab group ΓÇö actions that belong
+src\components\blocks\navigation\TabsCard\index.tsx-53-     * to the left axis (e.g. a manage-menu for the active tab, an "+" add button,
+src\components\blocks\navigation\TabsCard\index.tsx-54-     * an overflow count). Rendered as SIBLINGS of the tab list, never inside a
+src\components\blocks\navigation\TabsCard\index.tsx-55-     * `Tabs.Tab` (react-aria tabs can't nest interactive elements).
+src\components\blocks\navigation\TabsCard\index.tsx-56-     */
+src\components\blocks\navigation\TabsCard\index.tsx-57-    leftEnd?: ReactNode
+src\components\blocks\navigation\TabsCard\index.tsx-58-    /** Optional secondary tab group, pinned right (e.g. a language switcher). */
+src\components\blocks\navigation\TabsCard\index.tsx-59-    rightTabs?: TabsCardGroup
+src\components\blocks\navigation\TabsCard\index.tsx-60-    /**
+src\components\blocks\navigation\TabsCard\index.tsx-61-     * Collapse `rightTabs` into a compact dropdown below `sm` (mobile), expanding
+src\components\blocks\navigation\TabsCard\index.tsx-62-     * back to inline tabs from `sm` up. Use when the right group is a set-once
+src\components\blocks\navigation\TabsCard\index.tsx-63-     * preference (e.g. the language switcher) that would crowd a narrow reading
+--
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx:52:    const leftTabs = useMemo<TabsCardGroup>(
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-53-        () => ({
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-54-            ariaLabel,
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-55-            selectedKey,
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-56-            onSelectionChange,
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-57-            items: tabItems.map((item) => ({
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-58-                key: item.key,
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-59-                muted: item.locked,
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-60-                label: (
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-61-                    <TabTrigger
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-62-                        icon={CONTENT_TAB_ICON_MAP[item.key]}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-63-                        label={item.label}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-64-                        locked={item.locked}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-65-                    />
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-66-                ),
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-67-            })),
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-68-        }),
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-69-        [tabItems, selectedKey, ariaLabel, onSelectionChange],
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-70-    )
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-71-
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-72-    return (
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-73-        <Container
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-74-            identity={{ tier: "block", component: "ContentTabBar" }}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-75-            size="md"
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-76-            padding={1}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-77-            principle="center-measure"
+--
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx:80:                <TabsCard
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-81-                    leftTabs={leftTabs}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-82-                    rightTabs={rightTabs}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-83-                    collapseRightOnMobile
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-84-                    rightTabsNeutral
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-85-                />
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-86-            )}
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-87-        />
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-88-    )
+src\components\blocks\learn\lesson\ContentTabBar\index.tsx-89-}

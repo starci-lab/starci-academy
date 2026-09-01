@@ -1,0 +1,51 @@
+{
+  "batch": "B36",
+  "agent": "glyphmark-muted-contract",
+  "wave": "A",
+  "checkpoint": "84b92cd77",
+  "contract": "B-GlyphMark-muted",
+  "changedFiles": [
+    ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx",
+    "src/components/atoms/display/GlyphMark/index.tsx"
+  ],
+  "stories": {
+    "touched": false,
+    "note": "No .storybook/stories/**/GlyphMark/** present; muted example not required for contract-only wave"
+  },
+  "api": {
+    "GlyphMarkTone": ["default", "muted", "accent", "success", "warning"],
+    "mapping": {
+      "default": "text-foreground",
+      "muted": "text-muted",
+      "accent": "text-accent-soft-foreground",
+      "success": "text-success-soft-foreground",
+      "warning": "text-warning-soft-foreground"
+    },
+    "intrinsics": {
+      "box": "size-5 shrink-0",
+      "skeleton": "HeroSkeleton className size-5 shrink-0 rounded-full"
+    },
+    "behaviorUnchanged": [
+      "no className/classNames/style door",
+      "icon remains IconComponent (not ReactNode)",
+      "isSkeleton union unchanged",
+      "ariaLabel decorative vs role=img unchanged",
+      "BOX remains size-5 shrink-0"
+    ]
+  },
+  "parity": {
+    "sbSrcIdentical": true,
+    "note": "fc /b: no differences between SB GlyphMark.tsx and src index.tsx"
+  },
+  "outOfScope": {
+    "consumers": "Wave B — WeeklyGoals/ContentPager/muted size-5 candidates not migrated",
+    "forbidden": ["Navbar", "identity", "auth"]
+  },
+  "verification": {
+    "eslintMaxWarnings0": "pass on owned files",
+    "tsc": "clean (exit 0; no GlyphMark diagnostics)",
+    "gitDiffCheck": "clean on owned files"
+  },
+  "regressions": [],
+  "forbiddenTouched": false
+}

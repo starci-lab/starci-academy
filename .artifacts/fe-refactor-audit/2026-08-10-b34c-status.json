@@ -1,0 +1,46 @@
+{
+  "batch": "B34c",
+  "checkpoint": "6ff21c66",
+  "generatedAt": "2026-08-08T14:30:00.000Z",
+  "verdict": "READY TO COMMIT",
+  "commit": false,
+  "manifestCount": 37,
+  "eslint": {
+    "command": "npx eslint --format json --no-error-on-unmatched-pattern src .storybook",
+    "candidateClaimedByB34": { "warnings": 6911, "files": 1237 },
+    "beforeMeasured": { "warnings": 6921, "files": 1239, "errors": 0, "a11y": 11 },
+    "afterMeasured": { "warnings": 6872, "files": 1232, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -49, "files": -7, "errors": 0, "a11y": 0 },
+    "introducedOnCommitCandidates": 0,
+    "note": "Certification uses measured checkpoint remasure (6921/1239), not the B33c-after candidate (6911/1237)."
+  },
+  "partials": {
+    "source": "B33c remaining six clusters",
+    "counts": { "closed": 4, "stillPartial": 0, "unchangedHold": 2, "regression": 0 },
+    "closedClusterWarnings": 0,
+    "introducedWarnings": 0,
+    "introducedErrors": 0,
+    "unclassifiedDiagnostics": 0,
+    "clusters": "see 2026-08-10-b34c-partials.json"
+  },
+  "contracts": "see 2026-08-10-b34c-contract-audit.json",
+  "forbidden": {
+    "nivo": "no B34 edits; untracked InstanceList excluded as pre-existing dirty",
+    "nivoexpert": "untouched",
+    "mia-mia": "untouched (SiteFooter story pre-dirty excluded)"
+  },
+  "gates": {
+    "tsc": "pass",
+    "eslintMaxWarnings0CoreContractsAndClosedTwins": "pass",
+    "eslintFullCommitSetMaxWarnings0": "not claimed — classified pre-existing debt remains on some consumer files with zero increase",
+    "pluginEslintTests": "pass 22/22",
+    "principleAndSemanticTests": "pass 15/15",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass"
+  },
+  "holdsRetained": [
+    "WeeklyGoals text-muted glyph (not GlyphMarkTone)",
+    "src CollapsibleSidebar.className for mia-mia",
+    "SurfaceCard band58/band88 residual CSS doors (unchanged hold)"
+  ]
+}

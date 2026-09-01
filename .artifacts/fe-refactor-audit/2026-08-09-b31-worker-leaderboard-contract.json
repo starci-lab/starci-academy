@@ -1,0 +1,42 @@
+{
+  "warningsBefore": {
+    "LeaderboardListCard": 15
+  },
+  "warningsAfter": null,
+  "openTagConsumersBefore": [
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "value": "{className}"
+    }
+  ],
+  "openTagConsumersAfter": null,
+  "layoutOwnership": [],
+  "changed": [],
+  "skipped": [
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+  ],
+  "holds": [
+    "9 raw-shape unresolved contracts",
+    "HeroUI Link vocabulary gap",
+    "className door consumer is page-folder-blocked TopLearners",
+    "bare identity root missing"
+  ],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [
+    "bare cn flex flex-col gap-3",
+    "row/standing/ellipsis flex hosts",
+    "w-6 medal slots"
+  ],
+  "parity": {
+    "LeaderboardListCard": "src-only"
+  },
+  "verification": {
+    "phase": 1,
+    "sourceEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass-no-locked-nivo-overlap",
+  "manifest": [
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+  ]
+}

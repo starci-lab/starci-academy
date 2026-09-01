@@ -1,0 +1,31 @@
+{
+  "partition": "blocks-layout-domain",
+  "changed": [
+    "src/components/blocks/cards/LabeledCard/index.tsx",
+    "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+    "src/components/blocks/rendering/PDFView/index.tsx",
+    "src/components/blocks/learn/RelatedContentList/index.tsx",
+    "src/components/blocks/learn/RelatedContentList/component.tsx",
+    "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/index.tsx"
+  ],
+  "skipped": [],
+  "holds": [
+    "LabeledCard.contentClassName — live parent-placement callers",
+    "ShowcaseMockup.contentClassName — TalentMarketplace/LearnLoopScroll"
+  ],
+  "evidence": [
+    "LabeledCard WithClassNames/className zero valued consumers; stripped passthrough chain",
+    "ShowcaseMockup.className zero callers",
+    "blocks/rendering/PDFView WithClassNames/className dead (CvPreview uses height=)"
+  ],
+  "newVariants": [],
+  "vendorBoundaries": [],
+  "verification": {
+    "tsc": "pass",
+    "eslintMaxWarnings0": "fail on LabeledCard/ShowcaseMockup/blocks PDF — pre-existing non-door warnings only; no-public-classname-prop public doors removed"
+  },
+  "regressions": []
+}

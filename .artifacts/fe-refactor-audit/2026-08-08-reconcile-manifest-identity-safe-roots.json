@@ -1,0 +1,1777 @@
+{
+  "partition": "identity-safe-roots",
+  "generatedAt": "2026-08-06T22:31:27.722Z",
+  "batch": 12,
+  "fileCount": 35,
+  "totalCandidates": 195,
+  "capped": true,
+  "allowedClassifications": [
+    "consumer-safe",
+    "twin-safe",
+    "export-safe",
+    "identity-safe"
+  ],
+  "holdClassifications": [
+    "vendor-hold",
+    "api-hold",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "hardHolds": [
+    "ChipBase API / handleSide / non-identical twins",
+    "missing-both principles / page-folder / parallel skeleton",
+    "Nivo / locked / teacher holds / a11y",
+    "new principle tokens / unproven public API renames"
+  ],
+  "files": [
+    {
+      "path": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "twinExists": false,
+      "candidateCount": 3,
+      "messageCount": 5,
+      "byClass": {
+        "api-hold": 2,
+        "consumer-safe": 2,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `LanguageDropdown/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 19,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 19,
+          "column": 37,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "twin": ".storybook/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 6,
+      "byClass": {
+        "api-hold": 4,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Footer/` contains `FooterNavColumn/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 18,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 30,
+          "column": 47,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 56,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 60,
+          "column": 17,
+          "message": "`flex` on <ul> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Footer/index.tsx",
+      "twin": ".storybook/components/layouts/Footer/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 10,
+      "byClass": {
+        "consumer-safe": 1,
+        "identity-safe": 1,
+        "api-hold": 8
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 45,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 45,
+          "column": 27,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 78,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 81,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 82,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 90,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 106,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 113,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 117,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/LearnShellLayout/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/LearnShellLayout/component.tsx",
+      "twin": ".storybook/components/layouts/LearnShellLayout/component.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 6,
+      "byClass": {
+        "consumer-safe": 1,
+        "identity-safe": 1,
+        "api-hold": 4
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 48,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 75,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 78,
+          "column": 20,
+          "message": "`@app-lg:sticky` on <aside> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 87,
+          "column": 29,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 4,
+      "byClass": {
+        "api-hold": 2,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `AccountMenuDropdown/AccountMenuAuthed/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 23,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 23,
+          "column": 38,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 4,
+      "byClass": {
+        "api-hold": 2,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `AccountMenuDropdown/AccountMenuGuest/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 20,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 37,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 6,
+      "byClass": {
+        "api-hold": 4,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `AccountMenuDropdown/AccountTrigger/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 18,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 18,
+          "column": 35,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 42,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 53,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 5,
+      "byClass": {
+        "api-hold": 3,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `AccountMenuDropdown/DarkLightModeSwitch/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 40,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 28,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 5,
+      "byClass": {
+        "api-hold": 3,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `AccountMenuDropdown/GuestHeader/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 14,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 14,
+          "column": 32,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 27,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 3,
+      "byClass": {
+        "api-hold": 1,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `AccountMenuDropdown/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 34,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/CartButton/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/CartButton/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 5,
+      "byClass": {
+        "api-hold": 3,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `CartButton/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 17,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 17,
+          "column": 31,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 39,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 13,
+      "byClass": {
+        "consumer-safe": 1,
+        "identity-safe": 1,
+        "api-hold": 10,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 8,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 58,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 58,
+          "column": 27,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 96,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 98,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 99,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 104,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 108,
+          "column": 21,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 121,
+          "column": 26,
+          "message": "`items-center` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 157,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 174,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 175,
+          "column": 42,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 181,
+          "column": 42,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/Logo/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/Logo/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/Logo/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 5,
+      "byClass": {
+        "api-hold": 3,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `Logo/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 22,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 22,
+          "column": 25,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 44,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/NavLinks/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/NavLinks/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 6,
+      "byClass": {
+        "api-hold": 4,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `NavLinks/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 19,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 19,
+          "column": 29,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 34,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 38,
+          "column": 36,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/NotificationBell/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 10,
+      "byClass": {
+        "api-hold": 8,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `NotificationBell/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 13,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-retired-async-content",
+          "line": 39,
+          "column": 10,
+          "message": "`AsyncContent` is retired — thread `isSkeleton` to each leaf, and use AsyncContentEmpty/AsyncContentError from '@/components/composites/async/AsyncContent'.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 48,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 48,
+          "column": 37,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 158,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 173,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-parallel-skeleton",
+          "line": 191,
+          "column": 25,
+          "message": "Prop `skeleton={<…>}` is a hand-kept parallel skeleton tree that drifts from the real shape — thread `isSkeleton` to each leaf so shimmer mirrors the loaded tree.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 192,
+          "column": 34,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 209,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/SearchButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/SearchButton/index.tsx",
+      "twin": ".storybook/components/layouts/Navbar/SearchButton/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 3,
+      "byClass": {
+        "api-hold": 1,
+        "consumer-safe": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`layouts/Navbar/` contains `SearchButton/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 27,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "twin": ".storybook/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "identity-safe": 1,
+        "api-hold": 2,
+        "ambiguous": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 28,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 74,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 148,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 151,
+          "column": 22,
+          "message": "`overflow-y-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 170,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "twin": ".storybook/components/blocks/ai/AiQuotaLane/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "identity-safe": 1,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 14,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 51,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "twin": ".storybook/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "identity-safe": 1,
+        "api-hold": 1,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 17,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 39,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 120,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/async/AsyncContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/AsyncContent/index.tsx",
+      "twin": ".storybook/components/blocks/async/AsyncContent/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 14,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/async/ErrorContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/ErrorContent/index.tsx",
+      "twin": ".storybook/components/blocks/async/ErrorContent/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "identity-safe": 1,
+        "api-hold": 1,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 25,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 50,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/blog/PostRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/blog/PostRow/index.tsx",
+      "twin": ".storybook/components/blocks/blog/PostRow/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/NestedCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/NestedCard/index.tsx",
+      "twin": ".storybook/components/blocks/cards/NestedCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "identity-safe": 1,
+        "api-hold": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 9,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 36,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/PricingCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/PricingCard/index.tsx",
+      "twin": ".storybook/components/blocks/cards/PricingCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "identity-safe": 1,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 120,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "twin": ".storybook/components/blocks/chips/HostPlatformChip/component.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "identity-safe": 1,
+        "api-hold": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 20,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 48,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "twin": ".storybook/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "identity-safe": 1,
+        "api-hold": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 16,
+          "column": 51,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/code/SandpackPanel/index.tsx",
+      "twin": ".storybook/components/blocks/code/SandpackPanel/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "identity-safe": 1,
+        "api-hold": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 78,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 78,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "twin": ".storybook/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "api-hold": 1,
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 19,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 37,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "twin": ".storybook/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "twin": ".storybook/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/CommunityPost/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/CommunityPost/index.tsx",
+      "twin": ".storybook/components/blocks/community/CommunityPost/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "twin": ".storybook/components/blocks/consultant/ConsultantCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "identity-safe": 1,
+        "ambiguous": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 58,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 126,
+          "column": 33,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "twin": ".storybook/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "twin": ".storybook/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 17,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "twin": ".storybook/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "identity-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 14,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-safe"
+        }
+      ]
+    }
+  ]
+}

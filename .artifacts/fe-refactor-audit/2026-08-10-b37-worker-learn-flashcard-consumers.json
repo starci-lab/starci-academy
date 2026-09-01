@@ -1,0 +1,201 @@
+{
+  "batch": "B37",
+  "wave": "consumers",
+  "agent": "learn-flashcard-consumers",
+  "status": "complete",
+  "claimedAt": "2026-08-08T17:08:00.000Z",
+  "completedAt": "2026-08-08T17:13:25.000Z",
+  "checkpoint": "84b92cd77",
+  "contractsGreen": true,
+  "owns": [
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/index.tsx",
+    "src/components/blocks/learn/RelatedContentList/component.tsx",
+    "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+    "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/index.tsx"
+  ],
+  "mustNotTouch": [
+    "outside owns",
+    "SurfaceCard contract sources",
+    "EntityResultRow"
+  ],
+  "pattern": "Collapse LabeledCard frameless + SurfaceListCard into SurfaceCardList (label/labelEnd/subtleLabel/isSkeleton owned by List). Data rows via items[]. No parallel skeleton trees. Migrate exact non-A list shells when 1:1. Hold class H and non-exact (EntityResultRow, nested chrome, selected tint mismatch, class F framed bodies).",
+  "requiredFirstTargets": [
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "class": "A",
+      "status": "migrated",
+      "from": "LabeledCard frameless + SurfaceListCard (+ parallel listSkeleton)",
+      "to": "SurfaceCardList subtleLabel/label/labelEnd items[] content; skeletonItems + isSkeleton"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "class": "A",
+      "status": "migrated",
+      "from": "LabeledCard frameless + SurfaceListCard (+ parallel listSkeleton)",
+      "to": "SurfaceCardList subtleLabel/label/labelEnd; expandable free-form content without item onPress; skeletonItems + isSkeleton"
+    },
+    {
+      "path": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "class": "H",
+      "status": "held",
+      "mismatch": "Rows are EntityResultRow (own SurfaceListCardItem / bespoke layout). Parent only shells the list; migrating requires EntityResultRow contract change outside owns. No exact unlock this pass.",
+      "classification": "children-ReactNode-rows"
+    }
+  ],
+  "migrated": [
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "class": "A",
+      "shape": "free-form-content + labeled list",
+      "from": "LabeledCard frameless + SurfaceListCard / SurfaceListCardItem; parallel listSkeleton",
+      "to": "SurfaceCardList (time buckets + skeleton)",
+      "notes": "Deck accordion (LabeledAccordionCard) unchanged. Filter-empty still SurfaceCard body."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "class": "A",
+      "shape": "free-form-content + labeled list",
+      "from": "LabeledCard frameless + SurfaceListCard / SurfaceListCardItem; parallel listSkeleton",
+      "to": "SurfaceCardList (time buckets + skeleton)",
+      "notes": "Expand + nested weak-tag buttons stay inside content (no item onPress) to avoid button-in-button."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "class": "A",
+      "shape": "fixed-row",
+      "from": "LabeledCard frameless + SurfaceListCard + SurfaceListCardRow / hand skeleton boxes",
+      "to": "SurfaceCardList label + isSkeleton + title/meta items",
+      "notes": "ZONE 1 memory-health LabeledCard frameless + VerdictHeroCard left (not a list shell). ZONE 2 weak-topic map collapsed."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard bordered + SurfaceListCardItem",
+      "to": "SurfaceCardList variant=nested isSkeleton items[] content",
+      "notes": "Line view only. Grid view already SurfaceCard. CTA chips stay inside content."
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "class": "G",
+      "shape": "fixed-row",
+      "from": "SurfaceListCard bordered + free-form truncate + HeroUI Chip",
+      "to": "SurfaceCardList variant=nested title + meta Chip",
+      "notes": "Exact unlock via title/meta slots; external muted span label retained (not LabeledCard)."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem",
+      "to": "SurfaceCardList isSkeleton items[] content",
+      "notes": "Shell migrate only. Full twin collapse held — live result wiring outside owns."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem",
+      "to": "SurfaceCardList isSkeleton items[] content",
+      "notes": "Shell migrate only. Full twin collapse held — live FlashcardSessionStats/component.tsx not in owns."
+    }
+  ],
+  "held": [
+    {
+      "id": "RelatedContentList-EntityResultRow",
+      "class": "H",
+      "files": ["src/components/blocks/learn/RelatedContentList/component.tsx"],
+      "mismatch": "EntityResultRow owns row chrome / SurfaceListCardItem; parent is shell-only. No exact unlock without EntityResultRow co-change.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "ChatToolResult-EntityResultRow",
+      "files": ["src/components/blocks/learn/ChatToolResult/index.tsx"],
+      "mismatch": "Renders SurfaceListCardItem skeletons + EntityResultRow; custom border header + view-all footer; no owning SurfaceListCard shell. Same EntityResultRow hold.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "ContentAiChat-conversation-drawer",
+      "files": ["src/components/blocks/learn/ContentAiChat/index.tsx"],
+      "mismatch": "Rows embed inline rename input, overflow Dropdown, selection tint — custom nested interactive chrome, not exact SurfaceCardListItem fixed/content without rewriting the drawer.",
+      "classification": "custom-nested-chrome"
+    },
+    {
+      "id": "FlashcardReviewModeModal-selected-tint",
+      "files": ["src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx"],
+      "mismatch": "SurfaceListCardRow selected uses bg-accent-soft tint + per-row hover:bg-accent-soft className; SurfaceCardList selected uses trailing CheckCircleIcon only. Not exact visual/select contract.",
+      "classification": "selected-signal-mismatch"
+    },
+    {
+      "id": "recapBlocks-class-F",
+      "files": ["src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx"],
+      "mismatch": "LabeledCard (framed, not frameless) owns StackV + ScrollShadow body with loose SurfaceListCardRow children — class F legitimate framed body, not A collapse.",
+      "classification": "class-F-framed-body"
+    },
+    {
+      "id": "DueReviewHero-LabeledCard-body",
+      "files": ["src/components/pages/FlashcardsPage/DueReviewHero/component.tsx"],
+      "mismatch": "LabeledCard wraps non-list due body — not SurfaceListCard topology.",
+      "classification": "not-list-shell"
+    },
+    {
+      "id": "FlashcardStatsStrip-LabeledCard-body",
+      "files": ["src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx"],
+      "mismatch": "LabeledCard wraps stats strip body — not SurfaceListCard topology.",
+      "classification": "not-list-shell"
+    },
+    {
+      "id": "QuizSession-LabeledCard-forms",
+      "files": ["src/components/pages/FlashcardsPage/QuizSession/index.tsx"],
+      "mismatch": "LabeledCard wraps config/question/fill/answer form bodies — not list shells.",
+      "classification": "not-list-shell"
+    },
+    {
+      "id": "parallel-skeleton-twins-full-collapse",
+      "files": [
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx"
+      ],
+      "mismatch": "List shells migrated to SurfaceCardList; deleting twin files requires consumer rewiring outside owns (live components already have isSkeleton).",
+      "classification": "parallel-twin-hold"
+    }
+  ],
+  "unchangedInspected": [
+    "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/index.tsx",
+    "src/components/blocks/learn/RelatedContentList/component.tsx"
+  ],
+  "changedFiles": [
+    "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+    "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-learn-flashcard-consumers.json"
+  ],
+  "gates": {
+    "tscOwned": "pass",
+    "eslintOwned": "pass-warnings-only-0-errors",
+    "gitDiffCheck": "pass"
+  },
+  "outsideOwns": false,
+  "commit": false
+}

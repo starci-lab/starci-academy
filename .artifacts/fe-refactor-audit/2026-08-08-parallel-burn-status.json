@@ -1,0 +1,202 @@
+{
+  "workers": {
+    "atoms": {
+      "changed": 73,
+      "skipped": 0,
+      "holds": 0,
+      "regressions": 0,
+      "verification": {
+        "tsc": {
+          "command": "npx tsc --noEmit",
+          "exitCode": 0,
+          "ok": true
+        },
+        "eslintQuiet": {
+          "command": "npx eslint --quiet <73 manifest files>",
+          "exitCode": 0,
+          "remainingStarciFeMessages": 0,
+          "ok": true
+        },
+        "before": {
+          "filesWithMessages": 73,
+          "messages": 172,
+          "byRule": {
+            "starci-fe/require-export-jsdoc": 168,
+            "starci-fe/handler-on-prefix": 2,
+            "starci-fe/no-emoji-in-source": 2
+          }
+        },
+        "after": {
+          "filesWithMessages": 0,
+          "messages": 0
+        }
+      }
+    },
+    "composites": {
+      "changed": 40,
+      "skipped": 0,
+      "holds": 15,
+      "regressions": 0,
+      "verification": {
+        "eslintQuietChanged": {
+          "exitOk": true,
+          "errorCount": 0,
+          "files": 40
+        },
+        "safeRulesRemainingOnManifest": 0,
+        "holdCount": 15
+      }
+    },
+    "frames": {
+      "changed": 7,
+      "skipped": 0,
+      "holds": 0,
+      "regressions": 0,
+      "verification": {
+        "command": "npx eslint --format json <7 manifest files>",
+        "targetRules": [
+          "starci-fe/no-emoji-in-source",
+          "starci-fe/prefer-arrow-export"
+        ],
+        "targetRemainTotal": 0,
+        "starciFeRemainTotal": 0
+      }
+    },
+    "blocks-layout": {
+      "changed": 30,
+      "skipped": 162,
+      "holds": 187,
+      "regressions": 0,
+      "verification": {
+        "eslintSafeRulesOnWorkedFiles": "cleared except handleSide false-positive and require-identity-root holds",
+        "clearIdentityRootsFixed": 0,
+        "filesWorked": 30,
+        "filesDeferred": 161
+      }
+    },
+    "blocks-domain": {
+      "changed": 32,
+      "skipped": 305,
+      "holds": 35,
+      "regressions": 0,
+      "verification": {
+        "batchSize": 40,
+        "changedCount": 32,
+        "holdCount": 35,
+        "skippedInBatch": 8,
+        "deferredCount": 297,
+        "safeHitsBeforeBatch": 119,
+        "safeHitsAfterBatch": 51,
+        "remainingByRule": {
+          "starci-fe/require-identity-root": 18,
+          "starci-fe/no-inline-skeleton-branch": 11,
+          "starci-fe/no-emoji-in-source": 12,
+          "starci-fe/no-inline-parameter-type": 10
+        },
+        "note": "Storybook-first then src twins; product reaction emoji, unclear identity roots, inline-skeleton threading, and risky inline-param extracts held; nivo/Mia-Mia/locked absent from this partition."
+      }
+    },
+    "pages-core": {
+      "changed": 39,
+      "skipped": 130,
+      "holds": 68,
+      "regressions": 1,
+      "verification": {
+        "eslintQuietChanged": "pass",
+        "eslintSafeRemainingInBatch": {
+          "src/modules/utils/computations/pow-10.ts": [
+            "starci-fe/prefer-arrow-export"
+          ]
+        },
+        "tscNoEmit": "preexisting-fail:src/components/blocks/marketing/MicroservicesScene/index.tsx(TS1382); no errors in pages-core changed files",
+        "storybookTwinsInManifest": 0
+      }
+    },
+    "pages-special": {
+      "changed": 24,
+      "skipped": 1,
+      "holds": 123,
+      "regressions": 0,
+      "verification": {
+        "eslintOnChanged": {
+          "cleared": [
+            "no-emoji-in-source",
+            "no-inline-parameter-type",
+            "handler-on-prefix (except ResizableRail handleSide)",
+            "require-identity-root on FlashcardReviewPage"
+          ],
+          "remainOnChangedFiles": {
+            "starci-fe/require-identity-root": 8,
+            "starci-fe/handler-on-prefix": 1,
+            "note": "hard identity roots + handleSide API prop — recorded as holds"
+          }
+        },
+        "tsc": {
+          "result": "preexisting-error-outside-partition",
+          "detail": "src/components/blocks/marketing/MicroservicesScene/index.tsx TS1382 — not in this manifest"
+        }
+      }
+    },
+    "storybook-only": {
+      "changed": 7,
+      "skipped": 0,
+      "holds": 0,
+      "regressions": 0,
+      "verification": {
+        "eslint": {
+          "files": 7,
+          "starciFeRemaining": 0,
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      }
+    },
+    "exports-structure": {
+      "changed": 1,
+      "skipped": 0,
+      "holds": 0,
+      "regressions": 0,
+      "verification": [
+        {
+          "check": "eslint --max-warnings=0 src/components/blocks/cv/BlockRegistry/index.tsx",
+          "result": "pass"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "changed": 253,
+    "skipped": 598,
+    "holds": 428,
+    "regressions": 1
+  },
+  "overlaps": [],
+  "uniqueChangedFiles": 253,
+  "coordinator": {
+    "overlaps": 0,
+    "repairs": [
+      {
+        "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+        "note": "moved ProfilePinnedActionProps above component"
+      },
+      {
+        "path": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+        "note": "JSX text -> arrow wrapped in expression after emoji scrub"
+      }
+    ],
+    "twinParity": {
+      "softMismatches": 7,
+      "substantiveNewDrift": 0,
+      "note": "ChipBase src still has pre-existing no-per-part-classname-prop"
+    },
+    "verification": {
+      "tsc": true,
+      "eslintQuietChanged": true,
+      "pluginTests": true,
+      "principleStyle": true,
+      "auditFe": true,
+      "teacherHolds": 27
+    },
+    "noCommit": true
+  }
+}

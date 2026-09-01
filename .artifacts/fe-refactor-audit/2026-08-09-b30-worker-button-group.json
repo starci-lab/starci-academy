@@ -1,0 +1,69 @@
+{
+  "manifest": [
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+    "src/components/atoms/buttons/ButtonGroup/index.tsx",
+    ".storybook/components/atoms/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+    ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+    "src/components/composites/buttons/ButtonGroup/index.tsx"
+  ],
+  "openTagConsumers": [
+    {
+      "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+      "line": 124,
+      "prop": "classNames",
+      "kind": "expr",
+      "value": "[\"w-full\"]",
+      "normalized": "w-full",
+      "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm\", label: labels.confirmLabel, variant: \"danger\", isDisabled"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+      "line": 112,
+      "prop": "classNames",
+      "kind": "expr",
+      "value": "[\"w-full\"]",
+      "normalized": "w-full",
+      "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm\", label: labels.confirmLabel, variant: \"danger\", isPending:"
+    }
+  ],
+  "valueSet": {
+    "before": [
+      "w-fit",
+      "!top-0 !h-full !bg-border !opacity-100",
+      "w-full"
+    ],
+    "after": [
+      "w-full"
+    ]
+  },
+  "ownership": {
+    "w-fit": "baked into ButtonGroupRoot; FlexWrap migrated to house atoms",
+    "!top-0 !h-full !bg-border !opacity-100": "already baked into ButtonGroupSeparator; FlexWrap uses atom",
+    "w-full": "parent placement on composite ButtonGroup — held (nivoexpert)"
+  },
+  "oldApi": "HeroUI ButtonGroup className + Separator className; composite classNames",
+  "newApi": "ButtonGroupRoot + ButtonGroupSeparator (no CSS doors); composite classNames residual hold",
+  "changed": [
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx"
+  ],
+  "holds": [
+    {
+      "component": "ButtonGroup (composite)",
+      "reason": "Nivoexpert ConfirmDialog + RefundOrderModal keep classNames=['w-full']; RefundOrderModal explicitly not edited; root door remains live",
+      "files": [
+        ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+      ]
+    }
+  ],
+  "parity": {
+    "ButtonGroupSeparator": "SB atom twin already baked identical chrome (no edit)",
+    "ButtonGroupRoot": "SB atom twin already has w-fit baked (no edit)"
+  },
+  "verification": {
+    "tsc": "pending-coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

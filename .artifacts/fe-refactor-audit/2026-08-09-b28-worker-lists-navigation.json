@@ -1,0 +1,133 @@
+{
+  "worker": "lists-navigation",
+  "manifest": [
+    "src/components/blocks/lists/LabeledList/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/navigation/BackLink/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/blocks/navigation/TabsCard/index.tsx"
+  ],
+  "consumers": [
+    {
+      "component": "BackLink",
+      "file": "src/components/blocks/navigation/BackLink/index.tsx",
+      "before": [
+        {
+          "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+          "line": 60,
+          "prop": "className",
+          "value": "@app-sm:hidden",
+          "ownership": "parent-placement"
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+          "line": 45,
+          "prop": "className",
+          "value": "shrink-0",
+          "ownership": "parent-placement"
+        }
+      ],
+      "after": []
+    },
+    {
+      "component": "LabeledList",
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "before": [],
+      "after": [],
+      "holdEvidence": "consumer-scan false positive: self-start is on Button inside LessonChallenges action slot (line 91), not on LabeledList; zero open-tag className/classNames on LabeledList"
+    },
+    {
+      "component": "ListRow",
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "before": [
+        {
+          "prop": "className",
+          "ownership": "intrinsic"
+        }
+      ],
+      "after": [
+        {
+          "prop": "className",
+          "ownership": "intrinsic"
+        }
+      ]
+    },
+    {
+      "component": "SidebarNavItem",
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "before": [
+        {
+          "prop": "className",
+          "ownership": "mixed"
+        }
+      ],
+      "after": [
+        {
+          "prop": "className",
+          "ownership": "mixed"
+        }
+      ]
+    },
+    {
+      "component": "TabsCard",
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "before": [
+        {
+          "prop": "className",
+          "ownership": "parent-placement"
+        }
+      ],
+      "after": [
+        {
+          "prop": "className",
+          "ownership": "parent-placement"
+        }
+      ]
+    }
+  ],
+  "valueSet": {
+    "BackLink": ["@app-sm:hidden", "shrink-0"],
+    "LabeledList": ["self-start"],
+    "ListRow": ["p-3", "size-2 text-accent-soft-foreground", "size-5 text-success-soft-foreground", "size-5 text-muted", "size-5 text-foreground", "text-accent-soft-foreground", "STATUS_ICON_CLASS[lesson.status]"],
+    "SidebarNavItem": ["size-5 shrink-0", "rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white"],
+    "TabsCard": ["mx-auto w-full max-w-3xl", "w-full max-w-xs", "size-5", "size-4 shrink-0", "w-full", "size-5 shrink-0", "size-4"]
+  },
+  "ownership": {
+    "BackLink": ["parent-placement"],
+    "LabeledList": ["parent-placement"],
+    "ListRow": ["intrinsic", "dynamic"],
+    "SidebarNavItem": ["mixed", "intrinsic"],
+    "TabsCard": ["parent-placement", "intrinsic", "mixed"]
+  },
+  "oldApi": {
+    "BackLink": "WithClassNames<undefined> on connected + presentational — className merged onto HeroUI Link"
+  },
+  "newApi": {
+    "BackLink": "no className door; ResponsiveBreadcrumb uses HideAbove at=\"sm\" for short trails; CvEditorToolbarBar wraps with Box className=\"shrink-0\""
+  },
+  "changed": [
+    "src/components/blocks/navigation/BackLink/index.tsx",
+    "src/components/blocks/navigation/BackLink/component.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx"
+  ],
+  "holds": [
+    "LabeledList — no className/classNames consumers; scan attributed self-start to wrong component (Button in LessonChallenges action)",
+    "ListRow — multi-value / 9 consumers",
+    "SidebarNavItem — 5 consumers",
+    "TabsCard — 12 consumers"
+  ],
+  "parity": {
+    "BackLink": "src-only; SB LinkBack is separate atom port",
+    "LabeledList": "hold — door still present but unused",
+    "ListRow": "hold",
+    "SidebarNavItem": "hold",
+    "TabsCard": "hold"
+  },
+  "verification": {
+    "eslint": "read_lints clean on changed src files",
+    "tsc": "deferred to coordinator chunk"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — ResponsiveBreadcrumb is navigation block outside manifest but is the documented BackLink consumer; partial worker scope honored for BackLink only"
+}

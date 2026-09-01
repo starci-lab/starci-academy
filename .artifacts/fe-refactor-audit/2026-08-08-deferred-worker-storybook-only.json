@@ -1,0 +1,27 @@
+{
+  "partition": "storybook-only",
+  "checkpoint": "27127bb5",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "rules": ["starci-fe/handler-on-prefix"],
+      "classification": "semantic-hold",
+      "reason": "handleSide is ResizableRail JSX API prop (which edge the resize handle sits on), not an onXxx event handler — rename to onSide would break the API; no eslint-disable"
+    },
+    {
+      "path": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "rules": ["starci-fe/handler-on-prefix"],
+      "classification": "semantic-hold",
+      "reason": "handleSide is ResizableRail JSX API prop (which edge the resize handle sits on), not an onXxx event handler — rename to onSide would break the API; no eslint-disable"
+    }
+  ],
+  "verification": {
+    "eslint": {
+      "files": 0,
+      "note": "No source edits; both candidates held. eslint --quiet on the two manifest files: exit 0 (handler-on-prefix remains warn severity 1)."
+    }
+  },
+  "regressions": []
+}

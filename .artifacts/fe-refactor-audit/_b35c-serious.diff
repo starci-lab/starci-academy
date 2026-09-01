@@ -1,0 +1,2482 @@
+﻿diff --git a/.storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx b/.storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx
+index 26d1313f..e1d17d97 100644
+--- a/.storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx
++++ b/.storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx
+@@ -10,10 +10,10 @@ import { PhaseScarcityNote, PricingPhase } from "@sb-components/starci/blocks/co
+ import { Button } from "@sb-components/atoms/buttons/Button/Button"
+ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+ import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
+ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
++import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
+ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+ 
+ /**
+  * BLOCK ΓÇö the trial -> enroll conversion strip on the content-home. Bundles a
+  * loss-aversion line (free lessons remaining), the real price (+ phase-scarcity
+@@ -58,10 +58,8 @@ export interface TrialConversionStripProps {
+  */
+     isSkeleton?: boolean
+     /** Fired when the enroll CTA is pressed (caller owns opening the payment flow). */
+     onEnroll?: () => void
+-    /** Layout utilities on the root, from the closed positioning union (SurfaceCard's `className` door was deleted, COMPOSITE-4). */
+-    classNames?: Array<AllowedClassName>
+ }
+ 
+ /**
+  * Trial -> enroll conversion strip on the content-home. Bundles three honest
+@@ -76,9 +74,8 @@ const TrialConversionStripBase = ({
+     freeLessonsRemaining,
+     price,
+     isSkeleton = false,
+     onEnroll,
+-    classNames,
+ }: TrialConversionStripProps) => {
+     const hasFreeLeft = freeLessonsRemaining > 0
+ 
+     const breakdown: PriceBreakdown | undefined = price
+@@ -107,18 +104,22 @@ const TrialConversionStripBase = ({
+                 // title `sm` medium ┬╖ subtitle `xs` muted. Hand-building two atoms means
+                 // the block decides its own font sizes ΓÇö one style per spot, with
+                 // nothing keeping them in sync.
+                 () => (
+-                    <TitledText
+-                        classNames={["flex-1"]}
+-
++                    <FillAvailable
++                        at="base"
+                         isSkeleton={isSkeleton && !price}
+-                        title="Free trial ΓÇö unlock the full course"
+-                        subtitle={
+-                            hasFreeLeft
+-                                ? `${freeLessonsRemaining} free lessons left unread ΓÇö keep reading or unlock the full course now.`
+-                                : "You've read every free lesson ΓÇö unlock the full course to keep going."
+-                        }
++                        body={({ isSkeleton: titleSkeleton }: SkeletonProps) => (
++                            <TitledText
++                                isSkeleton={titleSkeleton}
++                                title="Free trial ΓÇö unlock the full course"
++                                subtitle={
++                                    hasFreeLeft
++                                        ? `${freeLessonsRemaining} free lessons left unread ΓÇö keep reading or unlock the full course now.`
++                                        : "You've read every free lesson ΓÇö unlock the full course to keep going."
++                                }
++                            />
++                        )}
+                     />
+                 ),
+             ]} />
+     )
+@@ -132,35 +133,41 @@ const TrialConversionStripBase = ({
+     // as far from its own price as the CTA is from everything ΓÇö a uniform
+     // rhythm stops reading as groups. With 3 the
+     // card reads 24/12/12/24 ΓÇö two groups, which is what it is.
+     const priceColumn = (
+-        <StackV gap={4} isSkeleton={isSkeleton} items={
+-            isSkeleton && !price ? [
+-                // The CTA card renders instantly once the outline
+-                // resolves, but the price is a second fetch ΓÇö mirror the price
+-                // line instead of showing an empty gap until it lands.
+-                () => <Typography size="h4" isSkeleton />,
+-                () => <Typography size="xs" isSkeleton />,
+-            ] : price?.discountedPriceVnd != null ? [
+-                ({ isSkeleton }: SkeletonProps) => (
+-                    <PriceTagProminent
+-                        isSkeleton={isSkeleton}
+-                        discounted={price.discountedPriceVnd}
+-                        original={price.originalPriceVnd}
+-                        breakdown={breakdown}
++        <StackV
++            gap={4}
++            principle="card-caption"
++            explain="Keeps the scarcity line as a caption under the price so the two read as one price cluster, not as separate blocks."
++            isSkeleton={isSkeleton}
++            items={
++                isSkeleton && !price ? [
++                    // The CTA card renders instantly once the outline
++                    // resolves, but the price is a second fetch ΓÇö mirror the price
++                    // line instead of showing an empty gap until it lands.
++                    () => <Typography size="h4" isSkeleton />,
++                    () => <Typography size="xs" isSkeleton />,
++                ] : price?.discountedPriceVnd != null ? [
++                    ({ isSkeleton }: SkeletonProps) => (
++                        <PriceTagProminent
++                            isSkeleton={isSkeleton}
++                            discounted={price.discountedPriceVnd}
++                            original={price.originalPriceVnd}
++                            breakdown={breakdown}
+ 
+-                    />
+-                ),
+-                ({ isSkeleton }: SkeletonProps) => (
+-                    <PhaseScarcityNote
+-                        isSkeleton={isSkeleton}
+-                        currentPhase={price.currentPhase}
+-                        seatsRemaining={price.seatsRemainingInCurrentPhase}
+-                        nextPhasePriceVnd={price.nextPhasePriceVnd}
+-                    />
+-                ),
+-            ] : []
+-        } />
++                        />
++                    ),
++                    ({ isSkeleton }: SkeletonProps) => (
++                        <PhaseScarcityNote
++                            isSkeleton={isSkeleton}
++                            currentPhase={price.currentPhase}
++                            seatsRemaining={price.seatsRemainingInCurrentPhase}
++                            nextPhasePriceVnd={price.nextPhasePriceVnd}
++                        />
++                    ),
++                ] : []
++            }
++        />
+     )
+ 
+     // Price is a NUMBER ΓÇö shrinking it means nothing, unlike a long title that
+     // can truncate. The correct behaviour for this row is to WRAP when tight:
+@@ -202,14 +209,20 @@ const TrialConversionStripBase = ({
+     return (
+         // The frame owns radius/shadow/padding from ONE source: `SurfaceCard`.
+         // `padding` defaults to `3` ΓÇö the system's actual `p-3` card rule.
+         <SurfaceCard
+-            classNames={classNames}
++            identity={{ tier: "block", component: "TrialConversionStrip" }}
+             body={({ isSkeleton }: SkeletonProps) => (
+-                <StackV gap={6} isSkeleton={isSkeleton} items={[
+-                    () => headerRow,
+-                    () => footerRow,
+-                ]} />
++                <StackV
++                    gap={6}
++                    principle="block-boundary"
++                    explain="Separates the loss-aversion header from the price/CTA footer so the strip reads as two blocks inside one card."
++                    isSkeleton={isSkeleton}
++                    items={[
++                        () => headerRow,
++                        () => footerRow,
++                    ]}
++                />
+             )}
+         />
+     )
+ }
+diff --git a/.storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx b/.storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx
+index 158b271e..e49aa81d 100644
+--- a/.storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx
++++ b/.storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx
+@@ -46,11 +46,11 @@ const ContentAiSelectionAsk = ({
+     // rhythm) ΓÇö the `Button`<->`Chip` seam is owned by `StackH` below, never hand-written here.
+     <div
+         style={{ position: "fixed", left: anchor.x, top: anchor.y }}
+         className={cn("z-50 -translate-x-1/2 -translate-y-full", className)}
+-
+     >
+         <StackH
++            identity={{ tier: "block", component: "ContentAiSelectionAsk" }}
+             gap={2}
+             principle="icon-text"
+             explain="Icon beside its label ΓÇö not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+             align="center"
+@@ -62,16 +62,14 @@ const ContentAiSelectionAsk = ({
+                         size="sm"
+                         prefixIcon={SparkleIcon}
+                         onPress={onOpen}
+                         isElevated
+-
+                     />
+                 ),
+                 ...(isNew ? [() => (
+                     <Chip
+                         text="New"
+                         tone="accent"
+-
+                     />
+                 )] : []),
+             ]}
+         />
+diff --git a/.storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx b/.storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx
+index e300d475..e2c83394 100644
+--- a/.storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx
++++ b/.storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx
+@@ -3,8 +3,9 @@ import { type SkeletonProps } from "@sb-components/frames/_slot"
+ import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
+ import { Button } from "@sb-components/atoms/buttons/Button/Button"
+ import { InputTextarea } from "@sb-components/atoms/forms"
+ import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLike/InputButtonLike"
++import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
+ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+ 
+ /**
+  * BLOCK ΓÇö `CourseQaComposer`: the ONE writing shape reused three ways on a
+@@ -123,103 +124,113 @@ const CourseQaComposer = ({
+             name={currentUser?.name}
+             src={currentUser?.avatarSrc}
+             size="sm"
+             isSkeleton={isSkeleton}
+-
+-
+         />
+     ) : null
+ 
+     // ΓöÇΓöÇ LEAF ΓÇö CollapsedPrompt: avatar + pill, nothing else composed ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+     if (mode === "collapsible" && !expanded) {
+         return (
+-            <div>
+-                <StackH
+-                    gap={3}
+-                    isSkeleton={isSkeleton}
+-                    items={[
+-                        () => avatar,
+-                        () => (
+-                            <div className="min-w-0 flex-1">
+-                                <InputButtonLike
+-                                    placeholder={placeholder ?? "Ask a question about this courseΓÇª"}
+-                                    onPress={() => setExpanded(true)}
+-                                    isSkeleton={isSkeleton}
+-                                />
+-                            </div>
+-                        ),
+-                    ]}
+-                />
+-            </div>
+-        )
+-    }
+-
+-    // ΓöÇΓöÇ LEAF ΓÇö ExpandedForm: avatar + textarea + action row ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+-    return (
+-        <div>
+             <StackH
++                identity={{ tier: "block", component: "CourseQaComposer" }}
+                 gap={3}
++                principle="content-row"
++                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                 isSkeleton={isSkeleton}
+                 items={[
+                     () => avatar,
+-                    ({ isSkeleton }: SkeletonProps) => (
+-                        <StackV
+-                            gap={3}
++                    () => (
++                        <FillAvailable
++                            at="base"
++                            explain="Collapsed prompt takes remaining row width beside the avatar so the pill can shrink instead of shoving the face."
+                             isSkeleton={isSkeleton}
+-                            classNames={["min-w-0", "flex-1"]}
+-                            items={[
+-                                () => (
+-                                    <InputTextarea
+-                                        value={value}
+-                                        onValueChange={onValueChange}
+-                                        placeholder={placeholder}
+-                                        ariaLabel={placeholder ?? "Content"}
+-                                        rows={3}
+-                                        isDisabled={isPending}
+-                                        isSkeleton={isSkeleton}
+-
+-                                    />
+-                                ),
+-                                () => (
+-                                    <StackH
+-                                        gap={3}
+-                                        principle="flex-action"
+-                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+-                                        justify="end"
+-                                        isSkeleton={isSkeleton}
+-                                        items={[
+-                                            ...(showCancel ? [() => (
+-                                                <Button
+-                                                    label="Cancel"
+-                                                    variant="tertiary"
+-                                                    size="sm"
+-                                                    onPress={onCancel}
+-                                                    isDisabled={isPending}
+-                                                    isSkeleton={isSkeleton}
+-
+-                                                />
+-                                            )] : []),
+-                                            () => (
+-                                                <Button
+-                                                    label={submitLabel}
+-                                                    variant="primary"
+-                                                    size="sm"
+-                                                    onPress={onSubmit}
+-                                                    isDisabled={!canSubmit}
+-                                                    isPending={isPending}
+-                                                    isSkeleton={isSkeleton}
+-
+-                                                />
+-                                            ),
+-                                        ]}
+-                                    />
+-                                ),
+-                            ]}
++                            body={() => (
++                                <InputButtonLike
++                                    placeholder={placeholder ?? "Ask a question about this courseΓÇª"}
++                                    onPress={() => setExpanded(true)}
++                                    isSkeleton={isSkeleton}
++                                />
++                            )}
+                         />
+                     ),
+                 ]}
+             />
+-        </div>
++        )
++    }
++
++    // ΓöÇΓöÇ LEAF ΓÇö ExpandedForm: avatar + textarea + action row ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
++    return (
++        <StackH
++            identity={{ tier: "block", component: "CourseQaComposer" }}
++            gap={3}
++            principle="content-row"
++            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
++            isSkeleton={isSkeleton}
++            items={[
++                () => avatar,
++                ({ isSkeleton }: SkeletonProps) => (
++                    <FillAvailable
++                        at="base"
++                        explain="Expanded form takes remaining row width beside the avatar so the textarea column can shrink instead of shoving the face."
++                        isSkeleton={isSkeleton}
++                        body={() => (
++                            <StackV
++                                gap={3}
++                                principle="sibling-stack"
++                                explain="Same-kind peer stack of field then actions ΓÇö not group-boundary, because these are repeating vertical siblings rather than section groups."
++                                isSkeleton={isSkeleton}
++                                items={[
++                                    () => (
++                                        <InputTextarea
++                                            value={value}
++                                            onValueChange={onValueChange}
++                                            placeholder={placeholder}
++                                            ariaLabel={placeholder ?? "Content"}
++                                            rows={3}
++                                            isDisabled={isPending}
++                                            isSkeleton={isSkeleton}
++                                        />
++                                    ),
++                                    () => (
++                                        <StackH
++                                            gap={3}
++                                            principle="flex-action"
++                                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
++                                            justify="end"
++                                            isSkeleton={isSkeleton}
++                                            items={[
++                                                ...(showCancel ? [() => (
++                                                    <Button
++                                                        label="Cancel"
++                                                        variant="tertiary"
++                                                        size="sm"
++                                                        onPress={onCancel}
++                                                        isDisabled={isPending}
++                                                        isSkeleton={isSkeleton}
++                                                    />
++                                                )] : []),
++                                                () => (
++                                                    <Button
++                                                        label={submitLabel}
++                                                        variant="primary"
++                                                        size="sm"
++                                                        onPress={onSubmit}
++                                                        isDisabled={!canSubmit}
++                                                        isPending={isPending}
++                                                        isSkeleton={isSkeleton}
++                                                    />
++                                                ),
++                                            ]}
++                                        />
++                                    ),
++                                ]}
++                            />
++                        )}
++                    />
++                ),
++            ]}
++        />
+     )
+ }
+ 
+ export { CourseQaComposer }
+diff --git a/.storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx b/.storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx
+index 5dddfe5c..6c5b19b3 100644
+--- a/.storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx
++++ b/.storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx
+@@ -1,8 +1,9 @@
+ import React from "react"
+ import { type SkeletonProps } from "@sb-components/frames/_slot"
+ import { SearchAutocomplete, type SearchAutocompleteItem } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
+ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
++import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
+ import { StackH } from "@sb-components/frames/Stack/Stack"
+ 
+ /**
+  * BLOCK ΓÇö `FoundationCategorySearchBar`: the Foundations hub's search row ΓÇö
+@@ -65,48 +66,49 @@ const FoundationCategorySearchBar = ({
+         label: suggestion.label,
+     }))
+ 
+     return (
+-        <div>
+-            <StackH
+-                gap={4}
+-                principle="content-row"
+-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+-                justify="between"
+-                isSkeleton={isSkeleton}
+-                items={[
+-                    () => (
+-                        <div className="min-w-0 flex-1">
++        <StackH
++            identity={{ tier: "block", component: "FoundationCategorySearchBar" }}
++            gap={4}
++            principle="content-row"
++            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
++            justify="between"
++            isSkeleton={isSkeleton}
++            items={[
++                () => (
++                    <FillAvailable
++                        at="base"
++                        explain="Search field takes remaining row width beside the topic count so the input can shrink instead of shoving the meta."
++                        isSkeleton={isSkeleton}
++                        body={() => (
+                             <SearchAutocomplete
+                                 items={items}
+                                 inputValue={query}
+                                 onInputChange={onQueryChange}
+                                 onSelect={onSelectSuggestion}
+                                 placeholder="Search topics..."
+                                 isSkeleton={isSkeleton}
+-
+                             />
+-                        </div>
+-                    ),
+-                    ...(isSkeleton
+-                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
+-                        : count !== undefined
+-                            ? [
+-                                ({ isSkeleton }: SkeletonProps) => (
+-                                    <Typography
+-                                        isSkeleton={isSkeleton}
+-                                        size="sm"
+-                                        color="muted"
+-                                        text={countLabel(count)}
+-
+-
+-                                    />
+-                                ),
+-                            ]
+-                            : []),
+-                ]}
+-            />
+-        </div>
++                        )}
++                    />
++                ),
++                ...(isSkeleton
++                    ? [() => <Typography size="sm" color="muted" isSkeleton />]
++                    : count !== undefined
++                        ? [
++                            ({ isSkeleton }: SkeletonProps) => (
++                                <Typography
++                                    isSkeleton={isSkeleton}
++                                    size="sm"
++                                    color="muted"
++                                    text={countLabel(count)}
++                                />
++                            ),
++                        ]
++                        : []),
++            ]}
++        />
+     )
+ }
+ 
+ export { FoundationCategorySearchBar }
+diff --git a/.storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx b/.storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx
+index 04b0c09c..88f294c8 100644
+--- a/.storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx
++++ b/.storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx
+@@ -26,8 +26,13 @@ import { DesktopNavRow } from "./DesktopNavRow"
+  * divider between groups) and `MobilePillBar` (a flattened rounded-full chip
+  * row). Both render the same component; only the container width differs, so
+  * each story shows the branch its own `@app-md` query resolves to. `activeHref`
+  * is data, so within each leaf it is a state.
++ *
++ * Held: sticky-under-navbar desktop height host, mobile sticky pill surface, and
++ * active/inactive chip `cn` ΓÇö no existing frame/composite owns those shapes
++ * (`ShowFrom`/`HideAbove` lack sticky+height; `NavigationRail` owns column fill;
++ * `RailShell` sticky uses `top-24`, not `top-16`).
+  */
+ 
+ /** Every account-settings destination this rail can offer ΓÇö the closed vocabulary the block owns. */
+ export type SettingsDestinationKey =
+@@ -134,79 +139,82 @@ const SettingsSidebarNav = ({
+     // desktop rail's dividers, the mobile bar has no room to spare on a section caption.
+     const flatItems = groups.flatMap((group) => group.items)
+ 
+     return (
+-        <div>
+-            {/* ΓöÇΓöÇ Desktop rail ΓÇö hidden below @app-md; wraps the reused `CollapsibleSidebar`
+-                (chrome) with this block's own rows/dividers (domain content). */}
+-            <div className="hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app-md:h-[calc(100dvh-4rem)]">
+-                <CollapsibleSidebar
+-                    title={title}
+-                    collapseLabel={collapseLabel}
+-                    expandLabel={expandLabel}
+-                    storageKey={storageKey}
+-                >
+-                    {groups.map((group, index) => (
+-                        <React.Fragment key={group.key}>
+-                            {/* Divider above every group but the first ΓÇö the inlined
+-                                `SidebarNavGroup` gap (see file header). Spacing between it
+-                                and its neighbours is owned by `CollapsibleSidebar`'s own
+-                                `StackV gap={4}`, not a margin on this Divider. */}
+-                            {index > 0 ? <Divider /> : null}
+-                            <StackV
+-                                gap={1}
+-
+-                                items={group.items.map((item) => () => (
+-                                    <DesktopNavRow
+-                                        item={item}
+-                                        isActive={item.href === activeHref}
+-                                        onNavigate={onNavigate}
+-
++        <StackV
++            identity={{ tier: "block", component: "SettingsSidebarNav" }}
++            gap={1}
++            principle="group-boundary"
++            explain="Separates the desktop rail from the mobile pill bar so each leaf keeps its own seam owner ΓÇö not sibling-stack, because these are alternate structural leaves rather than repeating peers."
++            items={[
++                () => (
++                    // Held: sticky-under-navbar + viewport-minus-chrome height ΓÇö no named frame.
++                    <div className="hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app-md:h-[calc(100dvh-4rem)]">
++                        <CollapsibleSidebar
++                            title={title}
++                            collapseLabel={collapseLabel}
++                            expandLabel={expandLabel}
++                            storageKey={storageKey}
++                        >
++                            {groups.map((group, index) => (
++                                <React.Fragment key={group.key}>
++                                    {index > 0 ? <Divider /> : null}
++                                    <StackV
++                                        gap={1}
++                                        principle="sibling-stack"
++                                        explain="Same-kind peer stack of settings rows ΓÇö not group-boundary, because rows are repeating siblings rather than section groups."
++                                        items={group.items.map((item) => () => (
++                                            <DesktopNavRow
++                                                item={item}
++                                                isActive={item.href === activeHref}
++                                                onNavigate={onNavigate}
++                                            />
++                                        ))}
+                                     />
+-                                ))}
++                                </React.Fragment>
++                            ))}
++                        </CollapsibleSidebar>
++                    </div>
++                ),
++                () => (
++                    // Held: mobile sticky pill landmark + chip active/inactive cn.
++                    <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
++                        <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
++                            <StackH
++                                gap={3}
++                                principle="flex-action"
++                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
++                                padding={{ x: 4, y: 3 }}
++                                items={flatItems.map((item) => () => {
++                                    const isActive = item.href === activeHref
++                                    const Icon = DESTINATION_ICON[item.key]
++                                    return (
++                                        <button
++                                            type="button"
++                                            aria-current={isActive ? "page" : undefined}
++                                            onClick={() => onNavigate(item.href)}
++                                            className={cn(
++                                                "shrink-0 rounded-full border px-3 py-2 transition-colors",
++                                                isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
++                                            )}
++                                        >
++                                            <StackH
++                                                principle="icon-text"
++                                                explain="Icon beside its label ΓÇö not name-handle, because this pairs a glyph with text rather than a name/handle identity."
++                                                items={[
++                                                    () => <Icon aria-hidden focusable="false" className="size-4 shrink-0" />,
++                                                    () => <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />,
++                                                ]}
++                                            />
++                                        </button>
++                                    )
++                                })}
+                             />
+-                        </React.Fragment>
+-                    ))}
+-                </CollapsibleSidebar>
+-            </div>
+-
+-            {/* ΓöÇΓöÇ Mobile pill bar ΓÇö the OTHER leaf: chip-shaped buttons in a horizontal
+-                scroll strip, not the rail's row shape. Visible only below @app-md. */}
+-            <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
+-                <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
+-                    <StackH
+-                        gap={3}
+-                        principle="flex-action"
+-                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+-                        padding={{ x: 4, y: 3 }}
+-                        items={flatItems.map((item) => () => {
+-                            const isActive = item.href === activeHref
+-                            const Icon = DESTINATION_ICON[item.key]
+-                            return (
+-                                <button
+-                                    type="button"
+-                                    aria-current={isActive ? "page" : undefined}
+-                                    onClick={() => onNavigate(item.href)}
+-                                    className={cn(
+-                                        "shrink-0 rounded-full border px-3 py-2 transition-colors",
+-                                        isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
+-                                    )}
+-                                >
+-                                    <StackH
+-                                        principle="icon-text"
+-                                        explain="Icon beside its label ΓÇö not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+-                                        items={[
+-                                            () => <Icon aria-hidden focusable="false" className="size-4 shrink-0" />,
+-                                            () => <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />,
+-                                        ]}
+-                                    />
+-                                </button>
+-                            )
+-                        })}
+-                    />
+-                </div>
+-            </nav>
+-        </div>
++                        </div>
++                    </nav>
++                ),
++            ]}
++        />
+     )
+ }
+ 
+ export { SettingsSidebarNav }
+diff --git a/.storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx b/.storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx
+index 1274aa1d..8a62dcaf 100644
+--- a/.storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx
++++ b/.storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx
+@@ -7,10 +7,13 @@ import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
+ import { AvatarGroup, type AvatarGroupItem } from "@sb-components/composites/lists/AvatarGroup/AvatarGroup"
+ import { ProgressBar } from "@sb-components/atoms/display/Progress/Progress"
+ import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+ import { Container } from "@sb-components/frames/Container/Container"
++import { Box } from "@sb-components/frames/Box/Box"
++import { RailShell } from "@sb-components/frames/RailShell/RailShell"
+ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
+ import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
++import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
+ 
+ /**
+  * BLOCK ΓÇö `ProfileLoadingState`: the public-profile first-load skeleton. It
+  * takes no data props (see the component's own file header) so it has exactly
+@@ -134,181 +137,182 @@ export const ProfileLoadingState = () => {
+             ]}
+         />
+     ))
+ 
+-    const overviewBody = (
+-        <div className="@app-md:flex-row @app-md:items-start">
+-            <StackV
+-                gap={6}
+-                items={[
+-                    () => (
+-                        <div className="@app-md:w-72 @app-md:shrink-0">
+-                            <StackV
+-                                gap={4}
+-                                classNames={["w-full"]}
+-                                items={[
+-                                    () => (
+-                                        <StackV
+-                                            gap={2}
+-                                            principle="title-subtitle"
+-                                            explain="Title over supporting line ΓÇö not label-field, because neither line is a form control label."
+-                                            align="start"
+-                                            items={[
+-                                                () => <HeroSkeleton className="size-32 rounded-full" />,
+-                                                () => <Chip isSkeleton />,
+-                                            ]}
+-                                        />
+-                                    ),
+-                                    () => (
+-                                        <StackV
+-                                            gap={1}
+-                                            items={[
+-                                                () => <Typography size="h3" isSkeleton />,
+-                                                () => <Typography size="sm" isSkeleton />,
+-                                                () => <Typography size="sm" isSkeleton />,
+-                                            ]}
+-                                        />
+-                                    ),
+-                                    () => <Typography size="sm" isSkeleton />,
+-                                    () => (
+-                                        <StackH
+-                                            gap={3}
+-                                            principle="chip-row"
+-                                            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+-                                            at="sm"
+-                                            items={[
+-                                                () => (
+-                                                    <StackH
+-                                                        gap={2}
++    const identityRail: ComponentTypeWithSkeleton = () => (
++        <StackV
++            gap={4}
++            classNames={["w-full"]}
++            items={[
++                () => (
++                    <StackV
++                        gap={2}
++                        principle="title-subtitle"
++                        explain="Title over supporting line ΓÇö not label-field, because neither line is a form control label."
++                        align="start"
++                        items={[
++                            // HOLD: no atom offers a 128px circular shimmer (src same gap).
++                            () => <HeroSkeleton className="size-32 rounded-full" />,
++                            () => <Chip isSkeleton />,
++                        ]}
++                    />
++                ),
++                () => (
++                    <StackV
++                        gap={1}
++                        items={[
++                            () => <Typography size="h3" isSkeleton />,
++                            () => <Typography size="sm" isSkeleton />,
++                            () => <Typography size="sm" isSkeleton />,
++                        ]}
++                    />
++                ),
++                () => <Typography size="sm" isSkeleton />,
++                () => (
++                    <StackH
++                        gap={3}
++                        principle="chip-row"
++                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
++                        at="sm"
++                        items={[
++                            () => (
++                                <StackH
++                                    gap={2}
++                                    items={[
++                                        () => <HeroSkeleton className="size-5 rounded" />,
++                                        () => <Typography size="sm" isSkeleton />,
++                                    ]}
++                                />
++                            ),
++                            () => <Chip isSkeleton />,
++                        ]}
++                    />
++                ),
++                () => (
++                    <StackH
++                        gap={4}
++                        items={[
++                            () => <Typography size="sm" isSkeleton />,
++                            () => <Typography size="sm" isSkeleton />,
++                        ]}
++                    />
++                ),
++                () => <AvatarGroup items={MEDAL_ITEMS} size="sm" isSkeleton />,
++                () => (
++                    <StackV
++                        gap={3}
++                        items={[
++                            () => <Button isSkeleton />,
++                            () => <Button isSkeleton />,
++                        ]}
++                    />
++                ),
++                () => <StackV gap={4} items={[() => metaRows]} />,
++            ]}
++        />
++    )
++
++    const overviewContent: ComponentTypeWithSkeleton = () => (
++        <StackV
++            gap={6}
++            items={[
++                () => (
++                    <StackV
++                        gap={4}
++                        principle="card-caption"
++                        explain="Section title over its readiness cluster ΓÇö not title-subtitle, because the cluster is a separate surface stack rather than a continuing subtitle line."
++                        items={[
++                            () => <Typography size="h4" isSkeleton />,
++                            () => (
++                                <StackV
++                                    gap={4}
++                                    principle="card-caption"
++                                    explain="Readiness summary card stacked above its track list ΓÇö not sibling-stack, because the list captions the summary rather than repeating the same kind of peer."
++                                    items={[
++                                        () => (
++                                            <SurfaceCard
++                                                padding={4}
++                                                body={() => (
++                                                    <StackV
++                                                        gap={3}
+                                                         items={[
+-                                                            () => <HeroSkeleton className="size-5 rounded" />,
++                                                            () => <Typography size="h3" isSkeleton />,
+                                                             () => <Typography size="sm" isSkeleton />,
++                                                            () => <Typography size="xs" isSkeleton />,
+                                                         ]}
+                                                     />
+-                                                ),
+-                                                () => <Chip isSkeleton />,
+-                                            ]}
+-                                        />
+-                                    ),
+-                                    () => (
+-                                        <StackH
+-                                            gap={4}
+-                                            items={[
+-                                                () => <Typography size="sm" isSkeleton />,
+-                                                () => <Typography size="sm" isSkeleton />,
+-                                            ]}
+-                                        />
+-                                    ),
+-                                    () => <AvatarGroup items={MEDAL_ITEMS} size="sm" isSkeleton />,
+-                                    () => (
+-                                        <StackV
+-                                            gap={3}
+-                                            items={[
+-                                                () => <Button isSkeleton />,
+-                                                () => <Button isSkeleton />,
+-                                            ]}
+-                                        />
+-                                    ),
+-                                    () => <StackV gap={4} items={[() => metaRows]} />,
+-                                ]}
+-                            />
+-                        </div>
+-                    ),
+-                    () => (
+-                        <StackV
+-                            gap={6}
+-                            classNames={["min-w-0", "flex-1"]}
+-                            items={[
+-                                () => (
+-                                    <StackV
+-                                        gap={4}
+-                                        principle="card-caption"
+-                                        explain="Section title over its readiness cluster ΓÇö not title-subtitle, because the cluster is a separate surface stack rather than a continuing subtitle line."
+-                                        items={[
+-                                            () => <Typography size="h4" isSkeleton />,
+-                                            () => (
+-                                                <StackV
+-                                                    gap={4}
+-                                                    principle="card-caption"
+-                                                    explain="Readiness summary card stacked above its track list ΓÇö not sibling-stack, because the list captions the summary rather than repeating the same kind of peer."
+-                                                    items={[
+-                                                        () => (
+-                                                            <SurfaceCard
+-                                                                padding={4}
+-                                                                body={() => (
+-                                                                    <StackV
+-                                                                        gap={3}
+-                                                                        items={[
+-                                                                            () => <Typography size="h3" isSkeleton />,
+-                                                                            () => <Typography size="sm" isSkeleton />,
+-                                                                            () => <Typography size="xs" isSkeleton />,
+-                                                                        ]}
+-                                                                    />
+-                                                                )}
+-                                                            />
+-                                                        ),
+-                                                        () => <SurfaceCardList items={readinessItems} />,
+-                                                    ]}
+-                                                />
+-                                            ),
+-                                        ]}
+-                                    />
+-                                ),
+-                                () => (
+-                                    <StackV
+-                                        gap={4}
+-                                        items={[
+-                                            () => <Typography size="h4" isSkeleton />,
+-                                            () => <SurfaceCardList items={courseItems} />,
+-                                        ]}
+-                                    />
+-                                ),
+-                                () => (
+-                                    <StackV
+-                                        gap={4}
+-                                        items={[
+-                                            () => <Typography size="h4" isSkeleton />,
+-                                            () => (
+-                                                <StackV
+-                                                    gap={4}
+-                                                    items={[
+-                                                        () => <HeroSkeleton className="h-40 w-full rounded-xl" />,
+-                                                        () => (
+-                                                            <StackH
+-                                                                gap={3}
+-                                                                items={[
+-                                                                    () => <HeroSkeleton className="size-4 rounded-full" />,
+-                                                                    () => <Typography size="sm" isSkeleton />,
+-                                                                ]}
+-                                                            />
+-                                                        ),
+-                                                    ]}
+-                                                />
+-                                            ),
+-                                        ]}
+-                                    />
+-                                ),
+-                                () => (
+-                                    <Grid
+-                                        columns={{ base: 1, md: 2 }}
+-                                        principle="block-boundary"
+-                                        explain="Block-to-block spacing ΓÇö not group-boundary, because this separates major blocks rather than nested section groups."
+-                                        items={skillItems}
+-                                    />
+-                                ),
+-                            ]}
+-                        />
+-                    ),
+-                ]}
+-            />
+-        </div>
++                                                )}
++                                            />
++                                        ),
++                                        () => <SurfaceCardList items={readinessItems} />,
++                                    ]}
++                                />
++                            ),
++                        ]}
++                    />
++                ),
++                () => (
++                    <StackV
++                        gap={4}
++                        items={[
++                            () => <Typography size="h4" isSkeleton />,
++                            () => <SurfaceCardList items={courseItems} />,
++                        ]}
++                    />
++                ),
++                () => (
++                    <StackV
++                        gap={4}
++                        items={[
++                            () => <Typography size="h4" isSkeleton />,
++                            () => (
++                                <StackV
++                                    gap={4}
++                                    items={[
++                                        // HOLD: no atom offers an arbitrary heatmap shimmer (src same gap).
++                                        () => <HeroSkeleton className="h-40 w-full rounded-xl" />,
++                                        () => (
++                                            <StackH
++                                                gap={3}
++                                                items={[
++                                                    () => <HeroSkeleton className="size-4 rounded-full" />,
++                                                    () => <Typography size="sm" isSkeleton />,
++                                                ]}
++                                            />
++                                        ),
++                                    ]}
++                                />
++                            ),
++                        ]}
++                    />
++                ),
++                () => (
++                    <Grid
++                        columns={{ base: 1, md: 2 }}
++                        principle="block-boundary"
++                        explain="Block-to-block spacing ΓÇö not group-boundary, because this separates major blocks rather than nested section groups."
++                        items={skillItems}
++                    />
++                ),
++            ]}
++        />
++    )
++
++    const overviewBody = (
++        <RailShell
++            principle="layout-split"
++            explain="Major layout split ΓÇö not block-boundary, because this separates primary page regions rather than adjacent blocks."
++            rail={identityRail}
++            body={overviewContent}
++            at="md"
++        />
+     )
+ 
+     return (
+-        <div
+-            aria-busy="true"
+-            aria-label="Loading profile"
+-            className="flex w-full flex-col"
++        // A11y ARIA on root held ΓÇö frames do not forward aria-busy/aria-label (src same hold).
++        <Box
++            className="w-full"
++            identity={{ tier: "block", component: "ProfileLoadingState" }}
+         >
+             {/* tab strip ΓÇö full-bleed row under the navbar, same footprint as `ProfileTabsBar`.
+                 `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky
+                 navbar, not a repeating list nor a generic card seam), same allowance `ContinueCard`
+@@ -330,7 +334,7 @@ export const ProfileLoadingState = () => {
+                 )}
+             />
+ 
+             <Container size="lg" padding={6} body={() => overviewBody} />
+-        </div>
++        </Box>
+     )
+ }
+diff --git a/src/components/blocks/feed/EntityLink/index.tsx b/src/components/blocks/feed/EntityLink/index.tsx
+index 65dae740..eb2b1f92 100644
+--- a/src/components/blocks/feed/EntityLink/index.tsx
++++ b/src/components/blocks/feed/EntityLink/index.tsx
+@@ -1,10 +1,10 @@
+ import React from "react"
+-import { Link, cn } from "@heroui/react"
+-import type { WithClassNames } from "@/modules/types/base/class-name"
++import { Typography } from "@/components/atoms/text/Typography"
++import { Box } from "@/components/frames/Box"
+ 
+ /** Props for the {@link EntityLink} block. */
+-export interface EntityLinkProps extends WithClassNames<undefined> {
++export interface EntityLinkProps {
+     /** Token text ΓÇö a username, lesson/challenge/course title, etc. */
+     label: string
+     /**
+      * Press handler (the owning feature resolves the entity's route and navigates).
+@@ -24,18 +24,32 @@ export interface EntityLinkProps extends WithClassNames<undefined> {
+  * style-free.
+  *
+  * @param props - {@link EntityLinkProps}
+  */
+-export const EntityLink = ({ label, onPress, isPending, className }: EntityLinkProps) => {
+-    if (!onPress) {
+-        return <span className={cn("font-semibold text-foreground", className)}>{label}</span>
+-    }
++export const EntityLink = ({ label, onPress, isPending }: EntityLinkProps) => {
++    const interactive = Boolean(onPress) && !isPending
++
+     return (
+-        <Link
+-            onPress={onPress}
+-            isDisabled={isPending}
+-            className={cn("inline cursor-pointer font-semibold text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]", className)}
++        <Box
++            as="span"
++            identity={{ tier: "block", component: "EntityLink" }}
++            principle="icon-text"
++            explain="Entity token text is the sole leaf ΓÇö not name-handle, because the press target is the label itself rather than a paired identity chrome."
+         >
+-            {label}
+-        </Link>
++            {interactive ? (
++                <Typography
++                    size="sm"
++                    weight="semibold"
++                    isLink
++                    text={label}
++                    onPress={onPress}
++                />
++            ) : (
++                <Typography
++                    size="sm"
++                    weight="semibold"
++                    text={label}
++                />
++            )}
++        </Box>
+     )
+ }
+diff --git a/src/components/blocks/form/SearchBar/component.tsx b/src/components/blocks/form/SearchBar/component.tsx
+index 2a88ad49..e563dcd0 100644
+--- a/src/components/blocks/form/SearchBar/component.tsx
++++ b/src/components/blocks/form/SearchBar/component.tsx
+@@ -2,16 +2,14 @@ import { SlidersHorizontalIcon } from "@phosphor-icons/react"
+ import React from "react"
+ import {
+     Autocomplete,
+     Button,
+-    cn,
+     InputGroup,
+     Label,
+     ListBox,
+     SearchField,
+     TextField,
+ } from "@heroui/react"
+-import type { WithClassNames } from "@/modules/types/base/class-name"
+ 
+ /** One selectable row in the autocomplete list, already localized. */
+ export interface SearchBarSuggestion {
+     /** Stable key forwarded to `ListBox.Item` `id`. */
+@@ -20,29 +18,27 @@ export interface SearchBarSuggestion {
+     label: string
+ }
+ 
+ /** Props for {@link _SearchBar} ΓÇö presentational; labels already resolved. */
+-export interface SearchBarProps extends WithClassNames<undefined> {
++export interface SearchBarProps {
+     /** Already-localized field label (screen-reader only). */
+     fieldLabel: string
+     /** Already-localized placeholder text. */
+     placeholder: string
+     /** Already-localized filters-button aria-label. */
+     filtersAriaLabel: string
+     /** Demo suggestions shown in the autocomplete dropdown, already localized. */
+     suggestionItems: Array<SearchBarSuggestion>
+-    /** Optional class names on the root `TextField` wrapper. */
+-    className?: string
+ }
+ 
+ /**
+  * Search field using HeroUI `TextField` + `InputGroup` with an `Autocomplete` on the left
+  * and a filters icon button in the suffix (same composition pattern as InputGroup + suffix).
+  *
+  * @param props - {@link SearchBarProps}
+  */
+-export const _SearchBar = ({ fieldLabel, placeholder, filtersAriaLabel, suggestionItems, className }: SearchBarProps) => (
+-    <TextField className={cn("w-full", className)} fullWidth variant="secondary">
++export const _SearchBar = ({ fieldLabel, placeholder, filtersAriaLabel, suggestionItems }: SearchBarProps) => (
++    <TextField className="w-full" fullWidth variant="secondary">
+         <Label className="sr-only">{fieldLabel}</Label>
+         <InputGroup className="w-full" variant="secondary">
+             <div className="min-w-0 flex-1">
+                 <Autocomplete
+diff --git a/src/components/blocks/learn/CourseQaComposer/index.tsx b/src/components/blocks/learn/CourseQaComposer/index.tsx
+index 02326091..be8a91ef 100644
+--- a/src/components/blocks/learn/CourseQaComposer/index.tsx
++++ b/src/components/blocks/learn/CourseQaComposer/index.tsx
+@@ -1,11 +1,11 @@
+-import { InputTextarea } from "@/components/atoms/forms"
+ import React, { useState } from "react"
+ import { type SkeletonProps } from "@/components/frames/_slot"
+ import { Avatar } from "@/components/atoms/display/Avatar"
+ import { Button } from "@/components/atoms/buttons/Button"
+-
++import { InputTextarea } from "@/components/atoms/forms"
+ import { InputButtonLike } from "@/components/composites/buttons/InputButtonLike"
++import { FillAvailable } from "@/components/frames/FillAvailable"
+ import { StackH, StackV } from "@/components/frames/Stack"
+ 
+ /**
+  * BLOCK ΓÇö `CourseQaComposer`: the ONE writing shape reused three ways on a
+@@ -124,93 +124,113 @@ const CourseQaComposer = ({
+             name={currentUser?.name}
+             src={currentUser?.avatarSrc}
+             size="sm"
+             isSkeleton={isSkeleton}
+-            classNames={["shrink-0"]}
+-
+         />
+     ) : null
+ 
+     // ΓöÇΓöÇ LEAF ΓÇö CollapsedPrompt: avatar + pill, nothing else composed ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+     if (mode === "collapsible" && !expanded) {
+         return (
+-            <div>
+-                <StackH
+-                    gap={3}
+-                    isSkeleton={isSkeleton}
+-                    items={[
+-                        () => avatar,
+-                        () => (
+-                            <div className="min-w-0 flex-1">
++            <StackH
++                identity={{ tier: "block", component: "CourseQaComposer" }}
++                gap={3}
++                principle="content-row"
++                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
++                isSkeleton={isSkeleton}
++                items={[
++                    () => avatar,
++                    () => (
++                        <FillAvailable
++                            at="base"
++                            explain="Collapsed prompt takes remaining row width beside the avatar so the pill can shrink instead of shoving the face."
++                            isSkeleton={isSkeleton}
++                            body={() => (
+                                 <InputButtonLike
+                                     placeholder={placeholder ?? "Ask a question about this courseΓÇª"}
+                                     onPress={() => setExpanded(true)}
+                                     isSkeleton={isSkeleton}
+                                 />
+-                            </div>
+-                        ),
+-                    ]}
+-                />
+-            </div>
++                            )}
++                        />
++                    ),
++                ]}
++            />
+         )
+     }
+ 
+     // ΓöÇΓöÇ LEAF ΓÇö ExpandedForm: avatar + textarea + action row ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+-    const actionRow = (
+-        <>
+-            {showCancel ? (
+-                <Button
+-                    label="Cancel"
+-                    variant="tertiary"
+-                    size="sm"
+-                    onPress={onCancel}
+-                    isDisabled={isPending}
+-                    isSkeleton={isSkeleton}
+-
+-                />
+-            ) : null}
+-            <Button
+-                label={submitLabel}
+-                variant="primary"
+-                size="sm"
+-                onPress={onSubmit}
+-                isDisabled={!canSubmit}
+-                isPending={isPending}
+-                isSkeleton={isSkeleton}
+-
+-            />
+-        </>
+-    )
+-
+-    const form = (
+-        <>
+-            <InputTextarea
+-                value={value}
+-                onValueChange={onValueChange}
+-                placeholder={placeholder}
+-                ariaLabel={placeholder ?? "Content"}
+-                rows={3}
+-                isDisabled={isPending}
+-                isSkeleton={isSkeleton}
+-
+-            />
+-            <StackH gap={3} principle="flex-action"
+-                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+-                justify="end" isSkeleton={isSkeleton} items={[() => actionRow]}  />
+-        </>
+-    )
+-
+     return (
+-        <div>
+-            <StackH
+-                gap={3}
+-                isSkeleton={isSkeleton}
+-                items={[
+-                    () => avatar,
+-                    ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} classNames={["min-w-0", "flex-1"]} items={[() => form]} />,
+-                ]}
+-            />
+-        </div>
++        <StackH
++            identity={{ tier: "block", component: "CourseQaComposer" }}
++            gap={3}
++            principle="content-row"
++            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
++            isSkeleton={isSkeleton}
++            items={[
++                () => avatar,
++                ({ isSkeleton }: SkeletonProps) => (
++                    <FillAvailable
++                        at="base"
++                        explain="Expanded form takes remaining row width beside the avatar so the textarea column can shrink instead of shoving the face."
++                        isSkeleton={isSkeleton}
++                        body={() => (
++                            <StackV
++                                gap={3}
++                                principle="sibling-stack"
++                                explain="Same-kind peer stack of field then actions ΓÇö not group-boundary, because these are repeating vertical siblings rather than section groups."
++                                isSkeleton={isSkeleton}
++                                items={[
++                                    () => (
++                                        <InputTextarea
++                                            value={value}
++                                            onValueChange={onValueChange}
++                                            placeholder={placeholder}
++                                            ariaLabel={placeholder ?? "Content"}
++                                            rows={3}
++                                            isDisabled={isPending}
++                                            isSkeleton={isSkeleton}
++                                        />
++                                    ),
++                                    () => (
++                                        <StackH
++                                            gap={3}
++                                            principle="flex-action"
++                                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
++                                            justify="end"
++                                            isSkeleton={isSkeleton}
++                                            items={[
++                                                ...(showCancel ? [() => (
++                                                    <Button
++                                                        label="Cancel"
++                                                        variant="tertiary"
++                                                        size="sm"
++                                                        onPress={onCancel}
++                                                        isDisabled={isPending}
++                                                        isSkeleton={isSkeleton}
++                                                    />
++                                                )] : []),
++                                                () => (
++                                                    <Button
++                                                        label={submitLabel}
++                                                        variant="primary"
++                                                        size="sm"
++                                                        onPress={onSubmit}
++                                                        isDisabled={!canSubmit}
++                                                        isPending={isPending}
++                                                        isSkeleton={isSkeleton}
++                                                    />
++                                                ),
++                                            ]}
++                                        />
++                                    ),
++                                ]}
++                            />
++                        )}
++                    />
++                ),
++            ]}
++        />
+     )
+ }
+ 
+ export { CourseQaComposer }
+diff --git a/src/components/blocks/learn/FoundationCategorySearchBar/index.tsx b/src/components/blocks/learn/FoundationCategorySearchBar/index.tsx
+index 7af90772..c00a68b0 100644
+--- a/src/components/blocks/learn/FoundationCategorySearchBar/index.tsx
++++ b/src/components/blocks/learn/FoundationCategorySearchBar/index.tsx
+@@ -1,8 +1,9 @@
+ import React from "react"
+ import { type SkeletonProps } from "@/components/frames/_slot"
+ import { SearchAutocomplete, type SearchAutocompleteItem } from "@/components/atoms/forms/SearchAutocomplete"
+ import { Typography } from "@/components/atoms/text/Typography"
++import { FillAvailable } from "@/components/frames/FillAvailable"
+ import { StackH } from "@/components/frames/Stack"
+ 
+ /**
+  * BLOCK ΓÇö `FoundationCategorySearchBar`: the Foundations hub's search row ΓÇö
+@@ -10,9 +11,9 @@ import { StackH } from "@/components/frames/Stack"
+  * it, one `StackH` seam apart. See the component file header for why this
+  * earns its own layer over the bare `SearchAutocomplete` atom (domain
+  * mapping + count wording, ┬º14d.1).
+  *
+- * ≡ƒôÉ ONE LEAF (┬º14d.2). `isSkeleton`, an empty vs. populated suggestion list,
++ *  ONE LEAF (┬º14d.2). `isSkeleton`, an empty vs. populated suggestion list,
+  * and every value `count` can take (unknown / zero / N) are all DATA ΓÇö no
+  * node appears or disappears across them ΓÇö so they are STATES inside the
+  * single `Default` leaf, not leaves of their own.
+  */
+@@ -65,47 +66,49 @@ const FoundationCategorySearchBar = ({
+         label: suggestion.label,
+     }))
+ 
+     return (
+-        <div>
+-            <StackH
+-                gap={4}
+-                principle="content-row"
+-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+-                justify="between"
+-                isSkeleton={isSkeleton}
+-                items={[
+-                    () => (
+-                        <div className="min-w-0 flex-1">
++        <StackH
++            identity={{ tier: "block", component: "FoundationCategorySearchBar" }}
++            gap={4}
++            principle="content-row"
++            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
++            justify="between"
++            isSkeleton={isSkeleton}
++            items={[
++                () => (
++                    <FillAvailable
++                        at="base"
++                        explain="Search field takes remaining row width beside the topic count so the input can shrink instead of shoving the meta."
++                        isSkeleton={isSkeleton}
++                        body={() => (
+                             <SearchAutocomplete
+                                 items={items}
+                                 inputValue={query}
+                                 onInputChange={onQueryChange}
+                                 onSelect={onSelectSuggestion}
+                                 placeholder="Search topics..."
+                                 isSkeleton={isSkeleton}
+-
+                             />
+-                        </div>
+-                    ),
+-                    ...(isSkeleton
+-                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
+-                        : count !== undefined
+-                            ? [
+-                                ({ isSkeleton }: SkeletonProps) => (
+-                                    <Typography
+-                                        isSkeleton={isSkeleton}
+-                                        size="sm"
+-                                        color="muted"
+-                                        text={countLabel(count)}
+-
+-                                    />
+-                                ),
+-                            ]
+-                            : []),
+-                ]}
+-            />
+-        </div>
++                        )}
++                    />
++                ),
++                ...(isSkeleton
++                    ? [() => <Typography size="sm" color="muted" isSkeleton />]
++                    : count !== undefined
++                        ? [
++                            ({ isSkeleton }: SkeletonProps) => (
++                                <Typography
++                                    isSkeleton={isSkeleton}
++                                    size="sm"
++                                    color="muted"
++                                    text={countLabel(count)}
++                                />
++                            ),
++                        ]
++                        : []),
++            ]}
++        />
+     )
+ }
+ 
+ export { FoundationCategorySearchBar }
+diff --git a/src/components/blocks/navigation/Navbar/index.tsx b/src/components/blocks/navigation/Navbar/index.tsx
+index 857d08c5..f91e6d3d 100644
+--- a/src/components/blocks/navigation/Navbar/index.tsx
++++ b/src/components/blocks/navigation/Navbar/index.tsx
+@@ -1,8 +1,7 @@
+ import React, { useEffect, useState } from "react"
+ import { type SkeletonProps } from "@/components/frames/_slot"
+ import {
+-    cn,
+     Button as HeroButton,
+     Dropdown,
+     Kbd,
+     Label,
+@@ -32,8 +31,11 @@ import { ButtonRadioGroup } from "@/components/composites/buttons/ButtonRadioGro
+ import { InputButtonLike } from "@/components/composites/buttons/InputButtonLike"
+ import { AsyncContent } from "@/components/composites/async/AsyncContent"
+ import { ListRow } from "@/components/composites/lists/List"
+ import { DrawerShell } from "@/components/composites/layout/DrawerShell"
++import { HideAbove } from "@/components/frames/HideAbove"
++import { ScrollArea } from "@/components/frames/ScrollArea"
++import { ShowFrom } from "@/components/frames/ShowFrom"
+ import { StackH, StackV } from "@/components/frames/Stack"
+ 
+ /**
+  * `Navbar` ΓÇö the sticky top app bar. Two structural leaves: the desktop row
+@@ -170,18 +172,13 @@ export interface NavbarProps {
+     /** Whether the mobile navigation drawer is open. Controlled by the caller. */
+     isMobileDrawerOpen: boolean
+     /** Fired on backdrop click / Escape / the close button / a row navigating away. */
+     onMobileDrawerOpenChange: (isOpen: boolean) => void
+-
+-    /** Extra class on the root `<nav>` (placement only). */
+-    className?: string
+ }
+ 
+-/** Props for {@link ShortcutHint}. */
+ interface ShortcutHintProps {
+     shortcutLabel: string
+ }
+-
+ const ShortcutHint = ({ shortcutLabel }: ShortcutHintProps) => (
+     <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>
+ )
+ 
+@@ -207,9 +204,8 @@ const Navbar = ({
+     notifications,
+     account,
+     isMobileDrawerOpen,
+     onMobileDrawerOpenChange,
+-    className,
+ }: NavbarProps) => {
+     const [isNotificationsOpen, setNotificationsOpen] = useState(false)
+     const [isAccountOpen, setAccountOpen] = useState(false)
+ 
+@@ -227,53 +223,8 @@ const Navbar = ({
+     }, [onSearchPress])
+ 
+     const activeNavId = navItems.find((item) => item.isActive)?.id ?? ""
+ 
+-    // desktop-only route pills; the mobile drawer renders the same `navItems` as full rows.
+-    // `hidden @app-md:flex` is the WRAPPER's call (showing/hiding at a breakpoint is the
+-    // surrounding frame's decision, not the atom's ΓÇö ATOM-5), so it sits on this span,
+-    // not on `ButtonRadioGroup`'s own `className`.
+-    const logoAndNavPills = (
+-        <>
+-            <span
+-                role="button"
+-                tabIndex={0}
+-                aria-label="StarCi Academy"
+-                onClick={onLogoPress}
+-                onKeyDown={(event) => {
+-                    if (event.key === "Enter" || event.key === " ") onLogoPress()
+-                }}
+-                className="inline-flex cursor-pointer items-center"
+-            >
+-                <Logo />
+-            </span>
+-            <span className="hidden @app-md:flex">
+-                <ButtonRadioGroup
+-                    items={navItems.map((item) => ({
+-                        value: item.id,
+-                        content: <Typography size="sm" text={item.label} />,
+-                    }))}
+-                    value={activeNavId}
+-                    onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
+-                    ariaLabel="Main navigation"
+-                />
+-            </span>
+-        </>
+-    )
+-
+-    // desktop: language + theme inline; the mobile drawer carries them instead
+-    const quickControls = (
+-        <>
+-            <NavbarLanguageMenu
+-                languages={languages}
+-                activeLocale={activeLocale}
+-                onLocaleChange={onLocaleChange}
+-
+-            />
+-            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} />
+-        </>
+-    )
+-
+     const notificationSkeletonRows = [0, 1, 2].map((row) => (
+         <ListRow key={row} title="" isSkeleton />
+     ))
+ 
+@@ -288,70 +239,11 @@ const Navbar = ({
+             subtitle={item.subtitle}
+             meta={() => <Typography size="xs" color="muted" text={item.timeLabel} />}
+             onPress={() => notifications.onItemPress(item)}
+             divider={index < notifications.items.length - 1}
+-
+         />
+     ))
+ 
+-    const notificationHeader = (
+-        <>
+-            <Typography size="sm" weight="bold" text="Notifications" />
+-            {notifications.unreadCount > 0 ? (
+-                <Button
+-                    isIconOnly
+-                    variant="ghost"
+-                    size="sm"
+-                    prefixIcon={ChecksIcon}
+-                    ariaLabel="Mark all as read"
+-                    onPress={notifications.onMarkAllRead}
+-
+-                />
+-            ) : null}
+-        </>
+-    )
+-
+-    // notification popover body: header row ΓåÆ async list ΓåÆ footer link
+-    const notificationPanel = (
+-        <>
+-            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => notificationHeader]}
+-                explain="Same-kind peer stack ΓÇö not group-boundary, because these items are repeating siblings rather than section groups."
+-            />
+-            <AsyncContent
+-                isLoading={notifications.isLoading && notifications.items.length === 0}
+-                skeleton={() => <StackV gap={1} items={[() => notificationSkeletonRows]} />}
+-                isEmpty={notifications.items.length === 0}
+-                emptyContent={{ title: "No notifications yet" }}
+-                error={notifications.error}
+-                errorContent={{
+-                    title: notifications.error ?? "",
+-                    onRetry: notifications.onRetry,
+-                    retryLabel: "Try again",
+-                }}
+-                content={() => (
+-                    <div className="max-h-[420px] overflow-y-auto">
+-                        <StackV gap={1} items={[() => notificationRows]} />
+-                    </div>
+-                )}
+-            />
+-            <Button
+-                variant="ghost"
+-                size="sm"
+-                classNames={["w-full"]}
+-                label="See all"
+-                onPress={notifications.onSeeAll}
+-
+-            />
+-        </>
+-    )
+-
+-    const guestAccountRow = (
+-        <>
+-            <Avatar icon={UserIcon} fallback="icon" />
+-            <Typography size="sm" color="muted" text="Sign in to save your learning progress" />
+-        </>
+-    )
+-
+     const accountMenuHeader = (
+         <AsyncContent
+             isLoading={account.isLoading}
+             skeleton={() => <UserCell username="" isSkeleton />}
+@@ -361,227 +253,323 @@ const Navbar = ({
+                     avatar={account.user.avatarUrl}
+                     handle={account.user.email}
+                 />
+             ) : (
+-                <StackH gap={3} items={[() => guestAccountRow]} />
++                <StackH
++                    gap={3}
++                    principle="icon-text"
++                    explain="Avatar beside its guest prompt ΓÇö not name-handle, because this pairs a glyph with instructional text rather than a name/handle identity."
++                    items={[
++                        () => <Avatar icon={UserIcon} fallback="icon" />,
++                        () => <Typography size="sm" color="muted" text="Sign in to save your learning progress" />,
++                    ]}
++                />
+             ))}
+         />
+     )
+ 
+-    // actions cluster: search ┬╖ language/theme ┬╖ cart ┬╖ notifications ┬╖ account ┬╖ mobile menu
+-    const barActions = (
+-        <>
+-            {/* desktop: full input-style search field; mobile: icon only */}
+-            <span className="hidden w-[260px] @app-md:flex">
+-                <InputButtonLike
+-                    placeholder={searchPlaceholder}
+-                    icon={MagnifyingGlassIcon}
+-                    suffix={() => <ShortcutHint shortcutLabel={shortcutLabel} />}
+-                    onPress={onSearchPress}
+-                />
+-            </span>
+-            {/* `@app-md:hidden` moved off the atom onto this wrapper ΓÇö a breakpoint
+-                show/hide is the surrounding frame's decision, not the atom's (ATOM-5). */}
+-            <span className="@app-md:hidden">
+-                <Button
+-                    isIconOnly
+-                    variant="ghost"
+-                    prefixIcon={MagnifyingGlassIcon}
+-                    ariaLabel={searchPlaceholder}
+-                    onPress={onSearchPress}
+-
+-                />
+-            </span>
+-
+-            <div className="hidden @app-md:flex">
+-                <StackH gap={3} items={[() => quickControls]} />
+-            </div>
+-
+-            {/* cart ΓÇö always shown (guests included), count badge only when non-empty.
+-                Raw HeroUI `Button` (not our atom, see file header): the atom's
+-                `isIconOnly` mode takes a single bare `prefixIcon` COMPONENT, with no
+-                room for the `Badge` this trigger anchors around its glyph. */}
+-            <HeroButton
+-                isIconOnly
+-                variant="tertiary"
+-                className="rounded-full"
+-                aria-label="Cart"
+-                onPress={onCartPress}
+-
+-            >
+-                <Badge color="accent" count={cartCount}>
+-                    <ShoppingCartIcon className="size-5" />
+-                </Badge>
+-            </HeroButton>
+-
+-            {/* notification bell ΓÇö only meaningful for a signed-in viewer (carried over
+-                from the real component's own `if (!authenticated) return null`). Raw
+-                HeroUI Popover + Button (see file header: same badge-around-glyph gap as
+-                the cart trigger above). */}
+-            {account.isAuthed ? (
+-                <Popover isOpen={isNotificationsOpen} onOpenChange={setNotificationsOpen}>
+-                    <HeroButton
+-                        isIconOnly
+-                        variant="tertiary"
+-                        className="rounded-full"
+-                        aria-label="Notifications"
+-
+-                    >
+-                        <Badge color="danger" count={notifications.unreadCount}>
+-                            <BellIcon className="size-5" />
+-                        </Badge>
+-                    </HeroButton>
+-                    <PopoverContent placement="bottom right" className="w-[360px]">
+-                        {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
+-                        <StackV gap={2} principle="control-pad" padding={{ x: 3, y: 2 }} items={[() => notificationPanel]}
+-                            explain="Control hit-area inset ΓÇö not row-pad, because this pads a single interactive control rather than a full content row."
+-                        />
+-                    </PopoverContent>
+-                </Popover>
+-            ) : null}
+-
+-            {/* account menu ΓÇö raw HeroUI Dropdown + Button (see file header): the
+-                authed trigger swaps its glyph for an `Avatar`, another shape the
+-                atom's bare-`IconComponent` slot cannot host. */}
+-            <Dropdown isOpen={isAccountOpen} onOpenChange={setAccountOpen}>
+-                <HeroButton
+-                    isIconOnly
+-                    variant="tertiary"
+-                    className="rounded-full"
+-                    aria-label="Account"
+-
+-                >
+-                    {account.isAuthed ? (
+-                        <Avatar
+-                            size="sm"
+-                            name={account.user?.username}
+-                            src={account.user?.avatarUrl ?? undefined}
+-                            seed={account.user?.email ?? account.user?.username}
+-                        />
+-                    ) : (
+-                        <UserIcon className="size-5" />
+-                    )}
+-                </HeroButton>
+-                <Dropdown.Popover placement="bottom right" className="w-[300px]">
+-                    <StackV gap={1} padding={4} principle="cell-pad" body={() => accountMenuHeader}
+-                        explain="Tight cell inset ΓÇö not card-padding, because this sits inside a dense table or list cell rather than a card body."
+-                    />
+-                    <Divider />
+-                    <Dropdown.Menu aria-label="Account">
+-                        <Dropdown.Section>
+-                            {account.menuItems.map((item) => {
+-                                const Icon = item.icon
+-                                return (
+-                                    <Dropdown.Item
+-                                        key={item.id}
+-                                        id={item.id}
+-                                        textValue={item.label}
+-                                        className={item.isDanger ? "text-danger-soft-foreground" : undefined}
+-                                        onPress={item.onPress}
+-
+-                                    >
+-                                        {Icon ? <Icon className="size-5" /> : null}
+-                                        <Label className={item.isDanger ? "text-danger-soft-foreground" : undefined}>{item.label}</Label>
+-                                    </Dropdown.Item>
+-                                )
+-                            })}
+-                        </Dropdown.Section>
+-                    </Dropdown.Menu>
+-                </Dropdown.Popover>
+-            </Dropdown>
+-
+-            {/* mobile: expand icon ΓåÆ the navigation drawer. `@app-md:hidden` moved off the
+-                atom onto this wrapper (ATOM-5 ΓÇö breakpoint visibility is the frame's call). */}
+-            <span className="@app-md:hidden">
+-                <Button
+-                    isIconOnly
+-                    variant="ghost"
+-                    prefixIcon={SidebarSimpleIcon}
+-                    ariaLabel="Open mobile menu"
+-                    onPress={() => onMobileDrawerOpenChange(true)}
+-
+-                />
+-            </span>
+-        </>
+-    )
+-
+-    // primary row ΓÇö fixed 4rem tall, matching the real bar's height contract
+-    const primaryRow = (
+-        <>
+-            <StackH gap={6} items={[() => logoAndNavPills]} />
+-            <StackH gap={3} items={[() => barActions]} />
+-        </>
+-    )
+-
+     const mobileNavRows = navItems.map((item) => (
+         <Button
+             key={item.id}
+             variant={item.isActive ? "secondary" : "ghost"}
+             align="start"
+-            classNames={["w-full"]}
+             label={item.label}
+             onPress={() => {
+                 item.onPress()
+                 onMobileDrawerOpenChange(false)
+             }}
+-
+         />
+     ))
+ 
+-    const languageRow = (
+-        <>
+-            <Typography size="sm" text="Language" />
+-            <NavbarLanguageMenu
+-                languages={languages}
+-                activeLocale={activeLocale}
+-                onLocaleChange={onLocaleChange}
+-
+-            />
+-        </>
+-    )
+-
+-    const themeRow = (
+-        <>
+-            <Typography size="sm" text="Theme" />
+-            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} />
+-        </>
+-    )
+-
+-    // controls hidden from the mobile bar live here: language + theme
+-    const drawerControls = (
+-        <>
+-            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => languageRow]}
+-                explain="Same-kind peer stack ΓÇö not group-boundary, because these items are repeating siblings rather than section groups."
+-            />
+-            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => themeRow]}
+-                explain="Same-kind peer stack ΓÇö not group-boundary, because these items are repeating siblings rather than section groups."
+-            />
+-        </>
+-    )
+-
+-    const drawerNav = (
+-        <>
+-            <StackV gap={2} items={[() => mobileNavRows]} />
+-            <Divider />
+-            <StackV gap={4} items={[() => drawerControls]} />
+-        </>
+-    )
+-
+     return (
+-        <nav
+-
+-            className={cn("sticky top-0 z-50 border-b border-default bg-surface", className)}
+-        >
++        <nav className="sticky top-0 z-50 border-b border-default bg-surface">
+             {/* primary row ΓÇö fixed 4rem tall, matching the real bar's height contract */}
+             <div className="h-16 min-h-16">
+                 <StackH
+                     gap={6}
+                     principle="block-boundary"
+                     explain="Block-to-block spacing ΓÇö not group-boundary, because this separates major blocks rather than nested section groups."
+                     justify="between"
+                     padding={{ x: 4 }}
+-
+-                    items={[() => primaryRow]}
++                    items={[
++                        () => (
++                            <StackH
++                                gap={6}
++                                principle="flex-action"
++                                explain="Groups brand mark and desktop route pills on one horizontal peer row so they share a single hit baseline."
++                                items={[
++                                    () => (
++                                        <span
++                                            role="button"
++                                            tabIndex={0}
++                                            aria-label="StarCi Academy"
++                                            onClick={onLogoPress}
++                                            onKeyDown={(event) => {
++                                                if (event.key === "Enter" || event.key === " ") onLogoPress()
++                                            }}
++                                            className="inline-flex cursor-pointer"
++                                        >
++                                            <Logo />
++                                        </span>
++                                    ),
++                                    () => (
++                                        <ShowFrom
++                                            at="md"
++                                            body={() => (
++                                                <ButtonRadioGroup
++                                                    items={navItems.map((item) => ({
++                                                        value: item.id,
++                                                        content: <Typography size="sm" text={item.label} />,
++                                                    }))}
++                                                    value={activeNavId}
++                                                    onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
++                                                    ariaLabel="Main navigation"
++                                                />
++                                            )}
++                                        />
++                                    ),
++                                ]}
++                            />
++                        ),
++                        () => (
++                            <StackH
++                                gap={3}
++                                principle="flex-action"
++                                explain="Groups search, locale, theme, cart, account, and mobile menu triggers on one horizontal peer row so they share a single hit baseline."
++                                items={[
++                                    () => (
++                                        <ShowFrom
++                                            at="md"
++                                            body={() => (
++                                                <InputButtonLike
++                                                    placeholder={searchPlaceholder}
++                                                    icon={MagnifyingGlassIcon}
++                                                    suffix={() => <ShortcutHint shortcutLabel={shortcutLabel} />}
++                                                    onPress={onSearchPress}
++                                                />
++                                            )}
++                                        />
++                                    ),
++                                    () => (
++                                        <HideAbove
++                                            at="md"
++                                            body={() => (
++                                                <Button
++                                                    isIconOnly
++                                                    variant="ghost"
++                                                    prefixIcon={MagnifyingGlassIcon}
++                                                    ariaLabel={searchPlaceholder}
++                                                    onPress={onSearchPress}
++                                                />
++                                            )}
++                                        />
++                                    ),
++                                    () => (
++                                        <ShowFrom
++                                            at="md"
++                                            body={() => (
++                                                <StackH
++                                                    gap={3}
++                                                    principle="flex-action"
++                                                    explain="Groups language and theme controls on one horizontal peer row so they share a single hit baseline."
++                                                    items={[
++                                                        () => (
++                                                            <NavbarLanguageMenu
++                                                                languages={languages}
++                                                                activeLocale={activeLocale}
++                                                                onLocaleChange={onLocaleChange}
++                                                            />
++                                                        ),
++                                                        () => (
++                                                            <NavbarThemeSwitch
++                                                                isDarkMode={isDarkMode}
++                                                                onThemeToggle={onThemeToggle}
++                                                            />
++                                                        ),
++                                                    ]}
++                                                />
++                                            )}
++                                        />
++                                    ),
++                                    () => (
++                                        <HeroButton
++                                            isIconOnly
++                                            variant="tertiary"
++                                            className="rounded-full"
++                                            aria-label="Cart"
++                                            onPress={onCartPress}
++                                        >
++                                            <Badge color="accent" count={cartCount}>
++                                                <ShoppingCartIcon className="size-5" />
++                                            </Badge>
++                                        </HeroButton>
++                                    ),
++                                    ...(account.isAuthed
++                                        ? [
++                                            () => (
++                                                <Popover isOpen={isNotificationsOpen} onOpenChange={setNotificationsOpen}>
++                                                    <HeroButton
++                                                        isIconOnly
++                                                        variant="tertiary"
++                                                        className="rounded-full"
++                                                        aria-label="Notifications"
++                                                    >
++                                                        <Badge color="danger" count={notifications.unreadCount}>
++                                                            <BellIcon className="size-5" />
++                                                        </Badge>
++                                                    </HeroButton>
++                                                    <PopoverContent placement="bottom right" className="w-[360px]">
++                                                        {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
++                                                        <StackV
++                                                            gap={2}
++                                                            principle="control-pad"
++                                                            explain="Control hit-area inset ΓÇö not row-pad, because this pads a single interactive control rather than a full content row."
++                                                            padding={{ x: 3, y: 2 }}
++                                                            items={[
++                                                                () => (
++                                                                    <StackH
++                                                                        gap={3}
++                                                                        principle="sibling-stack"
++                                                                        explain="Same-kind peer stack ΓÇö not group-boundary, because these items are repeating siblings rather than section groups."
++                                                                        justify="between"
++                                                                        items={[
++                                                                            () => <Typography size="sm" weight="bold" text="Notifications" />,
++                                                                            ...(notifications.unreadCount > 0
++                                                                                ? [
++                                                                                    () => (
++                                                                                        <Button
++                                                                                            isIconOnly
++                                                                                            variant="ghost"
++                                                                                            size="sm"
++                                                                                            prefixIcon={ChecksIcon}
++                                                                                            ariaLabel="Mark all as read"
++                                                                                            onPress={notifications.onMarkAllRead}
++                                                                                        />
++                                                                                    ),
++                                                                                ]
++                                                                                : []),
++                                                                        ]}
++                                                                    />
++                                                                ),
++                                                                () => (
++                                                                    <AsyncContent
++                                                                        isLoading={notifications.isLoading && notifications.items.length === 0}
++                                                                        skeleton={() => (
++                                                                            <StackV
++                                                                                gap={1}
++                                                                                principle="sibling-stack"
++                                                                                explain="Same-kind peer stack of notification skeleton rows ΓÇö not group-boundary, because rows are repeating siblings rather than section groups."
++                                                                                items={[() => notificationSkeletonRows]}
++                                                                            />
++                                                                        )}
++                                                                        isEmpty={notifications.items.length === 0}
++                                                                        emptyContent={{ title: "No notifications yet" }}
++                                                                        error={notifications.error}
++                                                                        errorContent={{
++                                                                            title: notifications.error ?? "",
++                                                                            onRetry: notifications.onRetry,
++                                                                            retryLabel: "Try again",
++                                                                        }}
++                                                                        content={() => (
++                                                                            <ScrollArea
++                                                                                axis="y"
++                                                                                principle="flex-fill"
++                                                                                explain="Owns local vertical overflow for the notification list so long threads do not grow the popover past the viewport."
++                                                                                body={() => (
++                                                                                    <StackV
++                                                                                        gap={1}
++                                                                                        principle="sibling-stack"
++                                                                                        explain="Same-kind peer stack of notification rows ΓÇö not group-boundary, because rows are repeating siblings rather than section groups."
++                                                                                        items={[() => notificationRows]}
++                                                                                    />
++                                                                                )}
++                                                                            />
++                                                                        )}
++                                                                    />
++                                                                ),
++                                                                () => (
++                                                                    <Button
++                                                                        variant="ghost"
++                                                                        size="sm"
++                                                                        label="See all"
++                                                                        onPress={notifications.onSeeAll}
++                                                                    />
++                                                                ),
++                                                            ]}
++                                                        />
++                                                    </PopoverContent>
++                                                </Popover>
++                                            ),
++                                        ]
++                                        : []),
++                                    () => (
++                                        <Dropdown isOpen={isAccountOpen} onOpenChange={setAccountOpen}>
++                                            <HeroButton
++                                                isIconOnly
++                                                variant="tertiary"
++                                                className="rounded-full"
++                                                aria-label="Account"
++                                            >
++                                                {account.isAuthed ? (
++                                                    <Avatar
++                                                        size="sm"
++                                                        name={account.user?.username}
++                                                        src={account.user?.avatarUrl ?? undefined}
++                                                        seed={account.user?.email ?? account.user?.username}
++                                                    />
++                                                ) : (
++                                                    <UserIcon className="size-5" />
++                                                )}
++                                            </HeroButton>
++                                            <Dropdown.Popover placement="bottom right" className="w-[300px]">
++                                                <StackV
++                                                    gap={1}
++                                                    padding={4}
++                                                    principle="cell-pad"
++                                                    explain="Tight cell inset ΓÇö not card-padding, because this sits inside a dense table or list cell rather than a card body."
++                                                    body={() => accountMenuHeader}
++                                                />
++                                                <Divider />
++                                                <Dropdown.Menu aria-label="Account">
++                                                    <Dropdown.Section>
++                                                        {account.menuItems.map((item) => {
++                                                            const Icon = item.icon
++                                                            return (
++                                                                <Dropdown.Item
++                                                                    key={item.id}
++                                                                    id={item.id}
++                                                                    textValue={item.label}
++                                                                    className={item.isDanger ? "text-danger-soft-foreground" : undefined}
++                                                                    onPress={item.onPress}
++                                                                >
++                                                                    {Icon ? <Icon className="size-5" /> : null}
++                                                                    <Label className={item.isDanger ? "text-danger-soft-foreground" : undefined}>{item.label}</Label>
++                                                                </Dropdown.Item>
++                                                            )
++                                                        })}
++                                                    </Dropdown.Section>
++                                                </Dropdown.Menu>
++                                            </Dropdown.Popover>
++                                        </Dropdown>
++                                    ),
++                                    () => (
++                                        <HideAbove
++                                            at="md"
++                                            body={() => (
++                                                <Button
++                                                    isIconOnly
++                                                    variant="ghost"
++                                                    prefixIcon={SidebarSimpleIcon}
++                                                    ariaLabel="Open mobile menu"
++                                                    onPress={() => onMobileDrawerOpenChange(true)}
++                                                />
++                                            )}
++                                        />
++                                    ),
++                                ]}
++                            />
++                        ),
++                    ]}
+                 />
+             </div>
+ 
+             {/* mobile navigation drawer ΓÇö the ONE local (non-overlay-store) drawer this run's
+@@ -591,10 +579,70 @@ const Navbar = ({
+                 isOpen={isMobileDrawerOpen}
+                 onOpenChange={onMobileDrawerOpenChange}
+                 placement="right"
+                 title="Mobile menu"
+-
+-                body={() => <StackV gap={6} items={[() => drawerNav]} />}
++                body={() => (
++                    <StackV
++                        gap={6}
++                        principle="group-boundary"
++                        explain="Separates mobile route list from language/theme controls so each region keeps its own seam owner ΓÇö not sibling-stack, because these are distinct section roles rather than repeating peers."
++                        items={[
++                            () => (
++                                <StackV
++                                    gap={2}
++                                    principle="sibling-stack"
++                                    explain="Same-kind peer stack of mobile route rows ΓÇö not group-boundary, because rows are repeating siblings rather than section groups."
++                                    items={[() => mobileNavRows]}
++                                />
++                            ),
++                            () => <Divider />,
++                            () => (
++                                <StackV
++                                    gap={4}
++                                    principle="sibling-stack"
++                                    explain="Same-kind peer stack of language and theme rows ΓÇö not group-boundary, because these are repeating preference peers rather than section groups."
++                                    items={[
++                                        () => (
++                                            <StackH
++                                                gap={3}
++                                                principle="sibling-stack"
++                                                explain="Same-kind peer stack ΓÇö not group-boundary, because these items are repeating siblings rather than section groups."
++                                                justify="between"
++                                                items={[
++                                                    () => <Typography size="sm" text="Language" />,
++                                                    () => (
++                                                        <NavbarLanguageMenu
++                                                            languages={languages}
++                                                            activeLocale={activeLocale}
++                                                            onLocaleChange={onLocaleChange}
++                                                        />
++                                                    ),
++                                                ]}
++                                            />
++                                        ),
++                                        () => (
++                                            <StackH
++                                                gap={3}
++                                                principle="sibling-stack"
++                                                explain="Same-kind peer stack ΓÇö not group-boundary, because these items are repeating siblings rather than section groups."
++                                                justify="between"
++                                                items={[
++                                                    () => <Typography size="sm" text="Theme" />,
++                                                    () => (
++                                                        <NavbarThemeSwitch
++                                                            isDarkMode={isDarkMode}
++                                                            onThemeToggle={onThemeToggle}
++                                                        />
++                                                    ),
++                                                ]}
++                                            />
++                                        ),
++                                    ]}
++                                />
++                            ),
++                        ]}
++                    />
++                )}
+             />
+         </nav>
+     )
+ }
+diff --git a/src/components/blocks/navigation/SettingsSidebarNav/index.tsx b/src/components/blocks/navigation/SettingsSidebarNav/index.tsx
+index 38c6ff65..52205fb4 100644
+--- a/src/components/blocks/navigation/SettingsSidebarNav/index.tsx
++++ b/src/components/blocks/navigation/SettingsSidebarNav/index.tsx
+@@ -26,8 +26,13 @@ import { DesktopNavRow } from "./DesktopNavRow"
+  * divider between groups) and `MobilePillBar` (a flattened rounded-full chip
+  * row). Both render the same component; only the container width differs, so
+  * each story shows the branch its own `@app-md` query resolves to. `activeHref`
+  * is data, so within each leaf it is a state.
++ *
++ * Held: sticky-under-navbar desktop height host, mobile sticky pill surface, and
++ * active/inactive chip `cn` ΓÇö no existing frame/composite owns those shapes
++ * (`ShowFrom`/`HideAbove` lack sticky+height; `NavigationRail` owns column fill;
++ * `RailShell` sticky uses `top-24`, not `top-16`).
+  */
+ 
+ /** Every account-settings destination this rail can offer ΓÇö the closed vocabulary the block owns. */
+ export type SettingsDestinationKey =
+@@ -134,83 +139,83 @@ const SettingsSidebarNav = ({
+     // desktop rail's dividers, the mobile bar has no room to spare on a section caption.
+     const flatItems = groups.flatMap((group) => group.items)
+ 
+     return (
+-        <div>
+-            {/* ΓöÇΓöÇ Desktop rail ΓÇö hidden below @app-md; wraps the reused `CollapsibleSidebar`
+-                (chrome) with this block's own rows/dividers (domain content). */}
+-            <div className="hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app-md:h-[calc(100dvh-4rem)]">
+-                <CollapsibleSidebar
+-                    title={title}
+-                    collapseLabel={collapseLabel}
+-                    expandLabel={expandLabel}
+-                    storageKey={storageKey}
+-                    className="h-full"
+-
+-
+-                >
+-                    {groups.map((group, index) => (
+-                        <React.Fragment key={group.key}>
+-                            {/* Divider above every group but the first ΓÇö the inlined
+-                                `SidebarNavGroup` gap (see file header). Spacing between it
+-                                and its neighbours is owned by `CollapsibleSidebar`'s own
+-                                `StackV gap={4}`, not a margin on this Divider. */}
+-                            {index > 0 ? <Divider /> : null}
+-                            <StackV
+-                                gap={1}
+-
+-                                items={group.items.map((item) => () => (
+-                                    <DesktopNavRow
+-                                        item={item}
+-                                        isActive={item.href === activeHref}
+-                                        onNavigate={onNavigate}
+-
++        <StackV
++            identity={{ tier: "block", component: "SettingsSidebarNav" }}
++            gap={1}
++            principle="group-boundary"
++            explain="Separates the desktop rail from the mobile pill bar so each leaf keeps its own seam owner ΓÇö not sibling-stack, because these are alternate structural leaves rather than repeating peers."
++            items={[
++                () => (
++                    // Held: sticky-under-navbar + viewport-minus-chrome height ΓÇö no named frame.
++                    <div className="hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app-md:h-[calc(100dvh-4rem)]">
++                        <CollapsibleSidebar
++                            title={title}
++                            collapseLabel={collapseLabel}
++                            expandLabel={expandLabel}
++                            storageKey={storageKey}
++                            className="h-full"
++                        >
++                            {groups.map((group, index) => (
++                                <React.Fragment key={group.key}>
++                                    {index > 0 ? <Divider /> : null}
++                                    <StackV
++                                        gap={1}
++                                        principle="sibling-stack"
++                                        explain="Same-kind peer stack of settings rows ΓÇö not group-boundary, because rows are repeating siblings rather than section groups."
++                                        items={group.items.map((item) => () => (
++                                            <DesktopNavRow
++                                                item={item}
++                                                isActive={item.href === activeHref}
++                                                onNavigate={onNavigate}
++                                            />
++                                        ))}
+                                     />
+-                                ))}
++                                </React.Fragment>
++                            ))}
++                        </CollapsibleSidebar>
++                    </div>
++                ),
++                () => (
++                    // Held: mobile sticky pill landmark + chip active/inactive cn.
++                    <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
++                        <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
++                            <StackH
++                                gap={3}
++                                principle="flex-action"
++                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
++                                padding={{ x: 4, y: 3 }}
++                                items={flatItems.map((item) => () => {
++                                    const isActive = item.href === activeHref
++                                    const Icon = DESTINATION_ICON[item.key]
++                                    return (
++                                        <button
++                                            type="button"
++                                            aria-current={isActive ? "page" : undefined}
++                                            onClick={() => onNavigate(item.href)}
++                                            className={cn(
++                                                "shrink-0 rounded-full border px-3 py-2 transition-colors",
++                                                isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
++                                            )}
++                                        >
++                                            <StackH
++                                                principle="icon-text"
++                                                explain="Icon beside its label ΓÇö not name-handle, because this pairs a glyph with text rather than a name/handle identity."
++                                                items={[
++                                                    () => <Icon aria-hidden focusable="false" className="size-4 shrink-0" />,
++                                                    () => <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />,
++                                                ]}
++                                            />
++                                        </button>
++                                    )
++                                })}
+                             />
+-                        </React.Fragment>
+-                    ))}
+-                </CollapsibleSidebar>
+-            </div>
+-
+-            {/* ΓöÇΓöÇ Mobile pill bar ΓÇö the OTHER leaf: chip-shaped buttons in a horizontal
+-                scroll strip, not the rail's row shape. Visible only below @app-md. */}
+-            <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
+-                <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
+-                    <StackH
+-                        gap={3}
+-                        principle="flex-action"
+-                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+-                        padding={{ x: 4, y: 3 }}
+-                        items={flatItems.map((item) => () => {
+-                            const isActive = item.href === activeHref
+-                            const Icon = DESTINATION_ICON[item.key]
+-                            const pillContent = (
+-                                <>
+-                                    <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
+-                                    <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />
+-                                </>
+-                            )
+-                            return (
+-                                <button
+-                                    type="button"
+-                                    aria-current={isActive ? "page" : undefined}
+-                                    onClick={() => onNavigate(item.href)}
+-                                    className={cn(
+-                                        "shrink-0 rounded-full border px-3 py-2 transition-colors",
+-                                        isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
+-                                    )}
+-                                >
+-                                    <StackH gap={2} principle="icon-text" align="center" items={[() => pillContent]}
+-                                        explain="Icon beside its label ΓÇö not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+-                                    />
+-                                </button>
+-                            )
+-                        })}
+-                    />
+-                </div>
+-            </nav>
+-        </div>
++                        </div>
++                    </nav>
++                ),
++            ]}
++        />
+     )
+ }
+ 
+ export { SettingsSidebarNav }
+diff --git a/src/components/blocks/skeleton/PaginationSkeleton/index.tsx b/src/components/blocks/skeleton/PaginationSkeleton/index.tsx
+index 2fc136aa..a51494f6 100644
+--- a/src/components/blocks/skeleton/PaginationSkeleton/index.tsx
++++ b/src/components/blocks/skeleton/PaginationSkeleton/index.tsx
+@@ -1,14 +1,11 @@
+ "use client"
+ 
+ import React, { useMemo } from "react"
+-import { Skeleton, cn } from "@heroui/react"
+-import type { WithClassNames } from "@/modules/types/base/class-name"
++import { Skeleton } from "@heroui/react"
+ 
+ /** Props for {@link PaginationSkeleton}. */
+-export interface PaginationSkeletonProps extends WithClassNames<undefined> {
+-    /** Extra classes on the outer wrapper (e.g. `mt-6`). */
+-    className?: string
++export interface PaginationSkeletonProps {
+     /** Number of page-number pill placeholders between prev/next. */
+     pageCount?: number
+ }
+ 
+@@ -16,22 +13,20 @@ export interface PaginationSkeletonProps extends WithClassNames<undefined> {
+  * Loading placeholder for a centered HeroUI {@link Pagination} row.
+  *
+  * Mirrors the `sm` pagination layout: previous control, page links, next control.
+  *
+- * @param props.className - Optional wrapper classes.
+  * @param props.pageCount - Page pill count (defaults to 3).
+  */
+ export const PaginationSkeleton = ({
+-    className,
+     pageCount = 3,
+ }: PaginationSkeletonProps) => {
+     const pageIndexes = useMemo(
+         () => Array.from({ length: pageCount }, (_, index) => index),
+         [pageCount],
+     )
+ 
+     return (
+-        <div className={cn("flex justify-center", className)}>
++        <div className="flex justify-center">
+             <div className="flex flex-wrap items-center justify-center gap-1">
+                 <Skeleton className="size-8 rounded-lg" />
+                 {pageIndexes.map((index) => (
+                     <Skeleton key={index} className="size-8 rounded-lg" />
+diff --git a/src/components/pages/CommunityChatPage/index.tsx b/src/components/pages/CommunityChatPage/index.tsx
+index a676ee5f..73f1898a 100644
+--- a/src/components/pages/CommunityChatPage/index.tsx
++++ b/src/components/pages/CommunityChatPage/index.tsx
+@@ -6,9 +6,8 @@ import { UsersThreeIcon } from "@phosphor-icons/react"
+ import type { Key } from "react"
+ import { useLocale, useTranslations } from "next-intl"
+ import { useRouter } from "next/navigation"
+ import { ChatPane } from "./ChatPane"
+-import { ChatPaneSkeleton } from "./ChatPane/ChatPaneSkeleton"
+ import { EmptyState } from "@/components/composites/feedback/EmptyState"
+ import { PageContainer } from "@/components/blocks/layout/PageContainer"
+ import { PageHeader } from "@/components/blocks/layout/PageHeader"
+ import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+@@ -112,9 +111,9 @@ export const CommunityChatPage = () => {
+                                 // 2026-07-12: was a bare "loadingΓÇª" caption while the active
+                                 // conversation id resolves ΓÇö mirror the real pane's shape
+                                 // (message list + composer) so the tab switch/first load
+                                 // doesn't jump into a differently-shaped panel afterward.
+-                                    <ChatPaneSkeleton withComposer />
++                                    <ChatPane />
+                                 )),
+                             ]} />
+                     ) : (
+                         <EmptyState

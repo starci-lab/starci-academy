@@ -1,0 +1,79 @@
+{
+  "batch": "B33c",
+  "title": "Certify StarCi-only B33",
+  "checkpoint": "139391b6",
+  "generatedAt": "2026-08-08T13:30:00.000Z",
+  "verdict": "READY TO COMMIT",
+  "committed": false,
+  "scope": {
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b33c-scope.json",
+    "ownershipOk": true,
+    "commitManifestCount": 132,
+    "unowned": 0,
+    "dualOwnership": 0,
+    "forbiddenHits": 0,
+    "preDirtyHoldOuts": [
+      "CLAUDE.md",
+      ".claude/fe/decision-ledger.json",
+      ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "src/components/blocks/learn/ReactionButton/types.ts"
+    ]
+  },
+  "eslint": {
+    "command": "npx eslint --format json --no-error-on-unmatched-pattern src .storybook",
+    "before": { "raw": 7146, "files": 1262, "errors": 0, "warnings": 7146, "a11y": 11 },
+    "after": { "raw": 6911, "files": 1237, "errors": 0, "warnings": 6911, "a11y": 11 },
+    "delta": { "raw": -235, "files": -25, "errors": 0, "a11y": 0 },
+    "candidateBaselineNote": "B33 status claimed 7136/1260; normalized checkpoint remeasure is 7146/1262",
+    "cert": {
+      "ok": true,
+      "introducedErrors": 0,
+      "introducedWarnings": 0,
+      "closedClusterDoorWarnings": 0,
+      "unclassified": 0,
+      "preExistingRelatedOnManifest": 430
+    }
+  },
+  "partials18": {
+    "closed": 12,
+    "stillPartial": 4,
+    "unchangedHold": 2,
+    "forbiddenConsumerHold": 0,
+    "falsePrior": 0,
+    "unresolvedFamilies": [
+      "QaConversationHeader API drift (unchanged-hold)",
+      "KeepGoingPath / ModuleLessonList skeleton shimmer (still-partial)",
+      "CollapsibleSidebar nav landmark (unchanged-hold)"
+    ],
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b33c-partials.json"
+  },
+  "diffAudit": {
+    "forbiddenPathDiffProof": true,
+    "forbiddenOnlyPreDirtyMiaMiaSiteFooter": true,
+    "findingsNeedingRepair": 0,
+    "certificationRepairs": [
+      "SB CollapsibleSidebar: removed className (src retains for mia-mia)",
+      "Reverted ResponsiveBreadcrumb atom migration (introduced identity-root)",
+      "Reverted Auth EmailField/PasswordField inlining (introduced identity-root)",
+      "Deleted unused oauth-button-item module"
+    ]
+  },
+  "gates": {
+    "tscNoEmit": "pass",
+    "pluginEslintTests": "22/22 pass",
+    "principleStyleAndSemanticContracts": "15/15 pass",
+    "auditFe": "pass (29 ledger holds)",
+    "gitDiffCheck": "pass"
+  },
+  "commit": {
+    "manifest": ".artifacts/fe-refactor-audit/_b33c-commit-manifest.json",
+    "count": 132,
+    "recommendedMessage": "refactor(fe): close StarCi B33 partial clusters and consumer CSS-door chains\n\nMigrate StarCi consumers onto existing frames/atoms, close B32 partials where vocabulary is exact, and retain shared doors required by live or locked consumers."
+  },
+  "remaining": {
+    "rawMessages": 6911,
+    "affectedFiles": 1237,
+    "actionableHoldClass": "see after byHoldClass",
+    "partialClustersStillOpen": 6
+  }
+}

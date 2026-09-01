@@ -1,0 +1,117 @@
+{
+  "partition": "markdown-block-contract",
+  "manifest": [
+    ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/blocks/rendering/MarkdownContent/map.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx"
+  ],
+  "consumerEvidence": [
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "line": 396,
+      "prop": "className",
+      "value": "blockMy",
+      "ownership": "parent-placement",
+      "note": "sole consumer; migrated to wrapping <div className={blockMy}>"
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "line": 377,
+      "prop": "className",
+      "value": "blockMy",
+      "ownership": "parent-placement",
+      "note": "sole consumer; migrated to wrapping <div className={blockMy}>"
+    },
+    {
+      "component": "CodeToHtml",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "evidence": "already wraps in <div className={blockMy}>; no classNames passed"
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "evidence": "already wraps in <div className={blockMy}>; no classNames passed"
+    },
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/composites/viewers/MarkdownContent/map.tsx",
+      "evidence": "already wraps in <div className={blockMy}>; no classNames passed"
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/composites/viewers/MarkdownContent/map.tsx",
+      "evidence": "already wraps in <div className={blockMy}>; no classNames passed"
+    }
+  ],
+  "valueSet": {
+    "CodeToHtml": {
+      "blockMy": "reading ? my-4 : my-3 (composite maps) / reading ? my-4 : '' (blocks map)"
+    },
+    "MermaidDiagram": {
+      "blockMy": "reading ? my-4 : my-3 (composite maps) / reading ? my-4 : '' (blocks map)"
+    }
+  },
+  "oldApi": {
+    "CodeToHtml": {
+      "storybookComposite": "classNames?: Array<AllowedClassName>",
+      "srcComposite": "classNames?: Array<AllowedClassName>",
+      "srcBlock": "WithClassNames<undefined> → className?: string"
+    },
+    "MermaidDiagram": {
+      "storybookComposite": "classNames?: Array<AllowedClassName>",
+      "srcComposite": "classNames?: Array<AllowedClassName>",
+      "srcBlockConnected": "WithClassNames<undefined> → className?: string",
+      "srcBlockPresentational": "WithClassNames<undefined> → className?: string"
+    }
+  },
+  "newApi": {
+    "CodeToHtml": {
+      "storybookComposite": "code, language, theme",
+      "srcComposite": "code, language, theme",
+      "srcBlock": "code, language, theme, elevated?"
+    },
+    "MermaidDiagram": {
+      "storybookComposite": "code, theme, loadingLabel, expandLabel, caption?, fallbackLabel",
+      "srcComposite": "code, theme, loadingLabel, expandLabel, caption?, fallbackLabel",
+      "srcBlockConnected": "code, theme, loadingLabel, expandLabel, caption?, fallbackLabel",
+      "srcBlockPresentational": "svg, loadingLabel, expandLabel, caption?, fallbackLabel"
+    },
+    "MarkdownContentMap": {
+      "blockSpacing": "private blockMy on wrapping <div> in pre renderer — not exposed as prop"
+    }
+  },
+  "changed": [
+    ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/blocks/rendering/MarkdownContent/map.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx"
+  ],
+  "holds": [
+    "Shiki lazy IntersectionObserver highlighting unchanged",
+    "Mermaid SWR cache, zoom modal, captions, themes unchanged",
+    "blocks CodeToHtml elevated variant unchanged",
+    "composite maps already correct — no map.tsx edits",
+    "MarkdownTable className door out of scope for this worker"
+  ],
+  "parity": {
+    "storybookSrc": "pass — SB composites authoritative; src composites mirrored; blocks map aligned to composite wrap pattern"
+  },
+  "verification": {
+    "consumerScan": "grep className/classNames on CodeToHtml|MermaidDiagram open tags → 0 outside map wrappers",
+    "importsRemoved": "AllowedClassName, WithClassNames, unused cn removed from touched files",
+    "local": "read_lints on changed files → 0 issues; tsc/eslint deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — manifest scoped to markdown-block-contract worker; no decision-ledger edits"
+}

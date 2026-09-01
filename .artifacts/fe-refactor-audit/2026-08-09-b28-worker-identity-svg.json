@@ -1,0 +1,99 @@
+{
+  "worker": "identity-svg",
+  "manifest": [
+    "src/components/blocks/identity/BadgeImage/index.tsx",
+    "src/components/blocks/identity/BrandLockup/index.tsx",
+    "src/components/blocks/identity/BrandLogo/index.tsx",
+    "src/components/blocks/identity/IconTile/index.tsx",
+    "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+    "src/components/svg/GithubIcon/index.tsx",
+    "src/components/svg/GoogleIcon/index.tsx",
+    "src/components/svg/LogoMark/index.tsx",
+    "src/components/svg/TierLevelIcon/index.tsx"
+  ],
+  "consumers": {
+    "GoogleIcon": [
+      {
+        "file": "src/components/pages/SettingsHomePage/index.tsx",
+        "before": "<GoogleIcon className=\"size-3.5\" />",
+        "after": "<GoogleIcon />"
+      }
+    ],
+    "LogoMark": [
+      {
+        "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+        "before": "<LogoMark className=\"size-10\" />",
+        "after": "<LogoMark />"
+      }
+    ],
+    "BrandLogo": [
+      {
+        "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+        "before": "<BrandLogo className=\"h-10\" />",
+        "after": "<BrandLogo size=\"md\" />"
+      },
+      {
+        "file": "src/components/blocks/layout/AppSplash/component.tsx",
+        "before": "<BrandLogo className=\"h-14\" />",
+        "after": "<BrandLogo size=\"lg\" />"
+      }
+    ],
+    "BrandLockup": [
+      {
+        "file": "src/components/layouts/Footer/index.tsx",
+        "before": "<BrandLockup className=\"self-start\" />",
+        "after": "<Box className=\"self-start\"><BrandLockup /></Box>"
+      }
+    ]
+  },
+  "valueSet": {
+    "GoogleIcon": ["size-3.5"],
+    "LogoMark": ["size-10"],
+    "BrandLogo": ["h-9 w-auto", "h-10", "h-14"],
+    "BrandLockup": ["self-start"]
+  },
+  "ownership": {
+    "GoogleIcon": ["intrinsic"],
+    "LogoMark": ["intrinsic"],
+    "BrandLogo": ["intrinsic"],
+    "BrandLockup": ["parent-placement"]
+  },
+  "oldApi": {
+    "GoogleIcon": "WithClassNames<undefined> — optional className on svg",
+    "LogoMark": "WithClassNames<undefined> — optional className on svg",
+    "BrandLogo": "WithClassNames<undefined> — optional className merged with default h-9 w-auto",
+    "BrandLockup": "WithClassNames<undefined> — optional className on outer span"
+  },
+  "newApi": {
+    "GoogleIcon": "no props — svg hardcoded className=\"size-3.5\"",
+    "LogoMark": "no props — svg hardcoded className=\"size-10\"",
+    "BrandLogo": "BrandLogoProps { size?: BrandLogoSize } where BrandLogoSize = \"sm\" | \"md\" | \"lg\"; sm→h-9 w-auto (default), md→h-10 w-auto, lg→h-14 w-auto",
+    "BrandLockup": "no props — BrandLogo size=\"md\" baked internally"
+  },
+  "changed": [
+    "src/components/svg/GoogleIcon/index.tsx",
+    "src/components/svg/LogoMark/index.tsx",
+    "src/components/blocks/identity/BrandLogo/index.tsx",
+    "src/components/blocks/identity/BrandLockup/index.tsx",
+    "src/components/pages/SettingsHomePage/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+    "src/components/blocks/layout/AppSplash/component.tsx",
+    "src/components/layouts/Footer/index.tsx"
+  ],
+  "holds": [
+    "src/components/blocks/identity/BadgeImage/index.tsx — dynamic cn() scale/opacity",
+    "src/components/blocks/identity/IconTile/index.tsx — size-5 text-accent mixes size+tone",
+    "src/components/blocks/profile/RankDeltaCaret/index.tsx — w-8 justify-end mixes width+align",
+    "src/components/svg/GithubIcon/index.tsx — LearnLoopScroll locked consumer blocks door deletion",
+    "src/components/svg/TierLevelIcon/index.tsx — re-check consumers"
+  ],
+  "parity": {
+    "storybookSrc": "src-only burns; no SB twins for GoogleIcon/LogoMark/BrandLogo/BrandLockup in this wave"
+  },
+  "verification": {
+    "eslint": "pass (exit 0, --quiet) on all 8 changed files",
+    "tsc": "deferred to coordinator — no diagnostics on changed paths in spot filter"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — manifest matches b28-manifest-identity-svg.json; consumer migrations scoped to identity-svg partition"
+}

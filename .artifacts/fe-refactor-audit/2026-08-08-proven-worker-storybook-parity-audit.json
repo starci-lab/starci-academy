@@ -1,0 +1,28 @@
+{
+  "partition": "storybook-parity-audit",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+      "reason": "SB still exposes dialogClassName/bodyClassName/footerClassName/titleClassName; src ModalShell only has containerClassName (+ identity). bodyClassName has story consumers — not removed."
+    },
+    {
+      "path": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "reason": "SB exposes contentClassName (live LessonEditorPanel), bodyClassName/titleClassName/footerClassName/dialogClassName; src DrawerShell lacks several — held, not invented away"
+    },
+    {
+      "path": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "reason": "identity ported on Base only; Nested/List/Accordion/… members still hard-code data-tier like pre-identity SB"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "remaining-shell-prop-drift",
+      "classification": "proposed",
+      "note": "Align SB ModalShell/DrawerShell remaining per-part props + identity with src in a follow-up with story migrations"
+    }
+  ],
+  "verification": {},
+  "regressions": []
+}

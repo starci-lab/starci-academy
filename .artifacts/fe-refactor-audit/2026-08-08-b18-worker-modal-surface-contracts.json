@@ -1,0 +1,79 @@
+{
+  "partition": "modal-surface-contracts",
+  "consumers": {
+    "ModalShell.bodyClassName": [
+      {
+        "path": ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx",
+        "was": "bodyClassName=\"flex flex-col gap-3\" on WithLeadingTabs",
+        "status": "migrated-off"
+      }
+    ],
+    "SurfaceCard.contentClassName": [
+      {
+        "path": "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+        "class": "relative flex flex-col gap-3 overflow-hidden",
+        "cluster": "stack-clip"
+      },
+      {
+        "path": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        "class": "relative flex flex-col gap-3 overflow-hidden",
+        "cluster": "stack-clip"
+      },
+      {
+        "path": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+        "class": "relative flex flex-col gap-3 overflow-hidden",
+        "cluster": "stack-clip"
+      },
+      {
+        "path": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        "class": "relative flex flex-col gap-3 overflow-hidden",
+        "cluster": "stack-clip"
+      },
+      {
+        "path": "src/components/composites/cards/SurfaceCard/index.tsx PressableGroup",
+        "class": "TILE_CHROME rounded-2xl shadow-field (+ verdict)",
+        "cluster": "tile-chrome"
+      },
+      {
+        "path": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx PressableGroup",
+        "class": "TILE_CHROME rounded-2xl shadow-field (+ verdict)",
+        "cluster": "tile-chrome"
+      }
+    ]
+  },
+  "currentSemantics": {
+    "bodyClassName": "Was SB-only ModalBody flex-col gap-3 for Tabs+ScrollShadow siblings — now owned by StackV content-row inside LeadingTabsDemo",
+    "contentClassName": "Two incompatible axes: ContinueCard stack-clip layout vs PressableGroup tile chrome"
+  },
+  "proposedContract": {
+    "bodyClassName": {
+      "applied": "delete SB bodyClassName; body stacks via StackV principle=content-row (12px = former Tailwind gap-3)",
+      "notApplied": "bodyVariant — unnecessary once StackV owns the seam"
+    },
+    "contentClassName": {
+      "applied": false,
+      "proposal": "Not one bodyVariant for ALL. ContinueCard may later use StackV + padding=1 (overflow-hidden already on padding===1). PressableGroup TILE_CHROME needs a separate chrome path.",
+      "implementationReady": false
+    }
+  },
+  "existingCanonEvidence": {
+    "StackV": "explore/registry content-row = gap step 4 / 12px; overlay-and-feedback does not define bodyClassName",
+    "SurfaceCard.padding": "padding===1 already applies overflow-hidden; StackV owns flex-col+gap"
+  },
+  "storybookSrcParity": {
+    "ModalShell.bodyClassName": "aligned after removal — both lack prop",
+    "SurfaceCard.contentClassName": "compatible — both twins still declare it"
+  },
+  "implementationReady": {
+    "ModalShell.bodyClassName-removal": true,
+    "SurfaceCard.bodyVariant": false
+  },
+  "changed": [
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx"
+  ],
+  "holds": [
+    "SurfaceCard-contentClassName-multi-semantic"
+  ],
+  "regressions": []
+}

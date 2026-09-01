@@ -1,0 +1,120 @@
+{
+  "ok": 310,
+  "stillMissing": 43,
+  "dynamic": 2,
+  "corrupt": 0,
+  "missingSample": [
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx",
+      "line": 64,
+      "reason": "no-explain",
+      "principleLine": 61
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 522,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 558,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 601,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 627,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 651,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 653,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 688,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 719,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 720,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 728,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 207,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 209,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 231,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 246,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 274,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 357,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 409,
+      "reason": "no-principle-found"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx",
+      "line": 127,
+      "reason": "no-explain",
+      "principleLine": 132
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 457,
+      "reason": "no-principle-found"
+    }
+  ],
+  "dynamicSample": [
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\LabeledCard\\index.tsx",
+      "line": 157
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SectionCard\\index.tsx",
+      "line": 116
+    }
+  ]
+}

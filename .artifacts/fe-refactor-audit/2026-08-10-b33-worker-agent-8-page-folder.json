@@ -1,0 +1,266 @@
+{
+  "manifest": "agent-8-page-folder",
+  "batch": "B33",
+  "checkpoint": "139391b6",
+  "agent": "B33 Agent 8 — Page-folder and AuthenticationModal slice",
+  "clusterIds": [],
+  "focus": "page-folder + AuthenticationModal",
+  "status": "partial",
+  "summary": "Closed high-confidence AiUsagePage hooks (moved to src/hooks/) and AuthenticationModal leaf helpers (inlined auth email/password fields; OauthButtonItem → modules/types; OAuth catalog inlined into CredentialsState). Held AdminMpegDash/AdminUpload trees, ArchitecturePage helpers (locked ArchitectureScene debt), BlogListPage/Masthead, AdminAiBalancer KeyRow, and remaining Auth section routers.",
+  "consumersScanned": [
+    "src/components/pages/AiUsagePage/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+    "src/components/pages/LoginPage/index.tsx"
+  ],
+  "consumersMigrated": [
+    {
+      "file": "src/components/pages/AiUsagePage/index.tsx",
+      "from": "./hooks (QuotaLaneVariant, useQuotaLaneData)",
+      "to": "@/hooks/quota-lane-variant + @/hooks/useQuotaLaneData",
+      "cluster": "ai-usage-hooks-out-of-page"
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+      "from": "./EmailField + ./PasswordField + ./map + ./types",
+      "to": "inlined InputText/InputPassword + OAUTH_BUTTON_ITEMS; type from @/modules/types/auth/oauth-button-item",
+      "cluster": "auth-credentials-leaf-inline"
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
+      "from": "../types OauthButtonItem",
+      "to": "@/modules/types/auth/oauth-button-item",
+      "cluster": "auth-oauth-type-home"
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+      "from": "./EmailField + ./PasswordField",
+      "to": "inlined InputText/InputPassword via expanded RegistrationStateLabels (presentational purity preserved)",
+      "cluster": "auth-registration-leaf-inline"
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/index.tsx",
+      "from": "labels {title,desc,submit}",
+      "to": "labels expanded with email/password/confirm field copy resolved in connected half",
+      "cluster": "auth-registration-leaf-inline"
+    }
+  ],
+  "sharedApiRemovedOrRetained": {
+    "OauthButtonItem": "retained — moved to src/modules/types/auth/oauth-button-item.ts; dropped WithClassNames icon typing (was CSS-door at sentence tier)",
+    "OAUTH_BUTTON_ITEMS": "retained as CredentialsState-private catalog (only live consumer); not promoted to resources (icon ComponentType is not resource copy)",
+    "QuotaLaneVariant / useQuotaLaneData": "retained — new homes under src/hooks/",
+    "AuthenticationModal SignInSection/SignUpSection public import paths": "retained — LoginPage + AuthenticationModal still import nested section routers; full overlay collapse held"
+  },
+  "beforeAfterMessages": {
+    "scope": "agent-8-page-folder manifest (40 files) starci-fe/* messages",
+    "before": {
+      "closedSubset (10 files later deleted)": {
+        "starci-fe/page-folder-two-files-only": 10,
+        "starci-fe/no-helper-folder-in-components": 5,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "total": 17
+      },
+      "remainingSubset (30 files still present)": {
+        "approxTotal": 82,
+        "note": "measured after; unchanged by this worker (held)"
+      },
+      "manifestTotalApprox": 99
+    },
+    "after": {
+      "closedSubset": 0,
+      "remainingOwnedFiles": 30,
+      "remainingStarciFeMessages": 82,
+      "manifestTotalApprox": 82
+    },
+    "delta": {
+      "starci-fe messages on owned closed files": -17,
+      "introducedOnMigratedImporters": 0,
+      "note": "CredentialsState/RegistrationState/AiUsagePage retain pre-existing heroui/identity/frame/classname debt outside this page-folder leaf mission"
+    }
+  },
+  "closedClusters": [
+    {
+      "id": "agent-8-page-folder::AiUsagePage::hooks-to-src-hooks",
+      "status": "closed",
+      "files": [
+        "src/components/pages/AiUsagePage/hooks/index.ts",
+        "src/components/pages/AiUsagePage/hooks/quota-lane-variant.ts",
+        "src/components/pages/AiUsagePage/hooks/useQuotaLaneData.ts"
+      ],
+      "destinations": [
+        "src/hooks/quota-lane-variant.ts",
+        "src/hooks/useQuotaLaneData.ts"
+      ],
+      "evidence": "Page hooks folder removed; AiUsagePage imports from @/hooks/*; page-folder + no-helper-folder messages for those three files gone."
+    },
+    {
+      "id": "agent-8-page-folder::AuthenticationModal::sign-in-field-leaves",
+      "status": "closed",
+      "files": [
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx"
+      ],
+      "evidence": "Page-specific labelled fields inlined into CredentialsState; leaf folders deleted."
+    },
+    {
+      "id": "agent-8-page-folder::AuthenticationModal::sign-up-field-leaves",
+      "status": "closed",
+      "files": [
+        "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+        "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx"
+      ],
+      "evidence": "Inlined into presentational RegistrationState via resolved labels from connected half (no useTranslations in component.tsx)."
+    },
+    {
+      "id": "agent-8-page-folder::AuthenticationModal::oauth-type-and-map",
+      "status": "closed",
+      "files": [
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/map.tsx",
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts",
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/index.ts"
+      ],
+      "destinations": [
+        "src/modules/types/auth/oauth-button-item.ts",
+        "CredentialsState private OAUTH_BUTTON_ITEMS"
+      ],
+      "evidence": "types/ + map.tsx removed from overlay folder; WithClassNames sentence-tier CSS-door on OauthButtonItem eliminated by ComponentType typing in modules."
+    }
+  ],
+  "partialClusters": [
+    {
+      "id": "agent-8-page-folder::AuthenticationModal::section-routers",
+      "status": "partial",
+      "files": [
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx",
+        "src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx"
+      ],
+      "why": "Leaf field/type/map debt closed, but SignInSection/SignUpSection remain nested extras. Full two-file overlay requires promoting CredentialsState/OtpState/OauthButtons/RememberMeRow/etc. (many outside this manifest) and updating LoginPage + AuthenticationModal importers. Not safely closable in this slice."
+    }
+  ],
+  "holds": [
+    {
+      "id": "admin-mpeg-dash-tree",
+      "classification": "unsafe-large-page-tree",
+      "files": [
+        "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+        "src/components/pages/AdminMpegDashTestPage/constants/index.ts",
+        "src/components/pages/AdminMpegDashTestPage/constants/quick-test-urls.ts",
+        "src/components/pages/AdminMpegDashTestPage/map.tsx",
+        "src/components/pages/AdminMpegDashTestPage/types/admin-mpeg-dash-test.ts",
+        "src/components/pages/AdminMpegDashTestPage/types/index.ts"
+      ],
+      "reason": "Large admin test harness with heroui/raw-host/cn debt entangled across nested cards. Inlining/promotion would require page root + non-manifest siblings; refused blind block promotion.",
+      "proposedNext": "Dedicated admin page-folder pass owning AdminMpegDashTestPage/{component,index}.tsx plus module destinations for constants/types/map."
+    },
+    {
+      "id": "admin-upload-tree",
+      "classification": "unsafe-large-page-tree",
+      "files": [
+        "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/enums/index.ts",
+        "src/components/pages/AdminUploadVideoPage/enums/upload-status.ts",
+        "src/components/pages/AdminUploadVideoPage/map.tsx",
+        "src/components/pages/AdminUploadVideoPage/types/admin-upload-video.ts",
+        "src/components/pages/AdminUploadVideoPage/types/index.ts"
+      ],
+      "reason": "Header/LoadingScreen carry heavy sentence-tier host/classname/heroui debt; enums/types/map need modules homes but FileSelectionCard siblings outside manifest block atomic close.",
+      "proposedNext": "Move enums/types/map to modules/* first in a dedicated cluster; separately decide Header/LoadingScreen/ProcessResultBanner inline vs block."
+    },
+    {
+      "id": "architecture-page-helpers",
+      "classification": "locked-product-debt",
+      "files": [
+        "src/components/pages/ArchitecturePage/ArchitectureMap/future-scene.ts",
+        "src/components/pages/ArchitecturePage/CurlTester/index.tsx",
+        "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+        "src/components/pages/ArchitecturePage/constants.ts",
+        "src/components/pages/ArchitecturePage/hooks/useArchitectureNode.ts",
+        "src/components/pages/ArchitecturePage/hooks/useSystemHealthPoll.ts",
+        "src/components/pages/ArchitecturePage/metricsFormat.ts",
+        "src/components/pages/ArchitecturePage/statusVisual.tsx"
+      ],
+      "reason": "ArchitectureScene is a locked product shape (B33 oracle). Helpers/scenes/hooks pull that debt; MetricsInline also has multi-rule sentence debt. Brief: hold ArchitecturePage helpers that pull locked scene debt.",
+      "proposedNext": "Coordinator unlock ArchitectureScene cluster before relocating scene/constants/hooks."
+    },
+    {
+      "id": "blog-list-masthead",
+      "classification": "locked-product-debt",
+      "files": [
+        "src/components/pages/BlogListPage/Masthead/index.tsx"
+      ],
+      "reason": "Masthead mounts locked ArchitectureScene + sibling scene.ts (not fully owned). Inline would still edit locked scene surface / leave scene.ts orphan.",
+      "proposedNext": "After ArchitectureScene unlock, either inline into BlogListPage or promote as marketing block with scene in resources."
+    },
+    {
+      "id": "admin-ai-balancer-key-row",
+      "classification": "page-specific-needs-parent",
+      "files": [
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx"
+      ],
+      "reason": "Page-specific <tr> row; closing requires inlining into ProviderSection (outside manifest) or inventing a table-row vocabulary owner. Raw host/identity still open — not a clean leaf delete.",
+      "proposedNext": "Own ProviderSection + KeyRow together; prefer inline into provider table body."
+    },
+    {
+      "id": "auth-overlay-remaining-nesting",
+      "classification": "cluster-incomplete",
+      "files": [
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx",
+        "src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx"
+      ],
+      "reason": "Section routers + CredentialsState/RegistrationState/OtpState/OauthButtons/RememberMeRow/AgreeToTermsRow/prompts remain nested under AuthenticationModal. LoginPage imports sections directly — promotion target must be shared (blocks/auth or standalone overlays), which exceeds this manifest.",
+      "proposedNext": "Promote SignInSection/SignUpSection trees to blocks/auth/* (or sibling overlays), update AuthenticationModal + LoginPage imports, collapse AuthenticationModal to component.tsx + index.tsx only."
+    }
+  ],
+  "forbiddenConsumers": {
+    "scanned": false,
+    "edited": false,
+    "note": "No nivo/nivoexpert/mia-mia/ArchitectureScene/CLAUDE.md/decision-ledger edits."
+  },
+  "parity": {
+    "storybookFirst": "n/a — no Storybook AuthenticationModal / AiUsagePage hook twins for closed leaves",
+    "twinsUpdated": [],
+    "srcOnlyClosures": [
+      "AiUsagePage hooks → src/hooks",
+      "AuthenticationModal field/type/map leaves"
+    ]
+  },
+  "tests": {
+    "focusedEslintClosedLeaves": "pass — deleted files no longer emit; new hooks/modules files clean",
+    "focusedEslintMigratedImporters": "pre-existing warnings only (heroui/identity/frame/classname) — none introduced by leaf inline",
+    "tsc": "repo tsc exit 2 from pre-existing unrelated errors (CollapsibleSidebar/PriceTag/EnumChip/Cluster gap); zero errors on touched Auth/AiUsage/hooks/modules paths",
+    "gitDiffCheck": "pass on touched auth/ai-usage/hooks/modules paths"
+  },
+  "regressions": [],
+  "changed": [
+    "src/hooks/quota-lane-variant.ts",
+    "src/hooks/useQuotaLaneData.ts",
+    "src/modules/types/auth/oauth-button-item.ts",
+    "src/components/pages/AiUsagePage/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/index.tsx"
+  ],
+  "deleted": [
+    "src/components/pages/AiUsagePage/hooks/index.ts",
+    "src/components/pages/AiUsagePage/hooks/quota-lane-variant.ts",
+    "src/components/pages/AiUsagePage/hooks/useQuotaLaneData.ts",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/map.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/index.ts",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx"
+  ],
+  "overlapCheck": "pass — edited only owned leaf destinations + required importers; no nivo/locked ArchitectureScene/CLAUDE/ledger; Admin/Architecture held intact"
+}

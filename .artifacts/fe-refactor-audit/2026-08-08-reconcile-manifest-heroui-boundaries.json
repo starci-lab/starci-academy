@@ -1,0 +1,1939 @@
+{
+  "partition": "heroui-boundaries",
+  "generatedAt": "2026-08-06T22:31:27.721Z",
+  "batch": 12,
+  "fileCount": 35,
+  "totalCandidates": 59,
+  "capped": true,
+  "allowedClassifications": [
+    "consumer-safe",
+    "twin-safe",
+    "export-safe",
+    "identity-safe"
+  ],
+  "holdClassifications": [
+    "vendor-hold",
+    "api-hold",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "hardHolds": [
+    "ChipBase API / handleSide / non-identical twins",
+    "missing-both principles / page-folder / parallel skeleton",
+    "Nivo / locked / teacher holds / a11y",
+    "new principle tokens / unproven public API renames"
+  ],
+  "files": [
+    {
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AppearancePage/index.tsx",
+      "twin": ".storybook/components/pages/AppearancePage/index.tsx",
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 4,
+      "byClass": {
+        "consumer-safe": 2,
+        "api-hold": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 9,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 20,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 249,
+          "column": 60,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 257,
+          "column": 55,
+          "message": "`relative` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "twin": ".storybook/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 6,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 5
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 27,
+          "column": 52,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 102,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 114,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 121,
+          "column": 56,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 173,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/SectionCard/index.tsx",
+      "twin": ".storybook/components/blocks/cards/SectionCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 2,
+        "ambiguous": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 41,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 105,
+          "column": 27,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 112,
+          "column": 9,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 131,
+          "column": 29,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/SummaryCard/index.tsx",
+      "twin": ".storybook/components/blocks/cards/SummaryCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 2,
+        "ambiguous": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 38,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 84,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 99,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 105,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/verdict-band.ts",
+      "twin": ".storybook/components/blocks/cards/verdict-band.ts",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 1,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 58,
+          "column": 12,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/CartLine/index.tsx",
+      "twin": ".storybook/components/blocks/commerce/CartLine/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 60,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 68,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "twin": ".storybook/components/blocks/commerce/FreeTierCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 24,
+          "column": 44,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "twin": ".storybook/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 1,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 95,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 318,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/TierCard/index.tsx",
+      "twin": ".storybook/components/blocks/commerce/TierCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 4,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 3
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 26,
+          "column": 40,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 99,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 125,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "twin": ".storybook/components/blocks/community/Discussion/CommentComposer.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 6,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 5
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 10,
+          "column": 47,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 95,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 113,
+          "column": 14,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 124,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 146,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/CommentItem.tsx",
+      "twin": ".storybook/components/blocks/community/Discussion/CommentItem.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 8,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 7
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 32,
+          "column": 65,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 85,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 92,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 99,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 101,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 145,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 204,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "twin": ".storybook/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 4
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 56,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 35,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 47,
+          "column": 36,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 55,
+          "column": 31,
+          "message": "`absolute` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "twin": ".storybook/components/blocks/community/Discussion/InteractionBar.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 4,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 3
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 11,
+          "column": 46,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 33,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 39,
+          "column": 23,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "twin": ".storybook/components/blocks/community/Discussion/ReactionBar.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 6,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 5
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 13,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/handler-on-prefix",
+          "line": 48,
+          "column": 11,
+          "message": "`handlePick` → rename to `onPick` (handlers are `onXxx`, not `handleXxx` — react-idioms §7).",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 54,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 79,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 80,
+          "column": 27,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "twin": ".storybook/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 42,
+          "column": 20,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "twin": ".storybook/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 21,
+          "column": 52,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 56,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "twin": ".storybook/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 10,
+          "column": 47,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 19,
+          "column": 1,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "twin": ".storybook/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 6,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 5
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 15,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 48,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 49,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 51,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 84,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/grading/GradingByline/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/grading/GradingByline/component.tsx",
+      "twin": ".storybook/components/blocks/grading/GradingByline/component.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 4
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 23,
+          "column": 67,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 25,
+          "column": 63,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 52,
+          "column": 19,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "twin": ".storybook/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 9,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 8
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-parallel-skeleton",
+          "line": 8,
+          "column": 10,
+          "message": "Import `ChallengeCardSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-retired-async-content",
+          "line": 12,
+          "column": 10,
+          "message": "`AsyncContent` is retired — thread `isSkeleton` to each leaf, and use AsyncContentEmpty/AsyncContentError from '@/components/composites/async/AsyncContent'.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 34,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 50,
+          "column": 5,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-parallel-skeleton",
+          "line": 81,
+          "column": 17,
+          "message": "Prop `skeleton={<…>}` is a hand-kept parallel skeleton tree that drifts from the real shape — thread `isSkeleton` to each leaf so shimmer mirrors the loaded tree.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 82,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 97,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 98,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "twin": ".storybook/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 1,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 135,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 206,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "ambiguous": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 33,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 37,
+          "column": 12,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "consumer-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "twin": ".storybook/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 4,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 3
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 23,
+          "column": 52,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 52,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 68,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "twin": ".storybook/components/blocks/rendering/MarkdownContent/map.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 8,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 7
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 49,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 279,
+          "column": 50,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 306,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 314,
+          "column": 30,
+          "message": "`space-y-2` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 364,
+          "column": 49,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 410,
+          "column": 35,
+          "message": "`space-y-2` on <ol> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 411,
+          "column": 35,
+          "message": "`space-y-2` on <ul> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "twin": ".storybook/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 9,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 8
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 27,
+          "column": 42,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 43,
+          "column": 34,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 55,
+          "column": 34,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 68,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 118,
+          "column": 14,
+          "message": "`overflow-x-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 119,
+          "column": 49,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 132,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 137,
+          "column": 30,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/mdxComponents.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/mdxComponents.tsx",
+      "twin": ".storybook/components/blocks/rendering/MarkdownContent/mdxComponents.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "consumer-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+      "twin": ".storybook/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 6,
+      "byClass": {
+        "api-hold": 1,
+        "consumer-safe": 1,
+        "ambiguous": 4
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 16,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 158,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 167,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 219,
+          "column": 17,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 232,
+          "column": 17,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx",
+      "twin": ".storybook/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "api-hold": 1,
+        "consumer-safe": 1,
+        "ambiguous": 3
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`overlays/AuthenticationModal/` contains `SignUpSection/OtpState/component.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 105,
+          "column": 15,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 112,
+          "column": 17,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 120,
+          "column": 33,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminAiBalancerPage/index.tsx",
+      "twin": ".storybook/components/pages/AdminAiBalancerPage/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 4,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 3
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 8,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-parallel-skeleton",
+          "line": 24,
+          "column": 5,
+          "message": "Import `AdminAiBalancerSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 85,
+          "column": 26,
+          "message": "`space-y-2` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-hero-heading-class",
+          "line": 86,
+          "column": 29,
+          "message": "Hand-rolled heading (text-xl+ + font-bold) — use <Typography type=\"h3|h4\"> instead of raw className.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "twin": ".storybook/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 4,
+      "byClass": {
+        "api-hold": 3,
+        "consumer-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`pages/AdminUploadVideoPage/` contains `UploadProgressCard/ProviderUploadRow/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 7,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 24,
+          "column": 49,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 56,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/pages/AiSettingsPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AiSettingsPage/index.tsx",
+      "twin": ".storybook/components/pages/AiSettingsPage/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 2
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 7,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-retired-async-content",
+          "line": 24,
+          "column": 10,
+          "message": "`AsyncContent` is retired — thread `isSkeleton` to each leaf, and use AsyncContentEmpty/AsyncContentError from '@/components/composites/async/AsyncContent'.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-parallel-skeleton",
+          "line": 143,
+          "column": 25,
+          "message": "Prop `skeleton={<…>}` is a hand-kept parallel skeleton tree that drifts from the real shape — thread `isSkeleton` to each leaf so shimmer mirrors the loaded tree.",
+          "severity": 1,
+          "classification": "api-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogListPage/TopicsStrip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogListPage/TopicsStrip/index.tsx",
+      "twin": ".storybook/components/pages/BlogListPage/TopicsStrip/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 2,
+      "byClass": {
+        "api-hold": 1,
+        "consumer-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`pages/BlogListPage/` contains `TopicsStrip/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BookmarksPage/index.tsx",
+      "twin": ".storybook/components/pages/BookmarksPage/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "consumer-safe": 1,
+        "api-hold": 3,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 7,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-retired-async-content",
+          "line": 27,
+          "column": 10,
+          "message": "`AsyncContent` is retired — thread `isSkeleton` to each leaf, and use AsyncContentEmpty/AsyncContentError from '@/components/composites/async/AsyncContent'.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 199,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-parallel-skeleton",
+          "line": 207,
+          "column": 25,
+          "message": "Prop `skeleton={<…>}` is a hand-kept parallel skeleton tree that drifts from the real shape — thread `isSkeleton` to each leaf so shimmer mirrors the loaded tree.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 235,
+          "column": 29,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "twin": ".storybook/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 5,
+      "byClass": {
+        "api-hold": 3,
+        "consumer-safe": 1,
+        "ambiguous": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`pages/ContactPage/` contains `ContactChannels/FounderCard/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "consumer-safe"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 25,
+          "column": 32,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 45,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "api-hold"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 80,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    }
+  ]
+}

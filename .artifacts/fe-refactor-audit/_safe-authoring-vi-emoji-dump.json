@@ -1,0 +1,3246 @@
+{
+  "viByKind": {
+    "comment": 126,
+    "stringish": 17,
+    "other": 1
+  },
+  "emojiByKind": {
+    "comment": 129,
+    "stringish": 33,
+    "other": 17
+  },
+  "vi": [
+    {
+      "file": ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+      "line": 41,
+      "column": 1,
+      "endLine": 53,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+      "line": 31,
+      "column": 5,
+      "endLine": 31,
+      "endColumn": 75,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Button copy for the \"not yet following\" state (e.g. \"Kết bạn\"). */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+      "line": 33,
+      "column": 5,
+      "endLine": 33,
+      "endColumn": 78,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Button copy for the \"already following\" state (e.g. \"Đã kết bạn\"). */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+      "line": 35,
+      "column": 5,
+      "endLine": 35,
+      "endColumn": 79,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Label for the following stat (caller-localized). */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 166,
+      "column": 32,
+      "endLine": 166,
+      "endColumn": 80,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "                text={`© ${year} StarCi Academy · Built by Nguyễn Văn Tự Cường`} // vn-ok: the author's real name",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/main.ts",
+      "line": 34,
+      "column": 13,
+      "endLine": 34,
+      "endColumn": 86,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "            // Storybook utils (BlockAnatomy, …) — not system components, so they live",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/main.ts",
+      "line": 35,
+      "column": 13,
+      "endLine": 35,
+      "endColumn": 64,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "            // outside `components/` (teacher ruling 2026-07-25).",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/preview.tsx",
+      "line": 13,
+      "column": 1,
+      "endLine": 21,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/Hero/Hero.stories.tsx",
+      "line": 14,
+      "column": 13,
+      "endLine": 14,
+      "endColumn": 160,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "            \"Đề THPT thật, chấm ngay with no lộ đáp án. Vocabulary bằng game, thi cùng bạn trong virtual exam room, có Mia — AI teaching assistant — kèm 24/7.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "line": 9,
+      "column": 18,
+      "endLine": 9,
+      "endColumn": 88,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        tagline: \"Học tiếng Anh, pass the exam — luyện thật, chơi thật, thi cùng nhau.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "line": 30,
+      "column": 20,
+      "endLine": 30,
+      "endColumn": 67,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        copyright: \"© 2026 Mia Mia. Học tiếng Anh, pass the exam.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/mia-mia/composites/cards/FeatureCard/FeatureCard.stories.tsx",
+      "line": 16,
+      "column": 22,
+      "endLine": 16,
+      "endColumn": 128,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        description: \"Đề thật của các Sở, chấm ngay theo đáp án server — with no lộ đáp án khi đang làm. Xem lại từng câu sai.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/mia-mia/composites/cards/FeatureCard/FeatureCard.stories.tsx",
+      "line": 58,
+      "column": 59,
+      "endLine": 58,
+      "endColumn": 81,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "                    <FeatureCard icon={<DocIcon />} title=\"Vocabulary bằng game\" description=\"Four speed games: beat monsters to remember words, defend a base, match pairs.\" ctaLabel=\"Play ngay\" ctaHr",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/story-kit.tsx",
+      "line": 4,
+      "column": 1,
+      "endLine": 22,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/test-runner.ts",
+      "line": 60,
+      "column": 1,
+      "endLine": 69,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 20,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "line": 26,
+      "column": 5,
+      "endLine": 26,
+      "endColumn": 46,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Tên part — hiện trong cây anatomy. */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "line": 28,
+      "column": 5,
+      "endLine": 28,
+      "endColumn": 73,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Giữ cho tương thích call-site cũ; cây lấy tier từ `annotate`. */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "line": 30,
+      "column": 5,
+      "endLine": 30,
+      "endColumn": 72,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Giữ cho tương thích call-site cũ; overlay không còn vẽ link. */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "line": 34,
+      "column": 1,
+      "endLine": 34,
+      "endColumn": 53,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/** Marker vô hình đánh dấu part cho cây anatomy. */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "line": 32,
+      "column": 1,
+      "endLine": 40,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "line": 41,
+      "column": 1,
+      "endLine": 56,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/block-anatomy.tsx",
+      "line": 27,
+      "column": 5,
+      "endLine": 27,
+      "endColumn": 79,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Only present in ONE state (e.g. `\"Đang tải\"`) — not a general part. */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/block-anatomy.tsx",
+      "line": 47,
+      "column": 92,
+      "endLine": 47,
+      "endColumn": 121,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "                <span className=\"text-xs font-semibold uppercase tracking-wide text-muted\">Cấu thành (block + primitive)</span>",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/utils/block-anatomy.tsx",
+      "line": 54,
+      "column": 70,
+      "endLine": 54,
+      "endColumn": 88,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "                            {p.state ? <span className=\"text-muted\">{` · [chỉ state: ${p.state}]`}</span> : null}",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/utils/block-anatomy.tsx",
+      "line": 60,
+      "column": 92,
+      "endLine": 60,
+      "endColumn": 117,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "                <span className=\"text-xs font-semibold uppercase tracking-wide text-muted\">Vì sao dùng composite này</span>",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/app/InnerLayout.tsx",
+      "line": 32,
+      "column": 5,
+      "endLine": 32,
+      "endColumn": 86,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // Footer hiện ở LANDING — cả locale root (\"/\", \"/vi\", \"/en\") LẪN /home (\"/home\",",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/InnerLayout.tsx",
+      "line": 33,
+      "column": 5,
+      "endLine": 33,
+      "endColumn": 91,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // \"/vi/home\"): /home là bản ungated của CÙNG trang landing (user đã login xem ở đây).",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/InnerLayout.tsx",
+      "line": 34,
+      "column": 5,
+      "endLine": 34,
+      "endColumn": 103,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // Mọi trang khác (dashboard / learn / profile / auth / …) KHÔNG có footer — thầy chốt 2026-06-26.",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/architecture/page.tsx",
+      "line": 22,
+      "column": 34,
+      "endLine": 22,
+      "endColumn": 62,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        path: \"/architecture\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/app/[locale]/contact/page.tsx",
+      "line": 22,
+      "column": 34,
+      "endLine": 22,
+      "endColumn": 43,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        path: \"/contact\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "line": 9,
+      "column": 1,
+      "endLine": 14,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 11,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "line": 7,
+      "column": 1,
+      "endLine": 16,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "line": 7,
+      "column": 1,
+      "endLine": 19,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "line": 7,
+      "column": 1,
+      "endLine": 16,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "line": 7,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "line": 4,
+      "column": 1,
+      "endLine": 13,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/app/[locale]/status/page.tsx",
+      "line": 22,
+      "column": 34,
+      "endLine": 22,
+      "endColumn": 55,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        path: \"/status\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "line": 57,
+      "column": 5,
+      "endLine": 60,
+      "endColumn": 8,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "line": 88,
+      "column": 13,
+      "endLine": 88,
+      "endColumn": 91,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "            // TODO(atom): skin-shape đậm (rounded-full + border + bg + shadow — pill nổi)",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "line": 89,
+      "column": 13,
+      "endLine": 89,
+      "endColumn": 90,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "            // nên thành atom/composite (Chip/Button/SurfaceCard) — frame không làm được,",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "line": 90,
+      "column": 13,
+      "endLine": 90,
+      "endColumn": 41,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "            // tạm bọc Box + principles.",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "line": 93,
+      "column": 18,
+      "endLine": 102,
+      "endColumn": 100,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "                    </HeroButton>",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 166,
+      "column": 32,
+      "endLine": 166,
+      "endColumn": 80,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "                color=\"muted\"",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 20,
+      "column": 1,
+      "endLine": 25,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 73,
+      "column": 5,
+      "endLine": 73,
+      "endColumn": 95,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // for the whole Ôn tập surface). The deck list lives IN the pane (study overview) and the",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 76,
+      "column": 5,
+      "endLine": 76,
+      "endColumn": 83,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // the \"Hỏi nhanh\" quiz goes full-bleed ONLY during a live run (a focused work",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 81,
+      "column": 5,
+      "endLine": 81,
+      "endColumn": 84,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // \"Học thẻ\"/\"Ôn thẻ đến hạn\" review goes full-bleed ONLY during a live session",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 83,
+      "column": 5,
+      "endLine": 83,
+      "endColumn": 81,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // (`flashcards/review/sessions/[sessionId]`, 2026-07-11 đính chính: \"ôn thẻ",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 84,
+      "column": 5,
+      "endLine": 84,
+      "endColumn": 77,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // giao diện y chang\"). This ONE route now serves BOTH FlashcardReviewer",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 92,
+      "column": 5,
+      "endLine": 92,
+      "endColumn": 80,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // (thầy: \"bỏ padding-6 ở đây này\", pointed at DevTools showing the shell's",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 126,
+      "column": 5,
+      "endLine": 126,
+      "endColumn": 96,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    // (Đề bài / Nộp bài), so it needs no on-this-page outline. Only the right rail is dropped.",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 214,
+      "column": 14,
+      "endLine": 219,
+      "endColumn": 64,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "            {/* The floating \"ask StarCi AI\" mascot button now mounts ONCE, globally,",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "line": 37,
+      "column": 52,
+      "endLine": 37,
+      "endColumn": 55,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        : `-${voucher.value.toLocaleString(\"vi-VN\")}đ` // vn-ok: VND currency suffix",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/config/seo.ts",
+      "line": 24,
+      "column": 9,
+      "endLine": 24,
+      "endColumn": 135,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        \"StarCi Academy — học Fullstack, System Design và AI/LLM Engineering qua dự án thật, thực hành chấm điểm và lộ trình rõ ràng.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/hooks/effects/UseEffects.tsx",
+      "line": 30,
+      "column": 5,
+      "endLine": 30,
+      "endColumn": 92,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Apply the user's custom accent color (Settings → \"Giao diện\") as a CSS override. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/effects/useAccentOverride.ts",
+      "line": 37,
+      "column": 1,
+      "endLine": 48,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/effects/useDefaultRedirect.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 16,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/socketio/types/mock-interview.ts",
+      "line": 69,
+      "column": 9,
+      "endLine": 69,
+      "endColumn": 123,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        /** 0-based index of the question this turn belongs to (Q&A kinds), for \"Câu N\" phrasing + first-ask detection. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 11,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 12,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 12,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 11,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "line": 18,
+      "column": 1,
+      "endLine": 26,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "line": 18,
+      "column": 1,
+      "endLine": 26,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "line": 18,
+      "column": 1,
+      "endLine": 26,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "line": 11,
+      "column": 1,
+      "endLine": 21,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+      "line": 9,
+      "column": 1,
+      "endLine": 29,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+      "line": 4,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+      "line": 9,
+      "column": 1,
+      "endLine": 17,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 17,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+      "line": 6,
+      "column": 1,
+      "endLine": 10,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "line": 6,
+      "column": 1,
+      "endLine": 11,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/zustand/overlay/hooks.ts",
+      "line": 57,
+      "column": 1,
+      "endLine": 57,
+      "endColumn": 85,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/** Cookie preferences modal overlay state (\"Tùy chỉnh\" granular cookie consent). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+      "line": 37,
+      "column": 1,
+      "endLine": 42,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+      "line": 38,
+      "column": 1,
+      "endLine": 42,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+      "line": 35,
+      "column": 1,
+      "endLine": 40,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "line": 33,
+      "column": 1,
+      "endLine": 37,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+      "line": 30,
+      "column": 1,
+      "endLine": 36,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+      "line": 37,
+      "column": 1,
+      "endLine": 42,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+      "line": 37,
+      "column": 1,
+      "endLine": 44,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+      "line": 36,
+      "column": 1,
+      "endLine": 43,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-start-trial.ts",
+      "line": 30,
+      "column": 1,
+      "endLine": 35,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+      "line": 36,
+      "column": 1,
+      "endLine": 41,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts",
+      "line": 36,
+      "column": 1,
+      "endLine": 41,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/cart.ts",
+      "line": 63,
+      "column": 5,
+      "endLine": 63,
+      "endColumn": 132,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Pay the whole cart in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/course-enroll.ts",
+      "line": 30,
+      "column": 5,
+      "endLine": 30,
+      "endColumn": 117,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Pay in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/discussion.ts",
+      "line": 8,
+      "column": 1,
+      "endLine": 12,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "line": 9,
+      "column": 5,
+      "endLine": 9,
+      "endColumn": 77,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Answer is solid for the card's level — clear hire signal (\"đạt\"). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "line": 11,
+      "column": 5,
+      "endLine": 11,
+      "endColumn": 74,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Answer is partial — some substance, notable gaps (\"chưa đạt\"). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "line": 13,
+      "column": 5,
+      "endLine": 13,
+      "endColumn": 84,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Answer misses the point or is largely wrong for the level (\"không đạt\"). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+      "line": 15,
+      "column": 5,
+      "endLine": 15,
+      "endColumn": 82,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Optional free-text steering for the rewrite (e.g. \"làm ngắn gọn hơn\"). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "line": 4,
+      "column": 1,
+      "endLine": 7,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "line": 9,
+      "column": 5,
+      "endLine": 9,
+      "endColumn": 46,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Hỏi AI khi đọc bài (lesson tutor). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "line": 11,
+      "column": 5,
+      "endLine": 11,
+      "endColumn": 44,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Chấm bài (challenge + capstone). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "line": 13,
+      "column": 5,
+      "endLine": 13,
+      "endColumn": 43,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Phỏng vấn thử (mock interview). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+      "line": 6,
+      "column": 5,
+      "endLine": 6,
+      "endColumn": 89,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Raw pasted CvGalleryPage text (from an existing résumé) to parse into blocks. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+      "line": 19,
+      "column": 5,
+      "endLine": 24,
+      "endColumn": 8,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "line": 12,
+      "column": 5,
+      "endLine": 16,
+      "endColumn": 8,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "line": 36,
+      "column": 5,
+      "endLine": 40,
+      "endColumn": 8,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "line": 42,
+      "column": 5,
+      "endLine": 47,
+      "endColumn": 8,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "line": 49,
+      "column": 5,
+      "endLine": 54,
+      "endColumn": 8,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "line": 93,
+      "column": 5,
+      "endLine": 93,
+      "endColumn": 122,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** The drawn prompt's title, localized — for Q&A kinds a summary like \"4 câu · theory\", not a single system name. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "line": 49,
+      "column": 5,
+      "endLine": 49,
+      "endColumn": 53,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Id of the \"Hỏi nhanh\" session to resolve. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "line": 53,
+      "column": 1,
+      "endLine": 60,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+      "line": 46,
+      "column": 1,
+      "endLine": 50,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "line": 42,
+      "column": 1,
+      "endLine": 49,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+      "line": 55,
+      "column": 1,
+      "endLine": 60,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "line": 39,
+      "column": 5,
+      "endLine": 39,
+      "endColumn": 72,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Course to check for a resumable in-progress \"Hỏi nhanh\" run. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "line": 43,
+      "column": 1,
+      "endLine": 47,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "line": 35,
+      "column": 5,
+      "endLine": 35,
+      "endColumn": 68,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Deck to check for a resumable in-progress \"Học thẻ\" run. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "line": 39,
+      "column": 1,
+      "endLine": 43,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+      "line": 46,
+      "column": 1,
+      "endLine": 51,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+      "line": 35,
+      "column": 1,
+      "endLine": 39,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "line": 5,
+      "column": 1,
+      "endLine": 9,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "line": 51,
+      "column": 5,
+      "endLine": 51,
+      "endColumn": 111,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Offered installment (trả góp) terms for the discounted VND price; empty for a free/USD-only course. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-questions.ts",
+      "line": 50,
+      "column": 5,
+      "endLine": 50,
+      "endColumn": 116,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Title of the lesson this question belongs to (for the \"Bài: …\" tag); null for a course-general question. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+      "line": 48,
+      "column": 5,
+      "endLine": 48,
+      "endColumn": 115,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Offered installment (trả góp) terms for the order's charged VND total; empty for a free/USD-only order. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/cv-blocks.ts",
+      "line": 24,
+      "column": 5,
+      "endLine": 24,
+      "endColumn": 96,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Whether this CvGalleryPage is the user's ONE public résumé (single-public-per-user). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "line": 11,
+      "column": 5,
+      "endLine": 11,
+      "endColumn": 63,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Hỏi AI khi đọc bài override; null = follow default. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "line": 13,
+      "column": 5,
+      "endLine": 13,
+      "endColumn": 53,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Chấm bài override; null = follow default. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "line": 15,
+      "column": 5,
+      "endLine": 15,
+      "endColumn": 58,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Phỏng vấn thử override; null = follow default. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "line": 3,
+      "column": 1,
+      "endLine": 4,
+      "endColumn": 74,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/** One weak tag from a finished \"Hỏi nhanh\" run, ranked worst-first, with an",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "line": 27,
+      "column": 1,
+      "endLine": 33,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+      "line": 3,
+      "column": 1,
+      "endLine": 3,
+      "endColumn": 84,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/** One completed flashcard review (\"Học thẻ\") session in the learner's history. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+      "line": 3,
+      "column": 1,
+      "endLine": 7,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+      "line": 43,
+      "column": 5,
+      "endLine": 43,
+      "endColumn": 103,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Reason-tagged leech cards (lapsed vs stuck-on-Hard), worst first — the \"viết lại\" fix-list. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+      "line": 3,
+      "column": 1,
+      "endLine": 4,
+      "endColumn": 61,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/** One recorded card outcome of an in-progress \"Hỏi nhanh\" run so far. Mirrors",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+      "line": 11,
+      "column": 1,
+      "endLine": 11,
+      "endColumn": 104,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/** One of the current user's installment (\"trả góp\") plans (mirrors backend `InstallmentPlanItem`). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "line": 9,
+      "column": 5,
+      "endLine": 9,
+      "endColumn": 54,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Cost in điểm quà paid for this redemption. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "line": 19,
+      "column": 5,
+      "endLine": 19,
+      "endColumn": 47,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Current spendable điểm quà balance. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "line": 21,
+      "column": 5,
+      "endLine": 21,
+      "endColumn": 36,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Lifetime điểm quà spent. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+      "line": 3,
+      "column": 1,
+      "endLine": 10,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/recommended-courses.ts",
+      "line": 32,
+      "column": 5,
+      "endLine": 32,
+      "endColumn": 75,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Courses the viewer already owns (for the \"đã học N khóa\" copy). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/dayjs/index.ts",
+      "line": 10,
+      "column": 1,
+      "endLine": 19,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/dayjs/index.ts",
+      "line": 24,
+      "column": 20,
+      "endLine": 24,
+      "endColumn": 45,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "        : d.format(\"HH:mm D [tháng] M, YYYY\")",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/modules/types/entities/challenge.ts",
+      "line": 23,
+      "column": 5,
+      "endLine": 23,
+      "endColumn": 89,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "    /** Optional hint text (markdown) — when present the card shows a \"có gợi ý\" tag. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/types/enums/cv-block-type.ts",
+      "line": 1,
+      "column": 1,
+      "endLine": 5,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/utils/rank.ts",
+      "line": 32,
+      "column": 1,
+      "endLine": 32,
+      "endColumn": 54,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/** Ring colour per rank: xám → đồng → bạc → vàng. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/utils/session-display-name.ts",
+      "line": 22,
+      "column": 1,
+      "endLine": 34,
+      "endColumn": 4,
+      "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+      "lineText": "/**",
+      "kind": "comment"
+    }
+  ],
+  "emoji": [
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "line": 48,
+      "column": 5,
+      "endLine": 53,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "line": 55,
+      "column": 5,
+      "endLine": 59,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "line": 149,
+      "column": 5,
+      "endLine": 154,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "line": 191,
+      "column": 10,
+      "endLine": 195,
+      "endColumn": 72,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).",
+      "kind": "other"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "line": 204,
+      "column": 9,
+      "endLine": 204,
+      "endColumn": 84,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "line": 205,
+      "column": 9,
+      "endLine": 205,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // title ↔ description stay a related gap={3} pair inside the title block.",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "line": 99,
+      "column": 5,
+      "endLine": 99,
+      "endColumn": 77,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // eyebrow ↔ title ↔ description are ONE text unit → tight gap={2} (§10b",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "line": 161,
+      "column": 5,
+      "endLine": 165,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 16,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/lists/List/List.tsx",
+      "line": 270,
+      "column": 1,
+      "endLine": 278,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "line": 196,
+      "column": 14,
+      "endLine": 200,
+      "endColumn": 73,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            {/* react-aria's useTab ALWAYS computes an `aria-controls` id pointing at",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/components/composites/text/TitledText/TitledText.tsx",
+      "line": 9,
+      "column": 1,
+      "endLine": 14,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "line": 11,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "line": 28,
+      "column": 1,
+      "endLine": 43,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/frames/Container/Container.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 58,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 27,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "line": 77,
+      "column": 1,
+      "endLine": 81,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "line": 118,
+      "column": 1,
+      "endLine": 121,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "line": 148,
+      "column": 9,
+      "endLine": 148,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // Those four rows are all ONE shape: label left ↔ value right, repeated ⇒",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 128,
+      "column": 5,
+      "endLine": 128,
+      "endColumn": 49,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // beside it. Applying \"design ↔ design = 6\"",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+      "line": 67,
+      "column": 1,
+      "endLine": 67,
+      "endColumn": 128,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/** One row's text: title (leading) ↔ current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      "line": 46,
+      "column": 5,
+      "endLine": 46,
+      "endColumn": 95,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // rhythm) — the `Button`↔`Chip` seam is owned by `StackH` below, never hand-written here.",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "line": 156,
+      "column": 14,
+      "endLine": 158,
+      "endColumn": 67,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly:",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LearnNudges/LearnNudges.tsx",
+      "line": 41,
+      "column": 5,
+      "endLine": 48,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 166,
+      "column": 23,
+      "endLine": 166,
+      "endColumn": 28,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                text={`© ${year} StarCi Academy · Built by Nguyễn Văn Tự Cường`} // vn-ok: the author's real name",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      "line": 306,
+      "column": 14,
+      "endLine": 308,
+      "endColumn": 50,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            {/* ModeNav↔Article↔(reaction cluster) sit CLOSER together than the identity/outcomes",
+      "kind": "other"
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+      "line": 52,
+      "column": 15,
+      "endLine": 52,
+      "endColumn": 106,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        role: \"horizontal row — the continue cluster (title ↔ Resume) and each lesson row's meta cluster\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/composites/layout/Section/SectionHeader.stories.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 19,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/IconLabelValueRow/IconLabelValueRow.stories.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 16,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/IconLabelValueRow/IconLabelValueRow.stories.tsx",
+      "line": 41,
+      "column": 30,
+      "endLine": 41,
+      "endColumn": 253,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                        why: \"One `content-row` seam (12px) across icon↔label↔value — no sub-grouping inside the row, so a single gap value is the honest read. `label` is `default`/medium (the row's o",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/IdentityContentRow/IdentityContentRow.stories.tsx",
+      "line": 92,
+      "column": 30,
+      "endLine": 92,
+      "endColumn": 156,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                        why: \"Both seams (avatar↔column, byline↔body) are `gap={2}` — a deliberate denser standalone treatment, not a `src`-fidelity port.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/List/ListRow.stories.tsx",
+      "line": 5,
+      "column": 1,
+      "endLine": 5,
+      "endColumn": 76,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "// ONE ICON SET ONLY = Phosphor (§5.0). Size scale per §5a: leading ↔ title",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/List/ListRow.stories.tsx",
+      "line": 345,
+      "column": 1,
+      "endLine": 345,
+      "endColumn": 71,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "// circle (`weight=\"fill\"`), in progress = circle with ▶, not opened =",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/composites/text/TitledText/TitledText.stories.tsx",
+      "line": 5,
+      "column": 1,
+      "endLine": 10,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/composites/viewers/MarkdownContent/MarkdownContent.stories.tsx",
+      "line": 5,
+      "column": 1,
+      "endLine": 12,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/frames/Split/Split.stories.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 14,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "line": 30,
+      "column": 20,
+      "endLine": 30,
+      "endColumn": 67,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        copyright: \"© 2026 Mia Mia. Học tiếng Anh, pass the exam.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/nivo/layouts/MarketingLandingShell/MarketingLandingShell.stories.tsx",
+      "line": 50,
+      "column": 14,
+      "endLine": 50,
+      "endColumn": 77,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    contact: \"© nivo · Need help? Sign in and open Support in your account.\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/commerce/PriceTag/PriceTag.stories.tsx",
+      "line": 87,
+      "column": 9,
+      "endLine": 87,
+      "endColumn": 71,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // The four \"label ↔ value\" rows go through the `KeyValueList`",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.stories.tsx",
+      "line": 69,
+      "column": 11,
+      "endLine": 69,
+      "endColumn": 120,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    role: \"price ↔ CTA row — `wrap` so the BUTTON drops to a new line when tight, the price column never gets squeezed\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.stories.tsx",
+      "line": 78,
+      "column": 15,
+      "endLine": 78,
+      "endColumn": 117,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        role: \"the title↔description pair as ONE unit — it owns the type scale (title sm medium, subtitle xs muted)\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.stories.tsx",
+      "line": 101,
+      "column": 31,
+      "endLine": 101,
+      "endColumn": 79,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                        role: \"lead row — icon ↔ text cluster, center-aligned\",",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/dashboard/DailyQuest/DailyQuest.stories.tsx",
+      "line": 58,
+      "column": 37,
+      "endLine": 58,
+      "endColumn": 125,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    \"Split\": { tier: \"frame\", role: \"a row's body — task title (leading) ↔ current/target (trailing), two peers on one line\", storyId: \"frames-split-split--default\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": ".storybook/test-runner.ts",
+      "line": 5,
+      "column": 1,
+      "endLine": 43,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "line": 32,
+      "column": 1,
+      "endLine": 40,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "line": 41,
+      "column": 1,
+      "endLine": 56,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 23,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "line": 165,
+      "column": 9,
+      "endLine": 165,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // Those four rows are all ONE shape: label left ↔ value right, repeated ⇒",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "line": 171,
+      "column": 9,
+      "endLine": 171,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // ⚠️ The frame does NOT format for you: every money string coming in here",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "line": 173,
+      "column": 9,
+      "endLine": 173,
+      "endColumn": 89,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // ⚠️ This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/constants.ts",
+      "line": 22,
+      "column": 16,
+      "endLine": 22,
+      "endColumn": 20,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        emoji: \"👍\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/constants.ts",
+      "line": 28,
+      "column": 16,
+      "endLine": 28,
+      "endColumn": 20,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        emoji: \"❤️\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/constants.ts",
+      "line": 34,
+      "column": 16,
+      "endLine": 34,
+      "endColumn": 20,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        emoji: \"😂\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/constants.ts",
+      "line": 40,
+      "column": 16,
+      "endLine": 40,
+      "endColumn": 20,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        emoji: \"😮\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/constants.ts",
+      "line": 46,
+      "column": 16,
+      "endLine": 46,
+      "endColumn": 20,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        emoji: \"😢\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/constants.ts",
+      "line": 52,
+      "column": 16,
+      "endLine": 52,
+      "endColumn": 20,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        emoji: \"😡\",",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "line": 24,
+      "column": 1,
+      "endLine": 31,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "line": 25,
+      "column": 1,
+      "endLine": 31,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "line": 32,
+      "column": 1,
+      "endLine": 42,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "line": 18,
+      "column": 1,
+      "endLine": 24,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "line": 37,
+      "column": 5,
+      "endLine": 42,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "line": 19,
+      "column": 1,
+      "endLine": 25,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "line": 67,
+      "column": 1,
+      "endLine": 67,
+      "endColumn": 128,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/** One row's text: title (leading) ↔ current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "line": 13,
+      "column": 1,
+      "endLine": 23,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 127,
+      "column": 22,
+      "endLine": 129,
+      "endColumn": 100,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                    {/* top-3 → place medal (🥇🥈🥉); rank 4+ → plain number. Number matches the",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "line": 11,
+      "column": 1,
+      "endLine": 21,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "line": 19,
+      "column": 1,
+      "endLine": 29,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/dashboard/rankBadge.tsx",
+      "line": 30,
+      "column": 1,
+      "endLine": 35,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "line": 26,
+      "column": 39,
+      "endLine": 26,
+      "endColumn": 43,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: ReactionType.Like, emoji: \"👍\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "line": 27,
+      "column": 39,
+      "endLine": 27,
+      "endColumn": 43,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: ReactionType.Love, emoji: \"❤️\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "line": 28,
+      "column": 39,
+      "endLine": 28,
+      "endColumn": 43,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: ReactionType.Haha, emoji: \"😄\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "line": 29,
+      "column": 38,
+      "endLine": 29,
+      "endColumn": 42,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: ReactionType.Wow, emoji: \"😮\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "line": 30,
+      "column": 38,
+      "endLine": 30,
+      "endColumn": 42,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: ReactionType.Sad, emoji: \"😢\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "line": 31,
+      "column": 40,
+      "endLine": 31,
+      "endColumn": 44,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: ReactionType.Angry, emoji: \"😠\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "line": 31,
+      "column": 1,
+      "endLine": 43,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "line": 82,
+      "column": 9,
+      "endLine": 82,
+      "endColumn": 82,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // outer gap-3: breadcrumb ↔ title-block ↔ meta (different header tiers);",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "line": 83,
+      "column": 9,
+      "endLine": 83,
+      "endColumn": 79,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // title ↔ description stay a tight gap-2 pair inside the title block.",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "line": 183,
+      "column": 1,
+      "endLine": 202,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "line": 10,
+      "column": 1,
+      "endLine": 20,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "line": 10,
+      "column": 1,
+      "endLine": 19,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 87,
+      "column": 5,
+      "endLine": 87,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // \"discussion\" (not a universal symbol like ✓/🔒), and the label text already",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 156,
+      "column": 14,
+      "endLine": 158,
+      "endColumn": 67,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly:",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/types.ts",
+      "line": 22,
+      "column": 5,
+      "endLine": 31,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/types.ts",
+      "line": 37,
+      "column": 5,
+      "endLine": 53,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+      "line": 33,
+      "column": 5,
+      "endLine": 39,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 17,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 39,
+      "column": 14,
+      "endLine": 41,
+      "endColumn": 68,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            {/* chip-pill row — ONE chip (status, the classification axis) + the scope",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 59,
+      "column": 17,
+      "endLine": 59,
+      "endColumn": 115,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                ),",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 52,
+      "column": 1,
+      "endLine": 52,
+      "endColumn": 103,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/** The signed-in viewer's own identity — threaded through for the `QaQuestionThread` swap (★2/★6). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 74,
+      "column": 5,
+      "endLine": 74,
+      "endColumn": 86,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** Signed-in viewer's id (drives the \"You\" swap, ★6); `null` when signed out. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 76,
+      "column": 5,
+      "endLine": 76,
+      "endColumn": 92,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (★2). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 78,
+      "column": 5,
+      "endLine": 78,
+      "endColumn": 111,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** Fired after an answer is posted/edited/deleted — pass-through for the `QaQuestionThread` swap (★2). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 80,
+      "column": 5,
+      "endLine": 80,
+      "endColumn": 54,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** Accessible name for the pager region (★4). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 82,
+      "column": 5,
+      "endLine": 82,
+      "endColumn": 71,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** External skeleton override, distinct from `isLoading` (★5). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 103,
+      "column": 1,
+      "endLine": 103,
+      "endColumn": 94,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/** The Loading branch's rows — see ★1 for why these are NOT `SurfaceCardList.isSkeleton`. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 129,
+      "column": 1,
+      "endLine": 134,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 166,
+      "column": 17,
+      "endLine": 166,
+      "endColumn": 90,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                // ★5 — an external override (`isSkeleton`) converges on the same Loading",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "line": 193,
+      "column": 37,
+      "endLine": 193,
+      "endColumn": 99,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                                    // ★4 — `Pagination` hard-codes its own aria-label; a wrapping",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseTeamGate/index.tsx",
+      "line": 25,
+      "column": 5,
+      "endLine": 37,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "line": 7,
+      "column": 1,
+      "endLine": 18,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "line": 5,
+      "column": 1,
+      "endLine": 16,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "line": 21,
+      "column": 1,
+      "endLine": 29,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+      "line": 78,
+      "column": 13,
+      "endLine": 78,
+      "endColumn": 90,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            ),",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 20,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 318,
+      "column": 14,
+      "endLine": 320,
+      "endColumn": 72,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            ) : null}",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "line": 44,
+      "column": 5,
+      "endLine": 44,
+      "endColumn": 93,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** Fired with the lesson id on ANY row press, premium or not (see the ⛔ note above). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "line": 135,
+      "column": 13,
+      "endLine": 135,
+      "endColumn": 62,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            // leading icon (see the ⭐ judgement call above).",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "line": 16,
+      "column": 1,
+      "endLine": 29,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "line": 12,
+      "column": 1,
+      "endLine": 22,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "line": 14,
+      "column": 28,
+      "endLine": 14,
+      "endColumn": 32,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: \"like\", emoji: \"👍\", label: \"Like\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "line": 15,
+      "column": 28,
+      "endLine": 15,
+      "endColumn": 32,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: \"love\", emoji: \"❤️\", label: \"Love\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "line": 16,
+      "column": 28,
+      "endLine": 16,
+      "endColumn": 32,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: \"haha\", emoji: \"😂\", label: \"Haha\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "line": 17,
+      "column": 27,
+      "endLine": 17,
+      "endColumn": 31,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: \"wow\", emoji: \"😮\", label: \"Wow\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "line": 18,
+      "column": 27,
+      "endLine": 18,
+      "endColumn": 31,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: \"sad\", emoji: \"😢\", label: \"Sad\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "line": 19,
+      "column": 29,
+      "endLine": 19,
+      "endColumn": 33,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    { type: \"angry\", emoji: \"😡\", label: \"Angry\" },",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+      "line": 4,
+      "column": 1,
+      "endLine": 15,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+      "line": 5,
+      "column": 1,
+      "endLine": 14,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "line": 50,
+      "column": 5,
+      "endLine": 50,
+      "endColumn": 85,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // surface fetch failures (e.g. the FE↔BE schema drift that broke this tab) as a",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "line": 49,
+      "column": 13,
+      "endLine": 49,
+      "endColumn": 84,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            // gap-2 = heading ↔ paragraph (a tight sub-cluster within one section)",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "line": 81,
+      "column": 9,
+      "endLine": 81,
+      "endColumn": 65,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // gap-3 = toolbar ↔ article (within one skeleton block)",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "line": 17,
+      "column": 9,
+      "endLine": 17,
+      "endColumn": 98,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // mirror PageHeader: breadcrumb ↔ title-block ↔ meta at gap-3; title ↔ description gap-2",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "line": 162,
+      "column": 9,
+      "endLine": 162,
+      "endColumn": 88,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // button row ↔ AI processing status = gap-3 (same block), no manual h-* spacer",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "line": 21,
+      "column": 1,
+      "endLine": 30,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "line": 101,
+      "column": 92,
+      "endLine": 101,
+      "endColumn": 116,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                {/* failure flag */}",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "line": 29,
+      "column": 5,
+      "endLine": 42,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "line": 75,
+      "column": 1,
+      "endLine": 109,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 166,
+      "column": 23,
+      "endLine": 166,
+      "endColumn": 28,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                color=\"muted\"",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "line": 183,
+      "column": 14,
+      "endLine": 190,
+      "endColumn": 51,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            {/* react-aria's useTab ALWAYS computes an `aria-controls` id pointing at",
+      "kind": "stringish"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 143,
+      "column": 5,
+      "endLine": 143,
+      "endColumn": 77,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // preset (sm/md/lg cap at 48px), so this spot builds its own shimmer.",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 250,
+      "column": 5,
+      "endLine": 250,
+      "endColumn": 72,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    )",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 291,
+      "column": 9,
+      "endLine": 291,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "line": 13,
+      "column": 1,
+      "endLine": 19,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/async/AsyncContent/index.tsx",
+      "line": 162,
+      "column": 5,
+      "endLine": 167,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/chips/Chip/index.tsx",
+      "line": 5,
+      "column": 1,
+      "endLine": 45,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/chips/EnumChip/index.tsx",
+      "line": 86,
+      "column": 1,
+      "endLine": 101,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/feedback/Callout/index.tsx",
+      "line": 7,
+      "column": 1,
+      "endLine": 27,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "line": 9,
+      "column": 1,
+      "endLine": 25,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "line": 140,
+      "column": 9,
+      "endLine": 140,
+      "endColumn": 93,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "line": 76,
+      "column": 5,
+      "endLine": 81,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "line": 83,
+      "column": 5,
+      "endLine": 87,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "line": 176,
+      "column": 5,
+      "endLine": 181,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "line": 217,
+      "column": 10,
+      "endLine": 221,
+      "endColumn": 72,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    >",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "line": 216,
+      "column": 9,
+      "endLine": 216,
+      "endColumn": 84,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            ) : null}",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "line": 217,
+      "column": 9,
+      "endLine": 217,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        </>",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "line": 9,
+      "column": 1,
+      "endLine": 45,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "line": 128,
+      "column": 5,
+      "endLine": 128,
+      "endColumn": 77,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // eyebrow ↔ title ↔ description are ONE text unit → tight gap={2} (§10b",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "line": 190,
+      "column": 5,
+      "endLine": 194,
+      "endColumn": 8,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    footer?: ComponentTypeWithSkeleton",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 43,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/lists/IdentityContentRow/index.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 44,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/lists/List/index.tsx",
+      "line": 270,
+      "column": 1,
+      "endLine": 278,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** Layout utilities on the outer section, from the closed positioning union. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 27,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/navigation/Toolbar/index.tsx",
+      "line": 196,
+      "column": 14,
+      "endLine": 200,
+      "endColumn": 73,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "                </TabsList>",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "line": 7,
+      "column": 1,
+      "endLine": 41,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/text/ScoreValue/index.tsx",
+      "line": 4,
+      "column": 1,
+      "endLine": 27,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/text/TitledText/index.tsx",
+      "line": 6,
+      "column": 1,
+      "endLine": 17,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/index.tsx",
+      "line": 11,
+      "column": 1,
+      "endLine": 49,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/map.tsx",
+      "line": 28,
+      "column": 1,
+      "endLine": 43,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/frames/Container/index.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 58,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "line": 8,
+      "column": 1,
+      "endLine": 27,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "line": 77,
+      "column": 1,
+      "endLine": 81,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "line": 118,
+      "column": 1,
+      "endLine": 121,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "line": 192,
+      "column": 5,
+      "endLine": 192,
+      "endColumn": 80,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    )",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "line": 77,
+      "column": 1,
+      "endLine": 100,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": ")",
+      "kind": "other"
+    },
+    {
+      "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "line": 74,
+      "column": 1,
+      "endLine": 74,
+      "endColumn": 85,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/** The gateway group for the active currency (domestic VND ↔ international USD). */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/overlays/modals/PaymentModal/index.tsx",
+      "line": 90,
+      "column": 1,
+      "endLine": 102,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+      "line": 94,
+      "column": 9,
+      "endLine": 94,
+      "endColumn": 97,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "        // ⚠️ LabeledAccordionCard takes no `identity` prop (unlike LabeledCard) and there is no",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FlashcardReview/component.tsx",
+      "line": 33,
+      "column": 1,
+      "endLine": 44,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "line": 60,
+      "column": 5,
+      "endLine": 60,
+      "endColumn": 83,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    // RailShell owns the identity↔content layout seam (stack → row at md, gap-8).",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/useFlashcardNav.ts",
+      "line": 21,
+      "column": 1,
+      "endLine": 38,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "line": 65,
+      "column": 1,
+      "endLine": 65,
+      "endColumn": 110,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/** Edges — ALL are light connecting lines (solid, thin, faint — like sharding↔cdc); NO dashed, NO accent. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/effects/useSyncReduxTaskId.ts",
+      "line": 28,
+      "column": 13,
+      "endLine": 28,
+      "endColumn": 81,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "            // then wrongly resolves to 🎯 Task there (grounding on an unrelated",
+      "kind": "comment"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 12,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/clients/links/attach-access-token.ts",
+      "line": 6,
+      "column": 1,
+      "endLine": 6,
+      "endColumn": 97,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "// `@/modules/api` → api↔storage cycle). `local` does not depend on api, so it breaks the cycle.",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "line": 33,
+      "column": 1,
+      "endLine": 37,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/storage/session/types/oauth-idp-hint.ts",
+      "line": 2,
+      "column": 1,
+      "endLine": 2,
+      "endColumn": 100,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "// breaks the api↔storage cycle in both the module graph and at runtime (the type is erased by TS).",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/types/entities/cv.ts",
+      "line": 143,
+      "column": 1,
+      "endLine": 172,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/types/entities/cv.ts",
+      "line": 202,
+      "column": 5,
+      "endLine": 202,
+      "endColumn": 79,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "    /** Whether this block type has an \"✨ AI writes it for you\" affordance. */",
+      "kind": "comment"
+    },
+    {
+      "file": "src/modules/types/entities/user-challenge-submission.ts",
+      "line": 7,
+      "column": 1,
+      "endLine": 10,
+      "endColumn": 4,
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "lineText": "/**",
+      "kind": "comment"
+    }
+  ]
+}

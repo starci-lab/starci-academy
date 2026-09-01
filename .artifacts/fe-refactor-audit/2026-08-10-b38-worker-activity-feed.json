@@ -1,0 +1,34 @@
+{
+  "batch": "B38",
+  "agent": "activity-feed",
+  "status": "complete",
+  "completedAt": "2026-08-08T18:40:00.000Z",
+  "checkpoint": "2a096210a",
+  "class": "A",
+  "residual": {
+    "id": "ActivityFeed",
+    "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "hits": 1
+  },
+  "anatomy": {
+    "before": "StackV of (LabeledCard frameless subtleLabel + SurfaceListCard bordered + SurfaceListCardItem > FeedItem ReactNode)",
+    "after": "StackV (identity retained) of SurfaceCardList (label=day, subtleLabel, variant=nested|surface, items[].content → FeedItem)"
+  },
+  "filesChanged": [
+    "src/components/blocks/feed/ActivityFeed/component.tsx"
+  ],
+  "filesOwnedUnchanged": [
+    "src/components/blocks/feed/ActivityFeed/index.tsx"
+  ],
+  "eslint": {
+    "command": "npx eslint --max-warnings=0 src/components/blocks/feed/ActivityFeed/component.tsx src/components/blocks/feed/ActivityFeed/index.tsx",
+    "errors": 0,
+    "warnings": 0
+  },
+  "holds": [],
+  "notes": [
+    "FeedItem remains free-form content (ComponentType); message ReactNode stays inside FeedItem — not a SurfaceCardList ReactNode escape.",
+    "LabeledCard and SurfaceListCard imports/usage removed from component.tsx.",
+    "bordered prop maps to variant nested|surface; connected index.tsx unchanged."
+  ]
+}

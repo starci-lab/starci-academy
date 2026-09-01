@@ -1,0 +1,195 @@
+{
+  "partition": "pages-profile-admin-other",
+  "manifest": [
+    "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+    "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "src/components/pages/AppearancePage/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/ArchitecturePage/CurlTester/component.tsx",
+    "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/BlogListPage/component.tsx",
+    "src/components/pages/BlogPostPage/component.tsx",
+    "src/components/pages/BookmarksPage/index.tsx",
+    "src/components/pages/CartPage/component.tsx",
+    "src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx",
+    "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+    "src/components/pages/ContactPage/ContactFaq/index.tsx",
+    "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+    "src/components/pages/CvEditorPage/index.tsx",
+    "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+    "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx",
+    "src/components/pages/InstallmentPlansPage/index.tsx",
+    "src/components/pages/JobDetailPage/component.tsx",
+    "src/components/pages/JobListPage/JobListRow/index.tsx",
+    "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+    "src/components/pages/JobListPage/component.tsx",
+    "src/components/pages/KpiPage/component.tsx",
+    "src/components/pages/KpiPage/index.tsx",
+    "src/components/pages/KpiPage/kpiMeta.tsx",
+    "src/components/pages/LandingPage/StatStrip/component.tsx",
+    "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+    "src/components/pages/LandingPage/index.tsx",
+    "src/components/pages/LeaderboardPage/component.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "src/components/pages/MindMapPage/component.tsx",
+    "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewResult/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+    "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+    "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+    "src/components/pages/ProfileChallengeManagePage/index.tsx",
+    "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "src/components/pages/ProfileCodingProblemPage/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx",
+    "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+    "src/components/pages/ProfilePublicCvPage/index.tsx",
+    "src/components/pages/ProfileRedirectPage/index.tsx",
+    "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+    "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+    "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+    "src/components/pages/SecurityPage/index.tsx",
+    "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+    "src/components/pages/SessionsPage/index.tsx",
+    "src/components/pages/SettingsHomePage/index.tsx",
+    "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+    "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+    "src/components/pages/TalentDirectoryPage/component.tsx"
+  ],
+  "changed": [],
+  "applied": [],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 0,
+    "parentPlacementApplied": 0,
+    "proposals": 4
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [],
+  "proposals": [
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "component": "ArchitectureRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/ArchitecturePage/index.tsx",
+            "prop": "className",
+            "line": 63,
+            "snippet": "<ArchitectureRail className=\"min-h-0 @app-lg:flex-1\" healthByName={healthByName} selectedId={node} onSelect={setNode} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-profile-admin-other",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "component": "MetricsInline",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+            "prop": "className",
+            "line": 48,
+            "snippet": "<MetricsInline metrics={metrics} className=\"text-xs text-muted\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-profile-admin-other",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/KpiPage/index.tsx",
+      "component": "KpiPage",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "pages-profile-admin-other"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "component": "MockInterviewWorkspace",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+            "prop": "className",
+            "line": 2070,
+            "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState="
+          },
+          {
+            "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+            "prop": "className",
+            "line": 2337,
+            "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState="
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-profile-admin-other",
+      "twin": null
+    }
+  ],
+  "parity": {
+    "storybookSrc": "n/a — proposal/hold only"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

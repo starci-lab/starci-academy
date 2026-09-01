@@ -1,0 +1,49 @@
+{
+  "partition": "composites-frames",
+  "changed": [],
+  "skipped": [
+    {
+      "path": "src/components/composites/layout/DrawerShell/index.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "dialogClassName/footerClassName have external callers (MiniCartDrawer, PersonalProjectTaskAttemptsDrawer) — cannot remove or rename without migrating consumers outside manifest"
+    },
+    {
+      "path": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "contentClassName has many external callers (ContinueCard, MilestoneUpNextCard, LeagueCard, LandingPage, etc.) — named-prop rewrite needs caller migration outside manifest"
+    },
+    {
+      "path": "src/components/composites/layout/ModalShell/index.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "containerClassName has external callers (CvPreviewModal, LivestreamCalendarModal) — cannot remove without named size/layout prop + caller migration outside manifest"
+    },
+    {
+      "path": "src/components/composites/viewers/PDFView/index.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "heightClassName has external callers (CvPreviewModal, PDFView stories, blocks/rendering twin) — height variants need named prop + migration outside manifest"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "rules": ["starci-fe/require-frame-self-declare"],
+      "reason": "ambiguous missing-both principle/explain — hard hold, no invented tokens"
+    },
+    {
+      "path": "src/components/composites/viewers/PDFView/index.tsx",
+      "rules": ["starci-fe/require-frame-self-declare"],
+      "reason": "ambiguous missing-both principle/explain — hard hold, no invented tokens"
+    }
+  ],
+  "verification": {
+    "note": "No source edits — all 4 safe candidates are per-part classname props with live consumers; unused per-part props already cleared in deferred BATCH",
+    "manifestFilesProcessed": 4,
+    "eslintFocusedChanged": {
+      "exitOk": true,
+      "errorCount": 0,
+      "files": [],
+      "skipped": true
+    }
+  },
+  "regressions": []
+}

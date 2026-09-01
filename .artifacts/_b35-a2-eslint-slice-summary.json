@@ -1,0 +1,968 @@
+{
+  "total": 172,
+  "filesWithDebt": 51,
+  "byFile": {
+    ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx": [
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 170,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 223,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 251,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      }
+    ],
+    "src/components/blocks/auth/Turnstile/index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 7,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 118,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 118,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite"
+      }
+    ],
+    "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 99,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 115,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 123,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 144,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 150,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 142,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 153,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 155,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 157,
+        "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 159,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 160,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 164,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 218,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 222,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 223,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 269,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 280,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 288,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 293,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 155,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx": [
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 133,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 134,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 196,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 209,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx": [
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 132,
+        "msg": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 151,
+        "msg": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 194,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 265,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 282,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/drawers/SubmissionAttemptsDrawer/map.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/SubmissionAttemptsDrawer/` contains `map.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx`"
+      }
+    ],
+    "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 81,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 182,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 194,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/AiQuotaModal/hooks/index.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AiQuotaModal/` contains `hooks/index.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = t"
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "msg": "`hooks/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure fu"
+      }
+    ],
+    "src/components/overlays/modals/AiQuotaModal/hooks/useAiQuotaHistorySwr.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AiQuotaModal/` contains `hooks/useAiQuotaHistorySwr.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, "
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "msg": "`hooks/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure fu"
+      }
+    ],
+    "src/components/overlays/modals/AiQuotaModal/hooks/useWindowResetLabel.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AiQuotaModal/` contains `hooks/useWindowResetLabel.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `"
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "msg": "`hooks/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure fu"
+      }
+    ],
+    "src/components/overlays/modals/AiQuotaModal/map.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AiQuotaModal/` contains `map.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wirin"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/EmailField/index.tsx` — a screen folder holds its two halves ONLY ("
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/OauthButtons/index.tsx` — a screen folder holds its two halves ONLY"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 39,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 43,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/PasswordField/index.tsx` — a screen folder holds its two halves ONL"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/RememberMeRow/index.tsx` — a screen folder holds its two halves ONL"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/SignUpPrompt/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/SignUpPrompt/index.tsx` — a screen folder holds its two halves ONLY"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/index.tsx` — a screen folder holds its two halves ONLY (`component."
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 16,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importi"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 158,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 167,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 205,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 219,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 232,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/map.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/map.tsx` — a screen folder holds its two halves ONLY (`component.ts"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/types/credentials-state.ts` — a screen folder holds its two halves "
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure fu"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 14,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 14,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/index.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/types/index.ts` — a screen folder holds its two halves ONLY (`compo"
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure fu"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/OtpState/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/OtpState/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = t"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 13,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importi"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 25,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 127,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 131,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 143,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 148,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignInSection/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape,"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 38,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/OtpState/component.tsx` — a screen folder holds its two halves ONLY (`component.tsx`"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 3,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importi"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 105,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 112,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 120,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 124,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/OtpState/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = t"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx` — a screen folder holds its two halves "
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/EmailField/index.tsx` — a screen folder holds its two halves ONLY "
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/PasswordField/index.tsx` — a screen folder holds its two halves ON"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/SignInPrompt/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/SignInPrompt/index.tsx` — a screen folder holds its two halves ONL"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/component.tsx` — a screen folder holds its two halves ONLY (`compo"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importi"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 15,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 109,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 122,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 126,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 179,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 185,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/index.tsx` — a screen folder holds its two halves ONLY (`component"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/AuthenticationModal/` contains `SignUpSection/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape,"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 21,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      }
+    ],
+    "src/components/overlays/modals/AuthenticationModal/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importi"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 10,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      }
+    ],
+    "src/components/overlays/modals/FollowListModal/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 160,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 196,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 218,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 219,
+        "msg": "`<ScrollArea>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody ca"
+      }
+    ],
+    "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/GlobalSearchModal/` contains `Content/Block/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 10,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 61,
+        "msg": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 93,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/GlobalSearchModal/` contains `Content/Empty/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 11,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 48,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/GlobalSearchModal/` contains `Content/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 14,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 56,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 59,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/LanguageModal/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 95,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 96,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 104,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/LinkGithubModal/component.tsx": [
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 54,
+        "msg": "Do not pass `className` to house component `GithubIcon`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 75,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 87,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/LivestreamCalendarModal/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importi"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 56,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 113,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 131,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 139,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/ManagePinnedProjectsModal/` contains `CourseProjectForm/component.tsx` — a screen folder holds its two halves ONLY (`component.tsx"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 15,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 97,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 111,
+        "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 156,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/ManagePinnedProjectsModal/` contains `CourseProjectForm/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = "
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/ManagePinnedProjectsModal/` contains `ExternalProjectForm/component.tsx` — a screen folder holds its two halves ONLY (`component.t"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 9,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 80,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 127,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/ManagePinnedProjectsModal/` contains `ExternalProjectForm/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` "
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/ManagePinnedProjectsModal/` contains `ManagePinnedListSkeleton/index.tsx` — a screen folder holds its two halves ONLY (`component."
+      },
+      {
+        "rule": "starci-fe/no-skeleton-twin-component",
+        "line": 1,
+        "msg": "`ManagePinnedListSkeleton` is a hand-mirrored twin: a second description of a shape that already has one. Give the component it mirrors an `"
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 27,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 28,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 31,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 32,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 35,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 38,
+        "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 49,
+        "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/ManagePinnedProjectsModal/` contains `PinnedProjectCard/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = "
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 33,
+        "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 61,
+        "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 32,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 35,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 36,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 39,
+        "msg": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 42,
+        "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 53,
+        "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 148,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 180,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/ManagePinnedProjectsModal/hooks/usePinnedProjectsManager.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/ManagePinnedProjectsModal/` contains `hooks/usePinnedProjectsManager.ts` — a screen folder holds its two halves ONLY (`component.t"
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "msg": "`hooks/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure fu"
+      }
+    ],
+    "src/components/overlays/modals/PaymentModal/component.tsx": [
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 216,
+        "msg": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 275,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 322,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 324,
+        "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 345,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 359,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 366,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 491,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 494,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 532,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 545,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+      }
+    ],
+    "src/components/overlays/modals/PremiumGateModal/map.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "msg": "`overlays/PremiumGateModal/` contains `map.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the w"
+      }
+    ]
+  }
+}

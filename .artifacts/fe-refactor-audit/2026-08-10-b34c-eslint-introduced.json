@@ -1,0 +1,125 @@
+{
+  "before": {
+    "warnings": 6921,
+    "errors": 0,
+    "a11y": 11,
+    "files": 1239
+  },
+  "after": {
+    "warnings": 6872,
+    "errors": 0,
+    "a11y": 11,
+    "files": 1232
+  },
+  "introduced": [],
+  "reduced": [
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "before": 3,
+      "after": 2,
+      "delta": -1
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+      "before": 8,
+      "after": 6,
+      "delta": -2
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "before": 17,
+      "after": 16,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "before": 15,
+      "after": 14,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "before": 16,
+      "after": 15,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "before": 11,
+      "after": 0,
+      "delta": -11
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "before": 14,
+      "after": 13,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "before": 16,
+      "after": 15,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "before": 19,
+      "after": 18,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "before": 21,
+      "after": 20,
+      "delta": -1
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "before": 36,
+      "after": 34,
+      "delta": -2
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "before": 9,
+      "after": 7,
+      "delta": -2
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/component.tsx",
+      "before": 7,
+      "after": 4,
+      "delta": -3
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/index.tsx",
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "before": 18,
+      "after": 12,
+      "delta": -6
+    }
+  ]
+}

@@ -1,0 +1,3800 @@
+{
+  "summary": [
+    {
+      "f": "src/components/blocks/navigation/Navbar/index.tsx",
+      "count": 37,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-frame-fragment-item",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "count": 29,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/index.tsx",
+      "count": 22,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "count": 21,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "count": 17,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Footer/index.tsx",
+      "count": 17,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "count": 16,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "count": 16,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "count": 14,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "count": 13,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-frame-fragment-item"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "count": 13,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "count": 12,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-parallel-skeleton"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "count": 11,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "count": 10,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "count": 9,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "count": 9,
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+      "count": 8,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+      "count": 8,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+      "count": 8,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/layouts/LearnShellLayout/component.tsx",
+      "count": 8,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+      "count": 7,
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+      "count": 7,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+      "count": 7,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "count": 7,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/Pagination/component.tsx",
+      "count": 7,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "count": 7,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/Logo/index.tsx",
+      "count": 7,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "count": 6,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx",
+      "count": 6,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "count": 6,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "count": 6,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "count": 6,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "count": 6,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "count": 5,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/NavLinks/index.tsx",
+      "count": 5,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "count": 5,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/layouts/LearnShellLayout/index.tsx",
+      "count": 5,
+      "rules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "count": 5,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "count": 4,
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "count": 4,
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "count": 4,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-frame-fragment-item"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "count": 4,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "count": 4,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "count": 4,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "count": 3,
+      "rules": [
+        "starci-fe/handler-on-prefix",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "count": 3,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "count": 3,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "count": 3,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "count": 3,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "count": 3,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/SearchButton/index.tsx",
+      "count": 3,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx",
+      "count": 2,
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/BackLink/component.tsx",
+      "count": 2,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "count": 2,
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "count": 2,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/layouts/LearnShellLayout/types/index.ts",
+      "count": 2,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "count": 2,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/types/index.ts",
+      "count": 2,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/types/navbar.ts",
+      "count": 2,
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/account-menu.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/index.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/types/index.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/blocks/layout/shell/Navbar/types/navbar.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "count": 1,
+      "rules": [
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ProgrammingLanguageTabs/constants/index.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/blocks/navigation/ProgrammingLanguageTabs/constants/programming-language-tabs.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/no-helper-folder-in-components"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "count": 1,
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "f": "src/components/layouts/Navbar/useNavbarItems.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "f": "src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx",
+      "count": 1,
+      "rules": [
+        "starci-fe/require-identity-root"
+      ]
+    },
+    {
+      "f": "src/components/layouts/PublicProfileLayout/component.tsx",
+      "count": 1,
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "f": "src/components/layouts/PublicProfileLayout/map.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "f": "src/components/layouts/SettingsLayout/map.ts",
+      "count": 1,
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    }
+  ],
+  "byFile": {
+    ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx": [
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 41,
+        "col": 5,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx": [
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 279,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 281,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 349,
+        "col": 41,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 443,
+        "col": 77,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx": [
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 138,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 141,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 174,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 175,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx": [
+      {
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 114,
+        "col": 17,
+        "msg": "`handleSide` → rename to `onSide` (handlers are `onXxx`, not `handleXxx` — react-idioms §7)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 136,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 148,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx": [
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 145,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 155,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 169,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 186,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<aside>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 202,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<main>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 210,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 241,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 3,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 12,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 12,
+        "col": 46,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 12,
+        "col": 46,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 29,
+        "col": 85,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 35,
+        "col": 28,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 46,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 52,
+        "col": 21,
+        "msg": "Do not pass `className` to house component `UserAvatar`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 11,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 11,
+        "col": 45,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 11,
+        "col": 45,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 23,
+        "col": 41,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 24,
+        "col": 5,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 24,
+        "col": 21,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 25,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 9,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 21,
+        "col": 43,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 21,
+        "col": 43,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 31,
+        "col": 39,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 32,
+        "col": 5,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 32,
+        "col": 21,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 3,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 12,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 12,
+        "col": 40,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 12,
+        "col": 40,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 25,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 29,
+        "col": 46,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 11,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 11,
+        "col": 42,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 11,
+        "col": 42,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 23,
+        "col": 48,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 24,
+        "col": 30,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 13,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 13,
+        "col": 40,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 13,
+        "col": 40,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 50,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 52,
+        "col": 30,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 63,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 63,
+        "col": 30,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 65,
+        "col": 29,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 74,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 74,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 76,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 87,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 87,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 88,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 89,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 89,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 3,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 11,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 11,
+        "col": 43,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 11,
+        "col": 43,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 30,
+        "col": 88,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 31,
+        "col": 5,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 31,
+        "col": 21,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 32,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 32,
+        "col": 14,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 34,
+        "col": 17,
+        "msg": "Do not pass `className` to house component `UserAvatar`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 39,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 39,
+        "col": 18,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 40,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 43,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 17,
+        "col": 51,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 17,
+        "col": 51,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 39,
+        "col": 79,
+        "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 43,
+        "col": 20,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 49,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx": [
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 10,
+        "col": 40,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 10,
+        "col": 40,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/account-menu.ts": [
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "col": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is"
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/index.ts": [
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "col": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is"
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/Logo/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 6,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 22,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 22,
+        "col": 25,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 22,
+        "col": 25,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 30,
+        "col": 24,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 43,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 16,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 28,
+        "col": 44,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 28,
+        "col": 44,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 61,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 66,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 67,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 70,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 70,
+        "col": 18,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 72,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 74,
+        "col": 40,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 89,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 89,
+        "col": 18,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 90,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 90,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 91,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 91,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 92,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 92,
+        "col": 30,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 95,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 95,
+        "col": 30,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 104,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 104,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 105,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 105,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 106,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 106,
+        "col": 30,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 109,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 109,
+        "col": 30,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 9,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 19,
+        "col": 40,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 19,
+        "col": 40,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 31,
+        "col": 48,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 32,
+        "col": 5,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 32,
+        "col": 21,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 36,
+        "col": 32,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 6,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 21,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 37,
+        "col": 48,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 37,
+        "col": 48,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 73,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 90,
+        "col": 28,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 104,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 104,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 124,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 124,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 128,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 132,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 132,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 141,
+        "col": 44,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 146,
+        "col": 33,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 146,
+        "col": 38,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 13,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 13,
+        "col": 44,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 13,
+        "col": 44,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 25,
+        "col": 49,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 26,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 27,
+        "col": 15,
+        "msg": "`items-center` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 31,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 31,
+        "col": 14,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 26,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 52,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 52,
+        "col": 14,
+        "msg": "`sticky` on <nav> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 53,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 53,
+        "col": 18,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 54,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 54,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 59,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 59,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/types/index.ts": [
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "col": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is"
+      }
+    ],
+    "src/components/blocks/layout/shell/Navbar/types/navbar.ts": [
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 4,
+        "col": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is"
+      }
+    ],
+    "src/components/blocks/navigation/BackLink/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 6,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 73,
+        "col": 5,
+        "msg": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 73,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 92,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 125,
+        "col": 28,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 138,
+        "col": 21,
+        "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 203,
+        "col": 63,
+        "msg": "Do not pass `className` to house component `DragScrollArea`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ],
+    "src/components/blocks/navigation/ContentMapRow/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 18,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 75,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 79,
+        "col": 60,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 82,
+        "col": 28,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/ExtendedTabs/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 3,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 63,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 9,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 19,
+        "col": 66,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 19,
+        "col": 66,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 124,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 124,
+        "col": 61,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/NavLinks/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 16,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 41,
+        "col": 5,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 41,
+        "col": 10,
+        "msg": "`@app-md:flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 52,
+        "col": 36,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      }
+    ],
+    "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      }
+    ],
+    "src/components/blocks/navigation/Navbar/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 3,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 49,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 176,
+        "col": 5,
+        "msg": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 176,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 211,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 245,
+        "col": 17,
+        "msg": "`items-center` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 249,
+        "col": 19,
+        "msg": "`@app-md:flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 316,
+        "col": 81,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 321,
+        "col": 33,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 331,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 331,
+        "col": 26,
+        "msg": "`overflow-y-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 332,
+        "col": 25,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 339,
+        "col": 17,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 365,
+        "col": 17,
+        "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 365,
+        "col": 41,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 374,
+        "col": 19,
+        "msg": "`@app-md:flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 395,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 395,
+        "col": 18,
+        "msg": "`@app-md:flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 396,
+        "col": 17,
+        "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 396,
+        "col": 41,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 435,
+        "col": 98,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 510,
+        "col": 13,
+        "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 510,
+        "col": 37,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 511,
+        "col": 13,
+        "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 511,
+        "col": 37,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 520,
+        "col": 13,
+        "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 552,
+        "col": 81,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 555,
+        "col": 81,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 563,
+        "col": 13,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 565,
+        "col": 13,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 565,
+        "col": 37,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 570,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 572,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 575,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 583,
+        "col": 29,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 596,
+        "col": 29,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 596,
+        "col": 53,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      }
+    ],
+    "src/components/blocks/navigation/OutlineRail/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 10,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 40,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 121,
+        "col": 43,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 121,
+        "col": 43,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 169,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 181,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 181,
+        "col": 25,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 184,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 184,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 185,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 185,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 207,
+        "col": 52,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 241,
+        "col": 45,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 241,
+        "col": 50,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 242,
+        "col": 49,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 242,
+        "col": 54,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 269,
+        "col": 45,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 269,
+        "col": 50,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 271,
+        "col": 53,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 304,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 304,
+        "col": 22,
+        "msg": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/navigation/Pagination/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 6,
+        "col": 42,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 6,
+        "col": 42,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 38,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 59,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 59,
+        "col": 25,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/ProfileTabsBar/index.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 32,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 28,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 40,
+        "col": 55,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 40,
+        "col": 55,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 50,
+        "col": 5,
+        "msg": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 50,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 71,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 94,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 122,
+        "col": 39,
+        "msg": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 125,
+        "col": 52,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 142,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/constants/index.ts": [
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "col": 1,
+        "msg": "`constants/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shap"
+      }
+    ],
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/constants/programming-language-tabs.ts": [
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 2,
+        "col": 1,
+        "msg": "`constants/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shap"
+      }
+    ],
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx": [
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 20,
+        "col": 64,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 20,
+        "col": 64,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      }
+    ],
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 51,
+        "col": 28,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/SelectableCardGroup/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 9,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 25,
+        "col": 69,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 25,
+        "col": 69,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 72,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 78,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 86,
+        "col": 44,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 99,
+        "col": 33,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 99,
+        "col": 38,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 105,
+        "col": 43,
+        "msg": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 10,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 48,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 54,
+        "col": 115,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      }
+    ],
+    "src/components/blocks/navigation/SettingsSidebarNav/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 33,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 138,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 141,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 141,
+        "col": 18,
+        "msg": "`@app-md:sticky` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 147,
+        "col": 21,
+        "msg": "Do not pass `className` to house component `CollapsibleSidebar`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 158,
+        "col": 29,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 177,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 177,
+        "col": 59,
+        "msg": "`sticky` on <nav> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 178,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 178,
+        "col": 22,
+        "msg": "`overflow-x-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 198,
+        "col": 48,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-frame-fragment-item",
+        "line": 203,
+        "col": 98,
+        "msg": "One frame item returns multiple siblings through a fragment. Model each sibling as an item or introduce the honest nested frame; fragments must not launder the typed items contract"
+      }
+    ],
+    "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 63,
+        "col": 36,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 88,
+        "col": 48,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 98,
+        "col": 52,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/SidebarNavGroup/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 9,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 34,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 34,
+        "col": 14,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 17,
+        "col": 46,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 17,
+        "col": 46,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 49,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 58,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 72,
+        "col": 32,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/blocks/navigation/TabsCard/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 7,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 21,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 48,
+        "col": 40,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 48,
+        "col": 40,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 136,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 153,
+        "col": 40,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 159,
+        "col": 35,
+        "msg": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 165,
+        "col": 54,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 217,
+        "col": 35,
+        "msg": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 238,
+        "col": 39,
+        "msg": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 251,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 251,
+        "col": 25,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 253,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 253,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 263,
+        "col": 29,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 264,
+        "col": 29,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      }
+    ],
+    "src/components/blocks/navigation/WorkSessionHeader/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 2,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 8,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 16,
+        "col": 49,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 16,
+        "col": 49,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 127,
+        "col": 5,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 135,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 135,
+        "col": 25,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 160,
+        "col": 31,
+        "msg": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 184,
+        "col": 31,
+        "msg": "`items-center` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 217,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 217,
+        "col": 18,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 222,
+        "col": 42,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 237,
+        "col": 58,
+        "msg": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/layouts/Footer/FooterNavColumn/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Footer/` contains `FooterNavColumn/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 10,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 46,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 46,
+        "col": 14,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 50,
+        "col": 17,
+        "msg": "`flex` on <ul> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/layouts/Footer/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 39,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 71,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<footer>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 72,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 74,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 74,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 75,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 75,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 79,
+        "col": 25,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 85,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 85,
+        "col": 30,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 101,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 101,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 108,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 108,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 112,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 112,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/layouts/LearnShellLayout/component.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 11,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 73,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 73,
+        "col": 25,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 76,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<aside>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 76,
+        "col": 20,
+        "msg": "`@app-lg:sticky` on <aside> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 85,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 85,
+        "col": 29,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/layouts/LearnShellLayout/index.tsx": [
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 140,
+        "col": 13,
+        "msg": "Do not pass `className` to house component `ResizableRail`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 151,
+        "col": 13,
+        "msg": "Do not pass `className` to house component `ResizableRail`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 162,
+        "col": 13,
+        "msg": "Do not pass `className` to house component `ResizableRail`. Parent layout owns placement; use the parent principle or a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 206,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 206,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/layouts/LearnShellLayout/types/index.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/LearnShellLayout/` contains `types/index.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has "
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "col": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is"
+      }
+    ],
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `AccountMenuDropdown/AccountMenuAuthed/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Wh"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 22,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `AccountMenuDropdown/AccountMenuGuest/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Wha"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 19,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `AccountMenuDropdown/AccountTrigger/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whate"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 13,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 53,
+        "col": 21,
+        "msg": "Do not pass `className` to house component `UserAvatar`. Parent layout owns placement; use the parent principle or a named wrapper."
+      }
+    ],
+    "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `AccountMenuDropdown/DarkLightModeSwitch/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). "
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 3,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      }
+    ],
+    "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `AccountMenuDropdown/GuestHeader/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 9,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 21,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 21,
+        "col": 14,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `AccountMenuDropdown/UserSummary/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever"
+      }
+    ],
+    "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `AccountMenuDropdown/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 34,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/layouts/Navbar/CartButton/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `CartButton/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a re"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 16,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/layouts/Navbar/LanguageDropdown/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `LanguageDropdown/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it ha"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 6,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 18,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/layouts/Navbar/Logo/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `Logo/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real hom"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 6,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 22,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 22,
+        "col": 25,
+        "msg": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 22,
+        "col": 25,
+        "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-public-classname-prop",
+        "line": 31,
+        "col": 24,
+        "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 44,
+        "col": 24,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/layouts/Navbar/NavLinks/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `NavLinks/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 18,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 32,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 32,
+        "col": 14,
+        "msg": "`items-center` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "line": 36,
+        "col": 36,
+        "msg": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+      }
+    ],
+    "src/components/layouts/Navbar/NotificationBell/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `NotificationBell/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it ha"
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 13,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/no-retired-async-content",
+        "line": 28,
+        "col": 10,
+        "msg": "`AsyncContent` is retired — thread `isSkeleton` to each leaf, and use AsyncContentEmpty/AsyncContentError from '@/components/composites/async/AsyncContent'."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 37,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 159,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 161,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 161,
+        "col": 26,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-parallel-skeleton",
+        "line": 179,
+        "col": 25,
+        "msg": "Prop `skeleton={<…>}` is a hand-kept parallel skeleton tree that drifts from the real shape — thread `isSkeleton` to each leaf so shimmer mirrors the loaded tree."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 180,
+        "col": 29,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 180,
+        "col": 34,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 197,
+        "col": 25,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 197,
+        "col": 30,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/layouts/Navbar/SearchButton/index.tsx": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `SearchButton/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a "
+      },
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 5,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 27,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/layouts/Navbar/index.tsx": [
+      {
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 8,
+        "col": 1,
+        "msg": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+      },
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 52,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 89,
+        "col": 9,
+        "msg": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 89,
+        "col": 14,
+        "msg": "`sticky` on <nav> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 91,
+        "col": 13,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 91,
+        "col": 18,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 92,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 92,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 97,
+        "col": 17,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 97,
+        "col": 22,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 101,
+        "col": 21,
+        "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`"
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 114,
+        "col": 21,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 114,
+        "col": 26,
+        "msg": "`items-center` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 138,
+        "col": 28,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 150,
+        "col": 33,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 150,
+        "col": 38,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 167,
+        "col": 33,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 167,
+        "col": 38,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 168,
+        "col": 37,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 168,
+        "col": 42,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      },
+      {
+        "rule": "starci-fe/no-host-element-at-sentence-tier",
+        "line": 174,
+        "col": 37,
+        "msg": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+      },
+      {
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "line": 174,
+        "col": 42,
+        "msg": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+      }
+    ],
+    "src/components/layouts/Navbar/types/index.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `types/index.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real hom"
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 1,
+        "col": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is"
+      }
+    ],
+    "src/components/layouts/Navbar/types/navbar.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 4,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `types/navbar.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real ho"
+      },
+      {
+        "rule": "starci-fe/no-helper-folder-in-components",
+        "line": 4,
+        "col": 1,
+        "msg": "`types/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is"
+      }
+    ],
+    "src/components/layouts/Navbar/useNavbarItems.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/Navbar/` contains `useNavbarItems.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real "
+      }
+    ],
+    "src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx": [
+      {
+        "rule": "starci-fe/require-identity-root",
+        "line": 37,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a ha"
+      }
+    ],
+    "src/components/layouts/PublicProfileLayout/component.tsx": [
+      {
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 241,
+        "col": 9,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is"
+      }
+    ],
+    "src/components/layouts/PublicProfileLayout/map.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/PublicProfileLayout/` contains `map.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a rea"
+      }
+    ],
+    "src/components/layouts/SettingsLayout/map.ts": [
+      {
+        "rule": "starci-fe/page-folder-two-files-only",
+        "line": 1,
+        "col": 1,
+        "msg": "`layouts/SettingsLayout/` contains `map.ts` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real hom"
+      }
+    ]
+  },
+  "total": 485
+}

@@ -1,0 +1,231 @@
+{
+  "batch": "31f",
+  "date": "2026-08-09",
+  "worker": "sb-blocks-nonlearn",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "contract": ".claude/fe/contracts/frame-items.md",
+  "fixedCount": 25,
+  "heldCount": 0,
+  "heldSiblingCount": 7,
+  "fragFindingsClosed": 60,
+  "classification": {
+    "peer-items": 25,
+    "nested-relationship": 0,
+    "conditional-peers": 0,
+    "single-rendered-child": 0,
+    "hold": 0
+  },
+  "fixed": [
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "frag": 7,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+      "frag": 3,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      "frag": 3,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      "frag": 4,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/LeaderboardPage/LeaderboardPage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      "frag": 4,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "frag": 7,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundHubPage/PlaygroundHubPage.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+      "frag": 4,
+      "classification": "peer-items",
+      "eslint": "pass"
+    }
+  ],
+  "held": [],
+  "heldSiblings": [
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "frag": 2,
+      "other": 2,
+      "otherRules": ["starci-fe/no-public-classname-prop"],
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "frag": 8,
+      "other": 2,
+      "otherRules": ["starci-fe/no-public-classname-prop"],
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "frag": 11,
+      "other": 2,
+      "otherRules": ["starci-fe/no-public-classname-prop"],
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "frag": 23,
+      "other": 2,
+      "otherRules": ["starci-fe/no-public-classname-prop"],
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": ["starci-fe/no-public-classname-prop"],
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": ["starci-fe/no-public-classname-prop"],
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "frag": 2,
+      "other": 1,
+      "otherRules": ["starci-fe/handler-on-prefix"],
+      "holdReason": "other-debt:1 (starci-fe/handler-on-prefix)"
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": "pass-all-25",
+    "commit": false
+  },
+  "notes": [
+    "Split multi-child fragment laundering into peer item factories (conditional spreads where needed).",
+    "Reattached orphaned explain= text siblings onto principle frames while rewriting those lines.",
+    "No new principles; no sibling-hiding wrappers; no commit."
+  ]
+}

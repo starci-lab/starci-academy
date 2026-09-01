@@ -1,0 +1,897 @@
+[
+  {
+    "path": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "Tooltip",
+      "span",
+      "Dropdown",
+      "DropdownItem",
+      "DropdownItem",
+      "DropdownItem",
+      "DropdownItem"
+    ],
+    "mech": [
+      "starci-fe/no-inline-parameter-type@131"
+    ],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownPopover, DropdownSection, DropdownTrigger, ScrollShadow, SearchField, Separator, Tooltip, Typography, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 9,
+    "divClass": 6,
+    "cand": 19
+  },
+  {
+    "path": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "nav"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Link, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 11,
+    "cand": 15
+  },
+  {
+    "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+    "idOk": false,
+    "idReason": "fragment-root",
+    "idRoot": null,
+    "idTags": null,
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Alert, Button, Modal, Typography, cn"
+    ],
+    "withClassNames": false,
+    "cnCount": 1,
+    "divClass": 4,
+    "cand": 12
+  },
+  {
+    "path": "src/components/blocks/grading/DiffViewer/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [
+      "starci-fe/no-inline-parameter-type@67",
+      "starci-fe/no-inline-parameter-type@74",
+      "starci-fe/no-inline-parameter-type@86"
+    ],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Typography, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 8,
+    "cand": 11
+  },
+  {
+    "path": "src/components/blocks/navigation/OutlineRail/index.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "div",
+      "Accordion"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Accordion, Button, Input, Label, ScrollShadow, TextField, Typography, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 7,
+    "cand": 11
+  },
+  {
+    "path": "src/components/blocks/navigation/TabsCard/index.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "Select",
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "ListBox, Select, Tabs, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 4,
+    "cand": 10
+  },
+  {
+    "path": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+    "idOk": false,
+    "idReason": "incapable-or-mixed-root",
+    "idRoot": null,
+    "idTags": [
+      "Popover"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Badge, Button, Popover, PopoverContent, Separator, Spinner, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 5,
+    "cand": 9
+  },
+  {
+    "path": "src/components/blocks/navigation/Navbar/index.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "Dropdown",
+      "nav"
+    ],
+    "mech": [],
+    "holds": [
+      "starci-fe/require-frame-self-declare"
+    ],
+    "heroui": true,
+    "herouiImports": [
+      "cn, Button as HeroButton, Dropdown, Kbd, Label, Popover, PopoverContent,"
+    ],
+    "withClassNames": false,
+    "cnCount": 1,
+    "divClass": 3,
+    "cand": 9
+  },
+  {
+    "path": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Button, ScrollShadow, Typography, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 2,
+    "cand": 9
+  },
+  {
+    "path": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "Table",
+      "Table",
+      "Table",
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn, Table"
+    ],
+    "withClassNames": true,
+    "cnCount": 5,
+    "divClass": 1,
+    "cand": 9
+  },
+  {
+    "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+    "idOk": false,
+    "idReason": "no-return-jsx-found",
+    "idRoot": null,
+    "idTags": null,
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "DropdownItem, DropdownMenu, DropdownSection, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 7,
+    "cand": 8
+  },
+  {
+    "path": "src/components/blocks/notifications/NotificationItem/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div",
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn, Typography"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 4,
+    "cand": 8
+  },
+  {
+    "path": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "Tag",
+      "div",
+      "button",
+      "code",
+      "MermaidDiagram",
+      "RenderReactComponent",
+      "LayoutWidget",
+      "CodeToHtml",
+      "div",
+      "ProseText",
+      "IntlLink",
+      "Link"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [],
+    "withClassNames": false,
+    "cnCount": 0,
+    "divClass": 4,
+    "cand": 8
+  },
+  {
+    "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "form"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Button, ProgressBar, Spinner, Typography, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 3,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/code/CodeConsole/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Tabs, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 5,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/layout/shell/Navbar/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "nav"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 3,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/lists/LabeledList/index.tsx",
+    "idOk": false,
+    "idReason": "no-return-jsx-found",
+    "idRoot": null,
+    "idTags": null,
+    "mech": [
+      "starci-fe/no-emoji-in-source@21"
+    ],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Label, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 2,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/lists/ListRow/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "a",
+      "div",
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn, Typography"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 4,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 4,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "Tabs",
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Tabs, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 1,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+    "idOk": false,
+    "idReason": "no-return-jsx-found",
+    "idRoot": null,
+    "idTags": null,
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Card, Radio, RadioGroup, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 1,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+    "idOk": false,
+    "idReason": "incapable-or-mixed-root",
+    "idRoot": null,
+    "idTags": [
+      "Accordion"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Accordion, Link, Typography, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 4,
+    "divClass": 0,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/notifications/NotificationList/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Button, cn, Typography"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 4,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "figure"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Modal, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 4,
+    "cand": 7
+  },
+  {
+    "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 3,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div",
+      "button"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 2,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn, Typography"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 3,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/form/Dropzone/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 5,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/form/SchedulePicker/index.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "div",
+      "Button"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Button, Calendar, cn, DateField, DatePicker, Label,"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 3,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/form/SearchInput/component.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div",
+      "li"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Input, TextField, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 2,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "button",
+      "span"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 0,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/grading/GradingByline/component.tsx",
+    "idOk": false,
+    "idReason": "fragment-root",
+    "idRoot": null,
+    "idTags": null,
+    "mech": [
+      "starci-fe/no-inline-parameter-type@13"
+    ],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": false,
+    "cnCount": 2,
+    "divClass": 0,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/identity/ImageDropzone/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Typography, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 1,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/identity/SnippetIcon/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "motion"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 0,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/layout/PageHeader/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn, Typography"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 4,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+    "idOk": false,
+    "idReason": "no-return-jsx-found",
+    "idRoot": null,
+    "idTags": null,
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Badge, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 5,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+    "idOk": false,
+    "idReason": "no-return-jsx-found",
+    "idRoot": null,
+    "idTags": null,
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Button, Kbd, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 1,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "button"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Typography, cn,"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 0,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/navigation/Footer/index.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "HeroUILink",
+      "footer"
+    ],
+    "mech": [],
+    "holds": [
+      "starci-fe/require-frame-self-declare"
+    ],
+    "heroui": true,
+    "herouiImports": [
+      "Link as HeroUILink, cn"
+    ],
+    "withClassNames": false,
+    "cnCount": 1,
+    "divClass": 5,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "span",
+      "a",
+      "Link"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Link, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 3,
+    "divClass": 0,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div",
+      "button"
+    ],
+    "mech": [],
+    "holds": [
+      "starci-fe/require-frame-self-declare"
+    ],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": false,
+    "cnCount": 1,
+    "divClass": 2,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "pre",
+      "Spinner",
+      "Content"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn, Spinner"
+    ],
+    "withClassNames": true,
+    "cnCount": 2,
+    "divClass": 0,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/rendering/PDFView/index.tsx",
+    "idOk": false,
+    "idReason": "mixed-host-and-component-roots",
+    "idRoot": null,
+    "idTags": [
+      "div",
+      "PdfViewportPage"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 6,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [],
+    "heroui": true,
+    "herouiImports": [
+      "Skeleton, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 2,
+    "cand": 6
+  },
+  {
+    "path": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+    "idOk": false,
+    "idReason": "host-element-root",
+    "idRoot": null,
+    "idTags": [
+      "div"
+    ],
+    "mech": [],
+    "holds": [
+      "starci-fe/no-arbitrary-token"
+    ],
+    "heroui": true,
+    "herouiImports": [
+      "Skeleton, cn"
+    ],
+    "withClassNames": true,
+    "cnCount": 1,
+    "divClass": 3,
+    "cand": 6
+  }
+]

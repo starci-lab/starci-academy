@@ -1,0 +1,114 @@
+{
+  "batch": "B36",
+  "checkpoint": "84b92cd77",
+  "wave": "B",
+  "regeneratedAfterWaveA": true,
+  "agents": [
+    {
+      "name": "navbar-and-glyphmark-consumers",
+      "owns": [
+        ".storybook/components/starci/blocks/dashboard/WeeklyGoals/**",
+        ".storybook/components/starci/blocks/learn/ContentPager/**",
+        ".storybook/components/starci/blocks/learn/FlashcardStudyCard/**",
+        ".storybook/components/starci/pages/CourseContents/**",
+        "src/components/blocks/dashboard/WeeklyGoals/**",
+        "src/components/blocks/learn/ContentPager/**",
+        "src/components/blocks/learn/FlashcardStudyCard/**",
+        "src/components/pages/CourseContents/**",
+        "src/components/pages/LearningHistoryPage/CourseOutline/**",
+        "src/components/pages/MockInterviewPage/MockInterviewSession/**",
+        "src/components/overlays/modals/PaymentModal/component.tsx",
+        "src/components/layouts/Navbar/**"
+      ],
+      "mustNotTouch": [
+        "**/AuthenticationModal/**",
+        "**/LoginPage/**",
+        "**/SurfaceListCard/**",
+        "**/SurfaceCard/**",
+        "**/PageHeader/**",
+        "**/GlyphMark/**"
+      ],
+      "note": "Migrate exact size-5 muted glyphs to GlyphMark tone=muted; optionally align layouts/Navbar with NavbarFrame if exact. Do not invent GlyphMark for size-4/hover/tile cases — hold and document."
+    },
+    {
+      "name": "identity-root-consumers",
+      "ownsHint": "StarCi blocks that root on PageHeader, Toolbar, Callout, Alert, FAB, ResponsiveBreadcrumb, or SearchAutocomplete and currently fail require-identity-root solely because identity was not forwarded — stamp identity on the approved root. Prefer header/breadcrumb families.",
+      "mustNotTouch": [
+        "**/Navbar/**",
+        "**/NavbarFrame/**",
+        "**/GlyphMark/**",
+        "**/WeeklyGoals/**",
+        "**/ContentPager/**",
+        "**/AuthenticationModal/**",
+        "**/LoginPage/**",
+        "**/SurfaceListCard/**",
+        "**/SurfaceCard/**",
+        "**/Alert/Alert.tsx",
+        "**/Alert/index.tsx",
+        "**/Callout/**",
+        "**/PageHeader/**",
+        "**/Toolbar/**",
+        "**/FloatingActionButton/**",
+        "**/ResponsiveBreadcrumb/**",
+        "**/SearchAutocomplete/**"
+      ],
+      "note": "Do not re-edit Wave A root contracts. Only consumer call sites. Disjoint file list written into worker JSON after claim."
+    },
+    {
+      "name": "authentication-content-separation",
+      "owns": [
+        "src/components/overlays/modals/AuthenticationModal/**",
+        "src/components/pages/LoginPage/**",
+        "src/components/blocks/auth/**",
+        "src/components/composites/**/Authentication*/**"
+      ],
+      "mayTouchHooksModules": true,
+      "mustNotTouch": [".storybook/**", "**/Navbar/**", "**/SurfaceListCard/**", "**/GlyphMark/**"],
+      "note": "Extract AuthenticationPanel/body without Modal chrome; AuthenticationModal uses ModalShell; LoginPage mounts same body. No new ModalShell variant."
+    },
+    {
+      "name": "surface-list-card-consumers",
+      "priorityConsumers": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+        "src/components/blocks/commerce/CartLine/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/learn/ChatToolResult/index.tsx",
+        "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/**",
+        "src/components/pages/DashboardPage/DailyQuest/**",
+        "src/components/pages/DashboardPage/TrendingContents/**",
+        "src/components/pages/DashboardPage/UpcomingLivestreamCard/**",
+        "src/components/pages/NotificationsPage/**",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/**",
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/**",
+        "src/components/blocks/cards/SurfaceListCard/**",
+        "src/components/blocks/cards/CrossListCard/**",
+        "src/components/blocks/cards/SummaryCard/**",
+        "src/components/blocks/commerce/TierCardBase/**"
+      ],
+      "mustNotTouch": [
+        "**/AuthenticationModal/**",
+        "**/LoginPage/**",
+        "**/Navbar/**",
+        "**/WeeklyGoals/**",
+        "**/ContentPager/**",
+        "**/GlyphMark/**"
+      ],
+      "note": "Migrate exact SurfaceCard.List matches only. Hold + document mismatches. Burn SurfaceListCard.className only when zero consumers remain. Inspect CourseCard/TierCardBase for exact SurfaceCard reuse only — no new variants."
+    },
+    {
+      "name": "coordinator-gates-and-inventory",
+      "owns": [
+        ".artifacts/fe-refactor-audit/2026-08-10-b36-inventory.json",
+        ".artifacts/fe-refactor-audit/2026-08-10-b36-manifests.json",
+        ".artifacts/fe-refactor-audit/2026-08-10-b36-worker-coordinator-gates-and-inventory.json"
+      ],
+      "productEdits": "none unless a dual-owned path conflict must be resolved by reverting one side — prefer documentation",
+      "note": "Wait until the other four Wave B worker JSONs exist. Then refresh inventory counts, record missing-vocabulary proposals, forbidden proof, and gate results into coordinator worker JSON. Parent writes final status."
+    }
+  ]
+}

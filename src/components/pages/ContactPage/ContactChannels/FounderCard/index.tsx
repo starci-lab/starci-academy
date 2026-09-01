@@ -1,83 +1,38 @@
 "use client"
 
 import React from "react"
-import {
-    Link,
-    Typography,
-} from "@heroui/react"
-import {
-    FaFacebook,
-    FaLinkedin,
-    FaGithub,
-} from "react-icons/fa6"
+import { Link, Typography } from "@heroui/react"
+import { FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa6"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import {
-    FOUNDER_FACEBOOK,
-    FOUNDER_GITHUB,
-    FOUNDER_LINKEDIN,
-} from "@/resources/contact"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { Cluster } from "@/components/frames/Cluster"
-import { StackV } from "@/components/frames/Stack"
+import { FOUNDER_FACEBOOK, FOUNDER_GITHUB, FOUNDER_LINKEDIN } from "@/resources/contact"
 
-/** Props for {@link FounderCard}. */
-export type FounderCardProps = WithClassNames<undefined>
-
-/** Founder social links (brand logos → react-icons/fa6 per the icon rule). */
-const SOCIALS = [
-    { key: "facebook", href: FOUNDER_FACEBOOK, icon: FaFacebook },
-    { key: "linkedin", href: FOUNDER_LINKEDIN, icon: FaLinkedin },
-    { key: "github", href: FOUNDER_GITHUB, icon: FaGithub },
-] as const
-
-/**
- * Founder mini-card — StarCi is founder-led, so the page names the person and
- * links straight to them. Static (the socials are real, fixed URLs). Anchors the
- * "reach the founder" route for partnership / press.
- *
- * @param props - optional className (placement only).
- */
+/** Human face of the founder-led brand, using the existing founder portrait. */
 export const FounderCard = () => {
     const t = useTranslations()
-    const bodyItems = [
-        () => (
-            <div className="flex flex-col">
-                <Typography type="body" weight="semibold">
-                    {t("contact.founder.name")}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {t("contact.founder.role")}
-                </Typography>
-            </div>
-        ),
-        () => (
-            <Cluster
-                gap={4}
-                align="center"
-                principle="chip-row"
-                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
-                items={SOCIALS.map(({ key, href, icon: Icon }) => () => (
-                    <Link
-                        key={key}
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={t(`contact.founder.${key}`)}
-                    >
-                        <Icon className="size-5" aria-hidden />
-                    </Link>
-                ))}
-            />
-        ),
-    ]
-    return (
-        <LabeledCard
-            identity={{ tier: "block", component: "FounderCard" }}
-            label={t("contact.founder.title")}
+    const socials = [
+        { key: "facebook", href: FOUNDER_FACEBOOK, icon: FaFacebook },
+        { key: "linkedin", href: FOUNDER_LINKEDIN, icon: FaLinkedin },
+        { key: "github", href: FOUNDER_GITHUB, icon: FaGithub },
+    ] as const
 
-        >
-            <StackV gap={4} items={bodyItems} />
-        </LabeledCard>
+    return (
+        <section className="overflow-hidden rounded-[1.5rem] bg-[#17121f] text-white shadow-xl">
+            <div className="grid @app-sm:grid-cols-[0.7fr_1.3fr]">
+                <div className="relative min-h-56 overflow-hidden @app-sm:min-h-full">
+                    <img src="/landing/founder.jpg" alt="Stacy Nguyen, founder of StarCi Academy" className="absolute inset-0 size-full object-cover object-top grayscale-[15%]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#17121f] via-transparent to-transparent" />
+                </div>
+                <div className="flex flex-col justify-between gap-6 p-5 @app-sm:p-7">
+                    <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-fuchsia-300">{t("contact.founder.title")}</p>
+                        <Typography.Heading level={2} className="mt-3 text-2xl font-bold text-white">Stacy Nguyen</Typography.Heading>
+                        <Typography className="mt-2 text-sm leading-6 text-white/65">Founder · StarCi Academy. Người trực tiếp xây sản phẩm và đọc những tin nhắn gửi về đây.</Typography>
+                    </div>
+                    <div className="flex items-center gap-4 border-t border-white/10 pt-4">
+                        {socials.map(({ key, href, icon: Icon }) => <Link key={key} href={href} target="_blank" rel="noreferrer" aria-label={t(`contact.founder.${key}`)} className="text-white/65 transition hover:text-white"><Icon className="size-5" aria-hidden /></Link>)}
+                    </div>
+                </div>
+            </div>
+        </section>
     )
 }

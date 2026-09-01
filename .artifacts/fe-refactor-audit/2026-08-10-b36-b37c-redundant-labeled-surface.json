@@ -1,0 +1,44 @@
+{
+  "batch": "B36+B37c",
+  "generatedAt": "2026-08-08T17:40:16.742Z",
+  "note": "Audit-only residual redundant labeled-surface patterns. Not an ESLint rule (ruleset freeze).",
+  "count": 6,
+  "hits": [
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "child": "SurfaceListCard",
+      "frameless": true,
+      "pattern": "LabeledCard frameless wraps self-framed surface"
+    },
+    {
+      "file": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "child": "SurfaceListCard",
+      "frameless": true,
+      "pattern": "LabeledCard frameless wraps self-framed surface"
+    },
+    {
+      "file": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "child": "SurfaceListCard",
+      "frameless": true,
+      "pattern": "LabeledCard frameless wraps self-framed surface"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "child": "SurfaceListCard",
+      "frameless": true,
+      "pattern": "LabeledCard frameless wraps self-framed surface"
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "child": "SurfaceListCard",
+      "frameless": true,
+      "pattern": "LabeledCard frameless wraps self-framed surface"
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "child": "SurfaceListCard",
+      "frameless": true,
+      "pattern": "LabeledCard frameless wraps self-framed surface"
+    }
+  ]
+}

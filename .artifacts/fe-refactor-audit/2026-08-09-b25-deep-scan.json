@@ -1,0 +1,5777 @@
+{
+  "generatedAt": "2026-08-07T13:20:41.342Z",
+  "hitCountsByTarget": {
+    "Typography": 141,
+    "Skeleton": 275,
+    "ProgressMeter": 6,
+    "UserAvatar": 19,
+    "TitledText": 2,
+    "EnumChip": 2,
+    "EmptyState": 2,
+    "SimpleEmptyState": 3,
+    "LabeledAccordionCard": 3,
+    "SurfaceListCard": 5,
+    "ProfileSectionGuard": 4
+  },
+  "allCompTop": [
+    [
+      "Skeleton",
+      275
+    ],
+    [
+      "Typography",
+      141
+    ],
+    [
+      "StackV",
+      122
+    ],
+    [
+      "StackH",
+      71
+    ],
+    [
+      "Button",
+      56
+    ],
+    [
+      "UserAvatar",
+      19
+    ],
+    [
+      "Chip",
+      11
+    ],
+    [
+      "MarkdownContent",
+      11
+    ],
+    [
+      "ResizableRail",
+      8
+    ],
+    [
+      "GithubIcon",
+      7
+    ],
+    [
+      "Cluster",
+      6
+    ],
+    [
+      "SearchInput",
+      6
+    ],
+    [
+      "SkeletonText",
+      6
+    ],
+    [
+      "ProgressMeter",
+      6
+    ],
+    [
+      "TabsCard",
+      5
+    ],
+    [
+      "SurfaceListCard",
+      5
+    ],
+    [
+      "ProfileSectionGuard",
+      4
+    ],
+    [
+      "CollapsibleSidebar",
+      3
+    ],
+    [
+      "TierCardBase",
+      3
+    ],
+    [
+      "SurfaceListCardRow",
+      3
+    ],
+    [
+      "FollowButton",
+      3
+    ],
+    [
+      "SimpleEmptyState",
+      3
+    ],
+    [
+      "LabeledAccordionCard",
+      3
+    ],
+    [
+      "TabsTab",
+      3
+    ],
+    [
+      "RankDeltaCaret",
+      3
+    ],
+    [
+      "SurfaceListCardItem",
+      3
+    ],
+    [
+      "SurfaceCard",
+      2
+    ],
+    [
+      "EnumChip",
+      2
+    ],
+    [
+      "TierLevelIcon",
+      2
+    ],
+    [
+      "TitledText",
+      2
+    ],
+    [
+      "BrandLogo",
+      2
+    ],
+    [
+      "OutlineRail",
+      2
+    ],
+    [
+      "SectionCard",
+      2
+    ],
+    [
+      "BackLink",
+      2
+    ],
+    [
+      "EmptyState",
+      2
+    ],
+    [
+      "Flex",
+      2
+    ],
+    [
+      "Pagination",
+      2
+    ],
+    [
+      "LeaderboardListCard",
+      2
+    ],
+    [
+      "Container",
+      2
+    ],
+    [
+      "GroupPressableCard",
+      1
+    ]
+  ],
+  "tokenGroups": {
+    "(other)": {
+      "count": 297,
+      "sample": [
+        {
+          "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+          "line": 106,
+          "component": "Typography",
+          "tokens": [],
+          "raw": "isSkeleton"
+        },
+        {
+          "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+          "line": 117,
+          "component": "Typography",
+          "tokens": [],
+          "raw": "isSkeleton"
+        },
+        {
+          "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+          "line": 165,
+          "component": "Typography",
+          "tokens": [],
+          "raw": "isSkeleton"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+          "line": 21,
+          "component": "Skeleton",
+          "tokens": [],
+          "raw": "flex flex-col gap-3 p-0"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+          "line": 32,
+          "component": "Skeleton",
+          "tokens": [],
+          "raw": "mt-1 flex flex-col gap-2"
+        },
+        {
+          "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+          "line": 41,
+          "component": "EnumChip",
+          "tokens": [],
+          "raw": ""
+        },
+        {
+          "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+          "line": 48,
+          "component": "EnumChip",
+          "tokens": [],
+          "raw": "size-5"
+        },
+        {
+          "file": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+          "line": 73,
+          "component": "Skeleton",
+          "tokens": [
+            "h-4",
+            "w-64",
+            "max-w-full",
+            "rounded"
+          ],
+          "raw": "[\"h-4\", \"w-64\", \"max-w-full\", \"rounded\", ...(classNames ?? []"
+        },
+        {
+          "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "line": 258,
+          "component": "Typography",
+          "tokens": [],
+          "raw": "isSkeleton"
+        },
+        {
+          "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "line": 270,
+          "component": "Typography",
+          "tokens": [],
+          "raw": "isSkeleton"
+        },
+        {
+          "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "line": 309,
+          "component": "Typography",
+          "tokens": [],
+          "raw": "isSkeleton"
+        },
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "line": 83,
+          "component": "Typography",
+          "tokens": [
+            "w-1/3"
+          ],
+          "raw": "[\"w-1/3\"]"
+        },
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "line": 84,
+          "component": "Typography",
+          "tokens": [
+            "w-1/3"
+          ],
+          "raw": "[\"w-1/3\"]"
+        },
+        {
+          "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+          "line": 102,
+          "component": "UserAvatar",
+          "tokens": [],
+          "raw": "shrink-0"
+        },
+        {
+          "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+          "line": 152,
+          "component": "UserAvatar",
+          "tokens": [],
+          "raw": "shrink-0"
+        }
+      ]
+    },
+    "shrink-0": {
+      "count": 25,
+      "sample": [
+        {
+          "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+          "line": 118,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+          "line": 124,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+          "line": 99,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+          "line": 108,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+          "line": 91,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+          "line": 100,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+          "line": 109,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+          "line": 122,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+          "line": 32,
+          "component": "Typography",
+          "tokens": [
+            "w-1/4",
+            "shrink-0"
+          ],
+          "raw": "[\"w-1/4\", \"shrink-0\"]"
+        },
+        {
+          "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+          "line": 212,
+          "component": "UserAvatar",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+          "line": 224,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardReviewPage/index.tsx",
+          "line": 207,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+          "line": 259,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+          "line": 346,
+          "component": "Typography",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+          "line": 224,
+          "component": "Skeleton",
+          "tokens": [
+            "shrink-0"
+          ],
+          "raw": "[\"shrink-0\"]"
+        }
+      ]
+    },
+    "min-w-0": {
+      "count": 9,
+      "sample": [
+        {
+          "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+          "line": 126,
+          "component": "Typography",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+          "line": 116,
+          "component": "UserAvatar",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+          "line": 127,
+          "component": "Typography",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+          "line": 36,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+          "line": 45,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+          "line": 46,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+          "line": 91,
+          "component": "SurfaceListCard",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+          "line": 97,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        },
+        {
+          "file": "src/components/pages/TalentDirectoryPage/component.tsx",
+          "line": 183,
+          "component": "UserAvatar",
+          "tokens": [
+            "min-w-0"
+          ],
+          "raw": "[\"min-w-0\"]"
+        }
+      ]
+    },
+    "flex-1": {
+      "count": 16,
+      "sample": [
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "line": 72,
+          "component": "TitledText",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+          "line": 38,
+          "component": "ProgressMeter",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/composites/lists/List/index.tsx",
+          "line": 458,
+          "component": "TitledText",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/BookmarksPage/index.tsx",
+          "line": 91,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/BookmarksPage/index.tsx",
+          "line": 99,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/BookmarksPage/index.tsx",
+          "line": 100,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+          "line": 47,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+          "line": 29,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "line": 433,
+          "component": "ProgressMeter",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "line": 480,
+          "component": "ProgressMeter",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+          "line": 130,
+          "component": "ProgressMeter",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/NotificationsPage/index.tsx",
+          "line": 320,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/NotificationsPage/index.tsx",
+          "line": 325,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/NotificationsPage/index.tsx",
+          "line": 326,
+          "component": "Skeleton",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+          "line": 83,
+          "component": "Typography",
+          "tokens": [
+            "flex-1"
+          ],
+          "raw": "[\"flex-1\"]"
+        }
+      ]
+    },
+    "w-1/2": {
+      "count": 20,
+      "sample": [
+        {
+          "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+          "line": 158,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+          "line": 159,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+          "line": 26,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+          "line": 134,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/LearnNudges/component.tsx",
+          "line": 63,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+          "line": 161,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+          "line": 166,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+          "line": 40,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2",
+            "w-3/4"
+          ],
+          "raw": "[index === lines - 1 ? \"w-1/2\" : \"w-3/4\"]"
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "line": 78,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "line": 94,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "line": 95,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "line": 240,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "line": 248,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "line": 261,
+          "component": "Skeleton",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "line": 267,
+          "component": "Typography",
+          "tokens": [
+            "w-1/2"
+          ],
+          "raw": "[\"w-1/2\"]"
+        }
+      ]
+    },
+    "w-full": {
+      "count": 21,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "line": 21,
+          "component": "Typography",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "line": 22,
+          "component": "Typography",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "line": 28,
+          "component": "Typography",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+          "line": 68,
+          "component": "Typography",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+          "line": 47,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+          "line": 59,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "line": 183,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "line": 187,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "line": 191,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "line": 202,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+          "line": 47,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+          "line": 59,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+          "line": 195,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+          "line": 199,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+          "line": 203,
+          "component": "Skeleton",
+          "tokens": [
+            "w-full"
+          ],
+          "raw": "[\"w-full\"]"
+        }
+      ]
+    },
+    "flex-1 min-w-0": {
+      "count": 55,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "line": 61,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+          "line": 102,
+          "component": "Typography",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+          "line": 153,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+          "line": 159,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+          "line": 160,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+          "line": 164,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+          "line": 61,
+          "component": "Typography",
+          "tokens": [
+            "flex-1",
+            "min-w-0"
+          ],
+          "raw": "[\"flex-1\", \"min-w-0\"]"
+        },
+        {
+          "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+          "line": 216,
+          "component": "Typography",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/CartPage/component.tsx",
+          "line": 50,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/CartPage/component.tsx",
+          "line": 54,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/CartPage/component.tsx",
+          "line": 57,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/CommunityFeedPage/component.tsx",
+          "line": 43,
+          "component": "Typography",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/CommunityFeedPage/component.tsx",
+          "line": 44,
+          "component": "Typography",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/CommunityFeedPage/component.tsx",
+          "line": 49,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        },
+        {
+          "file": "src/components/pages/CourseCatalogPage/CatalogLineCardSkeleton/index.tsx",
+          "line": 30,
+          "component": "Skeleton",
+          "tokens": [
+            "min-w-0",
+            "flex-1"
+          ],
+          "raw": "[\"min-w-0\", \"flex-1\"]"
+        }
+      ]
+    },
+    "min-w-0 w-full": {
+      "count": 1,
+      "sample": [
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+          "line": 146,
+          "component": "Typography",
+          "tokens": [
+            "w-full",
+            "min-w-0"
+          ],
+          "raw": "[\"w-full\", \"min-w-0\"]"
+        }
+      ]
+    }
+  },
+  "pageHitsOnlyAmbig": [
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "line": 73,
+      "component": "Skeleton",
+      "cls": "h-8 w-full rounded-lg",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 147,
+      "component": "Skeleton",
+      "cls": "h-16 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 153,
+      "component": "Skeleton",
+      "cls": "h-9 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 162,
+      "component": "Skeleton",
+      "cls": "h-9 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "line": 141,
+      "component": "Skeleton",
+      "cls": "h-44 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "line": 156,
+      "component": "Skeleton",
+      "cls": "h-12 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 20,
+      "component": "Skeleton",
+      "cls": "h-[440px] w-full rounded-3xl @app-sm:h-[560px]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 39,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 42,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 71,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 74,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "line": 118,
+      "component": "Skeleton",
+      "cls": "h-[440px] w-full rounded-3xl @app-sm:h-[560px]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "line": 149,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 72,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 133,
+      "component": "Typography",
+      "cls": "min-w-0 truncate font-mono",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 93,
+      "component": "Typography",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 104,
+      "component": "Typography",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/index.tsx",
+      "line": 91,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/index.tsx",
+      "line": 99,
+      "component": "Skeleton",
+      "cls": "h-4 w-1/2 rounded-medium",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/index.tsx",
+      "line": 130,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/CartPage/component.tsx",
+      "line": 50,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/CartPage/component.tsx",
+      "line": 57,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-lg",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/CartPage/component.tsx",
+      "line": 269,
+      "component": "Skeleton",
+      "cls": "h-12 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx",
+      "line": 47,
+      "component": "Skeleton",
+      "cls": "h-14 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/component.tsx",
+      "line": 43,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/component.tsx",
+      "line": 49,
+      "component": "Skeleton",
+      "cls": "h-16 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/CourseCatalogPage/CatalogLineCardSkeleton/index.tsx",
+      "line": 30,
+      "component": "Skeleton",
+      "cls": "hidden aspect-video w-36 shrink-0 rounded-2xl @app-sm:block",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/CourseCatalogPage/CatalogLineCardSkeleton/index.tsx",
+      "line": 52,
+      "component": "Skeleton",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/CourseCatalogPage/component.tsx",
+      "line": 107,
+      "component": "Skeleton",
+      "cls": "hidden aspect-video w-36 shrink-0 rounded-2xl @app-sm:block",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/CourseCatalogPage/component.tsx",
+      "line": 129,
+      "component": "Skeleton",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+      "line": 65,
+      "component": "Typography",
+      "cls": "[\"min-w-0\"]",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "line": 33,
+      "component": "Skeleton",
+      "cls": "h-4 w-16 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "line": 82,
+      "component": "Skeleton",
+      "cls": "h-4 w-16 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+      "line": 87,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-2xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "line": 76,
+      "component": "Typography",
+      "cls": "[\"min-w-0\", \"flex-1\"]",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "line": 30,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+      "line": 49,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "line": 47,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "line": 153,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "line": 171,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "line": 172,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "line": 174,
+      "component": "Skeleton",
+      "cls": "h-3 w-10 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "line": 175,
+      "component": "Skeleton",
+      "cls": "h-4 w-8 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "line": 33,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "line": 56,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "line": 57,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "line": 59,
+      "component": "Skeleton",
+      "cls": "h-3 w-10 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "line": 60,
+      "component": "Skeleton",
+      "cls": "h-4 w-8 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+      "line": 158,
+      "component": "ProgressMeter",
+      "cls": "[\"self-start\"]",
+      "ambig": [
+        "self-start"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "line": 55,
+      "component": "Skeleton",
+      "cls": "size-3 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "line": 66,
+      "component": "Skeleton",
+      "cls": "size-3 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "line": 109,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "line": 116,
+      "component": "Skeleton",
+      "cls": "size-6 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "line": 117,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "line": 148,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 86,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 109,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 110,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 112,
+      "component": "Skeleton",
+      "cls": "h-3 w-10 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 113,
+      "component": "Skeleton",
+      "cls": "h-8 w-24 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "line": 33,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "line": 56,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "line": 57,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "line": 59,
+      "component": "Skeleton",
+      "cls": "h-3 w-10 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "line": 60,
+      "component": "Skeleton",
+      "cls": "h-8 w-24 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "line": 73,
+      "component": "SurfaceListCard",
+      "cls": "h-4 w-5 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "line": 46,
+      "component": "Skeleton",
+      "cls": "h-4 w-5 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "line": 168,
+      "component": "Skeleton",
+      "cls": "h-6 w-16 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "line": 201,
+      "component": "Skeleton",
+      "cls": "size-6 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "line": 202,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "line": 203,
+      "component": "Skeleton",
+      "cls": "h-3 w-12 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "line": 211,
+      "component": "UserAvatar",
+      "cls": "size-6 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "line": 220,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "line": 44,
+      "component": "Skeleton",
+      "cls": "h-6 w-16 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "line": 56,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "line": 58,
+      "component": "Skeleton",
+      "cls": "h-3 w-12 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+      "line": 88,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+      "line": 103,
+      "component": "Skeleton",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/index.tsx",
+      "line": 183,
+      "component": "Typography",
+      "cls": "self-end",
+      "ambig": [
+        "self-end"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardReviewPage/index.tsx",
+      "line": 204,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "line": 202,
+      "component": "Skeleton",
+      "cls": "h-1 flex-1 rounded-full",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "line": 59,
+      "component": "Skeleton",
+      "cls": "h-1 flex-1 rounded-full",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "line": 119,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "line": 120,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "line": 183,
+      "component": "Typography",
+      "cls": "[\"min-w-0\", \"flex-1\"]",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "line": 243,
+      "component": "Typography",
+      "cls": "[\"min-w-0\", \"flex-1\"]",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "line": 255,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+      "line": 223,
+      "component": "Skeleton",
+      "cls": "size-2.5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "line": 58,
+      "component": "Skeleton",
+      "cls": "size-2.5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "line": 60,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "line": 66,
+      "component": "Skeleton",
+      "cls": "h-5 w-12 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "line": 92,
+      "component": "Skeleton",
+      "cls": "h-16 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "line": 55,
+      "component": "Typography",
+      "cls": "mt-1 w-full max-w-xs",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "line": 151,
+      "component": "Typography",
+      "cls": "self-start",
+      "ambig": [
+        "self-start"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 214,
+      "component": "Skeleton",
+      "cls": "h-1 flex-1 rounded-full",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 59,
+      "component": "Skeleton",
+      "cls": "h-1 flex-1 rounded-full",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "line": 254,
+      "component": "SurfaceListCard",
+      "cls": "[\"min-w-0\", \"flex-1\"]",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "line": 265,
+      "component": "Skeleton",
+      "cls": "h-6 w-12 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "line": 277,
+      "component": "LabeledAccordionCard",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 172,
+      "component": "Skeleton",
+      "cls": "ml-auto shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 292,
+      "component": "SurfaceListCard",
+      "cls": "self-start",
+      "ambig": [
+        "self-start"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "line": 240,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "line": 242,
+      "component": "ProgressMeter",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "line": 243,
+      "component": "ProgressMeter",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "line": 244,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "line": 41,
+      "component": "Skeleton",
+      "cls": "h-[14px] w-16 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "line": 42,
+      "component": "Skeleton",
+      "cls": "flex-1",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "line": 43,
+      "component": "Skeleton",
+      "cls": "h-[14px] w-16 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "line": 103,
+      "component": "Skeleton",
+      "cls": "size-4 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "line": 105,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "line": 114,
+      "component": "Skeleton",
+      "cls": "h-5 w-16 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "line": 123,
+      "component": "Typography",
+      "cls": "[\"min-w-0\"]",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "line": 142,
+      "component": "Typography",
+      "cls": "[\"min-w-0\", \"flex-1\"]",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+      "line": 29,
+      "component": "Skeleton",
+      "cls": "h-16 w-40 shrink-0 rounded-2xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/InstallmentPlansPage/index.tsx",
+      "line": 155,
+      "component": "Skeleton",
+      "cls": "h-40 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/JobDetailPage/component.tsx",
+      "line": 193,
+      "component": "Skeleton",
+      "cls": "size-16 shrink-0 rounded-2xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/JobDetailPage/component.tsx",
+      "line": 230,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/JobListPage/component.tsx",
+      "line": 116,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/JobListPage/component.tsx",
+      "line": 276,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+      "line": 25,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "line": 257,
+      "component": "Typography",
+      "cls": "self-start",
+      "ambig": [
+        "self-start"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 90,
+      "component": "Typography",
+      "cls": "self-start",
+      "ambig": [
+        "self-start"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 211,
+      "component": "Skeleton",
+      "cls": "size-10 shrink-0 rounded-2xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 267,
+      "component": "Skeleton",
+      "cls": "h-full w-full rounded-t-2xl rounded-b-none",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 296,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 297,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 298,
+      "component": "Skeleton",
+      "cls": "h-3 w-10 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 327,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 366,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 375,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "line": 45,
+      "component": "Skeleton",
+      "cls": "size-10 shrink-0 rounded-2xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "line": 97,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "line": 98,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "line": 100,
+      "component": "Skeleton",
+      "cls": "h-3 w-10 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 110,
+      "component": "Skeleton",
+      "cls": "size-10 shrink-0 rounded-2xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 163,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 164,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 166,
+      "component": "Skeleton",
+      "cls": "h-3 w-8 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 167,
+      "component": "Skeleton",
+      "cls": "h-4 w-8 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 178,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 187,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "line": 46,
+      "component": "Skeleton",
+      "cls": "size-10 shrink-0 rounded-2xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "line": 106,
+      "component": "Skeleton",
+      "cls": "h-3 w-6 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "line": 107,
+      "component": "Skeleton",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "line": 109,
+      "component": "Skeleton",
+      "cls": "h-3 w-8 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "line": 110,
+      "component": "Skeleton",
+      "cls": "h-4 w-8 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "line": 136,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "line": 170,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "line": 133,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "line": 199,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "line": 176,
+      "component": "Skeleton",
+      "cls": "h-9 min-w-0 flex-1 rounded-medium",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "line": 177,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-medium",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "line": 181,
+      "component": "Skeleton",
+      "cls": "h-[14px] w-16 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "line": 202,
+      "component": "Skeleton",
+      "cls": "h-6 w-10 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "line": 208,
+      "component": "Skeleton",
+      "cls": "size-4 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "line": 334,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 175,
+      "component": "Typography",
+      "cls": "min-w-0",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 245,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 424,
+      "component": "Typography",
+      "cls": "w-40 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 429,
+      "component": "ProgressMeter",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 471,
+      "component": "Typography",
+      "cls": "w-40 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 476,
+      "component": "ProgressMeter",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "line": 45,
+      "component": "Skeleton",
+      "cls": "size-7 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "line": 62,
+      "component": "Skeleton",
+      "cls": "h-1 flex-1 rounded-full",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "line": 133,
+      "component": "Skeleton",
+      "cls": "size-20 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "line": 145,
+      "component": "Skeleton",
+      "cls": "min-w-0",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "line": 155,
+      "component": "Skeleton",
+      "cls": "h-full min-h-64 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "line": 125,
+      "component": "ProgressMeter",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "line": 201,
+      "component": "Skeleton",
+      "cls": "flex-1",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "line": 99,
+      "component": "Typography",
+      "cls": "w-4 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "line": 114,
+      "component": "Typography",
+      "cls": "w-4 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "line": 129,
+      "component": "Typography",
+      "cls": "w-4 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 320,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "line": 74,
+      "component": "Skeleton",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "line": 83,
+      "component": "Typography",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 163,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1 truncate text-inherit",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "line": 91,
+      "component": "SurfaceListCard",
+      "cls": "[\"min-w-0\"]",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "line": 97,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "line": 107,
+      "component": "Skeleton",
+      "cls": "ml-auto flex shrink-0 items-center gap-2",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "line": 119,
+      "component": "Skeleton",
+      "cls": "h-24 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "line": 144,
+      "component": "Skeleton",
+      "cls": "h-24 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 57,
+      "component": "Skeleton",
+      "cls": "h-20 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 58,
+      "component": "Skeleton",
+      "cls": "h-20 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 82,
+      "component": "Skeleton",
+      "cls": "h-full w-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 98,
+      "component": "Skeleton",
+      "cls": "h-20 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "line": 144,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "line": 182,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "line": 127,
+      "component": "Typography",
+      "cls": "max-w-32 min-w-0 cursor-default text-center",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "line": 151,
+      "component": "Typography",
+      "cls": "w-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "line": 132,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 291,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "line": 119,
+      "component": "Skeleton",
+      "cls": "h-20 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "line": 148,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 138,
+      "component": "Skeleton",
+      "cls": "h-6 w-1/2",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "line": 126,
+      "component": "Skeleton",
+      "cls": "h-6 w-1/2",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "line": 127,
+      "component": "Skeleton",
+      "cls": "h-40 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "line": 69,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "line": 64,
+      "component": "Typography",
+      "cls": "min-w-0",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 176,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 192,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+      "line": 67,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+      "line": 115,
+      "component": "Skeleton",
+      "cls": "size-4 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfilePublicCvPage/index.tsx",
+      "line": 89,
+      "component": "Skeleton",
+      "cls": "h-full w-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "line": 95,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "line": 123,
+      "component": "Skeleton",
+      "cls": "h-40 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "line": 126,
+      "component": "Skeleton",
+      "cls": "size-4 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "line": 219,
+      "component": "Skeleton",
+      "cls": "h-20 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "line": 258,
+      "component": "Skeleton",
+      "cls": "h-9 min-w-0 flex-1 rounded-medium",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "line": 259,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "line": 262,
+      "component": "Skeleton",
+      "cls": "w-16 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "line": 497,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "line": 78,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "line": 84,
+      "component": "Skeleton",
+      "cls": "h-4 w-1/2 rounded-lg",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "line": 232,
+      "component": "Skeleton",
+      "cls": "size-12 shrink-0 rounded-xl",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "line": 233,
+      "component": "Skeleton",
+      "cls": "h-4 w-1/2 rounded-lg",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "line": 236,
+      "component": "Skeleton",
+      "cls": "h-4 w-full rounded-lg",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "line": 237,
+      "component": "Skeleton",
+      "cls": "h-9 w-24 self-end rounded-lg",
+      "ambig": [
+        "self-end"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/SessionsPage/index.tsx",
+      "line": 117,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/SessionsPage/index.tsx",
+      "line": 208,
+      "component": "Typography",
+      "cls": "ml-auto shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "line": 121,
+      "component": "Skeleton",
+      "cls": "h-14 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/TalentDirectoryPage/component.tsx",
+      "line": 158,
+      "component": "Skeleton",
+      "cls": "[\"min-w-0\"]",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "line": 686,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "line": 1187,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "line": 1986,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/feedback/ConfirmDialog/index.tsx",
+      "line": 113,
+      "component": "Typography",
+      "cls": "w-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "line": 128,
+      "component": "Typography",
+      "cls": "min-w-0",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "line": 132,
+      "component": "Typography",
+      "cls": "min-w-0",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/lists/List/index.tsx",
+      "line": 454,
+      "component": "TitledText",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/lists/UserCell/index.tsx",
+      "line": 140,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/index.tsx",
+      "line": 380,
+      "component": "Typography",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "line": 115,
+      "component": "Typography",
+      "cls": "h-44 w-full text-accent-soft-foreground",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "line": 183,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "line": 206,
+      "component": "Skeleton",
+      "cls": "flex w-full items-center gap-2",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "line": 258,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "line": 21,
+      "component": "Skeleton",
+      "cls": "aspect-video w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "line": 32,
+      "component": "Skeleton",
+      "cls": "size-4 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "line": 41,
+      "component": "Skeleton",
+      "cls": "flex w-full items-center gap-2",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "line": 118,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "line": 124,
+      "component": "Typography",
+      "cls": "[\"min-w-0\"]",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "line": 126,
+      "component": "Typography",
+      "cls": "[\"min-w-0\"]",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cards/PricingCard/index.tsx",
+      "line": 115,
+      "component": "Typography",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cards/SectionCard/index.tsx",
+      "line": 147,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "line": 211,
+      "component": "Typography",
+      "cls": "ml-auto shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "line": 91,
+      "component": "Typography",
+      "cls": "w-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 92,
+      "component": "Skeleton",
+      "cls": "size-6 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 109,
+      "component": "Skeleton",
+      "cls": "h-10 w-full rounded-3xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 124,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 72,
+      "component": "TitledText",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 84,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "line": 98,
+      "component": "UserAvatar",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "line": 148,
+      "component": "UserAvatar",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "line": 93,
+      "component": "UserAvatar",
+      "cls": "mt-0 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "line": 158,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "line": 21,
+      "component": "Skeleton",
+      "cls": "h-10 w-full max-w-md rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "line": 22,
+      "component": "Skeleton",
+      "cls": "h-16 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "line": 25,
+      "component": "Skeleton",
+      "cls": "h-24 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "line": 26,
+      "component": "Skeleton",
+      "cls": "h-24 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "line": 27,
+      "component": "Skeleton",
+      "cls": "h-24 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "line": 29,
+      "component": "Skeleton",
+      "cls": "h-[300px] w-full rounded-2xl @app-lg:h-[75vh]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 153,
+      "component": "Typography",
+      "cls": "shrink-0 text-right tabular-nums",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "line": 105,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "line": 72,
+      "component": "UserAvatar",
+      "cls": "flex min-w-0 flex-1 flex-col gap-1",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "line": 78,
+      "component": "Typography",
+      "cls": "size-3.5 shrink-0 text-accent-soft-foreground",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "line": 64,
+      "component": "UserAvatar",
+      "cls": "flex min-w-0 flex-1 flex-col",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "line": 70,
+      "component": "Typography",
+      "cls": "size-4 shrink-0 text-accent-soft-foreground",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "line": 112,
+      "component": "UserAvatar",
+      "cls": "mb-1 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "line": 46,
+      "component": "Typography",
+      "cls": "flex-1",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "line": 57,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "line": 90,
+      "component": "Typography",
+      "cls": "size-3.5 shrink-0 text-accent-soft-foreground",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "line": 24,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 21,
+      "component": "Typography",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 61,
+      "component": "Skeleton",
+      "cls": "size-2 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "line": 95,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "line": 103,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "line": 52,
+      "component": "Typography",
+      "cls": "w-full max-w-[300px]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 153,
+      "component": "Typography",
+      "cls": "flex-1",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 181,
+      "component": "Typography",
+      "cls": "size-4 shrink-0 text-accent-soft-foreground",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "line": 91,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "line": 95,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "line": 134,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "line": 105,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "line": 117,
+      "component": "Typography",
+      "cls": "[\"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "line": 154,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "line": 25,
+      "component": "Typography",
+      "cls": "[\"w-1/4\", \"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      "line": 60,
+      "component": "Typography",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+      "line": 81,
+      "component": "Typography",
+      "cls": "flex-1",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/LearnNudges/component.tsx",
+      "line": 63,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "line": 28,
+      "component": "Skeleton",
+      "cls": "h-3 w-full rounded-sm",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "line": 38,
+      "component": "Skeleton",
+      "cls": "h-40 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "line": 18,
+      "component": "Skeleton",
+      "cls": "h-14 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "line": 19,
+      "component": "Skeleton",
+      "cls": "h-14 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "line": 57,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "line": 65,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 161,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 304,
+      "component": "Skeleton",
+      "cls": "h-20 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "line": 31,
+      "component": "Typography",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "line": 99,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "line": 114,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "line": 35,
+      "component": "Skeleton",
+      "cls": "h-2 w-full rounded-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "line": 43,
+      "component": "Skeleton",
+      "cls": "h-10 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "line": 378,
+      "component": "Skeleton",
+      "cls": "h-40 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "line": 33,
+      "component": "Skeleton",
+      "cls": "h-[220px] w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+      "line": 430,
+      "component": "Typography",
+      "cls": "min-h-0 flex-1 overflow-hidden p-4 pb-20",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "line": 40,
+      "component": "Typography",
+      "cls": "[index === lines - 1 ? \"w-1/2\" : \"w-3/4\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "line": 80,
+      "component": "Skeleton",
+      "cls": "h-4 w-full rounded",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "line": 85,
+      "component": "UserAvatar",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "line": 122,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "line": 59,
+      "component": "UserAvatar",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "line": 158,
+      "component": "Skeleton",
+      "cls": "h-4 w-full rounded",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/ResumeRail/index.tsx",
+      "line": 79,
+      "component": "Typography",
+      "cls": "min-w-0 text-accent-soft-foreground",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/learn/ResumeRail/index.tsx",
+      "line": 82,
+      "component": "Typography",
+      "cls": "min-w-0 text-foreground",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "line": 78,
+      "component": "Typography",
+      "cls": "ml-auto flex shrink-0 items-center gap-2",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "line": 48,
+      "component": "Typography",
+      "cls": "[\"flex-1\"]",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "line": 51,
+      "component": "Typography",
+      "cls": "min-w-0 truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "line": 54,
+      "component": "Typography",
+      "cls": "shrink-0 text-[10px] text-muted",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "line": 89,
+      "component": "Typography",
+      "cls": "mt-0 shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "line": 221,
+      "component": "Skeleton",
+      "cls": "w-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "line": 243,
+      "component": "Typography",
+      "cls": "w-full min-w-0",
+      "ambig": [
+        "w-full",
+        "min-w-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "line": 258,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "line": 77,
+      "component": "Typography",
+      "cls": "min-w-0 flex-1 text-left",
+      "ambig": [
+        "min-w-0",
+        "flex-1"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "line": 152,
+      "component": "Typography",
+      "cls": "shrink-0 whitespace-nowrap",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "line": 176,
+      "component": "Typography",
+      "cls": "hidden shrink-0 whitespace-nowrap @app-sm:block",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "line": 142,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "line": 263,
+      "component": "Skeleton",
+      "cls": "h-5 w-10 shrink-0 rounded-medium",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "line": 268,
+      "component": "Skeleton",
+      "cls": "h-40 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "line": 271,
+      "component": "Skeleton",
+      "cls": "h-3 w-8 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "line": 273,
+      "component": "Skeleton",
+      "cls": "size-3 shrink-0 rounded-sm",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "line": 275,
+      "component": "Skeleton",
+      "cls": "h-3 w-8 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 78,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 94,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 95,
+      "component": "Typography",
+      "cls": "[\"w-1/4\", \"shrink-0\"]",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 128,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 158,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 240,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 248,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 261,
+      "component": "Skeleton",
+      "cls": "h-40 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 267,
+      "component": "Typography",
+      "cls": "[\"w-1/2\"]",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "line": 33,
+      "component": "Skeleton",
+      "cls": "h-px w-full rounded-xs",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+      "line": 20,
+      "component": "Skeleton",
+      "cls": "my-[5px] h-[14px] w-1/2 rounded",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "line": 26,
+      "component": "Skeleton",
+      "cls": "size-4 shrink-0 rounded-md",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "line": 16,
+      "component": "Skeleton",
+      "cls": "ml-auto size-4 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/index.tsx",
+      "line": 40,
+      "component": "Skeleton",
+      "cls": "h-12 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "line": 35,
+      "component": "Skeleton",
+      "cls": "size-8 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "line": 38,
+      "component": "Skeleton",
+      "cls": "my-[5px] h-[14px] w-1/2 rounded",
+      "ambig": [
+        "w-1/2"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "line": 43,
+      "component": "Skeleton",
+      "cls": "ml-auto size-4 shrink-0 rounded",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "line": 26,
+      "component": "Skeleton",
+      "cls": "size-5 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "line": 29,
+      "component": "Skeleton",
+      "cls": "size-4 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "line": 21,
+      "component": "Skeleton",
+      "cls": "h-2 w-full rounded-full",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "line": 26,
+      "component": "Skeleton",
+      "cls": "size-2 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "line": 17,
+      "component": "Skeleton",
+      "cls": "h-9 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "line": 16,
+      "component": "Skeleton",
+      "cls": "absolute inset-0 h-5 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+      "line": 35,
+      "component": "Skeleton",
+      "cls": "my-[5px] h-[14px] w-full rounded",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "line": 25,
+      "component": "Skeleton",
+      "cls": "h-full w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "line": 24,
+      "component": "Skeleton",
+      "cls": "size-9 shrink-0 rounded-full",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "line": 56,
+      "component": "Typography",
+      "cls": "shrink-0 text-warning-soft-foreground",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "line": 114,
+      "component": "Typography",
+      "cls": "flex w-full flex-col gap-3",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "line": 128,
+      "component": "Typography",
+      "cls": "flex-1",
+      "ambig": [
+        "flex-1"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "line": 131,
+      "component": "Typography",
+      "cls": "w-10 shrink-0 text-right",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": false
+    }
+  ],
+  "pageHitsSample": [
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "line": 50,
+      "component": "Skeleton",
+      "cls": "h-5 w-32 rounded",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "line": 51,
+      "component": "Skeleton",
+      "cls": "h-3 w-48 rounded-sm",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "line": 58,
+      "component": "Skeleton",
+      "cls": "h-6 w-20 rounded-full",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "line": 59,
+      "component": "Skeleton",
+      "cls": "h-6 w-20 rounded-full",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "line": 60,
+      "component": "Skeleton",
+      "cls": "h-6 w-20 rounded-full",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "line": 73,
+      "component": "Skeleton",
+      "cls": "h-8 w-full rounded-lg",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 147,
+      "component": "Skeleton",
+      "cls": "h-16 w-full rounded-2xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 152,
+      "component": "Skeleton",
+      "cls": "h-4 w-32 rounded-lg",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 153,
+      "component": "Skeleton",
+      "cls": "h-9 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 160,
+      "component": "Skeleton",
+      "cls": "h-4 w-40 rounded-lg",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiSettingsPage/index.tsx",
+      "line": 162,
+      "component": "Skeleton",
+      "cls": "h-9 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "line": 141,
+      "component": "Skeleton",
+      "cls": "h-44 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "line": 156,
+      "component": "Skeleton",
+      "cls": "h-12 w-full rounded-xl",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/index.tsx",
+      "line": 106,
+      "component": "Typography",
+      "cls": "text-warning-soft-foreground",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 20,
+      "component": "Skeleton",
+      "cls": "h-[440px] w-full rounded-3xl @app-sm:h-[560px]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 91,
+      "component": "Typography",
+      "cls": "overflow-x-auto pb-1",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 112,
+      "component": "Typography",
+      "cls": "overflow-x-auto pb-1",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 133,
+      "component": "Typography",
+      "cls": "overflow-x-auto pb-1",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 39,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 42,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 52,
+      "component": "Typography",
+      "cls": "whitespace-nowrap",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 71,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 74,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "line": 118,
+      "component": "Skeleton",
+      "cls": "h-[440px] w-full rounded-3xl @app-sm:h-[560px]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "line": 149,
+      "component": "Typography",
+      "cls": "shrink-0",
+      "ambig": [
+        "shrink-0"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 72,
+      "component": "Typography",
+      "cls": "min-w-0 truncate",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 75,
+      "component": "Typography",
+      "cls": "flex flex-col gap-2 border-t border-default pt-3",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 83,
+      "component": "Typography",
+      "cls": "flex flex-col gap-2 border-t border-default pt-3",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 89,
+      "component": "Typography",
+      "cls": "flex flex-wrap gap-2",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 110,
+      "component": "SimpleEmptyState",
+      "cls": "p-6",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 133,
+      "component": "Typography",
+      "cls": "min-w-0 truncate font-mono",
+      "ambig": [
+        "min-w-0"
+      ],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 143,
+      "component": "Typography",
+      "cls": "whitespace-nowrap",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 167,
+      "component": "Typography",
+      "cls": "group inline-flex items-center gap-2 text-accent-soft-foreground",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 91,
+      "component": "Skeleton",
+      "cls": "h-5 w-28 rounded-full",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 92,
+      "component": "Typography",
+      "cls": "[\"w-3/4\"]",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 93,
+      "component": "Typography",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 94,
+      "component": "Typography",
+      "cls": "[\"w-1/4\"]",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 103,
+      "component": "Typography",
+      "cls": "[\"w-2/3\"]",
+      "ambig": [],
+      "onlyAmbig": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 104,
+      "component": "Typography",
+      "cls": "[\"w-full\"]",
+      "ambig": [
+        "w-full"
+      ],
+      "onlyAmbig": true
+    },
+    {
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "line": 105,
+      "component": "Skeleton",
+      "cls": "h-3 w-1/3 rounded-sm",
+      "ambig": [],
+      "onlyAmbig": false
+    }
+  ],
+  "pageHitsCount": 733,
+  "duplicateCandidates": [
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 84,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "line": 158,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "line": 24,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "line": 134,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnNudges/component.tsx",
+      "line": 63,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 161,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 78,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 94,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 128,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 158,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 240,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 248,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 267,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/composites/lists/UserCell/index.tsx",
+      "line": 140,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "line": 181,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/component.tsx",
+      "line": 43,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "line": 30,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "line": 117,
+      "component": "Typography",
+      "change": "remove classNames={[\"w-1/2\"]} on isSkeleton (default already inline-block w-1/2 rounded)",
+      "evidence": "Typography skeleton: cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames)"
+    }
+  ],
+  "deadVerified": [
+    {
+      "file": ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+      "prop": "className",
+      "mentionCount": 5,
+      "uses": [
+        {
+          "before": "ean size?: number ",
+          "after": "className?: string } const Base = ({ className, "
+        },
+        {
+          "before": "e?: string } const Base = ({ ",
+          "after": "className, children, hideScrollBar = true, si"
+        },
+        {
+          "before": "} size={size} ",
+          "after": "className={cn(\"overflow-y-auto\", className)} > "
+        },
+        {
+          "before": " className={cn(\"overflow-y-auto\", ",
+          "after": "className)} > <motion.div "
+        },
+        {
+          "before": " <motion.div ",
+          "after": "className={cn( \"min-h-min select-none\","
+        }
+      ]
+    },
+    {
+      "file": ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+      "prop": "className",
+      "mentionCount": 6,
+      "uses": [
+        {
+          "before": " widthVar?: string ",
+          "after": "className?: string } const Base = ({ childr"
+        },
+        {
+          "before": "ndleSide = \"right\", widthVar, ",
+          "after": "className, }: ResizableRailBaseProps) => { const"
+        },
+        {
+          "before": "rageKey]) return ( <div ",
+          "after": "className={cn(className)} style={{ width }}> {c"
+        },
+        {
+          "before": " return ( <div className={cn(",
+          "after": "className)} style={{ width }}> {children} "
+        },
+        {
+          "before": " onKeyDown={onKeyDown} ",
+          "after": "className={cn( \"group absolute inset-y-"
+        },
+        {
+          "before": "} > <span ",
+          "after": "className=\"h-full w-px bg-separator transition-colors group-"
+        }
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/Cluster/Cluster.tsx",
+      "prop": "classNames",
+      "mentionCount": 3,
+      "uses": [
+        {
+          "before": " justify?: LayoutJustify ",
+          "after": "classNames?: Array<AllowedClassName> principle?: "
+        },
+        {
+          "before": "= \"start\", separator = false, ",
+          "after": "classNames, principle, explain, isSkeleton, "
+        },
+        {
+          "before": " JUSTIFY_CLASS[justify], ",
+          "after": "classNames)} > {(items ?? []).map((Item, index"
+        }
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "prop": "classNames",
+      "mentionCount": 3,
+      "uses": [
+        {
+          "before": " isSkeleton?: boolean ",
+          "after": "classNames?: Array<AllowedClassName> principle?: "
+        },
+        {
+          "before": "landmark = false, isSkeleton, ",
+          "after": "classNames, principle, explain, identity}: Pi"
+        },
+        {
+          "before": " className={cn(\"flex flex-col\", ",
+          "after": "classNames)} > {} <div cl"
+        }
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "prop": "classNames",
+      "mentionCount": 4,
+      "uses": [
+        {
+          "before": " showFooter: boolean ",
+          "after": "classNames?: Array<AllowedClassName> } const InnerLayo"
+        },
+        {
+          "before": "onTermsPress, onPrivacyPress, ",
+          "after": "classNames, ...navbarProps }: InnerLayoutProps) => { "
+        },
+        {
+          "before": "in-h-dvh\"> <StackV gap={1} ",
+          "after": "classNames={classNames} items={navMainFooter} /> </"
+        },
+        {
+          "before": " <StackV gap={1} classNames={",
+          "after": "classNames} items={navMainFooter} /> </div> ) "
+        }
+      ]
+    },
+    {
+      "file": "src/components/behaviors/DragScrollArea/index.tsx",
+      "prop": "className",
+      "mentionCount": 5,
+      "uses": [
+        {
+          "before": "ean size?: number ",
+          "after": "className?: string } const Base = ({ className, "
+        },
+        {
+          "before": "e?: string } const Base = ({ ",
+          "after": "className, children, hideScrollBar = true, si"
+        },
+        {
+          "before": "} size={size} ",
+          "after": "className={cn(\"overflow-y-auto\", className)} > "
+        },
+        {
+          "before": " className={cn(\"overflow-y-auto\", ",
+          "after": "className)} > <motion.div "
+        },
+        {
+          "before": " <motion.div ",
+          "after": "className={cn( \"min-h-min select-none\","
+        }
+      ]
+    },
+    {
+      "file": "src/components/behaviors/ResizableRail/index.tsx",
+      "prop": "className",
+      "mentionCount": 6,
+      "uses": [
+        {
+          "before": " widthVar?: string ",
+          "after": "className?: string } const Base = ({ childr"
+        },
+        {
+          "before": "ndleSide = \"right\", widthVar, ",
+          "after": "className, }: ResizableRailBaseProps) => { const"
+        },
+        {
+          "before": "rageKey]) return ( <div ",
+          "after": "className={cn(className)} style={{ width }}> {c"
+        },
+        {
+          "before": " return ( <div className={cn(",
+          "after": "className)} style={{ width }}> {children} "
+        },
+        {
+          "before": " onKeyDown={onKeyDown} ",
+          "after": "className={cn( \"group absolute inset-y-"
+        },
+        {
+          "before": "} > <span ",
+          "after": "className=\"h-full w-px bg-separator transition-colors group-"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "prop": "className",
+      "mentionCount": 16,
+      "uses": [
+        {
+          "before": "t LeaderboardCategoryRail = ({ variant, ",
+          "after": "className }: LeaderboardCategoryRailProps) => { const t"
+        },
+        {
+          "before": ") { return ( <div ",
+          "after": "className={cn(\"-mx-1 flex gap-2 overflow-x-auto px-1 pb-1\", "
+        },
+        {
+          "before": " flex gap-2 overflow-x-auto px-1 pb-1\", ",
+          "after": "className)}> {items.map((item) => { "
+        },
+        {
+          "before": "item.key)} ",
+          "after": "className={cn( \"flex shrink"
+        },
+        {
+          "before": "item.icon aria-hidden focusable=\"false\" ",
+          "after": "className=\"size-4 shrink-0\" /> "
+        },
+        {
+          "before": " <span ",
+          "after": "className=\"font-medium\">{t(\"leaderboard.xp\", { xp: item.xp }"
+        },
+        {
+          "before": " } return ( <div ",
+          "after": "className={cn(\"flex flex-col gap-3 overflow-y-auto p-6\", cla"
+        },
+        {
+          "before": "ex flex-col gap-3 overflow-y-auto p-6\", ",
+          "after": "className)}> <Label>{t(\"leaderboard.categories."
+        },
+        {
+          "before": " } }} ",
+          "after": "className=\"gap-1 p-0\" > {items"
+        },
+        {
+          "before": "item.disabled} ",
+          "after": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[disabl"
+        },
+        {
+          "before": " > <div ",
+          "after": "className=\"flex items-center gap-3\"> "
+        },
+        {
+          "before": "false\" ",
+          "after": "className={cn( \"size-5 "
+        }
+      ]
+    },
+    {
+      "file": "src/components/frames/Cluster/index.tsx",
+      "prop": "classNames",
+      "mentionCount": 3,
+      "uses": [
+        {
+          "before": " justify?: LayoutJustify ",
+          "after": "classNames?: Array<AllowedClassName> principle?: "
+        },
+        {
+          "before": "= \"start\", separator = false, ",
+          "after": "classNames, principle, explain, isSkeleton, "
+        },
+        {
+          "before": " JUSTIFY_CLASS[justify], ",
+          "after": "classNames)} > {(items ?? []).map((Item, index"
+        }
+      ]
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "prop": "classNames",
+      "mentionCount": 3,
+      "uses": [
+        {
+          "before": " isSkeleton?: boolean ",
+          "after": "classNames?: Array<AllowedClassName> principle?: "
+        },
+        {
+          "before": "landmark = false, isSkeleton, ",
+          "after": "classNames, principle, explain, identity}: Pi"
+        },
+        {
+          "before": " className={cn(\"flex flex-col\", ",
+          "after": "classNames)} > {} <div cl"
+        }
+      ]
+    },
+    {
+      "file": "src/components/svg/Logo/index.tsx",
+      "prop": "className",
+      "mentionCount": 1,
+      "uses": [
+        {
+          "before": "s<undefined> export const Logo = ({ ",
+          "after": "className }: LogoProps) => { return ( <svg xml"
+        }
+      ]
+    }
+  ],
+  "deadConsumerReport": [
+    {
+      "file": ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+      "prop": "className",
+      "componentGuess": "DragScrollArea",
+      "consumers": [
+        {
+          "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+          "line": 172,
+          "snippet": "<DragScrollArea size={40} className="
+        }
+      ],
+      "consumerCount": 1
+    },
+    {
+      "file": ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+      "prop": "className",
+      "componentGuess": "ResizableRail",
+      "consumers": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 138,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 149,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 160,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/index.tsx",
+          "line": 55,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/index.tsx",
+          "line": 423,
+          "snippet": "<ResizableRail storageKey=\"starci.cv.editorSidebar.width\" defaultWidth={256} minWidth={220} maxWidth={420} ariaLabel={t(\"cv.builder.resizeSidebarAria\")} classNa"
+        },
+        {
+          "file": "src/components/pages/MindMapPage/component.tsx",
+          "line": 304,
+          "snippet": "<ResizableRail storageKey={RAIL_STORAGE_KEY} defaultWidth={RAIL_DEFAULT_WIDTH} minWidth={RAIL_MIN_WIDTH} maxWidth={RAIL_MAX_WIDTH} ariaLabel={railResizeAriaLabe"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/index.tsx",
+          "line": 43,
+          "snippet": "<ResizableRail className="
+        }
+      ],
+      "consumerCount": 7
+    },
+    {
+      "file": ".storybook/components/frames/Cluster/Cluster.tsx",
+      "prop": "classNames",
+      "componentGuess": "Cluster",
+      "consumers": [
+        {
+          "file": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+          "line": 74,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" classNames="
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "line": 259,
+          "snippet": "<Cluster gap={3} items={chipItems} />, // the flashcard — FlipCard's LabeledCard (label OUTSIDE + Card) () => ( <StackV gap={4} items={[ () => <Typography isSke"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+          "line": 138,
+          "snippet": "<Cluster gap={3} principle=\"value-row\" explain=\"Holds a label and its numeric value on one baseline so the count stays readable against the label.\" justify=\"bet"
+        },
+        {
+          "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+          "line": 180,
+          "snippet": "<Cluster gap={4} principle=\"content-row\" justify=\"between\" align=\"center\" classNames="
+        },
+        {
+          "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+          "line": 85,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" classNames="
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "line": 251,
+          "snippet": "<Cluster gap={4} principle=\"content-row\" justify=\"between\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the "
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "line": 563,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" justify=\"end\" classNames="
+        }
+      ],
+      "consumerCount": 7
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "prop": "classNames",
+      "componentGuess": "PinnedTrack",
+      "consumers": [
+        {
+          "file": "src/components/layouts/InnerLayout/component.tsx",
+          "line": 57,
+          "snippet": "<PinnedTrack pinned={() => <Navbar {...(navbarProps as NavbarProps)} />} body={() => <>{children}</>} landmark classNames="
+        }
+      ],
+      "consumerCount": 1
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "prop": "classNames",
+      "componentGuess": "InnerLayout",
+      "consumers": [],
+      "consumerCount": 0
+    },
+    {
+      "file": "src/components/behaviors/DragScrollArea/index.tsx",
+      "prop": "className",
+      "componentGuess": "DragScrollArea",
+      "consumers": [
+        {
+          "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+          "line": 172,
+          "snippet": "<DragScrollArea size={40} className="
+        }
+      ],
+      "consumerCount": 1
+    },
+    {
+      "file": "src/components/behaviors/ResizableRail/index.tsx",
+      "prop": "className",
+      "componentGuess": "ResizableRail",
+      "consumers": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 138,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 149,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 160,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/index.tsx",
+          "line": 55,
+          "snippet": "<ResizableRail className="
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/index.tsx",
+          "line": 423,
+          "snippet": "<ResizableRail storageKey=\"starci.cv.editorSidebar.width\" defaultWidth={256} minWidth={220} maxWidth={420} ariaLabel={t(\"cv.builder.resizeSidebarAria\")} classNa"
+        },
+        {
+          "file": "src/components/pages/MindMapPage/component.tsx",
+          "line": 304,
+          "snippet": "<ResizableRail storageKey={RAIL_STORAGE_KEY} defaultWidth={RAIL_DEFAULT_WIDTH} minWidth={RAIL_MIN_WIDTH} maxWidth={RAIL_MAX_WIDTH} ariaLabel={railResizeAriaLabe"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/index.tsx",
+          "line": 43,
+          "snippet": "<ResizableRail className="
+        }
+      ],
+      "consumerCount": 7
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "prop": "className",
+      "componentGuess": "LeaderboardCategoryRail",
+      "consumers": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 168,
+          "snippet": "<LeaderboardCategoryRail variant=\"rail\" className="
+        }
+      ],
+      "consumerCount": 1
+    },
+    {
+      "file": "src/components/frames/Cluster/index.tsx",
+      "prop": "classNames",
+      "componentGuess": "Cluster",
+      "consumers": [
+        {
+          "file": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+          "line": 74,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" classNames="
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "line": 259,
+          "snippet": "<Cluster gap={3} items={chipItems} />, // the flashcard — FlipCard's LabeledCard (label OUTSIDE + Card) () => ( <StackV gap={4} items={[ () => <Typography isSke"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+          "line": 138,
+          "snippet": "<Cluster gap={3} principle=\"value-row\" explain=\"Holds a label and its numeric value on one baseline so the count stays readable against the label.\" justify=\"bet"
+        },
+        {
+          "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+          "line": 180,
+          "snippet": "<Cluster gap={4} principle=\"content-row\" justify=\"between\" align=\"center\" classNames="
+        },
+        {
+          "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+          "line": 85,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" classNames="
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "line": 251,
+          "snippet": "<Cluster gap={4} principle=\"content-row\" justify=\"between\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the "
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "line": 563,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" justify=\"end\" classNames="
+        }
+      ],
+      "consumerCount": 7
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "prop": "classNames",
+      "componentGuess": "PinnedTrack",
+      "consumers": [
+        {
+          "file": "src/components/layouts/InnerLayout/component.tsx",
+          "line": 57,
+          "snippet": "<PinnedTrack pinned={() => <Navbar {...(navbarProps as NavbarProps)} />} body={() => <>{children}</>} landmark classNames="
+        }
+      ],
+      "consumerCount": 1
+    },
+    {
+      "file": "src/components/svg/Logo/index.tsx",
+      "prop": "className",
+      "componentGuess": "Logo",
+      "consumers": [
+        {
+          "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+          "line": 23,
+          "snippet": "<Logo className="
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+          "line": 60,
+          "snippet": "<Logo className="
+        },
+        {
+          "file": "src/components/blocks/navigation/Footer/index.tsx",
+          "line": 89,
+          "snippet": "<Logo size=\"footer\" /> <div className="
+        },
+        {
+          "file": "src/components/blocks/navigation/Navbar/index.tsx",
+          "line": 247,
+          "snippet": "<Logo /> </span> <span className="
+        },
+        {
+          "file": "src/components/layouts/Navbar/index.tsx",
+          "line": 100,
+          "snippet": "<Logo className="
+        }
+      ],
+      "consumerCount": 5
+    }
+  ]
+}

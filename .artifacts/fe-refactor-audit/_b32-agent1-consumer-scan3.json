@@ -1,0 +1,3509 @@
+{
+  "Button": {
+    "className": {
+      "consumers": 184,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 82
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 40
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 80
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/feedback/Callout/Callout.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 134
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 108
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/landing/PricingTeaser/PricingTeaser.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 204
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/landing/ProductShowcase/ProductShowcase.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 159
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/navigation/NivoSidebar/NivoSidebar.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 161
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/navigation/NivoTopBar/NivoTopBar.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 101
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/blocks/landing/OfferSection/OfferSection.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 109
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 130
+            },
+            {
+              "tag": "Button",
+              "line": 150
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/pages/community/CommunityFeed/CommunityFeed.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 172
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/pages/CourseStudio/CourseStudio.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 101
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 101
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 152
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 188
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/MindMapContinueButton/MindMapContinueButton.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 63
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 245
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/ModuleContinueBand/ModuleContinueBand.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 109
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 76
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 57,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 80
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 172
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 161
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 186
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 76
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 206
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/cards/ContinueCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 168
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/PricingTable/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 153
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 118
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 141
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 100
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 129
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 142
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 26
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 59
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 109
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 105
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ModuleContinueBand/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 108
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+          "hits": [
+            {
+              "tag": "Button",
+              "line": 85
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Chip": {
+    "className": {
+      "consumers": 100,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 62
+            },
+            {
+              "tag": "Chip",
+              "line": 79
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 59
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/lists/List/List.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 373
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 95
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 99
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/landing/PricingTeaser/PricingTeaser.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 201
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/blocks/landing/OfferSection/OfferSection.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 108
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/pages/community/CommunityFeed/CommunityFeed.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 161
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 95
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 262
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 47
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 57
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 140
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/ModuleHeader/ModuleHeader.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 130
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 143
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 139
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/pages/CourseContents/CourseContents.tsx",
+          "hits": [
+            {
+              "tag": "ChipBase",
+              "line": 150
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 249
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 188
+            },
+            {
+              "tag": "Chip",
+              "line": 207
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 124
+            },
+            {
+              "tag": "Chip",
+              "line": 328
+            },
+            {
+              "tag": "Chip",
+              "line": 329
+            },
+            {
+              "tag": "Chip",
+              "line": 330
+            },
+            {
+              "tag": "Chip",
+              "line": 345
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 27,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/layout/Page/Page.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 190
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 114
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/PodOpenclawStatusCard/PodOpenclawStatusCard.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 166
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 160
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 115
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/cards/PricingCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 96
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 280
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/course/CourseTrialChip/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 31
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 94
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 29
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 99
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 143
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 31
+            },
+            {
+              "tag": "Chip",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 150
+            },
+            {
+              "tag": "Chip",
+              "line": 169
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/chips/EnumChip/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 114
+            },
+            {
+              "tag": "Chip",
+              "line": 122
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/layout/Page/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 204
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 112
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 135
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 32
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 171
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "dotClassName": {
+      "consumers": 5,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 112
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/PlaygroundConnectSheet/PlaygroundConnectSheet.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 206
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 30
+            },
+            {
+              "tag": "Chip",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 206
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+          "hits": [
+            {
+              "tag": "Chip",
+              "line": 31
+            },
+            {
+              "tag": "Chip",
+              "line": 37
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Avatar": {
+    "className": {
+      "consumers": 32,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 925
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/lists/AvatarGroup/AvatarGroup.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 75
+            },
+            {
+              "tag": "Avatar",
+              "line": 92
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 130
+            },
+            {
+              "tag": "Avatar",
+              "line": 158
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/navigation/NivoSidebar/NivoSidebar.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 208
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/layouts/ExpertDashboardShell/ExpertDashboardShell.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 209
+            },
+            {
+              "tag": "Avatar",
+              "line": 232
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 111
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/pages/AcademySettingsForm/AcademySettingsForm.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 221
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 122
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 93
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 57
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 352
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 257
+            },
+            {
+              "tag": "Avatar",
+              "line": 473
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/async/AsyncContent/AsyncContent.stories.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/cards/HighlightCard/HighlightCard.stories.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 31
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCard.stories.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 84
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 31
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/layout/Section/Section.stories.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 33
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 13,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/lists/IdentityContentRow/IdentityContentRow.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 71
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 90
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 111
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/blocks/landing/CommunityPreviewCard/CommunityPreviewCard.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 83
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 93
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 29
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 168
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 123
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 56
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 49
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/lists/IdentityContentRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 100
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/lists/UserCell/index.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 137
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CommunityFeedPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Avatar",
+              "line": 38
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Badge": {
+    "className": {
+      "consumers": 20,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 127
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/navigation/NivoTopBar/NivoTopBar.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 118
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/layouts/ExpertDashboardShell/ExpertDashboardShell.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 238
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 378
+            },
+            {
+              "tag": "Badge",
+              "line": 393
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 62
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 97
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 49
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 46
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 94
+            },
+            {
+              "tag": "Badge",
+              "line": 96
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/Navbar/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 411
+            },
+            {
+              "tag": "Badge",
+              "line": 429
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/notifications/NotificationBell/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 95
+            },
+            {
+              "tag": "Badge",
+              "line": 97
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 9
+            }
+          ]
+        },
+        {
+          "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 50
+            }
+          ]
+        },
+        {
+          "file": "src/components/layouts/Navbar/CartButton/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 42
+            },
+            {
+              "tag": "Badge",
+              "line": 44
+            }
+          ]
+        },
+        {
+          "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 150
+            },
+            {
+              "tag": "Badge",
+              "line": 152
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 352
+            },
+            {
+              "tag": "Badge",
+              "line": 354
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobListPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 262
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 277
+            },
+            {
+              "tag": "Badge",
+              "line": 279
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 200
+            },
+            {
+              "tag": "Badge",
+              "line": 202
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 465
+            },
+            {
+              "tag": "Badge",
+              "line": 467
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 1,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/pages/JobListPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Badge",
+              "line": 262
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Divider": {
+    "className": {
+      "consumers": 9,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/nivo/blocks/navigation/SidebarNavGroup/SidebarNavGroup.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/layouts/ExpertDashboardShell/ExpertDashboardShell.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 158
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 491
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 154
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 379
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/community/CommunityCommentThread/component.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 131
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/Navbar/index.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 468
+            },
+            {
+              "tag": "Divider",
+              "line": 564
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 157
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardReviewPage/index.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 237
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 4,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/frames/Stack/Stack.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 157
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 28
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/text/MetaDotRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 84
+            }
+          ]
+        },
+        {
+          "file": "src/components/frames/Stack/index.tsx",
+          "hits": [
+            {
+              "tag": "Divider",
+              "line": 157
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "IconTile": {
+    "className": {
+      "consumers": 16,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 128
+            },
+            {
+              "tag": "IconTile",
+              "line": 151
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 82
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 123
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 192
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 172
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 48
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 91
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/lists/UserCell/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 135
+            },
+            {
+              "tag": "IconTile",
+              "line": 157
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 69
+            },
+            {
+              "tag": "IconTile",
+              "line": 130
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 69
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 44
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobListPage/JobListRow/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 73
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 294
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 81
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 32
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 20,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 134
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 96
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 71
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 71
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 48
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 108
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/lists/UserCell/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 135
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 204
+            },
+            {
+              "tag": "IconTile",
+              "line": 315
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 58
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 124
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobDetailPage/component.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 195
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobListPage/JobListRow/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/LandingPage/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 291
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 155
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/LearningHistoryPage/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 178
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 73
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 70
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 227
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 68
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+          "hits": [
+            {
+              "tag": "IconTile",
+              "line": 81
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Logo": {
+    "className": {
+      "consumers": 7,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+          "hits": [
+            {
+              "tag": "Logo",
+              "line": 79
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+          "hits": [
+            {
+              "tag": "Logo",
+              "line": 304
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+          "hits": [
+            {
+              "tag": "Logo",
+              "line": 29
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+          "hits": [
+            {
+              "tag": "Logo",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/Footer/index.tsx",
+          "hits": [
+            {
+              "tag": "Logo",
+              "line": 76
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/Navbar/index.tsx",
+          "hits": [
+            {
+              "tag": "Logo",
+              "line": 247
+            }
+          ]
+        },
+        {
+          "file": "src/components/layouts/Navbar/index.tsx",
+          "hits": [
+            {
+              "tag": "Logo",
+              "line": 93
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Spinner": {
+    "className": {
+      "consumers": 30,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 169
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 125
+            }
+          ]
+        },
+        {
+          "file": "src/components/atoms/forms/SearchAutocomplete/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 169
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 103
+            },
+            {
+              "tag": "Spinner",
+              "line": 124
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/community/Discussion/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 119
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/community/FollowButton/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 66
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 50
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 89
+            },
+            {
+              "tag": "Spinner",
+              "line": 115
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/feed/Composer/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 138
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 121
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 125
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 352
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 45
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 73
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 163
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 217
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 40
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 378
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/AdminUploadVideoPage/map.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 16
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/FlashcardReviewPage/index.tsx",
+          "hits": [
+            {
+              "tag": "Spinner",
+              "line": 136
+            }
+          ]
+        }
+      ],
+      "inManifest": [
+        ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+        "src/components/atoms/buttons/Button/ButtonBase.tsx"
+      ]
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Alert": {
+    "className": {
+      "consumers": 8,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/feedback/Callout/Callout.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 122
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 142
+            },
+            {
+              "tag": "Alert",
+              "line": 143
+            },
+            {
+              "tag": "Alert",
+              "line": 146
+            },
+            {
+              "tag": "Alert",
+              "line": 147
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 108
+            },
+            {
+              "tag": "Alert",
+              "line": 109
+            },
+            {
+              "tag": "Alert",
+              "line": 111
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/feedback/Callout/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 135
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 129
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 718
+            },
+            {
+              "tag": "Alert",
+              "line": 719
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 384
+            },
+            {
+              "tag": "Alert",
+              "line": 385
+            },
+            {
+              "tag": "Alert",
+              "line": 395
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 2,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 104
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/feedback/Callout/index.tsx",
+          "hits": [
+            {
+              "tag": "Alert",
+              "line": 135
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "QRCode": {
+    "className": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Accordion": {
+    "className": {
+      "consumers": 8,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 84
+            },
+            {
+              "tag": "Accordion",
+              "line": 115
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/E2eBody/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 74
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 96
+            },
+            {
+              "tag": "Accordion",
+              "line": 110
+            },
+            {
+              "tag": "Accordion",
+              "line": 390
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/marketing/TruthList/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 34
+            },
+            {
+              "tag": "Accordion",
+              "line": 38
+            },
+            {
+              "tag": "Accordion",
+              "line": 49
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 223
+            },
+            {
+              "tag": "Accordion",
+              "line": 232
+            },
+            {
+              "tag": "Accordion",
+              "line": 238
+            },
+            {
+              "tag": "Accordion",
+              "line": 239
+            },
+            {
+              "tag": "Accordion",
+              "line": 263
+            },
+            {
+              "tag": "Accordion",
+              "line": 267
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 59
+            },
+            {
+              "tag": "Accordion",
+              "line": 60
+            },
+            {
+              "tag": "Accordion",
+              "line": 74
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 163
+            },
+            {
+              "tag": "Accordion",
+              "line": 198
+            },
+            {
+              "tag": "Accordion",
+              "line": 443
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 1,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "hits": [
+            {
+              "tag": "Accordion",
+              "line": 163
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Breadcrumbs": {
+    "className": {
+      "consumers": 4,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/stories/composites/layout/Page/PageHeader.stories.tsx",
+          "hits": [
+            {
+              "tag": "Breadcrumbs",
+              "line": 49
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/layout/PageHeader/index.tsx",
+          "hits": [
+            {
+              "tag": "Breadcrumbs",
+              "line": 65
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+          "hits": [
+            {
+              "tag": "Breadcrumbs",
+              "line": 50
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+          "hits": [
+            {
+              "tag": "Breadcrumbs",
+              "line": 12
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "LinkBack": {
+    "className": {
+      "consumers": 1,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+          "hits": [
+            {
+              "tag": "LinkBack",
+              "line": 148
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "LinkSeeMore": {
+    "className": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 2,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+          "hits": [
+            {
+              "tag": "LinkSeeMore",
+              "line": 91
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+          "hits": [
+            {
+              "tag": "LinkSeeMore",
+              "line": 91
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Pagination": {
+    "className": {
+      "consumers": 5,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+          "hits": [
+            {
+              "tag": "Pagination",
+              "line": 106
+            },
+            {
+              "tag": "Pagination",
+              "line": 111
+            },
+            {
+              "tag": "Pagination",
+              "line": 112
+            },
+            {
+              "tag": "Pagination",
+              "line": 119
+            },
+            {
+              "tag": "Pagination",
+              "line": 133
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+          "hits": [
+            {
+              "tag": "Pagination",
+              "line": 16
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/BookmarksPage/index.tsx",
+          "hits": [
+            {
+              "tag": "Pagination",
+              "line": 149
+            },
+            {
+              "tag": "Pagination",
+              "line": 154
+            },
+            {
+              "tag": "Pagination",
+              "line": 155
+            },
+            {
+              "tag": "Pagination",
+              "line": 162
+            },
+            {
+              "tag": "Pagination",
+              "line": 176
+            },
+            {
+              "tag": "Pagination",
+              "line": 183
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/CourseCatalogPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Pagination",
+              "line": 316
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/JobListPage/component.tsx",
+          "hits": [
+            {
+              "tag": "Pagination",
+              "line": 318
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "TabsBase": {
+    "className": {
+      "consumers": 19,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/AgentOsSubNav/AgentOsSubNav.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 108
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 208
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/atoms/navigation/Tabs/Tabs.stories.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 90
+            },
+            {
+              "tag": "Tabs",
+              "line": 124
+            },
+            {
+              "tag": "Tabs",
+              "line": 158
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/atoms/navigation/Tabs/TabsExtended.stories.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 38
+            }
+          ]
+        },
+        {
+          "file": ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 166
+            },
+            {
+              "tag": "Tabs",
+              "line": 341
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/code/CodeConsole/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 60
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 60
+            },
+            {
+              "tag": "Tabs",
+              "line": 66
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 208
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 46
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 93
+            },
+            {
+              "tag": "Tabs",
+              "line": 104
+            },
+            {
+              "tag": "Tabs",
+              "line": 105
+            },
+            {
+              "tag": "Tabs",
+              "line": 114
+            },
+            {
+              "tag": "Tabs",
+              "line": 129
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 146
+            },
+            {
+              "tag": "Tabs",
+              "line": 178
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 152
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 26
+            },
+            {
+              "tag": "Tabs",
+              "line": 32
+            },
+            {
+              "tag": "Tabs",
+              "line": 33
+            },
+            {
+              "tag": "Tabs",
+              "line": 40
+            },
+            {
+              "tag": "Tabs",
+              "line": 49
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "file": "src/components/overlays/modals/FollowListModal/component.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 200
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 56
+            }
+          ]
+        },
+        {
+          "file": "src/components/pages/PracticeProblemPage/index.tsx",
+          "hits": [
+            {
+              "tag": "Tabs",
+              "line": 660
+            }
+          ]
+        }
+      ],
+      "inManifest": [
+        ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+        "src/components/atoms/navigation/Tabs/TabsExtended.tsx"
+      ]
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "TabsExtended": {
+    "className": {
+      "consumers": 7,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 146
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 45
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 201
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 99
+            }
+          ]
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 201
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/navigation/Toolbar/index.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 146
+            }
+          ]
+        },
+        {
+          "file": "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 45
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 1,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+          "hits": [
+            {
+              "tag": "TabsExtended",
+              "line": 99
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Menu": {
+    "className": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  },
+  "Typography": {
+    "className": {
+      "consumers": 332,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 170
+            },
+            {
+              "tag": "Typography",
+              "line": 176
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 108
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 90
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 77
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 569
+            },
+            {
+              "tag": "Typography",
+              "line": 684
+            },
+            {
+              "tag": "Typography",
+              "line": 1177
+            },
+            {
+              "tag": "Typography",
+              "line": 1445
+            },
+            {
+              "tag": "Typography",
+              "line": 1463
+            },
+            {
+              "tag": "Typography",
+              "line": 1763
+            },
+            {
+              "tag": "Typography",
+              "line": 1971
+            },
+            {
+              "tag": "Typography",
+              "line": 1976
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/data/KeyValue/KeyValue.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 104
+            },
+            {
+              "tag": "Typography",
+              "line": 133
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/data/Table/Table.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 137
+            },
+            {
+              "tag": "Typography",
+              "line": 156
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 106
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 128
+            },
+            {
+              "tag": "Typography",
+              "line": 149
+            },
+            {
+              "tag": "Typography",
+              "line": 166
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/form/Dropzone/Dropzone.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 101
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/form/Form/Form.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 203
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/form/ImageDropzone/ImageDropzone.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 103
+            },
+            {
+              "tag": "Typography",
+              "line": 116
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 151
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/layout/Page/Page.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 135
+            },
+            {
+              "tag": "Typography",
+              "line": 143
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/layout/Section/Section.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 114
+            },
+            {
+              "tag": "Typography",
+              "line": 119
+            },
+            {
+              "tag": "Typography",
+              "line": 124
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/lists/AuthorByline/AuthorByline.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 64
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 133
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 131
+            },
+            {
+              "tag": "Typography",
+              "line": 198
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/stats/Legend/Legend.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 111
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 109
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 115,
+      "actionable": false,
+      "outOfManifest": [
+        {
+          "file": ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 90
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 95
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 1445
+            },
+            {
+              "tag": "Typography",
+              "line": 1463
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/feedback/OneTimeReveal/OneTimeReveal.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 175
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/form/SecretField/SecretField.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 178
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/composites/layout/Page/Page.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 135
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 113
+            },
+            {
+              "tag": "Typography",
+              "line": 214
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/PodAccessTokensPanel/PodAccessTokensPanel.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 270
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/agent-os/PodOpenclawStatusCard/PodOpenclawStatusCard.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 173
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 152
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 114
+            },
+            {
+              "tag": "Typography",
+              "line": 223
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteOfferingsEditor/ExpertSiteOfferingsEditor.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 115
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 149
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 127
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 287
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 75
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 32
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 89
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 78
+            }
+          ]
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+          "hits": [
+            {
+              "tag": "Typography",
+              "line": 294
+            }
+          ]
+        }
+      ],
+      "inManifest": []
+    }
+  },
+  "Progress": {
+    "className": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    },
+    "classNames": {
+      "consumers": 0,
+      "actionable": true,
+      "outOfManifest": [],
+      "inManifest": []
+    }
+  }
+}

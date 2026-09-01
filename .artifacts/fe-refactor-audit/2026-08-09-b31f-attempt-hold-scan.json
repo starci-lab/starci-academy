@@ -1,0 +1,1510 @@
+{
+  "batch": "31f",
+  "date": "2026-08-09",
+  "attemptCount": 67,
+  "holdCount": 73,
+  "attemptFindings": 137,
+  "holdFindings": 207,
+  "attempt": [
+    {
+      "worker": "sb-composites-cards-layout-data",
+      "file": ".storybook/components/composites/data/KeyValue/KeyValue.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-composites-cards-layout-data",
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-composites-cards-layout-data",
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "frag": 5,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-composites-cards-layout-data",
+      "file": ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      "frag": 3,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ChallengeHeader/ChallengeHeader.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentArticle/ContentArticle.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "frag": 3,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "frag": 4,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentReaction/ContentReaction.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "frag": 3,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "frag": 6,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "frag": 4,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      "frag": 3,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionButton.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-learn-b",
+      "file": ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "frag": 7,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+      "frag": 3,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      "frag": 3,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      "frag": 4,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/LeaderboardPage/LeaderboardPage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      "frag": 4,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "frag": 7,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/PlaygroundHubPage/PlaygroundHubPage.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "frag": 2,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+      "frag": 4,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    },
+    {
+      "worker": "src-blocks-profile-remaining",
+      "file": "src/components/blocks/profile/ProfileLockedState/index.tsx",
+      "frag": 1,
+      "other": 0,
+      "otherRules": [],
+      "attempt": true,
+      "holdReason": null
+    }
+  ],
+  "hold": [
+    {
+      "worker": "sb-composites-cards-layout-data",
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "frag": 1,
+      "other": 22,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:22 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-composites-cards-layout-data",
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "frag": 2,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "frag": 3,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-learn-a",
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "frag": 2,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "frag": 8,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "frag": 11,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "frag": 23,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "sb-blocks-nonlearn",
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "frag": 2,
+      "other": 1,
+      "otherRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:1 (starci-fe/handler-on-prefix)"
+    },
+    {
+      "worker": "src-composites",
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "frag": 1,
+      "other": 47,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:47 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop,starci-fe/no-per-part-classname-prop)"
+    },
+    {
+      "worker": "src-composites",
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "frag": 2,
+      "other": 9,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:9 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare,starci-fe/no-inline-skeleton-branch)"
+    },
+    {
+      "worker": "src-composites",
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-composites",
+      "file": "src/components/composites/stats/SegmentBar/index.tsx",
+      "frag": 1,
+      "other": 1,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:1 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "frag": 1,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "frag": 3,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/no-emoji-in-source,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "frag": 2,
+      "other": 1,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:1 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "frag": 3,
+      "other": 7,
+      "otherRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:7 (starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "frag": 3,
+      "other": 6,
+      "otherRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:6 (starci-fe/no-emoji-in-source,starci-fe/require-identity-root,starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "frag": 4,
+      "other": 9,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:9 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare,starci-fe/no-inline-skeleton-branch)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "frag": 2,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-skeleton-branch",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/require-identity-root,starci-fe/no-inline-skeleton-branch,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentPager/index.tsx",
+      "frag": 2,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "frag": 1,
+      "other": 1,
+      "otherRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:1 (starci-fe/require-identity-root)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContentReaction/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "frag": 1,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/no-raw-shape-at-sentence-tier,starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "frag": 2,
+      "other": 6,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:6 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "frag": 3,
+      "other": 9,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:9 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-a",
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "frag": 2,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "frag": 6,
+      "other": 6,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:6 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "frag": 2,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "frag": 1,
+      "other": 6,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:6 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "frag": 2,
+      "other": 1,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:1 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "frag": 4,
+      "other": 10,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-inline-skeleton-branch",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:10 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/no-inline-skeleton-branch,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "frag": 2,
+      "other": 7,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:7 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "frag": 2,
+      "other": 11,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:11 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "frag": 1,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "frag": 3,
+      "other": 10,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:10 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "frag": 1,
+      "other": 6,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:6 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "frag": 1,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "frag": 2,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "frag": 1,
+      "other": 9,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:9 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop,starci-fe/no-inline-skeleton-branch)"
+    },
+    {
+      "worker": "src-blocks-learn-b",
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "frag": 1,
+      "other": 1,
+      "otherRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:1 (starci-fe/require-identity-root)"
+    },
+    {
+      "worker": "src-blocks-commerce-dashboard-navigation",
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "frag": 1,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/no-emoji-in-source,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-commerce-dashboard-navigation",
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "frag": 2,
+      "other": 11,
+      "otherRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:11 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-commerce-dashboard-navigation",
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "frag": 1,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-commerce-dashboard-navigation",
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "frag": 8,
+      "other": 15,
+      "otherRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:15 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-commerce-dashboard-navigation",
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "frag": 11,
+      "other": 22,
+      "otherRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:22 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-commerce-dashboard-navigation",
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "frag": 1,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-cn-above-vocabulary)"
+    },
+    {
+      "worker": "src-blocks-commerce-dashboard-navigation",
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "frag": 1,
+      "other": 8,
+      "otherRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:8 (starci-fe/no-heroui-outside-vocabulary,starci-fe/require-identity-root,starci-fe/no-raw-shape-at-sentence-tier,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-blocks-profile-remaining",
+      "file": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-profile-remaining",
+      "file": "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-export-jsdoc",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-export-jsdoc,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-profile-remaining",
+      "file": "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "frag": 1,
+      "other": 1,
+      "otherRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:1 (starci-fe/require-export-jsdoc)"
+    },
+    {
+      "worker": "src-blocks-profile-remaining",
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "frag": 7,
+      "other": 6,
+      "otherRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:6 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-blocks-profile-remaining",
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "frag": 19,
+      "other": 37,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:37 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "frag": 3,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "frag": 2,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "frag": 2,
+      "other": 56,
+      "otherRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:56 (starci-fe/page-folder-two-files-only,starci-fe/no-heroui-outside-vocabulary,starci-fe/no-parallel-skeleton,starci-fe/no-classname-at-sentence-tier)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/FoundationResourcePage/component.tsx",
+      "frag": 2,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "frag": 2,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/FoundationsGridPage/component.tsx",
+      "frag": 2,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/LeaderboardPage/component.tsx",
+      "frag": 2,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "frag": 1,
+      "other": 11,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/handler-on-prefix"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:11 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop,starci-fe/handler-on-prefix)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "frag": 7,
+      "other": 10,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:10 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/PlaygroundHubPage/component.tsx",
+      "frag": 1,
+      "other": 2,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:2 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-learning",
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "frag": 2,
+      "other": 4,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:4 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "worker": "src-pages-remaining",
+      "file": "src/components/pages/HeadhuntingsPage/component.tsx",
+      "frag": 2,
+      "other": 3,
+      "otherRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "attempt": false,
+      "holdReason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    }
+  ]
+}

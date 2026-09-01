@@ -1,0 +1,2570 @@
+{
+  "generatedAt": "2026-08-06T23:01:24.546Z",
+  "batch": 13,
+  "title": "CONTRACT HOLD CLOSURE",
+  "checkpoint": "22f28f4e",
+  "workers": {
+    "per-part-props": {
+      "changed": 0,
+      "skipped": 17,
+      "holds": 9,
+      "decisions": 9,
+      "regressions": 0,
+      "verification": {
+        "eslintQuietOnChanged": "n/a — no source files changed",
+        "repoWideConsumerSearch": [
+          "dialogClassName|footerClassName",
+          "containerClassName",
+          "heightClassName",
+          "contentClassName"
+        ],
+        "safeApiRemovalCandidates": 0,
+        "safeConsumerMigrationCandidates": 0,
+        "note": "All seeded per-part holds remain record-only. Classifier false-positive safe-consumer-migration on ModalShell containerClassName and MiniCart require-frame-self-declare reclassified to new-named-slot-required / ambiguous."
+      }
+    },
+    "stacking-layout": {
+      "changed": 0,
+      "skipped": 6,
+      "holds": 4,
+      "decisions": 11,
+      "regressions": 0,
+      "verification": {
+        "eslintQuiet": "skipped — no product files changed (manifest/status only)",
+        "consumerProofScript": "ephemeral; ContinueCardHero 18 / ContinueCardItem 8 / className 0; LeaderboardListCard className forwarded from 3 dashboard call sites",
+        "safeApplyEligible": [
+          "ContinueCardDataProps-className-dead (proven, deferred — manifest-only partition)"
+        ],
+        "safeApplyExecuted": [],
+        "twinNotes": [
+          "SB ContinueCardHero/Item omit identity prop present on src",
+          "SB ContinueCardItem still hand-builds HeroSkeleton CTA; src forwards isSkeleton to LinkSeeMore",
+          "SB CardBody ProgressMeter skeleton uses HeroSkeleton; src passes isSkeleton into ProgressMeter",
+          "SB ContinueCard types already plain-NOTE; src types still have ⚠️",
+          "SB MilestoneUpNextCard StackV missing explain present on src"
+        ]
+      }
+    },
+    "heroui-boundaries": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 86,
+      "decisions": 30,
+      "regressions": 0,
+      "verification": {
+        "eslintQuiet": "skipped — no product code changes (Edit ONLY manifest files; 0 safe-consumer-migration)",
+        "safeConsumerMigrationCount": 0,
+        "vendorBoundaryCount": 30,
+        "note": "BATCH 12 already proved HeroUI→atom APIs mostly non-identical. Re-audited all 30 files; every @heroui/react import has an exact API mismatch (children vs label/text, compound vs data-driven, cn vocabulary-only, ChipBase hard-hold, or missing atom). No ChipBase redesign; no vendor compound namespace redesign; no eslint-disable."
+      }
+    },
+    "identity-hosts": {
+      "changed": 1,
+      "skipped": 20,
+      "holds": 30,
+      "decisions": 30,
+      "regressions": 0,
+      "verification": {
+        "eslintQuiet": {
+          "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx": {
+            "exitCode": 0,
+            "errorCount": 0,
+            "requireIdentityRoot": "cleared"
+          }
+        },
+        "appliedCount": 1,
+        "decisionCount": 30,
+        "twinParity": {
+          "note": "No twins listed in identity-hosts manifest. WeeklyChallengeCard SB twin exists outside claim — not edited."
+        }
+      }
+    },
+    "skeleton-contracts": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 23,
+      "decisions": 25,
+      "regressions": 0,
+      "verification": {
+        "productEdits": 0,
+        "eslintQuiet": "skipped-no-changed-files",
+        "filesReviewed": 25,
+        "skeletonDecisionMessages": 33,
+        "safeConsumerMigrationApplied": 0,
+        "note": "Reviewed all 25 claimed files. No case had provable loading ownership for safe-consumer-migration / clear same-component isSkeleton threading. Twin/parallel redesigns and different-element inline branches recorded as skeleton-decision; loading behavior preserved exactly."
+      }
+    },
+    "twin-parity": {
+      "changed": 2,
+      "skipped": 0,
+      "holds": 1,
+      "decisions": 2,
+      "regressions": 1,
+      "verification": {}
+    }
+  },
+  "totals": {
+    "changed": 3,
+    "skipped": 43,
+    "holds": 153,
+    "decisions": 107,
+    "regressions": 1
+  },
+  "overlaps": [],
+  "allDecisions": [
+    {
+      "partition": "per-part-props",
+      "id": "DrawerShell-dialog-footer",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/layout/DrawerShell/index.tsx",
+        ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx"
+      ],
+      "proposal": "Repo-wide: only MiniCartDrawer passes dialogClassName/footerClassName. dialogClassName=\"sm:max-w-md\" is a real dialog width (DrawerShell has no size prop; DrawerDialog only owns gap-3). footerClassName forces a vertical stacked footer (flex-col! items-stretch! justify-start! gap-3! border-t) because HeroUI Drawer.Footer hard-codes flex-row justify-end. Honest API: dialogWidth=\"md\" (maps to sm:max-w-md inside DrawerShell) + footerVariant=\"stacked\" (column stretch + top border, owned by shell). Do NOT remove props while MiniCart depends on them. Apply when both named props land on src+Storybook twins and MiniCart migrates in the same change.",
+      "applied": false,
+      "proof": {
+        "consumers": {
+          "dialogClassName": [
+            "src/components/overlays/drawers/MiniCartDrawer/component.tsx:302"
+          ],
+          "footerClassName": [
+            "src/components/overlays/drawers/MiniCartDrawer/component.tsx:310"
+          ]
+        },
+        "defs": [
+          "src/components/composites/layout/DrawerShell/index.tsx:71-73",
+          ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx:74-78"
+        ],
+        "whyNotSafeRemoval": "MiniCart is a live consumer; removal would drop max-width and stacked footer layout.",
+        "whyNotSafeMigration": "No existing named prop/token on DrawerShell or Drawer atom covers max-w-md or stacked footer; inventing className escapes is forbidden."
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "ModalShell-container-CvPreview",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/layout/ModalShell/index.tsx",
+        ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+        "src/components/overlays/modals/CvPreviewModal/component.tsx"
+      ],
+      "proposal": "Repo-wide: only CvPreviewModal passes containerClassName=\"h-[92vh] w-[96vw] max-w-[96vw]\". HeroUI ModalContainer size tokens are xs|sm|md|lg|cover|full. cover = full screen with 16px/40px margins; full = 100dvh edge-to-edge no radius. Neither equals 92vh×96vw. Honest API: viewportFit=\"near-fullscreen\" (or size=\"preview\") owned by ModalShell with those exact classes baked in — not size=\"cover\"/\"full\". Pair with PDFView height ownership (see PDFView-heightClassName). Manifest lint row marked safe-consumer-migration is a classifier false positive (generic containerClassName message missed the h-[92vh] consumer); treat as new-named-slot-required.",
+      "applied": false,
+      "proof": {
+        "consumers": {
+          "containerClassName": [
+            "src/components/overlays/modals/CvPreviewModal/component.tsx:44"
+          ]
+        },
+        "herouiSizeTokens": [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "cover",
+          "full"
+        ],
+        "notEquivalent": {
+          "cover": "margins 16px mobile / 40px desktop — not 96vw/92vh",
+          "full": "100dvh, no margins/radius — not 92vh×96vw with modal chrome"
+        },
+        "canon": "enforce/authoring/overlay-and-feedback.md §4 documents scroll=inside → max-h-[85vh] only; no near-fullscreen token",
+        "whyNotSafeMigration": "Migrating to size=cover or size=full would change CvPreview geometry; preserve exact sizing."
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "PDFView-heightClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/viewers/PDFView/index.tsx",
+        ".storybook/components/composites/viewers/PDFView/PDFView.tsx",
+        "src/components/blocks/rendering/PDFView/index.tsx",
+        ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+        "src/components/overlays/modals/CvPreviewModal/component.tsx"
+      ],
+      "proposal": "heightClassName remains until canon defines a closed viewer-height scale. Observed values: default h-[560px]; stories h-[200|320|400|420px]; CvPreview h-[84vh]. Canon (styling-tailwind.md §1) allows arbitrary [Npx] for media/canvas, but no named height enum exists — do NOT invent sm/md/lg tokens. Honest future API once product locks sizes: heightPx:number (canvas) + heightFit:\"modal-body\" → h-[84vh] owned by PDFView. Preserve every current pixel/vh exactly; Storybook/src/block twins must stay aligned. Block PDFView also carries vendor/identity/cn holds — out of scope for per-part apply.",
+      "applied": false,
+      "proof": {
+        "consumers": [
+          ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx (200/320/420/400/200)",
+          "src/components/overlays/modals/CvPreviewModal/component.tsx:51 (h-[84vh])",
+          "src/components/blocks/rendering/PDFView/index.tsx (forwards prop, default h-[560px])"
+        ],
+        "canonHeightEnum": null,
+        "whyNotSafeRemoval": "Multiple real consumers depend on distinct heights; CvPreview 84vh is not the 560px default."
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "SurfaceCard-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+      ],
+      "proposal": "Keep contentClassName. External SurfaceCard consumers need distinct body chrome: ContinueCard* relative flex-col gap-3 overflow-hidden (stacking-layout owns ContinueCard — do not edit those files here); LeagueCard/LeaderboardListCard flex-col gap-3; TalentMarketplace/LearnLoopScroll add p-4 + justify; PersonalProject* use grid cols; PressableGroup internally injects TILE_CHROME. Honest eventual API: bodyVariant closed set owned by SurfaceCard, e.g. stack | stack-clip | padded-stack | two-col — but values are not yet one semantic; inventing a partial enum while ContinueCard still needs clip+relative would leave an escape hatch. Coordinate with stacking-layout: they migrate ContinueCard once SurfaceCard exposes bodyVariant; this worker does not steal ContinueCard files.",
+      "applied": false,
+      "proof": {
+        "surfaceCardConsumers": [
+          "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+          "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+          ".storybook/components/starci/blocks/learn/ContinueCard/* (twins)",
+          "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+          "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+          "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+          "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+          "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+          "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+          "src/components/composites/cards/SurfaceCard/index.tsx (PressableGroup TILE_CHROME)"
+        ],
+        "coordinate": "stacking-layout owns ContinueCard; record-only handoff via this decision",
+        "whyNotSafeRemoval": "Many live consumers; ContinueCard hero clip depends on the prop"
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "MiniCart-require-frame-self-declare",
+      "classification": "ambiguous",
+      "files": [
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx"
+      ],
+      "proposal": "Five StackV nodes lack principle/explain (combo meter, skeleton text stack, cart body, total summary, footer). Manifest classifier marked safe-consumer-migration because MiniCart path matched per-part heuristics, but fixing requires choosing a singular canon principle per seam — inventing principles is forbidden. Hold until a principle audit names each seam (likely content-stack / form-section / action-stack analogues already used nearby: content-row, flex-action, card-padding). Not a per-part classname migration.",
+      "applied": false,
+      "proof": {
+        "lines": [
+          142,
+          155,
+          218,
+          269,
+          293
+        ],
+        "nearbyDeclaredPrinciples": [
+          "flex-action",
+          "card-padding",
+          "content-row"
+        ],
+        "hardRule": "no invented principles; singular principle only; prefer hold over guess"
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "LabeledCard-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/blocks/cards/LabeledCard/index.tsx"
+      ],
+      "proposal": "LabeledCard exposes its own contentClassName (separate from SurfaceCard). Consumers: TaskResult/TaskSubmissionPanel flex-col gap-*, FlipCard flex-col gap-3. Same family as SurfaceCard bodyVariant — propose bodyLayout=\"stack\" | \"stack-lg\" once SurfaceCard settles; also carries no-heroui/identity/cn holds (vendor/identity partitions). No apply.",
+      "applied": false,
+      "proof": {
+        "consumers": [
+          "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+          "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+          "src/components/blocks/cards/FlipCard/index.tsx"
+        ]
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "ShowcaseMockup-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/blocks/marketing/ShowcaseMockup/index.tsx"
+      ],
+      "proposal": "Block-tier contentClassName + className + raw absolute/relative/flex + HeroUI import. Needs named media/content slots on a composite below sentence tier, not a className escape. Record-only; overlaps vendor-boundary/identity work.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-per-part-classname-prop",
+          "no-classname-at-sentence-tier",
+          "no-heroui-outside-vocabulary",
+          "no-raw-shape-at-sentence-tier"
+        ]
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "blocks-PDFView-vendor-and-height",
+      "classification": "vendor-boundary",
+      "files": [
+        "src/components/blocks/rendering/PDFView/index.tsx"
+      ],
+      "proposal": "Block PDFView still imports @heroui/react, uses WithClassNames, cn, raw flex, and forwards heightClassName. Height follows PDFView-heightClassName; HeroUI/cn/identity are vendor/identity partition work — not safe apply here.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-heroui-outside-vocabulary",
+          "require-identity-root",
+          "no-classname-at-sentence-tier",
+          "no-per-part-classname-prop",
+          "no-cn-above-vocabulary",
+          "no-raw-shape-at-sentence-tier"
+        ]
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "LivestreamCalendarModal-vendor",
+      "classification": "vendor-boundary",
+      "files": [
+        "src/components/overlays/modals/LivestreamCalendarModal/component.tsx"
+      ],
+      "proposal": "HeroUI import + undeclared frames. No per-part classname prop to migrate; hold for heroui-boundaries / principle audit. Not safe-api-removal.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-heroui-outside-vocabulary",
+          "require-frame-self-declare"
+        ]
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCard-SurfaceCard-contentClassName-stack",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx"
+      ],
+      "proposal": "Add a named SurfaceCard body/content slot (prefer bodyVariant:\"stack\" or contentStack) that owns exactly `relative flex flex-col gap-3 overflow-hidden`. Do not remove contentClassName until that slot ships and ContinueCard (+ SB twins) migrate together. Coordinates with per-part-props decision SurfaceCard-contentClassName.",
+      "proof": {
+        "literal": "relative flex flex-col gap-3 overflow-hidden",
+        "callSites": [
+          "ContinueCardHero (src + SB)",
+          "ContinueCardItem (src + SB)"
+        ],
+        "commentIntent": "CardBody peers (title / progress / CTA) need a stack until CardBody owns one.",
+        "whyNotSafeRemoval": "Classes are stack chrome (relative positioning + vertical gap-3 sibling stack + overflow clip for highlight/watermark), not placement-only."
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCard-CardBody-owns-stack-later",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx"
+      ],
+      "proposal": "Longer-term: CardBody should own one StackV (canon gap-3 → sibling-stack + explain) wrapping title cluster / ProgressMeter / CTA, absorbing the outer contentClassName stack and the two sentence-tier `relative` wrappers. Until then keep contentClassName and relative wrappers — do not invent a principle token and do not eslint-disable.",
+      "proof": {
+        "lint": [
+          "no-raw-shape-at-sentence-tier on relative wrappers (lines 51, 66)",
+          "require-frame-self-declare on inner StackV (line 59)"
+        ],
+        "preserve": "ContinueCard stacking behavior must stay pixel-identical (title→progress→CTA order; relative stacking context for highlight)."
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCardDataProps-className-dead",
+      "classification": "safe-api-removal",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts",
+        ".storybook/components/starci/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "Remove unused `className?: string` from ContinueCardDataProps (and keep SB twin types aligned). Not applied in this partition because worker may edit manifest/status only; no product edits.",
+      "proof": {
+        "repoCallSites": {
+          "ContinueCardHero": 18,
+          "ContinueCardItem": 8,
+          "withClassName": 0
+        },
+        "forwarding": "Hero/Item neither destructure nor pass className to SurfaceCard; CardBody does not accept className.",
+        "keysObserved": [
+          "title",
+          "subtitle",
+          "value",
+          "max",
+          "meta",
+          "timeLeft",
+          "urgent",
+          "onPress",
+          "href",
+          "isSkeleton"
+        ]
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCard-types-emoji-authoring",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "Replace ⚠️ emoji in JSDoc with plain NOTE (SB twin already uses NOTE). Authoring cleanup only — misclassified as new-named-slot-required in seed; not an API slot.",
+      "proof": {
+        "srcHasEmoji": true,
+        "sbTwinAlreadyPlain": true,
+        "lines": [
+          25,
+          44
+        ]
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCard-types-className-backdoor-lint",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "no-classname-at-sentence-tier on ContinueCardDataProps.className is the same dead prop as ContinueCardDataProps-className-dead. Prefer removal (safe-api-removal above) over inventing a named placement slot — zero consumers need placement.",
+      "proof": {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 36,
+        "consumers": 0
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "LabeledCard-Leaderboard-contentClassName-stack",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx"
+      ],
+      "proposal": "Add a named LabeledCard content slot (contentVariant:\"stack\" / bodyVariant:\"stack\") owning exactly `flex flex-col gap-3`. Keep contentClassName until LabeledCard ships the slot; LeagueCard skeleton + LeaderboardListCard must migrate together.",
+      "proof": {
+        "literal": "flex flex-col gap-3",
+        "callSites": [
+          "LeaderboardListCard → LabeledCard contentClassName",
+          "LeagueCard skeleton → LabeledCard contentClassName",
+          "LeaderboardListCard bare mode → cn(\"flex flex-col gap-3\", className)"
+        ],
+        "whyNotSafeRemoval": "Same vertical peer stack as ContinueCard (gap-3) without relative/overflow; real chrome, not unused."
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "LeaderboardListCard-heroui-boundary",
+      "classification": "vendor-boundary",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "proposal": "Keep @heroui/react Link/Typography/cn until atom APIs are proven identical (Link profile-row chrome + Typography body-sm muted tabular + cn bare wrapper). Default BATCH 12 finding: non-identical → do not convert.",
+      "proof": {
+        "imports": [
+          "Link",
+          "Typography",
+          "cn"
+        ],
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "LeaderboardListCard-row-chrome-named-composite",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "proposal": "Raw flex row chrome (rank medal slot w-6, identity flex-1, value, trailing) needs a named composite/frame (e.g. LeaderboardRow / content-row StackH), not a generic className escape. Out of safe-api-removal scope.",
+      "proof": {
+        "rules": [
+          "no-raw-shape-at-sentence-tier (multiple)",
+          "no-classname-at-sentence-tier (WithClassNames)",
+          "no-cn-above-vocabulary (bare wrapper)"
+        ],
+        "classNameConsumers": [
+          "LeagueCard/component.tsx",
+          "LeagueCard/LeagueCardContent/index.tsx",
+          "TopLearners/component.tsx"
+        ]
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "LeaderboardListCard-ellipsis-emoji",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "proposal": "Ellipsis glyph `⋯` at line 205 is product UI content in a rank-column slot (teacher-aligned collapsed rows), not fluent-emoji art. Replacing needs an identity/icon token decision — hold, do not invent.",
+      "proof": {
+        "rule": "starci-fe/no-emoji-in-source",
+        "note": "placeMedalIcon already uses Iconify fluent-emoji-flat medals; ellipsis is a separate character literal."
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "LeagueCard-identity-and-WithClassNames",
+      "classification": "identity-decision",
+      "applied": false,
+      "files": [
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx"
+      ],
+      "proposal": "Presentational _LeagueCard lacks identity root (delegates to LeaderboardListCard when settled; skeleton LabeledCard path has no identity). WithClassNames placement is forwarded to LeaderboardListCard/LabeledCard. Defer to identity-hosts / home move — not a stacking slot removal.",
+      "proof": {
+        "rules": [
+          "page-folder-two-files-only",
+          "require-identity-root",
+          "no-classname-at-sentence-tier"
+        ],
+        "externalLeagueCardClassName": 0,
+        "internalForward": "LeagueCard/index.tsx passes className into _LeagueCard"
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "MilestoneUpNextCard-identity-and-emoji",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+        ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx"
+      ],
+      "proposal": "Add identity on SurfaceCard root (block/MilestoneUpNextCard) via identity-hosts rules; strip comment emoji 📐. No contentClassName stack issue here — body already uses StackV. Do not invent principle; existing content-row explain on src StackV is already present (SB twin missing explain — twin drift).",
+      "proof": {
+        "rules": [
+          "no-emoji-in-source",
+          "require-identity-root"
+        ],
+        "stackOwner": "StackV gap={4} principle=\"content-row\" inside SurfaceCard body — not contentClassName"
+      }
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.async.InfiniteScrollSentinel.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.auth.GithubTeamGate.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "imports": [
+        "Alert",
+        "Button",
+        "Modal",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Alert: Alert atom is Alert.* data props (title/description/body); HeroUI Alert.Indicator/Content/Title/Description compound + className — non-identical | Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Modal: Modal is vendor compound (Backdrop/Container/Dialog/Header/Body); no identical non-compound atom drop-in — compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Alert.Indicator, Alert.Content, Alert.Title, Alert.Description, Modal.Backdrop, Modal.Container, Modal.Dialog, Modal.CloseTrigger, Modal.Header, Modal.Body"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.auth.Turnstile.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.buttons.ElementCloseButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "imports": [
+        "CloseButton",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "CloseButton: No CloseButton atom; ElementCloseButton wraps HeroUI CloseButton with className — cannot migrate without new atom | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.buttons.FloatingActionButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "imports": [
+        "Button",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.buttons.RatingBar.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "imports": [
+        "Chip",
+        "Typography"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | compound usage observed: Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CheckListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CourseCardSkeleton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CourseCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CrossListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.FlipCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "imports": [
+        "ScrollShadow",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.GroupPressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.HighlightCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.LabeledAccordionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "imports": [
+        "Accordion",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Accordion: Accordion atom is data-driven `items[]` over DisclosureGroup; HeroUI Accordion.* compound (Item/Heading/Trigger/Panel/Body) — vendor compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Accordion.Item, Accordion.Heading, Accordion.Trigger, Accordion.Indicator, Accordion.Panel, Accordion.Body"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.PlaygroundCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.PressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.SectionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.SummaryCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.SurfaceListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.verdict-band.ts",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.CvSubmissionFields.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "imports": [
+        "Button",
+        "ProgressBar",
+        "Spinner",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | ProgressBar: Progress atom is Progress.Bar with value/max/color (Track/Fill internal); HeroUI ProgressBar.Track/Fill compound + className — non-identical | Spinner: Spinner atom uses size/tone/label + classNames array; usage co-imported with non-identical Button/Typography/ProgressBar — cannot clear heroui import by Spinner alone | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: ProgressBar.Track, ProgressBar.Fill"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.AiCategoryChip.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.DifficultyChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.EnumChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "imports": [
+        "Chip",
+        "Tooltip",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.LanguageChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.StatusChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "imports": [
+        "Chip"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | compound usage observed: Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.TagChips.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "imports": [
+        "Chip",
+        "ScrollShadow",
+        "Tooltip"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.code.CodeConsole.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "imports": [
+        "Tabs",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Tabs: Tabs atom is data-driven TabsBase/TabsExtended; HeroUI Tabs.ListContainer/List/Tab/Indicator compound — vendor compound redesign forbidden | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Tabs.ListContainer, Tabs.List, Tabs.Tab, Tabs.Indicator"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.code.IOExampleCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "WeeklyChallengeCard-surfacecard-root",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx"
+      ],
+      "proposal": "SurfaceCard is the sole JSX root and already accepts CallerIdentity — applied identity={{ tier:\"block\", component:\"WeeklyChallengeCard\" }}.",
+      "applied": true,
+      "proof": {
+        "root": "SurfaceCard",
+        "acceptsIdentity": true,
+        "twinInManifest": false,
+        "storybookTwin": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+        "twinNote": "SB twin also roots on SurfaceCard but was not in this partition manifest — left unchanged; twin-parity coordinator may claim drift."
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "AiQuotaSubscriptionPanel-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx"
+      ],
+      "proposal": "All three leaves root on a className-hosting <div>; capable SurfaceCard/StackV sit inside. Do not stamp identity on inner SurfaceCard/StackV while the div remains the element root. Future: drop the inert wrapper (or route className through a capable host) and put identity={{ tier:\"block\", component:\"AiQuotaSubscriptionPanel\" }} on the single remaining SurfaceCard/StackV root per leaf — only when className placement is settled (co-located no-classname-at-sentence-tier).",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div (skeleton)",
+          "div > SurfaceCard (no-tier)",
+          "div > StackV (premium)"
+        ],
+        "whyNotApply": "root is host div / mixed; stamping inner capable nodes forbidden"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "AsyncContent-block-fragment-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/async/AsyncContent/index.tsx"
+      ],
+      "proposal": "Block AsyncContent is a priority switch that returns ErrorContent | fragment(skeleton) | EmptyContent | fragment(children) — no single frame/composite root. Identity cannot attach without inventing a wrapper shape (BLOCK-2) or forcing every branch onto one capable host. Prefer callers to use composites/async/AsyncContent (already identity-capable) or accept this as a hostless switch.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "ErrorContent",
+          "<>skeleton</>",
+          "EmptyContent|null",
+          "<>children</>"
+        ],
+        "whyNotApply": "null/fragment/mixed host — no clearly declared capable root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ErrorContent-hand-rolled-data-tier-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/async/ErrorContent/index.tsx"
+      ],
+      "proposal": "Root is the exact anti-pattern from frames/_identity.ts: <div data-tier=\"composite\" data-component=\"ErrorContent\"> wrapping StackV. Collapse onto StackV with identity — BUT meta claims tier composite while CallerIdentity only allows block|layout|overlay|page, and the folder is blocks/. Need an explicit tier decision (treat as block → identity on StackV; or keep as composite self-name without CallerIdentity) before editing. Co-located classNames + undeclared inner StackV are separate.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div[data-tier=composite] > StackV"
+        ],
+        "capableInner": "StackV",
+        "metaTier": "composite",
+        "whyNotApply": "hand-rolled identity div + composite-vs-block tier conflict unresolved"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "PostRow-link-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/blog/PostRow/index.tsx"
+      ],
+      "proposal": "Root is next-intl Link (anchor host) with StackV inside; early span branch also exists. Link does not accept CallerIdentity. Do not stamp identity on inner StackV. Needs a capable root that can own the href press (or an identity-capable link composite) before apply.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Link",
+          "span"
+        ],
+        "whyNotApply": "non-capable host / mixed roots"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "HostPlatformChip-enumchip-atom-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/chips/HostPlatformChip/component.tsx"
+      ],
+      "proposal": "Single root EnumChip (composite chip helper) — not a frame/composite that documents CallerIdentity on this call path. Stamping identity would require EnumChip (or ChipBase) to accept identity; that is an API decision outside safe apply. Co-located WithClassNames hold remains.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "EnumChip"
+        ],
+        "whyNotApply": "non-capable root for identity prop"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "LessonVideoKindChip-enumchip-atom-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/chips/LessonVideoKindChip/index.tsx"
+      ],
+      "proposal": "Same as HostPlatformChip: root EnumChip only. Record until EnumChip/Chip identity-capable API exists; do not invent a wrapping frame.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "EnumChip"
+        ],
+        "whyNotApply": "non-capable root for identity prop"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "SandpackPanel-vendor-div-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/code/SandpackPanel/index.tsx"
+      ],
+      "proposal": "Root is className-hosting <div> around SandpackProvider vendor tree. No StarCi frame/composite draws the panel shape. Identity requires a capable host (Box/SurfaceCard/etc.) that can wrap Sandpack without changing layout — redesign, not a stamp.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > SandpackProvider"
+        ],
+        "whyNotApply": "vendor host div; no identity-capable root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "PhaseScarcityNote-color-div-over-cluster",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/commerce/PhaseScarcityNote/component.tsx"
+      ],
+      "proposal": "Live root is <div className=\"text-warning-soft-foreground\"> wrapping Cluster (identity-capable). Skeleton roots Skeleton; no-seat returns null. Do not stamp Cluster while color-host div remains. Future: move warning tone onto Cluster/Typography without the wrapper, then identity={{ tier:\"block\", component:\"PhaseScarcityNote\" }} on Cluster — only with proof tone inheritance is unchanged.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Skeleton",
+          "null",
+          "div > Cluster"
+        ],
+        "whyNotApply": "mixed/null + capable frame wrapped by host div"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "PriceTagInline-passthrough",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx"
+      ],
+      "proposal": "Thin passthrough to PriceTagBase — root is another block, not an identity-capable frame/composite. Identity belongs on PriceTagBase (or its eventual capable root) once that host is decided; do not stamp here.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "PriceTagBase"
+        ],
+        "whyNotApply": "passthrough to non-capable/undecided host"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "PriceTagProminent-passthrough",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx"
+      ],
+      "proposal": "Same as PriceTagInline: passthrough to PriceTagBase. Hold until PriceTagBase root identity is settled once for the family.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "PriceTagBase"
+        ],
+        "whyNotApply": "passthrough to non-capable/undecided host"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "CommunityPost-card-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/community/CommunityPost/index.tsx"
+      ],
+      "proposal": "Root is CommunityPostCard (sibling block). CommunityPostCard does not declare CallerIdentity. Stamping requires either identity API on CommunityPostCard or collapsing CommunityPost onto a capable composite — both are redesigns.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "CommunityPostCard"
+        ],
+        "whyNotApply": "block-on-block host without identity prop"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ConsultantDirectoryCompanySearch-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx"
+      ],
+      "proposal": "Root is bare <div>. Inspect before promoting an inner control to root; do not invent a frame solely to carry identity.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div"
+        ],
+        "whyNotApply": "unclear host div root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ConsultantDirectoryGrid-a11y-region-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx"
+      ],
+      "proposal": "Root <div role=\"region\" aria-label=…> owns a11y landmark semantics. Replacing with a frame must preserve the region/label contract; a11y edits are out of scope for this batch. Hold.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div[role=region]"
+        ],
+        "whyNotApply": "a11y-bearing host div; batch forbids a11y changes"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ConsultantDirectoryHeader-pageheader-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx"
+      ],
+      "proposal": "Root is inert <div> wrapping PageHeader. PageHeader (composites/layout/Page) does not declare CallerIdentity today. Future: add identity to PageHeader (or drop wrapper once PageHeader can be the element root) then pass identity={{ tier:\"block\", component:\"ConsultantDirectoryHeader\" }}.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > PageHeader"
+        ],
+        "pageHeaderAcceptsIdentity": false,
+        "whyNotApply": "host div + PageHeader not identity-capable yet"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "CourseTrialChip-chip-atom",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/course/CourseTrialChip/index.tsx"
+      ],
+      "proposal": "Root Chip atom (or null). Atoms do not take CallerIdentity. Hold — chip blocks need a capable host API or an exception path, not a hand-rolled data-tier div.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Chip",
+          "null"
+        ],
+        "whyNotApply": "atom/null root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "CvHtmlDocument-html-div-tree",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx"
+      ],
+      "proposal": "Large HTML-document renderer rooted on raw <div>s with inline styles — intentionally draws document chrome, not a StarCi frame. Identity host would require a document-root capable composite; out of safe stamp scope. Co-located no-inline-parameter-type is separate.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div (document tree)"
+        ],
+        "whyNotApply": "raw document host, not a declared capable frame/composite"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ChangelogList-async-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ],
+      "proposal": "Root <div className> wraps composites/async/AsyncContent (identity-capable) which then hosts SurfaceCardNested. Dropping the className div and putting identity on AsyncContent is plausible once className ownership is resolved (co-located no-classname). Do not stamp AsyncContent while the div remains root.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > AsyncContent"
+        ],
+        "capableInner": "AsyncContent (composites)",
+        "whyNotApply": "capable composite wrapped by host div"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "Confetti-fixed-overlay-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/Confetti/index.tsx"
+      ],
+      "proposal": "Root is fixed inset overlay <div aria-hidden> (or null). Draws layout/position classes at sentence tier (co-located no-raw-shape). Identity needs a capable overlay/frame that can own fixed fullscreen chrome — redesign, not a stamp.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div.fixed.inset-0",
+          "null"
+        ],
+        "whyNotApply": "raw overlay host div / null"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ContinueLearning-async-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/ContinueLearning/index.tsx"
+      ],
+      "proposal": "Root inert <div> wraps composites/async/AsyncContent; Grid (identity-capable) is inside content/skeleton slots, not the component root. Future: remove wrapper and identity={{ tier:\"block\", component:\"ContinueLearning\" }} on AsyncContent — only if AsyncContent is accepted as the single root for all leaves.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > AsyncContent"
+        ],
+        "capableInner": [
+          "AsyncContent",
+          "Grid (slot)"
+        ],
+        "whyNotApply": "host div; Grid is slot-inner not file root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "DailyQuest-async-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/DailyQuest/index.tsx"
+      ],
+      "proposal": "Root inert <div> wraps AsyncContent; StackV only appears inside the content slot. Same hold as ContinueLearning — do not stamp inner StackV. Co-located emoji + undeclared StackV are separate lanes.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > AsyncContent"
+        ],
+        "whyNotApply": "host div; capable StackV is slot-inner"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ReadinessChecklist-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/feedback/ReadinessChecklist/index.tsx"
+      ],
+      "proposal": "Root <div className> listing ListRow children — no identity-capable frame/composite root. Needs a StackV/Cluster (or list composite) promotion with className ownership settled first.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div"
+        ],
+        "whyNotApply": "host div / non-capable root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "BadgeImage-img-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/identity/BadgeImage/index.tsx"
+      ],
+      "proposal": "Root is raw <img> (or fragment). Atoms/media hosts do not take CallerIdentity. Hold until an Image/Box capable root owns the badge.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "img"
+        ],
+        "whyNotApply": "raw media host"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "SocketConnectionStatus-null-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/layout/SocketConnectionStatus/component.tsx"
+      ],
+      "proposal": "Renders null — effects push toasts only. No DOM root exists to wear identity. require-identity-root cannot close without changing the toast-only contract; record as hostless effect component.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "null"
+        ],
+        "whyNotApply": "no DOM root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "Spacer-layout-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/layout/Spacer/index.tsx"
+      ],
+      "proposal": "Root is an aria-hidden sizing <div> with inline width/height — the spacer IS the shape. Wrapping with a frame would add a second box. Either exempt layout spacers from require-identity-root or teach a dedicated Spacer frame; do not fake identity on an inner node.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div[aria-hidden]"
+        ],
+        "whyNotApply": "spacer host div is the drawn shape"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "TopLoader-progress-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/layout/TopLoader/index.tsx"
+      ],
+      "proposal": "Root is a fixed progress <div> owning navigation chrome styles. Same class as Confetti/Spacer — needs a dedicated capable chrome frame or an explicit host exemption, not an identity stamp on a child.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div (progress bar)"
+        ],
+        "whyNotApply": "raw chrome host div"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ChallengeHeader-pageheader-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ChallengeHeader/index.tsx"
+      ],
+      "proposal": "Same pattern as ConsultantDirectoryHeader: inert <div> > PageHeader without CallerIdentity. Hold until PageHeader accepts identity; then drop wrapper + pass identity={{ tier:\"block\", component:\"ChallengeHeader\" }}.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > PageHeader"
+        ],
+        "pageHeaderAcceptsIdentity": false,
+        "whyNotApply": "host div + PageHeader not identity-capable yet"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ConceptMapCanvas-reactflow-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ConceptMap/Canvas/index.tsx"
+      ],
+      "proposal": "Root is relative overflow host <div ref={containerRef}> for React Flow. Vendor canvas host; co-located no-raw-shape. Identity requires a capable canvas/frame that can own the ref+relative contract without breaking React Flow — redesign.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div.relative (react-flow host)",
+          "null"
+        ],
+        "whyNotApply": "vendor canvas host div"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "MindMapLegend-reactflow-panel",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx"
+      ],
+      "proposal": "Root is react-flow <Panel> vendor host with className chrome. Not a StarCi identity-capable frame. Hold at vendor boundary.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Panel (react-flow)"
+        ],
+        "whyNotApply": "vendor Panel root"
+      }
+    },
+    {
+      "partition": "identity-hosts",
+      "id": "ContentArticle-surfacecard-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ContentArticle/index.tsx"
+      ],
+      "proposal": "Root inert <div> wraps SurfaceCard (identity-capable). Clear future apply once wrapper is proven inert: remove div, identity={{ tier:\"block\", component:\"ContentArticle\" }} on SurfaceCard. Not applied this pass because current root is still the host div (rule: do not stamp inner capable nodes). Co-located undeclared StackV is separate.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > SurfaceCard"
+        ],
+        "capableInner": "SurfaceCard",
+        "whyNotApply": "capable composite wrapped by host div — remove wrapper first"
+      }
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        18,
+        19
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Storybook twin imports CommandSkeleton/OsTabsSkeleton parallels — same redesign as src PlaygroundSetupSteps. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        91,
+        106,
+        123
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Inline branches swap Skeleton for Icon/Price/CTA (different elements). Leaves are render-props/slots without proven isSkeleton ownership; threading would redesign TierCardBase contract. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        104
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Icon slot branches Skeleton vs KPI Icon component — not same-component; Icon is component-type from map, no proven isSkeleton API to thread. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        167
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Flagged branch is empty-state EmptyState vs loaded comment list (error→loading→empty→content). Not a safe same-component isSkeleton thread; changing it would alter empty invitation behavior. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        98
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Meta row branches one skeleton Typography vs multi-node loaded fragment (minutes/challenges). Structure differs; not same-component threading. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        303
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Callout has no isSkeleton (file comment); bare Skeleton bar stands in. Needs Callout isSkeleton or composite redesign — not safe-consumer-migration. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        96
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Author comment: leading color/icon chosen directly by block with no atom between — intentional hand-rolled Skeleton dot vs PuzzlePieceIcon. Redesign needs icon leaf isSkeleton. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        110
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "Author comment: STATUS_LEADING icon chosen directly by block — intentional Skeleton vs status Icon branch. Not same-component thread. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        206
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "isSkeleton||currentTask picks ContinueCardHero vs empty hero arm — empty-vs-content ownership mixed with loading. ContinueCardHero already takes isSkeleton; collapsing empty arm needs deliberate empty contract, not mechanical migrate. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        18,
+        19,
+        175,
+        197,
+        243
+      ],
+      "kinds": [
+        "parallel-skeleton",
+        "inline-branch"
+      ],
+      "reason": "CommandSkeleton/OsTabsSkeleton parallel twins + MarkdownContent/TabsExtended branches. MarkdownContent/Tabs lack proven co-located isSkeleton mirror; twin redesign required. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "lines": [
+        189
+      ],
+      "kinds": [
+        "inline-branch"
+      ],
+      "reason": "BriefMarkdown skeleton uses Typography line StackV instead of MarkdownContent (viewer needs real payload). Intentional different resting shape; not same-component thread. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        8,
+        81
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Legacy AsyncContent + ChallengeCardSkeleton parallel tree. Retiring AsyncContent and folding ChallengeCard isSkeleton is a redesign (also no-retired-async-content). Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        4
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Early-return CodeBodySkeleton twin instead of ExplainingCard tree with isSkeleton. Fold requires card isSkeleton + empty priority rewrite. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        4
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Early-return CodeBodySkeleton twin instead of ImplementationCard tree with isSkeleton. Fold requires card isSkeleton + empty priority rewrite. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "lines": [
+        11
+      ],
+      "kinds": [
+        "parallel-skeleton"
+      ],
+      "reason": "Imports ContentBodySkeleton parallel twin. Fold into ContentBodyV2 leaf tree with isSkeleton — article/markdown redesign. Prefer hold."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "skeleton-contracts",
+      "path": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "action": "record-only",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "lines": [
+        1
+      ],
+      "kinds": [
+        "twin-component"
+      ],
+      "reason": "Hand-mirrored *Skeleton twin — fold into the mirrored component via isSkeleton threading (canon loading-and-skeleton §1). Parallel redesign required; loading ownership not a safe-consumer-migration. Code unchanged."
+    },
+    {
+      "partition": "twin-parity",
+      "id": "ContinueCardDataProps-className-dead",
+      "classification": "safe-api-removal",
+      "applied": true,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts",
+        ".storybook/components/starci/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "Remove unused className from ContinueCardDataProps",
+      "proof": "26 call sites, 0 pass className; Hero/Item never forward it"
+    },
+    {
+      "partition": "twin-parity",
+      "id": "WeeklyChallengeCard-sb-identity-blocked",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx"
+      ],
+      "proposal": "Extend SB SurfaceCard to accept identity like src, then mirror WeeklyChallengeCard stamp",
+      "proof": "tsc TS2322: Property identity does not exist on SB SurfaceCardBaseProps"
+    }
+  ],
+  "changedFiles": [
+    ".storybook/components/starci/blocks/learn/ContinueCard/types.ts",
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+    "src/components/blocks/learn/ContinueCard/types.ts"
+  ],
+  "uniqueChanged": 3,
+  "deferredSafe": [
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCardDataProps-className-dead",
+      "classification": "safe-api-removal",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts",
+        ".storybook/components/starci/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "Remove unused `className?: string` from ContinueCardDataProps (and keep SB twin types aligned). Not applied in this partition because worker may edit manifest/status only; no product edits.",
+      "proof": {
+        "repoCallSites": {
+          "ContinueCardHero": 18,
+          "ContinueCardItem": 8,
+          "withClassName": 0
+        },
+        "forwarding": "Hero/Item neither destructure nor pass className to SurfaceCard; CardBody does not accept className.",
+        "keysObserved": [
+          "title",
+          "subtitle",
+          "value",
+          "max",
+          "meta",
+          "timeLeft",
+          "urgent",
+          "onPress",
+          "href",
+          "isSkeleton"
+        ]
+      }
+    }
+  ],
+  "proposedSlots": [
+    {
+      "partition": "per-part-props",
+      "id": "DrawerShell-dialog-footer",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/layout/DrawerShell/index.tsx",
+        ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx"
+      ],
+      "proposal": "Repo-wide: only MiniCartDrawer passes dialogClassName/footerClassName. dialogClassName=\"sm:max-w-md\" is a real dialog width (DrawerShell has no size prop; DrawerDialog only owns gap-3). footerClassName forces a vertical stacked footer (flex-col! items-stretch! justify-start! gap-3! border-t) because HeroUI Drawer.Footer hard-codes flex-row justify-end. Honest API: dialogWidth=\"md\" (maps to sm:max-w-md inside DrawerShell) + footerVariant=\"stacked\" (column stretch + top border, owned by shell). Do NOT remove props while MiniCart depends on them. Apply when both named props land on src+Storybook twins and MiniCart migrates in the same change.",
+      "applied": false,
+      "proof": {
+        "consumers": {
+          "dialogClassName": [
+            "src/components/overlays/drawers/MiniCartDrawer/component.tsx:302"
+          ],
+          "footerClassName": [
+            "src/components/overlays/drawers/MiniCartDrawer/component.tsx:310"
+          ]
+        },
+        "defs": [
+          "src/components/composites/layout/DrawerShell/index.tsx:71-73",
+          ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx:74-78"
+        ],
+        "whyNotSafeRemoval": "MiniCart is a live consumer; removal would drop max-width and stacked footer layout.",
+        "whyNotSafeMigration": "No existing named prop/token on DrawerShell or Drawer atom covers max-w-md or stacked footer; inventing className escapes is forbidden."
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "ModalShell-container-CvPreview",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/layout/ModalShell/index.tsx",
+        ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+        "src/components/overlays/modals/CvPreviewModal/component.tsx"
+      ],
+      "proposal": "Repo-wide: only CvPreviewModal passes containerClassName=\"h-[92vh] w-[96vw] max-w-[96vw]\". HeroUI ModalContainer size tokens are xs|sm|md|lg|cover|full. cover = full screen with 16px/40px margins; full = 100dvh edge-to-edge no radius. Neither equals 92vh×96vw. Honest API: viewportFit=\"near-fullscreen\" (or size=\"preview\") owned by ModalShell with those exact classes baked in — not size=\"cover\"/\"full\". Pair with PDFView height ownership (see PDFView-heightClassName). Manifest lint row marked safe-consumer-migration is a classifier false positive (generic containerClassName message missed the h-[92vh] consumer); treat as new-named-slot-required.",
+      "applied": false,
+      "proof": {
+        "consumers": {
+          "containerClassName": [
+            "src/components/overlays/modals/CvPreviewModal/component.tsx:44"
+          ]
+        },
+        "herouiSizeTokens": [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "cover",
+          "full"
+        ],
+        "notEquivalent": {
+          "cover": "margins 16px mobile / 40px desktop — not 96vw/92vh",
+          "full": "100dvh, no margins/radius — not 92vh×96vw with modal chrome"
+        },
+        "canon": "enforce/authoring/overlay-and-feedback.md §4 documents scroll=inside → max-h-[85vh] only; no near-fullscreen token",
+        "whyNotSafeMigration": "Migrating to size=cover or size=full would change CvPreview geometry; preserve exact sizing."
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "PDFView-heightClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/viewers/PDFView/index.tsx",
+        ".storybook/components/composites/viewers/PDFView/PDFView.tsx",
+        "src/components/blocks/rendering/PDFView/index.tsx",
+        ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+        "src/components/overlays/modals/CvPreviewModal/component.tsx"
+      ],
+      "proposal": "heightClassName remains until canon defines a closed viewer-height scale. Observed values: default h-[560px]; stories h-[200|320|400|420px]; CvPreview h-[84vh]. Canon (styling-tailwind.md §1) allows arbitrary [Npx] for media/canvas, but no named height enum exists — do NOT invent sm/md/lg tokens. Honest future API once product locks sizes: heightPx:number (canvas) + heightFit:\"modal-body\" → h-[84vh] owned by PDFView. Preserve every current pixel/vh exactly; Storybook/src/block twins must stay aligned. Block PDFView also carries vendor/identity/cn holds — out of scope for per-part apply.",
+      "applied": false,
+      "proof": {
+        "consumers": [
+          ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx (200/320/420/400/200)",
+          "src/components/overlays/modals/CvPreviewModal/component.tsx:51 (h-[84vh])",
+          "src/components/blocks/rendering/PDFView/index.tsx (forwards prop, default h-[560px])"
+        ],
+        "canonHeightEnum": null,
+        "whyNotSafeRemoval": "Multiple real consumers depend on distinct heights; CvPreview 84vh is not the 560px default."
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "SurfaceCard-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+      ],
+      "proposal": "Keep contentClassName. External SurfaceCard consumers need distinct body chrome: ContinueCard* relative flex-col gap-3 overflow-hidden (stacking-layout owns ContinueCard — do not edit those files here); LeagueCard/LeaderboardListCard flex-col gap-3; TalentMarketplace/LearnLoopScroll add p-4 + justify; PersonalProject* use grid cols; PressableGroup internally injects TILE_CHROME. Honest eventual API: bodyVariant closed set owned by SurfaceCard, e.g. stack | stack-clip | padded-stack | two-col — but values are not yet one semantic; inventing a partial enum while ContinueCard still needs clip+relative would leave an escape hatch. Coordinate with stacking-layout: they migrate ContinueCard once SurfaceCard exposes bodyVariant; this worker does not steal ContinueCard files.",
+      "applied": false,
+      "proof": {
+        "surfaceCardConsumers": [
+          "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+          "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+          ".storybook/components/starci/blocks/learn/ContinueCard/* (twins)",
+          "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+          "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+          "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+          "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+          "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+          "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+          "src/components/composites/cards/SurfaceCard/index.tsx (PressableGroup TILE_CHROME)"
+        ],
+        "coordinate": "stacking-layout owns ContinueCard; record-only handoff via this decision",
+        "whyNotSafeRemoval": "Many live consumers; ContinueCard hero clip depends on the prop"
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "LabeledCard-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/blocks/cards/LabeledCard/index.tsx"
+      ],
+      "proposal": "LabeledCard exposes its own contentClassName (separate from SurfaceCard). Consumers: TaskResult/TaskSubmissionPanel flex-col gap-*, FlipCard flex-col gap-3. Same family as SurfaceCard bodyVariant — propose bodyLayout=\"stack\" | \"stack-lg\" once SurfaceCard settles; also carries no-heroui/identity/cn holds (vendor/identity partitions). No apply.",
+      "applied": false,
+      "proof": {
+        "consumers": [
+          "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+          "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+          "src/components/blocks/cards/FlipCard/index.tsx"
+        ]
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "ShowcaseMockup-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/blocks/marketing/ShowcaseMockup/index.tsx"
+      ],
+      "proposal": "Block-tier contentClassName + className + raw absolute/relative/flex + HeroUI import. Needs named media/content slots on a composite below sentence tier, not a className escape. Record-only; overlaps vendor-boundary/identity work.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-per-part-classname-prop",
+          "no-classname-at-sentence-tier",
+          "no-heroui-outside-vocabulary",
+          "no-raw-shape-at-sentence-tier"
+        ]
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCard-SurfaceCard-contentClassName-stack",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx"
+      ],
+      "proposal": "Add a named SurfaceCard body/content slot (prefer bodyVariant:\"stack\" or contentStack) that owns exactly `relative flex flex-col gap-3 overflow-hidden`. Do not remove contentClassName until that slot ships and ContinueCard (+ SB twins) migrate together. Coordinates with per-part-props decision SurfaceCard-contentClassName.",
+      "proof": {
+        "literal": "relative flex flex-col gap-3 overflow-hidden",
+        "callSites": [
+          "ContinueCardHero (src + SB)",
+          "ContinueCardItem (src + SB)"
+        ],
+        "commentIntent": "CardBody peers (title / progress / CTA) need a stack until CardBody owns one.",
+        "whyNotSafeRemoval": "Classes are stack chrome (relative positioning + vertical gap-3 sibling stack + overflow clip for highlight/watermark), not placement-only."
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCard-CardBody-owns-stack-later",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx"
+      ],
+      "proposal": "Longer-term: CardBody should own one StackV (canon gap-3 → sibling-stack + explain) wrapping title cluster / ProgressMeter / CTA, absorbing the outer contentClassName stack and the two sentence-tier `relative` wrappers. Until then keep contentClassName and relative wrappers — do not invent a principle token and do not eslint-disable.",
+      "proof": {
+        "lint": [
+          "no-raw-shape-at-sentence-tier on relative wrappers (lines 51, 66)",
+          "require-frame-self-declare on inner StackV (line 59)"
+        ],
+        "preserve": "ContinueCard stacking behavior must stay pixel-identical (title→progress→CTA order; relative stacking context for highlight)."
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "ContinueCard-types-className-backdoor-lint",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "no-classname-at-sentence-tier on ContinueCardDataProps.className is the same dead prop as ContinueCardDataProps-className-dead. Prefer removal (safe-api-removal above) over inventing a named placement slot — zero consumers need placement.",
+      "proof": {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 36,
+        "consumers": 0
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "LabeledCard-Leaderboard-contentClassName-stack",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx"
+      ],
+      "proposal": "Add a named LabeledCard content slot (contentVariant:\"stack\" / bodyVariant:\"stack\") owning exactly `flex flex-col gap-3`. Keep contentClassName until LabeledCard ships the slot; LeagueCard skeleton + LeaderboardListCard must migrate together.",
+      "proof": {
+        "literal": "flex flex-col gap-3",
+        "callSites": [
+          "LeaderboardListCard → LabeledCard contentClassName",
+          "LeagueCard skeleton → LabeledCard contentClassName",
+          "LeaderboardListCard bare mode → cn(\"flex flex-col gap-3\", className)"
+        ],
+        "whyNotSafeRemoval": "Same vertical peer stack as ContinueCard (gap-3) without relative/overflow; real chrome, not unused."
+      }
+    },
+    {
+      "partition": "twin-parity",
+      "id": "WeeklyChallengeCard-sb-identity-blocked",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx"
+      ],
+      "proposal": "Extend SB SurfaceCard to accept identity like src, then mirror WeeklyChallengeCard stamp",
+      "proof": "tsc TS2322: Property identity does not exist on SB SurfaceCardBaseProps"
+    }
+  ],
+  "vendorBoundaries": [
+    {
+      "partition": "per-part-props",
+      "id": "blocks-PDFView-vendor-and-height",
+      "classification": "vendor-boundary",
+      "files": [
+        "src/components/blocks/rendering/PDFView/index.tsx"
+      ],
+      "proposal": "Block PDFView still imports @heroui/react, uses WithClassNames, cn, raw flex, and forwards heightClassName. Height follows PDFView-heightClassName; HeroUI/cn/identity are vendor/identity partition work — not safe apply here.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-heroui-outside-vocabulary",
+          "require-identity-root",
+          "no-classname-at-sentence-tier",
+          "no-per-part-classname-prop",
+          "no-cn-above-vocabulary",
+          "no-raw-shape-at-sentence-tier"
+        ]
+      }
+    },
+    {
+      "partition": "per-part-props",
+      "id": "LivestreamCalendarModal-vendor",
+      "classification": "vendor-boundary",
+      "files": [
+        "src/components/overlays/modals/LivestreamCalendarModal/component.tsx"
+      ],
+      "proposal": "HeroUI import + undeclared frames. No per-part classname prop to migrate; hold for heroui-boundaries / principle audit. Not safe-api-removal.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-heroui-outside-vocabulary",
+          "require-frame-self-declare"
+        ]
+      }
+    },
+    {
+      "partition": "stacking-layout",
+      "id": "LeaderboardListCard-heroui-boundary",
+      "classification": "vendor-boundary",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "proposal": "Keep @heroui/react Link/Typography/cn until atom APIs are proven identical (Link profile-row chrome + Typography body-sm muted tabular + cn bare wrapper). Default BATCH 12 finding: non-identical → do not convert.",
+      "proof": {
+        "imports": [
+          "Link",
+          "Typography",
+          "cn"
+        ],
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4
+      }
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.async.InfiniteScrollSentinel.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.auth.GithubTeamGate.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "imports": [
+        "Alert",
+        "Button",
+        "Modal",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Alert: Alert atom is Alert.* data props (title/description/body); HeroUI Alert.Indicator/Content/Title/Description compound + className — non-identical | Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Modal: Modal is vendor compound (Backdrop/Container/Dialog/Header/Body); no identical non-compound atom drop-in — compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Alert.Indicator, Alert.Content, Alert.Title, Alert.Description, Modal.Backdrop, Modal.Container, Modal.Dialog, Modal.CloseTrigger, Modal.Header, Modal.Body"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.auth.Turnstile.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.buttons.ElementCloseButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "imports": [
+        "CloseButton",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "CloseButton: No CloseButton atom; ElementCloseButton wraps HeroUI CloseButton with className — cannot migrate without new atom | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.buttons.FloatingActionButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "imports": [
+        "Button",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.buttons.RatingBar.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "imports": [
+        "Chip",
+        "Typography"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | compound usage observed: Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CheckListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CourseCardSkeleton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CourseCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.CrossListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.FlipCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "imports": [
+        "ScrollShadow",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.GroupPressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.HighlightCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.LabeledAccordionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "imports": [
+        "Accordion",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Accordion: Accordion atom is data-driven `items[]` over DisclosureGroup; HeroUI Accordion.* compound (Item/Heading/Trigger/Panel/Body) — vendor compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Accordion.Item, Accordion.Heading, Accordion.Trigger, Accordion.Indicator, Accordion.Panel, Accordion.Body"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.PlaygroundCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.PressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.SectionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.SummaryCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.SurfaceListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.cards.verdict-band.ts",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.CvSubmissionFields.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "imports": [
+        "Button",
+        "ProgressBar",
+        "Spinner",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | ProgressBar: Progress atom is Progress.Bar with value/max/color (Track/Fill internal); HeroUI ProgressBar.Track/Fill compound + className — non-identical | Spinner: Spinner atom uses size/tone/label + classNames array; usage co-imported with non-identical Button/Typography/ProgressBar — cannot clear heroui import by Spinner alone | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: ProgressBar.Track, ProgressBar.Fill"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.AiCategoryChip.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.DifficultyChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.EnumChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "imports": [
+        "Chip",
+        "Tooltip",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.LanguageChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.StatusChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "imports": [
+        "Chip"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | compound usage observed: Chip.Label"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.chips.TagChips.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "imports": [
+        "Chip",
+        "ScrollShadow",
+        "Tooltip"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.code.CodeConsole.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "imports": [
+        "Tabs",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Tabs: Tabs atom is data-driven TabsBase/TabsExtended; HeroUI Tabs.ListContainer/List/Tab/Indicator compound — vendor compound redesign forbidden | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Tabs.ListContainer, Tabs.List, Tabs.Tab, Tabs.Indicator"
+    },
+    {
+      "partition": "heroui-boundaries",
+      "id": "heroui-boundary:components.blocks.code.IOExampleCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    }
+  ],
+  "coordinatorApplies": [
+    {
+      "id": "ContinueCardDataProps-className-dead",
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts",
+        ".storybook/components/starci/blocks/learn/ContinueCard/types.ts"
+      ]
+    }
+  ],
+  "twinParity": {
+    "softMismatches": 1,
+    "note": "WeeklyChallengeCard src has identity; SB SurfaceCard lacks identity prop — held"
+  },
+  "ruleDelta": {
+    "before": 4679,
+    "after": 4677,
+    "delta": -2,
+    "rows": [
+      {
+        "r": "starci-fe/no-classname-at-sentence-tier",
+        "b": 541,
+        "a": 540,
+        "d": -1
+      },
+      {
+        "r": "starci-fe/require-identity-root",
+        "b": 621,
+        "a": 620,
+        "d": -1
+      }
+    ]
+  },
+  "verification": {
+    "tsc": true,
+    "eslintQuietChanged": true,
+    "eslintMaxWarningsChanged": "fails-on-preexisting-held-warnings-only",
+    "pluginTests": true,
+    "principleStyle": true,
+    "auditFe": true,
+    "teacherHolds": 27
+  },
+  "noCommit": true
+}

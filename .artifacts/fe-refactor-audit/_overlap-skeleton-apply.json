@@ -1,0 +1,141 @@
+{
+  "changed": [
+    "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+    "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+    "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    "src/components/blocks/learn/KeepGoingPath/index.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+    "src/components/blocks/learn/ModuleLessonList/index.tsx",
+    "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+    "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+    "src/components/blocks/learn/QuizRecapList/index.tsx",
+    "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+    "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+    "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+    "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx"
+  ],
+  "skipped": [
+    {
+      "file": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "reason": "house-wrapper"
+    },
+    {
+      "file": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "reason": "house-wrapper"
+    }
+  ],
+  "errors": []
+}

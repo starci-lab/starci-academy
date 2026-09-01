@@ -1,0 +1,525 @@
+{
+  "partition": "blocks-layout",
+  "generatedAt": "2026-08-06T21:54:23.969Z",
+  "checkpoint": "27127bb5",
+  "manifest": ".artifacts/fe-refactor-audit/2026-08-08-deferred-manifest-blocks-layout.json",
+  "changed": [
+    {
+      "path": "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "thin-redirect-to-LinkSeeMore-atom"
+    },
+    {
+      "path": "src/components/blocks/identity/SnippetIcon/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "reexport-vocabulary-SnippetIcon-atom"
+    },
+    {
+      "path": "src/components/blocks/lists/LabeledList/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "reason": "ascii-scrub-plus-Label-atom-swap"
+    },
+    {
+      "path": "src/components/blocks/grading/GradingByline/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named-VerdictIconProps"
+    },
+    {
+      "path": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named-row-cell-param-types"
+    },
+    {
+      "path": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named-ModelRowLayoutProps"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "fragment-root-unclear-identity"
+    },
+    {
+      "path": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "mixed-host-and-vendor-compound-hold"
+    },
+    {
+      "path": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "mixed-host-and-vendor-compound-hold"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "vendor-compound-root-keep-boundary"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "mixed-host-and-vendor-compound-hold"
+    },
+    {
+      "path": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "mixed-host-and-vendor-compound-hold"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "no-clear-return-root"
+    },
+    {
+      "path": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "mixed-host-and-component-roots-unclear-identity"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/lists/ListRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "mixed-host-and-vendor-compound-hold"
+    },
+    {
+      "path": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "no-clear-return-root"
+    },
+    {
+      "path": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "vendor-compound-root-keep-boundary"
+    },
+    {
+      "path": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/form/Dropzone/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "mixed-host-and-vendor-compound-hold"
+    },
+    {
+      "path": "src/components/blocks/form/SearchInput/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/layout/PageHeader/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "no-clear-return-root"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "no-clear-return-root"
+    },
+    {
+      "path": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/navigation/Footer/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "mixed-host-and-component-roots-unclear-identity"
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "mixed-host-and-component-roots-unclear-identity"
+    },
+    {
+      "path": "src/components/blocks/rendering/PDFView/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "mixed-host-and-component-roots-unclear-identity"
+    },
+    {
+      "path": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root-needs-frame-redesign-no-invented-tokens"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both-frame-self-declare-ambiguous"
+    },
+    {
+      "path": "src/components/blocks/navigation/Footer/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both-frame-self-declare-ambiguous"
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both-frame-self-declare-ambiguous"
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "rules": [
+        "starci-fe/no-arbitrary-token"
+      ],
+      "reason": "semantic-hold-manifest"
+    }
+  ],
+  "verification": {
+    "eslintQuietChanged": {
+      "files": [
+        "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+        "src/components/blocks/identity/SnippetIcon/index.tsx",
+        "src/components/blocks/lists/LabeledList/index.tsx",
+        "src/components/blocks/grading/GradingByline/component.tsx",
+        "src/components/blocks/grading/DiffViewer/index.tsx",
+        "src/components/blocks/grading/GradeModelDropdown/component.tsx"
+      ],
+      "exitCode": 0,
+      "errors": 0
+    },
+    "note": "SeeMoreLink + SnippetIcon cleared target structural rules via vocabulary redirect; mechanical named-types + Label/emoji on remaining changed files. No invented principle tokens. 0/45 files had clear identity-capable frame roots."
+  },
+  "regressions": []
+}

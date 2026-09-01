@@ -1,0 +1,39 @@
+{
+  "worker": "src-blocks-profile-remaining",
+  "status": "done",
+  "fixed": [
+    "src/components/blocks/profile/ProfileLockedState/index.tsx"
+  ],
+  "held": [
+    {
+      "file": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-export-jsdoc,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:1 (starci-fe/require-export-jsdoc)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "frag": 7,
+      "reason": "other-debt:6 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "frag": 19,
+      "reason": "other-debt:37 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    }
+  ],
+  "findingsBefore": 30,
+  "findingsFixed": 1,
+  "findingsHeld": 29,
+  "note": "Only ProfileLockedState was fragment-only; remaining files held for unrelated ESLint debt under zero-warn ratchet.",
+  "twinParity": "SB twins may be fixed while src remains held when src has other debt."
+}

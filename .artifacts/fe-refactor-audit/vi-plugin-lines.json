@@ -1,0 +1,398 @@
+[
+  {
+    "line": 59,
+    "text": "// ── tier map dùng chung — suy tier từ ĐƯỜNG DẪN FILE, không phải nội dung ──"
+  },
+  {
+    "line": 60,
+    "text": "// vocabulary: atoms/frames/composites (bọc vendor + ghép leaf, không quyết layout/data)."
+  },
+  {
+    "line": 61,
+    "text": "// sentence: blocks/pages/layouts/overlays (ghép câu, không tự vẽ hình/gọi data)."
+  },
+  {
+    "line": 62,
+    "text": "// Không còn nhà tạm: `features`, `starci`, `modals(v2)`, `drawers(v2)`, `pallettes` đã rỗng và"
+  },
+  {
+    "line": 63,
+    "text": "// bị xoá, nên bốn tên dưới đây là TOÀN BỘ tầng câu — thêm một thư mục mới cạnh chúng là lách cổng."
+  },
+  {
+    "line": 64,
+    "text": "// Bất cứ gì NGOÀI `src/components/**` (route app/, hook, module) KHÔNG PHẢI 1 component tier —"
+  },
+  {
+    "line": 65,
+    "text": "// mỗi rule dùng helper này tự nói rõ trong comment nó bỏ qua phạm vi đó hay không."
+  },
+  {
+    "line": 81,
+    "text": "// fractional KHÔNG BAO GIỜ đúng thang → bắt chắc, 0 false-positive."
+  },
+  {
+    "line": 108,
+    "text": "    docs: { description: \"Cấm ≥2 <Chip> kề nhau trong 1 cụm — 1 cụm meta tối đa 1 chip. [[enforcement L3]]\" },"
+  },
+  {
+    "line": 124,
+    "text": "// L2 — header anatomy: cấm escape-hatch `titleClassName` (nâng header modal thành hero/H-scale)."
+  },
+  {
+    "line": 128,
+    "text": "    docs: { description: \"Cấm prop titleClassName trên Modal/Shell — header = Typography body semibold default. [[enforcement L2]]\" },"
+  },
+  {
+    "line": 141,
+    "text": "// L2b — hero heading class: text-{xl,2xl,3xl} + font-bold trên 1 element = heading hand-roll → Typography."
+  },
+  {
+    "line": 146,
+    "text": "    docs: { description: \"text-xl+/font-bold hand-roll = heading → dùng <Typography type>. [[enforcement L2/L6]]\" },"
+  },
+  {
+    "line": 161,
+    "text": "// L4b/token — arbitrary Tailwind value = thoát token-system. Tailwind v4 sinh spacing bằng calc"
+  },
+  {
+    "line": 162,
+    "text": "// (không prune-enum được), nên chặn \"cửa hậu\": `gap-[7px]` (ngoài scale) + `text-[#hex]` (ngoài semantic color)."
+  },
+  {
+    "line": 163,
+    "text": "// 'warn' — có ca hợp lệ (vd % / px canh chỉnh, brand hex) → dùng eslint-disable + lý do."
+  },
+  {
+    "line": 169,
+    "text": "    docs: { description: \"Cấm arbitrary spacing/hex-color (thoát token-system). [[enforcement token]]\" },"
+  },
+  {
+    "line": 193,
+    "text": "// structure-and-naming §5 + \"tên hàm phải là arrow\": mọi hàm module-level là `const X = () => {}`,"
+  },
+  {
+    "line": 194,
+    "text": "// KHÔNG `function` declaration / `export default function`. Bắt FunctionDeclaration ở top-level."
+  },
+  {
+    "line": 292,
+    "text": "// atom layer = bọc vendor 1 LẦN (atom-layer-heroui-wrappers). Import @heroui/react thẳng ở sentence"
+  },
+  {
+    "line": 293,
+    "text": "// tier = 1 block tự quyết lại appearance mà atom đã chốt — bỏ qua atom, chồng nguồn sự thật hình dạng."
+  },
+  {
+    "line": 294,
+    "text": "// CHỈ áp cho file dưới `src/components/**` (sentence tier); ngoài src/components/ (route, hook, module)"
+  },
+  {
+    "line": 295,
+    "text": "// KHÔNG bị rule này soi — false-positive-risk: 1 hook/route import @heroui/react thẳng lọt lưới."
+  },
+  {
+    "line": 319,
+    "text": "// call site, invisible to every other screen that will need the same thing.\" Ở sentence tier, prop"
+  },
+  {
+    "line": 320,
+    "text": "// className/classNames (hoặc kế thừa WithClassNames<…>) mở lại cửa hậu đó — đóng bằng cách đẩy khác"
+  },
+  {
+    "line": 321,
+    "text": "// biệt xuống 1 tier, nơi nó có TÊN (1 composite/variant mới). CHỈ áp sentence tier."
+  },
+  {
+    "line": 325,
+    "text": "    docs: { description: \"Sentence tier không nhận prop className/classNames — cửa hậu che khác biệt gọi nơi khác. [[canon BLOCK-4]]\" },"
+  },
+  {
+    "line": 359,
+    "text": "// BLOCK-5: composing a class string (\"cn(\") là quyết hình dạng — việc của tier dưới (composite/atom)."
+  },
+  {
+    "line": 360,
+    "text": "// `cn(` xuất hiện ngoài vocabulary tier đọc là \"thiếu 1 composite, hoặc composite có sẵn thiếu variant\"."
+  },
+  {
+    "line": 361,
+    "text": "// CHỈ áp sentence tier (ngoài src/components/ — hook/lib định nghĩa `cn` chính nó — KHÔNG bị soi;"
+  },
+  {
+    "line": 362,
+    "text": "// false-positive-risk: `cn(` trong 1 hook/util ngoài components lọt lưới, chấp nhận để giữ precision)."
+  },
+  {
+    "line": 366,
+    "text": "    docs: { description: \"Gọi cn(...) chỉ hợp lệ ở tier vocabulary — tier trên compose bằng composite có sẵn. [[canon BLOCK-5]]\" },"
+  },
+  {
+    "line": 385,
+    "text": "// fe-asynccontent-4branch-retired: AsyncContent (bare, 4-nhánh) + EmptyContent/ErrorContent = bộ"
+  },
+  {
+    "line": 386,
+    "text": "// wrapper đã NGHỈ HƯU — thay bằng isSkeleton thread xuống từng leaf + AsyncContentEmpty/AsyncContentError."
+  },
+  {
+    "line": 387,
+    "text": "// Global — áp cho MỌI file (kể cả ngoài src/components/), vì import retired có thể lọt ở bất cứ đâu."
+  },
+  {
+    "line": 393,
+    "text": "    docs: { description: \"Cấm AsyncContent (bare) + EmptyContent/ErrorContent — bộ 4-nhánh đã retired. [[canon fe-asynccontent-4branch-retired]]\" },"
+  },
+  {
+    "line": 418,
+    "text": "// atom-tightening-migration-and-pos-ruling: overlay dev-tool showAnatomy/anatPart/data-anat-* đã"
+  },
+  {
+    "line": 419,
+    "text": "// NGHỈ HƯU — identity giờ là data-tier + data-component. Global — soi cả prop declaration, prop pass,"
+  },
+  {
+    "line": 420,
+    "text": "// destructure, và JSX attr data-anat*, vì overlay có thể rơi rớt ở bất cứ file nào (blueprint cũ)."
+  },
+  {
+    "line": 424,
+    "text": "    docs: { description: \"Cấm showAnatomy/anatPart/data-anat-* — overlay blueprint đã retired, identity = data-tier + data-component. [[canon atom-tightening-migration-and-pos-ruling]]\" },"
+  },
+  {
+    "line": 447,
+    "text": "// split.md — component.tsx (nửa PRESENTATIONAL của cặp index.tsx/component.tsx) chỉ nhận props đã"
+  },
+  {
+    "line": 448,
+    "text": "// resolve sẵn: không tự fetch, không tự đọc store, không tự resolve i18n — nếu không thì không còn"
+  },
+  {
+    "line": 449,
+    "text": "// render được từ story. Danh sách allow/deny mirror `check-presentational-purity.mjs` (gate BE dùng"
+  },
+  {
+    "line": 450,
+    "text": "// cho cùng invariant). Chỉ soi file tên đúng `component.tsx` — không giới hạn tier vì quy ước đặt tên"
+  },
+  {
+    "line": 451,
+    "text": "// đã tự khoanh phạm vi (component.tsx chỉ tồn tại trong src/components/**)."
+  },
+  {
+    "line": 456,
+    "text": "    docs: { description: \"component.tsx chỉ nhận props resolve sẵn — không fetch/store/i18n tự gọi. [[canon split.md]]\" },"
+  },
+  {
+    "line": 475,
+    "text": "// components/frames/_identity.ts (teacher's ruling 2026-08-05) — identity của 1 sentence-tier"
+  },
+  {
+    "line": 476,
+    "text": "// component.tsx (hoặc index.tsx khi KHÔNG có component.tsx sibling) KHÔNG còn tự vẽ `data-tier` lên"
+  },
+  {
+    "line": 477,
+    "text": "// 1 div bọc riêng (đó chính là shape BLOCK-2 cấm) — nó truyền prop `identity={{ tier, component }}`"
+  },
+  {
+    "line": 478,
+    "text": "// cho root frame/composite nó compose, ROOT đó mang cặp data-tier/data-component thay nó. Rule này"
+  },
+  {
+    "line": 479,
+    "text": "// bắt trường hợp cũ (mảng `require-identity-root` từng đòi `data-tier` trực tiếp trên file) — giờ đòi"
+  },
+  {
+    "line": 480,
+    "text": "// prop `identity`. Report 1 lần/file, trên export default/named. Conservative: bỏ file không có JSX,"
+  },
+  {
+    "line": 481,
+    "text": "// *.stories.tsx, map.ts, types (quy ước tên component.tsx | index.tsx đã tự loại các file đó khỏi"
+  },
+  {
+    "line": 482,
+    "text": "// phạm vi soi), và bỏ file mà MỌI return chỉ là fragment trần (`<>…</>`) hoặc null — không có root"
+  },
+  {
+    "line": 483,
+    "text": "// element thật để mang identity."
+  },
+  {
+    "line": 487,
+    "text": "    docs: { description: \"component.tsx/index.tsx sentence tier có JSX phải truyền prop identity={{ tier, component }} cho root frame/composite — ROOT mang identity, không tự vẽ div bọc. [[canon components/frames/_identity.ts]]\" },"
+  },
+  {
+    "line": 499,
+    "text": "      // ok — soi file này"
+  },
+  {
+    "line": 502,
+    "text": "      if (existsSync(join(dir, \"component.tsx\"))) return {} // sibling component.tsx là identity root thật"
+  },
+  {
+    "line": 504,
+    "text": "      return {} // không phải component.tsx / index.tsx — ngoài phạm vi rule (bao gồm *.stories.tsx, map.ts, types)"
+  },
+  {
+    "line": 512,
+    "text": "      if (!arg) return true // `return;` — không render gì"
+  },
+  {
+    "line": 515,
+    "text": "      if (arg.type === \"JSXFragment\") return true // fragment trần — không có element để mang identity"
+  },
+  {
+    "line": 532,
+    "text": "        if (sawReturn && !sawNonBareReturn) return // mọi return chỉ là fragment trần / null — bỏ qua"
+  },
+  {
+    "line": 539,
+    "text": "// components/frames/_identity.ts — mặt trái của rule trên: wrapper div tay-vẽ"
+  },
+  {
+    "line": 540,
+    "text": "// `data-tier=\"block|layout|overlay|page\"` để \"mang identity\" là chính pattern đã bị RETIRE (bug, không"
+  },
+  {
+    "line": 541,
+    "text": "// phải cách reconcile) — identity của sentence-tier giờ đứng trên CHÍNH root frame/composite nó"
+  },
+  {
+    "line": 542,
+    "text": "// compose qua prop `identity`, không phải 1 div bọc thêm. CHỈ 4 giá trị sentence-tier (block/layout/"
+  },
+  {
+    "line": 543,
+    "text": "// overlay/page) bị cấm ở đây; \"atom\"/\"frame\"/\"composite\" là vocabulary tier tự vẽ + tự badge element"
+  },
+  {
+    "line": 544,
+    "text": "// của chính nó — hợp lệ, không soi. Global — wrapper có thể rơi rớt ở bất cứ file nào."
+  },
+  {
+    "line": 549,
+    "text": "    docs: { description: \"Cấm div/span/… tay-vẽ data-tier=\\\"block|layout|overlay|page\\\" — wrapper identity đã retired, truyền prop identity cho root frame/composite thay vào đó. [[canon components/frames/_identity.ts]]\" },"
+  },
+  {
+    "line": 563,
+    "text": "        if (!tag || !/^[a-z]/.test(tag)) return // chỉ soi host element (div/span/…) — component PascalCase không tính"
+  },
+  {
+    "line": 570,
+    "text": "// sentence tier ghép câu bằng cách compose frame/composite có sẵn — nó không tự vẽ hình. Class LAYOUT"
+  },
+  {
+    "line": 571,
+    "text": "// (flex/grid/gap-/items-/justify-/space-x-/space-y-/absolute/relative/sticky/overflow-) trên 1 host"
+  },
+  {
+    "line": 572,
+    "text": "// element (div/span/section/…) ở sentence tier = tự vẽ hình thay vì compose. Bỏ qua: token `sr-only`,"
+  },
+  {
+    "line": 573,
+    "text": "// className CHỈ gồm token `size-*` (icon sizing), và variant-prefix (`md:flex`) được strip trước khi so."
+  },
+  {
+    "line": 582,
+    "text": "    docs: { description: \"Sentence tier không tự vẽ layout (flex/grid/gap-/absolute/…) trên host element — compose frame/composite có sẵn. [[canon sentence-tier-composes-not-draws]]\" },"
+  },
+  {
+    "line": 610,
+    "text": "// skeleton co-located: cây skeleton tay-giữ (\"import FooSkeleton from './FooSkeleton'\" hoặc prop"
+  },
+  {
+    "line": 611,
+    "text": "// `skeleton={<...>}`) là bản sao chép tay dễ trôi khỏi bản thật — thread `isSkeleton` xuống từng leaf"
+  },
+  {
+    "line": 612,
+    "text": "// để shimmer luôn mirror đúng hình đã load, không thể lệch. Global — cả 2 dạng đều là \"cây song song\""
+  },
+  {
+    "line": 613,
+    "text": "// dù ở tier nào. KHÔNG bắt import `Skeleton` (bare, tên đúng \"Skeleton\") — đó là primitive dùng co-located."
+  },
+  {
+    "line": 617,
+    "text": "    docs: { description: \"Cấm cây skeleton tay-giữ (prop skeleton={JSX} hoặc import *Skeleton relative) — thread isSkeleton xuống leaf. [[canon v2-src-twins-and-gates]]\" },"
+  },
+  {
+    "line": 646,
+    "text": "// atom phải nhận text đã resolve qua prop — không tự embed câu locale (i18n là data, thuộc file"
+  },
+  {
+    "line": 647,
+    "text": "// connected). Regression thật: Input.Password hardcode \"Show password\", user VN mất \"Hiện mật khẩu\"."
+  },
+  {
+    "line": 648,
+    "text": "// Heuristic: string literal có khoảng trắng + mở đầu chữ hoa = câu văn thật, không phải token. CHỈ"
+  },
+  {
+    "line": 649,
+    "text": "// áp vocabulary tier — sentence tier nhận text qua props nên không thuộc phạm vi rule này."
+  },
+  {
+    "line": 654,
+    "text": "    docs: { description: \"Atom (vocabulary tier) không hardcode câu văn ở aria-label/placeholder/title/alt — nhận qua prop đã resolve i18n. [[canon fe-no-custom-from-design-up]]\" },"
+  },
+  {
+    "line": 791,
+    "text": "// ── mỗi lớp phải TỰ KHAI nó là gì và VÌ SAO nó tồn tại ──────────────────────────"
+  },
+  {
+    "line": 792,
+    "text": "// `principle` = lớp này tuyên bố nó là seam gì (một token, tập đóng, khớp `patterns.mjs`,"
+  },
+  {
+    "line": 793,
+    "text": "// test đi theo `[data-principle]`). `explain` = vì sao có lớp này — thứ không ai dựng lại"
+  },
+  {
+    "line": 794,
+    "text": "// được từ markup về sau, và là thứ quyết định lớp kế tiếp nằm CẠNH hay nằm TRONG lớp này."
+  },
+  {
+    "line": 795,
+    "text": "// Atom miễn: nó bọc vendor, nó không dựng layer nào của riêng mình."
+  },
+  {
+    "line": 797,
+    "text": "/** Frame nào cũng dựng ra một node thật, nên node đó phải tự khai. */"
+  },
+  {
+    "line": 804,
+    "text": "/** Tên element JSX, kể cả dạng `Foo.Bar`. */"
+  },
+  {
+    "line": 813,
+    "text": "/** Element có prop tên này không (kể cả `{...spread}` — spread thì coi như CÓ, đừng báo oan). */"
+  },
+  {
+    "line": 893,
+    "text": "// ── một component = MỘT thư mục, và thư mục đó chỉ chứa hai nửa của chính nó ──"
+  },
+  {
+    "line": 894,
+    "text": "// Ba luật dưới đây khoá cùng một thói quen: nhét cả một cụm vào trong thư mục của"
+  },
+  {
+    "line": 895,
+    "text": "// một màn hình. Nó luôn bắt đầu vô hại (\"con này chỉ trang này dùng\") rồi kết thúc"
+  },
+  {
+    "line": 896,
+    "text": "// bằng một trang 674 dòng gồm 4 component, 1 folder constants, 1 folder utils và 3"
+  },
+  {
+    "line": 897,
+    "text": "// bản skeleton chép tay — đúng thứ `pages/AiSubscriptionPage` từng là."
+  },
+  {
+    "line": 899,
+    "text": "/** Đường dẫn có nằm trong thư mục của MỘT component ở tầng câu không, và tên thư mục đó là gì. */"
+  }
+]

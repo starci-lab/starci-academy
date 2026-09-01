@@ -1,0 +1,103 @@
+{
+  "changed": [
+    "src/app/InnerLayout.tsx",
+    "src/components/layouts/LearnShellLayout/index.tsx",
+    "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+    "src/hooks/zustand/overlay/hooks.ts",
+    "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+    "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+    "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+    "src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+    "src/modules/api/graphql/mutations/types/cart.ts",
+    "src/modules/api/graphql/mutations/types/course-enroll.ts",
+    "src/modules/api/graphql/mutations/types/discussion.ts",
+    "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+    "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+    "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+    "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+    "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+    "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+    "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+    "src/modules/api/graphql/queries/types/course-price-preview.ts",
+    "src/modules/api/graphql/queries/types/course-questions.ts",
+    "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+    "src/modules/api/graphql/queries/types/cv-blocks.ts",
+    "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+    "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+    "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+    "src/modules/api/graphql/queries/types/recommended-courses.ts",
+    "src/modules/types/entities/challenge.ts",
+    "src/modules/types/enums/cv-block-type.ts",
+    "src/modules/utils/rank.ts",
+    "src/modules/utils/session-display-name.ts"
+  ],
+  "remaining": [
+    {
+      "file": ".storybook/story-kit.tsx",
+      "text": "/**\r\n * Shared SCAFFOLD helpers for GALLERY stories — render every variant/state of a component in\r\n * ONE story, laid out identically everywhere.\r\n *\r\n * Deliberately NOT called \"layout primitives\": "
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "text": "/**\r\n * Modules route layout. The content-column shell + right module-outline rail live in the\r\n * shared learn layout; the lesson breadcrumb now lives INSIDE the PageHeader (ContentHeader)\r\n * so the"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "text": "/**\n * Learn / flashcards / review / sessions / [sessionId] — the ONE dedicated,\n * resumable URL for a live \"Flashcard study\" run, whichever kind started it (teacher\n * 2026-07-11: \"drop the deck rou"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "text": "/**\r\n * Shared shell for ONE playground exercise. Mounts\r\n * {@link PlaygroundSessionProvider} so the socket + session (and the pairing\r\n * code the learner already ran `npx` with) survive navigation "
+    },
+    {
+      "file": "src/hooks/effects/useDefaultRedirect.ts",
+      "text": "/**\r\n * Graceful fallback for the removed module index/overview. `/learn/content/modules`\r\n * has no page anymore — the content dashboard (`/learn/content`) + the lesson reader\r\n * (`/learn/content/mo"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateRewriteCvBlock} — the \"* AI rewrite\r\n * giúp\" per-block rewrite. Each block editor keeps its OWN call/spinner (this\r\n * hook is instantiated per block-in-"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardDueReviewSessionProgress}.\r\n * Best-effort, fire-and-forget persistence of the in-progress batch —\r\n * callers should NOT `await` this before advanci"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardQuizSessionProgress}. Best-effort,\r\n * fire-and-forget persistence of the in-progress run — callers should NOT\r\n * `await` this before advancing the "
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardReviewSessionProgress}.\r\n * Best-effort, fire-and-forget persistence of the in-progress run — callers\r\n * should NOT `await` this before advancing th"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncMockInterviewSessionTurns}. Best-effort,\r\n * fire-and-forget persistence of the in-progress transcript — callers should\r\n * NOT `await` this before continuing"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+      "text": "/**\r\n * Offset-paginated SWR hook for the content-AI conversations list (infinite\r\n * scroll). Each page skips `index * PAGE_LIMIT`; a page shorter than the limit\r\n * ends the list. Re-keys on `(scope"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "text": "/**\r\n * SWR wrapper for {@link queryMyVouchers}. `data` is the viewer's Coin-shop\r\n * vouchers (newest first), or `null`. User-scoped — only runs once the viewer\r\n * is authenticated. Shares its key w"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "text": "/**\r\n     * Which cards to persist into the session (teacher 2026-07-13 \"modal chọn mode\"):\r\n     * `\"full\"` (default) keeps the whole deck; `\"due\"` keeps only the cards\r\n     * needing review (no rev"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "text": "/** The drawn prompt's title, localized — for Q&A kinds a summary like \"4 câu · theory\", not a single system name. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "text": "/**\r\n * Fetches a flashcard \"Flashcard study\" session by its id alone (whichever kind it\r\n * is) — `null` when not found/not owned by the caller. Mirrors backend\r\n * `queries/flashcard/my-flashcard-re"
+    }
+  ]
+}

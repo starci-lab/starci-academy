@@ -1,0 +1,8 @@
+﻿src/components/pages/JobListPage/component.tsx(216,29): error TS1005: '>' expected.
+src/components/pages/JobListPage/component.tsx(229,29): error TS1005: '>' expected.
+src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx(295,101): error TS1005: '>' expected.
+src/components/pages/ProfileChallengeManagePage/index.tsx(225,61): error TS1005: '>' expected.
+src/components/pages/ProfileChallengeManagePage/index.tsx(243,61): error TS1005: '>' expected.
+src/components/pages/ProfileChallengeManagePage/index.tsx(264,61): error TS1005: '>' expected.
+src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx(393,49): error TS1005: '>' expected.
+src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx(419,49): error TS1005: '>' expected.

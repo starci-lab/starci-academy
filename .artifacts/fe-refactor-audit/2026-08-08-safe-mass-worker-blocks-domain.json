@@ -1,0 +1,290 @@
+{
+  "partition": "blocks-domain",
+  "changed": [
+    {
+      "path": "src/components/blocks/commerce/TierCard/index.tsx",
+      "rules": ["starci-fe/require-export-jsdoc", "starci-fe/require-identity-root"],
+      "reason": "JSDoc reattached to export (EmptySlot was stealing it); identity on TierCardBase host"
+    },
+    {
+      "path": "src/components/blocks/feed/Composer/index.tsx",
+      "rules": ["starci-fe/handler-on-prefix"],
+      "reason": "handleKeyDown → onKeyDown"
+    },
+    {
+      "path": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "removed unused heightClassName (no consumers); baked default h-[32rem]"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on clear LabeledCard root"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "unwrap identity-wrapper div → SurfaceCardAccordion identity; toneClassName→iconTone; named ErrorEmptyState/PlainEmptyState props"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on LabeledCard root (bare div path unchanged)"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on LabeledCard root (bare div path unchanged)"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "removed unused titleClassName; added identity?: plumbing on SurfaceListCardItem for callers"
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on SurfaceListCardItem root"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "rules": [],
+      "reason": "added identity?: + resolveIdentity on roots so SummaryCard can clear identity"
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on clear PressableCard root"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": [],
+      "reason": "added identity?: + resolveIdentity on Card root so TierCard/FreeTierCard can clear identity"
+    },
+    {
+      "path": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on TierCardBase root"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "rules": [],
+      "reason": "resolveIdentity own fallback {tier:composite,name:LabeledCard} (host still lacks JSX identity=)"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "rules": ["starci-fe/no-emoji-in-source", "starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "product emoji HOLD; cn/Typography not identical-API atom redirect; unclear div root"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/constants.ts",
+      "rules": ["starci-fe/no-emoji-in-source"],
+      "reason": "product reaction emoji HOLD"
+    },
+    {
+      "path": "src/components/blocks/learn/ReactionButton/types.ts",
+      "rules": ["starci-fe/no-emoji-in-source"],
+      "reason": "product reaction emoji HOLD"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary"],
+      "reason": "cn-only heroui; no vocabulary redirect without inventing cn utility"
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/no-inline-parameter-type", "starci-fe/require-identity-root"],
+      "reason": "unclear SVG/g roots; Typography API not identical; inline-param held after prior corruption risk"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/no-inline-parameter-type", "starci-fe/require-identity-root"],
+      "reason": "unclear div root; Typography/cn not identical-API redirects"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-per-part-classname-prop"],
+      "reason": "identity host (no JSX identity=); contentClassName has consumers; Card/cn vendor"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "identity host (resolveIdentity only); cn-only heroui"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary"],
+      "reason": "Button/Chip/Spinner/Typography vendor compounds — not identical atom APIs"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-emoji-in-source"],
+      "reason": "unclear div root; vendor form compounds; product emoji"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-emoji-in-source"],
+      "reason": "unclear div root; vendor form compounds; product emoji"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-emoji-in-source"],
+      "reason": "stack of LabeledCards under div — no single clear root; Dropdown vendor; product emoji"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-emoji-in-source"],
+      "reason": "unclear div root; vendor compounds; product emoji"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-emoji-in-source"],
+      "reason": "unclear div root; vendor form compounds; product emoji"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/no-emoji-in-source"],
+      "reason": "Typography/Link/cn not identical-API; product ellipsis emoji"
+    },
+    {
+      "path": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear div root; cn-only heroui"
+    },
+    {
+      "path": "src/components/blocks/feed/Composer/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear div root; TextArea/Button vendor compounds"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/RootNode/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-inline-parameter-type"],
+      "reason": "unclear div root; cn-only; inline-param held"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "skeleton HOLD; vendor Card/Skeleton"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/no-emoji-in-source"],
+      "reason": "Pagination atom API not identical to HeroUI compound; product emoji"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "Chip.Label vendor compound (Chip atom API not identical); ChipBase locked"
+    },
+    {
+      "path": "src/components/blocks/learn/QuizCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-inline-parameter-type"],
+      "reason": "vendor Radio/Checkbox compounds; unclear multi-root; inline-param held"
+    },
+    {
+      "path": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root", "starci-fe/no-per-part-classname-prop"],
+      "reason": "contentClassName has consumers; unclear root; Typography/cn"
+    },
+    {
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear div root; cn-only"
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear ul root; cn-only"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "Card atom strips className — not identical API; vendor compounds"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "skeleton HOLD"
+    },
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear ul root; cn-only"
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear div root; ScrollShadow vendor"
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear @container div host root (not PressableCard)"
+    },
+    {
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear root; cn-only"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary"],
+      "reason": "Accordion/Typography vendor compounds"
+    },
+    {
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "Card atom not identical API; vendor compounds"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "identity host (resolveIdentity only); cn-only heroui"
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary"],
+      "reason": "cn-only heroui"
+    },
+    {
+      "path": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "Tooltip/Button/Spinner vendor; unclear Tooltip root"
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary"],
+      "reason": "Button/Link/Typography vendor compounds"
+    },
+    {
+      "path": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary"],
+      "reason": "Button/Typography vendor compounds"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "identity host; Card/Skeleton/Typography vendor; skeleton-branch hold"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary", "starci-fe/require-identity-root"],
+      "reason": "unclear div root; cn-only"
+    }
+  ],
+  "verification": {
+    "eslintQuiet": "pass",
+    "changedCount": 14,
+    "holdCount": 40,
+    "manifestFileCount": 40,
+    "note": "Manifest is src-only (no Storybook twins in cap). Burned clear identity handoffs + JSDoc/handler/unused per-part/mechanical types. Held product emoji, skeletons, vendor HeroUI compounds (non-identical atom APIs), cn-only redirects, and unclear div/SVG host roots. No commit."
+  },
+  "regressions": []
+}

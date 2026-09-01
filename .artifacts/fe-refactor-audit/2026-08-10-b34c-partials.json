@@ -1,0 +1,96 @@
+{
+  "batch": "B34c",
+  "checkpoint": "6ff21c66",
+  "counts": {
+    "closed": 4,
+    "stillPartial": 0,
+    "unchangedHold": 2,
+    "regression": 0
+  },
+  "closedClusterWarnings": 0,
+  "claims": {
+    "closedClusterWarnings": 0,
+    "introducedWarnings": 0,
+    "introducedErrors": 0,
+    "unclassifiedDiagnostics": 0
+  },
+  "clusters": [
+    {
+      "id": "src-or-sb:blocks/learn/KeepGoingPath::KeepGoingPath::css-contract::band2",
+      "priorB33c": "still-partial",
+      "status": "closed",
+      "afterFocusRaw": 0,
+      "afterFocusRules": [],
+      "residualNonFocusRules": [],
+      "totalMessages": 0,
+      "reason": "B34 cleared focus rules; residualNonFocus="
+    },
+    {
+      "id": "src-or-sb:blocks/learn/ModuleLessonList::ModuleLessonList::css-contract::band3",
+      "priorB33c": "still-partial",
+      "status": "closed",
+      "afterFocusRaw": 0,
+      "afterFocusRules": [],
+      "residualNonFocusRules": [],
+      "totalMessages": 0,
+      "reason": "B34 cleared focus rules; residualNonFocus="
+    },
+    {
+      "id": "src-or-sb:blocks/learn/QaConversationHeader::QaConversationHeader::sentence-root::band5",
+      "priorB33c": "unchanged-hold",
+      "status": "closed",
+      "afterFocusRaw": 0,
+      "afterFocusRules": [],
+      "residualNonFocusRules": [],
+      "totalMessages": 0,
+      "reason": "B34 cleared focus rules; residualNonFocus="
+    },
+    {
+      "id": "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8",
+      "priorB33c": "unchanged-hold",
+      "status": "closed",
+      "afterFocusRaw": 0,
+      "afterFocusRules": [],
+      "residualNonFocusRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "totalMessages": 7,
+      "reason": "B34 cleared focus rules; residualNonFocus=starci-fe/no-heroui-outside-vocabulary,starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop,starci-fe/no-cn-above-vocabulary"
+    },
+    {
+      "id": "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band58",
+      "priorB33c": "still-partial",
+      "status": "unchanged-hold",
+      "afterFocusRaw": 43,
+      "afterFocusRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "residualNonFocusRules": [
+        "starci-fe/no-frame-fragment-item",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "totalMessages": 56,
+      "reason": "Not in B34 scope; SurfaceCard residual CSS-door debt preserved (focusHits=43)"
+    },
+    {
+      "id": "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band88",
+      "priorB33c": "still-partial",
+      "status": "unchanged-hold",
+      "afterFocusRaw": 43,
+      "afterFocusRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "residualNonFocusRules": [
+        "starci-fe/no-frame-fragment-item",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "totalMessages": 56,
+      "reason": "Not in B34 scope; SurfaceCard residual CSS-door debt preserved (focusHits=43)"
+    }
+  ]
+}

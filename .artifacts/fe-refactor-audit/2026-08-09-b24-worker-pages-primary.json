@@ -1,0 +1,37 @@
+{
+  "partition": "pages-primary",
+  "manifest": [
+    "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx"
+  ],
+  "changed": [
+    "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "action": "consumer-migrate-InputSearch-w-full-via-Box",
+      "classification": "applied"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "PinnedTrack.classNames — restored; live consumer InnerLayout classNames={[\"flex-1\"]}",
+    "Button/Chip/Avatar/Divider/Typography/Stack/Grid classNames — live-api",
+    "SurfaceCard chrome/body + contentClassName residual",
+    "DrawerShell.contentClassName (nivoexpert LessonEditorPanel)",
+    "ShowcaseMockup.contentClassName (locked LearnLoopScroll)",
+    "MiniCart, CvPreview, PDFView, ModalShell semantic contracts",
+    "vendor-boundary Box + HeroUI wrappers",
+    "Nivo/Nivoexpert + locked paths + teacher holds",
+    "Badge/Logo/Spinner/Alert className (singular) still live at call sites"
+  ],
+  "evidence": [
+    "Fresh eslint inventory 2492 hits before edits",
+    "Revalidated zero JSX className AND classNames consumers on open-tag window",
+    "PinnedTrack demoted post-tsc (live InnerLayout consumer) and restored from HEAD",
+    "InputSearch sole remaining field classNames consumer migrated to Box className=w-full (vendor boundary)"
+  ],
+  "parity": "single-tree or consumer-only",
+  "verification": {},
+  "regressions": []
+}

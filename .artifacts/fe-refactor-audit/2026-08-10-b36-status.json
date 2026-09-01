@@ -1,0 +1,64 @@
+{
+  "batch": "B36",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T17:05:00.000Z",
+  "verdict": "READY TO CERTIFY",
+  "doNotCommit": true,
+  "eslint": {
+    "before": { "warnings": 6265, "files": 1104, "errors": 0, "a11y": 11 },
+    "after": { "warnings": 6215, "files": 1086, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -50, "files": -18 },
+    "expectedRange": "300-700 warnings / 60-140 files",
+    "belowExpected": true,
+    "belowExpectedReason": "SurfaceListCard and GlyphMark inventories overstated exact-migratable consumers; most SurfaceListCard sites are ReactNode/accordion/per-row-hook holds. Identity and auth were unlock/ownership work with limited telemetry burn."
+  },
+  "contracts": {
+    "A_NavbarFrame": {
+      "api": "identity?, primary, secondary?, isSkeleton?",
+      "sb": ".storybook/components/frames/NavbarFrame/NavbarFrame.tsx",
+      "src": "src/components/frames/NavbarFrame/index.tsx",
+      "navbarMigrated": ["SB Navbar", "src blocks/navigation/Navbar"],
+      "outerRootClosed": true,
+      "herouiInternalHold": true
+    },
+    "B_GlyphMarkMuted": {
+      "tone": ["default", "muted", "accent", "success", "warning"],
+      "mapping": { "muted": "text-muted" },
+      "consumersMigrated": 4,
+      "heldNonExact": true
+    },
+    "C_CallerIdentityForwarding": {
+      "roots": ["PageHeader", "Toolbar", "Callout", "Alert", "FloatingActionButton", "ResponsiveBreadcrumb", "SearchAutocomplete"],
+      "atomSafeIdentityModule": ["src/components/atoms/_identity.ts", ".storybook/components/atoms/_identity.ts"],
+      "consumersStamped": 5,
+      "held": ["composites/PageHeader family", "legacy FAB block"]
+    },
+    "D_AuthenticationContentSeparation": {
+      "before": "HeroUI Modal chrome + SignIn/SignUp owned CloseTrigger/Header/Body; LoginPage reused chrome-bearing sections",
+      "after": "ModalShell chrome + AuthenticationPanel content; LoginPage SurfaceCard + same AuthenticationPanel",
+      "panel": "src/components/blocks/auth/AuthenticationPanel/**",
+      "loginPageTwoFile": true
+    },
+    "E_SurfaceListCardToSurfaceCardList": {
+      "migrated": 8,
+      "held": "majority of 75 import sites — ReactNode rows / accordion / per-row hooks",
+      "classNameDoorBurnedFully": false,
+      "doorRetainedReason": "held consumers still import SurfaceListCard"
+    }
+  },
+  "gates": {
+    "tsc": 0,
+    "pluginEslintTests": 0,
+    "principleStyleTests": 0,
+    "semanticContractsTests": 0,
+    "auditFe": 0,
+    "gitDiffCheck": 0
+  },
+  "forbiddenProof": {
+    "pass": true,
+    "productDiffs": [],
+    "preDirtyOnly": [".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"]
+  },
+  "workers": 10,
+  "recommendedCommitMessage": "refactor(fe): unlock NavbarFrame, GlyphMark muted, identity roots, auth panel\n\nLand named NavbarFrame and muted GlyphMark; forward CallerIdentity on reusable\nroots; separate AuthenticationPanel from ModalShell chrome; migrate exact\nSurfaceListCard consumers to SurfaceCard.List."
+}

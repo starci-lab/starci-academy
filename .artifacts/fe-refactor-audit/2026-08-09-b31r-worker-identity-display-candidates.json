@@ -1,0 +1,31 @@
+{
+  "changed": [],
+  "held": [
+    "Avatar ambiguous",
+    "no other display moves"
+  ],
+  "retracted": [],
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "candidateEvidence": [
+    {
+      "path": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "reason": "Places fallback icon/image chain; historically vendor atom. AvatarGroup already demoted to composite. Full Avatar demotion is ambiguous without dedicated batch; not IconTile-clear.",
+      "proposedTier": "hold-ambiguous"
+    }
+  ],
+  "beforeTier": "atom",
+  "afterTier": null,
+  "destination": null,
+  "consumersBefore": {},
+  "consumersAfter": null,
+  "publicDoorsBefore": {},
+  "publicDoorsAfter": null,
+  "skeletonBefore": {},
+  "skeletonAfter": null,
+  "storybookParity": "n/a"
+}

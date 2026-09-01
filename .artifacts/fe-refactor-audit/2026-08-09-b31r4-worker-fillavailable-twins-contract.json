@@ -1,0 +1,25 @@
+{
+  "worker": "fillavailable-twins-contract",
+  "status": "done",
+  "edited": [
+    ".storybook/components/frames/FillAvailable/FillAvailable.tsx",
+    ".storybook/stories/frames/FillAvailable/FillAvailable.stories.tsx",
+    "src/components/frames/FillAvailable/index.tsx",
+    ".storybook/components/frames/_principles.ts",
+    ".storybook/components/frames/_principle-style.ts",
+    "src/components/frames/_principles.ts",
+    "src/components/frames/_principle-style.ts",
+    ".storybook/test-runner/patterns.mjs",
+    "../starci-academy-backend/.claude/canon/fe/explore/registry.mjs",
+    "../starci-academy-backend/.claude/canon/fe/enforce/spacing/overview.md"
+  ],
+  "apiBefore": { "at": "\"lg\"" },
+  "apiAfter": { "at": "\"base\" | \"lg\"" },
+  "mapping": {
+    "base": { "classes": "min-w-0 flex-1", "principle": "flex-fill-base" },
+    "lg": { "classes": "min-h-0 @app-lg:flex-1", "principle": "flex-fill", "unchanged": true }
+  },
+  "newToken": "flex-fill-base",
+  "existingLgConsumers": "byte/behavior equivalent (same classes + flex-fill principle)",
+  "storybookSrcParity": true
+}

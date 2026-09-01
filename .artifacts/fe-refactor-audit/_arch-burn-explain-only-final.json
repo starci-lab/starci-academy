@@ -1,0 +1,36 @@
+{
+    "verification":  {
+                         "patternCoverage":  "0 failing; 27 teacher holds",
+                         "principleStyle":  0,
+                         "tsc":  0
+                     },
+    "apiAdds":  [
+                    "Stack explain",
+                    "Box explain",
+                    "Grid explain",
+                    "ButtonGroup explain",
+                    "FormActions explain",
+                    "SurfaceCardPressableGroup explain"
+                ],
+    "baselineReport":  {
+                           "confirmedUnlockedApprox":  200,
+                           "explainOnly":  339,
+                           "missingBothHardCase":  764
+                       },
+    "skipped":  {
+                    "dynamicPrinciple":  "ButtonGroup and similar principle={expr} sites",
+                    "restoredAfterCorruptionNoReapply":  23,
+                    "teacherHold":  152,
+                    "missingBothHardCase":  764,
+                    "lockedPaths":  318
+                },
+    "mission":  "require-frame-self-declare explain-only",
+    "approxCleared":  994,
+    "sourceScanAfter":  {
+                            "holdMissing":  152,
+                            "unlockedMissing":  216,
+                            "lockedMissing":  318,
+                            "unlockedWithExplain":  1001
+                        },
+    "sourceScanBeforeUnlockedMissing":  1210
+}

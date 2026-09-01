@@ -1,0 +1,22 @@
+{
+  "partition": "storybook-parity",
+  "changed": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    ".storybook/components/composites/_semantic-contracts.ts",
+    "src/components/composites/_semantic-contracts.ts",
+    ".storybook/components/composites/_semantic-contracts.mjs",
+    "src/components/composites/_semantic-contracts.mjs"
+  ],
+  "skipped": [],
+  "holds": [],
+  "evidence": [
+    "chromeVariant API + PressableGroup migration mirrored SB→src",
+    "semantic-contracts table identity test includes SURFACE_CARD_CHROME_VARIANT"
+  ],
+  "proposals": [],
+  "verification": {
+    "semanticContracts": "SB/src tables identical"
+  },
+  "regressions": []
+}

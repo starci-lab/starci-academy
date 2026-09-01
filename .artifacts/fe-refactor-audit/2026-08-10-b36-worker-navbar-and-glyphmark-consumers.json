@@ -1,0 +1,187 @@
+{
+  "batch": "B36",
+  "wave": "B",
+  "agent": "navbar-and-glyphmark-consumers",
+  "checkpoint": "84b92cd77",
+  "contract": "B-GlyphMark-muted consumers + optional layouts/Navbar → NavbarFrame",
+  "generatedAt": "2026-08-08T16:20:00.000Z",
+  "owns": [
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/**",
+    ".storybook/components/starci/blocks/learn/ContentPager/**",
+    ".storybook/components/starci/blocks/learn/FlashcardStudyCard/**",
+    ".storybook/components/starci/pages/CourseContents/**",
+    "src/components/blocks/dashboard/WeeklyGoals/**",
+    "src/components/blocks/learn/ContentPager/**",
+    "src/components/blocks/learn/FlashcardStudyCard/**",
+    "src/components/pages/CourseContents/**",
+    "src/components/pages/LearningHistoryPage/CourseOutline/**",
+    "src/components/pages/MockInterviewPage/MockInterviewSession/**",
+    "src/components/overlays/modals/PaymentModal/component.tsx",
+    "src/components/layouts/Navbar/**"
+  ],
+  "matchRule": "exact class triad size-5 + shrink-0 + text-muted|muted-foreground → <GlyphMark tone=\"muted\" icon={...} />; SB twin before src",
+  "changedFiles": [
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/learn/ContentPager/index.tsx",
+    "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+  ],
+  "migrated": [
+    {
+      "id": "weekly-goals-metric-icon",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+        "src/components/blocks/dashboard/WeeklyGoals/index.tsx"
+      ],
+      "before": "ternary HeroSkeleton/Skeleton size-5 shrink-0 rounded-full OR Icon size-5 shrink-0 text-muted",
+      "after": "<GlyphMark icon={KPI_ICON} tone=\"muted\" isSkeleton={isSkeleton} />",
+      "notes": "Skeleton branch collapsed into GlyphMark.isSkeleton (same size-5 shrink-0 rounded-full footprint)."
+    },
+    {
+      "id": "content-pager-carets",
+      "files": [
+        ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+        "src/components/blocks/learn/ContentPager/index.tsx"
+      ],
+      "before": "CaretLeftIcon / CaretRightIcon with className=\"size-5 shrink-0 text-muted\"",
+      "after": "<GlyphMark icon={CaretLeftIcon|CaretRightIcon} tone=\"muted\" />",
+      "sites": ["previous caret", "next caret"]
+    },
+    {
+      "id": "flashcard-study-card-lock",
+      "files": [
+        ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+        "src/components/blocks/learn/FlashcardStudyCard/index.tsx"
+      ],
+      "before": "LockIcon weight=\"bold\" className=\"size-5 shrink-0 text-muted\"",
+      "after": "<GlyphMark icon={LockIcon} tone=\"muted\" />",
+      "notes": "Dropped weight=\"bold\": GlyphMark at size-5 uses regular (atom contract: bold only for glyphs smaller than size-5)."
+    },
+    {
+      "id": "course-outline-module-premium-lock",
+      "files": [
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+      ],
+      "before": "LockIcon aria-label=… className=\"size-5 shrink-0 text-muted\" in LabeledAccordionCard titleEnd",
+      "after": "<GlyphMark icon={LockIcon} tone=\"muted\" ariaLabel={…} />",
+      "sbTwin": "none (src-only page fragment)"
+    }
+  ],
+  "held": [
+    {
+      "id": "course-contents-premium-lock-missing-shrink-0",
+      "files": [
+        ".storybook/components/starci/pages/CourseContents/CourseContents.tsx",
+        "src/components/pages/CourseContents/component.tsx"
+      ],
+      "proof": "LockIcon className=\"size-5 text-muted\" — missing shrink-0; not an exact triad match. Parent StackH / SurfaceCard meta slot provides placement; do not invent GlyphMark without exact box match.",
+      "classification": "missing-shrink-0"
+    },
+    {
+      "id": "course-outline-lesson-premium-lock-missing-shrink-0",
+      "files": [
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+      ],
+      "proof": "Lesson-row meta LockIcon className=\"size-5 text-muted\" — missing shrink-0.",
+      "classification": "missing-shrink-0"
+    },
+    {
+      "id": "course-outline-unread-circle-missing-shrink-0",
+      "files": [
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+      ],
+      "proof": "CircleIcon className=\"size-5 text-muted\" — missing shrink-0 (paired with success CheckCircle / foreground PuzzlePiece siblings that are also non-muted).",
+      "classification": "missing-shrink-0"
+    },
+    {
+      "id": "course-outline-read-check-success-tone",
+      "files": [
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+      ],
+      "proof": "CheckCircleIcon className=\"size-5 text-success-soft-foreground\" — not muted; out of this wave's muted-only migrate rule.",
+      "classification": "non-muted-tone"
+    },
+    {
+      "id": "course-outline-challenge-puzzle-foreground",
+      "files": [
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+      ],
+      "proof": "PuzzlePieceIcon className=\"size-5 text-foreground\" — default/foreground, not muted; also missing shrink-0.",
+      "classification": "non-muted-tone"
+    },
+    {
+      "id": "payment-modal-gateway-chevron-missing-shrink-0",
+      "files": [
+        "src/components/overlays/modals/PaymentModal/component.tsx"
+      ],
+      "proof": "GatewayTrailing ArrowRightIcon className=\"size-5 text-muted\" — missing shrink-0. Glyph-only candidate held for exact-match rule.",
+      "classification": "missing-shrink-0"
+    },
+    {
+      "id": "mock-interview-phase-circle-selection-color",
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx"
+      ],
+      "proof": "CircleIcon className={cn(\"size-5 shrink-0\", current ? \"text-accent-soft-foreground\" : \"text-muted\")} — selection/current color changer; GlyphMark tone is static.",
+      "classification": "hover-selection-color-changer"
+    },
+    {
+      "id": "mock-interview-phase-check-success",
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx"
+      ],
+      "proof": "CheckCircleIcon className=\"size-5 shrink-0 text-success-soft-foreground\" — success tone, not muted-only wave target.",
+      "classification": "non-muted-tone"
+    },
+    {
+      "id": "mock-interview-other-size-5-no-muted",
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx"
+      ],
+      "proof": "DoorOpenIcon/PenNibIcon/ArrowRightIcon/MicrophoneIcon use size-5 without text-muted (button prefix / inherit contexts).",
+      "classification": "not-muted-glyph"
+    },
+    {
+      "id": "layouts-navbar-navbarframe",
+      "files": [
+        "src/components/layouts/Navbar/index.tsx"
+      ],
+      "proof": "Cannot mount NavbarFrame exactly like blocks/navigation/Navbar without behavior/visual drift. (1) Chrome tokens differ: layouts uses border-separator bg-background; NavbarFrame owns border-default bg-surface. (2) layouts/Navbar is a live app shell (next-intl, zustand bottomLayer, router, HeroUI Drawer) with ReactNode secondary content, not ComponentTypeWithSkeleton slots. (3) bottomLayer + in-nav Drawer topology does not map 1:1 to NavbarFrame primary/secondary without restructuring behavior. shell/Navbar untouched.",
+      "classification": "navbarframe-behavior-drift",
+      "applied": false
+    }
+  ],
+  "untouchedOwned": [
+    ".storybook/components/starci/pages/CourseContents/**",
+    "src/components/pages/CourseContents/**",
+    "src/components/pages/MockInterviewPage/MockInterviewSession/**",
+    "src/components/overlays/modals/PaymentModal/component.tsx",
+    "src/components/layouts/Navbar/**"
+  ],
+  "forbiddenTouched": false,
+  "forbiddenProof": {
+    "AuthenticationModal": false,
+    "LoginPage": false,
+    "SurfaceListCard": false,
+    "SurfaceCard": false,
+    "PageHeader": false,
+    "GlyphMark atom files": false,
+    "nivo/mia-mia": false,
+    "shell/Navbar": false,
+    "commit": false
+  },
+  "verification": {
+    "tsc": "clean (exit 0; no owned-path diagnostics)",
+    "eslintOwned": "pre-existing warnings remain on WeeklyGoals/FlashcardStudyCard/CourseOutline (identity/frame/heroui/page-folder); no new GlyphMark-related findings; --max-warnings 0 still fails on baseline debt",
+    "gitDiffCheck": "pass on changed files"
+  },
+  "regressions": [],
+  "summary": {
+    "migratedSites": 7,
+    "heldSites": 10,
+    "navbarFrameMigrated": false
+  }
+}

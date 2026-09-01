@@ -1,0 +1,26 @@
+{
+  "partition": "weekly-challenge-parity",
+  "changed": [
+    {
+      "path": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "Ported identity?: CallerIdentity + resolveIdentity on Base to match src API"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "Stamped identity on SurfaceCard root to match src twin"
+    }
+  ],
+  "skipped": [],
+  "holds": [],
+  "decisions": [
+    {
+      "id": "WeeklyChallengeCard-sb-identity",
+      "classification": "applied",
+      "proof": "src SurfaceCard already accepted identity; SB Base now accepts it; WeeklyChallengeCard SB stamps tier block"
+    }
+  ],
+  "verification": {},
+  "regressions": []
+}

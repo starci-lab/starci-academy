@@ -1,0 +1,74 @@
+{
+  "changed": [],
+  "retracted": [],
+  "holds": [
+    "blocks/identity/IconTile cannot zero-warn (identity leaf + heroui)",
+    "TopLearners skeleton migrate blocked by page-folder while TopLearners move forbidden",
+    "atom isSkeleton exists but size-10/rounded-full ≠ size-12/rounded-xl"
+  ],
+  "publicDoors": [
+    "blocks/identity/IconTile.className still present (untouched)"
+  ],
+  "skeletonParity": "unchanged — no migrate",
+  "storybookParity": "atom twin already has isSkeleton; no blocks/identity twin",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "consumerEvidence": {
+    "topLearnersSkeleton": {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "payload": "Skeleton className=\"size-12 shrink-0 rounded-xl\"",
+      "mirrors": "blocks/identity/IconTile size=\"sm\"",
+      "editBlockedBy": [
+        "starci-fe/page-folder-two-files-only (TopLearners still under pages/ — B31a0 forbids moving TopLearners)",
+        "additional className/WithClassNames/Skeleton className warnings",
+        "migrating only the IconTile line still leaves page-folder on the touched file"
+      ]
+    },
+    "blockIconTileClassNameConsumers": 0
+  },
+  "destinationDecision": {
+    "atomAlreadyHasIsSkeleton": true,
+    "atomGeometryMatchesTopLearners": false,
+    "blockNeedsIsSkeleton": true,
+    "syncAtomGeometryToBlock": "broader visual migration across atom IconTile consumers — out of B31a0",
+    "migrateTopLearnersNow": false,
+    "reason": "Correct chrome owner is blocks/identity/IconTile (size-12 rounded-xl). Adding isSkeleton there cannot hit 0 warnings without Box or demotion. Migrating TopLearners/component.tsx cannot hit 0 warnings while page-folder remains and TopLearners move is forbidden."
+  },
+  "warningsBefore": {
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx": {
+      "isSkeleton": true,
+      "smBox": "size-10 + rounded-full",
+      "storybookTwinOf": "src/components/atoms/display/IconTile"
+    },
+    "src/components/atoms/display/IconTile/index.tsx": {
+      "isSkeleton": true,
+      "smBox": "size-10 + rounded-full",
+      "warningsBefore": {
+        "starci-fe/no-public-classname-prop": 2
+      }
+    },
+    "src/components/blocks/identity/IconTile/index.tsx": {
+      "isSkeleton": false,
+      "smBox": "size-12 rounded-xl (matches TopLearners Skeleton className)",
+      "storybookTwin": "none",
+      "classNameOpenTagConsumers": 0,
+      "warningsBefore": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "zeroWarnBlockers": [
+        "sentence-tier leaf draws shape — require-identity-root wants frame identity; Box root is forbidden escape-hatch proliferation",
+        "HeroUI cn / HeroSkeleton at block tier",
+        "public className door (removable — 0 consumers) insufficient alone"
+      ]
+    }
+  },
+  "warningsAfter": null
+}

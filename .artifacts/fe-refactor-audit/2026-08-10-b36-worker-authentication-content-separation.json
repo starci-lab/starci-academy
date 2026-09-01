@@ -1,0 +1,119 @@
+{
+  "batch": "B36",
+  "wave": "B",
+  "family": "authentication-content-separation",
+  "checkpoint": "84b92cd77",
+  "contract": "D",
+  "generatedAt": "2026-08-08T16:25:00.000Z",
+  "status": "closed",
+  "decision": {
+    "approved": "Do NOT create chrome-only ModalShell variant",
+    "ownership": {
+      "AuthenticationModal": "existing ModalShell owns chrome; AuthenticationPanel owns auth content",
+      "LoginPage": "page/card owner; same AuthenticationPanel body"
+    },
+    "rejected": [
+      "new ModalShell chrome-only variant",
+      "CSS door",
+      "raw HeroUI Modal host replacement on overlay",
+      "duplicate CloseTrigger/Header/Body inside shared content"
+    ]
+  },
+  "ownershipDiagram": {
+    "before": {
+      "ascii": [
+        "AuthenticationModal (raw HeroUI Modal.Backdrop/Container/Dialog)",
+        "  └─ SignInSection | SignUpSection  ← ALSO own Modal.CloseTrigger + Header + Body",
+        "LoginPage (HeroUI Card)",
+        "  └─ same SignInSection | SignUpSection (hideCloseButton)"
+      ],
+      "problems": [
+        "Shared content carried modal chrome, blocking ModalShell (nested Body/CloseTrigger)",
+        "hideCloseButton papered over page vs modal host difference",
+        "SignIn/SignUp nested under overlays/modals while reused by a page",
+        "LoginPage single-file + raw HeroUI Card/Link"
+      ]
+    },
+    "after": {
+      "ascii": [
+        "AuthenticationModal (overlay)",
+        "  └─ ModalShell (chrome: backdrop/container/dialog/CloseTrigger/Body)",
+        "       └─ body={AuthenticationPanel}  // ComponentTypeWithSkeleton, no ReactNode",
+        "",
+        "LoginPage (page two-file)",
+        "  └─ SurfaceCard (page-owned card surface)",
+        "       └─ body={AuthenticationPanel}  // same ComponentType slot",
+        "",
+        "AuthenticationPanel (blocks/auth) — content only",
+        "  └─ SignInSection | SignUpSection",
+        "       └─ Credentials / Registration / OTP steps (Typography title + form; NO Modal.*)"
+      ]
+    }
+  },
+  "changedPaths": {
+    "added": [
+      "src/components/blocks/auth/AuthenticationPanel/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/component.tsx",
+      "src/components/pages/LoginPage/component.tsx"
+    ],
+    "moved": [
+      {
+        "from": "src/components/overlays/modals/AuthenticationModal/SignInSection/**",
+        "to": "src/components/blocks/auth/AuthenticationPanel/SignInSection/**"
+      },
+      {
+        "from": "src/components/overlays/modals/AuthenticationModal/SignUpSection/**",
+        "to": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/**"
+      }
+    ],
+    "modified": [
+      "src/components/overlays/modals/AuthenticationModal/index.tsx",
+      "src/components/overlays/modals/AuthenticationModal/component.tsx",
+      "src/components/pages/LoginPage/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/map.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/OauthButtons/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/EmailField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/SignUpPrompt/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/SignInPrompt/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx"
+    ],
+    "deleted": [
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/types/credentials-state.ts",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/types/index.ts"
+    ]
+  },
+  "preservation": {
+    "signInSignUpTransitions": true,
+    "oauth": true,
+    "password": true,
+    "rememberMe": true,
+    "agreement": true,
+    "errors": true,
+    "i18n": true,
+    "loadingSkeleton": "form isPending / Turnstile gates preserved; ModalShell isSkeleton forwarded to AuthenticationPanel slot"
+  },
+  "gates": {
+    "tsc": "pass (npx tsc --noEmit)",
+    "eslintTouched": "0 errors; residual warnings are pre-existing classNames/principle self-declare clusters on form stacks",
+    "gitDiffCheck": "pass",
+    "committed": false
+  },
+  "notes": [
+    "OauthButtonItem co-located into CredentialsState/map.tsx (removed components/**/types/ helper shelf)",
+    "Leaf identity retargeted overlay → block after move under blocks/auth",
+    "LoginPage brand uses Typography isLink; card surface uses SurfaceCard body slot",
+    "Did not touch .storybook, nivo, mia-mia, Navbar, SurfaceListCard, GlyphMark"
+  ]
+}

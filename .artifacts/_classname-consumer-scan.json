@@ -1,0 +1,336 @@
+{
+  "surface": [
+    {
+      "file": "src/components/blocks/cards/MediaCard/index.tsx",
+      "member": "SurfaceCard",
+      "line": 128,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{classNames}"
+        }
+      ],
+      "snippet": "<SurfaceCard identity={{ tier: \"block\", component: \"MediaCard\" }} variant=\"nested\" padding={1} onPress={onPress} href={href} body={body} classNames={classNames} />"
+    },
+    {
+      "file": "src/components/blocks/cards/NestedCard/index.tsx",
+      "member": "SurfaceCardNested",
+      "line": 52,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{classNames}"
+        }
+      ],
+      "snippet": "<SurfaceCardNested identity={{ tier: \"block\", component: \"NestedCard\" }} title={title} icon={icon} items={items} variant={bordered ? \"nested\" : \"surface\"} isSkeleton={isSkeleton} classNames={classNames} />"
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "member": "SurfaceCard",
+      "line": 133,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{classNames}"
+        }
+      ],
+      "snippet": "<SurfaceCard identity={{ tier: \"block\", component: \"TrialConversionStrip\" }} classNames={classNames} body={() => ( <StackV gap={6} items={[ () => headerRow, () => footerRow, ]} /> )} />"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnNudges/component.tsx",
+      "member": "SurfaceCardList",
+      "line": 72,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{classNames}"
+        }
+      ],
+      "snippet": "<SurfaceCardList identity={{ tier: \"block\", component: \"LearnNudges\" }} classNames={classNames} items={rows} />"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "member": "SurfaceCard",
+      "line": 205,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{classNames}"
+        }
+      ],
+      "snippet": "<SurfaceCard classNames={classNames} body={({ isSkeleton }: SkeletonProps) => ( <StackV gap={6} isSkeleton={isSkeleton} items={[ () => headerRow, () => footerRow, ]} /> )} />"
+    },
+    {
+      "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+      "member": "SurfaceCardAccordion",
+      "line": 165,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"rounded-3xl bg-surface p-3 shadow-surface\""
+        }
+      ],
+      "snippet": "<SurfaceCardAccordion label=\\\"Resources\\\" variant=\\\"nested\\\" items={[…]} />\", render: ( <div data-tier=\"fixture\" className=\"rounded-3xl bg-surface p-3 shadow-surface\">"
+    },
+    {
+      "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardCrossList.stories.tsx",
+      "member": "SurfaceCardCrossList",
+      "line": 191,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"rounded-3xl bg-surface p-3 shadow-surface\""
+        }
+      ],
+      "snippet": "<SurfaceCardCrossList variant=\\\"nested\\\" items={[…]} />\", render: ( <div data-tier=\"fixture\" className=\"rounded-3xl bg-surface p-3 shadow-surface\">"
+    }
+  ],
+  "other": [
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "member": "MarkdownContent",
+      "line": 89,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"[&_p]:m-0\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={comment.body} className=\"[&_p]:m-0\" />"
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "member": "MarkdownContent",
+      "line": 98,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"[&_p]:m-0\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={post.body} className=\"[&_p]:m-0\" />"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "member": "MarkdownContent",
+      "line": 145,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"text-xs text-muted [&_p]:m-0 [&_p]:line-clamp-2\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={challenge.description} className=\"text-xs text-muted [&_p]:m-0 [&_p]:line-clamp-2\" />"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "member": "ProgressMeter",
+      "line": 33,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{[\"flex-1\"]}"
+        }
+      ],
+      "snippet": "<ProgressMeter value={score} max={max} color={isSkeleton ? \"accent\" : scoreColorOf(score, max)} isSkeleton={isSkeleton} classNames={[\"flex-1\"]} />"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "member": "MarkdownContent",
+      "line": 101,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"min-w-0 flex-1 text-sm [&_p]:m-0 [&_p]:line-clamp-1\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={feedback.message} className=\"min-w-0 flex-1 text-sm [&_p]:m-0 [&_p]:line-clamp-1\" />"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "member": "MarkdownContent",
+      "line": 132,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"text-sm text-muted [&_p]:m-0\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={feedback.suggestion} className=\"text-sm text-muted [&_p]:m-0\" />"
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "member": "MarkdownContent",
+      "line": 85,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"text-sm text-foreground [&_p]:m-0 [&_p]:line-clamp-2\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={question.body} className=\"text-sm text-foreground [&_p]:m-0 [&_p]:line-clamp-2\" />"
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "member": "MarkdownContent",
+      "line": 139,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"text-sm [&_p]:m-0\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={comment.body} className=\"text-sm [&_p]:m-0\" />"
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "member": "MarkdownContent",
+      "line": 194,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"text-sm [&_p]:m-0\""
+        }
+      ],
+      "snippet": "<MarkdownContent markdown={question.body} className=\"text-sm [&_p]:m-0\" />"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "member": "ProgressMeter",
+      "line": 242,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{[\"flex-1\"]}"
+        }
+      ],
+      "snippet": "<ProgressMeter isSkeleton color={row.color} classNames={[\"flex-1\"]} />"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "member": "ProgressMeter",
+      "line": 243,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{[\"flex-1\"]}"
+        }
+      ],
+      "snippet": "<ProgressMeter value={row.count} max={gradeTotal} color={row.color} classNames={[\"flex-1\"]} />"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "member": "MarkdownContent",
+      "line": 216,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"text-muted\""
+        }
+      ],
+      "snippet": "<MarkdownContent plain markdown={review.candidateAnswer} className=\"text-muted\" />"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "member": "ProgressMeter",
+      "line": 426,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{[\"flex-1\"]}"
+        }
+      ],
+      "snippet": "<ProgressMeter value={phaseScore.score} max={phaseScore.max} color={scoreColorOf(phaseScore.score, phaseScore.max)} classNames={[\"flex-1\"]} />"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "member": "ProgressMeter",
+      "line": 473,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{[\"flex-1\"]}"
+        }
+      ],
+      "snippet": "<ProgressMeter value={attribute.score} max={100} color={scoreColorOf(attribute.score, 100)} classNames={[\"flex-1\"]} />"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "member": "MarkdownContent",
+      "line": 513,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"min-w-0 flex-1\""
+        }
+      ],
+      "snippet": "<MarkdownContent plain markdown={gap} className=\"min-w-0 flex-1\" />"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "member": "MarkdownContent",
+      "line": 533,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"min-w-0 flex-1 italic\""
+        }
+      ],
+      "snippet": "<MarkdownContent plain markdown={grade.followUpQuestion ?? \"\"} className=\"min-w-0 flex-1 italic\" />"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "member": "ProgressMeter",
+      "line": 124,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{[\"flex-1\"]}"
+        }
+      ],
+      "snippet": "<ProgressMeter value={Math.round(item.avgScore)} max={Math.round(item.avgMax) || 100} color={scoreColorOf(item.avgScore, item.avgMax)} showValue classNames={[\"flex-1\"]} />"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "member": "ProgressMeter",
+      "line": 34,
+      "props": [
+        {
+          "prop": "classNames",
+          "val": "{[\"flex-1\"]}"
+        }
+      ],
+      "snippet": "<ProgressMeter value={score} max={max} color={isSkeleton ? \"accent\" : scoreColorOf(score, max)} isSkeleton={isSkeleton} classNames={[\"flex-1\"]} />"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/learn/QaChatBubble/QaChatBubble.stories.tsx",
+      "member": "MarkdownContent",
+      "line": 41,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"flex w-full max-w-sm justify-start\""
+        }
+      ],
+      "snippet": "<MarkdownContent source=\\\"Have you tried restarting the container?\\\" measure=\\\"compact\\\" /></QaChatBubble>\", render: ( <div data-tier=\"fixture\" className=\"flex w-full max-w-sm justify-start\">"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/learn/QaChatBubble/QaChatBubble.stories.tsx",
+      "member": "MarkdownContent",
+      "line": 53,
+      "props": [
+        {
+          "prop": "className",
+          "val": "\"flex w-full max-w-sm justify-end\""
+        }
+      ],
+      "snippet": "<MarkdownContent source=\\\"I restarted it but I'm still getting the error.\\\" measure=\\\"compact\\\" /></QaChatBubble>\", render: ( <div data-tier=\"fixture\" className=\"flex w-full max-w-sm justify-end\">"
+    }
+  ],
+  "wrapperConsumers": [],
+  "counts": {
+    "surface": 7,
+    "other": 20,
+    "wrapperConsumers": 0
+  }
+}

@@ -1,0 +1,972 @@
+{
+  "summaryCounts": {
+    "SAFE": 2,
+    "MAYBE": 18,
+    "SKIP": 17
+  },
+  "results": [
+    {
+      "dir": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-private types; modules/types home unclear without domain entity",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/account-menu.ts",
+          "lines": 19,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "AccountActionItem"
+          ],
+          "head": "import type { AuthenticationModalTab, } from \"@/redux/slices/tabs\" /** * One auth call-to-action button shown to signed-out users in the dropdown * (e.g. \"Sign in\" / \"Sign up\"). */ export interface AccountActionItem { /"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/layout/shell/Navbar/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-private types; modules/types home unclear without domain entity",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/types/navbar.ts",
+          "lines": 12,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "NavbarItem"
+          ],
+          "head": "/** * One top-level navigation entry rendered in the desktop navbar. */ export interface NavbarItem { /** Visible label. */ label: string /** Navigation target path. */ path: string /** Whether this entry match"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/learn/AiBalancer/utils",
+      "kind": "utils",
+      "fileCount": 1,
+      "nonBarrel": 1,
+      "outsideAbs": [
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx"
+      ],
+      "absHits": [
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx"
+      ],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "imported outside parent — check if move is mechanical",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/learn/AiBalancer/utils/format-timestamp.ts",
+          "lines": 24,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "formatBalancerTimestamp"
+          ],
+          "head": "/** * Formats an ISO timestamp for balancer health UI, or returns a dash when missing. * * @param value - ISO date string from GraphQL, or null. * @param locale - BCP-47 locale for `Intl.DateTimeFormat`. * @returns Localized date/"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/learn/ConceptMap/hooks",
+      "kind": "hooks",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/blocks/learn/ConceptMap/hooks/useMindMapFitView.ts",
+          "lines": 48,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "useMindMapFitView"
+          ],
+          "head": "import { useReactFlow } from \"@xyflow/react\" import { useEffect } from \"react\" import { useAppSelector } from \"@/redux/hooks\" /** Default zoom when landing on the \"you are here\" module — readable, not the tiny fit-all. */ const CURREN"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/learn/lesson/AiLab/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "unclear home / co-located with component",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/learn/lesson/AiLab/types/ai-lab.ts",
+          "lines": 25,
+          "hasReact": false,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "AiLabModelSelection",
+            "AiLabParamsForm"
+          ],
+          "head": "import type { ModelProvider } from \"@/modules/api/graphql/queries/query-my-ai-settings\" /** * A concrete model the user picked in the AI Lab. * * Mirrors the challenge panel's selection shape but lives locally so the AI Lab * sur"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/learn/lesson/constants",
+      "kind": "constants",
+      "fileCount": 1,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "constants local-only; destination ambiguous (resources vs modules)",
+      "dest": "src/resources/ or keep colocated → SKIP unless trivial",
+      "peek": [
+        {
+          "file": "src/components/blocks/learn/lesson/constants/content-tabs.ts",
+          "lines": 19,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "SCHEMA_V2_HIDDEN_CONTENT_TABS",
+            "isSchemaV2HiddenContentTab"
+          ],
+          "head": "import { ContentTab } from \"@/redux/slices/tabs\" /** * Content detail tabs hidden for SCHEMA V2 lessons (`verified` set). * Code explainings are inlined in the per-language markdown body instead. */ export const SCHEMA_V2_HIDDEN_C"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/learn/lesson/hooks",
+      "kind": "hooks",
+      "fileCount": 1,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/blocks/learn/lesson/hooks/useLessonNavigation.ts",
+          "lines": 93,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "AdjacentLesson",
+            "UseLessonNavigationResult",
+            "useLessonNavigation"
+          ],
+          "head": "\"use client\" import { useMemo, } from \"react\" import { useLocale, } from \"next-intl\" import { pathConfig, } from \"@/resources/path\" import { useAppSelector } from \"@/redux/hooks\" import { useQueryMyCourseOutlineSwr "
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/learn/lesson/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [
+        "src/components/pages/ContentPage/index.tsx",
+        "src/components/pages/ContentPage/component.tsx"
+      ],
+      "absHits": [
+        "src/components/pages/ContentPage/index.tsx",
+        "src/components/pages/ContentPage/component.tsx"
+      ],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "imported outside parent — check if move is mechanical",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/learn/lesson/types/content.ts",
+          "lines": 25,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "ContentTabItem"
+          ],
+          "head": "import type { ComponentType } from \"react\" import type { ContentTab } from \"@/redux/slices/tabs\" /** * One entry in the {@link ContentPage} tab bar: which redux {@link ContentTab} it * maps to, the i18n label shown on the trigger, a"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/learn/OnThisPage/hooks",
+      "kind": "hooks",
+      "fileCount": 1,
+      "nonBarrel": 1,
+      "outsideAbs": [
+        "src/components/blocks/learn/LearnMobileTabBar/index.tsx"
+      ],
+      "absHits": [
+        "src/components/blocks/learn/LearnMobileTabBar/index.tsx"
+      ],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook already imported outside parent — move to src/hooks/ may be clean",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/blocks/learn/OnThisPage/hooks/useTableOfContents.ts",
+          "lines": 148,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": true,
+          "exports": [
+            "TocHeading",
+            "UseTableOfContentsResult",
+            "useTableOfContents"
+          ],
+          "head": "\"use client\" import { useCallback, useEffect, useState, } from \"react\" /** A single entry in the \"on this page\" outline. */ export interface TocHeading { /** Anchor id of the heading element (matches the rendered"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/media/VideoRenderer/VideoControls/constants",
+      "kind": "constants",
+      "fileCount": 1,
+      "nonBarrel": 0,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-local constants without clear resources home",
+      "dest": null,
+      "peek": []
+    },
+    {
+      "dir": "src/components/blocks/media/VideoRenderer/VideoControls/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-private types; modules/types home unclear without domain entity",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/media/VideoRenderer/VideoControls/types/quality.ts",
+          "lines": 15,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "QualityLevel"
+          ],
+          "head": "/** * A single selectable video quality / bitrate rendition. * * Used by the DASH player to surface adaptive bitrate options and by the * quality selector UI to render the picker. */ export interface QualityLevel { /** Bitra"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/navigation/ProgrammingLanguageTabs/constants",
+      "kind": "constants",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "constants local-only; destination ambiguous (resources vs modules)",
+      "dest": "src/resources/ or keep colocated → SKIP unless trivial",
+      "peek": [
+        {
+          "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/constants/programming-language-tabs.ts",
+          "lines": 20,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "PROGRAMMING_LANGUAGE_TABS_ROOT_CLASS_NAME",
+            "PROGRAMMING_LANGUAGE_TABS_LIST_CLASS_NAME",
+            "PROGRAMMING_LANGUAGE_TABS_INDICATOR_CLASS_NAME",
+            "PROGRAMMING_LANGUAGE_TABS_SECONDARY_ROOT_CLASS_NAME",
+            "PROGRAMMING_LANGUAGE_TABS_SECONDARY_LIST_CLASS_NAME",
+            "PROGRAMMING_LANGUAGE_TABS_SECONDARY_TAB_CLASS_NAME"
+          ],
+          "head": "/** Root `Tabs` classes — HeroUI custom-styles pill tabs. */ export const PROGRAMMING_LANGUAGE_TABS_ROOT_CLASS_NAME = \"w-fit text-center\" /** `Tabs.List` slot overrides (compact pill tabs + accent foreground when selected). */ export c"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/rendering/MarkdownContent/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "unclear home / co-located with component",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/types/markdown-content.ts",
+          "lines": 42,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "MarkdownTranslator",
+            "MarkdownRenderersParams"
+          ],
+          "head": "import type { useTranslations, } from \"next-intl\" /** Translator returned by next-intl's `useTranslations`, passed to the renderers factory. */ export type MarkdownTranslator = ReturnType<typeof useTranslations> /** Params for "
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/rendering/MarkdownContent/utils",
+      "kind": "utils",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [
+        "src/components/composites/viewers/MarkdownContent/markdown-table.ts"
+      ],
+      "absHits": [
+        "src/components/composites/viewers/MarkdownContent/markdown-table.ts"
+      ],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "imported outside parent — check if move is mechanical",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/utils/markdown-table.ts",
+          "lines": 62,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "flattenMarkdownTableHeaderChildren",
+            "isMarkdownHeaderTableRowNode"
+          ],
+          "head": "import React from \"react\" /** * Flattens thead row output (e.g. a fragment wrapping columns) so the columns can be * passed directly as children of HeroUI `Table.Header`. * @param children - Rendered children of the markdown `thead"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/rendering/PDFView/constants",
+      "kind": "constants",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "constants local-only; destination ambiguous (resources vs modules)",
+      "dest": "src/resources/ or keep colocated → SKIP unless trivial",
+      "peek": [
+        {
+          "file": "src/components/blocks/rendering/PDFView/constants/pdf-view.ts",
+          "lines": 6,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "PAGE_ASPECT_FALLBACK",
+            "RESIZE_DEBOUNCE_MS"
+          ],
+          "head": "/** Fallback aspect ratio (height / width) for a page placeholder before its canvas mounts (A4-ish). */ export const PAGE_ASPECT_FALLBACK = 1.414 /** Debounce window (ms) before reacting to container resize observations. */ export cons"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/blocks/skeleton/AccordionSkeleton/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "unclear home / co-located with component",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/blocks/skeleton/AccordionSkeleton/types/accordion-skeleton.ts",
+          "lines": 31,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "AccordionSkeletonVariant",
+            "AccordionSkeletonItem",
+            "AccordionSkeletonProps"
+          ],
+          "head": "import type { ReactNode } from \"react\" import type { SkeletonTextSize } from \"../../SkeletonText\" import type { WithClassNames } from \"@/modules/types/base/class-name\" /** Visual variant aligned with HeroUI `Accordion`. */ export type"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/layouts/LearnShellLayout/types",
+      "kind": "types",
+      "fileCount": 1,
+      "nonBarrel": 0,
+      "outsideAbs": [
+        "src/hooks/useSidebarNavItems.ts",
+        "src/components/blocks/learn/LearnSidebar/index.tsx"
+      ],
+      "absHits": [
+        "src/hooks/useSidebarNavItems.ts",
+        "src/components/blocks/learn/LearnSidebar/index.tsx"
+      ],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "imported outside parent — check if move is mechanical",
+      "dest": null,
+      "peek": []
+    },
+    {
+      "dir": "src/components/layouts/Navbar/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-private types; modules/types home unclear without domain entity",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/layouts/Navbar/types/navbar.ts",
+          "lines": 12,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "NavbarItem"
+          ],
+          "head": "/** * One top-level navigation entry rendered in the desktop navbar. */ export interface NavbarItem { /** Visible label. */ label: string /** Navigation target path. */ path: string /** Whether this entry match"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/overlays/modals/AiQuotaModal/hooks",
+      "kind": "hooks",
+      "fileCount": 3,
+      "nonBarrel": 2,
+      "outsideAbs": [
+        "src/components/pages/AiUsagePage/hooks/useQuotaLaneData.ts"
+      ],
+      "absHits": [
+        "src/components/pages/AiUsagePage/hooks/useQuotaLaneData.ts"
+      ],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook already imported outside parent — move to src/hooks/ may be clean",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/overlays/modals/AiQuotaModal/hooks/useAiQuotaHistorySwr.ts",
+          "lines": 43,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "UseAiQuotaHistorySwrParams",
+            "useAiQuotaHistorySwr"
+          ],
+          "head": "import useSWR from \"swr\" import { useAppSelector } from \"@/redux/hooks\" import { AiQuotaTab } from \"@/redux/slices/tabs\" import { queryMyCreditUsageHistory } from \"@/modules/api/graphql/queries/query-my-credit-usage-history\" import { useAiQ"
+        },
+        {
+          "file": "src/components/overlays/modals/AiQuotaModal/hooks/useWindowResetLabel.ts",
+          "lines": 27,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "useWindowResetLabel"
+          ],
+          "head": "import { useCallback, } from \"react\" import { useTranslations, } from \"next-intl\" import dayjs from \"dayjs\" /** * Formats API reset timestamps for quota window copy (`aiQuota.windowResetAt`). * @returns Callback that maps an ISO-"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "unclear home / co-located with component",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts",
+          "lines": 18,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "OauthButtonItem"
+          ],
+          "head": "import type React from \"react\" import type { KeycloakIdentityProvider } from \"@/modules/api/graphql/mutations/types/exchange-code-for-token\" import type { WithClassNames } from \"@/modules/types/base/class-name\" /** * One OAuth shortc"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/overlays/modals/ManagePinnedProjectsModal/hooks",
+      "kind": "hooks",
+      "fileCount": 1,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/overlays/modals/ManagePinnedProjectsModal/hooks/usePinnedProjectsManager.ts",
+          "lines": 163,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "UsePinnedProjectsManagerResult",
+            "MAX_PINNED_PROJECTS",
+            "usePinnedProjectsManager"
+          ],
+          "head": "\"use client\" import { useCallback, useState, } from \"react\" import { useSWRConfig } from \"swr\" import { useTranslations } from \"next-intl\" import { useAppSelector } from \"@/redux/hooks\" import { QUERY_USER_PINNED_PROJECTS_"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/AdminMpegDashTestPage/constants",
+      "kind": "constants",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "constants local-only; destination ambiguous (resources vs modules)",
+      "dest": "src/resources/ or keep colocated → SKIP unless trivial",
+      "peek": [
+        {
+          "file": "src/components/pages/AdminMpegDashTestPage/constants/quick-test-urls.ts",
+          "lines": 22,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "QUICK_TEST_URLS"
+          ],
+          "head": "import type { QuickTestUrl } from \"../types\" import { VideoRendererType } from \"@/modules/types/enums/video-renderer-type\" /** Preset URLs offered for quick one-click testing of each renderer type. */ export const QUICK_TEST_URLS: Arra"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/AdminMpegDashTestPage/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "unclear home / co-located with component",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/pages/AdminMpegDashTestPage/types/admin-mpeg-dash-test.ts",
+          "lines": 27,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "RendererTypeOption",
+            "QuickTestUrl"
+          ],
+          "head": "import type { ReactNode } from \"react\" import type { VideoRendererType } from \"@/modules/types/enums/video-renderer-type\" /** Visual + descriptive metadata for one renderer-type selector option. */ export interface RendererTypeOption {"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/AdminUploadVideoPage/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-private types; modules/types home unclear without domain entity",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/pages/AdminUploadVideoPage/types/admin-upload-video.ts",
+          "lines": 26,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "ProviderUploadStatus",
+            "ProcessResult"
+          ],
+          "head": "import type { UploadStatus, } from \"../enums\" /** Tracking record for one storage provider's presigned-URL upload. */ export interface ProviderUploadStatus { /** Storage provider name (e.g. \"s3\", \"r2\"). */ provider: stri"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/AdminUploadVideoPage/utils",
+      "kind": "utils",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SAFE-CANDIDATE",
+      "reason": "pure util, local-only importers",
+      "dest": "src/modules/utils/format-size.ts",
+      "peek": [
+        {
+          "file": "src/components/pages/AdminUploadVideoPage/utils/format-size.ts",
+          "lines": 16,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "formatSize"
+          ],
+          "head": "/** * Format a byte count into a human-readable size string. * * Picks the largest unit (B, KB, MB, GB) under which the value is < 1024 and * rounds to a sensible number of decimals per unit. * @param bytes - raw size in bytes *"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/AiUsagePage/hooks",
+      "kind": "hooks",
+      "fileCount": 3,
+      "nonBarrel": 2,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/pages/AiUsagePage/hooks/quota-lane-variant.ts",
+          "lines": 8,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "QuotaLaneVariant"
+          ],
+          "head": "/** Which AI lane {@link useQuotaLaneData} derives (data from SWR, not props). */ export enum QuotaLaneVariant { /** Free Auto lane — credit windows from `myCreditUsage`. */ Auto = \"auto\", /** Paid Premium lane — limits from `my"
+        },
+        {
+          "file": "src/components/pages/AiUsagePage/hooks/useQuotaLaneData.ts",
+          "lines": 86,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "UseQuotaLaneDataResult",
+            "useQuotaLaneData"
+          ],
+          "head": "\"use client\" import { useMemo, } from \"react\" import type { AiQuotaLaneData, } from \"@/components/blocks/ai/AiQuotaLane\" import { useQueryMyAiQuotaSwr } from \"@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr\" import { useQueryM"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/CourseDetailPage/hooks",
+      "kind": "hooks",
+      "fileCount": 2,
+      "nonBarrel": 2,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/pages/CourseDetailPage/hooks/useCourseEnrollment.ts",
+          "lines": 88,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "UseCourseEnrollmentResult",
+            "useCourseEnrollment"
+          ],
+          "head": "\"use client\" import { useCallback, } from \"react\" import { useLocale, } from \"next-intl\" import { useRouter, } from \"next/navigation\" import { usePaymentOverlayState } from \"@/hooks/zustand/overlay/hooks\" import { u"
+        },
+        {
+          "file": "src/components/pages/CourseDetailPage/hooks/usePricingRows.ts",
+          "lines": 98,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "UsePricingRowsResult",
+            "usePricingRows"
+          ],
+          "head": "\"use client\" import { useMemo, } from \"react\" import numeral from \"numeral\" import Decimal from \"decimal.js\" import _ from \"lodash\" import type { CoursePriceRow, } from \"@/components/pages/CourseDetailPage/types\" import "
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/DashboardPage/hooks",
+      "kind": "hooks",
+      "fileCount": 1,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/pages/DashboardPage/hooks/useDashboardTabUrlSync.ts",
+          "lines": 68,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "useDashboardTabUrlSync"
+          ],
+          "head": "\"use client\" import { useEffect, useRef, } from \"react\" import { usePathname, useRouter, useSearchParams, } from \"next/navigation\" import { DASHBOARD_TABS, } from \"../types\" import type { Dashboar"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/FlashcardsPage/constants",
+      "kind": "constants",
+      "fileCount": 1,
+      "nonBarrel": 0,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-local constants without clear resources home",
+      "dest": null,
+      "peek": []
+    },
+    {
+      "dir": "src/components/pages/LandingPage/constants",
+      "kind": "constants",
+      "fileCount": 1,
+      "nonBarrel": 0,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-local constants without clear resources home",
+      "dest": null,
+      "peek": []
+    },
+    {
+      "dir": "src/components/pages/LearningHistoryPage/hooks",
+      "kind": "hooks",
+      "fileCount": 1,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/pages/LearningHistoryPage/hooks/useSelectedCourse.ts",
+          "lines": 73,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "UseSelectedCourseResult",
+            "useSelectedCourse"
+          ],
+          "head": "\"use client\" import { useCallback, useRef, } from \"react\" import { usePathname, useRouter, useSearchParams, } from \"next/navigation\" /** Query-string key the selected course globalId is mirrored to (`?cours"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/PracticeHubPage/constants",
+      "kind": "constants",
+      "fileCount": 1,
+      "nonBarrel": 0,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-local constants without clear resources home",
+      "dest": null,
+      "peek": []
+    },
+    {
+      "dir": "src/components/pages/PracticeHubPage/hooks",
+      "kind": "hooks",
+      "fileCount": 4,
+      "nonBarrel": 4,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "MAYBE",
+      "reason": "hook local-only; move to src/hooks/ only if not page-private wiring",
+      "dest": "src/hooks/<name>.ts",
+      "peek": [
+        {
+          "file": "src/components/pages/PracticeHubPage/hooks/useCodingProblemsSwr.ts",
+          "lines": 27,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "useCodingProblemsSwr"
+          ],
+          "head": "\"use client\" import useSWR from \"swr\" import { PROBLEMS_PAGE_LIMIT } from \"../constants\" import { queryCodingProblems } from \"@/modules/api/graphql/queries/query-coding-problems\" import { type CodingProblem } from \"@/modules/api/graph"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/hooks/useMyCodingProgressSwr.ts",
+          "lines": 23,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "useMyCodingProgressSwr"
+          ],
+          "head": "\"use client\" import useSWR from \"swr\" import { queryMyCodingProgress } from \"@/modules/api/graphql/queries/query-my-coding-progress\" import { type MyCodingProgress } from \"@/modules/api/graphql/queries/types/coding\" /** * SWR hook"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/hooks/usePracticeFilters.ts",
+          "lines": 155,
+          "hasReact": true,
+          "hasFetch": true,
+          "hasDom": false,
+          "exports": [
+            "UsePracticeFiltersResult",
+            "usePracticeFilters"
+          ],
+          "head": "\"use client\" import { useCallback, useMemo, } from \"react\" import { usePathname, useRouter, useSearchParams, } from \"next/navigation\" import type { DifficultyFilter, DomainFilter, PracticeFilte"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/hooks/usePracticeView.ts",
+          "lines": 59,
+          "hasReact": true,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "PracticeView",
+            "UsePracticeViewResult",
+            "usePracticeView"
+          ],
+          "head": "\"use client\" import { useCallback, useMemo, } from \"react\" import { usePathname, useRouter, useSearchParams, } from \"next/navigation\" /** The two top-level PracticeHubPage views, mirrored to the `?view=` UR"
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/PracticeHubPage/types",
+      "kind": "types",
+      "fileCount": 1,
+      "nonBarrel": 0,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-private types; modules/types home unclear without domain entity",
+      "dest": null,
+      "peek": []
+    },
+    {
+      "dir": "src/components/pages/PracticeHubPage/utils",
+      "kind": "utils",
+      "fileCount": 1,
+      "nonBarrel": 0,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "unclear home / co-located with component",
+      "dest": null,
+      "peek": []
+    },
+    {
+      "dir": "src/components/pages/SepayCheckoutPage/types",
+      "kind": "types",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SKIP",
+      "reason": "component-private types; modules/types home unclear without domain entity",
+      "dest": null,
+      "peek": [
+        {
+          "file": "src/components/pages/SepayCheckoutPage/types/sepay-checkout.ts",
+          "lines": 13,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "BankDetails"
+          ],
+          "head": "/** * Bank/account details resolved from the SePay QR url. * * Parsed once from the `qr` query param so the order summary can show the * destination bank + account number alongside the QR image. */ export interface BankDetails { "
+        }
+      ]
+    },
+    {
+      "dir": "src/components/pages/SepayCheckoutPage/utils",
+      "kind": "utils",
+      "fileCount": 2,
+      "nonBarrel": 1,
+      "outsideAbs": [],
+      "absHits": [],
+      "relHitCount": 0,
+      "verdict": "SAFE-CANDIDATE",
+      "reason": "pure util, local-only importers",
+      "dest": "src/modules/utils/parse-bank-details.ts",
+      "peek": [
+        {
+          "file": "src/components/pages/SepayCheckoutPage/utils/parse-bank-details.ts",
+          "lines": 39,
+          "hasReact": false,
+          "hasFetch": false,
+          "hasDom": false,
+          "exports": [
+            "parseBankDetails"
+          ],
+          "head": "import type { BankDetails, } from \"../types\" /** Fallback bank short name when the QR url is missing or unparseable. */ const DEFAULT_BANK = \"MBBank\" /** * Parse the destination bank + account number out of a SePay QR url. "
+        }
+      ]
+    }
+  ]
+}

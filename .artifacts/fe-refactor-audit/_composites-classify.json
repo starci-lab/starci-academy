@@ -1,0 +1,650 @@
+[
+  {
+    "file": ".storybook\\components\\composites\\buttons\\ButtonRadioGroup\\ButtonRadioGroup.tsx",
+    "rule": "starci-fe/handler-on-prefix",
+    "line": 115,
+    "col": 11,
+    "end": 115,
+    "msg": "`handlePress` ΓåÆ rename to `onPress` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7).",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\data\\KeyValue\\KeyValue.tsx",
+    "rule": "starci-fe/no-runtime-namespace",
+    "line": 274,
+    "col": 14,
+    "end": 274,
+    "msg": "`KeyValue` is a runtime component namespace. Export its members directly; the folder is only a filesystem grouping.",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\form\\_field\\FieldFrame.tsx",
+    "rule": "starci-fe/require-export-jsdoc",
+    "line": 144,
+    "col": 14,
+    "end": 144,
+    "msg": "Add JSDoc `/** ΓÇª */` for export `meta` ΓÇö role / what it does (comments ┬º3).",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\form\\Form\\Form.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 48,
+    "col": 5,
+    "end": 53,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\form\\Form\\Form.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 55,
+    "col": 5,
+    "end": 59,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\form\\Form\\Form.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 149,
+    "col": 5,
+    "end": 154,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\form\\Form\\Form.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 191,
+    "col": 10,
+    "end": 195,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\layout\\Page\\Page.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 201,
+    "col": 9,
+    "end": 201,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\layout\\Page\\Page.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 202,
+    "col": 9,
+    "end": 202,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\layout\\Section\\Section.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 99,
+    "col": 5,
+    "end": 99,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\layout\\Section\\Section.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 161,
+    "col": 5,
+    "end": 165,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\lists\\IconLabelValueRow\\IconLabelValueRow.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 6,
+    "col": 1,
+    "end": 16,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\lists\\List\\List.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 271,
+    "col": 1,
+    "end": 279,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\lists\\List\\List.tsx",
+    "rule": "starci-fe/no-runtime-namespace",
+    "line": 520,
+    "col": 14,
+    "end": 520,
+    "msg": "`List` is a runtime component namespace. Export its members directly; the folder is only a filesystem grouping.",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\navigation\\Toolbar\\Toolbar.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 197,
+    "col": 14,
+    "end": 201,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\text\\TitledText\\TitledText.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 9,
+    "col": 1,
+    "end": 14,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\viewers\\MarkdownContent\\map.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 28,
+    "col": 1,
+    "end": 43,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\viewers\\MarkdownContent\\markdown-table.ts",
+    "rule": "starci-fe/prefer-arrow-export",
+    "line": 35,
+    "col": 17,
+    "end": 35,
+    "msg": "Use an arrow const `const flattenMarkdownTableHeaderChildren = (ΓÇª) => {ΓÇª}` ΓÇö no module-level `function` (structure-and-naming ┬º5).",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\viewers\\MarkdownContent\\markdown-table.ts",
+    "rule": "starci-fe/prefer-arrow-export",
+    "line": 67,
+    "col": 17,
+    "end": 67,
+    "msg": "Use an arrow const `const isMarkdownHeaderTableRowNode = (ΓÇª) => {ΓÇª}` ΓÇö no module-level `function` (structure-and-naming ┬º5).",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\components\\composites\\viewers\\MarkdownContent\\MarkdownContent.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 11,
+    "col": 1,
+    "end": 18,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\layout\\Section\\SectionHeader.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 6,
+    "col": 1,
+    "end": 19,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\lists\\IconLabelValueRow\\IconLabelValueRow.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 6,
+    "col": 1,
+    "end": 16,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\lists\\IconLabelValueRow\\IconLabelValueRow.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 41,
+    "col": 30,
+    "end": 41,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\lists\\IdentityContentRow\\IdentityContentRow.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 92,
+    "col": 30,
+    "end": 92,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\lists\\List\\ListRow.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 5,
+    "col": 1,
+    "end": 5,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\lists\\List\\ListRow.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 345,
+    "col": 1,
+    "end": 345,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\text\\TitledText\\TitledText.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 5,
+    "col": 1,
+    "end": 10,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": ".storybook\\stories\\composites\\viewers\\MarkdownContent\\MarkdownContent.stories.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 5,
+    "col": 1,
+    "end": 12,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\async\\AsyncContent\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 162,
+    "col": 5,
+    "end": 167,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\buttons\\ButtonRadioGroup\\index.tsx",
+    "rule": "starci-fe/handler-on-prefix",
+    "line": 115,
+    "col": 11,
+    "end": 115,
+    "msg": "`handlePress` ΓåÆ rename to `onPress` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7).",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\chips\\Chip\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 5,
+    "col": 1,
+    "end": 45,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\chips\\EnumChip\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 86,
+    "col": 1,
+    "end": 101,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\data\\KeyValue\\index.tsx",
+    "rule": "starci-fe/no-runtime-namespace",
+    "line": 286,
+    "col": 14,
+    "end": 286,
+    "msg": "`KeyValue` is a runtime component namespace. Export its members directly; the folder is only a filesystem grouping.",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\feedback\\Callout\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 7,
+    "col": 1,
+    "end": 27,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\feedback\\EmptyState\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 9,
+    "col": 1,
+    "end": 25,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\feedback\\EmptyState\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 140,
+    "col": 9,
+    "end": 140,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\form\\_field\\FieldFrame.tsx",
+    "rule": "starci-fe/require-export-jsdoc",
+    "line": 144,
+    "col": 14,
+    "end": 144,
+    "msg": "Add JSDoc `/** ΓÇª */` for export `meta` ΓÇö role / what it does (comments ┬º3).",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\form\\Form\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 76,
+    "col": 5,
+    "end": 81,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\form\\Form\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 83,
+    "col": 5,
+    "end": 87,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\form\\Form\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 176,
+    "col": 5,
+    "end": 181,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\form\\Form\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 217,
+    "col": 10,
+    "end": 221,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\form\\ImageDropzone\\index.tsx",
+    "rule": "starci-fe/no-inline-skeleton-branch",
+    "line": 102,
+    "col": 14,
+    "end": 113,
+    "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component.",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\form\\ImageDropzone\\index.tsx",
+    "rule": "starci-fe/no-inline-skeleton-branch",
+    "line": 115,
+    "col": 17,
+    "end": 121,
+    "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component.",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Page\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 177,
+    "col": 23,
+    "end": 177,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Page\\index.tsx",
+    "rule": "starci-fe/no-inline-skeleton-branch",
+    "line": 197,
+    "col": 17,
+    "end": 210,
+    "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component.",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Page\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 215,
+    "col": 9,
+    "end": 215,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Page\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 216,
+    "col": 9,
+    "end": 216,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Page\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 217,
+    "col": 9,
+    "end": 217,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Section\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 9,
+    "col": 1,
+    "end": 45,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Section\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 128,
+    "col": 5,
+    "end": 128,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Section\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 149,
+    "col": 9,
+    "end": 161,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\layout\\Section\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 190,
+    "col": 5,
+    "end": 194,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\lists\\IconLabelValueRow\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 6,
+    "col": 1,
+    "end": 43,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\lists\\IdentityContentRow\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 6,
+    "col": 1,
+    "end": 44,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\lists\\IdentityContentRow\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 113,
+    "col": 17,
+    "end": 120,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\lists\\List\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 168,
+    "col": 21,
+    "end": 176,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\lists\\List\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 271,
+    "col": 1,
+    "end": 279,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\lists\\List\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 305,
+    "col": 9,
+    "end": 326,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\lists\\List\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 312,
+    "col": 21,
+    "end": 319,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\lists\\List\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 321,
+    "col": 52,
+    "end": 321,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\lists\\List\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 367,
+    "col": 5,
+    "end": 396,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\lists\\List\\index.tsx",
+    "rule": "starci-fe/no-runtime-namespace",
+    "line": 520,
+    "col": 14,
+    "end": 520,
+    "msg": "`List` is a runtime component namespace. Export its members directly; the folder is only a filesystem grouping.",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\navigation\\DoubleTabsCard\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 8,
+    "col": 1,
+    "end": 27,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\navigation\\Toolbar\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 197,
+    "col": 14,
+    "end": 201,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\navigation\\Toolbar\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 263,
+    "col": 9,
+    "end": 270,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\text\\DotLabel\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 7,
+    "col": 1,
+    "end": 41,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\text\\ScoreValue\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 4,
+    "col": 1,
+    "end": 27,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\text\\TitledText\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 6,
+    "col": 1,
+    "end": 17,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\text\\TitledText\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 130,
+    "col": 9,
+    "end": 166,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\viewers\\MarkdownContent\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 11,
+    "col": 1,
+    "end": 49,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  },
+  {
+    "file": "src\\components\\composites\\viewers\\MarkdownContent\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 376,
+    "col": 13,
+    "end": 383,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+    "safe": false
+  },
+  {
+    "file": "src\\components\\composites\\viewers\\MarkdownContent\\map.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 28,
+    "col": 1,
+    "end": 43,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+    "safe": true
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "manifest": [
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx"
+  ],
+  "warningsBefore": {
+    "NotificationsPage": 8,
+    "ContentTabBar": 1
+  },
+  "warningsAfter": {
+    "NotificationsPage": "retracted-to-checkpoint",
+    "ContentTabBar": 0
+  },
+  "introducedByB30": [
+    "NotificationsPage TabsCard → Box reel",
+    "ContentTabBar TabsCard → Container size=md"
+  ],
+  "preExistingInTouchedFile": [
+    "Notifications: no-retired-async-content, no-parallel-skeleton, heroui, classname",
+    "ContentTabBar: require-identity-root"
+  ],
+  "fixed": [
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "action": "Container identity root; dropped redundant w-full wrapper; 0 warnings"
+    }
+  ],
+  "retractedB30Changes": [
+    "NotificationsPage TabsCard Box wrap"
+  ],
+  "holds": [
+    "NotificationsPage TabsCard className=overflow-x-auto restored"
+  ],
+  "parity": {
+    "ContentTabBar": "src-only"
+  },
+  "verification": {
+    "ContentTabBar": "eslint --max-warnings=0 pass"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

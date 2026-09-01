@@ -1,0 +1,64 @@
+{
+  "partition": "storybook-only",
+  "changed": [
+    {
+      "path": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "Translated Vietnamese JSDoc/prop docs to English."
+    },
+    {
+      "path": ".storybook/utils/block-anatomy.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "English authoring for comments/tooling UI strings; JSDoc on BlockAnatomyProps."
+    },
+    {
+      "path": ".storybook/story-kit.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring",
+        "starci-fe/require-export-jsdoc",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "Removed Vietnamese phrase; JSDoc on Gallery; named VariantProps/VariantRowProps."
+    },
+    {
+      "path": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "Translated heroui/design history JSDoc to English; dropped star emoji."
+    },
+    {
+      "path": ".storybook/main.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "English comment for @sb-utils alias rationale."
+    },
+    {
+      "path": ".storybook/test-runner.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "Replaced warning emoji with NOTE; English teacher-date comment."
+    },
+    {
+      "path": ".storybook/preview.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "English teacher note in global decorator JSDoc."
+    }
+  ],
+  "skipped": [],
+  "holds": [],
+  "verification": {
+    "eslint": {
+      "files": 7,
+      "starciFeRemaining": 0,
+      "errorCount": 0,
+      "warningCount": 0
+    }
+  },
+  "regressions": []
+}

@@ -1,0 +1,70 @@
+{
+  "batch": "B36",
+  "checkpoint": "84b92cd77",
+  "before": {
+    "warnings": 6265,
+    "files": 1104,
+    "errors": 0,
+    "a11y": 11
+  },
+  "after": {
+    "warnings": 6215,
+    "files": 1086,
+    "errors": 0,
+    "a11y": 11
+  },
+  "delta": {
+    "warnings": -50,
+    "files": -18
+  },
+  "byRuleTop": [
+    [
+      "starci-fe/no-host-element-at-sentence-tier",
+      1494
+    ],
+    [
+      "starci-fe/no-public-classname-prop",
+      1103
+    ],
+    [
+      "starci-fe/no-raw-shape-at-sentence-tier",
+      764
+    ],
+    [
+      "starci-fe/require-frame-self-declare",
+      627
+    ],
+    [
+      "starci-fe/require-identity-root",
+      523
+    ],
+    [
+      "starci-fe/no-heroui-outside-vocabulary",
+      405
+    ],
+    [
+      "starci-fe/no-cn-above-vocabulary",
+      354
+    ],
+    [
+      "starci-fe/page-folder-two-files-only",
+      276
+    ],
+    [
+      "starci-fe/no-classname-at-sentence-tier",
+      177
+    ],
+    [
+      "starci-fe/no-frame-fragment-item",
+      74
+    ],
+    [
+      "starci-fe/no-parallel-skeleton",
+      67
+    ],
+    [
+      "starci-fe/no-inline-parameter-type",
+      63
+    ]
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "partition": "fill-learn-consumers",
+  "manifest": [
+    "src/components/layouts/LearnShellLayout/index.tsx",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx"
+  ],
+  "consumerEvidence": [
+    {
+      "component": "ContentMap",
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 147,
+      "prop": "className",
+      "value": "min-h-0 @app-lg:flex-1",
+      "ownership": "parent-placement",
+      "migration": "FillAvailable at=lg body={() => <ContentMap />}"
+    },
+    {
+      "component": "MilestoneOutline",
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 158,
+      "prop": "className",
+      "value": "min-h-0 @app-lg:flex-1",
+      "ownership": "parent-placement",
+      "migration": "FillAvailable at=lg body={() => <MilestoneOutline />}"
+    },
+    {
+      "component": "LeaderboardCategoryRail",
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "line": 169,
+      "prop": "className",
+      "value": "min-h-0 @app-lg:flex-1",
+      "ownership": "parent-placement",
+      "migration": "FillAvailable at=lg body={() => <LeaderboardCategoryRail variant=\"rail\" />}"
+    },
+    {
+      "component": "ContentMap",
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "evidence": "open-tag className consumers = 0 (no className passed)"
+    },
+    {
+      "component": "ContentMap",
+      "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      "evidence": "open-tag className consumers = 0 (no className passed)"
+    }
+  ],
+  "valueSet": {
+    "ContentMap": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "MilestoneOutline": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "LeaderboardCategoryRail": [
+      "min-h-0 @app-lg:flex-1"
+    ]
+  },
+  "oldApi": {
+    "ContentMap": {
+      "className": "string (WithClassNames door)"
+    },
+    "MilestoneOutline": {
+      "className": "string (WithClassNames door)",
+      "collapsed": "boolean"
+    },
+    "LeaderboardCategoryRail": {
+      "className": "string (WithClassNames door)",
+      "variant": "rail | chips"
+    }
+  },
+  "newApi": {
+    "ContentMap": {},
+    "MilestoneOutline": {
+      "collapsed": "boolean"
+    },
+    "LeaderboardCategoryRail": {
+      "variant": "rail | chips"
+    },
+    "LearnShellLayout": {
+      "FillAvailable": "at=lg body slot for ContentMap, MilestoneOutline, LeaderboardCategoryRail"
+    }
+  },
+  "changed": [
+    "src/components/layouts/LearnShellLayout/index.tsx",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx"
+  ],
+  "holds": [
+    "MilestoneOutline internal @app-lg:min-h-0 @app-lg:flex-1 on OutlineRail root retained for collapsed/non-shell layout needs",
+    "MilestoneOutline collapsed prop retained (no className door on that path)",
+    "LeaderboardCategoryRail variant=chips path unchanged (no flex-fill consumer)",
+    "OutlineRail className door retained (dynamic pass-through from MilestoneOutline intrinsic only)"
+  ],
+  "parity": {
+    "storybookSrc": "src-only — no SB twins for ContentMap/MilestoneOutline/LeaderboardCategoryRail in this worker"
+  },
+  "verification": {
+    "consumerScan": "grep className on ContentMap/MilestoneOutline/LeaderboardCategoryRail open tags → 0 in src",
+    "importsRemoved": "WithClassNames removed from ContentMap, MilestoneOutline, LeaderboardCategoryRail; cn removed from MilestoneOutline",
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — learn consumer files scoped to fill-learn-consumers; FillAvailable frame owned by fill-frame-contract worker"
+}

@@ -1,0 +1,36 @@
+{
+  "partition": "nivo-boundary-proposal",
+  "consumers": {
+    "DrawerShell.contentClassName": [
+      {
+        "path": ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+        "line": 150,
+        "class": "w-full sm:max-w-[560px]",
+        "kind": "nivoexpert-SB"
+      }
+    ]
+  },
+  "currentSemantics": "Caps sliding DrawerContent panel width for the lesson editor form (560px arbitrary).",
+  "proposedContract": {
+    "shortTerm": "Keep SB-only contentClassName; do not add to src twin; do not edit LessonEditorPanel this batch",
+    "nivoAllowedFollowUp": [
+      "Migrate LessonEditorPanel onto dialogClassName or future dialogWidth if product adopts that API",
+      "Then re-prove zero consumers and remove contentClassName"
+    ],
+    "matrixNote": "page-06 still lists contentClassName — stale vs src DrawerShell"
+  },
+  "existingCanonEvidence": {
+    "srcDrawerShell": "intentionally omits contentClassName",
+    "HeroUIDrawerDefault": "w-80 / sm:w-96 — not 560px",
+    "spacingCanon": "no 560px drawer-width token"
+  },
+  "storybookSrcParity": "incompatible by design — SB has prop for nivoexpert; src product twin lacks it",
+  "implementationReady": false,
+  "implementationReadyReason": "Nivoexpert consumer out of scope; SB/src drift intentional; 560px is arbitrary escape.",
+  "changed": [],
+  "holds": [
+    "DrawerShell-contentClassName-nivoexpert-boundary"
+  ],
+  "nivoexpertEdited": false,
+  "regressions": []
+}

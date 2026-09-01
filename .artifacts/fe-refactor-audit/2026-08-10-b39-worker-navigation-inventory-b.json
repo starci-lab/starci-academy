@@ -1,0 +1,12 @@
+{
+  "batch": "B39",
+  "agent": "navigation-inventory-b",
+  "mode": "read-only-inventory",
+  "checkpoint": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "half": "B",
+  "props": 10,
+  "string": 3,
+  "componentType": 2,
+  "mixed": 3,
+  "dead": 2
+}

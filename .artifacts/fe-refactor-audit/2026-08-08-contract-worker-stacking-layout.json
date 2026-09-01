@@ -1,0 +1,247 @@
+{
+  "partition": "stacking-layout",
+  "changed": [],
+  "skipped": [
+    "src/components/blocks/learn/ContinueCard/index.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+    ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx"
+  ],
+  "holds": [
+    {
+      "id": "ContinueCard-preserve-stack-chrome",
+      "classification": "new-named-slot-required",
+      "reason": "contentClassName owns real stack chrome; removing or generic-escaping would change ContinueCard stacking. Partition is record-only (manifest files only)."
+    },
+    {
+      "id": "LeaderboardListCard-vendor-and-raw-shape",
+      "classification": "ambiguous",
+      "reason": "HeroUI Link/Typography/cn + raw flex row chrome are not identical atom migrations without redesign; not safe-api-removal / safe-consumer-migration."
+    },
+    {
+      "id": "LeagueCard-page-folder-home",
+      "classification": "ambiguous",
+      "reason": "page-folder-two-files-only requires moving LeagueCard out of DashboardPage/ — ownership/home decision, not a proven prop migration."
+    },
+    {
+      "id": "twin-drift-ContinueCard-SB",
+      "classification": "ambiguous",
+      "reason": "SB starci twins already diverge from src (identity root, Item skeleton path, CardBody ProgressMeter skeleton). Manifest-only worker cannot realign; coordinator/twin-parity owns the sync."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "ContinueCard-SurfaceCard-contentClassName-stack",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx"
+      ],
+      "proposal": "Add a named SurfaceCard body/content slot (prefer bodyVariant:\"stack\" or contentStack) that owns exactly `relative flex flex-col gap-3 overflow-hidden`. Do not remove contentClassName until that slot ships and ContinueCard (+ SB twins) migrate together. Coordinates with per-part-props decision SurfaceCard-contentClassName.",
+      "proof": {
+        "literal": "relative flex flex-col gap-3 overflow-hidden",
+        "callSites": [
+          "ContinueCardHero (src + SB)",
+          "ContinueCardItem (src + SB)"
+        ],
+        "commentIntent": "CardBody peers (title / progress / CTA) need a stack until CardBody owns one.",
+        "whyNotSafeRemoval": "Classes are stack chrome (relative positioning + vertical gap-3 sibling stack + overflow clip for highlight/watermark), not placement-only."
+      }
+    },
+    {
+      "id": "ContinueCard-CardBody-owns-stack-later",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx"
+      ],
+      "proposal": "Longer-term: CardBody should own one StackV (canon gap-3 → sibling-stack + explain) wrapping title cluster / ProgressMeter / CTA, absorbing the outer contentClassName stack and the two sentence-tier `relative` wrappers. Until then keep contentClassName and relative wrappers — do not invent a principle token and do not eslint-disable.",
+      "proof": {
+        "lint": [
+          "no-raw-shape-at-sentence-tier on relative wrappers (lines 51, 66)",
+          "require-frame-self-declare on inner StackV (line 59)"
+        ],
+        "preserve": "ContinueCard stacking behavior must stay pixel-identical (title→progress→CTA order; relative stacking context for highlight)."
+      }
+    },
+    {
+      "id": "ContinueCardDataProps-className-dead",
+      "classification": "safe-api-removal",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts",
+        ".storybook/components/starci/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "Remove unused `className?: string` from ContinueCardDataProps (and keep SB twin types aligned). Not applied in this partition because worker may edit manifest/status only; no product edits.",
+      "proof": {
+        "repoCallSites": {
+          "ContinueCardHero": 18,
+          "ContinueCardItem": 8,
+          "withClassName": 0
+        },
+        "forwarding": "Hero/Item neither destructure nor pass className to SurfaceCard; CardBody does not accept className.",
+        "keysObserved": [
+          "title",
+          "subtitle",
+          "value",
+          "max",
+          "meta",
+          "timeLeft",
+          "urgent",
+          "onPress",
+          "href",
+          "isSkeleton"
+        ]
+      }
+    },
+    {
+      "id": "ContinueCard-types-emoji-authoring",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "Replace ⚠️ emoji in JSDoc with plain NOTE (SB twin already uses NOTE). Authoring cleanup only — misclassified as new-named-slot-required in seed; not an API slot.",
+      "proof": {
+        "srcHasEmoji": true,
+        "sbTwinAlreadyPlain": true,
+        "lines": [25, 44]
+      }
+    },
+    {
+      "id": "ContinueCard-types-className-backdoor-lint",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "no-classname-at-sentence-tier on ContinueCardDataProps.className is the same dead prop as ContinueCardDataProps-className-dead. Prefer removal (safe-api-removal above) over inventing a named placement slot — zero consumers need placement.",
+      "proof": {
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "line": 36,
+        "consumers": 0
+      }
+    },
+    {
+      "id": "LabeledCard-Leaderboard-contentClassName-stack",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx"
+      ],
+      "proposal": "Add a named LabeledCard content slot (contentVariant:\"stack\" / bodyVariant:\"stack\") owning exactly `flex flex-col gap-3`. Keep contentClassName until LabeledCard ships the slot; LeagueCard skeleton + LeaderboardListCard must migrate together.",
+      "proof": {
+        "literal": "flex flex-col gap-3",
+        "callSites": [
+          "LeaderboardListCard → LabeledCard contentClassName",
+          "LeagueCard skeleton → LabeledCard contentClassName",
+          "LeaderboardListCard bare mode → cn(\"flex flex-col gap-3\", className)"
+        ],
+        "whyNotSafeRemoval": "Same vertical peer stack as ContinueCard (gap-3) without relative/overflow; real chrome, not unused."
+      }
+    },
+    {
+      "id": "LeaderboardListCard-heroui-boundary",
+      "classification": "vendor-boundary",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "proposal": "Keep @heroui/react Link/Typography/cn until atom APIs are proven identical (Link profile-row chrome + Typography body-sm muted tabular + cn bare wrapper). Default BATCH 12 finding: non-identical → do not convert.",
+      "proof": {
+        "imports": ["Link", "Typography", "cn"],
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "line": 4
+      }
+    },
+    {
+      "id": "LeaderboardListCard-row-chrome-named-composite",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "proposal": "Raw flex row chrome (rank medal slot w-6, identity flex-1, value, trailing) needs a named composite/frame (e.g. LeaderboardRow / content-row StackH), not a generic className escape. Out of safe-api-removal scope.",
+      "proof": {
+        "rules": [
+          "no-raw-shape-at-sentence-tier (multiple)",
+          "no-classname-at-sentence-tier (WithClassNames)",
+          "no-cn-above-vocabulary (bare wrapper)"
+        ],
+        "classNameConsumers": [
+          "LeagueCard/component.tsx",
+          "LeagueCard/LeagueCardContent/index.tsx",
+          "TopLearners/component.tsx"
+        ]
+      }
+    },
+    {
+      "id": "LeaderboardListCard-ellipsis-emoji",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "proposal": "Ellipsis glyph `⋯` at line 205 is product UI content in a rank-column slot (teacher-aligned collapsed rows), not fluent-emoji art. Replacing needs an identity/icon token decision — hold, do not invent.",
+      "proof": {
+        "rule": "starci-fe/no-emoji-in-source",
+        "note": "placeMedalIcon already uses Iconify fluent-emoji-flat medals; ellipsis is a separate character literal."
+      }
+    },
+    {
+      "id": "LeagueCard-identity-and-WithClassNames",
+      "classification": "identity-decision",
+      "applied": false,
+      "files": [
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx"
+      ],
+      "proposal": "Presentational _LeagueCard lacks identity root (delegates to LeaderboardListCard when settled; skeleton LabeledCard path has no identity). WithClassNames placement is forwarded to LeaderboardListCard/LabeledCard. Defer to identity-hosts / home move — not a stacking slot removal.",
+      "proof": {
+        "rules": [
+          "page-folder-two-files-only",
+          "require-identity-root",
+          "no-classname-at-sentence-tier"
+        ],
+        "externalLeagueCardClassName": 0,
+        "internalForward": "LeagueCard/index.tsx passes className into _LeagueCard"
+      }
+    },
+    {
+      "id": "MilestoneUpNextCard-identity-and-emoji",
+      "classification": "ambiguous",
+      "applied": false,
+      "files": [
+        "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+        ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx"
+      ],
+      "proposal": "Add identity on SurfaceCard root (block/MilestoneUpNextCard) via identity-hosts rules; strip comment emoji 📐. No contentClassName stack issue here — body already uses StackV. Do not invent principle; existing content-row explain on src StackV is already present (SB twin missing explain — twin drift).",
+      "proof": {
+        "rules": ["no-emoji-in-source", "require-identity-root"],
+        "stackOwner": "StackV gap={4} principle=\"content-row\" inside SurfaceCard body — not contentClassName"
+      }
+    }
+  ],
+  "verification": {
+    "eslintQuiet": "skipped — no product files changed (manifest/status only)",
+    "consumerProofScript": "ephemeral; ContinueCardHero 18 / ContinueCardItem 8 / className 0; LeaderboardListCard className forwarded from 3 dashboard call sites",
+    "safeApplyEligible": [
+      "ContinueCardDataProps-className-dead (proven, deferred — manifest-only partition)"
+    ],
+    "safeApplyExecuted": [],
+    "twinNotes": [
+      "SB ContinueCardHero/Item omit identity prop present on src",
+      "SB ContinueCardItem still hand-builds HeroSkeleton CTA; src forwards isSkeleton to LinkSeeMore",
+      "SB CardBody ProgressMeter skeleton uses HeroSkeleton; src passes isSkeleton into ProgressMeter",
+      "SB ContinueCard types already plain-NOTE; src types still have ⚠️",
+      "SB MilestoneUpNextCard StackV missing explain present on src"
+    ]
+  },
+  "regressions": []
+}

@@ -1,0 +1,25 @@
+﻿{
+    "recordedAt":  "2026-08-09T01:46:59.1093732+07:00",
+    "note":  "B38 status artifact absent; dirty B38 product files left untouched. B39 scopes only blocks/navigation + blocks/marketing + required StarCi consumers.",
+    "shortHead":  "2a096210a",
+    "batch":  "B39",
+    "branch":  "mtp",
+    "marketingReactNodePropsExcludingChildren":  23,
+    "dirtyProductPathsLeftUntouched":  [
+                                           ".claude/fe/decision-ledger.json",
+                                           ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+                                           "CLAUDE.md",
+                                           "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/types/credentials-state.ts",
+                                           "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/types/index.ts",
+                                           "src/components/blocks/feed/ActivityFeed/component.tsx",
+                                           "src/components/blocks/learn/ChatToolResult/index.tsx",
+                                           "src/components/blocks/learn/EntityResultRow/component.tsx",
+                                           "src/components/blocks/learn/EntityResultRow/index.tsx",
+                                           "src/components/blocks/learn/RelatedContentList/component.tsx",
+                                           "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+                                           "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+                                           "src/components/pages/ProfileOverviewPage/index.tsx"
+                                       ],
+    "head":  "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+    "navigationReactNodePropsExcludingChildren":  22
+}

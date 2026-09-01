@@ -1,0 +1,105 @@
+{
+  "worker": "buttons-actions",
+  "manifest": [
+    "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+    "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+    "src/components/blocks/commerce/AddToCartButton/index.tsx",
+    "src/components/blocks/community/FollowButton/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+    "src/components/blocks/feedback/InfoTooltip/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "ElementCloseButton",
+      "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "plan": {
+        "action": "apply-parent-box",
+        "reason": "shrink-0 → StatusChip Box/wrapper"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "shrink-0"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "passthrough from ContentAiFab (locked) / dynamic"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "className",
+        "classNames"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "AddToCartButton",
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "plan": {
+        "action": "apply-parent-box",
+        "reason": "flex-1 → parent"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "flex-1"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "FollowButton",
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "plan": {
+        "action": "apply-parent-box",
+        "reason": "shrink-0 / ml-1 shrink-0 → parent wrappers"
+      },
+      "consumerCount": 3,
+      "valueSet": [
+        "ml-1 shrink-0",
+        "shrink-0"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "AiRewriteButton",
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "plan": {
+        "action": "apply-parent-box",
+        "reason": "w-fit self-start → parent editors"
+      },
+      "consumerCount": 4,
+      "valueSet": [
+        "w-fit self-start"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "InfoTooltip",
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "className lands on HeroUI Tooltip.Trigger — vendor boundary"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "text-sm font-medium"
+      ],
+      "ownerships": [
+        "intrinsic"
+      ]
+    }
+  ]
+}

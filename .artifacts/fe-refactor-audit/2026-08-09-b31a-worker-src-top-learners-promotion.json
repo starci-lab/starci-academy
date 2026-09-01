@@ -1,0 +1,35 @@
+{
+  "manifest": [],
+  "classification": {},
+  "importsBefore": [],
+  "importsAfter": null,
+  "warningsBefore": {},
+  "warningsAfter": null,
+  "changed": [],
+  "moved": [],
+  "deleted": [],
+  "skipped": [
+    "src/components/pages/DashboardPage/TopLearners/component.tsx",
+    "src/components/pages/DashboardPage/TopLearners/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/CommunityTab/index.tsx"
+  ],
+  "holds": [
+    "community-tab-import-ratchet",
+    "top-learners-colocated-skeleton-classname"
+  ],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [
+    "CommunityTab flex flex-col gap-6 (untouched)",
+    "TopLearners skeleton Skeleton className bars (untouched)"
+  ],
+  "skeletonParity": "preserved by non-edit",
+  "storybookParity": "none",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "status": "blocked-no-product-edits",
+  "leaderboardListCardClassName": "remains-open"
+}

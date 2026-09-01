@@ -1,0 +1,209 @@
+{
+  "before": {
+    "starci": 4881,
+    "a11y": 11,
+    "by": {
+      "starci-fe/require-export-jsdoc": 74,
+      "starci-fe/no-vietnamese-in-source-authoring": 87,
+      "starci-fe/no-inline-parameter-type": 82,
+      "starci-fe/no-emoji-in-source": 62,
+      "starci-fe/no-parallel-skeleton": 68,
+      "starci-fe/handler-on-prefix": 14,
+      "starci-fe/prefer-arrow-export": 3,
+      "starci-fe/no-per-part-classname-prop": 26,
+      "starci-fe/no-hardcoded-user-text-in-vocabulary": 4,
+      "starci-fe/require-identity-root": 646,
+      "starci-fe/no-classname-at-sentence-tier": 555,
+      "starci-fe/require-frame-self-declare": 829,
+      "starci-fe/no-raw-shape-at-sentence-tier": 714,
+      "starci-fe/no-heroui-outside-vocabulary": 524,
+      "starci-fe/no-cn-above-vocabulary": 621,
+      "starci-fe/no-skeleton-twin-component": 39,
+      "starci-fe/no-inline-skeleton-branch": 50,
+      "starci-fe/no-helper-folder-in-components": 63,
+      "starci-fe/no-runtime-namespace": 1,
+      "starci-fe/no-retired-async-content": 40,
+      "starci-fe/no-arbitrary-token": 16,
+      "starci-fe/no-identity-wrapper-div": 1,
+      "starci-fe/no-hero-heading-class": 8,
+      "starci-fe/page-folder-two-files-only": 354
+    }
+  },
+  "after": {
+    "starci": 4767,
+    "a11y": 11,
+    "by": {
+      "starci-fe/require-export-jsdoc": 70,
+      "starci-fe/no-vietnamese-in-source-authoring": 66,
+      "starci-fe/no-inline-parameter-type": 65,
+      "starci-fe/no-emoji-in-source": 61,
+      "starci-fe/no-parallel-skeleton": 68,
+      "starci-fe/handler-on-prefix": 11,
+      "starci-fe/no-per-part-classname-prop": 18,
+      "starci-fe/no-hardcoded-user-text-in-vocabulary": 4,
+      "starci-fe/require-identity-root": 637,
+      "starci-fe/no-classname-at-sentence-tier": 542,
+      "starci-fe/require-frame-self-declare": 829,
+      "starci-fe/no-raw-shape-at-sentence-tier": 708,
+      "starci-fe/no-heroui-outside-vocabulary": 513,
+      "starci-fe/no-cn-above-vocabulary": 604,
+      "starci-fe/no-skeleton-twin-component": 39,
+      "starci-fe/no-inline-skeleton-branch": 48,
+      "starci-fe/no-helper-folder-in-components": 63,
+      "starci-fe/no-runtime-namespace": 1,
+      "starci-fe/no-retired-async-content": 40,
+      "starci-fe/no-arbitrary-token": 16,
+      "starci-fe/no-identity-wrapper-div": 1,
+      "starci-fe/no-hero-heading-class": 8,
+      "starci-fe/page-folder-two-files-only": 354,
+      "starci-fe/prefer-arrow-export": 1
+    }
+  },
+  "delta": -114,
+  "rows": [
+    {
+      "r": "starci-fe/no-vietnamese-in-source-authoring",
+      "b": 87,
+      "a": 66,
+      "d": -21
+    },
+    {
+      "r": "starci-fe/no-inline-parameter-type",
+      "b": 82,
+      "a": 65,
+      "d": -17
+    },
+    {
+      "r": "starci-fe/no-cn-above-vocabulary",
+      "b": 621,
+      "a": 604,
+      "d": -17
+    },
+    {
+      "r": "starci-fe/no-classname-at-sentence-tier",
+      "b": 555,
+      "a": 542,
+      "d": -13
+    },
+    {
+      "r": "starci-fe/no-heroui-outside-vocabulary",
+      "b": 524,
+      "a": 513,
+      "d": -11
+    },
+    {
+      "r": "starci-fe/require-identity-root",
+      "b": 646,
+      "a": 637,
+      "d": -9
+    },
+    {
+      "r": "starci-fe/no-per-part-classname-prop",
+      "b": 26,
+      "a": 18,
+      "d": -8
+    },
+    {
+      "r": "starci-fe/no-raw-shape-at-sentence-tier",
+      "b": 714,
+      "a": 708,
+      "d": -6
+    },
+    {
+      "r": "starci-fe/require-export-jsdoc",
+      "b": 74,
+      "a": 70,
+      "d": -4
+    },
+    {
+      "r": "starci-fe/handler-on-prefix",
+      "b": 14,
+      "a": 11,
+      "d": -3
+    },
+    {
+      "r": "starci-fe/prefer-arrow-export",
+      "b": 3,
+      "a": 1,
+      "d": -2
+    },
+    {
+      "r": "starci-fe/no-inline-skeleton-branch",
+      "b": 50,
+      "a": 48,
+      "d": -2
+    },
+    {
+      "r": "starci-fe/no-emoji-in-source",
+      "b": 62,
+      "a": 61,
+      "d": -1
+    },
+    {
+      "r": "starci-fe/no-parallel-skeleton",
+      "b": 68,
+      "a": 68,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-hardcoded-user-text-in-vocabulary",
+      "b": 4,
+      "a": 4,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/require-frame-self-declare",
+      "b": 829,
+      "a": 829,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-skeleton-twin-component",
+      "b": 39,
+      "a": 39,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-helper-folder-in-components",
+      "b": 63,
+      "a": 63,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-runtime-namespace",
+      "b": 1,
+      "a": 1,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-retired-async-content",
+      "b": 40,
+      "a": 40,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-arbitrary-token",
+      "b": 16,
+      "a": 16,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-identity-wrapper-div",
+      "b": 1,
+      "a": 1,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/no-hero-heading-class",
+      "b": 8,
+      "a": 8,
+      "d": 0
+    },
+    {
+      "r": "starci-fe/page-folder-two-files-only",
+      "b": 354,
+      "a": 354,
+      "d": 0
+    }
+  ]
+}

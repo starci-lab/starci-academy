@@ -1,0 +1,1195 @@
+{
+  "generatedAt": "2026-08-07T13:18:05.795Z",
+  "totalUses": 864,
+  "byClass": {
+    "locked": 38,
+    "live-prop": 252,
+    "ambiguous": 573,
+    "vendor-boundary": 1
+  },
+  "byWorker": {
+    "blocks": {
+      "total": 256,
+      "byClass": {
+        "locked": 7,
+        "live-prop": 54,
+        "ambiguous": 194,
+        "vendor-boundary": 1
+      }
+    },
+    "composites": {
+      "total": 64,
+      "byClass": {
+        "ambiguous": 33,
+        "live-prop": 31
+      }
+    },
+    "frames": {
+      "total": 3,
+      "byClass": {
+        "live-prop": 1,
+        "ambiguous": 2
+      }
+    },
+    "pages-other": {
+      "total": 264,
+      "byClass": {
+        "ambiguous": 175,
+        "live-prop": 84,
+        "locked": 5
+      }
+    },
+    "pages-learning-commerce": {
+      "total": 148,
+      "byClass": {
+        "ambiguous": 76,
+        "live-prop": 46,
+        "locked": 26
+      }
+    },
+    "pages-profile-dashboard": {
+      "total": 129,
+      "byClass": {
+        "ambiguous": 93,
+        "live-prop": 36
+      }
+    }
+  },
+  "safeNoop": [],
+  "simplePlacementSample": [
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "line": 183,
+      "component": "GithubIcon",
+      "value": "size-4",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " setLinkGithubOpen(true) }}> <GithubIcon className=\"size-4\" /> {t(\"githubTeamGate.linkCta\")} </Button> </> ) : ( <> {/* course identity (FLAT — mirrors the enroll modal summary): cover IconTile + course title + team state */} "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/buttons/RatingBar/index.tsx",
+      "line": 78,
+      "component": "GroupPressableCard",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " gap={3} keyboardShortcut className={className} items={options.map((option, position) => ({ key: String(option.grade), onPress: () => onRate(option.grade), isDisabled: isPending, // the grade's tier drives the shared verdict LEFT-BAND (card"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledCard/index.tsx",
+      "line": 124,
+      "component": "Typography",
+      "value": "[\"min-w-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // `composites/cards/SurfaceCard/surface-card-header.tsx`), so the shape is unchanged. const labelSlot = subtleLabel ? ( <Typography size=\"xs\" color=\"muted\" truncate classNames={[\"min-w-0\"]} text={label} /> ) : ( <Typography size=\"sm\" weig"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledCard/index.tsx",
+      "line": 126,
+      "component": "Typography",
+      "value": "[\"min-w-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <Typography size=\"xs\" color=\"muted\" truncate classNames={[\"min-w-0\"]} text={label} /> ) : ( <Typography size=\"sm\" weight=\"medium\" classNames={[\"min-w-0\"]} text={label} /> ) // card body: frameless = content is itself card(s) → no inner Car"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/cards/NestedCard/index.tsx",
+      "line": 59,
+      "component": "SurfaceCardNested",
+      "value": "classNames",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " variant={bordered ? \"nested\" : \"surface\"} isSkeleton={isSkeleton} classNames={classNames} /> ) "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "line": 41,
+      "component": "EnumChip",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " [VideoHostPlatform.CloudflareStream]: { color: \"accent\", icon: <SiCloudflare size={16} />, label: labels[VideoHostPlatform.CloudflareStream] ?? \"\" }, } return <EnumChip value={hostPlatform} map={map} className={className} /> } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "line": 48,
+      "component": "EnumChip",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " }, } return <EnumChip value={kind} map={map} className={className} /> } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/chips/StatusChip/index.tsx",
+      "line": 120,
+      "component": "ElementCloseButton",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " onPress={onCancel} tone={tone} classNames={[\"shrink-0\"]} /> ) : null} </Chip> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "line": 48,
+      "component": "TierCardBase",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " identity={{ tier: \"block\", component: \"FreeTierCard\" }} isSkeleton={isSkeleton} className={className} icon={() => ( <TierLevelIcon level={1} className=\"size-6 shrink-0 text-accent-soft-foreground\" /> )} title={t(\"aiSubscription.free.title\""
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "line": 104,
+      "component": "Cluster",
+      "value": "classNames",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // whose link went to the generic Typography story. separator classNames={classNames} items={[ () => ( // §5a: icon matches the FONT-SIZE of the text beside it — `sm` // (14px) ⇒ `size-3.5`. §5.0a: below `size-5` ⇒ force // `weight=\"bold\"`"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/commerce/TierCard/index.tsx",
+      "line": 79,
+      "component": "TierCardBase",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " identity={{ tier: \"block\", component: \"TierCard\" }} isSkeleton className={className} icon={EmptySlot} title=\"\" price={EmptySlot} features={[]} isCurrent={false} cta={EmptySlot} /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 72,
+      "component": "TitledText",
+      "value": "[\"flex-1\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " align=\"center\" items={[ () => <IconTile icon={LockIcon} tone=\"accent\" size=\"sm\" />, () => <TitledText classNames={[\"flex-1\"]} title={title} subtitle={description} />, ]} /> ) // The scarcity line is a CAPTION OF THE PRICE — price + scarcit"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 83,
+      "component": "Typography",
+      "value": "[\"w-1/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // The header + CTA render instantly, but the price is a second fetch — // mirror the price line instead of showing an empty gap until it lands. () => <Typography size=\"h4\" isSkeleton classNames={[\"w-1/3\"]} />, () => <Typography size=\"xs\" "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 84,
+      "component": "Typography",
+      "value": "[\"w-1/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // mirror the price line instead of showing an empty gap until it lands. () => <Typography size=\"h4\" isSkeleton classNames={[\"w-1/3\"]} />, () => <Typography size=\"xs\" isSkeleton classNames={[\"w-1/2\"]} />, ] : price?.discountedPriceVnd != n"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "line": 102,
+      "component": "UserAvatar",
+      "value": "shrink-0",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " username={currentUser.username} avatar={currentUser.avatar} className=\"shrink-0\" /> ) : null} <span className=\"flex-1 cursor-pointer rounded-xl border border-default bg-surface px-4 py-2 text-sm text-muted transition-colors hover:bg-defaul"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "line": 152,
+      "component": "UserAvatar",
+      "value": "shrink-0",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " username={currentUser.username} avatar={currentUser.avatar} className=\"shrink-0\" /> ) : null} {form} </div> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/CommentItem.tsx",
+      "line": 107,
+      "component": "EntityLink",
+      "value": "text-sm",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " pathConfig().locale(locale).profile(comment.author.username).build(), )} className=\"text-sm\" /> {comment.isFounderAuthor ? ( <SealCheckIcon weight=\"fill\" aria-label={t(\"discussion.founderBadge\")} className=\"size-3.5 shrink-0 text-accent-so"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "line": 158,
+      "component": "Typography",
+      "value": "[\"w-1/2\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " const contactFork = isSkeleton ? ( <StackV gap={2} isSkeleton={isSkeleton} items={[ () => <Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} />, () => <Typography size=\"sm\" isSkeleton classNames={[\"w-1/3\"]} />, ]} /> ) : contactUnlock"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "line": 159,
+      "component": "Typography",
+      "value": "[\"w-1/2\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <StackV gap={2} isSkeleton={isSkeleton} items={[ () => <Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} />, () => <Typography size=\"sm\" isSkeleton classNames={[\"w-1/3\"]} />, ]} /> ) : contactUnlocked ? ( <StackV gap={2} isSkeleton={"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/feed/CommentThread/index.tsx",
+      "line": 125,
+      "component": "Composer",
+      "value": "pl-9",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " placeholder=\"Write a reply...\" submitLabel=\"Reply\" className=\"pl-9\" /> ) : null} {/* recursive reply subtree */} {replies.length > 0 ? ( <div className=\"flex flex-col gap-3\"> {replies.map((reply) => ( "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "line": 59,
+      "component": "ListRow",
+      "value": "p-3",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // sits flush against the card edge. Padding on the ROW keeps the // divider full-width (border-b is on the row box, outside padding). className=\"p-3\" divider={index < items.length - 1} leading={( <IconTile // circle-check, not a bare tick"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/layout/AppSplash/component.tsx",
+      "line": 73,
+      "component": "BrandLogo",
+      "value": "h-14",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " /> </div> <BrandLogo className=\"h-14\" /> <Typography type=\"body-sm\" color=\"muted\"> {loadingLabel} </Typography> </div> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+      "line": 52,
+      "component": "UserAvatar",
+      "value": "cursor-pointer",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <UserAvatar size=\"sm\" className=\"cursor-pointer\" username={username} avatar={avatar} seed={email ?? username} /> <Badge size=\"sm\" color=\"accent\">5</Badge> </Badge.Anchor> </Button> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "line": 95,
+      "component": "Typography",
+      "value": "[\"w-3/4\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " Array.from({ length: count }, (_unused, index) => ({ key: `${keyPrefix}-${index}`, content: () => <Typography size=\"sm\" isSkeleton classNames={[\"w-3/4\"]} />, })) /** One expected-output row: a leading check plus the stripped output text. *"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "line": 250,
+      "component": "Typography",
+      "value": "[\"w-3/4\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " body={() => isSkeleton ? <Typography size=\"sm\" isSkeleton classNames={[\"w-3/4\"]} /> : markdownBody(trimmedHint) } /> ) : null} </> ) "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "line": 128,
+      "component": "Typography",
+      "value": "[\"w-1/4\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " )} {isSkeleton ? ( <Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-1/4\"]} /> ) : scoreValue != null ? ( <Typography size=\"xs\" color=\"muted\" text={`${scoreValue} points`} /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentAiFab/index.tsx",
+      "line": 129,
+      "component": "FloatingActionButton",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} > {/* sparkle = AI intent; the wrapped isIconOnly button sizes the svg */} <SparkleIcon /> </FloatingActionButton> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 92,
+      "component": "Typography",
+      "value": "[\"w-1/4\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <> {isSkeleton ? ( <Typography weight=\"medium\" isSkeleton classNames={[\"w-1/4\"]} /> ) : ( <Typography weight=\"medium\" text={`${label} · ${total}`} /> )} {isSkeleton || total > 0 ? ( <Typography size=\"xs\" color=\"muted\" "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentHeader/index.tsx",
+      "line": 99,
+      "component": "Typography",
+      "value": "[\"w-2/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " ) : null} {isSkeleton ? ( <Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-2/3\"]} /> ) : ( <> {minutesRead != null ? ( <Typography size=\"xs\" color=\"muted\" text={`${minutesRead} min read`} "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "line": 46,
+      "component": "SkeletonText",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <SkeletonText size=\"sm\" className=\"w-3/4\" /> <SkeletonText size=\"xs\" className=\"w-full\" /> <SkeletonText size=\"xs\" className=\"w-3/4\" /> </div> ), [], ) return ( <AccordionSkeleton className={className}"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "line": 53,
+      "component": "AccordionSkeleton",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " return ( <AccordionSkeleton className={className} items={items} renderExpandedBody={renderExpandedBody} /> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentMap/index.tsx",
+      "line": 217,
+      "component": "OutlineRail",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " return ( <OutlineRail className={className} header={progress ? { label: t(\"courseContents.progress\"), progress: { done: progress.lessonsRead, total: progress.lessonsTotal }, countLabel: t(\"courseContents.contentCount\", { read: progress.les"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentReaction/index.tsx",
+      "line": 65,
+      "component": "Typography",
+      "value": "[\"w-1/4\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " /> {isSkeleton ? ( <Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-1/4\"]} /> ) : viewCount != null ? ( <Typography size=\"xs\" color=\"muted\" text={`${viewCount.toLocaleString(\"en-US\")} views`} /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "line": 26,
+      "component": "Typography",
+      "value": "[\"w-1/2\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <Typography weight=\"medium\" truncate isSkeleton={isSkeleton} text={title} /> {isSkeleton ? ( <Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-1/2\"]} /> ) : meta?.length || timeLeft ? ( <ListMeta items={meta ?? []} chip={ time"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "line": 128,
+      "component": "Avatar",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " size=\"sm\" isSkeleton={isSkeleton} classNames={[\"shrink-0\"]} /> ) : null // ── LEAF — CollapsedPrompt: avatar + pill, nothing else composed ────────── if (mode === \"collapsible\" && !expanded) { return ( "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 21,
+      "component": "Typography",
+      "value": "[\"w-full\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " const previewLines = ( <> <Typography size=\"sm\" isSkeleton classNames={[\"w-full\"]} /> <Typography size=\"sm\" isSkeleton classNames={[\"w-2/3\"]} /> </> ) const chipRow = ( <> <Typography size=\"xs\" isSkeleton classNames={[\"w-1/3\"]} /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 22,
+      "component": "Typography",
+      "value": "[\"w-full\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <> <Typography size=\"sm\" isSkeleton classNames={[\"w-full\"]} /> <Typography size=\"sm\" isSkeleton classNames={[\"w-2/3\"]} /> </> ) const chipRow = ( <> <Typography size=\"xs\" isSkeleton classNames={[\"w-1/3\"]} /> <Chip isSkeleton /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 28,
+      "component": "Typography",
+      "value": "[\"w-1/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " const chipRow = ( <> <Typography size=\"xs\" isSkeleton classNames={[\"w-1/3\"]} /> <Chip isSkeleton /> </> ) const textColumn = ( <> {/* asker + time line */} "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 36,
+      "component": "Typography",
+      "value": "[\"w-1/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <> {/* asker + time line */} <Typography size=\"xs\" isSkeleton classNames={[\"w-1/3\"]} /> {/* two-line preview */} <StackV gap={2} items={[() => previewLines]} /> {/* chip-pill row — ONE chip (status, the classification axis) + the scope as "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "line": 99,
+      "component": "Typography",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " color=\"muted\" isSkeleton classNames={[\"shrink-0\"]} /> ) : ( <Typography size=\"sm\" color=\"muted\" tabularNums "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "line": 108,
+      "component": "Typography",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " tabularNums text={resultCountLabel(resultCount)} classNames={[\"shrink-0\"]} /> )} </> ) const strip = ( "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "line": 91,
+      "component": "Typography",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " ), ...(isSkeleton ? [() => <Typography size=\"sm\" color=\"muted\" isSkeleton classNames={[\"shrink-0\"]} />] : count !== undefined ? [ ({ isSkeleton }: SkeletonProps) => ( <Typography isSkeleton={isSkeleton} size=\"sm\" color=\"muted\" "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "line": 100,
+      "component": "Typography",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " color=\"muted\" text={countLabel(count)} classNames={[\"shrink-0\"]} /> ), ] : []), ]} /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationHeader/index.tsx",
+      "line": 134,
+      "component": "Typography",
+      "value": "[\"w-1/2\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " /> {isSkeleton ? ( <Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-1/2\"]} /> ) : hasAuthor ? ( <Typography size=\"xs\" color=\"muted\" text={`Author: ${author}`} /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "line": 109,
+      "component": "Typography",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " color=\"muted\" isSkeleton classNames={[\"shrink-0\"]} /> ), ] : resultCount !== undefined ? [ () => ( "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "line": 122,
+      "component": "Typography",
+      "value": "[\"shrink-0\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " tabularNums text={resultCountLabel(resultCount)} classNames={[\"shrink-0\"]} /> ), ] : []), ]} /> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "line": 154,
+      "component": "Skeleton",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // The icon is chosen DIRECTLY by the block itself (no atom in between) — // hand-roll a single shimmer dot in place of the state/lock icon. () => <Skeleton className=\"size-5 shrink-0 rounded-full\" /> ) : ( () => ( <Icon aria-label={conten"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      "line": 68,
+      "component": "Typography",
+      "value": "[\"w-full\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " isSkeleton={isSkeleton} text={isSkeleton ? undefined : entry.username} classNames={[\"w-full\"]} /> ), () => ( <Typography size=\"xs\" color=\"muted\" "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+      "line": 85,
+      "component": "ButtonRadioGroup",
+      "value": "classNames",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " value={selected} onChange={onSelect} classNames={classNames} items={items.map((item) => ({ value: item.key, content: ( <Typography size=\"sm\" prefixIcon={CATEGORY_ICON[item.key]} "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/LearnNudges/component.tsx",
+      "line": 63,
+      "component": "Typography",
+      "value": "[\"w-1/2\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " ? Array.from({ length: 2 }, (_unused, index) => ({ key: `pending-${index}`, content: () => <Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} />, })) : items.map((item) => ({ key: item.key, leadingIcon: KIND_ICON[item.kind], title: it"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/LearnNudges/component.tsx",
+      "line": 72,
+      "component": "SurfaceCardList",
+      "value": "classNames",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " onPress: item.onPress, })) return <SurfaceCardList identity={{ tier: \"block\", component: \"LearnNudges\" }} classNames={classNames} items={rows} /> } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/LearnSidebar/index.tsx",
+      "line": 99,
+      "component": "CollapsibleSidebar",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " storageKey={SIDEBAR_STORAGE_KEY} topSlot={<ResumeRail />} className={className} > {GROUP_ORDER.map((group, index) => { // rows belonging to this cluster, in their declared order const groupItems = items.filter((item) => item.group === grou"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "line": 48,
+      "component": "SkeletonText",
+      "value": "w-3/4",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <SkeletonText size=\"sm\" className=\"w-3/4\" /> <SkeletonText size=\"xs\" className=\"w-full\" /> <SkeletonText size=\"xs\" className=\"w-3/4\" /> </div> ), [], ) return ( <AccordionSkeleton variant=\"default\" "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "line": 38,
+      "component": "ProgressMeter",
+      "value": "[\"flex-1\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " color={isSkeleton ? \"accent\" : scoreColorOf(score, max)} isSkeleton={isSkeleton} classNames={[\"flex-1\"]} /> ), () => ( <Typography size=\"xs\" color=\"muted\" tabularNums "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 161,
+      "component": "Typography",
+      "value": "[\"w-1/2\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " items={[ () => (isSkeleton ? ( <Typography size=\"sm\" weight=\"medium\" isSkeleton classNames={[\"w-1/2\"]} /> ) : promptTitle != null ? ( <Typography size=\"sm\" weight=\"medium\" text={promptTitle} /> ) : null), () => (isSkeleton ? ( <Typography "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 166,
+      "component": "Typography",
+      "value": "[\"w-1/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " ) : null), () => (isSkeleton ? ( <Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-1/3\"]} /> ) : createdAt != null ? ( <Typography size=\"xs\" color=\"muted\" text={createdAt} /> ) : null), ]} /> ) : null "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "line": 114,
+      "component": "Skeleton",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // never through an atom in between — hand-roll a single shimmer dot in // its place instead of branching off to build a whole separate row (§12c). <Skeleton className=\"size-5 shrink-0 rounded-full\" /> ) : ( <Icon aria-hidden focusable=\"fa"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "line": 397,
+      "component": "SurfaceListCardRow",
+      "value": "font-mono",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // face moves to the row itself, which reads fine for the // snippet subtitle too (both are source code). className=\"font-mono\" title={source.filePath} subtitle={source.snippet} /> ))} </SurfaceListCard> )} </div> "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "line": 26,
+      "component": "Typography",
+      "value": "[\"w-1/4\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " principle=\"control-pad\" explain=\"Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.\" body={() => <Typography size=\"xs\" isSkeleton classNames={[\"w-1/4\"]} />} /> <Divider /> <"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+      "line": 18,
+      "component": "Typography",
+      "value": "[\"w-1/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " explain=\"Title over supporting line — not label-field, because neither line is a form control label.\" items={[ () => <Typography size=\"sm\" isSkeleton classNames={[\"w-1/3\"]} />, () => <Typography size=\"xs\" isSkeleton classNames={[\"w-1/3\"]} "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+      "line": 19,
+      "component": "Typography",
+      "value": "[\"w-1/3\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " items={[ () => <Typography size=\"sm\" isSkeleton classNames={[\"w-1/3\"]} />, () => <Typography size=\"xs\" isSkeleton classNames={[\"w-1/3\"]} />, ]} /> ) /** Placeholder mirror of the OS tab row — label+underline bar per OS, matching `Tabs`'s o"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "line": 90,
+      "component": "UserAvatar",
+      "value": "shrink-0",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " avatar={asker.avatar} seed={asker.username} className=\"shrink-0\" /> <div className=\"flex min-w-0 items-center gap-2\"> <Typography type=\"body-sm\" weight=\"semibold\" className=\"truncate\"> {t(\"courseQa.askedBy\", { name: displayName })} </Typog"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/QaInboxRow/index.tsx",
+      "line": 64,
+      "component": "UserAvatar",
+      "value": "shrink-0",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " avatar={question.author.avatar} seed={question.author.username} className=\"shrink-0\" /> <div className=\"flex min-w-0 flex-1 flex-col gap-1\"> {/* asker + relative time */} <div className=\"flex flex-wrap items-center gap-2 text-xs text-muted"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "line": 191,
+      "component": "CommentComposer",
+      "value": "w-full",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " {replying ? ( <CommentComposer className=\"w-full\" placeholder={t(\"discussion.replyPlaceholder\")} submitLabel={t(\"discussion.reply\")} currentUser={currentUser} onCancel={() => setReplying(false)} onSubmit={(body) => { onReply(comment.id, bo"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/QuizCard/index.tsx",
+      "line": 302,
+      "component": "SectionCard",
+      "value": "classNames",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <SectionCard identity={{ tier: \"block\", component: \"QuizCard\" }} classNames={classNames} > <StackV gap={5} items={[ // Question header: optional index chip + the prompt () => ( <StackV "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "line": 195,
+      "component": "Typography",
+      "value": "[width]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " items={BRIEF_SKELETON_LINE_WIDTHS.map((width) => () => ( <Typography size=\"base\" isSkeleton classNames={[width]} /> ))} /> ) : ( <MarkdownContent source={trimmedBrief} measure=\"reading\" /> ) ) : null} "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/TaskLockedAlert/index.tsx",
+      "line": 62,
+      "component": "Callout",
+      "value": "classNames",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " actionLabel={onGoToCurrentTask ? ctaLabel : undefined} onAction={onGoToCurrentTask} classNames={classNames} /> ) /** `TaskLockedAlert.*` — single-component namespace ⇒ only `.Base`. */ export { TaskLockedAlertBase as TaskLockedAlert } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      "line": 18,
+      "component": "SimpleEmptyState",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " return ( <SimpleEmptyState className={className}> {t(\"content.codeExplainings.empty\")} </SimpleEmptyState> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      "line": 18,
+      "component": "SimpleEmptyState",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " return ( <SimpleEmptyState className={className}> {t(\"content.codeImplementation.empty\")} </SimpleEmptyState> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "line": 69,
+      "component": "Skeleton",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <div className={className}> <div className=\"flex items-center justify-between gap-3\"> <Skeleton className=\"h-8 w-24 rounded-full\" /> <Skeleton className=\"h-4 w-10 rounded\" /> </div> </div> ) } return ( "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "line": 78,
+      "component": "InteractionBar",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " return ( <InteractionBar className={className} summary={reactionsSwr.data ?? undefined} onReact={onReact} viewCount={reactionsSwr.data?.viewCount} /> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+      "line": 294,
+      "component": "Discussion",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " return ( <Discussion className={className} // discussion data currentUserId={currentUserId} currentUser={currentUser ? { username: currentUser.username, avatar: currentUser.avatar } : null} comments={comments} total={total} isLoading={comm"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      "line": 18,
+      "component": "SimpleEmptyState",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " const t = useTranslations() return ( <SimpleEmptyState className={className}> {t(\"content.lessonVideosEmpty\")} </SimpleEmptyState> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "line": 73,
+      "component": "LabeledAccordionCard",
+      "value": "className",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " // The per-criterion score rides in the header via `titleEnd`. <LabeledAccordionCard className={className} allowsMultipleExpanded items={sortedCriterias.map((criteria, index) => ({ id: criteria.id, title: `${index + 1}. ${criteria.text}`, "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/marketing/PitchCard/index.tsx",
+      "line": 43,
+      "component": "SectionCard",
+      "value": "[\"h-full\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <SectionCard identity={{ tier: \"block\", component: \"PitchCard\" }} classNames={[\"h-full\"]} contentGap={4} fillHeight > <IconTile icon={icon} tone={tone} size=\"md\" /> <Typography size=\"h5\" weight=\"semibold\" text={title} /> <Typography size=\""
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/marketing/PitchCard/index.tsx",
+      "line": 49,
+      "component": "Typography",
+      "value": "[\"flex-1\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " <IconTile icon={icon} tone={tone} size=\"md\" /> <Typography size=\"h5\" weight=\"semibold\" text={title} /> <Typography size=\"sm\" color=\"muted\" classNames={[\"flex-1\"]} text={body} /> {footer} </SectionCard> ) } "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "line": 172,
+      "component": "DragScrollArea",
+      "value": "flex-1",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " > <DragScrollArea size={40} className=\"flex-1\"> <StackV gap={4} items={[() => children]} /> </DragScrollArea> </nav> </> ) return ( "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "line": 102,
+      "component": "TabsExtended",
+      "value": "[\"w-full\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " selectedKey={activeTab} onSelectionChange={(key) => onTabChange(key as ProfileTab)} classNames={[\"w-full\"]} > <HeroTabs.ListContainer> <HeroTabs.List aria-label={ariaLabel}> {visibleTabs.map((tabId) => { const Icon = TAB_ICON[tabId] const "
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "line": 147,
+      "component": "CollapsibleSidebar",
+      "value": "h-full",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " expandLabel={expandLabel} storageKey={storageKey} className=\"h-full\" > {groups.map((group, index) => ( <React.Fragment key={group.key}> {/* Divider above every group but the first — the inlined `SidebarNavGroup` gap (see file header). Spac"
+    },
+    {
+      "file": "D:/Repositories/starci-academy/src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 78,
+      "component": "Typography",
+      "value": "[\"w-1/2\"]",
+      "classification": "ambiguous",
+      "worker": "blocks",
+      "window": " const readinessTrack = ( <> <Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} /> <ProgressBar isSkeleton /> <ProgressBar isSkeleton /> </> ) const readinessItems: Array<SurfaceCardListItem> = [ { "
+    }
+  ],
+  "topValues": [
+    [
+      "Typography :: [\"w-1/2\"]",
+      17
+    ],
+    [
+      "Typography :: [\"shrink-0\"]",
+      16
+    ],
+    [
+      "Typography :: [\"w-1/4\"]",
+      12
+    ],
+    [
+      "Typography :: [\"w-1/3\"]",
+      11
+    ],
+    [
+      "Typography :: [\"w-3/4\"]",
+      10
+    ],
+    [
+      "Skeleton :: [\"w-full\"]",
+      8
+    ],
+    [
+      "Skeleton :: [\"flex-1\"]",
+      6
+    ],
+    [
+      "ProgressMeter :: [\"flex-1\"]",
+      5
+    ],
+    [
+      "Typography :: [\"min-w-0\"]",
+      4
+    ],
+    [
+      "UserAvatar :: shrink-0",
+      4
+    ],
+    [
+      "Typography :: [\"w-2/3\"]",
+      4
+    ],
+    [
+      "Typography :: [\"w-full\"]",
+      4
+    ],
+    [
+      "ProfileSectionGuard :: className",
+      4
+    ],
+    [
+      "Skeleton :: className",
+      3
+    ],
+    [
+      "SimpleEmptyState :: className",
+      3
+    ],
+    [
+      "LabeledAccordionCard :: className",
+      3
+    ],
+    [
+      "Typography :: [\"flex-1\"]",
+      3
+    ],
+    [
+      "ResizableRail :: railClass",
+      3
+    ],
+    [
+      "SurfaceListCard :: className",
+      3
+    ],
+    [
+      "EnumChip :: className",
+      2
+    ],
+    [
+      "TierCardBase :: className",
+      2
+    ],
+    [
+      "TitledText :: [\"flex-1\"]",
+      2
+    ],
+    [
+      "UserAvatar :: cursor-pointer",
+      2
+    ],
+    [
+      "Skeleton :: [\"w-1/2\"]",
+      2
+    ],
+    [
+      "EmptyState :: classNames",
+      2
+    ],
+    [
+      "Flex :: classNames",
+      2
+    ],
+    [
+      "Cluster :: [\"shrink-0\"]",
+      2
+    ],
+    [
+      "LeaderboardListCard :: className",
+      2
+    ],
+    [
+      "FollowButton :: shrink-0",
+      2
+    ],
+    [
+      "Skeleton :: [\"min-w-0\"]",
+      2
+    ],
+    [
+      "SurfaceListCardItem :: className",
+      2
+    ],
+    [
+      "SurfaceListCard :: h-full",
+      2
+    ],
+    [
+      "GithubIcon :: size-4",
+      1
+    ],
+    [
+      "GroupPressableCard :: className",
+      1
+    ],
+    [
+      "SurfaceCardNested :: classNames",
+      1
+    ],
+    [
+      "ElementCloseButton :: [\"shrink-0\"]",
+      1
+    ],
+    [
+      "Cluster :: classNames",
+      1
+    ],
+    [
+      "EntityLink :: text-sm",
+      1
+    ],
+    [
+      "Composer :: pl-9",
+      1
+    ],
+    [
+      "ListRow :: p-3",
+      1
+    ]
+  ],
+  "allAmbiguousFiles": [
+    "D:/Repositories/starci-academy/src/components/blocks/ai/QuotaBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/auth/GithubTeamGate/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/buttons/RatingBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/cards/GroupPressableCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/cards/NestedCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/chips/HostPlatformChip/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/chips/StatusChip/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/commerce/FreeTierCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/commerce/TierCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/community/Discussion/CommentItem.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/dashboard/Podium/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/feed/ActivityAvatar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/feed/CommentThread/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/feed/CommunityCommentRow/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/feed/CommunityPostCard/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/feed/Composer/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/identity/AvatarUploadButton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/identity/BrandLockup/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/identity/BrandLogo/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/layout/AppSplash/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ChallengeBrief/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ChallengeHeader/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContentAiFab/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContentCommentThread/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContentDiscussion/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContentHeader/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContentMap/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContentReaction/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/CardBody.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaComposer/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/CourseQaToolbar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/EnrollGate/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationHeader/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/FoundationSearchBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/KeepGoingPath/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/LearnNudges/component.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/LearnSidebar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ModuleChallengeList/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/ModuleLessonList/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/QaInboxRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/QaMessageBubble/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/QaQuestionThread/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/QuizCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/QuizRecapList/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/TaskBriefBody/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/TaskLockedAlert/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/LessonPager/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/marketing/PitchCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/profile/ContributionCalendarView/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/profile/MascotBadge/index.tsx",
+    "D:/Repositories/starci-academy/src/components/blocks/profile/ProfileLoadingState/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/async/AsyncContent/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/buttons/ButtonGroup/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/cards/SurfaceCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/chips/RemovableToken/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/data/KeyValue/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/feedback/Callout/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/lists/AuthorByline/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/lists/IconLabelValueRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/lists/List/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/lists/UserCell/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/navigation/Toolbar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/text/DotLabel/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/text/MetaDotRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/text/PricePeriod/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/text/ScoreValue/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/text/TitledText/index.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+    "D:/Repositories/starci-academy/src/components/composites/viewers/MarkdownContent/index.tsx",
+    "D:/Repositories/starci-academy/src/components/frames/Stack/index.tsx",
+    "D:/Repositories/starci-academy/src/components/layouts/Footer/index.tsx",
+    "D:/Repositories/starci-academy/src/components/layouts/InnerLayout/component.tsx",
+    "D:/Repositories/starci-academy/src/components/layouts/LearnShellLayout/index.tsx",
+    "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/drawers/E2eResultDrawer/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/modals/LinkGithubModal/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/modals/ManagePinnedProjectsModal/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/modals/PaymentModal/component.tsx",
+    "D:/Repositories/starci-academy/src/components/overlays/modals/PremiumGateModal/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/AppearancePage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ArchitecturePage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/BlogListPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/BookmarksPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CartPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CommunityFeedPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ContactPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CourseCatalogPage/CatalogLineCardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CourseCatalogPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/CvEditorPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/ChangelogList/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/FeedTabs/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/QuickActions/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/StreakStrip/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/TopLearners/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/TrendingContents/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardReviewPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/DueReview/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/FlashcardsPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/InstallmentPlansPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/JobDetailPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/JobListPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/KpiPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LandingPage/StatStrip/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LeaderboardPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/LearningHistoryPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/MindMapPage/component.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/NotificationsPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/PracticeHubPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/PracticeProblemPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileActivityPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileChallengeManagePage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileChallengesPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileCodingProblemPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileProjectsPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfilePublicCvPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileRedirectPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/ProfileSkillsPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/SessionsPage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/SettingsHomePage/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+    "D:/Repositories/starci-academy/src/components/pages/TalentDirectoryPage/component.tsx"
+  ]
+}

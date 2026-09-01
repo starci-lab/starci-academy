@@ -1,0 +1,110 @@
+{
+  "batch": "B36+B37c",
+  "title": "Combined certification and semantic-compression correction",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T17:45:00.000Z",
+  "verdict": "READY TO CERTIFY",
+  "committed": false,
+  "scope": "Certify uncommitted B36 + B37 as one vertical change after B37c corrections. No new mass migration.",
+  "corrections": {
+    "rulesetFreeze": {
+      "removedRule": "starci-fe/no-redundant-labeled-surface",
+      "removedFiles": [
+        "plugins/eslint/labeled-surface.mjs",
+        "plugins/eslint/labeled-surface.test.mjs"
+      ],
+      "unwired": [
+        "plugins/eslint/index.mjs",
+        "eslint.config.mjs",
+        ".claude/fe/ESLINT-RULESET.md"
+      ],
+      "movedIntoOtherRule": false,
+      "auditOnlyResidual": ".artifacts/fe-refactor-audit/2026-08-10-b36-b37c-redundant-labeled-surface.json"
+    },
+    "trendingContents": {
+      "before": "_TrendingContents -> TrendingContentsSurface -> SurfaceCardList",
+      "after": "_TrendingContents -> SurfaceCardList",
+      "connectedOwns": "fetch + label + resolve-nav + SurfaceCardListItem[] in index.tsx",
+      "deleted": [
+        "src/components/pages/DashboardPage/TrendingContents/TrendingRow/",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/"
+      ],
+      "identity": {
+        "tier": "block",
+        "component": "TrendingContents"
+      }
+    }
+  },
+  "inventory": {
+    "b37Phase0": {
+      "LabeledCard": 97,
+      "frameless": 54,
+      "SurfaceListCard": 87,
+      "SurfaceCardList": 111
+    },
+    "afterB37c": {
+      "LabeledCard": 77,
+      "frameless": 46,
+      "SurfaceListCard": 51,
+      "SurfaceCardList": 146
+    }
+  },
+  "redundantLabeledSurfaceResidual": {
+    "count": 6,
+    "files": [
+      "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx"
+    ],
+    "enforcement": "audit-only — not an ESLint rule"
+  },
+  "eslintDelta": {
+    "afterB37WithForbiddenRule": {
+      "warnings": 6206,
+      "files": 1088,
+      "errors": 0,
+      "a11y": 11,
+      "noRedundantLabeledSurface": 6
+    },
+    "afterB37c": {
+      "warnings": 6193,
+      "files": 1084,
+      "errors": 0,
+      "a11y": 11,
+      "noRedundantLabeledSurface": 0
+    },
+    "deltaVsForbiddenRuleState": {
+      "warnings": -13,
+      "files": -4
+    }
+  },
+  "gates": {
+    "tsc": 0,
+    "pluginEslintTests": 0,
+    "pluginTestCount": 22,
+    "principleStyleTests": 0,
+    "semanticContractsTests": 0,
+    "auditFe": 0,
+    "gitDiffCheck": 0
+  },
+  "forbiddenProof": {
+    "nivoNivoexpertMiaMiaProductEditsThisCorrection": false,
+    "preDirtyHolds": [
+      "CLAUDE.md",
+      ".claude/fe/decision-ledger.json",
+      ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"
+    ],
+    "pass": true
+  },
+  "b36Retained": true,
+  "b37RetainedMinusCorrections": true,
+  "artifacts": [
+    ".artifacts/fe-refactor-audit/2026-08-10-b36-b37c-redundant-labeled-surface.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b36-b37c-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b36-b37c-status.md",
+    ".artifacts/fe-refactor-audit/2026-08-10-b36-b37c-handoff.md",
+    ".artifacts/_b37c-eslint-summary.json"
+  ]
+}

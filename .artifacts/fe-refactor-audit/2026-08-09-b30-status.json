@@ -1,0 +1,227 @@
+{
+  "batch": 30,
+  "title": "Card, list, and navigation contract closure",
+  "committed": false,
+  "checkpoint": "8c13fd52",
+  "generatedAt": "2026-08-07T17:59:23.882Z",
+  "workers": 8,
+  "overlapResult": "pass",
+  "overlaps": [],
+  "inventory": {
+    "rule": "starci-fe/no-public-classname-prop",
+    "before": {
+      "hits": 1536,
+      "files": 562
+    },
+    "after": {
+      "hits": 1517,
+      "files": 553
+    },
+    "delta": {
+      "hits": -19,
+      "files": -9
+    }
+  },
+  "doorsRemoved": [
+    "TierCardBase.className",
+    "ListRow.className",
+    "LeaderboardListCard.className",
+    "SidebarNavItem.className",
+    "LabeledList.className",
+    "FlexWrap HeroUI ButtonGroup/Separator className usage (migrated to doorless atoms)"
+  ],
+  "residualLiveDoors": [
+    {
+      "component": "TabsCard",
+      "reason": "locked QuizSession className=w-full"
+    },
+    {
+      "component": "ButtonGroup (composite)",
+      "reason": "nivoexpert ConfirmDialog + RefundOrderModal classNames=w-full"
+    },
+    {
+      "component": "SectionCard",
+      "reason": "held; QuizCard forwards classNames"
+    }
+  ],
+  "semanticPropsAdded": [
+    "TierCardBase.isFeatured?: boolean",
+    "ListRow.density?: \"default\" | \"comfortable\""
+  ],
+  "parentPlacementMigrations": [
+    "ContentTabBar → Container size=md",
+    "ArchitectureMap → Box w-full max-w-xs",
+    "FlashcardsPage overview TabsCard → Box w-full",
+    "NotificationsPage TabsCard → Box principle=reel overflow-x-auto"
+  ],
+  "sectionCardDecision": "HOLD — missing SurfaceCard contracts listed in section-card-surface worker",
+  "storybookSrcParity": {
+    "ButtonGroupSeparator": "already matched pre-batch",
+    "TierCardBase": "src-only",
+    "ListRow": "src-only",
+    "SidebarNavItem": "Nivo SB twin already doorless; src door burned"
+  },
+  "verification": {
+    "tsc": "pass",
+    "eslintChanged": "0 errors; pre-existing warnings on touched files",
+    "pluginTests": "pass",
+    "storybookTests": "pass",
+    "auditFe": "pass",
+    "teacherHolds": 29
+  },
+  "changed": [
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "src/components/blocks/lists/LabeledList/index.tsx",
+    "src/components/blocks/lists/ListRow/README.md",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx"
+  ],
+  "workersDetail": [
+    "tier-card",
+    "list-row",
+    "button-group",
+    "tabs-card",
+    "leaderboard-list-card",
+    "sidebar-labeled-list",
+    "section-card-surface",
+    "coordinator-verification"
+  ],
+  "semanticClosureAudit": {
+    "batch": "30b",
+    "confirmedFalseClosure": {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "oldPayload": "bare branch: <div className=\"flex flex-col gap-3\"> after className door removed",
+      "classification": "principle-owned",
+      "owner": "StackV principle=sibling-stack (shared by bare + LabeledCard branches)",
+      "action": "Shared content StackV; bare returns content; LabeledCard wraps same content; gap prop removed (principle owns spacing)",
+      "verification": "bare no-raw-shape on outer stack cleared; pre-existing row-internal flex warnings remain (not introduced by B30 door burn)"
+    },
+    "findings": [
+      {
+        "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "oldPayload": "className={cn(\"flex flex-col gap-3\", className)} → className=\"flex flex-col gap-3\"",
+        "classification": "principle-owned",
+        "owner": "StackV sibling-stack",
+        "action": "fixed in 30b",
+        "verification": "shared content stack"
+      },
+      {
+        "file": "src/components/blocks/lists/LabeledList/index.tsx",
+        "oldPayload": "className={cn(\"flex flex-col gap-3\", className)} → className=\"flex flex-col gap-3\" (+ inner flex rows)",
+        "classification": "principle-owned",
+        "owner": "StackV sibling-stack + StackH icon-text + StackV gap={2} for rows",
+        "action": "fixed in 30b — door stay closed; raw layout replaced with frames",
+        "verification": "0 no-raw-shape on LabeledList after repair"
+      },
+      {
+        "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+        "oldPayload": "removed className from cn(intrinsic row chrome…)",
+        "classification": "intrinsic",
+        "owner": "SidebarNavItem leaf chrome (active/hover/focus/collapsed)",
+        "action": "no change — appearance chrome, not child spacing/placement",
+        "verification": "0 no-raw-shape warnings on file"
+      },
+      {
+        "file": "src/components/blocks/lists/ListRow/index.tsx",
+        "oldPayload": "className door → density default|comfortable maps py-2|p-3",
+        "classification": "intrinsic",
+        "owner": "ListRow density (padding axis)",
+        "action": "preserved — intrinsic density, not parent placement",
+        "verification": "pre-existing internal column flex warnings unchanged (not B30 false closure)"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+        "oldPayload": "className door → isFeatured maps border-accent ring-2 ring-accent/30",
+        "classification": "intrinsic",
+        "owner": "TierCardBase isFeatured merchandising chrome",
+        "action": "preserved",
+        "verification": "pre-existing internal flex divs unchanged (not from door payload)"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCard/index.tsx",
+        "oldPayload": "className popular ring → isFeatured",
+        "classification": "intrinsic",
+        "owner": "TierCardBase.isFeatured",
+        "action": "preserved migration",
+        "verification": "ok"
+      },
+      {
+        "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "oldPayload": "HeroUI ButtonGroup className=w-fit + Separator className chrome",
+        "classification": "intrinsic",
+        "owner": "ButtonGroupRoot (w-fit baked) + ButtonGroupSeparator (chrome baked)",
+        "action": "preserved — migrated to doorless atoms, no private raw copy of removed CSS",
+        "verification": "ok"
+      },
+      {
+        "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+        "oldPayload": "TabsCard className mx-auto w-full max-w-3xl → Container size=md",
+        "classification": "parent-placement",
+        "owner": "Container center-measure / size=md",
+        "action": "preserved",
+        "verification": "outer w-full div pre-existed; not a door hide"
+      },
+      {
+        "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+        "oldPayload": "TabsCard className w-full max-w-xs → Box parent",
+        "classification": "parent-placement",
+        "owner": "Box escape (exact max-w-xs; no Container size)",
+        "action": "preserved",
+        "verification": "ok"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/index.tsx",
+        "oldPayload": "TabsCard className w-full → Box parent",
+        "classification": "parent-placement",
+        "owner": "Box w-full",
+        "action": "preserved",
+        "verification": "ok"
+      },
+      {
+        "file": "src/components/pages/NotificationsPage/index.tsx",
+        "oldPayload": "TabsCard className overflow-x-auto → Box principle=reel",
+        "classification": "parent-placement",
+        "owner": "Box reel + overflow-x-auto",
+        "action": "preserved",
+        "verification": "ok"
+      },
+      {
+        "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "oldPayload": "passthrough className removed",
+        "classification": "parent-placement",
+        "owner": "dead passthrough (never painted on non-bare path)",
+        "action": "preserved door burn",
+        "verification": "ok"
+      }
+    ],
+    "unresolvedPreExistingInB30TouchedFiles": [
+      {
+        "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "note": "9× no-raw-shape on row/standing internal flex markup — pre-existed B30; not introduced by door removal; out of 30b regression scope"
+      },
+      {
+        "file": "src/components/blocks/lists/ListRow/index.tsx",
+        "note": "internal text/meta column flex — pre-existing leaf structure"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+        "note": "internal Card layout flex divs — pre-existing"
+      }
+    ],
+    "holdsUnchanged": [
+      "TabsCard door live (QuizSession)",
+      "composite ButtonGroup classNames (nivoexpert)",
+      "SectionCard / QuizCard classNames"
+    ]
+  },
+  "batchNote": "30b regression repair on top of uncommitted B30"
+}

@@ -1,0 +1,21 @@
+{
+  "partition": "drawer-modal-shells",
+  "changed": [],
+  "skipped": [
+    "SB DrawerShell.contentClassName — nivoexpert LessonEditorPanel"
+  ],
+  "holds": [
+    "DrawerShell.contentClassName nivoexpert",
+    "Approved dialogWidth/footerVariant/viewportFit unchanged"
+  ],
+  "evidence": [
+    "LessonEditorPanel contentClassName=\"w-full sm:max-w-[560px]\" sole consumer"
+  ],
+  "proposals": [
+    "Migrate LessonEditorPanel onto dialogWidth in a nivo-allowed batch"
+  ],
+  "verification": {
+    "edits": "none — hold-only"
+  },
+  "regressions": []
+}

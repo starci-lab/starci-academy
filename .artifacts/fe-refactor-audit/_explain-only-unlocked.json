@@ -1,0 +1,2218 @@
+{
+  "total": 355,
+  "hits": [
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\LabeledCard\\index.tsx",
+      "line": 157,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\PressableCard\\index.tsx",
+      "line": 169,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SectionCard\\index.tsx",
+      "line": 116,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\PriceTag\\PriceTagBase.tsx",
+      "line": 243,
+      "col": 9,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ChallengeDeliverableList\\index.tsx",
+      "line": 326,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentPager\\index.tsx",
+      "line": 71,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LeaderboardToolbar\\index.tsx",
+      "line": 62,
+      "col": 5,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\MilestoneUpNextCard\\index.tsx",
+      "line": 68,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\TaskSubmissionPanel\\EvaluateActionRow\\index.tsx",
+      "line": 17,
+      "col": 5,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\CollapsibleSidebar\\index.tsx",
+      "line": 149,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\Navbar\\index.tsx",
+      "line": 311,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\Navbar\\index.tsx",
+      "line": 429,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\Navbar\\index.tsx",
+      "line": 458,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\Navbar\\index.tsx",
+      "line": 544,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\Navbar\\index.tsx",
+      "line": 546,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\SettingsSidebarNav\\DesktopNavRow\\index.tsx",
+      "line": 54,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\SettingsSidebarNav\\index.tsx",
+      "line": 203,
+      "col": 37,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\rendering\\RagSourceGraph\\index.tsx",
+      "line": 101,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\rendering\\RagSourceGraph\\index.tsx",
+      "line": 105,
+      "col": 31,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 636,
+      "col": 21,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 667,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 1123,
+      "col": 13,
+      "msg": "`<Grid>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 1150,
+      "col": 53,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 1449,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 1549,
+      "col": 11,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 1550,
+      "col": 58,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "line": 1935,
+      "col": 9,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\form\\InputTags\\index.tsx",
+      "line": 83,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\form\\InputTags\\index.tsx",
+      "line": 91,
+      "col": 17,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\layout\\Page\\index.tsx",
+      "line": 170,
+      "col": 9,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\layout\\Section\\index.tsx",
+      "line": 156,
+      "col": 23,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\lists\\UserCell\\index.tsx",
+      "line": 116,
+      "col": 9,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\overlays\\drawers\\PersonalProjectTaskResultHistoryDrawer\\component.tsx",
+      "line": 93,
+      "col": 15,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\overlays\\drawers\\PersonalProjectTaskResultHistoryDrawer\\component.tsx",
+      "line": 113,
+      "col": 15,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\overlays\\drawers\\PersonalProjectTaskResultHistoryDrawer\\component.tsx",
+      "line": 115,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\overlays\\drawers\\PersonalProjectTaskResultHistoryDrawer\\component.tsx",
+      "line": 121,
+      "col": 57,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\PremiumGateModal\\component.tsx",
+      "line": 150,
+      "col": 9,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "line": 39,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "line": 41,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "line": 43,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "line": 49,
+      "col": 41,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "line": 58,
+      "col": 33,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "line": 59,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\ProviderSection\\index.tsx",
+      "line": 93,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\ProviderSection\\index.tsx",
+      "line": 95,
+      "col": 25,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\ProviderSection\\index.tsx",
+      "line": 107,
+      "col": 33,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx",
+      "line": 41,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx",
+      "line": 43,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx",
+      "line": 44,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx",
+      "line": 50,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx",
+      "line": 60,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx",
+      "line": 62,
+      "col": 29,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx",
+      "line": 78,
+      "col": 33,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminMpegDashTestPage\\PreviewCard\\index.tsx",
+      "line": 36,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx",
+      "line": 64,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx",
+      "line": 66,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx",
+      "line": 76,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx",
+      "line": 96,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx",
+      "line": 98,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\index.tsx",
+      "line": 97,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\index.tsx",
+      "line": 99,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\index.tsx",
+      "line": 141,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\UploadProgressCard\\index.tsx",
+      "line": 44,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\UploadProgressCard\\index.tsx",
+      "line": 46,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AppearancePage\\index.tsx",
+      "line": 169,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AppearancePage\\index.tsx",
+      "line": 178,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AppearancePage\\index.tsx",
+      "line": 181,
+      "col": 29,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AppearancePage\\index.tsx",
+      "line": 193,
+      "col": 37,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AppearancePage\\index.tsx",
+      "line": 231,
+      "col": 29,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ArchitecturePage\\NodeDissectionPanel\\index.tsx",
+      "line": 63,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ArchitecturePage\\NodeDissectionPanel\\index.tsx",
+      "line": 64,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ArchitecturePage\\NodeDissectionPanel\\index.tsx",
+      "line": 105,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ArchitecturePage\\NodeDissectionPanel\\index.tsx",
+      "line": 119,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ArchitecturePage\\NodeDissectionPanel\\index.tsx",
+      "line": 120,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogListPage\\FeaturedPost\\index.tsx",
+      "line": 33,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogListPage\\FeaturedPost\\index.tsx",
+      "line": 36,
+      "col": 21,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogListPage\\FeaturedPost\\index.tsx",
+      "line": 73,
+      "col": 21,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CartPage\\component.tsx",
+      "line": 216,
+      "col": 17,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CartPage\\component.tsx",
+      "line": 243,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CartPage\\component.tsx",
+      "line": 268,
+      "col": 33,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CartPage\\component.tsx",
+      "line": 270,
+      "col": 41,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CommunityChatPage\\ChatPane\\component.tsx",
+      "line": 140,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ContentPage\\component.tsx",
+      "line": 278,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CourseContents\\component.tsx",
+      "line": 219,
+      "col": 9,
+      "msg": "`<Container>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CourseContents\\component.tsx",
+      "line": 224,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CourseContents\\component.tsx",
+      "line": 242,
+      "col": 29,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 382,
+      "col": 27,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 399,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 445,
+      "col": 29,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 446,
+      "col": 33,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 452,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 470,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 497,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 500,
+      "col": 45,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 522,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 558,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 601,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 627,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 651,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 653,
+      "col": 49,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 688,
+      "col": 37,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 719,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 720,
+      "col": 25,
+      "msg": "`<Grid>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "line": 728,
+      "col": 45,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 129,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 142,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 152,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 153,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 178,
+      "col": 9,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 179,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 182,
+      "col": 21,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 184,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 207,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 209,
+      "col": 33,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "line": 231,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\DueReviewHero\\component.tsx",
+      "line": 98,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardDeckList\\component.tsx",
+      "line": 177,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardQuizResult\\component.tsx",
+      "line": 239,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewHistory\\component.tsx",
+      "line": 206,
+      "col": 9,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewHistory\\component.tsx",
+      "line": 283,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewModeModal\\index.tsx",
+      "line": 87,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 159,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 160,
+      "col": 17,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 163,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 191,
+      "col": 29,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 193,
+      "col": 37,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 203,
+      "col": 41,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 205,
+      "col": 49,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 206,
+      "col": 53,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 213,
+      "col": 49,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "line": 214,
+      "col": 53,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardStatsStrip\\component.tsx",
+      "line": 117,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\HeadhuntingCompanyProfile\\index.tsx",
+      "line": 32,
+      "col": 9,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\HeadhuntingCompanyProfile\\index.tsx",
+      "line": 41,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\HeadhuntingCompanyProfile\\index.tsx",
+      "line": 49,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 139,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 152,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 169,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 177,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 179,
+      "col": 45,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 200,
+      "col": 45,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 209,
+      "col": 49,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 228,
+      "col": 49,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 246,
+      "col": 49,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "line": 274,
+      "col": 45,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx",
+      "line": 110,
+      "col": 9,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx",
+      "line": 117,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx",
+      "line": 125,
+      "col": 33,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx",
+      "line": 138,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx",
+      "line": 242,
+      "col": 9,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx",
+      "line": 244,
+      "col": 17,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx",
+      "line": 41,
+      "col": 5,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx",
+      "line": 44,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx",
+      "line": 54,
+      "col": 5,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx",
+      "line": 79,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx",
+      "line": 152,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx",
+      "line": 154,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "line": 128,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "line": 193,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "line": 215,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "line": 226,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "line": 294,
+      "col": 33,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "line": 363,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "line": 365,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LeaguePage\\GlobalBoard\\component.tsx",
+      "line": 190,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LeaguePage\\WeeklyBoard\\component.tsx",
+      "line": 254,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LearningHistoryPage\\CourseDetail\\CourseDayTimeline\\index.tsx",
+      "line": 161,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LearningHistoryPage\\CourseDetail\\CourseDayTimeline\\index.tsx",
+      "line": 162,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LearningHistoryPage\\CourseDetail\\CourseDayTimeline\\index.tsx",
+      "line": 190,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LearningHistoryPage\\CourseDetail\\CourseDayTimeline\\index.tsx",
+      "line": 195,
+      "col": 33,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LearningHistoryPage\\CourseDetail\\CourseDayTimeline\\index.tsx",
+      "line": 205,
+      "col": 45,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewGatePreview\\index.tsx",
+      "line": 25,
+      "col": 9,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewGatePreview\\index.tsx",
+      "line": 26,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewGatePreview\\index.tsx",
+      "line": 55,
+      "col": 45,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewGatePreview\\index.tsx",
+      "line": 56,
+      "col": 49,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewGatePreview\\index.tsx",
+      "line": 73,
+      "col": 45,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 162,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 169,
+      "col": 41,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 187,
+      "col": 41,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 193,
+      "col": 53,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 242,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 249,
+      "col": 45,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 281,
+      "col": 69,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 286,
+      "col": 85,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx",
+      "line": 337,
+      "col": 45,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 203,
+      "col": 9,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 204,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 238,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 309,
+      "col": 45,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 310,
+      "col": 49,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 313,
+      "col": 57,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 357,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 409,
+      "col": 45,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "line": 420,
+      "col": 53,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PersonalProjectTaskPage\\index.tsx",
+      "line": 429,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeFilters\\index.tsx",
+      "line": 70,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeFilters\\index.tsx",
+      "line": 98,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeFilters\\index.tsx",
+      "line": 100,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\PracticeMobileNav\\index.tsx",
+      "line": 56,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\PracticeMobileNav\\index.tsx",
+      "line": 65,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\PracticeMobileNav\\index.tsx",
+      "line": 82,
+      "col": 21,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx",
+      "line": 71,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx",
+      "line": 83,
+      "col": 41,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx",
+      "line": 92,
+      "col": 41,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx",
+      "line": 103,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx",
+      "line": 127,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\ProblemRow\\index.tsx",
+      "line": 80,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\ProblemRow\\index.tsx",
+      "line": 89,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\ProblemRow\\index.tsx",
+      "line": 102,
+      "col": 33,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\ProblemRow\\index.tsx",
+      "line": 125,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx",
+      "line": 94,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx",
+      "line": 97,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx",
+      "line": 100,
+      "col": 45,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx",
+      "line": 108,
+      "col": 37,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx",
+      "line": 137,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx",
+      "line": 139,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProgressCockpit\\index.tsx",
+      "line": 116,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProgressCockpit\\index.tsx",
+      "line": 122,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProgressCockpit\\index.tsx",
+      "line": 137,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProgressCockpit\\index.tsx",
+      "line": 154,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProgressCockpit\\index.tsx",
+      "line": 159,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\index.tsx",
+      "line": 55,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\index.tsx",
+      "line": 56,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\index.tsx",
+      "line": 77,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\index.tsx",
+      "line": 82,
+      "col": 33,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 22,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 23,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 26,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 34,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 35,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 37,
+      "col": 29,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 44,
+      "col": 29,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 56,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 57,
+      "col": 21,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 72,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 73,
+      "col": 25,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 78,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 81,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "line": 82,
+      "col": 25,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 360,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 363,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 393,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 395,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 397,
+      "col": 25,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 419,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 436,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 439,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 457,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 459,
+      "col": 17,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 469,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 471,
+      "col": 25,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 524,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 545,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 547,
+      "col": 17,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 624,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 625,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 652,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 662,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "line": 663,
+      "col": 21,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PrivacySettingsPage\\index.tsx",
+      "line": 110,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PrivacySettingsPage\\index.tsx",
+      "line": 133,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PrivacySettingsPage\\index.tsx",
+      "line": 168,
+      "col": 13,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PrivacySettingsPage\\index.tsx",
+      "line": 262,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 180,
+      "col": 13,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 182,
+      "col": 21,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 209,
+      "col": 37,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 210,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 212,
+      "col": 49,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 228,
+      "col": 49,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 247,
+      "col": 49,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 290,
+      "col": 33,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 337,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 339,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "line": 346,
+      "col": 49,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx",
+      "line": 114,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx",
+      "line": 143,
+      "col": 45,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx",
+      "line": 146,
+      "col": 53,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx",
+      "line": 173,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx",
+      "line": 193,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx",
+      "line": 206,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileOverviewPage\\OverviewChallengeSkills\\index.tsx",
+      "line": 85,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileOverviewPage\\OverviewChallengeSkills\\index.tsx",
+      "line": 122,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 121,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 123,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 169,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 172,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 177,
+      "col": 49,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 179,
+      "col": 57,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 215,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 223,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 241,
+      "col": 45,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 249,
+      "col": 57,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "line": 270,
+      "col": 69,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx",
+      "line": 67,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx",
+      "line": 68,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx",
+      "line": 70,
+      "col": 25,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx",
+      "line": 80,
+      "col": 37,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx",
+      "line": 112,
+      "col": 34,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx",
+      "line": 117,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfilePublicCvPage\\index.tsx",
+      "line": 86,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfilePublicCvPage\\index.tsx",
+      "line": 130,
+      "col": 25,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 38,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 39,
+      "col": 17,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 46,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 47,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 56,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 85,
+      "col": 53,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 88,
+      "col": 61,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 90,
+      "col": 69,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "line": 122,
+      "col": 33,
+      "msg": "`<Grid>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 214,
+      "col": 17,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 230,
+      "col": 41,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 247,
+      "col": 33,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 249,
+      "col": 41,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 261,
+      "col": 45,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 263,
+      "col": 53,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 291,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 312,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 325,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 342,
+      "col": 41,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 367,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 391,
+      "col": 37,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 425,
+      "col": 41,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 427,
+      "col": 49,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 455,
+      "col": 69,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 511,
+      "col": 57,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 513,
+      "col": 65,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "line": 529,
+      "col": 65,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx",
+      "line": 170,
+      "col": 13,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx",
+      "line": 254,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx",
+      "line": 269,
+      "col": 37,
+      "msg": "`<Grid>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx",
+      "line": 285,
+      "col": 57,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx",
+      "line": 318,
+      "col": 65,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\CheckoutExpired\\index.tsx",
+      "line": 67,
+      "col": 9,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\CheckoutExpired\\index.tsx",
+      "line": 69,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\CheckoutExpired\\index.tsx",
+      "line": 76,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\EnrolledSuccess\\index.tsx",
+      "line": 25,
+      "col": 9,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\EnrolledSuccess\\index.tsx",
+      "line": 27,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\OrderSummary\\index.tsx",
+      "line": 65,
+      "col": 9,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\OrderSummary\\index.tsx",
+      "line": 68,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\OrderSummary\\index.tsx",
+      "line": 71,
+      "col": 29,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\OrderSummary\\index.tsx",
+      "line": 86,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\OrderSummary\\index.tsx",
+      "line": 88,
+      "col": 29,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx",
+      "line": 54,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx",
+      "line": 60,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx",
+      "line": 74,
+      "col": 21,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx",
+      "line": 75,
+      "col": 25,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx",
+      "line": 77,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\index.tsx",
+      "line": 166,
+      "col": 9,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\index.tsx",
+      "line": 167,
+      "col": 13,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\index.tsx",
+      "line": 168,
+      "col": 17,
+      "msg": "`<Grid>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SystemStatusPage\\AiKeyGroup\\index.tsx",
+      "line": 59,
+      "col": 17,
+      "msg": "`<Box>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SystemStatusPage\\AiKeyGroup\\index.tsx",
+      "line": 60,
+      "col": 21,
+      "msg": "`<StackV>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SystemStatusPage\\AiKeyGroup\\index.tsx",
+      "line": 65,
+      "col": 33,
+      "msg": "`<StackH>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SystemStatusPage\\AiKeyGroup\\index.tsx",
+      "line": 86,
+      "col": 33,
+      "msg": "`<Cluster>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later."
+    }
+  ],
+  "byFile": {
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\LabeledCard\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\PressableCard\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SectionCard\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\PriceTag\\PriceTagBase.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ChallengeDeliverableList\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentPager\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LeaderboardToolbar\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\MilestoneUpNextCard\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\TaskSubmissionPanel\\EvaluateActionRow\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\CollapsibleSidebar\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\Navbar\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\SettingsSidebarNav\\DesktopNavRow\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\SettingsSidebarNav\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\blocks\\rendering\\RagSourceGraph\\index.tsx": 2,
+    "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx": 8,
+    "D:\\Repositories\\starci-academy\\src\\components\\composites\\form\\InputTags\\index.tsx": 2,
+    "D:\\Repositories\\starci-academy\\src\\components\\composites\\layout\\Page\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\composites\\layout\\Section\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\composites\\lists\\UserCell\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\overlays\\drawers\\PersonalProjectTaskResultHistoryDrawer\\component.tsx": 4,
+    "D:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\PremiumGateModal\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx": 6,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\ProviderSection\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminLoginPage\\index.tsx": 7,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminMpegDashTestPage\\PreviewCard\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\UploadProgressCard\\index.tsx": 2,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\AppearancePage\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ArchitecturePage\\NodeDissectionPanel\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogListPage\\FeaturedPost\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\CartPage\\component.tsx": 4,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\CommunityChatPage\\ChatPane\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ContentPage\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\CourseContents\\component.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx": 18,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx": 11,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\DueReviewHero\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardDeckList\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardQuizResult\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewHistory\\component.tsx": 2,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewModeModal\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx": 10,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardStatsStrip\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\HeadhuntingCompanyProfile\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx": 10,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx": 6,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx": 6,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx": 7,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\LeaguePage\\GlobalBoard\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\LeaguePage\\WeeklyBoard\\component.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\LearningHistoryPage\\CourseDetail\\CourseDayTimeline\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewGatePreview\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\MockInterviewPage\\MockInterviewHistory\\index.tsx": 9,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx": 9,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PersonalProjectTaskPage\\index.tsx": 1,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeFilters\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\PracticeMobileNav\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\ProblemRow\\index.tsx": 4,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx": 6,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProgressCockpit\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\index.tsx": 4,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx": 14,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx": 20,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\PrivacySettingsPage\\index.tsx": 4,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx": 11,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx": 6,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileOverviewPage\\OverviewChallengeSkills\\index.tsx": 2,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx": 11,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx": 6,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfilePublicCvPage\\index.tsx": 2,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx": 9,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx": 18,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\CheckoutExpired\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\EnrolledSuccess\\index.tsx": 2,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\OrderSummary\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx": 5,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\index.tsx": 3,
+    "D:\\Repositories\\starci-academy\\src\\components\\pages\\SystemStatusPage\\AiKeyGroup\\index.tsx": 4
+  }
+}

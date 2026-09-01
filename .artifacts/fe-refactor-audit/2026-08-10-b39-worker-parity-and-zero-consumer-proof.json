@@ -1,0 +1,192 @@
+{
+  "batch": "B39",
+  "agent": "parity-and-zero-consumer-proof",
+  "status": "complete",
+  "completedAt": "2026-08-09T01:57:05.0261786+07:00",
+  "checkpoint": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "branch": "mtp",
+  "shortHead": "2a096210a",
+  "edits": [
+    ".artifacts/fe-refactor-audit/2026-08-10-b39-worker-parity-and-zero-consumer-proof.json"
+  ],
+  "method": {
+    "search": "rg across src/ + .storybook/, excluding .artifacts/ node_modules/ .next/",
+    "openTag": "JSX <Name and prop= assignment patterns",
+    "import": "from '...Name' / named import Name",
+    "modulePresence": "filesystem + git status --porcelain"
+  },
+  "zeroConsumers": {
+    "PitchCard.title|body|footer": {
+      "verdict": "ZERO_CONSUMERS",
+      "moduleRemains": true,
+      "modulePath": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "propsOnDisk": ["icon", "tone"],
+      "propsDeletedInWorkingTree": ["title", "body", "footer"],
+      "openTagConsumers": [],
+      "importConsumers": [],
+      "nameHitsOutsideSelf": [
+        "src/components/blocks/cards/SectionCard/index.tsx (comment only)"
+      ],
+      "note": "title/body/footer already removed from PitchCardProps by marketing-apply; no open-tag or import callers anywhere. Component shell may remain."
+    },
+    "TopicLane": {
+      "verdict": "ENTIRE_MODULE_ORPHAN_DELETED",
+      "modulePath": "src/components/blocks/marketing/TopicLane/",
+      "folderExists": false,
+      "gitStatus": "D",
+      "openTagConsumers": [],
+      "importConsumers": [],
+      "remainingMentions": []
+    },
+    "MicroservicesScene": {
+      "verdict": "ENTIRE_MODULE_ORPHAN_DELETED",
+      "modulePath": "src/components/blocks/marketing/MicroservicesScene/",
+      "folderExists": false,
+      "gitStatus": "D",
+      "openTagConsumers": [],
+      "importConsumers": [],
+      "remainingMentions": [
+        "src/components/pages/LandingPage/HERO-CONTINUE.md (prose only; not an import)"
+      ]
+    },
+    "MicroservicesDiagram": {
+      "verdict": "ENTIRE_MODULE_ORPHAN_DELETED",
+      "modulePath": "src/components/blocks/marketing/MicroservicesDiagram/",
+      "folderExists": false,
+      "gitStatus": "D",
+      "openTagConsumers": [],
+      "importConsumers": [],
+      "remainingMentions": [
+        "src/components/pages/LandingPage/HERO-CONTINUE.md (prose only; not an import)"
+      ]
+    },
+    "TabsCard.leftEnd": {
+      "verdict": "ZERO_CONSUMERS",
+      "declaredAt": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "stillOnApi": true,
+      "openTagPassSites": [],
+      "note": "leftEnd= appears on Toolbar / DoubleTabsCard only — not on <TabsCard>. No TabsCard caller passes leftEnd."
+    },
+    "WorkSessionHeader.meta": {
+      "verdict": "ZERO_CONSUMERS",
+      "declaredAt": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "stillOnApi": true,
+      "openTagPassSites": [],
+      "liveCallSitesChecked": [
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+        "src/components/pages/FlashcardsPage/DueReview/component.tsx"
+      ],
+      "note": "Call sites pass title/counter/finishLabel/rightSlot; none pass meta=."
+    },
+    "FlexWrapButtonRadio.itemAction": {
+      "verdict": "ZERO_CONSUMERS",
+      "declaredAt": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "stillOnApi": true,
+      "openTagPassSites": [],
+      "note": "itemAction= exists only on ButtonRadioGroup (composite + SB stories), not FlexWrapButtonRadio callers."
+    },
+    "SelectableCardGroup.items[].icon": {
+      "verdict": "ZERO_CONSUMERS",
+      "declaredAt": "src/components/blocks/navigation/SelectableCardGroup/index.tsx (SelectableCardItem.icon)",
+      "stillOnApi": true,
+      "callSites": [
+        "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx (items: value+label only)",
+        "src/components/overlays/modals/CvReviewLevelDetailsModal/component.tsx (items: value+label+description only)"
+      ],
+      "itemsWithIconKey": []
+    },
+    "SelectableCardGroup.items[].badge": {
+      "verdict": "ZERO_CONSUMERS",
+      "declaredAt": "src/components/blocks/navigation/SelectableCardGroup/index.tsx (SelectableCardItem.badge)",
+      "stillOnApi": true,
+      "itemsWithBadgeKey": []
+    }
+  },
+  "starCiTwinParity": {
+    "WorkSessionHeader": {
+      "twinExists": true,
+      "sbPath": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "srcPath": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "sbContract": {
+        "title": "string?",
+        "counter": "string",
+        "finishLabel": "string?",
+        "timeLeft": "string?",
+        "rightSlot": "absent",
+        "meta": "absent"
+      },
+      "srcContract": {
+        "title": "ReactNode?",
+        "counter": "ReactNode",
+        "finishLabel": "ReactNode?",
+        "timeLeft": "absent",
+        "rightSlot": "ReactNode?",
+        "meta": "ReactNode? (zero consumers; dead door)"
+      },
+      "parityGap": "SB uses string for title/counter/finishLabel and timeLeft instead of rightSlot; src still ReactNode (+ rightSlot/meta). Held by zero-warn ratchet.",
+      "heldByRatchet": true
+    },
+    "CollapsibleSidebar": {
+      "twinExists": true,
+      "sbPath": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "srcPath": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "topSlot": "ReactNode? on both twins",
+      "parityGap": "topSlot remains ReactNode; held.",
+      "heldByRatchet": true
+    },
+    "marketingBlocks": {
+      "starCiMarketingTwinDirExists": false,
+      "srcMarketingBlocksPresent": [
+        "AdBanner",
+        "ArchitectureFlow",
+        "ArchitectureScene",
+        "HeroBanner",
+        "PitchCard",
+        "SectionHeading",
+        "ShowcaseMockup",
+        "SitePreview",
+        "TrackCard",
+        "TruthList"
+      ],
+      "note": "No StarCi twins for most marketing blocks (nivo/mia-mia excluded from this inventory)."
+    }
+  },
+  "forbiddenPathProof": {
+    "workerScopedPass": true,
+    "thisWorkerTouched": [
+      ".artifacts/fe-refactor-audit/2026-08-10-b39-worker-parity-and-zero-consumer-proof.json"
+    ],
+    "forbiddenTrees": [
+      "mia-mia",
+      "nivo",
+      "nivoexpert",
+      "SubmissionResultHeader",
+      "ESLint config / plugins/eslint"
+    ],
+    "thisWorkerEditsUnderForbidden": [],
+    "preExistingDirtNotFromThisWorker": {
+      "mia-mia": [
+        ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx (M; listed in B39 checkpoint as left untouched)"
+      ],
+      "nivo": [
+        ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx (??)",
+        ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx (??)"
+      ],
+      "nivoexpert": [],
+      "SubmissionResultHeader": [],
+      "eslintConfig": []
+    },
+    "note": "Proof agent wrote only this JSON artifact. Pre-existing mia-mia/nivo dirt predates this worker and was not modified here."
+  },
+  "summary": {
+    "allZeroConsumerClaimsProven": true,
+    "parityGapsHeld": [
+      "WorkSessionHeader string/timeLeft vs ReactNode/rightSlot",
+      "CollapsibleSidebar.topSlot ReactNode"
+    ],
+    "marketingStarCiTwins": "none",
+    "forbiddenEditsByThisWorker": 0
+  }
+}

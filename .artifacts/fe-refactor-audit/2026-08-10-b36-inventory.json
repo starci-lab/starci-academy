@@ -1,0 +1,534 @@
+{
+  "batch": "B36",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T16:43:58.236Z",
+  "baseline": {
+    "warnings": 6265,
+    "files": 1104,
+    "errors": 0,
+    "a11y": 11,
+    "partialClusters": 73
+  },
+  "namedFrameContext": {
+    "topologyRule": "Named frames (FooterFrame, ViewportShell, ModalShell) own structural grammar via finite contract; no fake public principle; optional identity?: CallerIdentity for root-capable callers",
+    "examples": [
+      ".storybook/components/frames/FooterFrame/FooterFrame.tsx",
+      ".storybook/components/frames/ViewportShell/ViewportShell.tsx",
+      ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+      ".storybook/components/frames/NavbarFrame/NavbarFrame.tsx",
+      "src/components/frames/NavbarFrame/index.tsx"
+    ],
+    "navbarFrame": {
+      "landed": true,
+      "wave": "A",
+      "layoutsNavbarMigrated": false,
+      "hold": "layouts/Navbar chrome tokens + ReactNode secondary + bottomLayer Drawer drift vs NavbarFrame slots"
+    }
+  },
+  "navbar": {
+    "sb": [
+      ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      ".storybook/components/starci/blocks/navigation/Navbar/types.ts",
+      ".storybook/components/starci/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      ".storybook/components/starci/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx"
+    ],
+    "stories": [
+      ".storybook/stories/starci/blocks/navigation/Navbar/Navbar.stories.tsx"
+    ],
+    "src": [
+      "src/components/blocks/navigation/Navbar/index.tsx",
+      "src/components/blocks/navigation/Navbar/types.ts",
+      "src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+      "src/components/layouts/Navbar/index.tsx",
+      "src/components/layouts/Navbar/useNavbarItems.ts",
+      "src/components/layouts/Navbar/types/index.ts",
+      "src/components/layouts/Navbar/types/navbar.ts",
+      "src/components/layouts/Navbar/Logo/index.tsx",
+      "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "src/components/layouts/Navbar/SearchButton/index.tsx",
+      "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "src/components/layouts/Navbar/CartButton/index.tsx",
+      "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/types/index.ts",
+      "src/components/blocks/layout/shell/Navbar/types/navbar.ts",
+      "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/index.ts",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/account-menu.ts",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx"
+    ],
+    "notes": [
+      "SB↔src vocabulary twin: blocks/navigation/Navbar (used by src/components/layouts/InnerLayout)",
+      "Live app shell still mounts src/components/layouts/Navbar via src/app/InnerLayout.tsx",
+      "blocks/layout/shell/Navbar is a parallel older shell tree"
+    ]
+  },
+  "glyphMark": {
+    "tonePaths": [
+      ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx",
+      "src/components/atoms/display/GlyphMark/index.tsx"
+    ],
+    "toneUnion": [
+      "default",
+      "muted",
+      "accent",
+      "success",
+      "warning"
+    ],
+    "note": "GlyphMarkTone includes muted (B36 Wave A). BOX remains size-5 shrink-0.",
+    "mutedSize5Candidates": [
+      "src/components/blocks/cards/CrossListCard/index.tsx",
+      "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "src/components/pages/ProfileProjectRoadmapPage/index.tsx"
+    ],
+    "mutedSize5ClassNameDoorConsumersNote": "Candidates are StarCi (src + .storybook/components/starci) hand-rolled size-5 + text-muted / text-muted-foreground glyphs (or cn size-5 shrink-0 with muted branch). SurfaceCard ITEM_ICON_CLS included as equivalent muted glyph pattern owner.",
+    "waveB": {
+      "migratedSites": 7,
+      "heldSites": 10,
+      "navbarFrameMigrated": false,
+      "migratedFiles": [
+        ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+        ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+        ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+        "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+        "src/components/blocks/learn/ContentPager/index.tsx",
+        "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+      ],
+      "remainingExactTriadCandidates": [
+        "src/components/blocks/cards/CrossListCard/index.tsx",
+        "src/components/blocks/commerce/TierCardBase/index.tsx",
+        "src/components/pages/ProfileProjectRoadmapPage/index.tsx"
+      ],
+      "source": "2026-08-10-b36-worker-navbar-and-glyphmark-consumers.json + post-scan triad"
+    }
+  },
+  "surfaceListCard": {
+    "definition": [
+      "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "src/components/composites/cards/SurfaceCard/index.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx"
+    ],
+    "definitionNote": "SurfaceListCard is src-only children API (already accepts identity?: CallerIdentity). SurfaceCard.List / SurfaceCardList is the newer data-driven twin (SB+src).",
+    "consumersAllowed": [
+      "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "src/components/blocks/commerce/CartLine/index.tsx",
+      "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "src/components/pages/BookmarksPage/index.tsx",
+      "src/components/pages/CartPage/component.tsx",
+      "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+      "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+      "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+      "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "src/components/pages/JobListPage/component.tsx",
+      "src/components/pages/JobListPage/JobListRow/index.tsx",
+      "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+      "src/components/pages/KpiPage/component.tsx",
+      "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "src/components/pages/LearningHistoryPage/index.tsx",
+      "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "src/components/pages/PracticeProblemPage/index.tsx",
+      "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+      "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+      "src/components/pages/ProfileRedirectPage/index.tsx",
+      "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "src/components/pages/SessionsPage/index.tsx"
+    ],
+    "consumersForbidden": [],
+    "classNameDoorConsumers": [
+      "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "src/components/pages/DashboardPage/TrendingContents/component.tsx"
+    ],
+    "classNameDoorNote": "B36 Wave B migrated 8 exact consumers to SurfaceCardList; className door retained. Post-scan: remaining list-host className doors ≈5 of prior inventory set (Item-level className e.g. CodingLeaderboard not a list door). Forbidden trees still 0.",
+    "waveB": {
+      "migrated": 8,
+      "held": 13,
+      "doorStatus": "SurfaceListCard.className retained (consumers remain)",
+      "forbiddenConsumers": 0,
+      "source": "2026-08-10-b36-worker-surface-list-card-consumers.json"
+    },
+    "migratedToSurfaceCardList": [
+      "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "src/components/pages/NotificationsPage/index.tsx",
+      "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx"
+    ]
+  },
+  "authentication": {
+    "modal": [
+      "src/components/overlays/modals/AuthenticationModal/index.tsx",
+      "src/components/overlays/modals/AuthenticationModal/component.tsx"
+    ],
+    "loginPage": [
+      "src/components/pages/LoginPage/index.tsx",
+      "src/components/pages/LoginPage/component.tsx",
+      "src/components/pages/AdminLoginPage/index.tsx",
+      "src/app/[locale]/login/page.tsx",
+      "src/app/[locale]/admin/page.tsx"
+    ],
+    "signInSignUp": [
+      "src/hooks/zustand/signIn/store.ts",
+      "src/hooks/zustand/signIn/useSignInForm.ts",
+      "src/hooks/zustand/signUp/store.ts",
+      "src/hooks/zustand/signUp/useSignUpForm.ts",
+      "src/hooks/swr/api/graphql/mutations/useMutateSignInInitSwr.ts",
+      "src/hooks/swr/api/graphql/mutations/useMutateSignInResendOtpSwr.ts",
+      "src/hooks/swr/api/graphql/mutations/useMutateSignInVerifyOtpSwr.ts",
+      "src/hooks/swr/api/graphql/mutations/useMutateSignUpInitSwr.ts",
+      "src/hooks/swr/api/graphql/mutations/useMutateSignUpResendOtpSwr.ts",
+      "src/hooks/swr/api/graphql/mutations/useMutateSignUpVerifyOtpSwr.ts",
+      "src/modules/api/graphql/mutations/mutation-sign-in-init.ts",
+      "src/modules/api/graphql/mutations/mutation-sign-in-resend-otp.ts",
+      "src/modules/api/graphql/mutations/mutation-sign-in-verify-otp.ts",
+      "src/modules/api/graphql/mutations/mutation-sign-up-init.ts",
+      "src/modules/api/graphql/mutations/mutation-sign-up-resend-otp.ts",
+      "src/modules/api/graphql/mutations/mutation-sign-up-verify-otp.ts",
+      "src/modules/api/graphql/mutations/types/sign-in-init.ts",
+      "src/modules/api/graphql/mutations/types/sign-in-resend-otp.ts",
+      "src/modules/api/graphql/mutations/types/sign-in-verify-otp.ts",
+      "src/modules/api/graphql/mutations/types/sign-up-init.ts",
+      "src/modules/api/graphql/mutations/types/sign-up-resend-otp.ts",
+      "src/modules/api/graphql/mutations/types/sign-up-verify-otp.ts"
+    ],
+    "notes": [
+      "B36 Wave B: AuthenticationPanel extracted under blocks/auth; ModalShell owns modal chrome; LoginPage uses SurfaceCard + same panel",
+      "No chrome-only ModalShell variant created",
+      "No SB AuthenticationModal / LoginPage twin under .storybook/components/starci"
+    ],
+    "ownership": {
+      "AuthenticationModal": "ModalShell chrome; body=AuthenticationPanel",
+      "LoginPage": "page/card SurfaceCard; body=AuthenticationPanel",
+      "AuthenticationPanel": "blocks/auth content only (SignIn/SignUp; no Modal.*)",
+      "chromeOnlyModalShellVariant": "rejected"
+    },
+    "panel": [
+      "src/components/blocks/auth/AuthenticationPanel/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/component.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/map.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/EmailField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/OauthButtons/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/SignUpPrompt/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/SignInPrompt/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/index.tsx",
+      "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx"
+    ],
+    "source": "2026-08-10-b36-worker-authentication-content-separation.json"
+  },
+  "identityForwardTargets": [
+    {
+      "name": "PageHeader",
+      "sb": "",
+      "src": "src/components/blocks/layout/PageHeader/index.tsx",
+      "stories": ".storybook/stories/composites/layout/Page/PageHeader.stories.tsx",
+      "hasIdentity": true,
+      "starciConsumerCount": 58
+    },
+    {
+      "name": "Toolbar",
+      "sb": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "src": "src/components/composites/navigation/Toolbar/index.tsx",
+      "hasIdentity": true,
+      "starciConsumerCount": 3
+    },
+    {
+      "name": "Callout",
+      "sb": ".storybook/components/composites/feedback/Callout/Callout.tsx",
+      "src": "src/components/composites/feedback/Callout/index.tsx",
+      "hasIdentity": true,
+      "starciConsumerCount": 23
+    },
+    {
+      "name": "Alert",
+      "sb": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "src": "src/components/atoms/feedback/Alert/index.tsx",
+      "hasIdentity": true,
+      "starciConsumerCount": 9
+    },
+    {
+      "name": "FloatingActionButton",
+      "sb": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "src": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "srcLegacyBlock": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "hasIdentity": true,
+      "starciConsumerCount": 1
+    },
+    {
+      "name": "ResponsiveBreadcrumb",
+      "sb": "",
+      "src": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "hasIdentity": true,
+      "starciConsumerCount": 9
+    },
+    {
+      "name": "SearchAutocomplete",
+      "sb": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+      "src": "src/components/atoms/forms/SearchAutocomplete/index.tsx",
+      "srcLegacyBlock": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "hasIdentity": true,
+      "starciConsumerCount": 4
+    }
+  ],
+  "identityForwardTargetsNote": "Wave A forwarded identity?: CallerIdentity on all seven hosts. Wave B stamped 5 consumer roots (LearnBreadcrumb, SettingsBreadcrumb, CourseHero, ContentModeNav src+SB).",
+  "b35Proposals": [
+    {
+      "worker": "2026-08-10-b35-worker-dashboard-admin-system-architecture.json",
+      "kind": "hold",
+      "path": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "reason": "GlyphMark migration held: icon uses text-muted; GlyphMarkTone has no muted (default|accent|success|warning only) — do not invent muted tone"
+    },
+    {
+      "worker": "2026-08-10-b35-worker-learn-course-content.json",
+      "kind": "mention",
+      "focusMentions": true,
+      "summaryMentions": true,
+      "note": "Mentions Navbar/GlyphMark/SurfaceListCard/AuthenticationModal in focus or summary without a discrete proposal object"
+    },
+    {
+      "worker": "2026-08-10-b35-worker-navigation-shells-layouts.json",
+      "kind": "contractProposals",
+      "name": "NavbarFrame",
+      "need": "Owns sticky top app-bar landmark (`sticky top-0 z-50 border-b border-default bg-surface`) plus fixed 4rem primary row height (`h-16 min-h-16`), with identity slot for block/layout roots.",
+      "earnedBy": [
+        ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        "src/components/blocks/navigation/Navbar/index.tsx"
+      ],
+      "note": "Proposal only — no new contract landed this batch."
+    },
+    {
+      "worker": "2026-08-10-b35-worker-navigation-shells-layouts.json",
+      "kind": "hold",
+      "id": "navbar-heroui-atoms",
+      "files": [
+        "src/components/blocks/navigation/Navbar/index.tsx"
+      ],
+      "proof": "Missing house Dropdown / Kbd / Popover badge-trigger atoms (B31f2 hero-ui gap). Cannot clear no-heroui-outside-vocabulary without new vocabulary."
+    },
+    {
+      "worker": "2026-08-10-b35-worker-overlays-modals-drawers.json",
+      "kind": "hold",
+      "family": "AuthenticationModal",
+      "score": 5,
+      "reason": "Documented ModalShell conflict: SignIn/SignUp sections also mount bare on LoginPage with their own Modal.CloseTrigger/Header/Body; wrapping in ModalShell double-nests chrome. Closing needs chrome-only ModalShell variant (agent 10 vocabulary) plus page-folder extraction of nested sections to blocks (outside this manifest).",
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "identity-root",
+        "page-two-files"
+      ]
+    },
+    {
+      "worker": "2026-08-10-b35-worker-playground-practice-interview.json",
+      "kind": "partialCluster",
+      "id": "SubmissionFindingsList",
+      "files": [
+        ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+        "src/components/blocks/learn/SubmissionFindingsList/index.tsx"
+      ],
+      "actions": [
+        "SB first then src",
+        "Markdown wrappers text-muted [&_p]:m-0 → tone=muted flow=embedded",
+        "min-w-0 flex-1 → FillAvailable at=base",
+        "Panel StackV → sibling-stack + explain",
+        "Burned Chip classNames shrink-0 on src; identity on SurfaceCardAccordion; removed identity wrapper div on SB"
+      ],
+      "remaining": [
+        "severity trigger icons size-3.5 with text-danger|warning|muted — not GlyphMark (size-5; no danger/muted tone)",
+        "MapPin/Lightbulb size-3/3.5 text-muted — not GlyphMark",
+        "cn(...) + @heroui/react for severity iconTone"
+      ],
+      "eslintMaxWarnings0": "fail — 2 held severity-glyph warnings"
+    },
+    {
+      "worker": "2026-08-10-b35-worker-playground-practice-interview.json",
+      "kind": "partialCluster",
+      "id": "QuizCard",
+      "files": [
+        "src/components/blocks/learn/QuizCard/index.tsx"
+      ],
+      "actions": [
+        "Correct OptionResultIcon → GlyphMark tone=success"
+      ],
+      "held": [
+        {
+          "path": "OptionResultIcon incorrect",
+          "reason": "text-danger-soft-foreground — GlyphMarkTone has no danger (default|accent|success|warning)"
+        }
+      ],
+      "sbTwin": "unassigned in B35 manifests",
+      "remaining": [
+        "HeroUI Radio/Checkbox vocabulary, classNames doors, host div, unnamed StackV"
+      ]
+    },
+    {
+      "worker": "2026-08-10-b35-worker-profile-cv-careers-consultant.json",
+      "kind": "contractProposals",
+      "id": "UserStreak-dropdown",
+      "files": [
+        "src/components/blocks/profile/UserStreak/index.tsx"
+      ],
+      "reason": "HeroUI Dropdown/Card surface; no Dropdown atom.",
+      "proposal": "Navbar-streak composite once Dropdown vendor boundary exists."
+    },
+    {
+      "worker": "2026-08-10-b35-worker-shared-consumer-chains-coordinator.json",
+      "kind": "contractProposals",
+      "target": "SurfaceListCard / CourseCard HeroUI Card chrome",
+      "proposal": "Reuse SurfaceCard.List / house Card atom contracts already in composites; mass call-site migration outside single-agent door burn"
+    },
+    {
+      "worker": "2026-08-10-b35-worker-shared-consumer-chains-coordinator.json",
+      "kind": "partialCluster",
+      "id": "SurfaceListCard",
+      "status": "partial",
+      "overlapScore": 6,
+      "summary": "Door retained (13 out-of-manifest consumers). Host/cn/raw-shape remain — needs SurfaceCard.List migration or new contract; not invented here"
+    },
+    {
+      "worker": "2026-08-10-b35-worker-shared-consumer-chains-coordinator.json",
+      "kind": "doorsRetained",
+      "id": "Divider.classNames",
+      "forbiddenCount": 2,
+      "classification": "locked-consumer",
+      "note": "Also Navbar (other agent) still consumes"
+    },
+    {
+      "worker": "2026-08-10-b35-worker-shared-consumer-chains-coordinator.json",
+      "kind": "doorsRetained",
+      "id": "SurfaceListCard.className",
+      "allowedRemaining": 13,
+      "classification": "locked-consumer",
+      "reason": "Consumers owned by other agents; cannot burn door"
+    }
+  ],
+  "counts": {
+    "navbarSb": 4,
+    "navbarStories": 1,
+    "navbarSrc": 50,
+    "glyphMarkTonePaths": 2,
+    "mutedSize5Candidates": 3,
+    "surfaceListCardDefinition": 4,
+    "surfaceListCardConsumersAllowed": 67,
+    "surfaceListCardConsumersForbidden": 0,
+    "surfaceListCardClassNameDoor": 5,
+    "authenticationModal": 2,
+    "loginPage": 5,
+    "signInSignUp": 22,
+    "identityForwardTargets": 7,
+    "identityForwardWithIdentity": 7,
+    "b35Proposals": 12,
+    "glyphMarkMigratedSites": 7,
+    "glyphMarkHeldSites": 10,
+    "surfaceListCardMigratedWaveB": 8,
+    "surfaceListCardHeldWaveB": 13,
+    "authenticationPanel": 20,
+    "identityConsumersStampedWaveB": 5
+  },
+  "waveBRefreshedAt": "2026-08-08T16:43:58.236Z",
+  "identityWaveB": {
+    "stamped": 5,
+    "held": 5,
+    "stampedFiles": [
+      "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "src/components/blocks/learn/ContentModeNav/index.tsx",
+      ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx"
+    ],
+    "source": "2026-08-10-b36-worker-identity-root-consumers.json"
+  }
+}

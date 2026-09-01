@@ -1,0 +1,282 @@
+{
+  "batch": "B39",
+  "agent": "navigation-apply",
+  "status": "retracted",
+  "completedAt": "2026-08-09T01:56:00.000Z",
+  "checkpoint": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "scope": "src/components/blocks/navigation ReactNode hosts (excluding children)",
+  "verdict": "ALL_RETRACTED",
+  "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration",
+  "productEdits": [],
+  "atomicMigrationsApplied": [],
+  "zeroWarnScan": {
+    "method": "npx eslint --format json on each ReactNode host file",
+    "hostsAtZeroWarnings": [
+      {
+        "file": "src/components/blocks/navigation/WorkSessionHeader/index.tsx",
+        "warnings": 0,
+        "eligibleForAtomicMigration": false,
+        "reason": "Connected wrapper only; no ReactNode prop declarations (decls live in component.tsx)."
+      }
+    ],
+    "note": "No navigation ReactNode host file is already at eslint --max-warnings=0 with ReactNode decls available to migrate atomically."
+  },
+  "hostFiles": [
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "warnings": 7,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "reactNodePropsExcludingChildren": ["topSlot"]
+    },
+    {
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "warnings": 5,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 3
+      },
+      "reactNodePropsExcludingChildren": ["meta"]
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "warnings": 6,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "reactNodePropsExcludingChildren": ["content", "trailing", "itemAction"]
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "warnings": 21,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 8,
+        "starci-fe/no-cn-above-vocabulary": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 6
+      },
+      "reactNodePropsExcludingChildren": ["meta", "label", "countLabel", "continue.label"]
+    },
+    {
+      "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "warnings": 2,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "reactNodePropsExcludingChildren": ["label"]
+    },
+    {
+      "file": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "warnings": 10,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-cn-above-vocabulary": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      },
+      "reactNodePropsExcludingChildren": [
+        "SelectableCardItem.label",
+        "SelectableCardItem.description",
+        "SelectableCardItem.icon",
+        "SelectableCardItem.badge"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "warnings": 7,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-cn-above-vocabulary": 2
+      },
+      "reactNodePropsExcludingChildren": ["icon", "endContent"]
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "warnings": 16,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-cn-above-vocabulary": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4,
+        "starci-fe/no-host-element-at-sentence-tier": 4
+      },
+      "reactNodePropsExcludingChildren": ["label", "icon", "leftEnd"]
+    },
+    {
+      "file": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "warnings": 13,
+      "errors": 0,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-cn-above-vocabulary": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4
+      },
+      "reactNodePropsExcludingChildren": ["title", "counter", "finishLabel", "meta", "rightSlot"]
+    },
+    {
+      "file": "src/components/blocks/navigation/WorkSessionHeader/index.tsx",
+      "warnings": 0,
+      "errors": 0,
+      "rules": {},
+      "reactNodePropsExcludingChildren": [],
+      "note": "No ReactNode decls; not a migration host."
+    }
+  ],
+  "retractedDeadPropDeletes": [
+    {
+      "prop": "FlexWrapButtonRadio.itemAction",
+      "host": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "action": "retracted-delete",
+      "reason": "Dead prop; host cannot finish at zero warnings under B39 ratchet without HeroUI migration."
+    },
+    {
+      "prop": "SelectableCardItem.icon",
+      "host": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "action": "retracted-delete",
+      "reason": "Dead prop; host cannot finish at zero warnings under B39 ratchet without HeroUI migration."
+    },
+    {
+      "prop": "SelectableCardItem.badge",
+      "host": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "action": "retracted-delete",
+      "reason": "Dead prop; host cannot finish at zero warnings under B39 ratchet without HeroUI migration."
+    },
+    {
+      "prop": "TabsCard.leftEnd",
+      "host": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "action": "retracted-delete",
+      "reason": "Dead prop; host cannot finish at zero warnings under B39 ratchet without HeroUI migration."
+    },
+    {
+      "prop": "WorkSessionHeader.meta",
+      "host": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "action": "retracted-delete",
+      "reason": "Dead prop; host cannot finish at zero warnings under B39 ratchet without HeroUI migration."
+    }
+  ],
+  "retractedStringOrComponentTypeMigrations": [
+    {
+      "props": ["ContentMapRow.meta"],
+      "host": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["OutlineRail.meta", "OutlineRail.label", "OutlineRail.countLabel", "OutlineRail.continue.label"],
+      "host": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["ResponsiveBreadcrumb.label"],
+      "host": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["SelectableCardItem.label", "SelectableCardItem.description"],
+      "host": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["CollapsibleSidebar.topSlot"],
+      "host": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["FlexWrapButtonRadio.trailing"],
+      "host": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["SidebarNavItem.icon"],
+      "host": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["TabsCard.icon"],
+      "host": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    },
+    {
+      "props": ["WorkSessionHeader.title", "WorkSessionHeader.counter", "WorkSessionHeader.finishLabel"],
+      "host": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "action": "retracted-migrate",
+      "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration"
+    }
+  ],
+  "holds": [
+    {
+      "prop": "FlexWrapButtonRadio.content",
+      "host": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "classification": "mixed",
+      "action": "held",
+      "reason": "Mixed ReactNode use; classification hold, not ratchet burn."
+    },
+    {
+      "prop": "SidebarNavItem.endContent",
+      "host": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "classification": "mixed",
+      "action": "held",
+      "reason": "Mixed ReactNode use; classification hold, not ratchet burn."
+    },
+    {
+      "prop": "TabsCard.label",
+      "host": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "classification": "mixed",
+      "action": "held",
+      "reason": "Mixed ReactNode use; classification hold, not ratchet burn."
+    },
+    {
+      "prop": "WorkSessionHeader.rightSlot",
+      "host": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "classification": "mixed",
+      "action": "held",
+      "reason": "Mixed ReactNode use; classification hold, not ratchet burn."
+    }
+  ],
+  "verification": {
+    "checkpointMatches": true,
+    "navigationProductDiff": "none",
+    "artifactOnly": true
+  }
+}

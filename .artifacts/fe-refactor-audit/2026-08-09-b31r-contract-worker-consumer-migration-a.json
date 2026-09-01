@@ -1,0 +1,38 @@
+{
+  "changed": [],
+  "held": [
+    "no migration — canonical composite not landed",
+    "15 CONFLICT size remaps need separate approved decision"
+  ],
+  "retracted": [],
+  "storybookParity": "unchanged",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "sizeEvidence": {
+    "unlocked": 45,
+    "conflicts": 15,
+    "blockSmToMd": 30
+  },
+  "radiusEvidence": {},
+  "consumerCountBefore": 80,
+  "consumerCountAfter": 80,
+  "oldPathsBefore": [
+    "src/components/atoms/display/IconTile",
+    ".storybook/components/atoms/display/IconTile",
+    ".storybook/stories/atoms/display/IconTile",
+    "src/components/blocks/identity/IconTile"
+  ],
+  "oldPathsAfter": [
+    "src/components/atoms/display/IconTile",
+    ".storybook/components/atoms/display/IconTile",
+    ".storybook/stories/atoms/display/IconTile",
+    "src/components/blocks/identity/IconTile"
+  ],
+  "canonicalPath": null,
+  "canonicalTier": null,
+  "skeletonContract": null
+}

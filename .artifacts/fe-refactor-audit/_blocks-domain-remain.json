@@ -1,0 +1,101 @@
+{
+  "byRule": {
+    "starci-fe/require-identity-root": 18,
+    "starci-fe/no-inline-skeleton-branch": 11,
+    "starci-fe/no-emoji-in-source": 12,
+    "starci-fe/no-inline-parameter-type": 10
+  },
+  "byFile": {
+    "src\\components\\blocks\\commerce\\TierCardBase\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-skeleton-branch",
+      "starci-fe/no-inline-skeleton-branch",
+      "starci-fe/no-inline-skeleton-branch"
+    ],
+    "src\\components\\blocks\\dashboard\\WeeklyChallengeCard\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-skeleton-branch"
+    ],
+    "src\\components\\blocks\\feed\\ReactionBar\\index.tsx": [
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/require-identity-root"
+    ],
+    "src\\components\\blocks\\grading\\DiffViewer\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/no-inline-parameter-type"
+    ],
+    "src\\components\\blocks\\grading\\GradeModelDropdown\\component.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-parameter-type"
+    ],
+    "src\\components\\blocks\\learn\\ConceptMap\\index.tsx": [
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/require-identity-root"
+    ],
+    "src\\components\\blocks\\learn\\ContentDiscussion\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-skeleton-branch"
+    ],
+    "src\\components\\blocks\\learn\\CourseQaComposer\\index.tsx": [
+      "starci-fe/require-identity-root"
+    ],
+    "src\\components\\blocks\\learn\\CourseQaQuestionList\\index.tsx": [
+      "starci-fe/require-identity-root"
+    ],
+    "src\\components\\blocks\\learn\\MindMapContinueButton\\index.tsx": [
+      "starci-fe/require-identity-root"
+    ],
+    "src\\components\\blocks\\learn\\MockInterviewScorecard\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-skeleton-branch"
+    ],
+    "src\\components\\blocks\\learn\\ModuleLessonList\\index.tsx": [
+      "starci-fe/no-inline-skeleton-branch"
+    ],
+    "src\\components\\blocks\\learn\\PlaygroundSetupSteps\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-skeleton-branch",
+      "starci-fe/no-inline-skeleton-branch",
+      "starci-fe/no-inline-skeleton-branch"
+    ],
+    "src\\components\\blocks\\learn\\ReactionButton\\index.tsx": [
+      "starci-fe/require-identity-root"
+    ],
+    "src\\components\\blocks\\learn\\ReactionButton\\types.ts": [
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/no-emoji-in-source"
+    ],
+    "src\\components\\blocks\\learn\\SubmissionFindingsList\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/no-inline-parameter-type"
+    ],
+    "src\\components\\blocks\\learn\\lesson\\ContentBodySkeleton\\index.tsx": [
+      "starci-fe/require-identity-root"
+    ],
+    "src\\components\\blocks\\learn\\personal-project\\TaskActions\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-skeleton-branch"
+    ],
+    "src\\components\\blocks\\learn\\personal-project\\TaskResult\\index.tsx": [
+      "starci-fe/require-identity-root",
+      "starci-fe/no-inline-parameter-type"
+    ],
+    "src\\components\\blocks\\marketing\\SitePreview\\index.tsx": [
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/require-identity-root"
+    ]
+  }
+}

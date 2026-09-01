@@ -1,0 +1,34 @@
+{
+  "batch": "B40",
+  "worker": "w04-src-pages-FlashcardsPage",
+  "owns": [
+    "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+    "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx"
+  ],
+  "safeRules": [
+    "starci-fe/require-export-jsdoc",
+    "starci-fe/no-inline-parameter-type",
+    "starci-fe/handler-on-prefix",
+    "starci-fe/prefer-arrow-export",
+    "starci-fe/no-vietnamese-in-source-authoring",
+    "starci-fe/require-identity-root",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-emoji-in-source"
+  ],
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w04-src-pages-FlashcardsPage.json"
+}

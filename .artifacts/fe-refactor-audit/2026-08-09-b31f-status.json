@@ -1,0 +1,48 @@
+{
+  "batch": "31f",
+  "date": "2026-08-09",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "status": "partial",
+  "findings": {
+    "before": 344,
+    "after": 207,
+    "fixed": 137,
+    "held": 207
+  },
+  "files": {
+    "before": 140,
+    "after": 73,
+    "changedRetained": 67
+  },
+  "classificationApproximate": {
+    "peer-items": "majority of fixed (~50%+)",
+    "conditional-peers": "large share of learn/page fixes",
+    "nested-relationship": "minority",
+    "single-rendered-child": 0,
+    "hold": 207
+  },
+  "workers": {
+    "sb-composites-cards-layout-data": { "fixed": 4, "held": 2 },
+    "sb-blocks-learn-a": { "fixed": 18, "held": 0 },
+    "sb-blocks-learn-b": { "fixed": 19, "held": 0 },
+    "sb-blocks-nonlearn": { "fixed": 25, "heldSiblings": 7 },
+    "src-composites": { "fixed": 0, "held": 4 },
+    "src-blocks-learn-a": { "fixed": 0, "held": 17 },
+    "src-blocks-learn-b": { "fixed": 0, "held": 17 },
+    "src-blocks-commerce-dashboard-navigation": { "fixed": 0, "held": 7 },
+    "src-blocks-profile-remaining": { "fixed": 1, "held": 5 },
+    "src-pages-learning": { "fixed": 0, "held": 11 },
+    "src-pages-remaining": { "fixed": 0, "held": 1 }
+  },
+  "holdReasons": [
+    "no-public-classname-prop (SurfaceCard, Page, Footer, Navbar, CollapsibleSidebar, …)",
+    "require-frame-self-declare and mixed sentence-tier debt on most src twins",
+    "handler-on-prefix (MindMapPage)",
+    "large mixed debt (QuizSession 56 other warnings)"
+  ],
+  "storybookSrcParity": "SB-first; src mirrors held when zero-warn ratchet blocks. Only ProfileLockedState src landed without SB twin (SB twin held for classNames API).",
+  "domConditionPreservation": "Fragment children split into ordered item factories / conditional spreads; no sibling-hiding wrappers.",
+  "overlap": "none",
+  "gates": "all pass",
+  "committed": false
+}

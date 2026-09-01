@@ -1,0 +1,55 @@
+{
+  "worker": "community-feed",
+  "manifest": [
+    "src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "src/components/blocks/community/Discussion/index.tsx",
+    "src/components/blocks/feed/Composer/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "CommentComposer",
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "plan": {
+        "action": "apply-parent-box",
+        "reason": "w-full → parent"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "w-full"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "Discussion",
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "dynamic passthrough"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "className"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "Composer",
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "pl-9 is thread indent chrome; needs indentLevel teacher axis"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "pl-9"
+      ],
+      "ownerships": [
+        "intrinsic"
+      ]
+    }
+  ]
+}

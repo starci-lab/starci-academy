@@ -1,0 +1,29 @@
+{
+  "partition": "blocks",
+  "manifest": [],
+  "changed": [],
+  "applied": [],
+  "skipped": [
+    "no eligible dead doors in blocks this wave"
+  ],
+  "holds": [
+    "PinnedTrack.classNames — restored; live consumer InnerLayout classNames={[\"flex-1\"]}",
+    "Button/Chip/Avatar/Divider/Typography/Stack/Grid classNames — live-api",
+    "SurfaceCard chrome/body + contentClassName residual",
+    "DrawerShell.contentClassName (nivoexpert LessonEditorPanel)",
+    "ShowcaseMockup.contentClassName (locked LearnLoopScroll)",
+    "MiniCart, CvPreview, PDFView, ModalShell semantic contracts",
+    "vendor-boundary Box + HeroUI wrappers",
+    "Nivo/Nivoexpert + locked paths + teacher holds",
+    "Badge/Logo/Spinner/Alert className (singular) still live at call sites"
+  ],
+  "evidence": [
+    "Fresh eslint inventory 2492 hits before edits",
+    "Revalidated zero JSX className AND classNames consumers on open-tag window",
+    "PinnedTrack demoted post-tsc (live InnerLayout consumer) and restored from HEAD",
+    "InputSearch sole remaining field classNames consumer migrated to Box className=w-full (vendor boundary)"
+  ],
+  "parity": "no changes",
+  "verification": {},
+  "regressions": []
+}

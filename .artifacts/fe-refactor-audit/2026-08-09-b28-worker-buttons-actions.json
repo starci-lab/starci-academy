@@ -1,0 +1,136 @@
+{
+  "worker": "buttons-actions",
+  "manifest": [
+    "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+    "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+    "src/components/blocks/commerce/AddToCartButton/index.tsx",
+    "src/components/blocks/community/FollowButton/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+    "src/components/blocks/feedback/InfoTooltip/index.tsx"
+  ],
+  "consumers": {
+    "ElementCloseButton": [
+      {
+        "file": "src/components/blocks/chips/StatusChip/index.tsx",
+        "prop": "classNames",
+        "values": ["shrink-0"],
+        "action": "dropped — baked intrinsic"
+      }
+    ],
+    "FollowButton": [
+      {
+        "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+        "prop": "className",
+        "values": ["shrink-0"],
+        "action": "dropped — baked intrinsic"
+      },
+      {
+        "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "prop": "className",
+        "values": ["shrink-0"],
+        "action": "dropped — baked intrinsic"
+      },
+      {
+        "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+        "prop": "className",
+        "values": ["ml-1 shrink-0"],
+        "action": "ml-1 → parent span; shrink-0 baked intrinsic"
+      }
+    ],
+    "AddToCartButton": [
+      {
+        "file": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+        "prop": "className",
+        "values": ["flex-1"],
+        "action": "flex-1 → parent Box"
+      }
+    ],
+    "AiRewriteButton": [
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+        "prop": "className",
+        "values": ["w-fit self-start"],
+        "action": "dropped — baked intrinsic"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+        "prop": "className",
+        "values": ["w-fit self-start"],
+        "action": "dropped — baked intrinsic"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+        "prop": "className",
+        "values": ["w-fit self-start"],
+        "action": "dropped — baked intrinsic"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+        "prop": "className",
+        "values": ["w-fit self-start"],
+        "action": "dropped — baked intrinsic"
+      }
+    ]
+  },
+  "valueSet": {
+    "ElementCloseButton": ["shrink-0"],
+    "FollowButton": ["shrink-0", "ml-1"],
+    "AddToCartButton": ["flex-1"],
+    "AiRewriteButton": ["w-fit", "self-start"]
+  },
+  "ownership": {
+    "ElementCloseButton": {
+      "shrink-0": "intrinsic"
+    },
+    "FollowButton": {
+      "shrink-0": "intrinsic",
+      "ml-1": "parent-placement"
+    },
+    "AddToCartButton": {
+      "flex-1": "parent-placement"
+    },
+    "AiRewriteButton": {
+      "w-fit": "intrinsic",
+      "self-start": "intrinsic"
+    }
+  },
+  "oldApi": {
+    "ElementCloseButton": "classNames?: Array<AllowedClassName>",
+    "FollowButton": "extends WithClassNames<undefined> (className door)",
+    "AddToCartButton": "extends WithClassNames<undefined> (className door)",
+    "AiRewriteButton": "extends WithClassNames<undefined> (className door)"
+  },
+  "newApi": {
+    "ElementCloseButton": "label, onPress, tone — shrink-0 baked on CloseButton",
+    "FollowButton": "following, onToggle, isPending, quiet — shrink-0 baked on Button",
+    "AddToCartButton": "course, isEnrolled, variant, fullWidth, iconOnly — no className door",
+    "AiRewriteButton": "onRewrite — w-fit self-start baked on Button"
+  },
+  "changed": [
+    "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+    "src/components/blocks/chips/StatusChip/index.tsx",
+    "src/components/blocks/community/FollowButton/index.tsx",
+    "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "src/components/blocks/commerce/AddToCartButton/index.tsx",
+    "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx"
+  ],
+  "holds": [
+    "src/components/blocks/buttons/FloatingActionButton/index.tsx — passthrough from ContentAiFab (locked) / dynamic",
+    "src/components/blocks/feedback/InfoTooltip/index.tsx — className lands on HeroUI Tooltip.Trigger (vendor boundary)"
+  ],
+  "parity": {
+    "storybookSrc": "src-only — no SB twins for applied components in this worker"
+  },
+  "verification": {
+    "local": "typecheck on changed files deferred to coordinator batch gate"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — each changed file assigned to buttons-actions partition only; holds remain untouched"
+}

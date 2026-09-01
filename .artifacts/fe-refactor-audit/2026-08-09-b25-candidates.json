@@ -1,0 +1,250 @@
+{
+  "generatedAt": "2026-08-07T13:17:19.823Z",
+  "totalHits": 2216,
+  "useHitsEligible": 826,
+  "safeNoop": [],
+  "conditionalEmpty": [],
+  "livePropSample": [
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\ai\\AiQuotaHistoryPanel\\index.tsx",
+      "line": 172,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\ai\\QuotaBar\\index.tsx",
+      "line": 155,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\async\\EmptyContent\\index.tsx",
+      "line": 60,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\async\\ErrorContent\\index.tsx",
+      "line": 54,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\ContinueCard\\index.tsx",
+      "line": 174,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\ContinueCard\\index.tsx",
+      "line": 187,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\MediaCard\\index.tsx",
+      "line": 134,
+      "msg": "Do not pass `classNames` to house component `SurfaceCard`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "SurfaceCard",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\PressableCard\\index.tsx",
+      "line": 176,
+      "msg": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackH",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\PricingCard\\index.tsx",
+      "line": 120,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SectionCard\\index.tsx",
+      "line": 127,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SectionCard\\index.tsx",
+      "line": 143,
+      "msg": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackH",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\PriceTag\\PriceTagBase.tsx",
+      "line": 323,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\PricingTable\\index.tsx",
+      "line": 157,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\TrialConversionStrip\\component.tsx",
+      "line": 121,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\TrialConversionStrip\\component.tsx",
+      "line": 134,
+      "msg": "Do not pass `classNames` to house component `SurfaceCard`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "SurfaceCard",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\course\\CourseTrialChip\\index.tsx",
+      "line": 31,
+      "msg": "Do not pass `classNames` to house component `Chip`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Chip",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\DailyQuest\\index.tsx",
+      "line": 106,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\JobReadinessWidget\\index.tsx",
+      "line": 135,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\JobReadinessWidget\\index.tsx",
+      "line": 139,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentCommentComposer\\index.tsx",
+      "line": 170,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentCommentComposer\\index.tsx",
+      "line": 177,
+      "msg": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackH",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentDiscussion\\index.tsx",
+      "line": 145,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContinueCard\\CardBody.tsx",
+      "line": 59,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContinueCard\\ContinueCardHero\\index.tsx",
+      "line": 35,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\CourseQaComposer\\index.tsx",
+      "line": 209,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\CourseQaQuestionList\\SkeletonQuestionRow\\index.tsx",
+      "line": 59,
+      "msg": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackV",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\EnrollGate\\index.tsx",
+      "line": 65,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\FlashcardDueHero\\index.tsx",
+      "line": 167,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LeaderboardToolbar\\index.tsx",
+      "line": 67,
+      "msg": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "StackH",
+      "classification": "live-prop"
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\MilestoneUpNextCard\\index.tsx",
+      "line": 113,
+      "msg": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+      "severity": 1,
+      "component": "Button",
+      "classification": "live-prop"
+    }
+  ],
+  "note": "Only safeNoop/conditionalEmpty are eligible without new principles"
+}

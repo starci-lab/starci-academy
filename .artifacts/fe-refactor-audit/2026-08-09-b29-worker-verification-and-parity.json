@@ -1,0 +1,21 @@
+{
+  "partition": "verification-and-parity",
+  "manifest": [],
+  "consumerEvidence": "read-only coordinator",
+  "valueSet": {},
+  "oldApi": "n/a",
+  "newApi": "n/a",
+  "changed": [],
+  "holds": [],
+  "parity": {
+    "FillAvailable": "SB first, src twin",
+    "PhaseScarcityNote": "n/a this batch",
+    "Markdown": "SB composites doors closed; src composites mirrored; src blocks map wrapped",
+    "VideoRenderer": "src-only (no SB twin)"
+  },
+  "verification": {
+    "role": "coordinator suite after aggregation"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

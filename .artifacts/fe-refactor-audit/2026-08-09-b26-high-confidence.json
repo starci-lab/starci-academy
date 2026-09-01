@@ -1,0 +1,3931 @@
+{
+  "generatedAt": "2026-08-07T13:50:26.067Z",
+  "elapsedMs": 473,
+  "deadDoors": 387,
+  "ignoredPassthrough": 3,
+  "deadDoorsList": [
+    {
+      "file": "src/components/blocks/auth/GithubLinkGate/index.tsx",
+      "component": "GithubLinkGate",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/auth/Turnstile/index.tsx",
+      "component": "Turnstile",
+      "prop": "classNames",
+      "dest": " onVerify, onExpire, onError, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "component": "RatingBar",
+      "prop": "classNames",
+      "dest": " options, onRate, ariaLabel, isPending = false, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "component": "CourseCardSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/FlipCard/index.tsx",
+      "component": "FlipCard",
+      "prop": "classNames",
+      "dest": " revealed, questionLabel, answerLabel, front: Front, belowFront: BelowFront, back: Back, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "component": "GroupPressableCard",
+      "prop": "classNames",
+      "dest": " items, ariaLabel, columns = {",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "component": "HighlightCard",
+      "prop": "classNames",
+      "dest": " children, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "component": "PressableCard",
+      "prop": "classNames",
+      "dest": " children, onPress, href, isDisabled = false, actions: Actions, label, className, identity, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "component": "SurfaceListCard",
+      "prop": "classNames",
+      "dest": " children, bordered = false, className, identity ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "component": "CvSubmissionFields",
+      "prop": "classNames",
+      "dest": " cv, cvError, isSubmitting, onCvChange, onSubmit, isUploading, isProcessing, uploadProgress, uploade",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "component": "CVSubmissionForm",
+      "prop": "classNames",
+      "dest": " isUploading, isProcessing, uploadProgress, uploadedFileName, uploadedS3Key, onSubmit, onProcess, cl",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "component": "LanguageChip",
+      "prop": "classNames",
+      "dest": " language, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "component": "LessonVideoKindChip",
+      "prop": "classNames",
+      "dest": " kind, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "component": "CodeConsole",
+      "prop": "classNames",
+      "dest": " ariaLabel, tabs, selectedTab, onSelectTab, actions, hint, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "component": "IOExampleCard",
+      "prop": "classNames",
+      "dest": " rows, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "component": "SandpackPanel",
+      "prop": "classNames",
+      "dest": " files, dependencies = {",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "component": "SandpackPanel",
+      "prop": "className",
+      "dest": " files, dependencies = {",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "component": "TestCaseResultGrid",
+      "prop": "classNames",
+      "dest": " cases, labels, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "component": "AddToCartButton",
+      "prop": "classNames",
+      "dest": " course, isEnrolled = false, variant = \"tertiary\", fullWidth = false, iconOnly = false, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "component": "FreeTierCard",
+      "prop": "classNames",
+      "dest": " isCurrent, className, isSkeleton = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "component": "TierCard",
+      "prop": "classNames",
+      "dest": " tier, isCurrent, className, isSkeleton = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "component": "TierCardBase",
+      "prop": "classNames",
+      "dest": " icon: Icon, title, badge: Badge, description, price: Price, features, isCurrent, cta: Cta, classNam",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "component": "TierGrid",
+      "prop": "classNames",
+      "dest": " className, isSkeleton = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "component": "CommentComposer",
+      "prop": "classNames",
+      "dest": " onSubmit: onSubmitAction, placeholder, submitLabel, onCancel: onCancelAction, initialValue, busy, c",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "component": "CommentItem",
+      "prop": "classNames",
+      "dest": " comment, currentUserId, depth, repliesByParent, onReply, onEdit, onDelete, onReactComment, onLoadRe",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "component": "FacebookReactionSelector",
+      "prop": "classNames",
+      "dest": " active, onSelect, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "component": "Discussion",
+      "prop": "classNames",
+      "dest": " currentUserId, currentUser, comments, total, isLoading, repliesByParent, onSubmitComment, onReply, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "component": "InteractionBar",
+      "prop": "classNames",
+      "dest": " summary, onReact, viewCount, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "component": "ReactionBar",
+      "prop": "classNames",
+      "dest": " summary, onReact, disabled, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "component": "ReactionEmoji",
+      "prop": "classNames",
+      "dest": " descriptor, size = \"xs\", className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "component": "FollowButton",
+      "prop": "classNames",
+      "dest": " following, onToggle, isPending = false, quiet = false, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "component": "AchievementBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "component": "ActivityBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange, onAiRewrite ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "component": "CertificationBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "component": "EducationBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "component": "ExperienceBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange, onAiRewrite ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "component": "CvBlockStack",
+      "prop": "classNames",
+      "dest": " className, blocks, onChange, addableTypes, onAddBlock, onAiRewrite, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "component": "InterestBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "component": "LanguageBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "component": "PersonalBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "component": "ProjectBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange, onAiRewrite ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "component": "PickFromStarciSelect",
+      "prop": "classNames",
+      "dest": " className, onPick, excludeIds = [] ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "component": "AiRewriteButton",
+      "prop": "classNames",
+      "dest": " className, onRewrite ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "component": "RepeatableItemCard",
+      "prop": "classNames",
+      "dest": " className, children, onRemove, onMoveUp, onMoveDown, headerEnd, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "component": "SkillsBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "component": "SummaryBlockEditor",
+      "prop": "classNames",
+      "dest": " className, block, onChange, onAiRewrite ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "component": "CvPdfPreview",
+      "prop": "classNames",
+      "dest": " className, cvId, tex ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "component": "CvSplitFromTextModal",
+      "prop": "classNames",
+      "dest": " className, isOpen, onOpenChange, onSplit ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "component": "CvTailorToJobModal",
+      "prop": "classNames",
+      "dest": " className, isOpen, onOpenChange, blocks, selectedModel, selectedModelProvider, onTailored, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "component": "CvTemplateGalleryModal",
+      "prop": "classNames",
+      "dest": " className, isOpen, onOpenChange, doc, onSelect, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "component": "CvTexEditor",
+      "prop": "classNames",
+      "dest": " className, value, onChange ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "component": "CvWorkspaceSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "component": "CvTextOrFileInput",
+      "prop": "classNames",
+      "dest": " className, value, onChange, fieldId, label, placeholder, onExtractingChange, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "component": "LeaderboardListCard",
+      "prop": "classNames",
+      "dest": " bare = false, title, onSeeMore, seeMoreLabel, standing, topSlot, rows, selfRow, ellipsisLabel, meLa",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/dashboard/Podium/index.tsx",
+      "component": "Podium",
+      "prop": "classNames",
+      "dest": " entries, meLabel, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "component": "StandingHeroCard",
+      "prop": "classNames",
+      "dest": " badge, rankLabel, meta, progress, ctaLabel, onCta, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/entity/EntityToken/index.tsx",
+      "component": "EntityToken",
+      "prop": "classNames",
+      "dest": " globalId, href, label, block = false, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "component": "ActivityAvatar",
+      "prop": "classNames",
+      "dest": " username, avatar, icon, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "component": "ChatBubble",
+      "prop": "classNames",
+      "dest": " role, children, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "component": "ChatPanel",
+      "prop": "classNames",
+      "dest": " messages, composer, isTyping = false, emptyState, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/CommentThread/index.tsx",
+      "component": "CommentThread",
+      "prop": "classNames",
+      "dest": " comments, onReply, onReact, avatarSrc, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "component": "Composer",
+      "prop": "classNames",
+      "dest": " value, onChange, onSubmit, placeholder, avatarSrc, isSubmitting = false, submitLabel = \"Send\", atta",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/EntityLink/index.tsx",
+      "component": "EntityLink",
+      "prop": "classNames",
+      "dest": " label, onPress, isPending, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/FeedItem/index.tsx",
+      "component": "FeedItem",
+      "prop": "classNames",
+      "dest": " leading, children, timestamp, footer, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "component": "ReactionBar",
+      "prop": "classNames",
+      "dest": " count, myReaction, onReact, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/Timeline/index.tsx",
+      "component": "Timeline",
+      "prop": "classNames",
+      "dest": " children, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "component": "ErrorPageState",
+      "prop": "classNames",
+      "dest": " code, title, description, actions, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "component": "ErrorState",
+      "prop": "classNames",
+      "dest": " title, description, retryLabel, onRetry, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "component": "InfoTooltip",
+      "prop": "classNames",
+      "dest": " children, title, description, content, placement = \"top\", className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "component": "ReadinessChecklist",
+      "prop": "classNames",
+      "dest": " items, readyLabel, pendingLabel, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "component": "SimpleEmptyState",
+      "prop": "classNames",
+      "dest": " children, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/Dropzone/index.tsx",
+      "component": "Dropzone",
+      "prop": "classNames",
+      "dest": " hint, file, errorMessage, acceptedMimeTypes, maxSizeInBytes, onChange, onBlur, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/OtpInput/index.tsx",
+      "component": "OtpInput",
+      "prop": "classNames",
+      "dest": " length = 6, value, onChange, isInvalid, errorMessage, autoFocus, label, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "component": "SchedulePicker",
+      "prop": "classNames",
+      "dest": " dateValue, onDateChange, availableSlots, selectedSlotId, onSlotChange, minDate, slotsLabel = \"Choos",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "component": "SearchAutocomplete",
+      "prop": "classNames",
+      "dest": " items, inputValue, onInputChange, onSelect, placeholder = \"Search courses, topics...\", isLoading = ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "component": "DiffViewer",
+      "prop": "classNames",
+      "dest": " filename, hunks, variant = \"unified\", className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/index.tsx",
+      "component": "SelfHostGpuMark",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "component": "AvatarUploadButton",
+      "prop": "classNames",
+      "dest": " avatar, displayName, seed, label, onPress, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "component": "BadgeImage",
+      "prop": "classNames",
+      "dest": " objectKey, size = 24, alt, fallback, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "component": "BrandLockup",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "component": "BrandLogo",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "component": "IconTile",
+      "prop": "classNames",
+      "dest": " icon, src, alt = \"\", tone = \"accent\", size = \"md\", className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "component": "ImageDropzone",
+      "prop": "classNames",
+      "dest": " onFile, label, hint, icon, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/Logo/index.tsx",
+      "component": "Logo",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "component": "AmbientBackground",
+      "prop": "classNames",
+      "dest": " className, effect = BackgroundEffect.None, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "component": "ConnectSheet",
+      "prop": "classNames",
+      "dest": " open, onOpenChange, peek, children, toggleLabel, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "component": "DragScrollArea",
+      "prop": "classNames",
+      "dest": " className, children, hideScrollBar = true, size = 40, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/PageContainer/index.tsx",
+      "component": "PageContainer",
+      "prop": "classNames",
+      "dest": " children, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "component": "PageHeader",
+      "prop": "classNames",
+      "dest": " title, description, breadcrumb, actions, meta, size = \"page\", className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "component": "ResizableRail",
+      "prop": "classNames",
+      "dest": " children, storageKey, defaultWidth = 320, minWidth = 256, maxWidth = 560, ariaLabel, handleSide = \"",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "component": "AccountTrigger",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+      "component": "AppearanceRow",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+      "component": "AuthActions",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+      "component": "LogoutMenu",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+      "component": "MenuList",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "component": "UserSummary",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "component": "Navbar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "component": "Logo",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+      "component": "MobileNavbar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+      "component": "NavLinks",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+      "component": "SearchButton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "component": "StickyBottomBar",
+      "prop": "classNames",
+      "dest": " children, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "component": "KeyStatusChip",
+      "prop": "classNames",
+      "dest": " status, label, variant = KeyStatusChipVariant.Dark, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "component": "ChatToolResult",
+      "prop": "classNames",
+      "dest": " items, label, icon, isLoading = false, showKindChip = false, onSelect, onViewAll, viewAllLabel, cla",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "component": "ConceptMap",
+      "prop": "classNames",
+      "dest": " data, query, tier, selectedId, onSelectId, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      "component": "MindMapCanvas",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "component": "MindMapContinueButton",
+      "prop": "classNames",
+      "dest": " resumeHref, allContentDone ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "component": "MindMapContinueButton",
+      "prop": "className",
+      "dest": " resumeHref, allContentDone ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "component": "MindMapFullscreenButton",
+      "prop": "classNames",
+      "dest": " targetRef ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "component": "MindMapFullscreenButton",
+      "prop": "className",
+      "dest": " targetRef ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+      "component": "ContentAiFab",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "component": "ContentMapSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "component": "ContentMap",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "component": "LeaderboardCategoryRail",
+      "prop": "classNames",
+      "dest": " variant, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "component": "LearnMobileBar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "component": "LearnPanelToggles",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "component": "LearnSidebar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      "component": "AiLab",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "component": "LaneModelPicker",
+      "prop": "classNames",
+      "dest": " models, selection, canPremium, isDisabled = false, onSelect, onUpgrade, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "component": "ParamControls",
+      "prop": "classNames",
+      "dest": " params, isDisabled = false, onChange, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "component": "PromptPlayground",
+      "prop": "classNames",
+      "dest": " playground, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "component": "ChallengeCard",
+      "prop": "classNames",
+      "dest": " challenge, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "component": "ChallengeCardSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "component": "CodeBodySkeleton",
+      "prop": "classNames",
+      "dest": " count = 2, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      "component": "Empty",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "component": "ExplainingCard",
+      "prop": "classNames",
+      "dest": " item, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      "component": "Empty",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "component": "ImplementationCard",
+      "prop": "classNames",
+      "dest": " item, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      "component": "ActionToolbar",
+      "prop": "classNames",
+      "dest": " isFavorite, isShareVisible, isFavoritePending, onToggleFavorite, onShare, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "component": "ContentReactionBar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "component": "ContentBodySkeleton",
+      "prop": "classNames",
+      "dest": " className, variant = \"v2\", ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "component": "ContentTabBar",
+      "prop": "classNames",
+      "dest": " tabItems, selectedKey, ariaLabel, onSelectionChange, className, rightTabs, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "component": "TabTrigger",
+      "prop": "classNames",
+      "dest": " icon: TabIcon, label, locked, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      "component": "Empty",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      "component": "LessonCard",
+      "prop": "classNames",
+      "dest": " lessonVideo, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "component": "LessonCardSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "component": "LessonPager",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "component": "ReadBadge",
+      "prop": "classNames",
+      "dest": " size, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "component": "MilestoneOutline",
+      "prop": "classNames",
+      "dest": " className, collapsed = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "component": "MilestoneIndexStrip",
+      "prop": "classNames",
+      "dest": " milestones, activeMilestoneId, onSelectMilestone, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "component": "MilestoneOutlineSkeleton",
+      "prop": "classNames",
+      "dest": " count, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "component": "MilestoneOutlineSkeleton",
+      "prop": "className",
+      "dest": " count, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      "component": "ContentActions",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "component": "OnThisPage",
+      "prop": "classNames",
+      "dest": " className, mobile = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "component": "GithubGradingSettings",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "component": "PersonalProjectDashboard",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "component": "PersonalProjectDashboardSkeleton",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+      "component": "PersonalProjectSubmission",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "component": "TaskActions",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "component": "TaskCodeImplementations",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "component": "TaskCriteriaList",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+      "component": "TaskLockedAlert",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "component": "TaskResultsSkeleton",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "component": "TaskSkeleton",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "component": "TaskSubmissionPanel",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "component": "PlaygroundRagWorkspace",
+      "prop": "classNames",
+      "dest": " ragAnswer, ragCitations, sendRagIndex, sendRagAsk, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "component": "QaConversationHeader",
+      "prop": "classNames",
+      "dest": " asker, isFounderAsker, participants, replyCount, onCollapse, canFollow = false, isFollowing = false",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx"
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "component": "QaInboxRow",
+      "prop": "classNames",
+      "dest": " question, onOpen, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "component": "QaMessageBubble",
+      "prop": "classNames",
+      "dest": " comment, currentUserId, currentUser, repliesByParent, replyToName, canAccept = false, onAcceptAnswe",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx"
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "component": "QaQuestionThread",
+      "prop": "classNames",
+      "dest": " question, currentUserId, currentUser, onAnswered, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx"
+    },
+    {
+      "file": "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      "component": "ReferenceLinks",
+      "prop": "classNames",
+      "dest": " references, titleKey, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "component": "TrialEnrollHook",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "component": "ListRow",
+      "prop": "classNames",
+      "dest": " leading, title, subtitle, meta, trailing, divider = false, onPress, href, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "component": "AdBanner",
+      "prop": "classNames",
+      "dest": " ad, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "component": "ArchitectureFlow",
+      "prop": "classNames",
+      "dest": " nodes, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "component": "HeroBanner",
+      "prop": "classNames",
+      "dest": " eyebrow, eyebrowIcon, headline, subline, primary, secondary, keywords, keywordsLabel, visual, class",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "component": "MicroservicesDiagram",
+      "prop": "classNames",
+      "dest": " caption, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "component": "MicroservicesScene",
+      "prop": "classNames",
+      "dest": " caption, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "component": "SectionHeading",
+      "prop": "classNames",
+      "dest": " eyebrow, title, intro, level = 3, align = \"center\", anchorId, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "component": "TopicLane",
+      "prop": "classNames",
+      "dest": " icon, title, items, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/TruthList/index.tsx",
+      "component": "TruthList",
+      "prop": "classNames",
+      "dest": " items, byline, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/CoverImage/index.tsx",
+      "component": "CoverImage",
+      "prop": "classNames",
+      "dest": " src, alt, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/QRCode/index.tsx",
+      "component": "QRCode",
+      "prop": "classNames",
+      "dest": " size, data, icon, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "component": "MpegDash",
+      "prop": "classNames",
+      "dest": " src, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "component": "Standard",
+      "prop": "classNames",
+      "dest": " src, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "component": "FullscreenButton",
+      "prop": "classNames",
+      "dest": " onFullscreen, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "component": "VideoControls",
+      "prop": "classNames",
+      "dest": " isPlaying, currentTime, duration, volume, isMuted, onPlayPause, onSeek, onVolumeChange, onMuteToggl",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "component": "PlayPauseButton",
+      "prop": "classNames",
+      "dest": " isPlaying, onPlayPause, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "component": "QualitySelector",
+      "prop": "classNames",
+      "dest": " qualityLevels, selectedQuality, onQualityChange, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "component": "SeekBar",
+      "prop": "classNames",
+      "dest": " currentTime, duration, onSeek, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "component": "TimeDisplay",
+      "prop": "classNames",
+      "dest": " currentTime, duration, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "component": "VolumeControl",
+      "prop": "classNames",
+      "dest": " volume, isMuted, onVolumeChange, onMuteToggle, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "component": "Youtube",
+      "prop": "classNames",
+      "dest": " url, title = \"YouTube video\", className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/BackLink/index.tsx",
+      "component": "BackLink",
+      "prop": "classNames",
+      "dest": " label, target, onPress, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "component": "ContentMapRow",
+      "prop": "classNames",
+      "dest": " title, isActive, isRead, isLocked = false, isPremium, meta, onPress, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "component": "ExtendedTabs",
+      "prop": "classNames",
+      "dest": " selectedKey, onSelectionChange, children, className, variant = \"secondary\", size = \"md\", ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "component": "OutlineRail",
+      "prop": "classNames",
+      "dest": " header, search, groups, expandedKeys, onExpandedChange, isSkeleton = false, async, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "component": "ProgrammingLanguageTabs",
+      "prop": "classNames",
+      "dest": " availableLangs, ...props ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "component": "ProgrammingLanguageTabs",
+      "prop": "className",
+      "dest": " availableLangs, ...props ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "component": "ResponsiveBreadcrumb",
+      "prop": "classNames",
+      "dest": " items, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "component": "SidebarNavAccordionGroup",
+      "prop": "classNames",
+      "dest": " icon: Icon, label, items, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "component": "SidebarNavGroup",
+      "prop": "classNames",
+      "dest": " label, divider = false, children, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "component": "SidebarNavItem",
+      "prop": "classNames",
+      "dest": " icon, label, isActive = false, endContent, onPress, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "component": "TabsCard",
+      "prop": "classNames",
+      "dest": " leftTabs, leftEnd, rightTabs, collapseRightOnMobile, rightTabsNeutral, variant = \"secondary\", size ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "prop": "classNames",
+      "dest": " unreadCount, groups, onMarkAllRead, title = \"Notifications\", emptyState, ariaLabel = \"Notifications",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "component": "NotificationItem",
+      "prop": "classNames",
+      "dest": " title, body, timeLabel, icon, tone = \"default\", isUnread = false, onPress, actionSlot, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "component": "NotificationList",
+      "prop": "classNames",
+      "dest": " groups, title, onMarkAllRead, markAllReadLabel = \"Mark all as read\", emptyState, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "component": "ContributionCalendarView",
+      "prop": "classNames",
+      "dest": " days, year, onYearChange, isSkeleton = false, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "component": "CvSubmission",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+      "component": "MascotBadge",
+      "prop": "classNames",
+      "dest": " objectKey, name, earned, tierReached, size = 64, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "component": "ProfileSectionGuard",
+      "prop": "classNames",
+      "dest": " section, children, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+      "component": "ProfileTabsBar",
+      "prop": "classNames",
+      "dest": " username, isSelf, hasPublicCv, sectionVisibility, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/RankBadge/index.tsx",
+      "component": "RankBadge",
+      "prop": "classNames",
+      "dest": " label, color, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "component": "RankDeltaCaret",
+      "prop": "classNames",
+      "dest": " delta, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/UserStreak/index.tsx",
+      "component": "UserStreak",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "component": "CodePreviewTabs",
+      "prop": "classNames",
+      "dest": " preview, code, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "component": "CodeToHtml",
+      "prop": "classNames",
+      "dest": " code, language, theme, elevated = false, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "component": "LayoutWidget",
+      "prop": "classNames",
+      "dest": " html, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "component": "MermaidDiagram",
+      "prop": "classNames",
+      "dest": " code, theme, loadingLabel, expandLabel, caption, fallbackLabel, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+      "component": "RenderReactComponent",
+      "prop": "classNames",
+      "dest": " code, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "component": "PaginationSkeleton",
+      "prop": "classNames",
+      "dest": " className, pageCount = 3, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "component": "DeadlineCallout",
+      "prop": "classNames",
+      "dest": " count, title, hint, forecast, caption, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "component": "LanguageDonut",
+      "prop": "classNames",
+      "dest": " items, unitLabel, ariaLabel, size = 128, thickness = 8, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "component": "MilestoneRoadmap",
+      "prop": "classNames",
+      "dest": " milestones, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "component": "TopicMasteryGrid",
+      "prop": "classNames",
+      "dest": " topics, ariaLabel, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "component": "HighlightChip",
+      "prop": "classNames",
+      "dest": " tone = \"default\", icon, value, label, isSkeleton = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx"
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "component": "HighlightChip",
+      "prop": "className",
+      "dest": " tone = \"default\", icon, value, label, isSkeleton = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx"
+    },
+    {
+      "file": "src/components/composites/stats/Legend/index.tsx",
+      "component": "Legend",
+      "prop": "className",
+      "dest": " items, direction = \"row\", isSkeleton = false, skeletonCount = 3",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/composites/stats/Legend/Legend.tsx"
+    },
+    {
+      "file": "src/components/composites/stats/MetricCard/index.tsx",
+      "component": "MetricCard",
+      "prop": "className",
+      "dest": " value, label, hint, isSkeleton = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/composites/stats/MetricCard/MetricCard.tsx"
+    },
+    {
+      "file": "src/components/composites/stats/StatRibbon/index.tsx",
+      "component": "StatRibbon",
+      "prop": "className",
+      "dest": " items, valueType, bordered = false, isSkeleton = false, skeletonCount = 3, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx"
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "component": "DotLabel",
+      "prop": "className",
+      "dest": " color, label, tone = \"muted\", isSkeleton = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": ".storybook/components/composites/text/DotLabel/DotLabel.tsx"
+    },
+    {
+      "file": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "component": "FooterNavColumn",
+      "prop": "classNames",
+      "dest": " title, links, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Footer/index.tsx",
+      "component": "Footer",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "component": "AccountMenuAuthed",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "component": "AccountMenuGuest",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "component": "AccountTrigger",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "component": "DarkLightModeSwitch",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "component": "GuestHeader",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "component": "CartButton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/index.tsx",
+      "component": "Navbar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "component": "LanguageDropdown",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/Logo/index.tsx",
+      "component": "Logo",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "component": "NavLinks",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "component": "AdminAiBalancerSkeleton",
+      "prop": "classNames",
+      "dest": " count = 3, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "component": "ProviderSection",
+      "prop": "classNames",
+      "dest": " providerHealth, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "component": "ProviderSection",
+      "prop": "className",
+      "dest": " providerHealth, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "component": "KeyRow",
+      "prop": "classNames",
+      "dest": " keyHealth, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "component": "KeyRow",
+      "prop": "className",
+      "dest": " keyHealth, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminLoginPage/index.tsx",
+      "component": "AdminLoginPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "component": "ConfigCard",
+      "prop": "classNames",
+      "dest": " url, activeType, onChangeUrl, onSelectType, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "component": "RendererTypeButton",
+      "prop": "classNames",
+      "dest": " option, isActive, onSelect, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "component": "AdminMpegDashTestPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "component": "PreviewCard",
+      "prop": "classNames",
+      "dest": " url, activeType, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "component": "QuickTestUrls",
+      "prop": "classNames",
+      "dest": " onSelect, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "component": "QuickTestUrlButton",
+      "prop": "classNames",
+      "dest": " item, onSelect, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "component": "DropZone",
+      "prop": "classNames",
+      "dest": " file, fileInputRef, onClickZone, onDragOver, onDrop, onFileChange, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "component": "DropZone",
+      "prop": "className",
+      "dest": " file, fileInputRef, onClickZone, onDragOver, onDrop, onFileChange, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "component": "FileSelectionCard",
+      "prop": "classNames",
+      "dest": " file, fileInputRef, objectKey, isRequesting, isUploading, uploadDone, isProcessing, processResult, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "component": "FileSelectionCard",
+      "prop": "className",
+      "dest": " file, fileInputRef, objectKey, isRequesting, isUploading, uploadDone, isProcessing, processResult, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "component": "ProcessResultBanner",
+      "prop": "classNames",
+      "dest": " processResult, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "component": "ProcessResultBanner",
+      "prop": "className",
+      "dest": " processResult, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "component": "AdminUploadVideoPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "component": "LoadingScreen",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "component": "TopBar",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "component": "UploadProgressCard",
+      "prop": "classNames",
+      "dest": " uploads, uploadDone, onCopyUrl, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "component": "UploadProgressCard",
+      "prop": "className",
+      "dest": " uploads, uploadDone, onCopyUrl, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "component": "ProviderUploadRow",
+      "prop": "classNames",
+      "dest": " upload, index, onCopyUrl, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "component": "ProviderUploadRow",
+      "prop": "className",
+      "dest": " upload, index, onCopyUrl, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "component": "AiUsageHistory",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "component": "ArchitectureMap",
+      "prop": "classNames",
+      "dest": " healthByName, selectedId, onSelectNode, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "component": "ArchitectureMobileNav",
+      "prop": "classNames",
+      "dest": " healthByName, selectedId, onSelect, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "component": "ArchitectureRail",
+      "prop": "classNames",
+      "dest": " healthByName, selectedId, onSelect, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "component": "MetricsInline",
+      "prop": "classNames",
+      "dest": " metrics, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "component": "NodeDissectionPanel",
+      "prop": "classNames",
+      "dest": " nodeId, healthByName, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "component": "BookmarkCard",
+      "prop": "classNames",
+      "dest": " content, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "component": "BookmarkCard",
+      "prop": "className",
+      "dest": " content, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "component": "ContactChannels",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "component": "ContactForm",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "component": "ContactPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "component": "CourseHero",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "component": "CourseMobileEnrollBar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "component": "CoursePricingRail",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "component": "CvEditorToolbarBar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/index.tsx",
+      "component": "CvEditorPage",
+      "prop": "classNames",
+      "dest": " className, cvId ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CvGalleryPage/index.tsx",
+      "component": "CvGalleryPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "component": "ChangelogListSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "component": "CommunityTab",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "component": "ContinueLearningSkeleton",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "component": "CoursesTab",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "component": "DashboardIdentity",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "component": "ProfileMenuCard",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "component": "DashboardTabsBar",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "component": "ExploreTab",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "component": "FeedTabsSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "component": "DashboardPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+      "component": "LeagueCard",
+      "prop": "classNames",
+      "dest": " className, framed = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "component": "LeagueCardContent",
+      "prop": "classNames",
+      "dest": " data, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "component": "LeagueCardSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "component": "LeagueTierBadge",
+      "prop": "classNames",
+      "dest": " tier, size = 24, showLabel = false, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "component": "OverviewTab",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "component": "OverviewContributionsSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "component": "QuickActions",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/index.tsx",
+      "component": "RecommendedCourses",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/index.tsx",
+      "component": "TopLearners",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "component": "TopLearnersSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+      "component": "TrendingContents",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/index.tsx",
+      "component": "WeeklyChallengeCard",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+      "component": "AvatarUploadModal",
+      "prop": "classNames",
+      "dest": " onFile, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "component": "DueReviewSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "component": "FlashcardDeckListSkeleton",
+      "prop": "classNames",
+      "dest": " count = 3, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "component": "FlashcardMobileNav",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "component": "FlashcardReviewerSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/index.tsx",
+      "component": "FlashcardReviewer",
+      "prop": "classNames",
+      "dest": " deckId, sessionId, className, onBack ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/index.tsx",
+      "component": "FlashcardStudyRail",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "component": "FlashcardsPage",
+      "prop": "classNames",
+      "dest": " className, resumeQuizSessionId, resumeStudySessionId, resultQuizSessionId, resultStudySessionId, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+      "component": "HeadhuntingCompanyPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/index.tsx",
+      "component": "JobPostFormPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/KpiPage/index.tsx",
+      "component": "KpiPage",
+      "prop": "className",
+      "dest": " classNames, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "component": "LandingPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "component": "KnowledgeGraph",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/StatStrip/index.tsx",
+      "component": "StatStrip",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "component": "TalentMarketplace",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "component": "GlobalBoardSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/index.tsx",
+      "component": "GlobalBoard",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "component": "LeaguePage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/index.tsx",
+      "component": "WeeklyBoard",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "component": "WeeklyBoardSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "component": "CourseDayTimeline",
+      "prop": "classNames",
+      "dest": " courseGlobalId, query, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "component": "CourseDetail",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "component": "CourseMilestoneOutline",
+      "prop": "classNames",
+      "dest": " search = \"\", className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "component": "CourseOutline",
+      "prop": "classNames",
+      "dest": " search = \"\", className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "component": "LearningHistoryPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "component": "LoginPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "component": "InterviewerPresence",
+      "prop": "classNames",
+      "dest": " persona, speaking, speakingLabel, ttsSupported, ttsEnabled, onToggleTts, muteLabel, unmuteLabel, ch",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "component": "MockInterviewHistory",
+      "prop": "classNames",
+      "dest": " courseId, courseDisplayId, onStartInterview, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "component": "MockInterviewScorecard",
+      "prop": "classNames",
+      "dest": " grade, courseId, courseDisplayId, promptTitle, createdAt, onRetry, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "component": "MockInterviewSessionSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+      "component": "MockInterviewSetupSkeleton",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "component": "MockInterviewStats",
+      "prop": "classNames",
+      "dest": " courseId, courseDisplayId, onStartInterview, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "component": "MockInterviewTrackSnapshot",
+      "prop": "classNames",
+      "dest": " courseId, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "component": "MockInterviewWorkspace",
+      "prop": "classNames",
+      "dest": " tool, onDiagramChange, codeState, onCodeStateChange, givenCodeVariants = [], className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "component": "VoiceHero",
+      "prop": "classNames",
+      "dest": " sttSupported, listening, interimTranscript, value, onValueChange, onToggleListen, answerMode, label",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "component": "VoiceUnavailableModal",
+      "prop": "classNames",
+      "dest": " isOpen, onOpenChange, onRecheck: recheckVoices, hasLocaleVoice, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "component": "MyAttemptsPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MyFeedbackPage/index.tsx",
+      "component": "MyFeedbackPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "component": "MySubmissionsPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "component": "NotificationsPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/OauthRedirectPage/index.tsx",
+      "component": "OauthRedirectPage",
+      "prop": "classNames",
+      "dest": " action, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "component": "PracticeFilters",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "component": "PracticeRail",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "component": "PracticeMobileNav",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "component": "ProblemCatalog",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "component": "ProblemRow",
+      "prop": "classNames",
+      "dest": " problem, status, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "component": "ProgressCockpit",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/index.tsx",
+      "component": "ProfileActivityPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "component": "ProfileChallengeManagePage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "component": "ProfileChallengesPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "component": "ChallengeCourseRow",
+      "prop": "classNames",
+      "dest": " username, courseTitle, courseSlug, items, totalChallenges, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "component": "ProfileChallenges",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "component": "ProfileChallengeSubmissionPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "component": "ProfileCodingProblemPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/index.tsx",
+      "component": "ProfileOverviewPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "component": "OverviewChallengeSkills",
+      "prop": "classNames",
+      "dest": " label, onSeeMore, seeMoreLabel, fillHeight ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "component": "OverviewChallengeSkills",
+      "prop": "className",
+      "dest": " label, onSeeMore, seeMoreLabel, fillHeight ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "component": "OverviewCodeSkills",
+      "prop": "classNames",
+      "dest": " label, onSeeMore, seeMoreLabel, fillHeight ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "component": "OverviewCodeSkills",
+      "prop": "className",
+      "dest": " label, onSeeMore, seeMoreLabel, fillHeight ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "component": "ProfileProjectRoadmapPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "component": "ProfileProjectsPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "component": "PinnedProjectCard",
+      "prop": "classNames",
+      "dest": " pin, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "component": "ProfileRedirectPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "component": "ProfileSkillsPage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "component": "ProfileCoding",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "component": "RewardsPage",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "component": "MyVouchers",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "component": "RewardCatalog",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "component": "DetailRow",
+      "prop": "classNames",
+      "dest": " label, value, showCopy = false, copyValue, isHighlighted = false, onCopy, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SettingsHomePage/index.tsx",
+      "component": "SettingsHomePage",
+      "prop": "classNames",
+      "dest": " className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "component": "AiKeyGroup",
+      "prop": "classNames",
+      "dest": " group ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "component": "AiKeyGroup",
+      "prop": "className",
+      "dest": " group ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "component": "ComponentCard",
+      "prop": "classNames",
+      "dest": " component ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "component": "ComponentCard",
+      "prop": "className",
+      "dest": " component ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "component": "OverallBanner",
+      "prop": "classNames",
+      "dest": " allUp, label, className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "component": "SystemStatusSkeleton",
+      "prop": "classNames",
+      "dest": " aiOnly = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "component": "SystemStatusSkeleton",
+      "prop": "className",
+      "dest": " aiOnly = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/GithubIcon/index.tsx",
+      "component": "GithubIcon",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/GoogleIcon/index.tsx",
+      "component": "GoogleIcon",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/Logo/index.tsx",
+      "component": "Logo",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/LogoMark/index.tsx",
+      "component": "LogoMark",
+      "prop": "classNames",
+      "dest": " className ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/TierLevelIcon/index.tsx",
+      "component": "TierLevelIcon",
+      "prop": "classNames",
+      "dest": " level, className, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": null
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "component": "HighlightChip",
+      "prop": "classNames",
+      "dest": " tone = \"default\", icon, value, label, isSkeleton = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": "src/components/composites/chips/HighlightChip/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "component": "HighlightChip",
+      "prop": "className",
+      "dest": " tone = \"default\", icon, value, label, isSkeleton = false ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": "src/components/composites/chips/HighlightChip/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/stats/Legend/Legend.tsx",
+      "component": "Legend",
+      "prop": "className",
+      "dest": " items, direction = \"row\", isSkeleton = false, skeletonCount = 3, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": "src/components/composites/stats/Legend/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+      "component": "MetricCard",
+      "prop": "className",
+      "dest": " value, label, hint, isSkeleton = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": "src/components/composites/stats/MetricCard/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx",
+      "component": "StatRibbon",
+      "prop": "className",
+      "dest": " items, valueType, bordered = false, isSkeleton = false, skeletonCount = 3, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": "src/components/composites/stats/StatRibbon/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+      "component": "DotLabel",
+      "prop": "className",
+      "dest": " color, label, tone = \"muted\", isSkeleton = false, ",
+      "consumers": 0,
+      "consumerList": [],
+      "kind": "dead-door",
+      "twin": "src/components/composites/text/DotLabel/index.tsx"
+    }
+  ],
+  "ignoredList": [
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "component": "FloatingActionButton",
+      "prop": "classNames",
+      "dest": " onPress, ariaLabel, children, className, ",
+      "consumers": 1,
+      "consumerList": [
+        {
+          "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+          "line": 57,
+          "prop": "classNames",
+          "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+        }
+      ],
+      "kind": "ignored-passthrough",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "component": "GroupPressableCard",
+      "prop": "className",
+      "dest": " items, ariaLabel, columns = {",
+      "consumers": 1,
+      "consumerList": [
+        {
+          "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+          "line": 69,
+          "prop": "className",
+          "snippet": "<GroupPressableCard ariaLabel={ariaLabel} // measured: below a 384px container the hint line wraps and the tiles grow // to 104px tall; at 3"
+        }
+      ],
+      "kind": "ignored-passthrough",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "component": "LabeledList",
+      "prop": "classNames",
+      "dest": " label, icon, children, action, className, ",
+      "consumers": 1,
+      "consumerList": [
+        {
+          "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+          "line": 82,
+          "prop": "classNames",
+          "snippet": "<LabeledList label={t(\"lessonRail.challenges.title\")} action={( <Button label={t(\"lessonRail.challenges.practice\")} size=\"sm\" variant=\"prima"
+        }
+      ],
+      "kind": "ignored-passthrough",
+      "twin": null
+    }
+  ]
+}

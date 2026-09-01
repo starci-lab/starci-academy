@@ -1,0 +1,217 @@
+{
+  "batch": "B40",
+  "worker": "w13-src-blocks-cv",
+  "manifest": ".artifacts/fe-refactor-audit/b40-manifests/w13-src-blocks-cv.json",
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w13-src-blocks-cv.json",
+  "status": "complete",
+  "completedAt": "2026-08-09T02:20:00+07:00",
+  "checkpoint": "2a096210a",
+  "branch": "mtp",
+  "doNotCommit": true,
+  "method": {
+    "scope": "owns only",
+    "safeRules": [
+      "starci-fe/require-export-jsdoc",
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/handler-on-prefix",
+      "starci-fe/prefer-arrow-export",
+      "starci-fe/no-vietnamese-in-source-authoring",
+      "starci-fe/require-identity-root",
+      "starci-fe/require-frame-self-declare",
+      "starci-fe/no-emoji-in-source"
+    ],
+    "gate": "changed files must pass eslint --max-warnings=0 or revert+hold",
+    "baselineSafeFindings": 54,
+    "baselineOwnedMessages": 298
+  },
+  "changed": [
+    {
+      "file": "src/components/blocks/async/EmptyContent/index.tsx",
+      "classification": "applied",
+      "cleared": ["starci-fe/require-frame-self-declare"],
+      "notes": "Root StackV: existing sibling-stack + explain; gap omitted so principle owns seam (EmptyState pattern)."
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "classification": "applied",
+      "cleared": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "notes": "Mirrored EmptyContent: StackV identity root; dropped composite host wrapper."
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "classification": "applied",
+      "cleared": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "notes": "Box foreign-mount identity + existing flex-fill-base for CodeMirror."
+    },
+    {
+      "file": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "classification": "applied",
+      "cleared": ["starci-fe/handler-on-prefix"],
+      "notes": "Omitted handleSide=\"right\" — ResizableRail default is right; prop name is a noun (resize-handle edge), not an onXxx handler. Renaming API out of owns."
+    }
+  ],
+  "holds": [
+    {
+      "file": "src/components/blocks/async/AsyncContent/index.tsx",
+      "classification": "ambiguous",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "Multi-branch switch returns ErrorContent / EmptyContent / fragments / null — no singular frame root to stamp without inventing a wrapper."
+    },
+    {
+      "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "classification": "locked",
+      "rules": ["starci-fe/require-identity-root", "starci-fe/no-host-element-at-sentence-tier"],
+      "reason": "IntersectionObserver requires a host ref; Box does not forwardRef. Identity host blocked without contract change."
+    },
+    {
+      "file": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "classification": "hold",
+      "reason": "Raw span + cn/classNames doors + HeroUI; identity not stampable on Chip/Typography (B36 law). Cannot reach eslint --max-warnings=0 without vocabulary redesign."
+    },
+    {
+      "file": "src/components/blocks/chips/EnumChip/index.tsx",
+      "classification": "vendor",
+      "reason": "Roots on house Chip / HeroUI Tooltip; Chip atom does not accept CallerIdentity. no-heroui remains vendor."
+    },
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "classification": "hold",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "Thin map over EnumChip — host does not forward identity."
+    },
+    {
+      "file": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "classification": "vendor",
+      "reason": "Raw span + HeroUI Typography; identity/host burn blocked without DotLabel migration contract."
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "classification": "hold",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "Thin map over EnumChip — same identity-forwarding hold."
+    },
+    {
+      "file": "src/components/blocks/chips/StatusChip/index.tsx",
+      "classification": "vendor",
+      "reason": "Deliberate HeroUI Chip root for ElementCloseButton tonal cancel; not house Chip."
+    },
+    {
+      "file": "src/components/blocks/chips/TagChips/component.tsx",
+      "classification": "vendor",
+      "reason": "HeroUI Chip/Tooltip/ScrollShadow overflow row; host/raw-shape + heroui cluster."
+    },
+    {
+      "files": [
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx"
+      ],
+      "classification": "vendor",
+      "reason": "Safe identity/emoji/host burns blocked by residual starci-fe/no-heroui-outside-vocabulary (CvBlockEditorFormSurface vendor boundary, same as AchievementBlockEditor). Editing would fail eslint --max-warnings=0 gate → revert+hold. Emoji only in JSDoc/comments; strip deferred with form migration."
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "classification": "locked",
+      "rules": ["starci-fe/no-inline-parameter-type", "starci-fe/require-identity-root", "starci-fe/no-host-element-at-sentence-tier"],
+      "reason": "PDF/HTML print tree — 39 host elements + inline SectionTitle props; CvPreview/PDF surface hold. Inline-type extract alone cannot clear file."
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "classification": "locked",
+      "reason": "Live PDF preview surface (MiniCart/CvPreview/PDF hold family); heroui + classname + host cluster."
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "classification": "hold",
+      "reason": "Skeleton redesign / twin forbidden this batch; classname + skeleton rules remain."
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "classification": "vendor",
+      "reason": "HeroUI + host/raw-shape; cannot clear under max-warnings=0 without form vocabulary migration."
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "classification": "locked",
+      "rules": ["starci-fe/require-frame-self-declare", "starci-fe/no-public-classname-prop"],
+      "reason": "11 frame-self-declare sites co-located with 24 public classname doors — classname contract hold; principle-only edit cannot clear file."
+    },
+    {
+      "file": "src/components/composites/navigation/Toolbar/index.tsx",
+      "classification": "locked",
+      "reason": "frame-self-declare residual behind public classname contract hold."
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "classification": "hold",
+      "rules": ["starci-fe/require-frame-self-declare"],
+      "reason": "Inner StackV missing principle, but page-folder-two-files-only + heroui + host block max-warnings=0. page-folder moves forbidden."
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "classification": "vendor",
+      "reason": "Dual-root (Box success / form HeroUI); page-folder-two-files-only + heroui. Identity ambiguous across branches."
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "classification": "hold",
+      "reason": "PageContainer root without identity forward; outer host div + heroui Typography. page shell burn deferred."
+    },
+    {
+      "file": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "classification": "hold",
+      "rules": ["starci-fe/require-frame-self-declare"],
+      "reason": "Box already has identity; principle missing, but classname/skeleton/page-folder residuals block clean gate."
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "classification": "hold",
+      "reason": "Identity + host/raw-shape + heroui + page-folder; not fully cleanable under safe rules."
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "classification": "hold",
+      "reason": "Large marketing page host/raw-shape cluster + heroui; identity ambiguous across sections."
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": {
+      "files": [
+        "src/components/blocks/async/EmptyContent/index.tsx",
+        "src/components/blocks/async/ErrorContent/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+        ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx"
+      ],
+      "exitCode": 0
+    },
+    "gitDiffCheck": { "exitCode": 0 }
+  },
+  "counts": {
+    "owns": 36,
+    "applied": 4,
+    "hold": 9,
+    "vendor": 17,
+    "locked": 5,
+    "ambiguous": 1,
+    "changedFiles": 4,
+    "safeFindingsCleared": 8,
+    "untouchedOwns": 32
+  },
+  "summary": "Applied 4 clean burns (EmptyContent principle, ErrorContent identity mirror, CvTexEditor Box mount, LearnShell default handleSide omit). Remaining owns held: HeroUI vendor CV/chip surfaces cannot pass eslint --max-warnings=0 without form vocabulary migration; PDF/skeleton/classname/page-folder clusters locked or held."
+}

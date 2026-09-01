@@ -1,0 +1,191 @@
+{
+  "batch": "B35",
+  "agentKey": "navigation-shells-layouts",
+  "checkpoint": "02011807",
+  "status": "done",
+  "closed": [
+    {
+      "cluster": "blocks/navigation/NavLinks",
+      "overlapScore": null,
+      "files": [
+        ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+        "src/components/blocks/navigation/NavLinks/index.tsx"
+      ],
+      "fix": "ShowFrom + ButtonRadioGroup + StackH identity; zero starci-fe warnings"
+    },
+    {
+      "cluster": "layouts/PublicProfileLayout",
+      "overlapScore": null,
+      "files": [
+        ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+        "src/components/layouts/PublicProfileLayout/component.tsx"
+      ],
+      "fix": "RailShell + Container page-pad + StackV group-boundary identity (SB mirrored to src); zero starci-fe warnings"
+    },
+    {
+      "cluster": "layouts/Footer",
+      "overlapScore": null,
+      "files": [
+        "src/components/layouts/Footer/index.tsx"
+      ],
+      "fix": "FooterFrame + Measure + Stack + InlineLink + FooterLinkColumn with i18n wiring; zero starci-fe warnings"
+    }
+  ],
+  "partial": [
+    {
+      "cluster": "blocks/navigation/Navbar",
+      "overlapScore": 7,
+      "files": [
+        ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        "src/components/blocks/navigation/Navbar/index.tsx"
+      ],
+      "burned": [
+        "ShowFrom / HideAbove for md visibility",
+        "ScrollArea for notification list",
+        "Stack principle/explain + fragment cleanup; src twin aligned to SB"
+      ],
+      "remaining": [
+        "sticky top-0 nav + h-16 row hosts (no NavbarFrame)",
+        "src: HeroUI Dropdown/Kbd/Popover/Button/cn import",
+        "src: require-identity-root (needs frame that owns sticky nav landmark)"
+      ]
+    },
+    {
+      "cluster": "layouts/Navbar/NavLinks",
+      "overlapScore": 6,
+      "files": [
+        "src/components/layouts/Navbar/NavLinks/index.tsx"
+      ],
+      "burned": [
+        "ShowFrom + ButtonRadioGroup + StackH identity; HeroUI/host/raw/cn cleared"
+      ],
+      "remaining": [
+        "page-folder-two-files-only (layouts/Navbar nested folder — filing hold)"
+      ]
+    },
+    {
+      "cluster": "layouts/LearnShell",
+      "overlapScore": null,
+      "files": [
+        ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx"
+      ],
+      "burned": [
+        "Stage fill=viewport + StackV identity; host wrappers removed"
+      ],
+      "remaining": [
+        "handler-on-prefix on ResizableRail handleSide (API outside slice)"
+      ]
+    },
+    {
+      "cluster": "layouts/Footer/FooterNavColumn",
+      "overlapScore": null,
+      "files": [
+        "src/components/layouts/Footer/FooterNavColumn/index.tsx"
+      ],
+      "burned": [
+        "StackV + InlineLink; HeroUI/host/raw cleared"
+      ],
+      "remaining": [
+        "page-folder-two-files-only"
+      ]
+    }
+  ],
+  "holds": [
+    {
+      "cluster": "blocks/navigation/SettingsSidebarNav",
+      "overlapScore": 7,
+      "files": [
+        ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "src/components/blocks/navigation/SettingsSidebarNav/index.tsx"
+      ],
+      "proof": "Sticky-under-navbar desktop height (top-16 + h-[calc(100dvh-4rem)]) and mobile sticky pill surface + active/inactive chip cn have no existing owner. ShowFrom/HideAbove lack sticky+height; NavigationRail owns column flex-fill; RailShell sticky uses top-24. Src keeps CollapsibleSidebar.className door (mia-mia). StackV identity + sibling-stack principles applied where vocabulary fit.",
+      "applied": [
+        "StackV identity root + group-boundary",
+        "Desktop/mobile leaf Stack principles"
+      ]
+    },
+    {
+      "id": "collapsible-sidebar-classname-mia-mia",
+      "files": [
+        "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+      ],
+      "proof": "Brief: keep src CollapsibleSidebar.className while mia-mia needs it; SB stays doorless. Not burned."
+    },
+    {
+      "id": "navbar-heroui-atoms",
+      "files": [
+        "src/components/blocks/navigation/Navbar/index.tsx"
+      ],
+      "proof": "Missing house Dropdown / Kbd / Popover badge-trigger atoms (B31f2 hero-ui gap). Cannot clear no-heroui-outside-vocabulary without new vocabulary."
+    }
+  ],
+  "contractProposals": [
+    {
+      "name": "NavbarFrame",
+      "need": "Owns sticky top app-bar landmark (`sticky top-0 z-50 border-b border-default bg-surface`) plus fixed 4rem primary row height (`h-16 min-h-16`), with identity slot for block/layout roots.",
+      "earnedBy": [
+        ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        "src/components/blocks/navigation/Navbar/index.tsx"
+      ],
+      "note": "Proposal only — no new contract landed this batch."
+    },
+    {
+      "name": "SettingsStickyRail / SettingsMobilePillNav",
+      "need": "Desktop: sticky top-16 + viewport-minus-navbar height around CollapsibleSidebar. Mobile: sticky blurred horizontal pill strip with active/inactive chip chrome (or SettingsTabChip composite).",
+      "earnedBy": [
+        ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "src/components/blocks/navigation/SettingsSidebarNav/index.tsx"
+      ],
+      "note": "Proposal only — no new contract landed this batch."
+    }
+  ],
+  "filesChanged": [
+    ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+    ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+    ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+    ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+    ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+    "src/components/blocks/navigation/NavLinks/index.tsx",
+    "src/components/blocks/navigation/Navbar/index.tsx",
+    "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+    "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+    "src/components/layouts/Footer/index.tsx",
+    "src/components/layouts/Navbar/NavLinks/index.tsx",
+    "src/components/layouts/PublicProfileLayout/component.tsx"
+  ],
+  "notTouched": [
+    "nivo",
+    "nivoexpert",
+    "mia-mia",
+    "CLAUDE.md",
+    ".claude/fe/decision-ledger.json",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+  ],
+  "gates": {
+    "tsc": {
+      "scope": "filtered for navigation-shells-layouts paths",
+      "result": "clean on touched paths",
+      "note": "Repo-wide tsc still has pre-existing errors outside this slice (Admin*/Flashcards*/LandingPage)."
+    },
+    "eslint": {
+      "touchedFiles": 12,
+      "closedAtZero": [
+        "NavLinks SB+src blocks",
+        "PublicProfileLayout SB+src",
+        "layouts/Footer"
+      ],
+      "partialRemaining": {
+        "Navbar SB": ["no-host-element-at-sentence-tier x2"],
+        "Navbar src": [
+          "no-heroui-outside-vocabulary",
+          "require-identity-root",
+          "no-host-element-at-sentence-tier x2",
+          "no-raw-shape-at-sentence-tier"
+        ],
+        "SettingsSidebarNav": "sticky/chip hosts + cn + CollapsibleSidebar.className call",
+        "LearnShell": "handler-on-prefix handleSide",
+        "layouts NavLinks / FooterNavColumn": "page-folder-two-files-only only"
+      }
+    }
+  }
+}

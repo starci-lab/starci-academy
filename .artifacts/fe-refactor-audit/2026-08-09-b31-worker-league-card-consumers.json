@@ -1,0 +1,35 @@
+{
+  "warningsBefore": {
+    "LeagueCardComponent": 10,
+    "LeagueCardContent": 3
+  },
+  "warningsAfter": null,
+  "openTagConsumersBefore": [],
+  "openTagConsumersAfter": null,
+  "layoutOwnership": [],
+  "changed": [],
+  "skipped": [
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx"
+  ],
+  "holds": [
+    "page-folder-two-files-only",
+    "skeleton/loading",
+    "RankDeltaCaret className"
+  ],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [],
+  "parity": {},
+  "verification": {
+    "phase": 1,
+    "sourceEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass-no-locked-nivo-overlap",
+  "manifest": [],
+  "readFirst": [
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx"
+  ]
+}

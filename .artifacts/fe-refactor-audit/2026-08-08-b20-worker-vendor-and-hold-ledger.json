@@ -1,0 +1,30 @@
+{
+  "partition": "vendor-and-hold-ledger",
+  "changed": [
+    "plugins/eslint/public-contracts.mjs",
+    "plugins/eslint/public-contracts.test.mjs"
+  ],
+  "skipped": [],
+  "holds": [
+    "HeroUI wrapper atoms + Box remain declaration-exempt",
+    "SB DrawerShell.contentClassName nivoexpert",
+    "SurfaceCard TILE_CHROME",
+    "LabeledCard/ShowcaseMockup contentClassName",
+    "27 teacher pattern holds (audit:fe)",
+    "skeletons redesign-only"
+  ],
+  "evidence": [
+    "Rule now exempts className/classNames USAGE when import path is vendor-boundary (Box/Modal/Drawer/…)",
+    "Trailing-slash-optional path match so @/components/atoms/overlay/Drawer works"
+  ],
+  "newVariants": [],
+  "vendorBoundaries": [
+    "Box",
+    "Modal/Drawer/Popover/Tooltip/Select/ListBox/Table/AlertDialog/ButtonGroup atoms"
+  ],
+  "verification": {
+    "publicContractsTest": "pass",
+    "auditFe": "0 failing / 27 held"
+  },
+  "regressions": []
+}

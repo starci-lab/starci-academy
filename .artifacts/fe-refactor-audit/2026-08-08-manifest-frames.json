@@ -1,0 +1,77 @@
+{
+  "partition": "frames",
+  "generatedAt": "2026-08-06T21:05:14.776Z",
+  "fileCount": 7,
+  "files": [
+    {
+      "path": ".storybook/components/frames/Split/Split.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/frames/Split/Split.tsx",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/frames/_spacing.ts",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/frames/_spacing.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/frames/Split/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/frames/Split/index.tsx",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/frames/_spacing.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/frames/_spacing.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/frames/Container/Container.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/frames/Container/Container.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/stories/frames/Split/Split.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/frames/Split/Split.stories.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/frames/Container/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/frames/Container/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    }
+  ]
+}

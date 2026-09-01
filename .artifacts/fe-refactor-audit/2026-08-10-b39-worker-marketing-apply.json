@@ -1,0 +1,40 @@
+{
+  "batch": "39-marketing-apply",
+  "checkpointHead": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "verifiedHead": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "filesChanged": [
+    "src/components/blocks/marketing/PitchCard/index.tsx"
+  ],
+  "propsDeleted": [
+    "title",
+    "body",
+    "footer"
+  ],
+  "propsKept": [
+    "icon",
+    "tone"
+  ],
+  "modulesDeleted": [
+    "src/components/blocks/marketing/TopicLane/",
+    "src/components/blocks/marketing/MicroservicesScene/",
+    "src/components/blocks/marketing/MicroservicesDiagram/"
+  ],
+  "eslintResult": {
+    "command": "npx eslint --max-warnings=0 src/components/blocks/marketing/PitchCard/index.tsx",
+    "exitCode": 0,
+    "maxWarnings": 0,
+    "clean": true
+  },
+  "verification": {
+    "topicLaneFolderGone": true,
+    "microservicesSceneFolderGone": true,
+    "microservicesDiagramFolderGone": true,
+    "remainingSrcImportsOfDeletedModules": [],
+    "notes": [
+      "HERO-CONTINUE.md still mentions MicroservicesScene/MicroservicesDiagram as prose (not imports); left untouched per scope.",
+      "SectionCard PitchCard comment mentions left untouched per DO NOT.",
+      ".storybook/irr.md mentions deleted modules as inventory prose only; not edited."
+    ]
+  },
+  "blockers": []
+}

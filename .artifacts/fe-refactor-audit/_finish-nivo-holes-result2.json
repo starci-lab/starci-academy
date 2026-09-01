@@ -1,0 +1,78 @@
+{
+  "applied": [
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      "line": 88,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+      "line": 37,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 327,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+      "line": 410,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 259,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 201,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      "line": 139,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      "line": 263,
+      "principle": "content-row",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "line": 97,
+      "principle": "flex-action",
+      "retuneGap": null
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 191,
+      "principle": "flex-action",
+      "retuneGap": 3
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/overlays/modals/BanMemberModal/BanMemberModal.tsx",
+      "line": 105,
+      "principle": "flex-action",
+      "retuneGap": 3
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+      "line": 174,
+      "principle": "chip-row",
+      "retuneGap": 3
+    }
+  ],
+  "missed": [],
+  "skipped": []
+}

@@ -1,0 +1,550 @@
+{
+  "partition": "identity-hosts",
+  "batch": 13,
+  "changed": [
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx"
+  ],
+  "skipped": [
+    "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx#require-frame-self-declare",
+    "src/components/blocks/async/ErrorContent/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/async/ErrorContent/index.tsx#require-frame-self-declare",
+    "src/components/blocks/chips/HostPlatformChip/component.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/chips/LessonVideoKindChip/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/code/SandpackPanel/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/commerce/PhaseScarcityNote/component.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx#no-inline-parameter-type",
+    "src/components/blocks/dashboard/ChangelogList/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/dashboard/Confetti/index.tsx#no-raw-shape-at-sentence-tier",
+    "src/components/blocks/dashboard/DailyQuest/index.tsx#no-emoji-in-source",
+    "src/components/blocks/dashboard/DailyQuest/index.tsx#require-frame-self-declare",
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx#no-inline-skeleton-branch",
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx#require-frame-self-declare",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/identity/BadgeImage/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/layout/Spacer/index.tsx#no-classname-at-sentence-tier",
+    "src/components/blocks/learn/ConceptMap/Canvas/index.tsx#no-raw-shape-at-sentence-tier",
+    "src/components/blocks/learn/ContentArticle/index.tsx#require-frame-self-declare"
+  ],
+  "holds": [
+    "AiQuotaSubscriptionPanel-host-div",
+    "AsyncContent-block-fragment-host",
+    "ErrorContent-hand-rolled-data-tier-div",
+    "PostRow-link-host",
+    "HostPlatformChip-enumchip-atom-host",
+    "LessonVideoKindChip-enumchip-atom-host",
+    "SandpackPanel-vendor-div-host",
+    "PhaseScarcityNote-color-div-over-cluster",
+    "PriceTagInline-passthrough",
+    "PriceTagProminent-passthrough",
+    "CommunityPost-card-host",
+    "ConsultantDirectoryCompanySearch-host-div",
+    "ConsultantDirectoryGrid-a11y-region-div",
+    "ConsultantDirectoryHeader-pageheader-wrapper-div",
+    "CourseTrialChip-chip-atom",
+    "CvHtmlDocument-html-div-tree",
+    "ChangelogList-async-wrapper-div",
+    "Confetti-fixed-overlay-div",
+    "ContinueLearning-async-wrapper-div",
+    "DailyQuest-async-wrapper-div",
+    "ReadinessChecklist-host-div",
+    "BadgeImage-img-host",
+    "SocketConnectionStatus-null-host",
+    "Spacer-layout-div",
+    "TopLoader-progress-div",
+    "ChallengeHeader-pageheader-wrapper-div",
+    "ConceptMapCanvas-reactflow-host-div",
+    "MindMapLegend-reactflow-panel",
+    "ContentArticle-surfacecard-wrapper-div",
+    "WeeklyChallengeCard-skeleton-decision-colocated"
+  ],
+  "decisions": [
+    {
+      "id": "WeeklyChallengeCard-surfacecard-root",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx"
+      ],
+      "proposal": "SurfaceCard is the sole JSX root and already accepts CallerIdentity — applied identity={{ tier:\"block\", component:\"WeeklyChallengeCard\" }}.",
+      "applied": true,
+      "proof": {
+        "root": "SurfaceCard",
+        "acceptsIdentity": true,
+        "twinInManifest": false,
+        "storybookTwin": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+        "twinNote": "SB twin also roots on SurfaceCard but was not in this partition manifest — left unchanged; twin-parity coordinator may claim drift."
+      }
+    },
+    {
+      "id": "AiQuotaSubscriptionPanel-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx"
+      ],
+      "proposal": "All three leaves root on a className-hosting <div>; capable SurfaceCard/StackV sit inside. Do not stamp identity on inner SurfaceCard/StackV while the div remains the element root. Future: drop the inert wrapper (or route className through a capable host) and put identity={{ tier:\"block\", component:\"AiQuotaSubscriptionPanel\" }} on the single remaining SurfaceCard/StackV root per leaf — only when className placement is settled (co-located no-classname-at-sentence-tier).",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div (skeleton)",
+          "div > SurfaceCard (no-tier)",
+          "div > StackV (premium)"
+        ],
+        "whyNotApply": "root is host div / mixed; stamping inner capable nodes forbidden"
+      }
+    },
+    {
+      "id": "AsyncContent-block-fragment-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/async/AsyncContent/index.tsx"
+      ],
+      "proposal": "Block AsyncContent is a priority switch that returns ErrorContent | fragment(skeleton) | EmptyContent | fragment(children) — no single frame/composite root. Identity cannot attach without inventing a wrapper shape (BLOCK-2) or forcing every branch onto one capable host. Prefer callers to use composites/async/AsyncContent (already identity-capable) or accept this as a hostless switch.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "ErrorContent",
+          "<>skeleton</>",
+          "EmptyContent|null",
+          "<>children</>"
+        ],
+        "whyNotApply": "null/fragment/mixed host — no clearly declared capable root"
+      }
+    },
+    {
+      "id": "ErrorContent-hand-rolled-data-tier-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/async/ErrorContent/index.tsx"
+      ],
+      "proposal": "Root is the exact anti-pattern from frames/_identity.ts: <div data-tier=\"composite\" data-component=\"ErrorContent\"> wrapping StackV. Collapse onto StackV with identity — BUT meta claims tier composite while CallerIdentity only allows block|layout|overlay|page, and the folder is blocks/. Need an explicit tier decision (treat as block → identity on StackV; or keep as composite self-name without CallerIdentity) before editing. Co-located classNames + undeclared inner StackV are separate.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div[data-tier=composite] > StackV"
+        ],
+        "capableInner": "StackV",
+        "metaTier": "composite",
+        "whyNotApply": "hand-rolled identity div + composite-vs-block tier conflict unresolved"
+      }
+    },
+    {
+      "id": "PostRow-link-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/blog/PostRow/index.tsx"
+      ],
+      "proposal": "Root is next-intl Link (anchor host) with StackV inside; early span branch also exists. Link does not accept CallerIdentity. Do not stamp identity on inner StackV. Needs a capable root that can own the href press (or an identity-capable link composite) before apply.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Link",
+          "span"
+        ],
+        "whyNotApply": "non-capable host / mixed roots"
+      }
+    },
+    {
+      "id": "HostPlatformChip-enumchip-atom-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/chips/HostPlatformChip/component.tsx"
+      ],
+      "proposal": "Single root EnumChip (composite chip helper) — not a frame/composite that documents CallerIdentity on this call path. Stamping identity would require EnumChip (or ChipBase) to accept identity; that is an API decision outside safe apply. Co-located WithClassNames hold remains.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "EnumChip"
+        ],
+        "whyNotApply": "non-capable root for identity prop"
+      }
+    },
+    {
+      "id": "LessonVideoKindChip-enumchip-atom-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/chips/LessonVideoKindChip/index.tsx"
+      ],
+      "proposal": "Same as HostPlatformChip: root EnumChip only. Record until EnumChip/Chip identity-capable API exists; do not invent a wrapping frame.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "EnumChip"
+        ],
+        "whyNotApply": "non-capable root for identity prop"
+      }
+    },
+    {
+      "id": "SandpackPanel-vendor-div-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/code/SandpackPanel/index.tsx"
+      ],
+      "proposal": "Root is className-hosting <div> around SandpackProvider vendor tree. No StarCi frame/composite draws the panel shape. Identity requires a capable host (Box/SurfaceCard/etc.) that can wrap Sandpack without changing layout — redesign, not a stamp.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > SandpackProvider"
+        ],
+        "whyNotApply": "vendor host div; no identity-capable root"
+      }
+    },
+    {
+      "id": "PhaseScarcityNote-color-div-over-cluster",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/commerce/PhaseScarcityNote/component.tsx"
+      ],
+      "proposal": "Live root is <div className=\"text-warning-soft-foreground\"> wrapping Cluster (identity-capable). Skeleton roots Skeleton; no-seat returns null. Do not stamp Cluster while color-host div remains. Future: move warning tone onto Cluster/Typography without the wrapper, then identity={{ tier:\"block\", component:\"PhaseScarcityNote\" }} on Cluster — only with proof tone inheritance is unchanged.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Skeleton",
+          "null",
+          "div > Cluster"
+        ],
+        "whyNotApply": "mixed/null + capable frame wrapped by host div"
+      }
+    },
+    {
+      "id": "PriceTagInline-passthrough",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx"
+      ],
+      "proposal": "Thin passthrough to PriceTagBase — root is another block, not an identity-capable frame/composite. Identity belongs on PriceTagBase (or its eventual capable root) once that host is decided; do not stamp here.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "PriceTagBase"
+        ],
+        "whyNotApply": "passthrough to non-capable/undecided host"
+      }
+    },
+    {
+      "id": "PriceTagProminent-passthrough",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx"
+      ],
+      "proposal": "Same as PriceTagInline: passthrough to PriceTagBase. Hold until PriceTagBase root identity is settled once for the family.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "PriceTagBase"
+        ],
+        "whyNotApply": "passthrough to non-capable/undecided host"
+      }
+    },
+    {
+      "id": "CommunityPost-card-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/community/CommunityPost/index.tsx"
+      ],
+      "proposal": "Root is CommunityPostCard (sibling block). CommunityPostCard does not declare CallerIdentity. Stamping requires either identity API on CommunityPostCard or collapsing CommunityPost onto a capable composite — both are redesigns.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "CommunityPostCard"
+        ],
+        "whyNotApply": "block-on-block host without identity prop"
+      }
+    },
+    {
+      "id": "ConsultantDirectoryCompanySearch-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx"
+      ],
+      "proposal": "Root is bare <div>. Inspect before promoting an inner control to root; do not invent a frame solely to carry identity.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div"
+        ],
+        "whyNotApply": "unclear host div root"
+      }
+    },
+    {
+      "id": "ConsultantDirectoryGrid-a11y-region-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx"
+      ],
+      "proposal": "Root <div role=\"region\" aria-label=…> owns a11y landmark semantics. Replacing with a frame must preserve the region/label contract; a11y edits are out of scope for this batch. Hold.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div[role=region]"
+        ],
+        "whyNotApply": "a11y-bearing host div; batch forbids a11y changes"
+      }
+    },
+    {
+      "id": "ConsultantDirectoryHeader-pageheader-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx"
+      ],
+      "proposal": "Root is inert <div> wrapping PageHeader. PageHeader (composites/layout/Page) does not declare CallerIdentity today. Future: add identity to PageHeader (or drop wrapper once PageHeader can be the element root) then pass identity={{ tier:\"block\", component:\"ConsultantDirectoryHeader\" }}.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > PageHeader"
+        ],
+        "pageHeaderAcceptsIdentity": false,
+        "whyNotApply": "host div + PageHeader not identity-capable yet"
+      }
+    },
+    {
+      "id": "CourseTrialChip-chip-atom",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/course/CourseTrialChip/index.tsx"
+      ],
+      "proposal": "Root Chip atom (or null). Atoms do not take CallerIdentity. Hold — chip blocks need a capable host API or an exception path, not a hand-rolled data-tier div.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Chip",
+          "null"
+        ],
+        "whyNotApply": "atom/null root"
+      }
+    },
+    {
+      "id": "CvHtmlDocument-html-div-tree",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx"
+      ],
+      "proposal": "Large HTML-document renderer rooted on raw <div>s with inline styles — intentionally draws document chrome, not a StarCi frame. Identity host would require a document-root capable composite; out of safe stamp scope. Co-located no-inline-parameter-type is separate.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div (document tree)"
+        ],
+        "whyNotApply": "raw document host, not a declared capable frame/composite"
+      }
+    },
+    {
+      "id": "ChangelogList-async-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ],
+      "proposal": "Root <div className> wraps composites/async/AsyncContent (identity-capable) which then hosts SurfaceCardNested. Dropping the className div and putting identity on AsyncContent is plausible once className ownership is resolved (co-located no-classname). Do not stamp AsyncContent while the div remains root.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > AsyncContent"
+        ],
+        "capableInner": "AsyncContent (composites)",
+        "whyNotApply": "capable composite wrapped by host div"
+      }
+    },
+    {
+      "id": "Confetti-fixed-overlay-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/Confetti/index.tsx"
+      ],
+      "proposal": "Root is fixed inset overlay <div aria-hidden> (or null). Draws layout/position classes at sentence tier (co-located no-raw-shape). Identity needs a capable overlay/frame that can own fixed fullscreen chrome — redesign, not a stamp.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div.fixed.inset-0",
+          "null"
+        ],
+        "whyNotApply": "raw overlay host div / null"
+      }
+    },
+    {
+      "id": "ContinueLearning-async-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/ContinueLearning/index.tsx"
+      ],
+      "proposal": "Root inert <div> wraps composites/async/AsyncContent; Grid (identity-capable) is inside content/skeleton slots, not the component root. Future: remove wrapper and identity={{ tier:\"block\", component:\"ContinueLearning\" }} on AsyncContent — only if AsyncContent is accepted as the single root for all leaves.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > AsyncContent"
+        ],
+        "capableInner": [
+          "AsyncContent",
+          "Grid (slot)"
+        ],
+        "whyNotApply": "host div; Grid is slot-inner not file root"
+      }
+    },
+    {
+      "id": "DailyQuest-async-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/dashboard/DailyQuest/index.tsx"
+      ],
+      "proposal": "Root inert <div> wraps AsyncContent; StackV only appears inside the content slot. Same hold as ContinueLearning — do not stamp inner StackV. Co-located emoji + undeclared StackV are separate lanes.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > AsyncContent"
+        ],
+        "whyNotApply": "host div; capable StackV is slot-inner"
+      }
+    },
+    {
+      "id": "ReadinessChecklist-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/feedback/ReadinessChecklist/index.tsx"
+      ],
+      "proposal": "Root <div className> listing ListRow children — no identity-capable frame/composite root. Needs a StackV/Cluster (or list composite) promotion with className ownership settled first.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div"
+        ],
+        "whyNotApply": "host div / non-capable root"
+      }
+    },
+    {
+      "id": "BadgeImage-img-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/identity/BadgeImage/index.tsx"
+      ],
+      "proposal": "Root is raw <img> (or fragment). Atoms/media hosts do not take CallerIdentity. Hold until an Image/Box capable root owns the badge.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "img"
+        ],
+        "whyNotApply": "raw media host"
+      }
+    },
+    {
+      "id": "SocketConnectionStatus-null-host",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/layout/SocketConnectionStatus/component.tsx"
+      ],
+      "proposal": "Renders null — effects push toasts only. No DOM root exists to wear identity. require-identity-root cannot close without changing the toast-only contract; record as hostless effect component.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "null"
+        ],
+        "whyNotApply": "no DOM root"
+      }
+    },
+    {
+      "id": "Spacer-layout-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/layout/Spacer/index.tsx"
+      ],
+      "proposal": "Root is an aria-hidden sizing <div> with inline width/height — the spacer IS the shape. Wrapping with a frame would add a second box. Either exempt layout spacers from require-identity-root or teach a dedicated Spacer frame; do not fake identity on an inner node.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div[aria-hidden]"
+        ],
+        "whyNotApply": "spacer host div is the drawn shape"
+      }
+    },
+    {
+      "id": "TopLoader-progress-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/layout/TopLoader/index.tsx"
+      ],
+      "proposal": "Root is a fixed progress <div> owning navigation chrome styles. Same class as Confetti/Spacer — needs a dedicated capable chrome frame or an explicit host exemption, not an identity stamp on a child.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div (progress bar)"
+        ],
+        "whyNotApply": "raw chrome host div"
+      }
+    },
+    {
+      "id": "ChallengeHeader-pageheader-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ChallengeHeader/index.tsx"
+      ],
+      "proposal": "Same pattern as ConsultantDirectoryHeader: inert <div> > PageHeader without CallerIdentity. Hold until PageHeader accepts identity; then drop wrapper + pass identity={{ tier:\"block\", component:\"ChallengeHeader\" }}.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > PageHeader"
+        ],
+        "pageHeaderAcceptsIdentity": false,
+        "whyNotApply": "host div + PageHeader not identity-capable yet"
+      }
+    },
+    {
+      "id": "ConceptMapCanvas-reactflow-host-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ConceptMap/Canvas/index.tsx"
+      ],
+      "proposal": "Root is relative overflow host <div ref={containerRef}> for React Flow. Vendor canvas host; co-located no-raw-shape. Identity requires a capable canvas/frame that can own the ref+relative contract without breaking React Flow — redesign.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div.relative (react-flow host)",
+          "null"
+        ],
+        "whyNotApply": "vendor canvas host div"
+      }
+    },
+    {
+      "id": "MindMapLegend-reactflow-panel",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx"
+      ],
+      "proposal": "Root is react-flow <Panel> vendor host with className chrome. Not a StarCi identity-capable frame. Hold at vendor boundary.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "Panel (react-flow)"
+        ],
+        "whyNotApply": "vendor Panel root"
+      }
+    },
+    {
+      "id": "ContentArticle-surfacecard-wrapper-div",
+      "classification": "identity-decision",
+      "files": [
+        "src/components/blocks/learn/ContentArticle/index.tsx"
+      ],
+      "proposal": "Root inert <div> wraps SurfaceCard (identity-capable). Clear future apply once wrapper is proven inert: remove div, identity={{ tier:\"block\", component:\"ContentArticle\" }} on SurfaceCard. Not applied this pass because current root is still the host div (rule: do not stamp inner capable nodes). Co-located undeclared StackV is separate.",
+      "applied": false,
+      "proof": {
+        "roots": [
+          "div > SurfaceCard"
+        ],
+        "capableInner": "SurfaceCard",
+        "whyNotApply": "capable composite wrapped by host div — remove wrapper first"
+      }
+    }
+  ],
+  "verification": {
+    "eslintQuiet": {
+      "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx": {
+        "exitCode": 0,
+        "errorCount": 0,
+        "requireIdentityRoot": "cleared"
+      }
+    },
+    "appliedCount": 1,
+    "decisionCount": 30,
+    "twinParity": {
+      "note": "No twins listed in identity-hosts manifest. WeeklyChallengeCard SB twin exists outside claim — not edited."
+    }
+  },
+  "regressions": []
+}

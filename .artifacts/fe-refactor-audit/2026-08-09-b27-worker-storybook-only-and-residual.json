@@ -1,0 +1,709 @@
+{
+  "partition": "storybook-only-and-residual",
+  "manifest": [
+    ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+    ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+    ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+    ".storybook/components/atoms/display/Badge/Badge.tsx",
+    ".storybook/components/atoms/display/Divider/Divider.tsx",
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+    ".storybook/components/atoms/display/Logo/Logo.tsx",
+    ".storybook/components/atoms/display/Progress/Progress.tsx",
+    ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+    ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+    ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    ".storybook/components/atoms/text/Typography/Typography.tsx",
+    ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+    ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+    ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+    ".storybook/components/composites/data/Table/Table.tsx",
+    ".storybook/components/composites/feedback/Callout/Callout.tsx",
+    ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+    ".storybook/components/composites/form/Form/Form.tsx",
+    ".storybook/components/composites/form/_field/FieldFrame.tsx",
+    ".storybook/components/composites/layout/Page/Page.tsx",
+    ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+    ".storybook/components/composites/stats/Legend/Legend.tsx",
+    ".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx",
+    ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+    ".storybook/components/composites/text/TitledText/TitledText.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+    ".storybook/components/frames/Cluster/Cluster.tsx",
+    ".storybook/components/frames/Container/Container.tsx",
+    ".storybook/components/frames/Flex/Flex.tsx",
+    ".storybook/components/frames/Grid/Grid.tsx",
+    ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+    ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+    ".storybook/components/frames/Stack/Stack.tsx",
+    ".storybook/components/frames/Stage/Stage.tsx",
+    ".storybook/components/mia-mia/atoms/buttons/ChunkyButton/index.tsx",
+    ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+    ".storybook/components/mia-mia/composites/cards/FeatureCard/index.tsx",
+    ".storybook/components/mia-mia/composites/cards/StickerCard/index.tsx",
+    "src/components/atoms/buttons/Button/ButtonBase.tsx",
+    "src/components/atoms/chips/Chip/ChipBase.tsx",
+    "src/components/atoms/display/Avatar/AvatarBase.tsx",
+    "src/components/atoms/display/Badge/index.tsx",
+    "src/components/atoms/display/Divider/index.tsx",
+    "src/components/atoms/display/IconTile/index.tsx",
+    "src/components/atoms/display/Logo/index.tsx",
+    "src/components/atoms/display/Progress/index.tsx",
+    "src/components/atoms/display/Spinner/index.tsx",
+    "src/components/atoms/feedback/Alert/index.tsx",
+    "src/components/atoms/media/QRCode/index.tsx",
+    "src/components/atoms/navigation/Accordion/index.tsx",
+    "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+    "src/components/atoms/navigation/Link/LinkBack.tsx",
+    "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    "src/components/atoms/navigation/Pagination/index.tsx",
+    "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+    "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    "src/components/atoms/overlay/Menu/index.tsx",
+    "src/components/atoms/text/Typography/index.tsx",
+    "src/components/behaviors/DragScrollArea/index.tsx",
+    "src/components/behaviors/ResizableRail/index.tsx",
+    "src/components/composites/async/AsyncContent/index.tsx",
+    "src/components/composites/buttons/ButtonGroup/index.tsx",
+    "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "src/components/composites/buttons/InputButtonLike/index.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    "src/components/composites/chips/EnumChip/index.tsx",
+    "src/components/composites/chips/RemovableToken/index.tsx",
+    "src/components/composites/data/KeyValue/index.tsx",
+    "src/components/composites/data/Table/index.tsx",
+    "src/components/composites/feedback/Callout/index.tsx",
+    "src/components/composites/feedback/EmptyState/index.tsx",
+    "src/components/composites/form/Dropzone/index.tsx",
+    "src/components/composites/form/Form/index.tsx",
+    "src/components/composites/form/_field/FieldFrame.tsx",
+    "src/components/composites/layout/Page/index.tsx",
+    "src/components/composites/layout/Section/index.tsx",
+    "src/components/composites/lists/AuthorByline/index.tsx",
+    "src/components/composites/lists/IconLabelValueRow/index.tsx",
+    "src/components/composites/lists/IdentityContentRow/index.tsx",
+    "src/components/composites/lists/List/index.tsx",
+    "src/components/composites/lists/UserCell/index.tsx",
+    "src/components/composites/navigation/Toolbar/index.tsx",
+    "src/components/composites/stats/Legend/index.tsx",
+    "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    "src/components/composites/stats/ProgressMeter/index.tsx",
+    "src/components/composites/text/DotLabel/index.tsx",
+    "src/components/composites/text/MetaDotRow/index.tsx",
+    "src/components/composites/text/PricePeriod/index.tsx",
+    "src/components/composites/text/ScoreValue/index.tsx",
+    "src/components/composites/text/TitledText/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "src/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/composites/viewers/MarkdownContent/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/map.tsx",
+    "src/components/frames/Cluster/index.tsx",
+    "src/components/frames/Container/index.tsx",
+    "src/components/frames/Flex/index.tsx",
+    "src/components/frames/Grid/index.tsx",
+    "src/components/frames/PinnedTrack/index.tsx",
+    "src/components/frames/ResponsiveCluster/index.tsx",
+    "src/components/frames/Stack/index.tsx",
+    "src/components/frames/Stage/index.tsx",
+    "src/components/svg/GithubIcon/index.tsx",
+    "src/components/svg/GoogleIcon/index.tsx",
+    "src/components/svg/Logo/index.tsx",
+    "src/components/svg/LogoMark/index.tsx",
+    "src/components/svg/TierLevelIcon/index.tsx"
+  ],
+  "changed": [],
+  "applied": [],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 0,
+    "parentPlacementApplied": 0,
+    "proposals": 28
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [],
+  "proposals": [
+    {
+      "file": "src/components/atoms/buttons/Button/ButtonBase.tsx",
+      "component": "ButtonBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "component": "ChipBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "component": "AvatarBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkBack.tsx",
+      "component": "LinkBack",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "component": "LinkSeeMore",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "component": "TabsBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "component": "TabsExtended",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "component": "ButtonGroup",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 152,
+            "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+          },
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 167,
+            "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" /"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+            "prop": "classNames",
+            "line": 124,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          },
+          {
+            "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+            "prop": "classNames",
+            "line": 112,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          }
+        ],
+        "classNameCount": 2,
+        "classNamesCount": 2
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx"
+    },
+    {
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "component": "FloatingActionButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+            "prop": "className",
+            "line": 126,
+            "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+            "prop": "classNames",
+            "line": 57,
+            "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+          }
+        ],
+        "classNameCount": 1,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "component": "CodePreviewTabs",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "component": "CodeToHtml",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 389,
+            "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "component": "MermaidDiagram",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 370,
+            "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/GithubIcon/index.tsx",
+      "component": "GithubIcon",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+            "prop": "className",
+            "line": 144,
+            "snippet": "<GithubIcon className=\"size-5\" /"
+          },
+          {
+            "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+            "prop": "className",
+            "line": 183,
+            "snippet": "<GithubIcon className=\"size-4\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+            "prop": "className",
+            "line": 188,
+            "snippet": "<GithubIcon className=\"size-5\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+            "prop": "className",
+            "line": 236,
+            "snippet": "<GithubIcon aria-hidden className=\"size-4\" /"
+          },
+          {
+            "file": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+            "prop": "className",
+            "line": 54,
+            "snippet": "<GithubIcon className=\"w-16 h-16\" /"
+          },
+          {
+            "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+            "prop": "className",
+            "line": 274,
+            "snippet": "<GithubIcon className=\"size-3.5\" /"
+          },
+          {
+            "file": "src/components/pages/SettingsHomePage/index.tsx",
+            "prop": "className",
+            "line": 52,
+            "snippet": "<GithubIcon className=\"size-3.5\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 7,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/GoogleIcon/index.tsx",
+      "component": "GoogleIcon",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/SettingsHomePage/index.tsx",
+            "prop": "className",
+            "line": 54,
+            "snippet": "<GoogleIcon className=\"size-3.5\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/LogoMark/index.tsx",
+      "component": "LogoMark",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+            "prop": "className",
+            "line": 45,
+            "snippet": "<LogoMark className=\"size-10\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/TierLevelIcon/index.tsx",
+      "component": "TierLevelIcon",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+            "prop": "className",
+            "line": 46,
+            "snippet": "<TierLevelIcon level={1} className=\"size-6 shrink-0 text-accent-soft-foreground\" /"
+          },
+          {
+            "file": "src/components/blocks/commerce/TierCard/index.tsx",
+            "prop": "className",
+            "line": 96,
+            "snippet": "<TierLevelIcon level={tierLevel} className=\"size-6 shrink-0 text-accent-soft-foreground\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "component": "ButtonBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "component": "ChipBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "component": "AvatarBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "component": "LinkBack",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "component": "LinkSeeMore",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "component": "TabsBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "component": "TabsExtended",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "component": "ButtonGroup",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 152,
+            "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+          },
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 167,
+            "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" /"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+            "prop": "classNames",
+            "line": 124,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          },
+          {
+            "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+            "prop": "classNames",
+            "line": 112,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          }
+        ],
+        "classNameCount": 2,
+        "classNamesCount": 2
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/buttons/ButtonGroup/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "component": "FloatingActionButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+            "prop": "className",
+            "line": 126,
+            "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+            "prop": "classNames",
+            "line": 57,
+            "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+          }
+        ],
+        "classNameCount": 1,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/buttons/FloatingActionButton/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "component": "CodePreviewTabs",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "component": "CodeToHtml",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 389,
+            "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/viewers/MarkdownContent/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "component": "MermaidDiagram",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 370,
+            "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/viewers/MarkdownContent/index.tsx"
+    }
+  ],
+  "parity": {
+    "storybookSrc": "n/a — proposal/hold only"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

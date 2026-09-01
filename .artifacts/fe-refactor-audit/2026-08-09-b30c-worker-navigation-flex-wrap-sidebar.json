@@ -1,0 +1,37 @@
+{
+  "manifest": [
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx"
+  ],
+  "warningsBefore": {
+    "FlexWrapButtonRadio": 5,
+    "SidebarNavItem": 4
+  },
+  "warningsAfter": "retracted-to-checkpoint",
+  "introducedByB30": [
+    "FlexWrap → ButtonGroupRoot/Separator",
+    "SidebarNavItem.className door burn"
+  ],
+  "preExistingInTouchedFile": [
+    "no-heroui-outside-vocabulary",
+    "require-identity-root",
+    "no-cn-above-vocabulary",
+    "no-classname-at-sentence-tier",
+    "no-public-classname-prop"
+  ],
+  "fixed": [],
+  "retractedB30Changes": [
+    "FlexWrapButtonRadio atom migration",
+    "SidebarNavItem.className door burn"
+  ],
+  "holds": [
+    "HeroUI ButtonGroup className usage restored in FlexWrap",
+    "SidebarNavItem.className restored"
+  ],
+  "parity": "n/a retracted",
+  "verification": {
+    "action": "git checkout 8c13fd52"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

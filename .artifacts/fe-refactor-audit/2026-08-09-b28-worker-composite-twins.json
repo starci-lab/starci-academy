@@ -1,0 +1,203 @@
+{
+  "partition": "composite-twins",
+  "manifest": [
+    "src/components/composites/buttons/ButtonGroup/index.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx"
+  ],
+  "consumers": {
+    "ButtonGroup": [
+      {
+        "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "line": 152,
+        "prop": "className",
+        "value": "w-fit",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "line": 167,
+        "prop": "className",
+        "value": "!top-0 !h-full !bg-border !opacity-100",
+        "ownership": "ambiguous"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        "line": 124,
+        "prop": "classNames",
+        "value": "w-full",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+        "line": 112,
+        "prop": "classNames",
+        "value": "w-full",
+        "ownership": "parent-placement"
+      }
+    ],
+    "FloatingActionButton": [
+      {
+        "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+        "line": 126,
+        "prop": "className",
+        "value": "className",
+        "ownership": "dynamic"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+        "line": 57,
+        "prop": "classNames",
+        "value": "classNames",
+        "ownership": "dynamic"
+      }
+    ],
+    "CodeToHtml": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 389,
+        "prop": "className",
+        "value": "blockMy",
+        "ownership": "parent-placement"
+      }
+    ],
+    "MermaidDiagram": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 370,
+        "prop": "className",
+        "value": "blockMy",
+        "ownership": "parent-placement"
+      }
+    ]
+  },
+  "valueSet": {
+    "ButtonGroup": [
+      "w-fit",
+      "!top-0 !h-full !bg-border !opacity-100",
+      "w-full"
+    ],
+    "FloatingActionButton": [
+      "className",
+      "classNames"
+    ],
+    "CodeToHtml": [
+      "blockMy"
+    ],
+    "MermaidDiagram": [
+      "blockMy"
+    ]
+  },
+  "ownership": {
+    "ButtonGroup": [
+      "parent-placement",
+      "ambiguous"
+    ],
+    "FloatingActionButton": [
+      "dynamic"
+    ],
+    "CodeToHtml": [
+      "parent-placement"
+    ],
+    "MermaidDiagram": [
+      "parent-placement"
+    ]
+  },
+  "oldApi": {
+    "ButtonGroup": "className/classNames door retained",
+    "FloatingActionButton": "className/classNames door retained",
+    "CodeToHtml": "className/classNames door retained",
+    "MermaidDiagram": "className/classNames door retained"
+  },
+  "newApi": {
+    "ButtonGroup": "composite twin; multi door",
+    "FloatingActionButton": "passthrough from ContentAiFab (locked) / dynamic",
+    "CodeToHtml": "blockMy AllowedClassName — markdown spacing contract",
+    "MermaidDiagram": "blockMy markdown spacing"
+  },
+  "changed": [],
+  "holds": [
+    {
+      "component": "ButtonGroup",
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "reason": "composite twin; multi door",
+      "values": [
+        "w-fit",
+        "!top-0 !h-full !bg-border !opacity-100",
+        "w-full"
+      ]
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "reason": "passthrough from ContentAiFab (locked) / dynamic",
+      "values": [
+        "className",
+        "classNames"
+      ]
+    },
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "reason": "blockMy AllowedClassName — markdown spacing contract",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "reason": "blockMy markdown spacing",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "component": "ButtonGroup",
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "reason": "composite twin; multi door",
+      "values": [
+        "w-fit",
+        "!top-0 !h-full !bg-border !opacity-100",
+        "w-full"
+      ]
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "reason": "passthrough from ContentAiFab (locked) / dynamic",
+      "values": [
+        "className",
+        "classNames"
+      ]
+    },
+    {
+      "component": "CodeToHtml",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "reason": "blockMy AllowedClassName — markdown spacing contract",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "reason": "blockMy markdown spacing",
+      "values": [
+        "blockMy"
+      ]
+    }
+  ],
+  "parity": "n/a — hold only",
+  "verification": {
+    "tsc": "deferred-coordinator",
+    "eslint": "n/a"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — declaration files owned once via workerFor"
+}

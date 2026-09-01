@@ -1,0 +1,149 @@
+{
+  "partition": "blocks-auth-commerce",
+  "manifest": [
+    ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+    ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx",
+    "src/components/blocks/auth/GithubTeamGate/index.tsx",
+    "src/components/blocks/commerce/AddToCartButton/index.tsx",
+    "src/components/blocks/commerce/FreeTierCard/index.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+    "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    "src/components/blocks/commerce/PricingTable/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/index.tsx"
+  ],
+  "changed": [],
+  "applied": [],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 0,
+    "parentPlacementApplied": 0,
+    "proposals": 6
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [],
+  "proposals": [
+    {
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "component": "AddToCartButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+            "prop": "className",
+            "line": 45,
+            "snippet": "<AddToCartButton course={course} isEnrolled={course.isEnrolled ?? undefined} variant=\"secondary\" className=\"flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-auth-commerce",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+      "component": "PhaseScarcityNote",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+            "prop": "classNames",
+            "line": 108,
+            "snippet": "<PhaseScarcityNote currentPhase={price.currentPhase} seatsRemaining={price.seatsRemaining ?? null} nextPhasePriceVnd={pr"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-auth-commerce",
+      "twin": ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "component": "PriceTagBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-auth-commerce"
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "component": "TierCardBase",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/commerce/TierCard/index.tsx",
+            "prop": "className",
+            "line": 92,
+            "snippet": "<TierCardBase identity={{ tier: \"block\", component: \"TierCard\" }} className={tier.popular ? \"border-accent ring-2 ring-a"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-auth-commerce",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/index.tsx",
+      "component": "TrialConversionStrip",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-auth-commerce"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "component": "PriceTagBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-auth-commerce"
+    }
+  ],
+  "parity": {
+    "storybookSrc": "n/a — proposal/hold only"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

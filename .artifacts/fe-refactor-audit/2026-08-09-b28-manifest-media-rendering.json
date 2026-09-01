@@ -1,0 +1,87 @@
+{
+  "worker": "media-rendering",
+  "manifest": [
+    "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "MpegDash",
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "media fill — re-check"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "classNames?.content"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "Standard",
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "media fill"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "classNames?.content"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "Youtube",
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "media fill"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "classNames?.content"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "blockMy AllowedClassName — markdown spacing contract"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "blockMy"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "blockMy markdown spacing"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "blockMy"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    }
+  ]
+}

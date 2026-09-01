@@ -1,0 +1,120 @@
+{
+  "batch": 21,
+  "title": "STRICT CSS-DOOR HOLD CLOSURE",
+  "generatedAt": "2026-08-09T00:00:00.000Z",
+  "rule": "Close only doors with proven semantic ownership; no mechanical contentClassName purge",
+  "approvedContractsUnchanged": [
+    "DrawerShell.dialogWidth/footerVariant",
+    "ModalShell.viewportFit",
+    "PDFView.height",
+    "SurfaceCard.bodyVariant default|stacked|tile"
+  ],
+  "findings": [
+    {
+      "id": "drawer-contentClassName",
+      "partition": "drawer-modal-shells",
+      "file": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "prop": "contentClassName",
+      "classification": "nivo-or-teacher-hold",
+      "evidence": "Sole consumer: nivoexpert LessonEditorPanel contentClassName=\"w-full sm:max-w-[560px]\". Absent from src twin. Mandatory hold.",
+      "action": "hold"
+    },
+    {
+      "id": "surface-TILE_CHROME",
+      "partition": "surface-card",
+      "file": "SurfaceCard PressableGroup → Base.contentClassName",
+      "prop": "contentClassName",
+      "classification": "ambiguous",
+      "evidence": "TILE_CHROME=rounded-2xl shadow-field is chrome axis; bodyVariant tile is flex/gap/overflow only. Different axes. Not mapped.",
+      "action": "hold"
+    },
+    {
+      "id": "surface-bodyVariant-tile",
+      "partition": "surface-card",
+      "prop": "bodyVariant",
+      "classification": "intrinsic-semantic",
+      "evidence": "ContinueCard Item+Hero (src+SB) use bodyVariant=\"tile\"",
+      "action": "keep"
+    },
+    {
+      "id": "surface-member-classNames-dead",
+      "partition": "surface-card",
+      "prop": "classNames on PressableGroup/SelectableGroup/Accordion/CrossList/Placeholder",
+      "classification": "dead",
+      "evidence": "Zero external group-level classNames callers (item.classNames still live via ContentPager)",
+      "action": "delete-dead-group-classNames"
+    },
+    {
+      "id": "labeled-stack-gap3",
+      "partition": "labeled-card",
+      "prop": "contentClassName",
+      "classification": "parent-placement",
+      "evidence": "4 consumers: FlipCard, TaskResult, LeaderboardListCard, LeagueCard skeleton — exact \"flex flex-col gap-3\"",
+      "action": "migrate-to-StackV-sibling-stack-then-delete-door-if-clear"
+    },
+    {
+      "id": "labeled-grid-2",
+      "partition": "labeled-card",
+      "prop": "contentClassName",
+      "classification": "parent-placement",
+      "evidence": "2 consumers: PersonalProjectDashboard + GatePreview — exact \"grid gap-3 @app-sm:grid-cols-2\"",
+      "action": "migrate-to-Grid-sibling-stack"
+    },
+    {
+      "id": "labeled-gap6",
+      "partition": "labeled-card",
+      "prop": "contentClassName",
+      "classification": "parent-placement",
+      "evidence": "1 consumer TaskSubmissionPanel \"flex flex-col gap-6\" — one-off; migrate via block-boundary StackV, no new contract",
+      "action": "migrate-to-StackV-block-boundary"
+    },
+    {
+      "id": "showcase-contentClassName",
+      "partition": "showcase-mockup",
+      "prop": "contentClassName",
+      "classification": "nivo-or-teacher-hold",
+      "evidence": "LearnLoopScroll is a locked path and still passes contentClassName. TalentMarketplace also uses it (parent-placement candidate) but door cannot die while LearnLoopScroll lives.",
+      "action": "hold-door; optional TalentMarketplace later"
+    },
+    {
+      "id": "list-classNames",
+      "partition": "list",
+      "prop": "classNames on Row/Labeled/Meta/ToggleRow",
+      "classification": "dead",
+      "evidence": "Zero external classNames= callers in src or stories",
+      "action": "delete"
+    },
+    {
+      "id": "keyvalue-classNames",
+      "partition": "key-value",
+      "prop": "classNames on Row/List",
+      "classification": "dead",
+      "evidence": "Zero external classNames= callers; PriceTag uses KeyValueList without classNames",
+      "action": "delete"
+    }
+  ],
+  "proposals": [
+    {
+      "id": "surface-chrome-axis",
+      "status": "proposal-only",
+      "summary": "Named chrome/radius API for PressableGroup TILE_CHROME — not bodyVariant. Requires ≥2 product-locked consumers beyond internal PressableGroup.",
+      "notClaimedFixed": true
+    },
+    {
+      "id": "pressable-item-span",
+      "status": "proposal-only",
+      "summary": "PressableGroupItem.span?: 1|2 → Grid span to retire ContentPager col-span-2 via item.classNames",
+      "notClaimedFixed": true
+    }
+  ],
+  "partitions": {
+    "surface-card": ["SurfaceCard SB+src"],
+    "labeled-card": ["LabeledCard + house consumers (not locked)"],
+    "showcase-mockup": ["ShowcaseMockup + TalentMarketplace note; LearnLoopScroll locked"],
+    "list": ["List SB+src"],
+    "key-value": ["KeyValue SB+src"],
+    "drawer-modal-shells": ["DrawerShell/ModalShell hold-only"],
+    "storybook-only": ["SB twins handled inside list/key-value/surface-card"],
+    "ambiguous-and-ledger": ["ledger + remaining ~2.4k inventory"]
+  }
+}

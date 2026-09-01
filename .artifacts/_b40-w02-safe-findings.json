@@ -1,0 +1,2737 @@
+{
+  "cleanable": [
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 101,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 153,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1,
+        "no-emoji-in-source": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 14,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 21,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "no-emoji-in-source": 1,
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 30,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 98,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 107,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "total": 6,
+      "safe": 6,
+      "other": 0,
+      "safeRules": {
+        "no-emoji-in-source": 6
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 15,
+          "col": 28,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 16,
+          "col": 28,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 17,
+          "col": 28,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 18,
+          "col": 27,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 19,
+          "col": 27,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 20,
+          "col": 29,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 15,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 48,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 12,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    }
+  ],
+  "blocked": [
+    {
+      "file": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 32,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 15,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+      "total": 7,
+      "safe": 1,
+      "other": 6,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 3,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 28,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "total": 9,
+      "safe": 5,
+      "other": 4,
+      "safeRules": {
+        "no-emoji-in-source": 1,
+        "require-identity-root": 1,
+        "require-frame-self-declare": 3
+      },
+      "otherRules": {
+        "no-frame-fragment-item": 3,
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 10,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 22,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 236,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 287,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 342,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 67,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+      "total": 3,
+      "safe": 2,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1,
+        "no-emoji-in-source": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 33,
+          "col": 5,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "total": 10,
+      "safe": 8,
+      "other": 2,
+      "safeRules": {
+        "require-frame-self-declare": 8
+      },
+      "otherRules": {
+        "no-public-classname-prop": 2
+      },
+      "safeDetails": [
+        {
+          "line": 41,
+          "col": 5,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 51,
+          "col": 21,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 58,
+          "col": 21,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 157,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 178,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 179,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 181,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 183,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 14,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "total": 5,
+      "safe": 3,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 27,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 91,
+          "col": 12,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+        },
+        {
+          "line": 178,
+          "col": 21,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 13,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      "total": 12,
+      "safe": 1,
+      "other": 11,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 5,
+        "no-raw-shape-at-sentence-tier": 4,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 35,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "total": 5,
+      "safe": 1,
+      "other": 4,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 1,
+        "no-raw-shape-at-sentence-tier": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 10,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "no-emoji-in-source": 1
+      },
+      "otherRules": {
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 8,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "total": 15,
+      "safe": 7,
+      "other": 8,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 6
+      },
+      "otherRules": {
+        "no-public-classname-prop": 2,
+        "no-inline-skeleton-branch": 1,
+        "no-frame-fragment-item": 4,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 24,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 319,
+          "col": 33,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 328,
+          "col": 33,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 333,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 337,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 360,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 366,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleHeader/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 29,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+      "total": 10,
+      "safe": 2,
+      "other": 8,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 4,
+        "no-raw-shape-at-sentence-tier": 2,
+        "no-public-classname-prop": 2
+      },
+      "safeDetails": [
+        {
+          "line": 23,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 277,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+      "total": 11,
+      "safe": 3,
+      "other": 8,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 7,
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 20,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 88,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 107,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "total": 16,
+      "safe": 1,
+      "other": 15,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 7,
+        "no-raw-shape-at-sentence-tier": 6,
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 25,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "total": 16,
+      "safe": 9,
+      "other": 7,
+      "safeRules": {
+        "require-frame-self-declare": 9
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-parallel-skeleton": 2,
+        "no-inline-skeleton-branch": 3,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 229,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 255,
+          "col": 52,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 265,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 284,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 303,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 314,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 325,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 359,
+          "col": 52,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 412,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "total": 13,
+      "safe": 1,
+      "other": 12,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 4,
+        "no-raw-shape-at-sentence-tier": 5,
+        "no-public-classname-prop": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaReactionBar/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 12,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "total": 8,
+      "safe": 6,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 5
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1,
+        "no-frame-fragment-item": 1
+      },
+      "safeDetails": [
+        {
+          "line": 23,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 100,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 120,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 142,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 189,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 233,
+          "col": 29,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+      "total": 6,
+      "safe": 1,
+      "other": 5,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 1,
+        "no-cn-above-vocabulary": 2
+      },
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "total": 5,
+      "safe": 1,
+      "other": 4,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2,
+        "no-raw-shape-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 12,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "total": 20,
+      "safe": 1,
+      "other": 19,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 1,
+        "no-host-element-at-sentence-tier": 7,
+        "no-cn-above-vocabulary": 2,
+        "no-raw-shape-at-sentence-tier": 7
+      },
+      "safeDetails": [
+        {
+          "line": 55,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "total": 13,
+      "safe": 1,
+      "other": 12,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-skeleton-twin-component": 1,
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 5,
+        "no-host-element-at-sentence-tier": 2,
+        "no-cn-above-vocabulary": 1,
+        "no-raw-shape-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 10,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1
+      },
+      "safeDetails": [
+        {
+          "line": 43,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1
+      },
+      "safeDetails": [
+        {
+          "line": 43,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "total": 4,
+      "safe": 2,
+      "other": 2,
+      "safeRules": {
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 76,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<ScrollArea>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody ca"
+        },
+        {
+          "line": 80,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "total": 6,
+      "safe": 1,
+      "other": 5,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 2,
+        "no-raw-shape-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 39,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 20,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "total": 10,
+      "safe": 1,
+      "other": 9,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-skeleton-twin-component": 1,
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 4,
+        "no-host-element-at-sentence-tier": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 9,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      "total": 5,
+      "safe": 3,
+      "other": 2,
+      "safeRules": {
+        "require-frame-self-declare": 3
+      },
+      "otherRules": {
+        "no-public-classname-prop": 2
+      },
+      "safeDetails": [
+        {
+          "line": 81,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 95,
+          "col": 25,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 108,
+          "col": 25,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "total": 16,
+      "safe": 1,
+      "other": 15,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 7,
+        "no-raw-shape-at-sentence-tier": 7
+      },
+      "safeDetails": [
+        {
+          "line": 13,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "total": 5,
+      "safe": 1,
+      "other": 4,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2,
+        "no-raw-shape-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 38,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "total": 4,
+      "safe": 2,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 19,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 55,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1
+      },
+      "safeDetails": [
+        {
+          "line": 52,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "total": 10,
+      "safe": 1,
+      "other": 9,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 4,
+        "no-raw-shape-at-sentence-tier": 4
+      },
+      "safeDetails": [
+        {
+          "line": 24,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    }
+  ],
+  "noSafeCount": 0,
+  "rows": [
+    {
+      "file": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 32,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 15,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+      "total": 7,
+      "safe": 1,
+      "other": 6,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 3,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 28,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "total": 9,
+      "safe": 5,
+      "other": 4,
+      "safeRules": {
+        "no-emoji-in-source": 1,
+        "require-identity-root": 1,
+        "require-frame-self-declare": 3
+      },
+      "otherRules": {
+        "no-frame-fragment-item": 3,
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 10,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 22,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 236,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 287,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 342,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 67,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+      "total": 3,
+      "safe": 2,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1,
+        "no-emoji-in-source": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 33,
+          "col": 5,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "total": 10,
+      "safe": 8,
+      "other": 2,
+      "safeRules": {
+        "require-frame-self-declare": 8
+      },
+      "otherRules": {
+        "no-public-classname-prop": 2
+      },
+      "safeDetails": [
+        {
+          "line": 41,
+          "col": 5,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 51,
+          "col": 21,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 58,
+          "col": 21,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 157,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 178,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 179,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 181,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 183,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 14,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "total": 5,
+      "safe": 3,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 27,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 91,
+          "col": 12,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s"
+        },
+        {
+          "line": 178,
+          "col": 21,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 101,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 153,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1,
+        "no-emoji-in-source": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 14,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 21,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 13,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      "total": 12,
+      "safe": 1,
+      "other": 11,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 5,
+        "no-raw-shape-at-sentence-tier": 4,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 35,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "total": 5,
+      "safe": 1,
+      "other": 4,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 1,
+        "no-raw-shape-at-sentence-tier": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 10,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "no-emoji-in-source": 1
+      },
+      "otherRules": {
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 8,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "total": 15,
+      "safe": 7,
+      "other": 8,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 6
+      },
+      "otherRules": {
+        "no-public-classname-prop": 2,
+        "no-inline-skeleton-branch": 1,
+        "no-frame-fragment-item": 4,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 24,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 319,
+          "col": 33,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 328,
+          "col": 33,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 333,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 337,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 360,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 366,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleHeader/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 29,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "no-emoji-in-source": 1,
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 30,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      "total": 2,
+      "safe": 2,
+      "other": 0,
+      "safeRules": {
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 98,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 107,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+      "total": 10,
+      "safe": 2,
+      "other": 8,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 4,
+        "no-raw-shape-at-sentence-tier": 2,
+        "no-public-classname-prop": 2
+      },
+      "safeDetails": [
+        {
+          "line": 23,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 277,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+      "total": 11,
+      "safe": 3,
+      "other": 8,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 7,
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 20,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 88,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 107,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "total": 16,
+      "safe": 1,
+      "other": 15,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 7,
+        "no-raw-shape-at-sentence-tier": 6,
+        "no-public-classname-prop": 1
+      },
+      "safeDetails": [
+        {
+          "line": 25,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "total": 16,
+      "safe": 9,
+      "other": 7,
+      "safeRules": {
+        "require-frame-self-declare": 9
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-parallel-skeleton": 2,
+        "no-inline-skeleton-branch": 3,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 229,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 255,
+          "col": 52,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 265,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 284,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 303,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 314,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 325,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 359,
+          "col": 52,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 412,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "total": 13,
+      "safe": 1,
+      "other": 12,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 4,
+        "no-raw-shape-at-sentence-tier": 5,
+        "no-public-classname-prop": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaReactionBar/index.tsx",
+      "total": 3,
+      "safe": 1,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 12,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "total": 8,
+      "safe": 6,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 5
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 1,
+        "no-frame-fragment-item": 1
+      },
+      "safeDetails": [
+        {
+          "line": 23,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 100,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 120,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 142,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 189,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        },
+        {
+          "line": 233,
+          "col": 29,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "total": 6,
+      "safe": 6,
+      "other": 0,
+      "safeRules": {
+        "no-emoji-in-source": 6
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 15,
+          "col": 28,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 16,
+          "col": 28,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 17,
+          "col": 28,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 18,
+          "col": 27,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 19,
+          "col": 27,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        },
+        {
+          "line": 20,
+          "col": 29,
+          "rule": "no-emoji-in-source",
+          "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+      "total": 6,
+      "safe": 1,
+      "other": 5,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 1,
+        "no-cn-above-vocabulary": 2
+      },
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 15,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 16,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 17,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 48,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "total": 5,
+      "safe": 1,
+      "other": 4,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2,
+        "no-raw-shape-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 12,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "total": 20,
+      "safe": 1,
+      "other": 19,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 1,
+        "no-host-element-at-sentence-tier": 7,
+        "no-cn-above-vocabulary": 2,
+        "no-raw-shape-at-sentence-tier": 7
+      },
+      "safeDetails": [
+        {
+          "line": 55,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "total": 13,
+      "safe": 1,
+      "other": 12,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-skeleton-twin-component": 1,
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 5,
+        "no-host-element-at-sentence-tier": 2,
+        "no-cn-above-vocabulary": 1,
+        "no-raw-shape-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 10,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1
+      },
+      "safeDetails": [
+        {
+          "line": 43,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1
+      },
+      "safeDetails": [
+        {
+          "line": 43,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "total": 4,
+      "safe": 2,
+      "other": 2,
+      "safeRules": {
+        "require-frame-self-declare": 2
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 76,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<ScrollArea>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody ca"
+        },
+        {
+          "line": 80,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "total": 6,
+      "safe": 1,
+      "other": 5,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 2,
+        "no-raw-shape-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 39,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 20,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "total": 10,
+      "safe": 1,
+      "other": 9,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-skeleton-twin-component": 1,
+        "no-heroui-outside-vocabulary": 1,
+        "no-classname-at-sentence-tier": 1,
+        "no-public-classname-prop": 4,
+        "no-host-element-at-sentence-tier": 1,
+        "no-cn-above-vocabulary": 1
+      },
+      "safeDetails": [
+        {
+          "line": 9,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      "total": 5,
+      "safe": 3,
+      "other": 2,
+      "safeRules": {
+        "require-frame-self-declare": 3
+      },
+      "otherRules": {
+        "no-public-classname-prop": 2
+      },
+      "safeDetails": [
+        {
+          "line": 81,
+          "col": 9,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 95,
+          "col": 25,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        },
+        {
+          "line": 108,
+          "col": 25,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "total": 16,
+      "safe": 1,
+      "other": 15,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 7,
+        "no-raw-shape-at-sentence-tier": 7
+      },
+      "safeDetails": [
+        {
+          "line": 13,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "total": 5,
+      "safe": 1,
+      "other": 4,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-host-element-at-sentence-tier": 2,
+        "no-raw-shape-at-sentence-tier": 2
+      },
+      "safeDetails": [
+        {
+          "line": 38,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+      "total": 1,
+      "safe": 1,
+      "other": 0,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {},
+      "safeDetails": [
+        {
+          "line": 12,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "total": 4,
+      "safe": 2,
+      "other": 2,
+      "safeRules": {
+        "require-identity-root": 1,
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 1
+      },
+      "safeDetails": [
+        {
+          "line": 19,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        },
+        {
+          "line": 55,
+          "col": 13,
+          "rule": "require-frame-self-declare",
+          "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      "total": 2,
+      "safe": 1,
+      "other": 1,
+      "safeRules": {
+        "require-frame-self-declare": 1
+      },
+      "otherRules": {
+        "no-parallel-skeleton": 1
+      },
+      "safeDetails": [
+        {
+          "line": 52,
+          "col": 17,
+          "rule": "require-frame-self-declare",
+          "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "total": 10,
+      "safe": 1,
+      "other": 9,
+      "safeRules": {
+        "require-identity-root": 1
+      },
+      "otherRules": {
+        "no-heroui-outside-vocabulary": 1,
+        "no-host-element-at-sentence-tier": 4,
+        "no-raw-shape-at-sentence-tier": 4
+      },
+      "safeDetails": [
+        {
+          "line": 24,
+          "col": 1,
+          "rule": "require-identity-root",
+          "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra"
+        }
+      ]
+    }
+  ]
+}

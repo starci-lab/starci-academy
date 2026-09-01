@@ -1,0 +1,125 @@
+{
+  "batch": "B37",
+  "wave": "consumers",
+  "agent": "profile-consumers-b",
+  "status": "complete",
+  "completedAt": "2026-08-08T17:20:00.000Z",
+  "checkpoint": "84b92cd77",
+  "contractsGreen": true,
+  "owns": [
+    "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+    "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx",
+    "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+    "src/components/pages/ProfileRedirectPage/index.tsx"
+  ],
+  "requiredFirstTargets": [
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+      "class": "A",
+      "status": "migrated"
+    }
+  ],
+  "pattern": "Migrate exact A/C/G to SurfaceCardList; collapse LabeledCard when SurfaceCardList owns label/surface/rows/empty/error/skeleton/identity. Hold mismatches (H) and free-form G. Leave F/E alone (not list collapse).",
+  "classification": {
+    "A": ["src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx"],
+    "B": [],
+    "C": [],
+    "D": [],
+    "E": ["src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx"],
+    "F": [
+      "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "src/components/pages/ProfileOverviewPage/index.tsx"
+    ],
+    "G": [
+      "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "src/components/pages/ProfileRedirectPage/index.tsx"
+    ],
+    "H": ["src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx"]
+  },
+  "migrated": [
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+      "class": "A",
+      "shape": "free-form-content",
+      "from": "LabeledCard frameless + SurfaceListCard + SurfaceListCardItem children",
+      "to": "SurfaceCardList label + items[] content=ProjectCard + isSkeleton + error/errorState",
+      "identity": {
+        "tier": "block",
+        "component": "ProfileCapstone"
+      },
+      "collapsedLabeledCard": true,
+      "removedSurfaceListCard": true,
+      "notes": "Decision A collapse. Skeleton keeps SKELETON_ROWS placeholder ProjectCard rows (same resting shape). Error uses SurfaceCardList errorState → AsyncContentError. Sparse empty still returns null. ProjectCard file outside owns — untouched."
+    }
+  ],
+  "held": [
+    {
+      "id": "ProfileActivity-class-H",
+      "files": ["src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx"],
+      "class": "H",
+      "mismatch": "LabeledCard framed wraps AsyncContent + ActivityFeed (which owns its own SurfaceListCard bordered shell) plus load-more Button. Unexpected double-frame / feed-owned list; not an exact A/C/G SurfaceCardList collapse without rewriting ActivityFeed (owned by feed-overlay-commerce-consumers).",
+      "classification": "behavior-mismatch"
+    },
+    {
+      "id": "ProfileProjectRoadmapPage-class-G-freeform",
+      "files": ["src/components/pages/ProfileProjectRoadmapPage/index.tsx"],
+      "class": "G",
+      "mismatch": "Legacy SurfaceListCard rows embed nested milestone/task trees (IconTile + ProgressMeter + per-task StackH with score tones). Not expressible as fixed SurfaceCardListItem fields without inventing nested-list chrome; free-form content migration deferred — not exact.",
+      "classification": "free-form-nested-rows"
+    },
+    {
+      "id": "ProfileRedirectPage-class-G-freeform",
+      "files": ["src/components/pages/ProfileRedirectPage/index.tsx"],
+      "class": "G",
+      "mismatch": "First-load shell skeleton uses SurfaceListCardItem children as hand-kept parallel trees (metric stacks, course-row stacks) mirroring the profile layout — not exact fixed-row/data items. Hold pending whole-shell isSkeleton rewrite outside B37 list collapse.",
+      "classification": "parallel-skeleton-shell"
+    }
+  ],
+  "retained": [
+    {
+      "id": "ProfileAchievements-class-F",
+      "files": ["src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx"],
+      "class": "F",
+      "reason": "LabeledCard legitimately owns a generic framed badge-wall body (Cluster of MascotBadge groups). Not A/C/G list topology."
+    },
+    {
+      "id": "ProfileOverviewPage-class-F",
+      "files": ["src/components/pages/ProfileOverviewPage/index.tsx"],
+      "class": "F",
+      "reason": "Page composes section owners; only direct LabeledCard is contributions (generic framed OverviewContributions body). Child Overview*Skills/Courses owned by profile-consumers-a."
+    },
+    {
+      "id": "ProfilePinned-class-E",
+      "files": ["src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx"],
+      "class": "E",
+      "reason": "LabeledCard frameless={cond} over Grid of self-framed PinnedProjectCard — collection/grid, not SurfaceCardList. Decision E collection case; not list migration."
+    }
+  ],
+  "changed": [
+    "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx"
+  ],
+  "mustNotTouchHonored": [
+    "No edits outside owns",
+    "ProjectCard/index.tsx not edited (outside owns)",
+    "No SurfaceCard / LabeledCard / SurfaceListCard contract edits",
+    "No .storybook / plugins/eslint / forbidden trees",
+    "No commit"
+  ],
+  "verification": {
+    "tsc": {
+      "ownedCapstoneErrors": 0,
+      "note": "npx tsc --noEmit — no diagnostics naming ProfileCapstone; repo may still exit non-zero from unrelated paths."
+    },
+    "eslint": {
+      "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+      "errors": 0,
+      "newArchitecturalWarnings": 0,
+      "preexisting": ["starci-fe/page-folder-two-files-only"]
+    },
+    "gitDiffCheck": "pass",
+    "committed": false
+  }
+}

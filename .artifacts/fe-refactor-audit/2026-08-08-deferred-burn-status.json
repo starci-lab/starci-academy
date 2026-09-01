@@ -1,0 +1,298 @@
+{
+  "generatedAt": "2026-08-06T22:00:19.180Z",
+  "checkpoint": "27127bb5",
+  "workers": {
+    "atoms-display-forms": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 4,
+      "regressions": 0,
+      "verification": {
+        "eslint": "not-run — no files changed",
+        "tsc": "not-run — no type surface changed",
+        "manifestFiles": 3,
+        "candidateBurned": 0,
+        "holdsRecorded": 4
+      }
+    },
+    "composites-frames": {
+      "changed": 4,
+      "skipped": 0,
+      "holds": 23,
+      "regressions": 0,
+      "verification": {
+        "eslintFocusedChanged": {
+          "exitOk": true,
+          "errorCount": 0,
+          "files": [
+            "src/components/composites/form/ImageDropzone/index.tsx",
+            "src/components/composites/layout/DrawerShell/index.tsx",
+            "src/components/composites/layout/ModalShell/index.tsx",
+            "src/components/composites/cards/SurfaceCard/index.tsx"
+          ],
+          "safeRulesCleared": {
+            "ImageDropzone": [
+              "starci-fe/no-inline-skeleton-branch"
+            ],
+            "DrawerShell": [
+              "titleClassName",
+              "contentClassName",
+              "bodyClassName"
+            ],
+            "ModalShell": [
+              "titleClassName",
+              "dialogClassName",
+              "bodyClassName",
+              "footerClassName"
+            ],
+            "SurfaceCard": [
+              "titleClassName"
+            ]
+          },
+          "safeRulesRemainingOnChanged": {
+            "DrawerShell": [
+              "dialogClassName",
+              "footerClassName"
+            ],
+            "ModalShell": [
+              "containerClassName"
+            ],
+            "SurfaceCard": [
+              "contentClassName"
+            ]
+          }
+        },
+        "tscNoEmit": {
+          "exitOk": true
+        },
+        "manifestFilesProcessed": 20,
+        "holdCount": 23
+      }
+    },
+    "blocks-layout": {
+      "changed": 6,
+      "skipped": 39,
+      "holds": 4,
+      "regressions": 0,
+      "verification": {
+        "eslintQuietChanged": {
+          "files": [
+            "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+            "src/components/blocks/identity/SnippetIcon/index.tsx",
+            "src/components/blocks/lists/LabeledList/index.tsx",
+            "src/components/blocks/grading/GradingByline/component.tsx",
+            "src/components/blocks/grading/DiffViewer/index.tsx",
+            "src/components/blocks/grading/GradeModelDropdown/component.tsx"
+          ],
+          "exitCode": 0,
+          "errors": 0
+        },
+        "note": "SeeMoreLink + SnippetIcon cleared target structural rules via vocabulary redirect; mechanical named-types + Label/emoji on remaining changed files. No invented principle tokens. 0/45 files had clear identity-capable frame roots."
+      }
+    },
+    "blocks-domain": {
+      "changed": 4,
+      "skipped": 44,
+      "holds": 44,
+      "regressions": 0,
+      "verification": {
+        "manifestFileCount": 45,
+        "changedCount": 4,
+        "holdCount": 44,
+        "skippedCount": 44,
+        "eslintQuiet": "pass",
+        "mechanicalCleared": [
+          "starci-fe/handler-on-prefix",
+          "starci-fe/no-inline-parameter-type"
+        ],
+        "structuralCleared": {
+          "src/components/blocks/stats/CourseProgressBar/index.tsx": "re-export composite (storybook-authored sync)"
+        },
+        "remainingByRuleNote": "Host/HeroUI roots cannot take identity without frame conversion; frame conversion needs honest singular principle (gap/step match) — inventing tokens held. Product reaction/medal emoji held. Skeleton twin/parallel/arbitrary/retired-async held. Nivo/Mia-Mia/locked absent from manifest.",
+        "checkpoint": "27127bb5"
+      }
+    },
+    "pages-learning-commerce": {
+      "changed": 15,
+      "skipped": 1,
+      "holds": 42,
+      "regressions": 0,
+      "verification": {
+        "eslintQuiet": {
+          "changedFiles": 15,
+          "exitCode": 0,
+          "command": "npx eslint --quiet <15 changed paths>"
+        },
+        "tscFiltered": {
+          "note": "npx tsc --noEmit — no errors on changed paths"
+        }
+      }
+    },
+    "pages-profile-dashboard": {
+      "changed": 6,
+      "skipped": 1,
+      "holds": 150,
+      "regressions": 0,
+      "verification": {
+        "eslintQuietOnChanged": {
+          "result": "clean",
+          "files": [
+            "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+            "src/components/pages/LegalPage/index.tsx",
+            "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+            "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+            "src/components/pages/AppearancePage/index.tsx",
+            "src/components/pages/RewardsPage/MyVouchers/index.tsx"
+          ]
+        },
+        "cleared": [
+          "no-inline-parameter-type (InterviewerPresence, LegalPage, MockInterviewScorecard)",
+          "handler-on-prefix (VoiceUnavailableModal)",
+          "require-identity-root (AppearancePage)",
+          "no-vietnamese-in-source-authoring (MyVouchers)"
+        ],
+        "remainOnChangedFiles": {
+          "starci-fe/require-identity-root": 4,
+          "note": "incapable/host roots on LegalPage, InterviewerPresence, MockInterviewScorecard, VoiceUnavailableModal — recorded as holds",
+          "structural": "heroui/classname/cn/raw remain where ownership unclear"
+        },
+        "teacherHoldsUntouched": 27,
+        "lockedPathsSkipped": [
+          "MockInterviewSession"
+        ]
+      }
+    },
+    "app-modules-utils": {
+      "changed": 26,
+      "skipped": 0,
+      "holds": 0,
+      "regressions": 0,
+      "verification": {
+        "eslintQuietChanged": "pass",
+        "eslintSafeRemainingInBatch": {},
+        "manifestFiles": 26,
+        "changed": 26,
+        "skipped": 0,
+        "holds": 0
+      }
+    },
+    "storybook-only": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 2,
+      "regressions": 0,
+      "verification": {
+        "eslint": {
+          "files": 0,
+          "note": "No source edits; both candidates held. eslint --quiet on the two manifest files: exit 0 (handler-on-prefix remains warn severity 1)."
+        }
+      }
+    }
+  },
+  "totals": {
+    "changed": 61,
+    "skipped": 85,
+    "holds": 269,
+    "regressions": 0
+  },
+  "overlaps": [],
+  "uniqueChangedFiles": 61,
+  "ruleDelta": {
+    "before": 4881,
+    "after": 4767,
+    "delta": -114,
+    "rows": [
+      {
+        "r": "starci-fe/no-vietnamese-in-source-authoring",
+        "b": 87,
+        "a": 66,
+        "d": -21
+      },
+      {
+        "r": "starci-fe/no-inline-parameter-type",
+        "b": 82,
+        "a": 65,
+        "d": -17
+      },
+      {
+        "r": "starci-fe/no-cn-above-vocabulary",
+        "b": 621,
+        "a": 604,
+        "d": -17
+      },
+      {
+        "r": "starci-fe/no-classname-at-sentence-tier",
+        "b": 555,
+        "a": 542,
+        "d": -13
+      },
+      {
+        "r": "starci-fe/no-heroui-outside-vocabulary",
+        "b": 524,
+        "a": 513,
+        "d": -11
+      },
+      {
+        "r": "starci-fe/require-identity-root",
+        "b": 646,
+        "a": 637,
+        "d": -9
+      },
+      {
+        "r": "starci-fe/no-per-part-classname-prop",
+        "b": 26,
+        "a": 18,
+        "d": -8
+      },
+      {
+        "r": "starci-fe/no-raw-shape-at-sentence-tier",
+        "b": 714,
+        "a": 708,
+        "d": -6
+      },
+      {
+        "r": "starci-fe/require-export-jsdoc",
+        "b": 74,
+        "a": 70,
+        "d": -4
+      },
+      {
+        "r": "starci-fe/handler-on-prefix",
+        "b": 14,
+        "a": 11,
+        "d": -3
+      },
+      {
+        "r": "starci-fe/prefer-arrow-export",
+        "b": 3,
+        "a": 1,
+        "d": -2
+      },
+      {
+        "r": "starci-fe/no-inline-skeleton-branch",
+        "b": 50,
+        "a": 48,
+        "d": -2
+      },
+      {
+        "r": "starci-fe/no-emoji-in-source",
+        "b": 62,
+        "a": 61,
+        "d": -1
+      }
+    ]
+  },
+  "twinParity": {
+    "softMismatches": 0
+  },
+  "verification": {
+    "tsc": true,
+    "eslintQuietChanged": true,
+    "eslintMaxWarningsChanged": "fails-on-preexisting-held-warnings-only",
+    "pluginTests": true,
+    "principleStyle": true,
+    "auditFe": true,
+    "teacherHolds": 27
+  },
+  "noCommit": true
+}

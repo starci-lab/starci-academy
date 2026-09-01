@@ -1,0 +1,182 @@
+{
+  "repaired": 180,
+  "changedFiles": 44,
+  "changed": [
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "fileRepaired": 5
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\ProviderSection\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminUploadVideoPage\\FileSelectionCard\\DropZone\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AppearancePage\\index.tsx",
+      "fileRepaired": 4
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ArchitecturePage\\NodeDissectionPanel\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogListPage\\FeaturedPost\\index.tsx",
+      "fileRepaired": 3
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CartPage\\component.tsx",
+      "fileRepaired": 4
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CvEditorPage\\index.tsx",
+      "fileRepaired": 9
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "fileRepaired": 5
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewHistory\\component.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewStats\\component.tsx",
+      "fileRepaired": 6
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\HeadhuntingCompanyProfile\\index.tsx",
+      "fileRepaired": 3
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\InstallmentPlansPage\\index.tsx",
+      "fileRepaired": 6
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\JobListPage\\component.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\TalentMarketplace\\index.tsx",
+      "fileRepaired": 6
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LandingPage\\index.tsx",
+      "fileRepaired": 5
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "fileRepaired": 7
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeFilters\\index.tsx",
+      "fileRepaired": 3
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\PracticeMobileNav\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\PracticeRail\\index.tsx",
+      "fileRepaired": 4
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\ProblemRow\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProblemCatalog\\index.tsx",
+      "fileRepaired": 4
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\ProgressCockpit\\index.tsx",
+      "fileRepaired": 3
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeHubPage\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\PracticeProblemSkeleton\\index.tsx",
+      "fileRepaired": 8
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PracticeProblemPage\\index.tsx",
+      "fileRepaired": 12
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PrivacySettingsPage\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengeManagePage\\index.tsx",
+      "fileRepaired": 10
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileChallengesPage\\ProfileChallenges\\index.tsx",
+      "fileRepaired": 6
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileOverviewPage\\OverviewChallengeSkills\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectRoadmapPage\\index.tsx",
+      "fileRepaired": 10
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileProjectsPage\\ProfilePinned\\PinnedProjectCard\\index.tsx",
+      "fileRepaired": 3
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileRedirectPage\\index.tsx",
+      "fileRepaired": 5
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "fileRepaired": 17
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\CheckoutExpired\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\OrderSummary\\index.tsx",
+      "fileRepaired": 3
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\DueReviewHero\\component.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardDeckList\\component.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardQuizResult\\component.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewModeModal\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardStatsStrip\\component.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LeaguePage\\WeeklyBoard\\component.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx",
+      "fileRepaired": 3
+    }
+  ]
+}

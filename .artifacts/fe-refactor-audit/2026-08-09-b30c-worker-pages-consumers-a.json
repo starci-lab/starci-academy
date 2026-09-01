@@ -1,0 +1,36 @@
+{
+  "manifest": [
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx"
+  ],
+  "warningsBefore": {
+    "ArchitectureMap": 6,
+    "FlashcardsPage": 9
+  },
+  "warningsAfter": "retracted-to-checkpoint",
+  "introducedByB30": [
+    "TabsCard parent Box wrappers"
+  ],
+  "preExistingInTouchedFile": [
+    "page-folder-two-files-only",
+    "no-parallel-skeleton",
+    "no-heroui-outside-vocabulary",
+    "no-raw-shape-at-sentence-tier",
+    "require-identity-root",
+    "require-frame-self-declare"
+  ],
+  "fixed": [],
+  "retractedB30Changes": [
+    "ArchitectureMap TabsCard Box wrap",
+    "FlashcardsPage TabsCard Box wrap"
+  ],
+  "holds": [
+    "TabsCard className consumers restored on these pages"
+  ],
+  "parity": "n/a retracted",
+  "verification": {
+    "action": "git checkout 8c13fd52"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

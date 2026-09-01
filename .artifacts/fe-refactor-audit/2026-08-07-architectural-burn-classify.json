@@ -1,0 +1,2011 @@
+{
+  "generated": "2026-08-07",
+  "productTotal": 5516,
+  "archTotal": 4636,
+  "a11y": 11,
+  "error": [
+    {
+      "file": "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+      "line": 3,
+      "column": 10,
+      "rule": "@typescript-eslint/no-unused-vars",
+      "severity": 2,
+      "message": "'Typography' is defined but never used.",
+      "tier": "other",
+      "classification": "skip-authoring",
+      "note": "authoring pass already done — leave"
+    }
+  ],
+  "byRule": {
+    "starci-fe/require-frame-self-declare": 836,
+    "starci-fe/no-raw-shape-at-sentence-tier": 717,
+    "starci-fe/require-identity-root": 701,
+    "starci-fe/no-cn-above-vocabulary": 623,
+    "starci-fe/no-classname-at-sentence-tier": 555,
+    "starci-fe/no-heroui-outside-vocabulary": 546,
+    "starci-fe/page-folder-two-files-only": 356,
+    "starci-fe/no-parallel-skeleton": 68,
+    "starci-fe/no-helper-folder-in-components": 66,
+    "starci-fe/no-inline-skeleton-branch": 55,
+    "starci-fe/no-retired-async-content": 40,
+    "starci-fe/no-skeleton-twin-component": 39,
+    "starci-fe/no-per-part-classname-prop": 26,
+    "starci-fe/export-matches-folder": 7,
+    "starci-fe/no-identity-wrapper-div": 1
+  },
+  "byClass": {
+    "confirmed": 3867,
+    "overlap": 347,
+    "hard-case": 287,
+    "teacher-hold": 135
+  },
+  "byTier": {
+    "other": 4636
+  },
+  "frameKinds": {
+    "missingBoth": 764,
+    "noExplain": 72,
+    "noPrinciple": 0,
+    "other": 0
+  },
+  "identityBuckets": {
+    "other": 701
+  },
+  "overlapMarked": 347,
+  "overlapLocations": 451,
+  "topFiles": [
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "n": 63,
+      "tier": "other",
+      "locked": true,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "n": 48,
+      "tier": "other",
+      "locked": true,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "n": 38,
+      "tier": "other",
+      "locked": true,
+      "hold": "ps-landing-loopstep-list"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "n": 30,
+      "tier": "other",
+      "locked": true,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "n": 23,
+      "tier": "other",
+      "locked": true,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "n": 21,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "n": 20,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "n": 20,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+      "n": 19,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "n": 19,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "n": 19,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "n": 19,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/ContentPage/component.tsx",
+      "n": 19,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "n": 18,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "n": 18,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "n": 17,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "n": 17,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+      "n": 17,
+      "tier": "other",
+      "locked": true,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "n": 16,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "n": 16,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "n": 16,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "n": 15,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "n": 14,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "n": 14,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "n": 14,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "n": 13,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "n": 13,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/index.tsx",
+      "n": 13,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "n": 13,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "n": 13,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "n": 13,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "n": 13,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/AIProcessingText/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "n": 12,
+      "tier": "other",
+      "locked": false,
+      "hold": null
+    }
+  ],
+  "samples": {
+    "confirmed": [
+      {
+        "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+        "line": 18,
+        "column": 10,
+        "rule": "starci-fe/no-parallel-skeleton",
+        "severity": 1,
+        "message": "Import `CommandSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "thread isSkeleton; skip primitives under blocks/skeleton and atoms"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+        "line": 19,
+        "column": 10,
+        "rule": "starci-fe/no-parallel-skeleton",
+        "severity": 1,
+        "message": "Import `OsTabsSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "thread isSkeleton; skip primitives under blocks/skeleton and atoms"
+      },
+      {
+        "file": "src/components/atoms/buttons/ButtonGroup/index.tsx",
+        "line": 2,
+        "column": 1,
+        "rule": "starci-fe/export-matches-folder",
+        "severity": 1,
+        "message": "`index.tsx` in folder `ButtonGroup` does not export `ButtonGroup` (exports: ButtonGroupRoot, ButtonGroupSeparator, meta) — the named export must match the folder (structure-and-naming §5).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add matching named export alias when safe"
+      },
+      {
+        "file": "src/components/atoms/chips/Chip/ChipBase.tsx",
+        "line": 75,
+        "column": 49,
+        "rule": "starci-fe/no-per-part-classname-prop",
+        "severity": 1,
+        "message": "`dotClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/atoms/chips/Chip/ChipBase.tsx",
+        "line": 89,
+        "column": 11,
+        "rule": "starci-fe/no-per-part-classname-prop",
+        "severity": 1,
+        "message": "`dotClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "line": 28,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "line": 74,
+        "column": 5,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "line": 148,
+        "column": 9,
+        "rule": "starci-fe/require-frame-self-declare",
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "missing principle+explain — only fix if token is inferable from gap/pad; else promote to hard-case at repair time"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "line": 151,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`overflow-y-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "line": 170,
+        "column": 13,
+        "rule": "starci-fe/require-frame-self-declare",
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "missing principle+explain — only fix if token is inferable from gap/pad; else promote to hard-case at repair time"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+        "line": 14,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+        "line": 51,
+        "column": 13,
+        "rule": "starci-fe/require-frame-self-declare",
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "missing principle+explain — only fix if token is inferable from gap/pad; else promote to hard-case at repair time"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+        "line": 17,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+        "line": 39,
+        "column": 5,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+        "line": 120,
+        "column": 13,
+        "rule": "starci-fe/require-frame-self-declare",
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "missing principle+explain — only fix if token is inferable from gap/pad; else promote to hard-case at repair time"
+      },
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "line": 44,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "line": 60,
+        "column": 5,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "line": 153,
+        "column": 9,
+        "rule": "starci-fe/require-frame-self-declare",
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "missing principle+explain — only fix if token is inferable from gap/pad; else promote to hard-case at repair time"
+      },
+      {
+        "file": "src/components/blocks/async/AsyncContent/index.tsx",
+        "line": 14,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/async/EmptyContent/index.tsx",
+        "line": 11,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/async/EmptyContent/index.tsx",
+        "line": 29,
+        "column": 5,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/async/EmptyContent/index.tsx",
+        "line": 55,
+        "column": 9,
+        "rule": "starci-fe/require-frame-self-declare",
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "missing principle+explain — only fix if token is inferable from gap/pad; else promote to hard-case at repair time"
+      },
+      {
+        "file": "src/components/blocks/async/ErrorContent/index.tsx",
+        "line": 11,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/async/ErrorContent/index.tsx",
+        "line": 25,
+        "column": 5,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/async/ErrorContent/index.tsx",
+        "line": 50,
+        "column": 9,
+        "rule": "starci-fe/require-frame-self-declare",
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "missing principle+explain — only fix if token is inferable from gap/pad; else promote to hard-case at repair time"
+      },
+      {
+        "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+        "line": 6,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+        "line": 10,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+        "line": 20,
+        "column": 5,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+        "line": 77,
+        "column": 24,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubLinkGate/index.tsx",
+        "line": 12,
+        "column": 35,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 5,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 29,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 134,
+        "column": 15,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 191,
+        "column": 46,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 197,
+        "column": 50,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 201,
+        "column": 66,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 208,
+        "column": 45,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <ol> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 209,
+        "column": 49,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 211,
+        "column": 54,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 227,
+        "column": 49,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 231,
+        "column": 49,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 233,
+        "column": 54,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/Turnstile/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/auth/Turnstile/index.tsx",
+        "line": 9,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair; primary in overlap cluster"
+      },
+      {
+        "file": "src/components/blocks/auth/Turnstile/index.tsx",
+        "line": 120,
+        "column": 47,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/blog/PostRow/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/blog/PostRow/index.tsx",
+        "line": 10,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      },
+      {
+        "file": "src/components/blocks/blog/PostRow/index.tsx",
+        "line": 35,
+        "column": 18,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+        "line": 1,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "tier boundary — move decision to owning atom/composite/frame; overlap likely"
+      },
+      {
+        "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+        "line": 9,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "add identity on clear single root frame/composite; host div roots → hard-case at repair"
+      }
+    ],
+    "hardCase": [
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "line": 24,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "line": 24,
+        "column": 56,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "line": 32,
+        "column": 24,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "line": 45,
+        "column": 36,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+        "line": 55,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+        "line": 111,
+        "column": 18,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+        "line": 124,
+        "column": 18,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`overflow-hidden` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+        "line": 13,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+        "line": 13,
+        "column": 39,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+        "line": 102,
+        "column": 24,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+        "line": 121,
+        "column": 19,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 82,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 82,
+        "column": 34,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1017,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1024,
+        "column": 18,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1046,
+        "column": 29,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1057,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1104,
+        "column": 46,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1105,
+        "column": 50,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1117,
+        "column": 56,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1195,
+        "column": 74,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1204,
+        "column": 74,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1214,
+        "column": 74,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1252,
+        "column": 29,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1276,
+        "column": 30,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1281,
+        "column": 52,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1304,
+        "column": 25,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1309,
+        "column": 18,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1326,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1327,
+        "column": 26,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1352,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1354,
+        "column": 30,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1408,
+        "column": 46,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1439,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1441,
+        "column": 30,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1468,
+        "column": 21,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "hard-case",
+        "note": "locked path — do not edit"
+      }
+    ],
+    "teacherHold": [
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "line": 1,
+        "column": 1,
+        "rule": "starci-fe/page-folder-two-files-only",
+        "severity": 1,
+        "message": "`pages/AdminAiBalancerPage/` contains `AdminAiBalancerSkeleton/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "line": 1,
+        "column": 1,
+        "rule": "starci-fe/no-skeleton-twin-component",
+        "severity": 1,
+        "message": "`AdminAiBalancerSkeleton` is a hand-mirrored twin: a second description of a shape that already has one. Give the component it mirrors an `isSkeleton` prop and let it rest as ITSELF — the twin cannot be kept in step, it can only be noticed after it has already drifted. (The `Skeleton.*` primitives under `blocks/skeleton/` are the pieces you rest WITH, and are exempt.)",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "line": 16,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "line": 16,
+        "column": 55,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "line": 31,
+        "column": 25,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+        "line": 1,
+        "column": 1,
+        "rule": "starci-fe/page-folder-two-files-only",
+        "severity": 1,
+        "message": "`pages/AdminAiBalancerPage/` contains `ProviderSection/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-4"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+        "line": 6,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-4"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+        "line": 22,
+        "column": 40,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-4"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+        "line": 34,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-4"
+      },
+      {
+        "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+        "line": 128,
+        "column": 34,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`overflow-x-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-4"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 21,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 21,
+        "column": 35,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 33,
+        "column": 25,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 35,
+        "column": 18,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 36,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 37,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 38,
+        "column": 22,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminLoginPage/index.tsx",
+        "line": 94,
+        "column": 54,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-5"
+      },
+      {
+        "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "line": 1,
+        "column": 1,
+        "rule": "starci-fe/page-folder-two-files-only",
+        "severity": 1,
+        "message": "`pages/AdminMpegDashTestPage/` contains `PreviewCard/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-6"
+      },
+      {
+        "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "line": 4,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-6"
+      },
+      {
+        "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "line": 13,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-6"
+      },
+      {
+        "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "line": 13,
+        "column": 43,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-6"
+      },
+      {
+        "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "line": 34,
+        "column": 26,
+        "rule": "starci-fe/no-cn-above-vocabulary",
+        "severity": 1,
+        "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-6"
+      },
+      {
+        "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "line": 39,
+        "column": 53,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <h2> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-6"
+      },
+      {
+        "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+        "line": 53,
+        "column": 30,
+        "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+        "severity": 1,
+        "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-6"
+      },
+      {
+        "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+        "line": 1,
+        "column": 1,
+        "rule": "starci-fe/page-folder-two-files-only",
+        "severity": 1,
+        "message": "`pages/AdminUploadVideoPage/` contains `FileSelectionCard/DropZone/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-2"
+      },
+      {
+        "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+        "line": 5,
+        "column": 1,
+        "rule": "starci-fe/no-heroui-outside-vocabulary",
+        "severity": 1,
+        "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-2"
+      },
+      {
+        "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+        "line": 16,
+        "column": 1,
+        "rule": "starci-fe/require-identity-root",
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "tier": "other",
+        "classification": "teacher-hold",
+        "note": "ledger:ps-admin-2"
+      }
+    ],
+    "overlap": [
+      {
+        "file": "src/components/blocks/auth/Turnstile/index.tsx",
+        "line": 9,
+        "column": 41,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+        "line": 9,
+        "column": 52,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+        "line": 16,
+        "column": 51,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/CourseCard/component.tsx",
+        "line": 28,
+        "column": 42,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/FlipCard/index.tsx",
+        "line": 10,
+        "column": 40,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+        "line": 8,
+        "column": 45,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+        "line": 12,
+        "column": 43,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+        "line": 20,
+        "column": 46,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/PressableCard/index.tsx",
+        "line": 37,
+        "column": 45,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+        "line": 54,
+        "column": 47,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+        "line": 21,
+        "column": 50,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+        "line": 20,
+        "column": 48,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+        "line": 21,
+        "column": 48,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/chips/LanguageChip/index.tsx",
+        "line": 7,
+        "column": 44,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+        "line": 17,
+        "column": 51,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/chips/TagChips/component.tsx",
+        "line": 10,
+        "column": 40,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+        "line": 79,
+        "column": 45,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+        "line": 13,
+        "column": 47,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+        "line": 24,
+        "column": 44,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+        "line": 17,
+        "column": 44,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCard/index.tsx",
+        "line": 26,
+        "column": 40,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+        "line": 15,
+        "column": 40,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/community/Discussion/index.tsx",
+        "line": 22,
+        "column": 42,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/community/FollowButton/index.tsx",
+        "line": 18,
+        "column": 44,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+        "line": 21,
+        "column": 54,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+        "line": 22,
+        "column": 51,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+        "line": 23,
+        "column": 56,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+        "line": 21,
+        "column": 52,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+        "line": 23,
+        "column": 53,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+        "line": 24,
+        "column": 51,
+        "rule": "starci-fe/no-classname-at-sentence-tier",
+        "severity": 1,
+        "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+        "tier": "other",
+        "classification": "overlap",
+        "note": "same line — fix once with primary"
+      }
+    ],
+    "identityWrapper": [
+      {
+        "file": "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+        "line": 204,
+        "column": 13,
+        "rule": "starci-fe/no-identity-wrapper-div",
+        "severity": 1,
+        "message": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the root frame/composite instead (see components/frames/_identity.ts).",
+        "tier": "other",
+        "classification": "confirmed",
+        "note": "replace data-tier wrapper with identity prop on root"
+      }
+    ]
+  }
+}

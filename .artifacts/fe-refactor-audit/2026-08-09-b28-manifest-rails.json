@@ -1,0 +1,93 @@
+{
+  "worker": "rails",
+  "manifest": [
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    "src/components/blocks/navigation/OutlineRail/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "CollapsibleSidebar",
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "multi-consumer / twin; not finite in wave 1"
+      },
+      "consumerCount": 3,
+      "valueSet": [
+        "h-full",
+        "className"
+      ],
+      "ownerships": [
+        "parent-placement",
+        "dynamic"
+      ]
+    },
+    {
+      "component": "OutlineRail",
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "needs value re-check / likely flex-fill"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "className",
+        "@app-lg:min-h-0 @app-lg:flex-1"
+      ],
+      "ownerships": [
+        "dynamic",
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "ArchitectureRail",
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "flex-fill hold"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "min-h-0 @app-lg:flex-1"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "PracticeRail",
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "flex-fill hold"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "min-h-0 @app-lg:flex-1"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "CollapsibleSidebar",
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "multi-consumer / twin; not finite in wave 1"
+      },
+      "consumerCount": 3,
+      "valueSet": [
+        "h-full",
+        "className"
+      ],
+      "ownerships": [
+        "parent-placement",
+        "dynamic"
+      ]
+    }
+  ]
+}

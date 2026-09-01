@@ -1,0 +1,2647 @@
+{
+  "partition": "blocks-layout",
+  "generatedAt": "2026-08-06T21:05:14.779Z",
+  "fileCount": 191,
+  "files": [
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "safeCount": 11,
+      "messageCount": 19,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/LearnShellLayout/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/LearnShellLayout/index.tsx",
+      "safeCount": 10,
+      "messageCount": 11,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "safeCount": 4,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Footer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Footer/index.tsx",
+      "safeCount": 3,
+      "messageCount": 14,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/PageHeader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/PageHeader/index.tsx",
+      "safeCount": 3,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Navbar/index.tsx",
+      "safeCount": 2,
+      "messageCount": 19,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "safeCount": 2,
+      "messageCount": 13,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/TabsCard/index.tsx",
+      "safeCount": 2,
+      "messageCount": 11,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/PaymentModal/component.tsx",
+      "safeCount": 2,
+      "messageCount": 10,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "safeCount": 2,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/ConnectSheet/index.tsx",
+      "safeCount": 2,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/layouts/PersonalProjectWorkspaceLayout/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/PersonalProjectWorkspaceLayout/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CourseCard/component.tsx",
+      "safeCount": 1,
+      "messageCount": 20,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "safeCount": 1,
+      "messageCount": 15,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 13,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/OutlineRail/index.tsx",
+      "safeCount": 1,
+      "messageCount": 11,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/PressableCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 10,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Footer/index.tsx",
+      "safeCount": 1,
+      "messageCount": 10,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "safeCount": 1,
+      "messageCount": 10,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-parallel-skeleton"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "safeCount": 1,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-arbitrary-token"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/FlipCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/SummaryCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/Dropzone/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/Dropzone/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/SchedulePicker/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/SearchInput/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/SearchInput/component.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/PDFView/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/PDFView/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-arbitrary-token"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-arbitrary-token"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/LearnShellLayout/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/LearnShellLayout/component.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/NavLinks/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/OtpState/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignInSection/OtpState/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CheckListCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CrossListCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/DifficultyChip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/TagChips/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/SearchBar/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/SearchBar/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/DragScrollArea/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/ResizableRail/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/SubPageHeader/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/SubPageHeader/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/NavLinks/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/NavLinks/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/RagSourceGraph/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-identity-wrapper-div",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-arbitrary-token",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-arbitrary-token"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-arbitrary-token"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-arbitrary-token"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/CartButton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/Logo/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/Logo/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/FollowListModal/component.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/buttons/RatingBar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/HighlightCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/EnumChip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/LanguageChip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/ErrorState/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/form/OtpInput/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/form/OtpInput/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AppSplash/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AppSplash/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/PageContainer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/PageContainer/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/BackLink/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/BackLink/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Pagination/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Pagination/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/MarkdownContent/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/Skeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/Skeleton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/async/ErrorContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/ErrorContent/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/BubblesEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/BubblesEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/EmberEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/EmberEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/WaveEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/WaveEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/SearchButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/SearchButton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/MaintenanceModal/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/MaintenanceModal/component.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/NestedCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/NestedCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cards/PricingCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/PricingCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/StatusChip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/AuroraEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/AuroraEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/FirefliesEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/FirefliesEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/RainEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/RainEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/SnowEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/SnowEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/AmbientBackground/effects/StarsEffect.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/AmbientBackground/effects/StarsEffect.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/layout/Spacer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/Spacer/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/AuthenticationModal/component.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/blocks/async/AsyncContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/AsyncContent/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/blocks/layout/SocketConnectionStatus/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/SocketConnectionStatus/component.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/blocks/layout/TopLoader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/TopLoader/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/layouts/PublicProfileLayout/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/layouts/PublicProfileLayout/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/overlays/drawers/DrawerContainer.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/drawers/DrawerContainer.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/overlays/modals/CvReviewLevelDetailsModal/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/CvReviewLevelDetailsModal/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/overlays/modals/ModalContainer.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/ModalContainer.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/overlays/modals/PaymentModal/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/PaymentModal/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    }
+  ]
+}

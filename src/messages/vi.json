@@ -81,18 +81,18 @@
     "tooltipAdd": "Thêm vào giỏ"
   },
   "contact": {
-    "title": "Liên hệ",
-    "intro": "StarCi do một người dựng nên, nên câu hỏi của bạn tới thẳng người làm ra nó. Chọn cách liên hệ nhanh nhất bên dưới, hoặc gửi tin nhắn.",
-    "responseTime": "Thường phản hồi trong vòng 24 giờ (giờ hỗ trợ T2–T6, 9:00–18:00).",
+    "title": "Nói chuyện trực tiếp với người xây StarCi",
+    "intro": "StarCi được xây bởi một người, nên tin nhắn của bạn sẽ đến thẳng Stacy Nguyen. Chọn một kênh bên dưới hoặc gửi tin nhắn tại đây.",
+    "responseTime": "Stacy thường phản hồi trong vòng 24 giờ, từ thứ Hai đến thứ Sáu, 9:00–18:00.",
     "direct": {
-      "title": "Liên hệ trực tiếp",
+      "title": "Kết nối trực tiếp",
       "emailLabel": "Email",
       "phoneLabel": "Điện thoại",
       "hoursLabel": "Giờ hỗ trợ",
       "hoursValue": "T2–T6, 9:00–18:00"
     },
     "founder": {
-      "title": "Người dựng StarCi",
+      "title": "Người xây StarCi",
       "name": "Stacy Nguyen",
       "role": "Founder · StarCi Academy",
       "facebook": "Facebook",
@@ -100,23 +100,23 @@
       "github": "GitHub"
     },
     "form": {
-      "title": "Gửi tin nhắn",
+      "title": "Gửi tin nhắn cho Stacy",
       "name": "Họ tên",
       "namePlaceholder": "Nguyễn Văn A",
       "email": "Email",
       "emailPlaceholder": "ban@email.com",
-      "category": "Lý do liên hệ",
-      "message": "Nội dung",
-      "messagePlaceholder": "Chúng tôi có thể giúp gì cho bạn?",
+      "category": "Bạn muốn liên hệ về việc gì?",
+      "message": "Tin nhắn",
+      "messagePlaceholder": "Ví dụ: Tôi cần hỗ trợ với khóa học Python",
       "submit": "Gửi tin nhắn",
       "submitting": "Đang gửi…",
-      "successTitle": "Đã gửi!",
-      "successBody": "Cảm ơn bạn. Chúng tôi sẽ phản hồi qua email sớm nhất có thể.",
-      "sendAnother": "Gửi tin khác",
-      "errorTitle": "Không gửi được tin nhắn. Vui lòng thử lại.",
-      "nameRequired": "Vui lòng nhập họ tên.",
-      "emailInvalid": "Email không hợp lệ.",
-      "messageRequired": "Vui lòng nhập nội dung."
+      "successTitle": "Đã gửi tin nhắn",
+      "successBody": "Cảm ơn bạn. Stacy sẽ phản hồi qua email trong thời gian hỗ trợ.",
+      "sendAnother": "Gửi tin nhắn khác",
+      "errorTitle": "Tin nhắn chưa được gửi",
+      "nameRequired": "Nhập họ tên để Stacy biết cách xưng hô với bạn.",
+      "emailInvalid": "Kiểm tra lại địa chỉ email của bạn.",
+      "messageRequired": "Viết nội dung bạn muốn gửi."
     },
     "categories": {
       "course_support": "Hỗ trợ khoá học / tài khoản",

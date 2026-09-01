@@ -1,0 +1,861 @@
+{
+  "batch": "B31",
+  "phase": 1,
+  "editsAllowed": false,
+  "title": "Leaderboard vertical closure — Phase 1 inventory",
+  "objectiveSlice": "LeaderboardListCard -> TopLearners -> direct page owner",
+  "precondition": {
+    "required": "B30c checkpoint committed",
+    "status": "pass",
+    "head": "18f84f5b15528163e9fca10cfb7252323f02f013",
+    "headShort": "18f84f5b",
+    "headSubject": "refactor(fe): enforce semantic closure ratchet",
+    "b30cEvidence": [
+      "plugins/eslint/sentence-tier.test.mjs",
+      "src/components/blocks/lists/LabeledList/index.tsx",
+      "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      ".claude/fe/decision-ledger.json entry b30c-touched-file-zero-warning-2026-08-09"
+    ],
+    "workingTreeAtStart": [
+      "?? .artifacts/",
+      "?? .claude/fe/prompts/cursor/31-leaderboard-vertical-closure.md"
+    ]
+  },
+  "astConsumerScan": {
+    "method": "babel parse + traverse JSXOpeningElement where imported local === LeaderboardListCard",
+    "bareApiStatus": "exported bare?: boolean with live branch, but AST finds zero open-tag bare=true consumers in src/.storybook",
+    "bareConsumers": [],
+    "typeOnlyImports": [
+      "src/components/pages/DashboardPage/TopLearners/index.tsx (LeaderboardRow type)"
+    ],
+    "nestedClassNameNotRootConsumers": [
+      "UserCell internal classNames",
+      "Typography className on value cell",
+      "Link className on profile wrap",
+      "RankDeltaCaret className from LeagueCard toRow trailing",
+      "row/standing host div flex payloads"
+    ],
+    "openTagConsumers": [
+      {
+        "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "line": 132,
+        "classNameDoor": true,
+        "classNameValue": "passthrough identifier className from _TopLearners props",
+        "note": "Connected TopLearners/index.tsx never passes className into _TopLearners. Live painted root className payload is empty on non-bare path because LabeledCard does not receive className.",
+        "attrs": {
+          "className": "{className}",
+          "title": "labels.title",
+          "onSeeMore": "{onSeeMore}",
+          "seeMoreLabel": "labels.seeMoreLabel",
+          "standing": "{standing}",
+          "rows": "{rows}",
+          "selfRow": "{selfRow}",
+          "ellipsisLabel": "{ellipsisLabel}",
+          "meLabel": "labels.meLabel"
+        }
+      },
+      {
+        "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "line": 188,
+        "classNameDoor": false,
+        "attrs": [
+          "title",
+          "onSeeMore",
+          "seeMoreLabel",
+          "standing",
+          "rows",
+          "selfRow",
+          "ellipsisLabel",
+          "meLabel"
+        ]
+      },
+      {
+        "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+        "line": 113,
+        "classNameDoor": false,
+        "note": "Second live content path under LeagueCard; page-folder structural finding",
+        "attrs": [
+          "title",
+          "onSeeMore",
+          "seeMoreLabel",
+          "standing",
+          "rows",
+          "selfRow",
+          "ellipsisLabel",
+          "meLabel"
+        ]
+      }
+    ]
+  },
+  "overlapCheck": {
+    "result": "no overlap with locked/Nivo/teacher-held edit paths — but page-folder + skeleton + vocabulary-gap blockers apply",
+    "nivo": "none in proposed slice",
+    "nivoexpert": "none",
+    "lockedPaths": "none in slice",
+    "teacherHold": "none specific to LeaderboardListCard door; CommunityTab comment cites teacher identical-sections intent (preserve behavior)",
+    "coreButtonChipStackGridBox": "must not edit APIs"
+  },
+  "completionForecast": {
+    "statusIfStopNow": "blocked-at-inventory",
+    "zeroWarningChangedSet": false,
+    "honestDoorGone": false,
+    "primaryBlockers": [
+      "page-folder-two-files-only on every TopLearners/LeagueCard/CommunityTab page-folder file required for vertical consumer closure",
+      "LeaderboardListCard internal raw-shape payloads lack honest existing principles/composites at exact seams",
+      "HeroUI Link vocabulary gap",
+      "B30c already retracted the same vertical attempt under identical ratchet"
+    ]
+  },
+  "files": {
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx": {
+      "role": "semantic block — shared leaderboard preview",
+      "storybookTwin": "none (src-only)",
+      "publicCssDoors": [
+        "WithClassNames<undefined> on LeaderboardListCardProps",
+        "destructured className",
+        "cn(\"flex flex-col gap-3\", className) on bare root"
+      ],
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 15,
+        "byRule": {
+          "starci-fe/no-heroui-outside-vocabulary": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 2,
+          "starci-fe/no-raw-shape-at-sentence-tier": 9,
+          "starci-fe/no-emoji-in-source": 1,
+          "starci-fe/no-cn-above-vocabulary": 1
+        },
+        "byLine": [
+          {
+            "line": 4,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/no-heroui-outside-vocabulary",
+            "message": "Import '@heroui/react' outside the vocabulary tier ΓÇö use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+          },
+          {
+            "line": 59,
+            "col": 51,
+            "sev": "warning",
+            "rule": "starci-fe/no-classname-at-sentence-tier",
+            "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+          },
+          {
+            "line": 59,
+            "col": 51,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+          },
+          {
+            "line": 111,
+            "col": 5,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+          },
+          {
+            "line": 127,
+            "col": 22,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 128,
+            "col": 22,
+            "sev": "warning",
+            "rule": "starci-fe/no-emoji-in-source",
+            "message": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+          },
+          {
+            "line": 132,
+            "col": 31,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <span> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 136,
+            "col": 31,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <span> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 148,
+            "col": 30,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 161,
+            "col": 30,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 171,
+            "col": 22,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 173,
+            "col": 26,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 194,
+            "col": 38,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 195,
+            "col": 43,
+            "sev": "warning",
+            "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+            "message": "`flex` on <span> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+          },
+          {
+            "line": 214,
+            "col": 29,
+            "sev": "warning",
+            "rule": "starci-fe/no-cn-above-vocabulary",
+            "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) ΓÇö treat this as a missing composite or missing variant; do not assemble classes here."
+          }
+        ]
+      },
+      "herouiImports": [
+        "Link",
+        "Typography",
+        "cn"
+      ],
+      "starciEquivalents": {
+        "Typography": {
+          "exists": true,
+          "path": "src/components/atoms/text/Typography",
+          "notes": "type/color/weight/truncate/tabularNums/align closed props cover current HeroUI usage; shrink-0 is placement not Typography"
+        },
+        "Link": {
+          "exists": false,
+          "gap": "house Link atoms are LinkBack/LinkSeeMore only — no profile/href row Link with hover opacity semantics",
+          "action": "vocabulary-gap proposal; do not wrap HeroUI locally"
+        },
+        "cn": {
+          "exists": false,
+          "notes": "must leave with door burn; no sentence-tier cn"
+        }
+      },
+      "identityRoot": {
+        "cardBranch": "LabeledCard identity={{ tier: \"block\", component: \"LeaderboardListCard\" }}",
+        "bareBranch": "missing — bare returns raw div with no identity"
+      },
+      "skeletonOwnership": "none inside LeaderboardListCard; consumers mirror loading co-located",
+      "pageFolderFindings": null,
+      "lockedVendorTeacher": [],
+      "b30cLesson": "Door-only burn left bare flex flex-col gap-3 (false closure). Full rewrite blocked by className door law residuals, Typography classNames, Box self-declare vs escape, HeroUI Link gap, raw-shape row internals.",
+      "layoutPayloads": [
+        {
+          "payload": "bare root: cn(\"flex flex-col gap-3\", className)",
+          "classification": "child relationship owned by the component",
+          "honestExisting": true,
+          "ownerProposal": "StackV principle=\"sibling-stack\" shared with card branch; no gap prop; no className door",
+          "blocker": null
+        },
+        {
+          "payload": "card branch StackV gap={3} principle=\"sibling-stack\"",
+          "classification": "child relationship owned by the component",
+          "honestExisting": true,
+          "ownerProposal": "keep StackV sibling-stack; drop gap={3} (principle owns step 3)",
+          "blocker": null
+        },
+        {
+          "payload": "row host div.flex.items-center.gap-3",
+          "classification": "unresolved contract",
+          "candidatePrinciples": [
+            {
+              "token": "flex-action-center",
+              "gapStep": 3,
+              "align": "center",
+              "honesty": "spacing/align match visually; semantic name is action-bar not ranked list row — questionable"
+            },
+            {
+              "token": "content-row",
+              "gapStep": 4,
+              "honesty": "wrong seam (gap-4 vs gap-3) — visual regression if used"
+            },
+            {
+              "token": "identity",
+              "gapStep": 3,
+              "honesty": "no center align ownership"
+            }
+          ],
+          "missingContractProposal": "ranked-row or list-row horizontal principle (gap step 3 + align center) OR reuse/prove flex-action-center as honest for medal+identity+meta rows",
+          "blocker": "no invent token in B31"
+        },
+        {
+          "payload": "span.flex.w-6.shrink-0.items-center.justify-center (medal/rank/ellipsis)",
+          "classification": "intrinsic leaf chrome",
+          "ownerProposal": "medal/rank slot composite or vocabulary IconSlot; not parent placement",
+          "missingContractProposal": "fixed-width centered rank/medal slot (w-6) — no existing composite found",
+          "blocker": "missing composite; do not invent in B31"
+        },
+        {
+          "payload": "Link className flex min-w-0 flex-1 items-center text-foreground no-underline hover:opacity-60",
+          "classification": "vendor boundary + unresolved contract",
+          "ownerProposal": "StarCi profile Link atom with flex-fill participation owned by parent Stack item",
+          "blocker": "vocabulary gap for Link; flex-1/min-w-0 placement needs frame item contract"
+        },
+        {
+          "payload": "div.flex.min-w-0.flex-1.items-center (non-link identity)",
+          "classification": "child relationship / unresolved",
+          "blocker": "same flex participation as link wrap — needs frame fill contract"
+        },
+        {
+          "payload": "Typography className shrink-0 text-right tabular-nums",
+          "classification": "mixed",
+          "semanticPart": "align=\"end\" tabularNums on StarCi Typography",
+          "placementPart": "shrink-0 owned by parent frame item",
+          "blocker": "parent frame must accept shrink without public className door on Typography"
+        },
+        {
+          "payload": "standing host flex items-center gap-3 + IconTile + text column flex-col",
+          "classification": "unresolved contract",
+          "candidate": "StackH icon-text is gap-2 (visual change); identity gap-3 no center; title-subtitle for text column is gap-2 vs current tight flex-col",
+          "missingContractProposal": "standing header: icon-tile + primary/secondary stack with exact current seams",
+          "blocker": "no invent token"
+        },
+        {
+          "payload": "ellipsis row flex min-h-8 items-center gap-3",
+          "classification": "unresolved contract",
+          "blocker": "same as row host + min-h-8 intrinsic"
+        }
+      ]
+    },
+    "src/components/pages/DashboardPage/TopLearners/component.tsx": {
+      "role": "presentational TopLearners — direct LeaderboardListCard consumer + className passthrough",
+      "storybookTwin": "none",
+      "publicCssDoors": [
+        "WithClassNames on TopLearnersProps",
+        "className destructure",
+        "pass className to LeaderboardListCard"
+      ],
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 10,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 8
+        },
+        "byLine": [
+          {
+            "line": 1,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/page-folder-two-files-only",
+            "message": "`pages/DashboardPage/` contains `TopLearners/component.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+          },
+          {
+            "line": 27,
+            "col": 43,
+            "sev": "warning",
+            "rule": "starci-fe/no-classname-at-sentence-tier",
+            "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+          },
+          {
+            "line": 27,
+            "col": 43,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+          },
+          {
+            "line": 70,
+            "col": 5,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+          },
+          {
+            "line": 91,
+            "col": 41,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 95,
+            "col": 33,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 109,
+            "col": 53,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 112,
+            "col": 53,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 113,
+            "col": 53,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 133,
+            "col": 13,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `LeaderboardListCard`. Parent layout owns placement; use the parent principle or a named wrapper."
+          }
+        ]
+      },
+      "openTagClassNameToLeaderboard": "{className} passthrough — only root className consumer in AST",
+      "parentPlacement": {
+        "owner": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+        "payload": "sibling in flex flex-col gap-6; no className passed to <TopLearners />",
+        "connected": "TopLearners/index.tsx passes no className"
+      },
+      "identityRoot": {
+        "empty": "AsyncContentEmpty identity TopLearners",
+        "skeleton": "StackV identity TopLearners",
+        "content": "delegated to LeaderboardListCard LabeledCard identity (LeaderboardListCard, not TopLearners)"
+      },
+      "skeletonOwnership": "inline isSkeleton branch in same file (co-located mirror); also TopLearnersSkeleton twin file exists",
+      "pageFolderFindings": "page-folder-two-files-only — cannot clear without forbidden page-folder migration",
+      "lockedVendorTeacher": [],
+      "layoutPayloads": [
+        {
+          "payload": "skeleton StackV sibling-stack + StackH content-row classNames min-w-0 flex-1 + Skeleton className sizes",
+          "classification": "skeleton/loading — out of B31 redesign scope",
+          "blocker": "zero-warn requires clearing Skeleton/Stack className props without redesign OR keep file out of edit set"
+        }
+      ],
+      "zeroWarningPath": "BLOCKED under B31 ratchet: page-folder-two-files-only remains after any door/skeleton cleanup unless page structure migrates (forbidden)"
+    },
+    "src/components/pages/DashboardPage/TopLearners/index.tsx": {
+      "role": "connected fetch/follow owner",
+      "usesLeaderboardListCard": "type-only LeaderboardRow",
+      "classNameDoor": false,
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 1,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1
+        },
+        "byLine": [
+          {
+            "line": 1,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/page-folder-two-files-only",
+            "message": "`pages/DashboardPage/` contains `TopLearners/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+          }
+        ]
+      },
+      "zeroWarningPath": "BLOCKED — page-folder-two-files-only only",
+      "editRecommendation": "exclude from edit manifest (type-only; cannot reach 0 warnings)"
+    },
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx": {
+      "role": "hand-mirrored skeleton twin",
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 13,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/no-skeleton-twin-component": 1,
+          "starci-fe/no-heroui-outside-vocabulary": 1,
+          "starci-fe/require-identity-root": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 7,
+          "starci-fe/no-cn-above-vocabulary": 1
+        },
+        "byLine": [
+          {
+            "line": 1,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/page-folder-two-files-only",
+            "message": "`pages/DashboardPage/` contains `TopLearners/TopLearnersSkeleton/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+          },
+          {
+            "line": 1,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/no-skeleton-twin-component",
+            "message": "`TopLearnersSkeleton` is a hand-mirrored twin: a second description of a shape that already has one. Give the component it mirrors an `isSkeleton` prop and let it rest as ITSELF ΓÇö the twin cannot be kept in step, it can only be noticed after it has already drifted. (The `Skeleton.*` primitives under `blocks/skeleton/` are the pieces you rest WITH, and are exempt.)"
+          },
+          {
+            "line": 4,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/no-heroui-outside-vocabulary",
+            "message": "Import '@heroui/react' outside the vocabulary tier ΓÇö use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+          },
+          {
+            "line": 18,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/require-identity-root",
+            "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+          },
+          {
+            "line": 18,
+            "col": 40,
+            "sev": "warning",
+            "rule": "starci-fe/no-classname-at-sentence-tier",
+            "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+          },
+          {
+            "line": 18,
+            "col": 40,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+          },
+          {
+            "line": 28,
+            "col": 39,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+          },
+          {
+            "line": 29,
+            "col": 21,
+            "sev": "warning",
+            "rule": "starci-fe/no-cn-above-vocabulary",
+            "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) ΓÇö treat this as a missing composite or missing variant; do not assemble classes here."
+          },
+          {
+            "line": 38,
+            "col": 45,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 42,
+            "col": 37,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 56,
+            "col": 57,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 59,
+            "col": 57,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 60,
+            "col": 57,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          }
+        ]
+      },
+      "holds": [
+        "no-skeleton-twin-component",
+        "skeleton/loading redesign forbidden",
+        "page-folder-two-files-only",
+        "HeroUI cn"
+      ],
+      "editRecommendation": "exclude — parallel-skeleton / hold"
+    },
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx": {
+      "role": "presentational LeagueCard — LeaderboardListCard consumer (no className)",
+      "openTagClassNameToLeaderboard": false,
+      "skeletonInline": true,
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 10,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/require-identity-root": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 7
+        },
+        "byLine": [
+          {
+            "line": 1,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/page-folder-two-files-only",
+            "message": "`pages/DashboardPage/` contains `LeagueCard/component.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+          },
+          {
+            "line": 29,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/require-identity-root",
+            "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+          },
+          {
+            "line": 49,
+            "col": 42,
+            "sev": "warning",
+            "rule": "starci-fe/no-classname-at-sentence-tier",
+            "message": "`WithClassNames<ΓÇª>` at sentence tier opens a className backdoor (BLOCK-4) ΓÇö push the difference down one tier and name it."
+          },
+          {
+            "line": 49,
+            "col": 42,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+          },
+          {
+            "line": 96,
+            "col": 55,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `RankDeltaCaret`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 153,
+            "col": 53,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 157,
+            "col": 45,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 171,
+            "col": 65,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 174,
+            "col": 65,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          },
+          {
+            "line": 175,
+            "col": 65,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+          }
+        ]
+      },
+      "holds": [
+        "page-folder-two-files-only",
+        "inline skeleton className props",
+        "RankDeltaCaret className",
+        "WithClassNames on props"
+      ],
+      "zeroWarningPath": "BLOCKED — page-folder + skeleton",
+      "editRecommendation": "read-only in B31; exclude from edit manifest unless zero-warn proven without skeleton/page-folder work"
+    },
+    "src/components/pages/DashboardPage/LeagueCard/index.tsx": {
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 1,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1
+        },
+        "byLine": [
+          {
+            "line": 1,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/page-folder-two-files-only",
+            "message": "`pages/DashboardPage/` contains `LeagueCard/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+          }
+        ]
+      },
+      "editRecommendation": "exclude"
+    },
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx": {
+      "role": "alternate connected content mapper → LeaderboardListCard",
+      "openTagClassNameToLeaderboard": false,
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 3,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/require-identity-root": 1,
+          "starci-fe/no-public-classname-prop": 1
+        },
+        "byLine": [
+          {
+            "line": 1,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/page-folder-two-files-only",
+            "message": "`pages/DashboardPage/` contains `LeagueCard/LeagueCardContent/index.tsx` ΓÇö a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+          },
+          {
+            "line": 29,
+            "col": 1,
+            "sev": "warning",
+            "rule": "starci-fe/require-identity-root",
+            "message": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+          },
+          {
+            "line": 105,
+            "col": 63,
+            "sev": "warning",
+            "rule": "starci-fe/no-public-classname-prop",
+            "message": "Do not pass `className` to house component `RankDeltaCaret`. Parent layout owns placement; use the parent principle or a named wrapper."
+          }
+        ]
+      },
+      "holds": [
+        "page-folder-two-files-only",
+        "require-identity-root",
+        "RankDeltaCaret className"
+      ],
+      "zeroWarningPath": "BLOCKED — page-folder at minimum",
+      "editRecommendation": "exclude"
+    },
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx": {
+      "holds": [
+        "skeleton twin",
+        "page-folder",
+        "HeroUI cn"
+      ],
+      "editRecommendation": "exclude"
+    },
+    "src/components/pages/DashboardPage/CommunityTab/index.tsx": {
+      "role": "immediate page owner of LeagueCard + TopLearners",
+      "placement": "div.flex.flex-col.gap-6 wrapping both cards",
+      "passesClassNameToTopLearners": false,
+      "layoutPayload": {
+        "payload": "flex flex-col gap-6",
+        "classification": "placement owned by the immediate parent",
+        "ownerProposal": "StackV principle=\"group-boundary\" (gap step 5) or block-boundary (step 6) — neither is exact gap-6; marketing-beat is 8",
+        "blocker": "exact gap-6 has no honest existing principle; page-folder also blocks zero-warn"
+      },
+      "eslintBefore": {
+        "errors": 0,
+        "warnings": 3,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/require-identity-root": 1,
+          "starci-fe/no-raw-shape-at-sentence-tier": 1
+        }
+      },
+      "editRecommendation": "exclude unless placement migration is exact and page-folder cleared (forbidden)"
+    }
+  },
+  "proposedWorkerManifests": {
+    "note": "Disjoint edit manifests for Phase 3 IF and only IF coordinator accepts a zero-warn path. Current inventory recommends empty edit manifests / blocked status.",
+    "leaderboard-contract": {
+      "proposed": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+      ],
+      "storybookTwin": [],
+      "canReachZeroWarningsAlone": false,
+      "reasons": [
+        "9× raw-shape row/standing hosts need principles/composites not inventable in B31",
+        "HeroUI Link has no StarCi equivalent (vocabulary gap)",
+        "removing className requires TopLearners consumer edit (blocked below)",
+        "bare identity strategy must stamp proven root without wrapper div"
+      ]
+    },
+    "top-learners-consumer": {
+      "proposed": [
+        "src/components/pages/DashboardPage/TopLearners/component.tsx"
+      ],
+      "parentPlacement": "CommunityTab — also page-folder blocked; no live className to migrate",
+      "canReachZeroWarningsAlone": false,
+      "reasons": [
+        "starci-fe/page-folder-two-files-only cannot clear without forbidden page-folder migration",
+        "inline skeleton className props require skeleton redesign or remain warnings",
+        "door passthrough removal alone leaves page-folder + skeleton warnings"
+      ]
+    },
+    "league-card-consumers": {
+      "readFirst": [
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx"
+      ],
+      "proposed": [],
+      "editCapableOfZeroWarningClosure": false,
+      "reasons": [
+        "page-folder-two-files-only",
+        "inline/parallel skeleton",
+        "RankDeltaCaret className"
+      ]
+    },
+    "coordinator-gates": {
+      "sourceEdits": [],
+      "proposed": [
+        ".artifacts/fe-refactor-audit/2026-08-09-b31-inventory.json",
+        ".artifacts/fe-refactor-audit/2026-08-09-b31-status.json",
+        ".artifacts/fe-refactor-audit/2026-08-09-b31-status.md",
+        ".artifacts/fe-refactor-audit/2026-08-09-b31-worker-*.json"
+      ]
+    }
+  },
+  "contractDesignDraft": {
+    "root": {
+      "bare": "controls LabeledCard chrome only",
+      "sharedContent": "one StackV principle=\"sibling-stack\" items={contentItems} — no gap; no duplicated map",
+      "publicDoor": "delete WithClassNames/className/cn only after zero open-tag consumers AND no private flex flex-col gap-3 residual",
+      "identity": "stamp on proven exported root: LabeledCard when !bare; bare needs identity-capable frame root (StackV identity) — not a wrapper div"
+    },
+    "doorConsumerMigration": {
+      "TopLearners.className": "dead passthrough — drop WithClassNames; no parent placement to migrate (CommunityTab passes nothing)",
+      "blockedBy": "editing TopLearners/component.tsx cannot hit 0 warnings under page-folder rule"
+    },
+    "internalRows": {
+      "doNotInvent": true,
+      "stopSubparts": [
+        "row host gap-3 centered",
+        "w-6 medal/rank slot",
+        "profile Link vocabulary",
+        "flex-1 identity participation",
+        "standing header seams",
+        "ellipsis min-h-8 row"
+      ]
+    },
+    "heroui": {
+      "Typography": "replace with StarCi Typography where behaviorally identical",
+      "Link": "exact vocabulary gap — stop; do not wrap",
+      "cn": "remove with door"
+    },
+    "skeleton": "read-only parity; no redesign; keep skeleton files outside edit manifest"
+  }
+}

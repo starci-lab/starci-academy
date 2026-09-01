@@ -1,0 +1,59 @@
+{
+  "starci-fe/no-inline-parameter-type": [],
+  "starci-fe/handler-on-prefix": [],
+  "starci-fe/prefer-arrow-export": [],
+  "starci-fe/no-vietnamese-in-source-authoring": [
+    {
+      "file": "src/app/[locale]/architecture/page.tsx",
+      "line": 24,
+      "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+    },
+    {
+      "file": "src/app/[locale]/contact/page.tsx",
+      "line": 24,
+      "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+    },
+    {
+      "file": "src/app/[locale]/status/page.tsx",
+      "line": 24,
+      "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "line": 95,
+      "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+    },
+    {
+      "file": "src/modules/dayjs/index.ts",
+      "line": 24,
+      "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+    }
+  ],
+  "starci-fe/no-emoji-in-source": [
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 156,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 39,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "line": 159,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "line": 593,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "line": 103,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+    }
+  ]
+}

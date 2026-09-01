@@ -1,0 +1,54 @@
+﻿.
+tree: .storybook/components
+
+atoms found: 62 component folder(s), 138 exported name(s)
+
+ATOM-1  17 to judge
+        an atom is ONE element ΓÇö a child the caller handed in makes it a composite
+        (run with --suspects, or --rule 1, to read them)
+
+ATOM-2  ok
+        it knows nothing about data ΓÇö naming a domain entity is the line that decides the tier
+
+ATOM-3  ok
+        an atom imports no other tier ΓÇö importing one means it is arranging children
+
+ATOM-4  ok
+        every atom exposes `isSkeleton` ΓÇö only the atom knows the space its value will occupy
+
+ATOM-4-shape  ok
+        a shimmer is a FRACTION of its container wide, and its height is never passable
+
+ATOM-5  ok
+        `className` on an atom carries POSITION only ΓÇö appearance is already a prop
+
+ATOM-5-type  ok
+        the prop should be `classNames?: Array<AllowedClassName>` ΓÇö a free string cannot be constrained
+
+ATOM-6  13 to judge
+        it decides its own appearance, and the class strings behind a variant stay private
+        (run with --suspects, or --rule 6, to read them)
+
+ATOM-8  ok
+        an atom that renders ANOTHER atom is a composite ΓÇö taking `items` is not the signal, rendering an atom is
+
+ATOM-9  ok
+        the vendor stops at `Base` ΓÇö so the library can be swapped in one file
+
+ATOM-10  ok
+        it takes the inspection SWITCH and never the part NAME ΓÇö an atom knows what it is
+
+ATOM-11  1 violation(s)
+        the app's copy is the blueprint minus the anatomy overlay ΓÇö and a change lands in both
+        atoms/buttons/ButtonGroup/ButtonGroup.tsx
+            the two trees differ beyond the overlay ΓÇö 0 line(s) only in the blueprint, 3 only in the app's copy
+
+ATOM-9  note: 105 file(s) above the atom tier import the vendor directly.
+        Each is a missing atom, counted by audit-composites.mjs rule 3, not here.
+
+ATOM-7  derived
+        it belongs here when it renders a value with no child of its own to place ΓÇö
+        satisfied exactly when ATOM-1, ATOM-2 and ATOM-8 are. Nothing separate to check.
+
+1 violation(s)
+30 candidate(s) needing judgement ΓÇö these do not fail the gate

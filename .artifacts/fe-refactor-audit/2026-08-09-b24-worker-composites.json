@@ -1,0 +1,499 @@
+{
+  "partition": "composites",
+  "manifest": [
+    ".storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+    ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+    ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+    ".storybook/components/composites/cards/HighlightCard/HighlightCard.tsx",
+    ".storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+    ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+    ".storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+    ".storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx",
+    ".storybook/components/composites/feedback/OneTimeReveal/OneTimeReveal.tsx",
+    ".storybook/components/composites/feedback/Toast/Toast.tsx",
+    ".storybook/components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup.tsx",
+    ".storybook/components/composites/form/InputTags/InputTags.tsx",
+    ".storybook/components/composites/form/SecretField/SecretField.tsx",
+    ".storybook/components/composites/layout/Disclosure/Disclosure.tsx",
+    ".storybook/components/composites/layout/Section/Section.tsx",
+    ".storybook/components/composites/lists/AuthorByline/AuthorByline.tsx",
+    ".storybook/components/composites/lists/AvatarGroup/AvatarGroup.tsx",
+    ".storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+    ".storybook/components/composites/lists/IdentityContentRow/IdentityContentRow.tsx",
+    ".storybook/components/composites/navigation/DoubleTabsCard/DoubleTabsCard.tsx",
+    ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+    ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+    ".storybook/components/composites/stats/CourseProgressBar/CourseProgressBar.tsx",
+    ".storybook/components/composites/stats/Legend/Legend.tsx",
+    ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+    ".storybook/components/composites/stats/ProgressRing/ProgressRing.tsx",
+    ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx",
+    ".storybook/components/composites/stats/StatGridCard/StatGridCard.tsx",
+    ".storybook/components/composites/stats/StatPair/StatPair.tsx",
+    ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx",
+    ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+    ".storybook/components/composites/text/InlineIconLabel/InlineIconLabel.tsx",
+    ".storybook/components/composites/text/MetaDotRow/MetaDotRow.tsx",
+    ".storybook/components/composites/text/PricePeriod/PricePeriod.tsx",
+    ".storybook/components/composites/viewers/FlowDiagram/FlowDiagram.tsx",
+    ".storybook/components/composites/viewers/RichText/RichText.tsx",
+    "src/components/composites/buttons/ActionBar/index.tsx",
+    "src/components/composites/buttons/InputButtonLike/index.tsx",
+    "src/components/composites/cards/HighlightCard/index.tsx",
+    "src/components/composites/chips/ChipGroup/index.tsx",
+    "src/components/composites/chips/HighlightChip/index.tsx",
+    "src/components/composites/chips/RemovableToken/index.tsx",
+    "src/components/composites/feedback/ConfirmDialog/index.tsx",
+    "src/components/composites/feedback/Toast/index.tsx",
+    "src/components/composites/form/ChoiceRadioGroup/index.tsx",
+    "src/components/composites/form/InputTags/index.tsx",
+    "src/components/composites/layout/Disclosure/index.tsx",
+    "src/components/composites/layout/Section/index.tsx",
+    "src/components/composites/lists/AuthorByline/index.tsx",
+    "src/components/composites/lists/AvatarGroup/index.tsx",
+    "src/components/composites/lists/IconLabelValueRow/index.tsx",
+    "src/components/composites/lists/IdentityContentRow/index.tsx",
+    "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+    "src/components/composites/navigation/Toolbar/index.tsx",
+    "src/components/composites/stats/CourseProgressBar/index.tsx",
+    "src/components/composites/stats/Legend/index.tsx",
+    "src/components/composites/stats/MetricCard/index.tsx",
+    "src/components/composites/stats/ProgressRing/index.tsx",
+    "src/components/composites/stats/SegmentBar/index.tsx",
+    "src/components/composites/stats/StatGridCard/index.tsx",
+    "src/components/composites/stats/StatPair/index.tsx",
+    "src/components/composites/stats/StatRibbon/index.tsx",
+    "src/components/composites/text/DotLabel/index.tsx",
+    "src/components/composites/text/InlineIconLabel/index.tsx",
+    "src/components/composites/text/MetaDotRow/index.tsx",
+    "src/components/composites/text/PricePeriod/index.tsx",
+    "src/components/composites/viewers/RichText/index.tsx"
+  ],
+  "changed": [
+    ".storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+    ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+    ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+    ".storybook/components/composites/cards/HighlightCard/HighlightCard.tsx",
+    ".storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+    ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+    ".storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+    ".storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx",
+    ".storybook/components/composites/feedback/OneTimeReveal/OneTimeReveal.tsx",
+    ".storybook/components/composites/feedback/Toast/Toast.tsx",
+    ".storybook/components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup.tsx",
+    ".storybook/components/composites/form/InputTags/InputTags.tsx",
+    ".storybook/components/composites/form/SecretField/SecretField.tsx",
+    ".storybook/components/composites/layout/Disclosure/Disclosure.tsx",
+    ".storybook/components/composites/layout/Section/Section.tsx",
+    ".storybook/components/composites/lists/AuthorByline/AuthorByline.tsx",
+    ".storybook/components/composites/lists/AvatarGroup/AvatarGroup.tsx",
+    ".storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+    ".storybook/components/composites/lists/IdentityContentRow/IdentityContentRow.tsx",
+    ".storybook/components/composites/navigation/DoubleTabsCard/DoubleTabsCard.tsx",
+    ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+    ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+    ".storybook/components/composites/stats/CourseProgressBar/CourseProgressBar.tsx",
+    ".storybook/components/composites/stats/Legend/Legend.tsx",
+    ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+    ".storybook/components/composites/stats/ProgressRing/ProgressRing.tsx",
+    ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx",
+    ".storybook/components/composites/stats/StatGridCard/StatGridCard.tsx",
+    ".storybook/components/composites/stats/StatPair/StatPair.tsx",
+    ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx",
+    ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+    ".storybook/components/composites/text/InlineIconLabel/InlineIconLabel.tsx",
+    ".storybook/components/composites/text/MetaDotRow/MetaDotRow.tsx",
+    ".storybook/components/composites/text/PricePeriod/PricePeriod.tsx",
+    ".storybook/components/composites/viewers/FlowDiagram/FlowDiagram.tsx",
+    ".storybook/components/composites/viewers/RichText/RichText.tsx",
+    "src/components/composites/buttons/ActionBar/index.tsx",
+    "src/components/composites/buttons/InputButtonLike/index.tsx",
+    "src/components/composites/cards/HighlightCard/index.tsx",
+    "src/components/composites/chips/ChipGroup/index.tsx",
+    "src/components/composites/chips/HighlightChip/index.tsx",
+    "src/components/composites/chips/RemovableToken/index.tsx",
+    "src/components/composites/feedback/ConfirmDialog/index.tsx",
+    "src/components/composites/feedback/Toast/index.tsx",
+    "src/components/composites/form/ChoiceRadioGroup/index.tsx",
+    "src/components/composites/form/InputTags/index.tsx",
+    "src/components/composites/layout/Disclosure/index.tsx",
+    "src/components/composites/layout/Section/index.tsx",
+    "src/components/composites/lists/AuthorByline/index.tsx",
+    "src/components/composites/lists/AvatarGroup/index.tsx",
+    "src/components/composites/lists/IconLabelValueRow/index.tsx",
+    "src/components/composites/lists/IdentityContentRow/index.tsx",
+    "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+    "src/components/composites/navigation/Toolbar/index.tsx",
+    "src/components/composites/stats/CourseProgressBar/index.tsx",
+    "src/components/composites/stats/Legend/index.tsx",
+    "src/components/composites/stats/MetricCard/index.tsx",
+    "src/components/composites/stats/ProgressRing/index.tsx",
+    "src/components/composites/stats/SegmentBar/index.tsx",
+    "src/components/composites/stats/StatGridCard/index.tsx",
+    "src/components/composites/stats/StatPair/index.tsx",
+    "src/components/composites/stats/StatRibbon/index.tsx",
+    "src/components/composites/text/DotLabel/index.tsx",
+    "src/components/composites/text/InlineIconLabel/index.tsx",
+    "src/components/composites/text/MetaDotRow/index.tsx",
+    "src/components/composites/text/PricePeriod/index.tsx",
+    "src/components/composites/viewers/RichText/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": ".storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/cards/HighlightCard/HighlightCard.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/feedback/OneTimeReveal/OneTimeReveal.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/feedback/Toast/Toast.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/form/InputTags/InputTags.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/form/SecretField/SecretField.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Disclosure/Disclosure.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/lists/AuthorByline/AuthorByline.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/lists/AvatarGroup/AvatarGroup.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/lists/IdentityContentRow/IdentityContentRow.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/navigation/DoubleTabsCard/DoubleTabsCard.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/CourseProgressBar/CourseProgressBar.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/Legend/Legend.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressRing/ProgressRing.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatGridCard/StatGridCard.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatPair/StatPair.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/text/InlineIconLabel/InlineIconLabel.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/text/MetaDotRow/MetaDotRow.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/text/PricePeriod/PricePeriod.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/FlowDiagram/FlowDiagram.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/RichText/RichText.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/buttons/ActionBar/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/buttons/InputButtonLike/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/cards/HighlightCard/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/chips/ChipGroup/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/chips/RemovableToken/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/feedback/ConfirmDialog/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/feedback/Toast/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/form/ChoiceRadioGroup/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/form/InputTags/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/layout/Disclosure/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/lists/AuthorByline/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/lists/AvatarGroup/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/lists/IdentityContentRow/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/navigation/Toolbar/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/CourseProgressBar/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/Legend/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/MetricCard/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/ProgressRing/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/SegmentBar/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/StatGridCard/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/StatPair/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/stats/StatRibbon/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/text/InlineIconLabel/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/text/MetaDotRow/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/text/PricePeriod/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    },
+    {
+      "file": "src/components/composites/viewers/RichText/index.tsx",
+      "action": "delete-dead-classNames-or-className-door",
+      "classification": "applied"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "PinnedTrack.classNames — restored; live consumer InnerLayout classNames={[\"flex-1\"]}",
+    "Button/Chip/Avatar/Divider/Typography/Stack/Grid classNames — live-api",
+    "SurfaceCard chrome/body + contentClassName residual",
+    "DrawerShell.contentClassName (nivoexpert LessonEditorPanel)",
+    "ShowcaseMockup.contentClassName (locked LearnLoopScroll)",
+    "MiniCart, CvPreview, PDFView, ModalShell semantic contracts",
+    "vendor-boundary Box + HeroUI wrappers",
+    "Nivo/Nivoexpert + locked paths + teacher holds",
+    "Badge/Logo/Spinner/Alert className (singular) still live at call sites"
+  ],
+  "evidence": [
+    "Fresh eslint inventory 2492 hits before edits",
+    "Revalidated zero JSX className AND classNames consumers on open-tag window",
+    "PinnedTrack demoted post-tsc (live InnerLayout consumer) and restored from HEAD",
+    "InputSearch sole remaining field classNames consumer migrated to Box className=w-full (vendor boundary)"
+  ],
+  "parity": "SB↔src twins updated together where twins exist",
+  "verification": {},
+  "regressions": []
+}

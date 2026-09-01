@@ -1,0 +1,72 @@
+{
+  "partition": "storybook-only",
+  "generatedAt": "2026-08-06T21:49:03.294Z",
+  "checkpoint": "27127bb5",
+  "fileCount": 2,
+  "totalPartitionFiles": 2,
+  "totalPartitionMessages": 2,
+  "capped": false,
+  "allowedClassifications": [
+    "safe-mechanical",
+    "safe-structural"
+  ],
+  "holdClassifications": [
+    "semantic-hold",
+    "vendor-hold",
+    "teacher-hold",
+    "locked-path",
+    "ambiguous"
+  ],
+  "files": [
+    {
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "twin": "src/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/handler-on-prefix",
+          "line": 113,
+          "column": 17,
+          "message": "`handleSide` → rename to `onSide` (handlers are `onXxx`, not `handleXxx` — react-idioms §7).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "twin": "src/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/handler-on-prefix",
+          "line": 277,
+          "column": 13,
+          "message": "`handleSide` → rename to `onSide` (handlers are `onXxx`, not `handleXxx` — react-idioms §7).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ]
+    }
+  ]
+}

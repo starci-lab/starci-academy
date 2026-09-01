@@ -1,0 +1,730 @@
+{
+  "result": {
+    "batch": "B35c",
+    "checkpoint": "02011807",
+    "filesAudited": 301,
+    "regressions": [
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"card-caption\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"title-subtitle\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\" /                             principle=\"name-handle\" /                     () => <Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping"
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/RatingBar/RatingBar.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"card-caption\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                                                     principle=\"flex-action\""
+      },
+      {
+        "kind": "raw-host-replacing-raw-host",
+        "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "evidence": "typed layout removed (<StackV) and raw host with className added (<div className=\"hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app)"
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:  * `RailShell` sticky uses `top-24`, not `top-16`). /             principle=\"group-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                         principle=\"title-subtitle\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"group-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"layout-split\" /                 principle=\"page-pad\" /                 explain=\"Page chrome inset — not card-padding, because this pads the whole page rather than a nested card "
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                         principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                             principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"identity\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"icon-text\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"title-subtitle\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"card-caption\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/community/Discussion/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"group-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"group-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"group-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                                         principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"group-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/feed/CommentThread/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/feed/Composer/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/feed/FeedItem/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"block-boundary\""
+      },
+      {
+        "kind": "classname-removed-replaced-by-local-css",
+        "path": "src/components/blocks/form/SearchBar/component.tsx",
+        "evidence": "public className(s) door removed; novel host className literals: w-full"
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/learn/FoundationHeader/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/learn/RatingBar/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"content-row\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/learn/VoiceHero/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"card-caption\""
+      },
+      {
+        "kind": "classname-removed-replaced-by-local-css",
+        "path": "src/components/blocks/navigation/Navbar/index.tsx",
+        "evidence": "public className(s) door removed; novel host className literals: sticky top-0 z-50 border-b border-default bg-surface | inline-flex cursor-pointer"
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/navigation/Navbar/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"icon-text\""
+      },
+      {
+        "kind": "raw-host-replacing-raw-host",
+        "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+        "evidence": "typed layout removed (<StackV) and raw host with className added (<div className=\"hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app)"
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:  * `RailShell` sticky uses `top-24`, not `top-16`). /             principle=\"group-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                                             principle=\"name-handle\" /                                                         align=\"center\""
+      },
+      {
+        "kind": "classname-removed-replaced-by-local-css",
+        "path": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+        "evidence": "public className(s) door removed; novel host className literals: flex justify-center"
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"label-field\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/layouts/Footer/index.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                     principle=\"block-boundary\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/overlays/drawers/E2eResultDrawer/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                         principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"title-subtitle\" /                 principle=\"sibling-stack\" /                                         principle=\"title-subtitle\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:             principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/overlays/modals/LanguageModal/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/overlays/modals/MaintenanceModal/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                                         principle=\"flex-action-between\""
+      },
+      {
+        "kind": "gap-align-padding-beside-principle",
+        "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+        "evidence": "principle co-located with gap/align/padding CSS or props; sample:                 principle=\"sibling-stack\""
+      },
+      {
+        "kind": "skeleton-loading-behavior-drift",
+        "path": "src/components/pages/CommunityChatPage/index.tsx",
+        "evidence": "parallel skeleton component usage removed without isSkeleton replacement in this file"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminMpegDashTestPage/map.tsx",
+        "evidence": "deleted export RENDERER_TYPE_OPTION_MAP still imported from old path in: src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminMpegDashTestPage/map.tsx",
+        "evidence": "deleted export RENDERER_TYPE_OPTIONS still imported from old path in: src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminMpegDashTestPage/types/admin-mpeg-dash-test.ts",
+        "evidence": "deleted export RendererTypeOption still imported from old path in: src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminMpegDashTestPage/types/admin-mpeg-dash-test.ts",
+        "evidence": "deleted export QuickTestUrl still imported from old path in: src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx, src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx, src/components/pages/AdminMpegDashTestPage/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminUploadVideoPage/enums/upload-status.ts",
+        "evidence": "deleted export UploadStatus still imported from old path in: src/components/pages/AdminUploadVideoPage/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminUploadVideoPage/map.tsx",
+        "evidence": "deleted export UPLOAD_STATUS_ICON_MAP still imported from old path in: src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminUploadVideoPage/map.tsx",
+        "evidence": "deleted export UPLOAD_STATUS_TRACK_CLASS_MAP still imported from old path in: src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminUploadVideoPage/map.tsx",
+        "evidence": "deleted export UPLOAD_STATUS_FILL_CLASS_MAP still imported from old path in: src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminUploadVideoPage/types/admin-upload-video.ts",
+        "evidence": "deleted export ProviderUploadStatus still imported from old path in: src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx, src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx, src/components/pages/AdminUploadVideoPage/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/AdminUploadVideoPage/types/admin-upload-video.ts",
+        "evidence": "deleted export ProcessResult still imported from old path in: src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx, src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx, src/components/pages/AdminUploadVideoPage/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/ArchitecturePage/hooks/useSystemHealthPoll.ts",
+        "evidence": "deleted export HealthByName still imported from old path in: src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx, src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx, src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx, src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/ArchitecturePage/modules.ts",
+        "evidence": "deleted export ARCHITECTURE_MODULES still imported from old path in: src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx, src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/ArchitecturePage/modules.ts",
+        "evidence": "deleted export ARCHITECTURE_MODULE_MAP still imported from old path in: src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx, src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/BlogListPage/Masthead/scene.ts",
+        "evidence": "deleted export BACKEND_INFRA_SCENE still imported from old path in: src/components/pages/BlogListPage/Masthead/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/DashboardPage/ContinueLearning/useResumeItems.ts",
+        "evidence": "deleted export RESUME_LIMIT still imported from old path in: src/components/pages/DashboardPage/ContinueLearning/component.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/DashboardPage/ContinueLearning/useResumeItems.ts",
+        "evidence": "deleted export ResumeItem still imported from old path in: src/components/pages/DashboardPage/ContinueLearning/component.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/DashboardPage/WeeklyGoals/map.tsx",
+        "evidence": "deleted export KPI_ICON_MAP still imported from old path in: src/components/pages/DashboardPage/WeeklyGoals/component.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/DashboardPage/WeeklyGoals/map.tsx",
+        "evidence": "deleted export KPI_ORDER still imported from old path in: src/components/pages/DashboardPage/WeeklyGoals/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/DashboardPage/WeeklyGoals/map.tsx",
+        "evidence": "deleted export DEFAULT_KPI_TARGETS still imported from old path in: src/components/pages/DashboardPage/WeeklyGoals/index.tsx, src/components/pages/KpiPage/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/FlashcardsPage/useFlashcardNav.ts",
+        "evidence": "deleted export FlashcardMode still imported from old path in: src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx, src/components/pages/FlashcardsPage/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/LandingPage/KnowledgeGraph/data.ts",
+        "evidence": "deleted export TRACK_CONFIG still imported from old path in: src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx, src/components/pages/LandingPage/KnowledgeGraph/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/LandingPage/KnowledgeGraph/data.ts",
+        "evidence": "deleted export KNOWLEDGE_NODES still imported from old path in: src/components/pages/LandingPage/KnowledgeGraph/index.tsx, src/components/pages/LandingPage/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/LandingPage/KnowledgeGraph/data.ts",
+        "evidence": "deleted export KNOWLEDGE_EDGES still imported from old path in: src/components/pages/LandingPage/KnowledgeGraph/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/LandingPage/KnowledgeGraph/data.ts",
+        "evidence": "deleted export NODE_DEGREE still imported from old path in: src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx, src/components/pages/LandingPage/KnowledgeGraph/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/LandingPage/KnowledgeGraph/data.ts",
+        "evidence": "deleted export TrackKey still imported from old path in: src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx, src/components/pages/LandingPage/KnowledgeGraph/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/OauthRedirectPage/enums/oauth-action.ts",
+        "evidence": "deleted export OauthAction still imported from old path in: src/app/[locale]/authentication/github/login/page.tsx, src/app/[locale]/authentication/github/logout/page.tsx, src/app/[locale]/authentication/google/login/page.tsx, src/app/[locale]/authentication/google/logout/page.tsx, src/app/[locale]/authentication/google/page.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/PracticeHubPage/hooks/usePracticeView.ts",
+        "evidence": "deleted export PracticeView still imported from old path in: src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx, src/components/pages/PracticeHubPage/PracticeRail/index.tsx"
+      },
+      {
+        "kind": "public-api-removed-with-live-consumer",
+        "path": "src/components/pages/SepayCheckoutPage/types/sepay-checkout.ts",
+        "evidence": "deleted export BankDetails still imported from old path in: src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx"
+      },
+      {
+        "kind": "storybook-src-drift",
+        "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+        "evidence": "classNames burn asymmetry vs src/components/blocks/commerce/TrialConversionStrip/component.tsx: sbBurn=true srcBurn=false sbStill=false srcStill=false"
+      },
+      {
+        "kind": "storybook-src-drift",
+        "path": ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+        "evidence": "prop 'className' present in SB=true vs src twin src/components/blocks/learn/ContentAiSelectionAsk/index.tsx=false"
+      },
+      {
+        "kind": "box-fake-lint-escape",
+        "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        "evidence": "Box introduced while raw host removed; sample + <Box"
+      },
+      {
+        "kind": "box-fake-lint-escape",
+        "path": "src/components/blocks/feed/EntityLink/index.tsx",
+        "evidence": "Box introduced while raw host removed; sample + <Box"
+      },
+      {
+        "kind": "skeleton-loading-behavior-drift",
+        "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+        "evidence": "isSkeleton expressions changed: [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"] -> [\"isSkeleton={titleSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"]"
+      },
+      {
+        "kind": "skeleton-loading-behavior-drift",
+        "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+        "evidence": "isSkeleton expressions changed: [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"] -> [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"]"
+      },
+      {
+        "kind": "skeleton-loading-behavior-drift",
+        "path": ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+        "evidence": "isSkeleton expressions changed: [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"] -> [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"]"
+      },
+      {
+        "kind": "skeleton-loading-behavior-drift",
+        "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+        "evidence": "isSkeleton expressions changed: [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"] -> [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"]"
+      },
+      {
+        "kind": "skeleton-loading-behavior-drift",
+        "path": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+        "evidence": "isSkeleton expressions changed: [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"] -> [\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\",\"isSkeleton={isSkeleton}\"]"
+      }
+    ],
+    "regressionCount": 103,
+    "ok": false,
+    "notes": [
+      "product-change diffs parsed: 200",
+      "deletion diffs parsed: 55",
+      "new files appended as full adds: 46",
+      "no src twin found for .storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "high-risk spot-check set size: 55",
+      "spot-check sample: src/components/blocks/community/Discussion/CommentComposer.tsx, src/components/layouts/Navbar/NavLinks/index.tsx, .storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx, src/components/blocks/skeleton/PaginationSkeleton/index.tsx, .storybook/components/atoms/feedback/Alert/Alert.tsx, .storybook/components/atoms/navigation/Tabs/TabsExtended.tsx, .storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx, .storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx, .storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx, .storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx, .storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx, .storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx, .storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx, .storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx, .storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+      "false-positive suppressed classname-local-css at src/components/blocks/async/InfiniteScrollSentinel/index.tsx: dead classNames door burn keeping prior internal cn literals",
+      "retainedProduct=301 productChanges=200 deletions=55 newFiles=46",
+      "suspectsRaw=10",
+      "highRiskFilesSpotChecked=55"
+    ],
+    "meta": {
+      "generatedAt": "2026-08-08T15:20:17.461Z",
+      "spotCheckPaths": [
+        "src/components/blocks/community/Discussion/CommentComposer.tsx",
+        "src/components/layouts/Navbar/NavLinks/index.tsx",
+        ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+        ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+        ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+        ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+        ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+        ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+        ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+        ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+        ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+        ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+        ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+        ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+        ".storybook/components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner.tsx",
+        ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+        ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+        ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+        ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+        ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+        ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+        ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+        ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+        "src/components/atoms/feedback/Alert/index.tsx",
+        "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+        "src/components/blocks/ai/QuotaBar/index.tsx",
+        "src/components/blocks/async/EmptyContent/index.tsx",
+        "src/components/blocks/async/ErrorContent/index.tsx",
+        "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+        "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "src/components/blocks/cards/CheckListCard/index.tsx",
+        "src/components/blocks/cards/CourseCard/component.tsx",
+        "src/components/blocks/cards/CrossListCard/index.tsx",
+        "src/components/blocks/cards/SummaryCard/index.tsx",
+        "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/blocks/community/Discussion/CommentItem.tsx",
+        "src/components/blocks/community/Discussion/index.tsx",
+        "src/components/blocks/dashboard/DailyQuest/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/feed/Composer/index.tsx",
+        "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+        "src/components/blocks/form/SearchBar/component.tsx",
+        "src/components/blocks/form/SearchBar/index.tsx",
+        "src/components/blocks/layout/StickyBottomBar/index.tsx",
+        "src/components/blocks/layout/SubPageHeader/component.tsx",
+        "src/components/blocks/learn/ContentModeNav/index.tsx",
+        "src/components/blocks/learn/CourseBrief/index.tsx",
+        "src/components/blocks/learn/CourseQaComposer/index.tsx",
+        "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+        "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+        "src/components/blocks/learn/VoiceHero/index.tsx"
+      ],
+      "suspectCount": 10
+    }
+  },
+  "suspects": [
+    {
+      "kind": "skeleton-loading-behavior-drift",
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "rem": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ],
+      "add": [
+        "isSkeleton={titleSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ]
+    },
+    {
+      "kind": "skeleton-loading-behavior-drift",
+      "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "rem": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ],
+      "add": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ]
+    },
+    {
+      "kind": "skeleton-loading-behavior-drift",
+      "path": ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+      "rem": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ],
+      "add": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ]
+    },
+    {
+      "kind": "box-fake-lint-escape",
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "evidence": "Box introduced while raw host removed; sample + <Box"
+    },
+    {
+      "kind": "raw-host-replacing-raw-host",
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "remSample": [
+        "    <span className={cn(\"inline-flex items-center gap-2\", className)}>"
+      ],
+      "addSample": [
+        "    <span className=\"inline-flex items-center gap-2\">"
+      ]
+    },
+    {
+      "kind": "box-fake-lint-escape",
+      "path": "src/components/blocks/feed/EntityLink/index.tsx",
+      "evidence": "Box introduced while raw host removed; sample + <Box"
+    },
+    {
+      "kind": "raw-host-replacing-raw-host",
+      "path": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "remSample": [
+        "        <div className={cn(\"fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-4 py-3\", className)}>"
+      ],
+      "addSample": [
+        "        <div className=\"fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-4 py-3\">"
+      ]
+    },
+    {
+      "kind": "skeleton-loading-behavior-drift",
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "rem": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ],
+      "add": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ]
+    },
+    {
+      "kind": "skeleton-loading-behavior-drift",
+      "path": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "rem": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ],
+      "add": [
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}",
+        "isSkeleton={isSkeleton}"
+      ]
+    },
+    {
+      "kind": "raw-host-replacing-raw-host",
+      "path": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "remSample": [
+        "        <div className={cn(\"flex justify-center\", className)}>"
+      ],
+      "addSample": [
+        "        <div className=\"flex justify-center\">"
+      ]
+    }
+  ]
+}

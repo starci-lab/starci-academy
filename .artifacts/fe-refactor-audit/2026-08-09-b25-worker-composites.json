@@ -1,0 +1,34 @@
+{
+  "partition": "composites",
+  "manifest": [
+    "src/components/composites/lists/UserCell/index.tsx"
+  ],
+  "changed": [
+    "src/components/composites/lists/UserCell/index.tsx"
+  ],
+  "applied": [
+    {
+      "kind": "safe-noop",
+      "file": "src/components/composites/lists/UserCell/index.tsx",
+      "change": "Removed classNames={[\"w-1/2\"]} from Typography isSkeleton — duplicate of Typography skeleton default `inline-block w-1/2 rounded`",
+      "consumerSearch": "rg 'isSkeleton.*classNames=\\{\\[\"w-1/2\"\\]\\}' src .storybook → only these sites; SB twins already omit",
+      "owningFrame": "Typography (atoms) skeleton branch",
+      "principle": null
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "Other Typography/Skeleton/ProgressMeter classNames on composites stay live-prop (no width/flex principle)"
+  ],
+  "evidence": {
+    "typographySkeletonDefault": "cn(\"inline-block w-1/2 rounded\", SKEL_H[size], classNames) in SB+src Typography"
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "SB UserCell twin already without redundant w-1/2; src aligned to SB contract"
+  },
+  "verification": {
+    "local": "deferred to aggregate"
+  },
+  "regressions": []
+}

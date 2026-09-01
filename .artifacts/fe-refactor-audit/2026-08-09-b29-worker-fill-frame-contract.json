@@ -1,0 +1,45 @@
+{
+  "partition": "fill-frame-contract",
+  "manifest": [
+    ".storybook/components/frames/FillAvailable/FillAvailable.tsx",
+    ".storybook/stories/frames/FillAvailable/FillAvailable.stories.tsx",
+    "src/components/frames/FillAvailable/index.tsx",
+    ".storybook/components/frames/_principles.ts",
+    "src/components/frames/_principles.ts",
+    ".storybook/components/frames/_principle-style.ts",
+    "src/components/frames/_principle-style.ts",
+    ".storybook/test-runner/patterns.mjs"
+  ],
+  "consumerEvidence": {
+    "note": "Frame + token only; consumers owned by fill-learn-consumers / fill-page-consumers",
+    "provenValue": "min-h-0 @app-lg:flex-1",
+    "targets": ["ContentMap", "LeaderboardCategoryRail", "MilestoneOutline", "ArchitectureRail", "PracticeRail"]
+  },
+  "valueSet": ["min-h-0 @app-lg:flex-1"],
+  "oldApi": "callers passed className=\"min-h-0 @app-lg:flex-1\" onto rail children",
+  "newApi": "FillAvailable at=\"lg\" body={ComponentTypeWithSkeleton}; fixed principle flex-fill; no className/gap/padding/align props",
+  "changed": [
+    ".storybook/components/frames/FillAvailable/FillAvailable.tsx",
+    ".storybook/stories/frames/FillAvailable/FillAvailable.stories.tsx",
+    "src/components/frames/FillAvailable/index.tsx",
+    ".storybook/components/frames/_principles.ts",
+    "src/components/frames/_principles.ts",
+    ".storybook/components/frames/_principle-style.ts",
+    "src/components/frames/_principle-style.ts",
+    ".storybook/test-runner/patterns.mjs"
+  ],
+  "holds": [
+    {
+      "item": "at=base",
+      "reason": "No unlocked exact min-h-0 flex-1 consumer on the five fill targets; MockInterviewWorkspace locked"
+    },
+    {
+      "item": "h-full / percentage heights",
+      "reason": "Different contracts — out of FillAvailable scope"
+    }
+  ],
+  "parity": "SB FillAvailable authored first; src twin mirrored",
+  "verification": { "local": "deferred-coordinator" },
+  "regressions": [],
+  "overlapCheck": "pass — frame/token files not in consumer worker manifests"
+}

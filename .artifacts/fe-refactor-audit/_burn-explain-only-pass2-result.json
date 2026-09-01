@@ -1,0 +1,95 @@
+{
+  "fixed": 30,
+  "changedFiles": 22,
+  "changed": [
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\PriceTag\\PriceTagBase.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ChallengeDeliverableList\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentPager\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LeaderboardToolbar\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\MilestoneUpNextCard\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\TaskSubmissionPanel\\EvaluateActionRow\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\layout\\Page\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\PremiumGateModal\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogListPage\\FeaturedPost\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CommunityChatPage\\ChatPane\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ContentPage\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\CourseContents\\component.tsx",
+      "fileFixed": 3
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\DueReviewHero\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardDeckList\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardQuizResult\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardReviewModeModal\\index.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardsPage\\FlashcardStatsStrip\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LeaguePage\\GlobalBoard\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\LeaguePage\\WeeklyBoard\\component.tsx",
+      "fileFixed": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "fileFixed": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PrivacySettingsPage\\index.tsx",
+      "fileFixed": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\RewardsPage\\RewardCatalog\\index.tsx",
+      "fileFixed": 5
+    }
+  ],
+  "hardCases": []
+}

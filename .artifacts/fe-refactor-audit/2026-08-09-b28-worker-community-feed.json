@@ -1,0 +1,102 @@
+{
+  "worker": "community-feed",
+  "manifest": [
+    "src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "src/components/blocks/community/Discussion/index.tsx",
+    "src/components/blocks/feed/Composer/index.tsx"
+  ],
+  "consumers": [
+    {
+      "component": "CommentComposer",
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "before": [
+        {
+          "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+          "line": 186,
+          "prop": "className",
+          "value": "w-full",
+          "ownership": "parent-placement"
+        }
+      ],
+      "after": []
+    },
+    {
+      "component": "Discussion",
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "before": [
+        {
+          "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+          "prop": "className",
+          "ownership": "dynamic"
+        }
+      ],
+      "after": [
+        {
+          "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+          "prop": "className",
+          "ownership": "dynamic"
+        }
+      ]
+    },
+    {
+      "component": "Composer",
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "before": [
+        {
+          "file": "src/components/blocks/feed/CommentThread/index.tsx",
+          "prop": "className",
+          "value": "pl-9",
+          "ownership": "intrinsic"
+        }
+      ],
+      "after": [
+        {
+          "file": "src/components/blocks/feed/CommentThread/index.tsx",
+          "prop": "className",
+          "value": "pl-9",
+          "ownership": "intrinsic"
+        }
+      ]
+    }
+  ],
+  "valueSet": {
+    "CommentComposer": ["w-full"],
+    "Discussion": ["className"],
+    "Composer": ["pl-9"]
+  },
+  "ownership": {
+    "CommentComposer": ["parent-placement"],
+    "Discussion": ["dynamic"],
+    "Composer": ["intrinsic"]
+  },
+  "oldApi": {
+    "CommentComposer": "WithClassNames<undefined> — className on root + collapsed trigger",
+    "Discussion": "WithClassNames<undefined> — dynamic passthrough",
+    "Composer": "WithClassNames<undefined> — pl-9 thread indent"
+  },
+  "newApi": {
+    "CommentComposer": "no className door; w-full baked on expanded root and collapsed trigger",
+    "Discussion": "unchanged (hold)",
+    "Composer": "unchanged (hold)"
+  },
+  "changed": [
+    "src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "src/components/blocks/learn/QaMessageBubble/index.tsx"
+  ],
+  "holds": [
+    "Discussion — dynamic className passthrough from ContentBodyV2/Discussion",
+    "Composer — pl-9 thread indent; needs indentLevel teacher axis",
+    "FollowButton and other manifest-adjacent doors outside B28 apply scope"
+  ],
+  "parity": {
+    "CommentComposer": "src-only; SB twin is ContentCommentComposer (separate block, no className door on CommentComposer)",
+    "Discussion": "n/a",
+    "Composer": "n/a"
+  },
+  "verification": {
+    "eslint": "read_lints clean on changed src files",
+    "tsc": "deferred to coordinator chunk"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — CommentComposer/QaMessageBubble cross-worker touch is consumer-only; manifest files unchanged except CommentComposer"
+}

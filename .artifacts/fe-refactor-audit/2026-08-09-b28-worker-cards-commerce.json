@@ -1,0 +1,116 @@
+{
+  "worker": "cards-commerce",
+  "manifest": [
+    "src/components/blocks/cards/SectionCard/index.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+  ],
+  "consumers": [
+    {
+      "component": "PhaseScarcityNote",
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+      "before": [
+        {
+          "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+          "line": 108,
+          "prop": "classNames",
+          "value": "self-center",
+          "ownership": "parent-placement"
+        }
+      ],
+      "after": []
+    },
+    {
+      "component": "SectionCard",
+      "file": "src/components/blocks/cards/SectionCard/index.tsx",
+      "before": [
+        {
+          "file": "src/components/blocks/learn/QuizCard/index.tsx",
+          "prop": "classNames",
+          "ownership": "dynamic"
+        }
+      ],
+      "after": [
+        {
+          "file": "src/components/blocks/learn/QuizCard/index.tsx",
+          "prop": "classNames",
+          "ownership": "dynamic"
+        }
+      ]
+    },
+    {
+      "component": "TierCardBase",
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "before": [
+        {
+          "prop": "className",
+          "ownership": "mixed"
+        }
+      ],
+      "after": [
+        {
+          "prop": "className",
+          "ownership": "mixed"
+        }
+      ]
+    },
+    {
+      "component": "LeaderboardListCard",
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "before": [
+        {
+          "prop": "className",
+          "ownership": "dynamic"
+        }
+      ],
+      "after": [
+        {
+          "prop": "className",
+          "ownership": "dynamic"
+        }
+      ]
+    }
+  ],
+  "valueSet": {
+    "PhaseScarcityNote": ["self-center"],
+    "SectionCard": ["classNames", "size-5 text-accent-soft-foreground"],
+    "TierCardBase": ["size-6 shrink-0 text-accent-soft-foreground", "border-accent ring-2 ring-accent/30"],
+    "LeaderboardListCard": ["className"]
+  },
+  "ownership": {
+    "PhaseScarcityNote": ["parent-placement"],
+    "SectionCard": ["dynamic", "intrinsic"],
+    "TierCardBase": ["mixed", "intrinsic"],
+    "LeaderboardListCard": ["dynamic"]
+  },
+  "oldApi": {
+    "PhaseScarcityNote": "classNames?: Array<AllowedClassName> on connected + _PhaseScarcityNote; forwarded to Cluster/Skeleton"
+  },
+    "newApi": {
+    "PhaseScarcityNote": "no classNames door; EnrollGate SB consumer wraps with Box className=\"self-center\""
+  },
+  "changed": [
+    ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+    ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/component.tsx"
+  ],
+  "holds": [
+    "SectionCard — dynamic classNames passthrough (4 consumers)",
+    "TierCardBase — mixed intrinsic tokens",
+    "LeaderboardListCard — dynamic className"
+  ],
+  "parity": {
+    "PhaseScarcityNote": "SB twin updated first (EnrollGate consumer + PhaseScarcityNote.tsx); src connected/presentational halves stripped in same batch",
+    "SectionCard": "hold",
+    "TierCardBase": "hold",
+    "LeaderboardListCard": "hold"
+  },
+  "verification": {
+    "eslint": "read_lints clean on changed src files",
+    "tsc": "deferred to coordinator chunk"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — PhaseScarcityNote src consumers (EnrollGate, ContentPaywall, TrialConversionStrip, PremiumGateModal) never passed classNames; only SB EnrollGate did"
+}

@@ -1,0 +1,31 @@
+{
+  "partition": "skeleton-redesign-proposal",
+  "consumers": {
+    "sourceArtifact": ".artifacts/fe-refactor-audit/2026-08-08-contract-worker-skeleton-contracts.json",
+    "uniqueFiles": 23,
+    "holds": 23
+  },
+  "currentSemantics": "Hand-rolled parallel skeleton leaves / inline isSkeleton ternaries / co-located skeleton trees outside COMPOSITE-10 atom mirrors.",
+  "proposedContract": {
+    "future": "Replace hand-rolled skeleton leaves once leaf atoms expose isSkeleton mirrors (COMPOSITE-10); thread isSkeleton down one tree",
+    "doNotThisBatch": [
+      "Change loading behavior",
+      "Redesign ContinueCard / PDF / MiniCart / CvPreview skeleton paths",
+      "Invent new skeleton principles"
+    ]
+  },
+  "existingCanonEvidence": {
+    "COMPOSITE-8": "slots are component references receiving isSkeleton",
+    "COMPOSITE-10": "atom draws its own shimmer shape",
+    "no-parallel-skeleton": "eslint flags hand-kept second trees"
+  },
+  "storybookSrcParity": "varies per twin — redesign proposal only",
+  "implementationReady": false,
+  "implementationReadyReason": "Redesign proposal only; loading behavior must not change this batch.",
+  "changed": [],
+  "holds": [
+    "skeleton-contracts-redesign"
+  ],
+  "sourceEdits": false,
+  "regressions": []
+}

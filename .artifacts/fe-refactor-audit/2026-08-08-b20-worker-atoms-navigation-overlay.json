@@ -1,0 +1,16 @@
+{
+  "partition": "atoms-navigation-overlay",
+  "changed": [],
+  "skipped": "No proven-dead doors selected; Accordion/Breadcrumbs/Link/Pagination classNames held.",
+  "holds": [
+    "navigation atom classNames doors"
+  ],
+  "evidence": [],
+  "newVariants": [],
+  "vendorBoundaries": [],
+  "verification": {
+    "tsc": "n/a",
+    "eslintMaxWarnings0": "n/a"
+  },
+  "regressions": []
+}

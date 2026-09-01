@@ -1,0 +1,1071 @@
+{
+  "partition": "pages-special",
+  "changed": [
+    {
+      "path": ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "scrubbed authoring emoji arrows"
+    },
+    {
+      "path": ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "handleAskQuestion -> onAskQuestion with prop alias"
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "handleBlur -> onBlur"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "handleSelect -> onSelect"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReviewHero/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "handlePressStart -> onPressStart"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "merged handleRate into onRate"
+    },
+    {
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "scrubbed authoring emoji"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/index.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "scrubbed authoring emoji"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FlashcardReview/component.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "scrubbed authoring emoji"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "scrubbed authoring emoji"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/useFlashcardNav.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "scrubbed authoring emoji"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named ComponentRowProps/ModuleRowProps"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named chip props types"
+    },
+    {
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named inline param types"
+    },
+    {
+      "path": "src/components/pages/CvGalleryPage/CvGallery/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named card props types"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named inline param type"
+    },
+    {
+      "path": "src/components/pages/MindMapPage/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named MindMapWorkspaceEmptyProps; handleSide held"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named ProfilePinnedActionProps"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named inline param type"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named inline param type"
+    },
+    {
+      "path": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named inline param type"
+    },
+    {
+      "path": "src/components/pages/ProfilePublicCvPage/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named inline param type"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named inline param type"
+    },
+    {
+      "path": "src/components/pages/FlashcardReviewPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "clear Box roots got identity"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/components/pages/ContentPage/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "closed-contentpage-box"
+    }
+  ],
+  "holds": [
+    {
+      "path": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "handleSide is ResizableRail JSX API prop — outside rename scope"
+    },
+    {
+      "path": "src/components/pages/MindMapPage/component.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "handleSide is ResizableRail JSX API prop — outside rename scope"
+    },
+    {
+      "path": "src/components/pages/JobDetailPage/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/JobDetailPage/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:span,div"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:button,div"
+    },
+    {
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:section"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SectionCard"
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardItem,LabeledCard"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/KpiPage/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/CommunityChatPage/ChatPane/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:ReactFlow"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Card,Callout"
+    },
+    {
+      "path": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/LandingPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Tooltip,LabeledCard"
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:span"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:a,div"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/SessionsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-host:Box,form"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCtaButtons/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "unclear-identity-root:"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "unclear-identity-root:"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "unclear-identity-root:"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardItem"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Accordion"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseTrustStats/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Link"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Modal"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SubmitSuccess"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/CommunityFeedPage/CommunityComposer/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Card"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactFaq/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/ContactPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:PageContainer"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:StickyBottomBar"
+    },
+    {
+      "path": "src/components/pages/CvGalleryPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCard"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ContinueLearning/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledList"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardRow"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/EditProfilePage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-host:AsyncContentError,HeadhuntingCompanyLoadingState,div,Box"
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:ProfileSectionGuard"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardItem"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:ProfileSectionGuard"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:ProfileSectionGuard"
+    },
+    {
+      "path": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:ProfileSectionGuard"
+    },
+    {
+      "path": "src/components/pages/CommunityChatPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:PageContainer"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:PageHeader"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardItem"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LeaderboardListCard"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyBreadcrumbs/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Breadcrumbs"
+    },
+    {
+      "path": "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardItem"
+    },
+    {
+      "path": "src/components/pages/JobListPage/JobListRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardItem"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:LabeledCard,Typography"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/CommunityFeedPage/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:CourseCard"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "async-root"
+    },
+    {
+      "path": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "unclear-identity-root:"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:SurfaceListCardItem"
+    }
+  ],
+  "verification": {
+    "eslintOnChanged": {
+      "cleared": [
+        "no-emoji-in-source",
+        "no-inline-parameter-type",
+        "handler-on-prefix (except ResizableRail handleSide)",
+        "require-identity-root on FlashcardReviewPage"
+      ],
+      "remainOnChangedFiles": {
+        "starci-fe/require-identity-root": 8,
+        "starci-fe/handler-on-prefix": 1,
+        "note": "hard identity roots + handleSide API prop — recorded as holds"
+      }
+    },
+    "tsc": {
+      "result": "preexisting-error-outside-partition",
+      "detail": "src/components/blocks/marketing/MicroservicesScene/index.tsx TS1382 — not in this manifest"
+    }
+  },
+  "regressions": [],
+  "counts": {
+    "changed": 24,
+    "skipped": 1,
+    "holds": 123,
+    "cap": 40
+  }
+}

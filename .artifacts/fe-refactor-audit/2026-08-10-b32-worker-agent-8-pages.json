@@ -1,0 +1,145 @@
+{
+  "batch": "32",
+  "checkpoint": "9e86cbdf",
+  "worker": "agent-8-pages",
+  "status": "partial",
+  "manifestCount": 40,
+  "eslintBefore": {
+    "total": 40,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 38,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/require-frame-self-declare": 1
+    }
+  },
+  "eslintAfter": {
+    "total": 39,
+    "byRule": {
+      "starci-fe/page-folder-two-files-only": 38,
+      "starci-fe/no-host-element-at-sentence-tier": 1
+    }
+  },
+  "fixed": [
+    {
+      "file": "src/components/pages/AiSubscriptionPage/component.tsx",
+      "rules": ["starci-fe/require-frame-self-declare"],
+      "change": "Declared principle=\"block-boundary\" + explain on page-root StackV (header vs TierGrid seam)."
+    }
+  ],
+  "held": [
+    {
+      "file": ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+      "rules": ["starci-fe/no-host-element-at-sentence-tier"],
+      "reason": "Device preview uses arbitrary px width + @container + dashed fixture chrome. No named vocabulary owns that mount; Box+fake principle would be false closure. Propose: move deviceLeaf out of sentence-tier pages into .storybook utils/fixture helper, or add a typed DeviceFixture frame (vocabulary owner — outside this manifest).",
+      "proposedTarget": ".storybook/utils/device-fixture (or frames DeviceFixture) — not in agent-8-pages manifest"
+    },
+    {
+      "cluster": "page-folder-two-files-only / helpers+maps",
+      "files": [
+        "src/components/pages/AdminMpegDashTestPage/map.tsx",
+        "src/components/pages/AdminUploadVideoPage/map.tsx",
+        "src/components/pages/AdminUploadVideoPage/enums/index.ts",
+        "src/components/pages/AdminUploadVideoPage/enums/upload-status.ts",
+        "src/components/pages/ArchitecturePage/constants.ts",
+        "src/components/pages/ArchitecturePage/metricsFormat.ts",
+        "src/components/pages/ArchitecturePage/modules.ts",
+        "src/components/pages/ArchitecturePage/ArchitectureMap/scene.ts",
+        "src/components/pages/ArchitecturePage/ArchitectureMap/future-scene.ts",
+        "src/components/pages/BlogListPage/Masthead/scene.ts",
+        "src/components/pages/ChallengeResultPage/map.ts",
+        "src/components/pages/CourseContents/map.ts",
+        "src/components/pages/CourseDetailPage/constants.ts",
+        "src/components/pages/CourseDetailPage/types.ts"
+      ],
+      "reason": "Non-UI helpers/types/config/maps/scenes under page folders. Ownership law says modules/utils, modules/types, or resources — destinations and importer updates (page component.tsx/index.tsx + cross-page consumers e.g. hooks/useCourseTotals) are outside this manifest.",
+      "proposedTargets": {
+        "AdminMpegDashTestPage/map.tsx": "modules/utils or resources (admin renderer options) — hold",
+        "AdminUploadVideoPage/map.tsx + enums/*": "modules/types/enums + modules/utils — hold",
+        "ArchitecturePage/{constants,metricsFormat,modules}.ts + ArchitectureMap/*scene.ts": "resources/architecture + modules/utils — hold",
+        "BlogListPage/Masthead/scene.ts": "resources or modules/utils — hold",
+        "ChallengeResultPage/map.ts": "modules/utils — hold",
+        "CourseContents/map.ts": "modules/utils — hold",
+        "CourseDetailPage/constants.ts": "resources — hold",
+        "CourseDetailPage/types.ts": "modules/types (already imported from hooks/) — hold"
+      }
+    },
+    {
+      "cluster": "page-folder-two-files-only / hooks",
+      "files": [
+        "src/components/pages/DashboardPage/ContinueLearning/useResumeItems.ts"
+      ],
+      "reason": "Fetch/orchestration helper under page folder. Real home is hooks/; importer ContinueLearning/index.tsx + destination path not in manifest.",
+      "proposedTarget": "src/hooks/useResumeItems.ts (or hooks/dashboard/) — not in manifest"
+    },
+    {
+      "cluster": "page-folder-two-files-only / nested page UI — do not promote blindly",
+      "files": [
+        "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+        "src/components/pages/ArchitecturePage/CurlTester/index.tsx",
+        "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseCurriculum/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseFaq/index.tsx",
+        "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+        "src/components/pages/CourseDetailPage/CoursePrerequisites/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseTrustStats/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseValueProps/index.tsx",
+        "src/components/pages/CvGalleryPage/CvGallery/index.tsx",
+        "src/components/pages/DashboardPage/AiQuotaCard/component.tsx",
+        "src/components/pages/DashboardPage/AiQuotaCard/index.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/index.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/ResumeCard/component.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/ResumeCard/index.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/index.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/index.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/index.tsx",
+        "src/components/pages/DashboardPage/DashboardIdentity/IdentityStats/index.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/index.tsx"
+      ],
+      "reason": "Nested UI under page folders. Mission forbids promoting page-specific arrangements into blocks merely to clear the rule. Closure requires either (a) inline page-only shape into the page's component.tsx, or (b) promote only when ownership law proves a reusable block AND destination is owned — neither page roots nor block destinations are in this manifest. Cross-folder deps (e.g. CourseCurriculum → ModuleAccordionItem, CourseHero → CourseTrustStats) make atomic refile unsafe in-worker.",
+      "classificationHint": {
+        "likelyPageOnlyInline": [
+          "ArchitecturePage/CurlTester",
+          "AdminUploadVideoPage/.../ProcessResultBanner",
+          "DashboardPage/ContinueLearning/ResumeCard",
+          "DashboardPage/ChangelogList",
+          "DashboardPage/DailyQuest",
+          "DashboardPage/CoursesTab/MyCoursesProgress",
+          "DashboardPage/DashboardIdentity/IdentityStats"
+        ],
+        "possibleBlockPromotionNeedsProof": [
+          "CourseDetailPage/CourseCurriculum",
+          "CourseDetailPage/CourseFaq",
+          "CourseDetailPage/CoursePrerequisites",
+          "CourseDetailPage/CourseValueProps",
+          "CourseDetailPage/CourseTrustStats",
+          "DashboardPage/AiQuotaCard",
+          "DashboardPage/FeedTabs",
+          "DashboardPage/ContinueLearning",
+          "CommunityChatPage/ChatPane",
+          "CvGalleryPage/CvGallery"
+        ]
+      }
+    }
+  ],
+  "notInDebtOnManifest": {
+    "rawPageHosts": "only SB CourseContents/_shared (held)",
+    "identityRoots": "no require-identity-root / no-identity-wrapper-div on owned files",
+    "sentenceClassNameOrCn": "no no-classname-at-sentence-tier / no-cn-above-vocabulary on owned files",
+    "directHeroUILayout": "no no-heroui-outside-vocabulary on owned files",
+    "pageOwnedParallelSkeletons": "no no-parallel-skeleton / no-inline-skeleton-branch / no-skeleton-twin-component on owned files"
+  },
+  "changed": [
+    "src/components/pages/AiSubscriptionPage/component.tsx"
+  ],
+  "verification": {
+    "focusedEslint": "40 → 39 starci-fe warnings on manifest; AiSubscriptionPage clean; CourseContents/_shared host remains",
+    "gitDiffCheck": "pass on AiSubscriptionPage/component.tsx",
+    "tsc": "deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — only edited AiSubscriptionPage/component.tsx (owned page public half); no block/hook/module destinations touched",
+  "summary": "Closed require-frame-self-declare on AiSubscriptionPage. Held 38 page-folder-two-files-only extras and 1 SB device-fixture host: destinations/importers outside manifest; refused Box/fake-principle false closure and refused blind block promotions."
+}

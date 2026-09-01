@@ -1,0 +1,120 @@
+{
+  "batch": "B36",
+  "wave": "B",
+  "agent": "identity-root-consumers",
+  "checkpoint": "84b92cd77",
+  "status": "complete",
+  "claimedAt": "2026-08-08T16:20:00.000Z",
+  "completedAt": "2026-08-08T16:35:00.000Z",
+  "pattern": "Stamp identity={{ tier, component }} on Wave-A approved hosts (PageHeader / Toolbar / Callout / Alert / FAB / ResponsiveBreadcrumb / SearchAutocomplete) when that host is the exported sentence root. Prefer header + breadcrumb families. No wrappers. No styling. No identity on Button/Chip/Typography.",
+  "claimed": [
+    "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+    "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "src/components/blocks/learn/ContentModeNav/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx"
+  ],
+  "stamped": [
+    {
+      "file": "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      "host": "ResponsiveBreadcrumb",
+      "identity": { "tier": "block", "component": "LearnBreadcrumb" }
+    },
+    {
+      "file": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "host": "ResponsiveBreadcrumb",
+      "identity": { "tier": "block", "component": "SettingsBreadcrumb" }
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "host": "PageHeader (blocks/layout/PageHeader)",
+      "identity": { "tier": "page", "component": "CourseHero" }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentModeNav/index.tsx",
+      "host": "Toolbar",
+      "identity": { "tier": "block", "component": "ContentModeNav" },
+      "note": "Removed obsolete 'Identity hold: Toolbar does not accept CallerIdentity' comment — Wave A forwarded identity on Toolbar."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+      "host": "Toolbar",
+      "identity": { "tier": "block", "component": "ContentModeNav" },
+      "note": "SB twin parity with src ContentModeNav."
+    }
+  ],
+  "skippedSurfaceListCardOverlap": [],
+  "hardExclusionsHonored": [
+    "Navbar*",
+    "GlyphMark*",
+    "WeeklyGoals*",
+    "ContentPager*",
+    "AuthenticationModal*",
+    "LoginPage*",
+    "SurfaceListCard*",
+    "SurfaceCard*",
+    "Wave A contract definitions (Alert/Callout/PageHeader/Toolbar/FAB/ResponsiveBreadcrumb/SearchAutocomplete)",
+    "nivo/nivoexpert/mia-mia",
+    "CLAUDE.md",
+    "decision-ledger",
+    "commit"
+  ],
+  "held": [
+    {
+      "id": "composites-PageHeader-without-identity",
+      "files": [
+        "src/components/blocks/learn/PlaygroundHubHeader/index.tsx",
+        "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+        ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+        ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx"
+      ],
+      "host": "PageHeader from composites/layout/Page",
+      "reason": "Exported root is PageHeader, but it is the composites/layout/Page member — Wave A only forwarded identity?: on blocks/layout/PageHeader. Stamping identity here would be a type error. Do not invent forwarding on composites Page (out of Wave B consumer scope) and do not silently remount onto blocks PageHeader (API differs: breadcrumb is ComponentTypeWithSkeleton vs ReactNode).",
+      "classification": "host-not-forwarded"
+    },
+    {
+      "id": "ContentAiFab-legacy-fab-dual-root",
+      "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+      "reason": "Drawer path roots on blocks/buttons/FloatingActionButton (Wave A demotion-hold — no CallerIdentity). Rail path roots on raw HeroUI Button. Not a clean approved-host root; remount onto composites/buttons/FloatingActionButton is a separate consumer migration.",
+      "classification": "legacy-host-hold"
+    },
+    {
+      "id": "page-shells-not-pageheader-root",
+      "note": "Many pages compose PageHeader inside StackV/Container/PageContainer (RewardsPage, LeaguePage, PracticeHubPage, settings pages, etc.). Exported root is not PageHeader — out of this agent's stamp rule. Identity belongs on the true root frame when those shells are burned.",
+      "classification": "not-approved-host-root"
+    },
+    {
+      "id": "callout-alert-search-deferred",
+      "candidatesObserved": [
+        "src/components/blocks/learn/CourseTeamGate/index.tsx",
+        "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+        "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+        "src/components/pages/JobDetailPage/component.tsx"
+      ],
+      "reason": "Prefer header + breadcrumb families this wave. Left unclaimed so a follow-up can verify each exported root is truly Callout/Alert/SearchAutocomplete (scan had nested-return false-positive risk) and stay disjoint from surface/navbar agents.",
+      "classification": "deferred-non-priority"
+    },
+    {
+      "id": "MockInterviewSession-other-agent",
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "reason": "Owned by navbar-and-glyphmark-consumers in B36 manifests — skipped for disjointness.",
+      "classification": "other-agent"
+    }
+  ],
+  "changed": [
+    "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+    "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "src/components/blocks/learn/ContentModeNav/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx"
+  ],
+  "gates": {
+    "tsc": "pass (exit 0)",
+    "eslintTouched": "pass with pre-existing CourseHero warnings only (page-folder-two-files-only, no-classname-at-sentence-tier, no-public-classname-prop ×3). No require-identity-root on claimed files. LearnBreadcrumb / SettingsBreadcrumb / ContentModeNav (src+SB) clean.",
+    "gitDiffCheck": "pass",
+    "committed": false
+  },
+  "committed": false
+}

@@ -1,0 +1,15 @@
+{
+  "worker": "glyph-consumers",
+  "manifest": [],
+  "classification": "atom IconTile consumers (glyph/round chrome) stay on atoms/display/IconTile — no silent remap to IdentityTile",
+  "changed": [],
+  "held": [
+    "nivo/nivoexpert locked paths",
+    "atom consumers already on correct semantic for glyph tile"
+  ],
+  "migrated": [],
+  "warningCounts": {},
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

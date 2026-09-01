@@ -1,0 +1,274 @@
+{
+  "batch": "B37",
+  "wave": "consumer",
+  "agent": "labeled-card-non-list-classification",
+  "status": "complete",
+  "completedAt": "2026-08-09T00:20:00.000Z",
+  "checkpoint": "84b92cd77",
+  "owns": [
+    "src/components/blocks/cards/FlipCard/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+    "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+    "src/components/blocks/learn/personal-project/index.tsx",
+    "src/components/pages/AiUsagePage/index.tsx",
+    "src/components/pages/AppearancePage/index.tsx",
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/ContactPage/ContactFaq/index.tsx",
+    "src/components/pages/ContactPage/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+    "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+    "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+    "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+    "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+    "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+    "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "src/components/pages/MyAttemptsPage/index.tsx",
+    "src/components/pages/MyFeedbackPage/index.tsx",
+    "src/components/pages/MySubmissionsPage/index.tsx"
+  ],
+  "mustNotTouch": [
+    "LabeledCard module deletion",
+    "LabeledSection invent",
+    "list/accordion consumer files owned by other B37 agents",
+    "plugins/eslint",
+    ".storybook/**"
+  ],
+  "pattern": "Decision E: confirm real complete shape per owned consumer. Exact E (frameless + self-framed non-list) → section vocabulary (SurfaceCardHeader + surfaceSectionGap) or SurfaceCard Base for framed async branches. Exact F (generic framed body) → SurfaceCard Base with label. Misclassified list/accordion and dynamic-frameless mismatches → hold. No LabeledSection wrapper. Do not delete LabeledCard.",
+  "inventoryConfirm": {
+    "E": 10,
+    "F": 18,
+    "D": 0,
+    "misclassifiedAccordionOrList": [
+      "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+      "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+      "src/components/pages/ContactPage/ContactFaq/index.tsx",
+      "src/components/blocks/learn/personal-project/index.tsx",
+      "src/components/blocks/learn/personal-project/TaskResult/index.tsx (feedback branch only)"
+    ]
+  },
+  "migrated": [
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "class": "E",
+      "from": "LabeledCard frameless + CheckListCard",
+      "to": "section vocabulary (SurfaceCardHeader + CheckListCard)",
+      "decision": "E"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "class": "E",
+      "from": "LabeledCard frameless + ContinueCard grid",
+      "to": "section vocabulary (SurfaceCardHeader + Grid of ContinueCard)",
+      "decision": "E"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "class": "E",
+      "from": "LabeledCard frameless + ContinueCard grid",
+      "to": "section vocabulary (SurfaceCardHeader + Grid of ContinueCard)",
+      "decision": "E"
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+      "class": "E",
+      "from": "LabeledCard frameless + CheckListCard (also frameless on error/empty)",
+      "to": "content: section vocabulary; error/empty: SurfaceCard Base",
+      "decision": "E"
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+      "class": "E",
+      "from": "LabeledCard frameless + CheckListCard",
+      "to": "content: section vocabulary; error/empty: SurfaceCard Base",
+      "decision": "E"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "class": "E+F",
+      "from": "LabeledCard frameless + VerdictHeroCard; framed LabeledCard for byPhase",
+      "to": "section vocabulary for readiness; SurfaceCard Base for byPhase",
+      "decision": "E"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "class": "E/F mixed",
+      "migrated": "Result LabeledCard → SurfaceCard Base",
+      "held": "Feedback LabeledCard dynamicFrameless + Accordion",
+      "decision": "E partial"
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/AppearancePage/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base (accent + effect)",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base (CurlTester body)",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base (ContactForm body)",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base (config panel)",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/MyFeedbackPage/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "class": "F",
+      "to": "SurfaceCard Base",
+      "decision": "E/F"
+    }
+  ],
+  "held": [
+    {
+      "id": "ChallengeBody-dynamic-frameless",
+      "files": ["src/components/blocks/learn/lesson/ChallengeBody/index.tsx"],
+      "class": "E",
+      "reason": "dynamicFrameless — ChallengeCard grid self-frames only when loaded; SurfaceCard Base has no frameless door and inventing one is forbidden. Hold until a contract unlock.",
+      "classification": "mismatch-dynamic-frameless"
+    },
+    {
+      "id": "CourseCurriculum-accordion-misclassified",
+      "files": ["src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx"],
+      "class": "E inventory / accordion reality",
+      "reason": "Real shape is AccordionTree variant=surface with dynamic frameless. Misclassified non-list E; leave for accordion/list agents. Do not steal into SurfaceCardAccordion invent here.",
+      "classification": "misclassified-accordion"
+    },
+    {
+      "id": "CourseFaq-accordion-misclassified",
+      "files": ["src/components/pages/CourseDetailPage/CourseFaq/component.tsx"],
+      "class": "F inventory / accordion reality",
+      "reason": "Content branch is LabeledAccordionCard; error/empty/loading use framed LabeledCard. Canonical target SurfaceCardAccordion — leave for accordion agents.",
+      "classification": "misclassified-accordion"
+    },
+    {
+      "id": "ContactFaq-accordion-misclassified",
+      "files": ["src/components/pages/ContactPage/ContactFaq/index.tsx"],
+      "class": "F inventory / accordion reality",
+      "reason": "Accordion variant=surface nested in framed LabeledCard. Accordion collapse target, not generic F body.",
+      "classification": "misclassified-accordion"
+    },
+    {
+      "id": "personal-project-index-criteria-accordion",
+      "files": ["src/components/blocks/learn/personal-project/index.tsx"],
+      "class": "E",
+      "reason": "frameless LabeledCard wraps TaskCriteriaList + TaskCodeImplementations which self-frame (accordion/guide). Leave for accordion/list owners.",
+      "classification": "misclassified-accordion"
+    },
+    {
+      "id": "TaskResult-feedback-dynamic-frameless-accordion",
+      "files": ["src/components/blocks/learn/personal-project/TaskResult/index.tsx"],
+      "class": "E",
+      "reason": "Feedback branch keeps LabeledCard with dynamicFrameless around HeroUI Accordion surface. Result branch migrated. Accordion + dynamic frameless held.",
+      "classification": "mismatch-dynamic-frameless-accordion"
+    },
+    {
+      "id": "FlipCard-bordered-mismatch",
+      "files": ["src/components/blocks/cards/FlipCard/index.tsx"],
+      "class": "F",
+      "reason": "Uses LabeledCard bordered (border ON TOP of shadow). SurfaceCard nested is border XOR shadow — visual mismatch. Retain LabeledCard.",
+      "classification": "mismatch-bordered"
+    },
+    {
+      "id": "CvBlockStack-retain-F",
+      "files": ["src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx"],
+      "class": "F",
+      "reason": "Legitimate framed body with complex action toolbar (move/remove). SurfaceCard action door can express it but body/editor tree is not an exact Base collapse without churn; retain LabeledCard per Decision E class F allowance.",
+      "classification": "retain-legitimate-F"
+    }
+  ],
+  "notInvented": [
+    "LabeledSection wrapper",
+    "frameless boolean on SurfaceCard",
+    "new CSS doors / ReactNode description fallbacks",
+    "LabeledCard module deletion"
+  ],
+  "verification": {
+    "tsc": "pass (npx tsc --noEmit)",
+    "eslintErrorsOnTouched": "pass (--quiet on migrated owned files)",
+    "gitDiffCheck": "pass on owned diffs after trailing-whitespace strip"
+  },
+  "outsideOwnsNotTouchedByThisAgent": [
+    "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "src/components/pages/ContactPage/ContactChannels/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx"
+  ],
+  "notes": [
+    "LabeledCard module retained; frameless usage removed only from migrated exact E consumers.",
+    "Section vocabulary reuses SurfaceCardHeader + surfaceSectionGap — no new LabeledSection.",
+    "CheckListCard / ContinueCard / VerdictHeroCard remain the self-framed faces under section headers."
+  ]
+}

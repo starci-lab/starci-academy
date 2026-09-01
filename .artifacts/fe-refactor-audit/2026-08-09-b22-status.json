@@ -1,0 +1,26 @@
+{
+  "batch": 22,
+  "title": "Chrome axis and remaining boundary closure",
+  "committed": false,
+  "checkpoint": "90009dc5",
+  "generatedAt": "2026-08-07T09:43:54.836Z",
+  "chromeAxis": {
+    "api": "chromeVariant?: \"default\" | \"tile\"",
+    "tileOwns": "rounded-2xl shadow-field",
+    "bodyVariantUnchanged": true,
+    "migrated": "SurfaceCardPressableGroup → chromeVariant=\"tile\"",
+    "continueCard": "unchanged bodyVariant=\"tile\" only (preserves default surface chrome)"
+  },
+  "proposalsNotClaimedFixed": [
+    "pressable-group-item-span",
+    "lesson-editor-dialogWidth",
+    "showcase-content-parent-placement"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "eslintChangedContracts": "pass (SurfaceCard classNames warnings pre-exist; not introduced)",
+    "pluginAndPrincipleTests": "24/24",
+    "semanticContracts": "8/8",
+    "auditFe": "pass (27 teacher holds)"
+  }
+}

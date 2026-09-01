@@ -1,0 +1,368 @@
+{
+  "partition": "pages-learning-commerce",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:StickyBottomBar (no identity prop); HeroUI Button uses children — atom Button requires label/prefixIcon (not identical API); page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; HeroUI Card/Separator/Typography/cn — Typography not identical API, Separator≠Divider API, cn-above hold; page-folder"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; cn-only heroui import tied to cn-above hold; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; cn-only heroui import tied to cn-above hold; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "host-root:div + parallel-skeleton + missing-both frame-self-declare; cn-above hold"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:div + retired-async + parallel-skeleton + page-folder; Button/Typography not identical API"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:div + retired-async + parallel-skeleton + page-folder; Input/TextField/Link/Typography not identical atom redirects"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:blocks AsyncContent (no identity prop) + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:blocks AsyncContent (no identity prop) + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:div + retired-async + parallel-skeleton; Input/TextField/Typography/cn not identical/safe redirects"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; vendor Select/ListBox/SearchField compounds + Button/Typography not identical API; page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; ScrollShadow has no atom; ListBox≠ListBoxRoot API; page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; ScrollShadow has no atom; Button not identical API; page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:blocks AsyncContent + retired-async + parallel-skeleton + page-folder; Chip/Typography not identical API"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:SurfaceListCardItem (no identity prop); Typography not identical API; page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:blocks AsyncContent + retired-async + parallel-skeleton + page-folder; Label could redirect but cn keeps heroui import (cn-above hold)"
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:div + parallel-skeleton; raw layout needs owning frame; Button/Tabs/Typography not identical API"
+    },
+    {
+      "path": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:CourseCard (block, no identity prop); page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:AccordionTreeItem (no identity prop); page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:PageHeader (block, no identity prop); className carries grid placement; page-folder"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:SurfaceListCardItem (no identity prop); page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "skeleton-twin hard hold + missing-both + page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "fragment/multi-root + early AsyncContent branches; missing-both; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "skeleton-twin hard hold + missing-both + page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "skeleton-twin hard hold — do not burn Card/CardContent even though Container root exists; page-folder + missing-both"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Button/Typography not identical API; ScrollShadow has no atom; missing-both; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare + page-folder; Button/Chip/Typography/Spinner APIs differ from atoms"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "skeleton-twin hard hold + missing-both + page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both + page-folder; ListBox≠ListBoxRoot; ScrollShadow has no atom (file comments the gap)"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "rail+pane flex host-root:div — no existing frame owns responsive rail split"
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "reason": "skeleton-twin + page-folder; host-root:div"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:SurfaceListCardItem (no identity prop); page-folder"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-hero-heading-class",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "glass Card className + Card.Content compound — atom Card omits className and has no Card.Content; hero-heading hold; page-folder"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-hero-heading-class",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "glass Card className + Card.Content compound — atom Card omits className and has no Card.Content; hero-heading hold; page-folder"
+    }
+  ],
+  "verification": {
+    "note": "No source edits — all 34 safe-candidate files held (unclear hosts, skeletons, non-identical HeroUI APIs, page-folder, cn-above). No storybook twins in manifest. eslint --quiet not run (zero changed)."
+  },
+  "regressions": []
+}

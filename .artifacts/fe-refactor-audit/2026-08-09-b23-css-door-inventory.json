@@ -1,0 +1,1028 @@
+{
+  "generatedAt": "2026-08-07T10:04:46.897Z",
+  "scope": [
+    "src/components/**",
+    ".storybook/components/**"
+  ],
+  "rule": "starci-fe/no-public-classname-prop",
+  "totalHits": 2492,
+  "totalFiles": 936,
+  "summary": {
+    "vendor-boundary": {
+      "hits": 0,
+      "files": 0,
+      "note": "Rule skips vendor-boundary files; allowlist unchanged. Paths listed in handoff."
+    },
+    "locked": {
+      "hits": 57,
+      "files": 12
+    },
+    "teacher-hold": {
+      "hits": 15,
+      "files": 7
+    },
+    "live-api": {
+      "hits": 1568,
+      "files": 777
+    },
+    "ambiguous": {
+      "hits": 0,
+      "files": 0
+    },
+    "ratchet-ready": {
+      "hits": 852,
+      "files": 341
+    }
+  },
+  "vendorAllowlistUnchanged": [
+    "components/frames/Box",
+    "components/atoms/**/Modal|Drawer|Popover|Tooltip|Select|ListBox|Table|AlertDialog|ButtonGroup"
+  ],
+  "nivoHitsInScope": 0,
+  "lockedFiles": [
+    "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/index.tsx",
+    "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/index.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx"
+  ],
+  "teacherHoldFilesSample": [
+    ".storybook/components/mia-mia/atoms/buttons/ChunkyButton/index.tsx",
+    ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+    ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+    ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+    ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+    ".storybook/components/mia-mia/composites/cards/FeatureCard/index.tsx",
+    ".storybook/components/mia-mia/composites/cards/StickerCard/index.tsx"
+  ],
+  "liveApiFilesSample": [
+    ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+    ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+    ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+    ".storybook/components/atoms/display/Badge/Badge.tsx",
+    ".storybook/components/atoms/display/Divider/Divider.tsx",
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+    ".storybook/components/atoms/display/Logo/Logo.tsx",
+    ".storybook/components/atoms/display/Progress/Progress.tsx",
+    ".storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+    ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+    ".storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+    ".storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+    ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+    ".storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+    ".storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+    ".storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+    ".storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+    ".storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+    ".storybook/components/atoms/forms/InputDate/InputDate.tsx",
+    ".storybook/components/atoms/forms/InputNumber/InputNumber.tsx",
+    ".storybook/components/atoms/forms/InputOtp/InputOtp.tsx",
+    ".storybook/components/atoms/forms/InputPassword/InputPassword.tsx",
+    ".storybook/components/atoms/forms/InputSearch/InputSearch.tsx",
+    ".storybook/components/atoms/forms/InputText/InputText.tsx",
+    ".storybook/components/atoms/forms/InputTextarea/InputTextarea.tsx",
+    ".storybook/components/atoms/forms/InputTime/InputTime.tsx",
+    ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+    ".storybook/components/atoms/forms/SelectCombobox/SelectCombobox.tsx",
+    ".storybook/components/atoms/forms/SelectMulti/SelectMulti.tsx",
+    ".storybook/components/atoms/forms/SelectSingle/SelectSingle.tsx",
+    ".storybook/components/atoms/forms/_input/FieldSkeleton.tsx",
+    ".storybook/components/atoms/forms/_input/types.ts",
+    ".storybook/components/atoms/forms/_select/TriggerSkeleton.tsx",
+    ".storybook/components/atoms/forms/_select/types.ts",
+    ".storybook/components/atoms/media/CoverImage/CoverImage.tsx",
+    ".storybook/components/atoms/media/Image/Image.tsx",
+    ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    ".storybook/components/atoms/text/Typography/Typography.tsx",
+    ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+    ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+    ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+    ".storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+    ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+    ".storybook/components/composites/cards/HighlightCard/HighlightCard.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+    ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+    ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx"
+  ],
+  "ratchetReadySample": [
+    "src/components/atoms/forms/InputCurrency/index.tsx:50",
+    "src/components/atoms/forms/InputDate/index.tsx:47",
+    "src/components/atoms/forms/InputNumber/index.tsx:47",
+    "src/components/atoms/forms/InputPassword/index.tsx:45",
+    "src/components/atoms/forms/InputSearch/index.tsx:39",
+    "src/components/atoms/forms/InputText/index.tsx:26",
+    "src/components/atoms/forms/InputTextarea/index.tsx:43",
+    "src/components/atoms/forms/InputTime/index.tsx:43",
+    "src/components/atoms/forms/SelectCombobox/index.tsx:47",
+    "src/components/atoms/forms/SelectMulti/index.tsx:51",
+    "src/components/atoms/forms/SelectSingle/index.tsx:46",
+    "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx:172",
+    "src/components/blocks/ai/QuotaBar/index.tsx:106",
+    "src/components/blocks/ai/QuotaBar/index.tsx:117",
+    "src/components/blocks/ai/QuotaBar/index.tsx:155",
+    "src/components/blocks/ai/QuotaBar/index.tsx:165",
+    "src/components/blocks/async/EmptyContent/index.tsx:60",
+    "src/components/blocks/async/ErrorContent/index.tsx:54",
+    "src/components/blocks/auth/GithubTeamGate/index.tsx:144",
+    "src/components/blocks/auth/GithubTeamGate/index.tsx:183",
+    "src/components/blocks/buttons/RatingBar/index.tsx:78",
+    "src/components/blocks/cards/ContinueCard/index.tsx:174",
+    "src/components/blocks/cards/ContinueCard/index.tsx:187",
+    "src/components/blocks/cards/CourseCardSkeleton/index.tsx:21",
+    "src/components/blocks/cards/CourseCardSkeleton/index.tsx:32",
+    "src/components/blocks/cards/GroupPressableCard/index.tsx:227",
+    "src/components/blocks/cards/LabeledCard/index.tsx:118",
+    "src/components/blocks/cards/LabeledCard/index.tsx:124",
+    "src/components/blocks/cards/LabeledCard/index.tsx:126",
+    "src/components/blocks/cards/MediaCard/index.tsx:134",
+    "src/components/blocks/cards/NestedCard/index.tsx:59",
+    "src/components/blocks/cards/PressableCard/index.tsx:176",
+    "src/components/blocks/cards/PricingCard/index.tsx:120",
+    "src/components/blocks/cards/SectionCard/index.tsx:127",
+    "src/components/blocks/cards/SectionCard/index.tsx:143",
+    "src/components/blocks/chips/HostPlatformChip/component.tsx:41",
+    "src/components/blocks/chips/LessonVideoKindChip/index.tsx:48",
+    "src/components/blocks/chips/StatusChip/index.tsx:120",
+    "src/components/blocks/commerce/FreeTierCard/index.tsx:48",
+    "src/components/blocks/commerce/FreeTierCard/index.tsx:52"
+  ],
+  "note": [
+    "vendor-boundary = allowlisted Box + HeroUI overlay wrappers; zero eslint hits because the rule does not visit them.",
+    "locked = BlockAnatomy / LearnLoopScroll / QuizSession / MockInterviewSession / ContentAiChat / ArchitectureScene / resources.",
+    "teacher-hold = mia-mia (+ nivo/nivoexpert if any classname hits appear).",
+    "live-api = public className/classNames/WithClassNames declarations still on house components.",
+    "ratchet-ready = call-site usages outside locked/teacher trees — migrate after live-api doors close; NOT safe to error-ratchet while live-api > 0.",
+    "ambiguous = residual unclassified message shapes."
+  ],
+  "buckets": {
+    "locked": [
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "line": 24,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "line": 24,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+        "line": 105,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `ResizableRail`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+        "line": 112,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `ContentAiScopePill`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+        "line": 13,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+        "line": 31,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 82,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 319,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 959,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `GradeModelDropdown`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1062,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `SearchInput`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1109,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+        "line": 696,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+        "line": 721,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 89,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 155,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 208,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 222,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 330,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 332,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 333,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 337,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `SearchInput`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 414,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 428,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 433,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "line": 434,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "locked"
+      }
+    ],
+    "teacher-hold": [
+      {
+        "file": ".storybook/components/mia-mia/atoms/buttons/ChunkyButton/index.tsx",
+        "line": 25,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/atoms/buttons/ChunkyButton/index.tsx",
+        "line": 65,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+        "line": 24,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+        "line": 62,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+        "line": 10,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+        "line": 69,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+        "line": 18,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+        "line": 66,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+        "line": 85,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `UserAvatar`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+        "line": 42,
+        "kind": "declaration",
+        "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+        "line": 82,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+        "line": 91,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `CollapsibleSidebar`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/composites/cards/FeatureCard/index.tsx",
+        "line": 24,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/composites/cards/FeatureCard/index.tsx",
+        "line": 62,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      },
+      {
+        "file": ".storybook/components/mia-mia/composites/cards/StickerCard/index.tsx",
+        "line": 14,
+        "kind": "declaration",
+        "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "teacher-hold"
+      }
+    ],
+    "live-api": [
+      {
+        "file": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+        "line": 67,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+        "line": 99,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+        "line": 63,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+        "line": 108,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+        "line": 145,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+        "line": 165,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Badge/Badge.tsx",
+        "line": 47,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Badge/Badge.tsx",
+        "line": 65,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Divider/Divider.tsx",
+        "line": 66,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Divider/Divider.tsx",
+        "line": 79,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+        "line": 61,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+        "line": 142,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Logo/Logo.tsx",
+        "line": 48,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Logo/Logo.tsx",
+        "line": 66,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+        "line": 56,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+        "line": 72,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+        "line": 112,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+        "line": 162,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+        "line": 183,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+        "line": 33,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+        "line": 67,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+        "line": 32,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+        "line": 44,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+        "line": 42,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+        "line": 95,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+        "line": 18,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+        "line": 26,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+        "line": 100,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+        "line": 132,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+        "line": 36,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+        "line": 44,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+        "line": 25,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+        "line": 36,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+        "line": 25,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+        "line": 29,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+        "line": 26,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+        "line": 38,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+        "line": 19,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+        "line": 39,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      },
+      {
+        "file": ".storybook/components/atoms/forms/InputDate/InputDate.tsx",
+        "line": 18,
+        "kind": "declaration",
+        "message": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper.",
+        "bucket": "live-api"
+      }
+    ],
+    "ambiguous": [],
+    "ratchet-ready": [
+      {
+        "file": "src/components/atoms/forms/InputCurrency/index.tsx",
+        "line": 50,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/InputDate/index.tsx",
+        "line": 47,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/InputNumber/index.tsx",
+        "line": 47,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/InputPassword/index.tsx",
+        "line": 45,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/InputSearch/index.tsx",
+        "line": 39,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/InputText/index.tsx",
+        "line": 26,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/InputTextarea/index.tsx",
+        "line": 43,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/InputTime/index.tsx",
+        "line": 43,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `FieldSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/SelectCombobox/index.tsx",
+        "line": 47,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `TriggerSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/SelectMulti/index.tsx",
+        "line": 51,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `TriggerSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/atoms/forms/SelectSingle/index.tsx",
+        "line": 46,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `TriggerSkeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "line": 172,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "line": 106,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "line": 117,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "line": 155,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "line": 165,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/async/EmptyContent/index.tsx",
+        "line": 60,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/async/ErrorContent/index.tsx",
+        "line": 54,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 144,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `GithubIcon`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 183,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `GithubIcon`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+        "line": 78,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `GroupPressableCard`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/ContinueCard/index.tsx",
+        "line": 174,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/ContinueCard/index.tsx",
+        "line": 187,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+        "line": 21,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+        "line": 32,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+        "line": 227,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `PressableCard`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+        "line": 118,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+        "line": 124,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+        "line": 126,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `Typography`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/MediaCard/index.tsx",
+        "line": 134,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `SurfaceCard`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/NestedCard/index.tsx",
+        "line": 59,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `SurfaceCardNested`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/PressableCard/index.tsx",
+        "line": 176,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/PricingCard/index.tsx",
+        "line": 120,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/SectionCard/index.tsx",
+        "line": 127,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/cards/SectionCard/index.tsx",
+        "line": 143,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `StackH`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+        "line": 41,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `EnumChip`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+        "line": 48,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `EnumChip`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/chips/StatusChip/index.tsx",
+        "line": 120,
+        "kind": "usage",
+        "message": "Do not pass `classNames` to house component `ElementCloseButton`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+        "line": 48,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `TierCardBase`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      },
+      {
+        "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+        "line": 52,
+        "kind": "usage",
+        "message": "Do not pass `className` to house component `TierLevelIcon`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "bucket": "ratchet-ready"
+      }
+    ]
+  }
+}

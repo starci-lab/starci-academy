@@ -1,0 +1,434 @@
+[
+  {
+    "file": "src/components/blocks/cards/SectionCard/index.tsx",
+    "line": 116,
+    "col": 13,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 206,
+    "col": 17,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 222,
+    "col": 25,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 256,
+    "col": 25,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 275,
+    "col": 37,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 328,
+    "col": 21,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 330,
+    "col": 29,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 361,
+    "col": 49,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 364,
+    "col": 61,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 383,
+    "col": 61,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 426,
+    "col": 37,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "line": 442,
+    "col": 33,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+    "line": 150,
+    "col": 9,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+    "line": 155,
+    "col": 25,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "line": 33,
+    "col": 29,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "line": 39,
+    "col": 41,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "line": 58,
+    "col": 29,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "line": 78,
+    "col": 45,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "line": 92,
+    "col": 53,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "line": 125,
+    "col": 57,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "line": 131,
+    "col": 69,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 810,
+    "col": 17,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 861,
+    "col": 41,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 863,
+    "col": 49,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 880,
+    "col": 49,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 896,
+    "col": 49,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 912,
+    "col": 49,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 989,
+    "col": 29,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 992,
+    "col": 41,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1060,
+    "col": 29,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1113,
+    "col": 25,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1125,
+    "col": 53,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1154,
+    "col": 41,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1166,
+    "col": 41,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1208,
+    "col": 25,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1212,
+    "col": 41,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1221,
+    "col": 53,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1239,
+    "col": 45,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1351,
+    "col": 49,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1354,
+    "col": 57,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1395,
+    "col": 49,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1413,
+    "col": 53,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "line": 1428,
+    "col": 49,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "line": 219,
+    "col": 21,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "line": 314,
+    "col": 17,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "line": 316,
+    "col": 25,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "line": 394,
+    "col": 25,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "line": 440,
+    "col": 9,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1351,
+    "col": 17,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1379,
+    "col": 21,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1480,
+    "col": 17,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1515,
+    "col": 41,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1522,
+    "col": 53,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1529,
+    "col": 41,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1541,
+    "col": 41,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1666,
+    "col": 69,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1782,
+    "col": 73,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1839,
+    "col": 17,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1840,
+    "col": 21,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1841,
+    "col": 25,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1851,
+    "col": 41,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1996,
+    "col": 21,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1997,
+    "col": 25,
+    "tag": "StackV"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2068,
+    "col": 21,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2127,
+    "col": 17,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2151,
+    "col": 49,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2182,
+    "col": 33,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2244,
+    "col": 33,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2255,
+    "col": 49,
+    "tag": "Box"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2263,
+    "col": 45,
+    "tag": "Cluster"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2288,
+    "col": 61,
+    "tag": "StackH"
+  },
+  {
+    "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2336,
+    "col": 17,
+    "tag": "Box"
+  }
+]

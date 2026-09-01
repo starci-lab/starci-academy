@@ -1,0 +1,55 @@
+{
+  "partition": "twin-parity",
+  "changed": [
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContinueCard/types.ts",
+      "rules": ["starci-fe/no-classname-at-sentence-tier"],
+      "reason": "Mirrored dead ContinueCardDataProps.className removal from src"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/types.ts",
+      "rules": ["starci-fe/no-classname-at-sentence-tier"],
+      "reason": "Coordinator applied proven safe-api-removal from stacking-layout"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    {
+      "path": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "SB SurfaceCardBaseProps does not accept identity (src does) — twin API drift; cannot mirror stamp without SurfaceCard twin contract work"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "ContinueCardDataProps-className-dead",
+      "classification": "safe-api-removal",
+      "applied": true,
+      "files": [
+        "src/components/blocks/learn/ContinueCard/types.ts",
+        ".storybook/components/starci/blocks/learn/ContinueCard/types.ts"
+      ],
+      "proposal": "Remove unused className from ContinueCardDataProps",
+      "proof": "26 call sites, 0 pass className; Hero/Item never forward it"
+    },
+    {
+      "id": "WeeklyChallengeCard-sb-identity-blocked",
+      "classification": "new-named-slot-required",
+      "applied": false,
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx"
+      ],
+      "proposal": "Extend SB SurfaceCard to accept identity like src, then mirror WeeklyChallengeCard stamp",
+      "proof": "tsc TS2322: Property identity does not exist on SB SurfaceCardBaseProps"
+    }
+  ],
+  "verification": {},
+  "regressions": [
+    {
+      "path": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      "note": "Attempted identity mirror failed tsc; reverted",
+      "resolved": true
+    }
+  ]
+}

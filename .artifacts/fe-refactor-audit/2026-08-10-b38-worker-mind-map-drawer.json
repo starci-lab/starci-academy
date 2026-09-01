@@ -1,0 +1,44 @@
+{
+  "batch": "B38",
+  "agent": "mind-map-drawer",
+  "status": "complete",
+  "completedAt": "2026-08-08T18:40:00.000Z",
+  "checkpoint": "2a096210a",
+  "class": "A",
+  "residual": {
+    "id": "MindMapNodeDrawer",
+    "file": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+    "hits": 1
+  },
+  "dependency": {
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b38-worker-related-content.json",
+    "EntityResultRow": {
+      "api": "list-safe body (no onSelect / no button); isSkeleton + ENTITY_RESULT_PLACEHOLDER",
+      "press": "SurfaceCardListItem.onPress + hover=underline"
+    }
+  },
+  "anatomy": {
+    "before": "per-group LabeledCard frameless subtleLabel + SurfaceListCard + EntityResultRow (self-button); skeleton parallel SurfaceListCard + Skeleton.Typography tree",
+    "after": "per-group SurfaceCardList (label, labelEnd=countLabel, subtleLabel, variant=nested, items content=EntityResultRow showSnippet onPress hover=underline); skeleton = same SurfaceCardList trees with isSkeleton + ENTITY_RESULT_PLACEHOLDER items"
+  },
+  "filesChanged": [
+    "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx"
+  ],
+  "filesOwnedUnchanged": [
+    "src/components/overlays/drawers/MindMapNodeDrawer/index.tsx"
+  ],
+  "eslint": {
+    "command": "npx eslint --max-warnings=0 src/components/overlays/drawers/MindMapNodeDrawer/component.tsx src/components/overlays/drawers/MindMapNodeDrawer/index.tsx",
+    "errors": 0,
+    "warnings": 0
+  },
+  "holds": [],
+  "notes": [
+    "Removed LabeledCard, SurfaceListCard, SurfaceListCardItem, and Skeleton imports/usage.",
+    "Press chrome lives on SurfaceCardListItem (onPress + hover=underline); EntityResultRow is content body only.",
+    "Connected index.tsx unchanged — still buckets, i18ns, and navigates via onSelectItem."
+  ],
+  "outsideOwns": false,
+  "commit": false,
+  "summary": "MindMapNodeDrawer Exact A → per-group SurfaceCardList nested with EntityResultRow content bodies; skeleton reuses the same tree via isSkeleton placeholders."
+}

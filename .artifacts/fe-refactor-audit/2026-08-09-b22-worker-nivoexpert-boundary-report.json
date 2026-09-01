@@ -1,0 +1,24 @@
+{
+  "partition": "nivoexpert-boundary-report",
+  "changed": [],
+  "skipped": [
+    ".storybook/components/nivoexpert/** — mandatory non-edit"
+  ],
+  "holds": [
+    "SB DrawerShell.contentClassName sole consumer LessonEditorPanel w-full sm:max-w-[560px]"
+  ],
+  "evidence": [
+    ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx:150"
+  ],
+  "proposals": [
+    {
+      "id": "lesson-editor-dialogWidth",
+      "summary": "Migrate LessonEditorPanel off contentClassName onto DrawerShell dialogWidth (new token or existing) in a nivo-allowed batch, then delete SB contentClassName if zero consumers",
+      "notClaimedFixed": true
+    }
+  ],
+  "verification": {
+    "edits": "none"
+  },
+  "regressions": []
+}

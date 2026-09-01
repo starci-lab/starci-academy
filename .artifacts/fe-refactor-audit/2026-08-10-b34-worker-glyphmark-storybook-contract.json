@@ -1,0 +1,58 @@
+{
+  "batch": "B34",
+  "agent": "glyphmark-storybook-contract",
+  "checkpoint": "6ff21c66",
+  "wave": "A",
+  "contract": "A-GlyphMark",
+  "changedFiles": [
+    ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx"
+  ],
+  "api": {
+    "exports": [
+      "GlyphMarkTone",
+      "IconWeight",
+      "IconComponent",
+      "GlyphMarkIcon",
+      "GlyphMarkProps",
+      "GlyphMark",
+      "meta"
+    ],
+    "GlyphMarkTone": ["default", "accent", "success", "warning"],
+    "GlyphMarkProps": {
+      "icon": "IconComponent (required when isSkeleton is not true; optional when isSkeleton: true)",
+      "tone": "GlyphMarkTone?, default \"default\"",
+      "isSkeleton": "boolean union with icon requirement",
+      "ariaLabel": "string? — absent → aria-hidden decorative; present → role=img + aria-label"
+    },
+    "IconComponent": "ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }> (IconTile pattern; GlyphMarkIcon alias)",
+    "intrinsics": {
+      "box": "size-5 shrink-0",
+      "skeleton": "HeroSkeleton className size-5 shrink-0 rounded-full",
+      "default": "text-foreground",
+      "accent": "text-accent-soft-foreground",
+      "success": "text-success-soft-foreground",
+      "warning": "text-warning-soft-foreground"
+    },
+    "retention": {
+      "noClassName": true,
+      "noClassNames": true,
+      "noPlacement": true,
+      "noReactNodeIcon": true,
+      "noRuntimeNamespace": true,
+      "noPublicGlyphMarkSkeleton": true,
+      "dataTier": "atom",
+      "dataComponent": "GlyphMark"
+    }
+  },
+  "tests": {
+    "required": false,
+    "note": "none required beyond file exists",
+    "fileExists": true
+  },
+  "verification": {
+    "tsc": "clean (npx tsc --noEmit; no GlyphMark diagnostics)",
+    "eslint": "n/a (contract-only wave A)"
+  },
+  "regressions": [],
+  "forbiddenTouched": false
+}

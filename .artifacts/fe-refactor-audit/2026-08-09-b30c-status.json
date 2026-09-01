@@ -1,0 +1,48 @@
+{
+  "batch": "30c",
+  "title": "Touched-file zero-warning closure",
+  "complete": true,
+  "checkpoint": "8c13fd52",
+  "generatedAt": "2026-08-07T18:37:35.022Z",
+  "strategy": "Retract B30 edits in files that cannot reach zero warnings without forbidden contracts; keep only zero-warning survivors.",
+  "kept": [
+    "src/components/blocks/lists/LabeledList/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "plugins/eslint/sentence-tier.test.mjs"
+  ],
+  "retracted": [
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/lists/ListRow/README.md",
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx"
+  ],
+  "doorsRestoredViaRetract": [
+    "TierCardBase.className",
+    "ListRow.className",
+    "LeaderboardListCard.className",
+    "SidebarNavItem.className",
+    "LabeledList.className — NOT restored (kept closed via Stack frames)",
+    "FlexWrap HeroUI ButtonGroup/Separator className",
+    "TabsCard consumer classNames on ArchitectureMap/Flashcards/Notifications"
+  ],
+  "semanticContractsRetained": [
+    "LabeledList StackV sibling-stack (door closed)",
+    "ContentTabBar Container size=md parent placement"
+  ],
+  "semanticContractsLost": [
+    "TierCardBase.isFeatured",
+    "ListRow.density",
+    "LeaderboardListCard B30b shared StackV",
+    "FlexWrap → ButtonGroupRoot migration"
+  ],
+  "overlapResult": "pass",
+  "b30AggregateNote": "B30 is NOT complete as originally claimed; 30c retracts uncleanable door burns. See 30c status."
+}

@@ -1,0 +1,26 @@
+{
+  "partition": "pressable-group-audit",
+  "changed": [],
+  "skipped": [
+    "No span API invented this batch"
+  ],
+  "holds": [
+    "item.classNames funnel for ContentPager col-span-2 + stories"
+  ],
+  "evidence": [
+    "src/components/blocks/learn/ContentPager/index.tsx:129 classNames:[\"col-span-2\"]",
+    "SB ContentPager + SurfaceCardPressableGroup stories same pattern",
+    "Grid already has span?: 1|2 on GridItem — proposal is PressableGroupItem.span forwarding"
+  ],
+  "proposals": [
+    {
+      "id": "pressable-group-item-span",
+      "summary": "Add PressableGroupItem.span?: 1 | 2 → Grid item span; stop routing col-span via classNames/contentClassName",
+      "notClaimedFixed": true
+    }
+  ],
+  "verification": {
+    "edits": "none — audit only"
+  },
+  "regressions": []
+}

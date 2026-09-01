@@ -1,0 +1,242 @@
+[
+  {
+    "f": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+    "after": 23,
+    "base": 5,
+    "d": 18
+  },
+  {
+    "f": "src/components/pages/CvEditorPage/index.tsx",
+    "after": 18,
+    "base": 1,
+    "d": 17
+  },
+  {
+    "f": "src/components/pages/InstallmentPlansPage/index.tsx",
+    "after": 10,
+    "base": 0,
+    "d": 10
+  },
+  {
+    "f": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+    "after": 11,
+    "base": 1,
+    "d": 10
+  },
+  {
+    "f": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+    "after": 11,
+    "base": 1,
+    "d": 10
+  },
+  {
+    "f": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+    "after": 3,
+    "base": 12,
+    "d": -9
+  },
+  {
+    "f": "src/components/composites/cards/SurfaceCard/index.tsx",
+    "after": 22,
+    "base": 14,
+    "d": 8
+  },
+  {
+    "f": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+    "after": 14,
+    "base": 6,
+    "d": 8
+  },
+  {
+    "f": "src/components/pages/ProfileRedirectPage/index.tsx",
+    "after": 17,
+    "base": 9,
+    "d": 8
+  },
+  {
+    "f": "src/components/pages/NotificationsPage/index.tsx",
+    "after": 9,
+    "base": 2,
+    "d": 7
+  },
+  {
+    "f": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "after": 13,
+    "base": 7,
+    "d": 6
+  },
+  {
+    "f": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+    "after": 7,
+    "base": 1,
+    "d": 6
+  },
+  {
+    "f": "src/components/blocks/navigation/Navbar/index.tsx",
+    "after": 14,
+    "base": 9,
+    "d": 5
+  },
+  {
+    "f": "src/components/pages/JobListPage/component.tsx",
+    "after": 12,
+    "base": 7,
+    "d": 5
+  },
+  {
+    "f": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "after": 9,
+    "base": 4,
+    "d": 5
+  },
+  {
+    "f": "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+    "after": 5,
+    "base": 0,
+    "d": 5
+  },
+  {
+    "f": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "after": 2,
+    "base": 6,
+    "d": -4
+  },
+  {
+    "f": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "after": 2,
+    "base": 6,
+    "d": -4
+  },
+  {
+    "f": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+    "after": 5,
+    "base": 1,
+    "d": 4
+  },
+  {
+    "f": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+    "after": 4,
+    "base": 0,
+    "d": 4
+  },
+  {
+    "f": "src/components/pages/PrivacySettingsPage/index.tsx",
+    "after": 7,
+    "base": 3,
+    "d": 4
+  },
+  {
+    "f": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+    "after": 6,
+    "base": 2,
+    "d": 4
+  },
+  {
+    "f": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+    "after": 5,
+    "base": 1,
+    "d": 4
+  },
+  {
+    "f": "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+    "after": 6,
+    "base": 3,
+    "d": 3
+  },
+  {
+    "f": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+    "after": 2,
+    "base": 5,
+    "d": -3
+  },
+  {
+    "f": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "after": 6,
+    "base": 9,
+    "d": -3
+  },
+  {
+    "f": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+    "after": 3,
+    "base": 0,
+    "d": 3
+  },
+  {
+    "f": "src/components/pages/SepayCheckoutPage/index.tsx",
+    "after": 3,
+    "base": 0,
+    "d": 3
+  },
+  {
+    "f": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+    "after": 4,
+    "base": 1,
+    "d": 3
+  },
+  {
+    "f": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+    "after": 1,
+    "base": 3,
+    "d": -2
+  },
+  {
+    "f": "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+    "after": 4,
+    "base": 2,
+    "d": 2
+  },
+  {
+    "f": "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+    "after": 3,
+    "base": 1,
+    "d": 2
+  },
+  {
+    "f": "src/components/pages/BlogPostPage/component.tsx",
+    "after": 3,
+    "base": 5,
+    "d": -2
+  },
+  {
+    "f": "src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx",
+    "after": 1,
+    "base": 3,
+    "d": -2
+  },
+  {
+    "f": "src/components/pages/CourseContents/component.tsx",
+    "after": 7,
+    "base": 5,
+    "d": 2
+  },
+  {
+    "f": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+    "after": 11,
+    "base": 9,
+    "d": 2
+  },
+  {
+    "f": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+    "after": 2,
+    "base": 4,
+    "d": -2
+  },
+  {
+    "f": "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx",
+    "after": 3,
+    "base": 1,
+    "d": 2
+  },
+  {
+    "f": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "after": 7,
+    "base": 9,
+    "d": -2
+  },
+  {
+    "f": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "after": 5,
+    "base": 7,
+    "d": -2
+  }
+]

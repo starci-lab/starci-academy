@@ -1,0 +1,25 @@
+{
+  "partition": "ambiguous-and-ledger",
+  "changed": [
+    ".claude/fe/decision-ledger.json"
+  ],
+  "skipped": [
+    "~2.4k remaining no-public-classname-prop hits outside priority groups"
+  ],
+  "holds": [
+    "27 teacher pattern holds (audit:fe)",
+    "SurfaceCard TILE_CHROME",
+    "ShowcaseMockup contentClassName",
+    "DrawerShell contentClassName nivoexpert",
+    "atoms/pages mass debt"
+  ],
+  "evidence": [
+    "Inventory written; only proven dead + parent-placement closed"
+  ],
+  "proposals": [
+    "surface-chrome-axis",
+    "pressable-item-span"
+  ],
+  "verification": {},
+  "regressions": []
+}

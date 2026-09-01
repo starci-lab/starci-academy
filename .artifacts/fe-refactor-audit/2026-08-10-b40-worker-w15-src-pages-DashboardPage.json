@@ -1,0 +1,354 @@
+{
+  "batch": "B40",
+  "worker": "w15-src-pages-DashboardPage",
+  "mode": "mass-safe-burn",
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w15-src-pages-DashboardPage.json",
+  "manifest": ".artifacts/fe-refactor-audit/b40-manifests/w15-src-pages-DashboardPage.json",
+  "completedAt": "2026-08-09T19:20:00.000Z",
+  "ownsCount": 37,
+  "safeFindingsBefore": 54,
+  "safeFindingsByRuleBefore": {
+    "starci-fe/require-identity-root": 26,
+    "starci-fe/require-frame-self-declare": 28
+  },
+  "gate": "Changed files must pass eslint --max-warnings=0; else revert+hold. page-folder-two-files-only and skeleton redesign are forbidden, so nested DashboardPage/Cv* extras cannot be closed.",
+  "filesChanged": [
+    "src/components/pages/CvGalleryPage/index.tsx"
+  ],
+  "eslintTouched": {
+    "src/components/pages/CvGalleryPage/index.tsx": "pass --max-warnings=0"
+  },
+  "counts": {
+    "applied": 1,
+    "hold": 49,
+    "vendor": 2,
+    "locked": 0,
+    "ambiguous": 2
+  },
+  "applied": [
+    {
+      "path": "src/components/pages/CvGalleryPage/index.tsx",
+      "classification": "applied",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "alsoClosed": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "change": "Root raw measure div + HeroUI Breadcrumbs → Container identity={{ tier: \"page\", component: \"CvGalleryPage\" }} size=\"xl\" padding={6} principle=\"page-pad\" + ResponsiveBreadcrumb (LeaguePage vocabulary)."
+    }
+  ],
+  "vendor": [
+    {
+      "path": "src/components/blocks/entity/EntityToken/index.tsx",
+      "classification": "vendor",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "Root returns are HeroUI Link / raw <button> / <span>; no identity-capable house root without inventing a wrapper. HeroUI import is vocabulary debt outside this safe-burn."
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "classification": "vendor",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "Wide @heroui/react surface + retired AsyncContent + parallel skeleton + host/cn doors. Identity alone cannot reach --max-warnings=0."
+    }
+  ],
+  "ambiguous": [
+    {
+      "path": "src/components/blocks/course/CourseTrialChip/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "Sole return root is Chip atom (no identity prop). Wrapping Chip in a frame solely to stamp identity invents a wrapper."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/index.tsx",
+      "classification": "ambiguous",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Container already carries identity but lacks principle; four role=tabpanel host divs remain (aria-controls wired from DashboardTabsBar). Box does not forward role/id/aria-labelledby; no TabPanel vocabulary. Touching principle alone fails zero-warning; a11y host rewrite out of safe scope."
+    }
+  ],
+  "locked": [],
+  "hold": [
+    {
+      "path": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only + HeroUI + host/raw/classname residual; folder move forbidden."
+    },
+    {
+      "path": "src/components/pages/CvGalleryPage/CvGallery/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "count": 3,
+      "reason": "page-folder-two-files-only on CvGallery/component.tsx; thumbnail scale Boxes need foreign-mount chrome, not a proven existing principle close under zero-warning."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "count": 5,
+      "reason": "page-folder-two-files-only blocks zero-warning."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + host/raw residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + no-skeleton-twin-component (skeleton redesign forbidden)."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ContinueLearning/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "count": 2,
+      "reason": "page-folder-two-files-only + inline skeleton branch residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + classname doors."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + host/raw residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DashboardIdentity/IdentityStats/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only blocks zero-warning."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + host/classname residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + host/raw residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + HeroUI + host residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + host/raw residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + no-skeleton-twin-component."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FlashcardReview/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only; Split gap without principle. Identity already on Box root."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + classname residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + no-skeleton-twin-component."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + classname residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + host residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only + classname residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + no-skeleton-twin-component."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only blocks zero-warning."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + host/raw residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + HeroUI residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "count": 4,
+      "reason": "page-folder-two-files-only + classname residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + classname residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "count": 6,
+      "reason": "page-folder-two-files-only + classname + inline skeleton residual."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + no-skeleton-twin-component."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "SectionCard root is identity-capable, but page-folder-two-files-only blocks zero-warning after any edit."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "page-folder-two-files-only + no-skeleton-twin-component."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyGoals/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only blocks zero-warning."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only + inline skeleton branch residual."
+    }
+  ],
+  "findingCountCheck": {
+    "applied": 1,
+    "vendor": 2,
+    "ambiguous": 2,
+    "holdFindingUnits": "49 (expanded by multi-finding files: CvGallery×3, ChangelogList×5, ContinueLearning×2, RecommendedCourses×4, StreakStrip×6, WhoToFollow×2, CvEditorToolbarBar×2, plus remaining singles)",
+    "locked": 0,
+    "totalSafeFindings": 54
+  },
+  "note": "No commit/push/reset/checkout/branch. No page-folder moves. No new principles/rules/contracts. Nested DashboardPage debt remains held under the touched-file zero-warning gate."
+}

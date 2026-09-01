@@ -1,0 +1,21 @@
+{
+  "worker": "identity-tile-src",
+  "manifest": [],
+  "sizeEvidence": {
+    "IdentityTileApproved": "sm48/xl md64/2xl lg80/2xl"
+  },
+  "canonicalPath": null,
+  "changed": [],
+  "held": [
+    "COMPOSITE-3/10 blocks src composite with vendor shimmer",
+    "no leaf atom yet for identity chrome"
+  ],
+  "retracted": [
+    "src/components/composites/identity/IdentityTile/index.tsx"
+  ],
+  "srcParity": "n/a",
+  "barrelsUpdated": false,
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

@@ -1,0 +1,458 @@
+{
+  "partition": "pages-consumer-migrations",
+  "changed": [],
+  "skipped": [
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "skeleton twin / skeleton path — skip per contract"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "skeleton twin / skeleton path — skip per contract"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:Card; HeroUI→atom not identical (Card/CardContent) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Button) — preserve vendor; page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/AdminLoginPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Button/Card/CardContent/FieldError/Input/Label/TextField/cn) — preserve vendor; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "unclear identity — no single return root found; HeroUI→atom not identical (Card/CardContent/Input/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:button; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Button/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:Card; HeroUI→atom not identical (Card/CardContent/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear identity — no single return root found; HeroUI→atom not identical (Card/CardContent/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:button; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Chip) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:Card; HeroUI→atom not identical (Button/Card/CardContent/Input/Label/TextField) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "incapable-root:div; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:LoadingScreen,div; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Button/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "incapable-root:Card; HeroUI→atom not identical (Card/CardContent/Chip) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "host-root:blocks AsyncContent (no identity prop; composites AsyncContent API differs); HeroUI→atom not identical (Chip/ScrollShadow/cn) — preserve vendor; page-folder-two-files-only; skeleton-related api-hold; retired-async api-hold; missing-both / frame-self-declare ambiguous; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Button/Chip/Typography) — preserve vendor; missing-both / frame-self-declare ambiguous; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Chip/Skeleton/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:button,div; HeroUI→atom not identical (ScrollShadow/Typography/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:span,div; HeroUI→atom not identical (Label/ListBox/ScrollShadow/Typography/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "unclear identity — no single return root found; HeroUI→atom not identical (Alert/Button/Link/Skeleton/Typography) — preserve vendor; skeleton-related api-hold; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:span; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:Card,Callout; HeroUI→atom not identical (Card/Link/Typography/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Chip/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "host-root:SurfaceListCardRow (no identity prop; Item has it, Row does not); HeroUI→atom not identical (Chip/Typography) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/CommunityChatPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:PageContainer (raw div shell, no identity prop); HeroUI→atom not identical (Button) — preserve vendor; skeleton-related api-hold"
+    },
+    {
+      "path": "src/components/pages/CommunityFeedPage/CommunityComposer/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:Card; HeroUI→atom not identical (Button/Card/CardContent/TextArea/TextField) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "mixed roots (Box+form) — identity not clear; HeroUI→atom not identical (Button/Input/Label/ListBox/Select/TextArea/TextField/Typography/cn) — preserve vendor; page-folder-two-files-only; missing-both / frame-self-declare ambiguous; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/ContactPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "host-root:PageContainer (raw div shell, no identity prop); HeroUI→atom not identical (Typography) — preserve vendor; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "host-root:StickyBottomBar (no identity prop); HeroUI→atom not identical (Button) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Card/CardContent/Separator/Typography/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Button/Input/TextField/cn) — preserve vendor; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "incapable-root:div,Typography; HeroUI→atom not identical (Alert/Button/Chip/Label/ListBox/ScrollShadow/Select/Typography/cn) — preserve vendor; skeleton-related api-hold; retired-async api-hold; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/CvGalleryPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; HeroUI→atom not identical (Breadcrumbs/cn) — preserve vendor; classname/raw/cn/hero-heading ownership unclear — preserve"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "incapable-root:div; cn-only @heroui/react import tied to cn-above hold — no house cn redirect; page-folder-two-files-only; classname/raw/cn/hero-heading ownership unclear — preserve"
+    }
+  ],
+  "verification": {
+    "note": "No source edits — all 40 capped files held or skipped (skeletons). No Storybook twins in manifest (twinExists=false). HeroUI Button/Typography/Chip/Card/form compounds not identical to atoms; cn-only imports tied to cn-above. No clear identity-capable single roots (PageContainer/StickyBottomBar/SurfaceListCardRow/blocks AsyncContent lack identity; ContactForm mixed Box+form). eslint --quiet not run (zero changed).",
+    "changedCount": 0,
+    "skippedCount": 2,
+    "holdsCount": 38
+  },
+  "regressions": []
+}

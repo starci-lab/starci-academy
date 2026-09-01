@@ -1,0 +1,160 @@
+{
+  "worker": "identity-svg",
+  "manifest": [
+    "src/components/blocks/identity/BadgeImage/index.tsx",
+    "src/components/blocks/identity/BrandLockup/index.tsx",
+    "src/components/blocks/identity/BrandLogo/index.tsx",
+    "src/components/blocks/identity/IconTile/index.tsx",
+    "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+    "src/components/svg/GithubIcon/index.tsx",
+    "src/components/svg/GoogleIcon/index.tsx",
+    "src/components/svg/LogoMark/index.tsx",
+    "src/components/svg/TierLevelIcon/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "BadgeImage",
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "dynamic cn() scale/opacity — ambiguous"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        " // scale up to eat the art's built-in transparent margin so the // visible animal reaches the ring (overflow clipped by parent) \"rounded-full object-cover scale-[1.18]\", !earned && \"opacity-40 grayscale\", "
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    },
+    {
+      "component": "BrandLockup",
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "plan": {
+        "action": "apply-parent-box",
+        "reason": "self-start → Footer Box"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "self-start"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "BrandLogo",
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "plan": {
+        "action": "apply-intrinsic",
+        "prop": "size",
+        "reason": "finite h-9|h-10|h-14 → size sm|md|lg"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "h-10",
+        "h-14"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "IconTile",
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "size-5 text-accent mixes size+tone on IconTile which already has size"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "size-5 text-accent-soft-foreground"
+      ],
+      "ownerships": [
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "RankDeltaCaret",
+      "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "w-8 justify-end mixes width+align"
+      },
+      "consumerCount": 3,
+      "valueSet": [
+        "w-8 justify-end",
+        "w-8 shrink-0 justify-end"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "GithubIcon",
+      "file": "src/components/svg/GithubIcon/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "LearnLoopScroll locked consumer blocks door deletion"
+      },
+      "consumerCount": 7,
+      "valueSet": [
+        "size-5",
+        "size-4",
+        "w-16 h-16",
+        "size-3.5"
+      ],
+      "ownerships": [
+        "intrinsic",
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "GoogleIcon",
+      "file": "src/components/svg/GoogleIcon/index.tsx",
+      "plan": {
+        "action": "apply-intrinsic",
+        "prop": "size",
+        "reason": "single consumer size-3.5 → bake default, delete door"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "size-3.5"
+      ],
+      "ownerships": [
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "LogoMark",
+      "file": "src/components/svg/LogoMark/index.tsx",
+      "plan": {
+        "action": "apply-intrinsic",
+        "prop": "size",
+        "reason": "single consumer size-10 → bake default, delete door"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "size-10"
+      ],
+      "ownerships": [
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "TierLevelIcon",
+      "file": "src/components/svg/TierLevelIcon/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "re-check consumers"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "size-6 shrink-0 text-accent-soft-foreground"
+      ],
+      "ownerships": [
+        "mixed"
+      ]
+    }
+  ]
+}

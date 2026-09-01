@@ -1,0 +1,52 @@
+{
+  "partition": "frames",
+  "changed": [
+    {
+      "path": ".storybook/components/frames/Split/Split.tsx",
+      "rules": ["starci-fe/no-emoji-in-source"],
+      "fix": "scrubbed Extended_Pictographic arrows (↔ → <->) in comments"
+    },
+    {
+      "path": ".storybook/components/frames/_spacing.ts",
+      "rules": ["starci-fe/prefer-arrow-export"],
+      "fix": "gapClassNames / paddingValueClassNames / paddingClassNames → arrow consts"
+    },
+    {
+      "path": ".storybook/components/frames/Container/Container.tsx",
+      "rules": ["starci-fe/no-emoji-in-source"],
+      "fix": "scrubbed ⭐ → * in header comment"
+    },
+    {
+      "path": ".storybook/stories/frames/Split/Split.stories.tsx",
+      "rules": ["starci-fe/no-emoji-in-source"],
+      "fix": "scrubbed ↔ → <-> in comment"
+    },
+    {
+      "path": "src/components/frames/Split/index.tsx",
+      "rules": ["starci-fe/no-emoji-in-source"],
+      "fix": "scrubbed Extended_Pictographic arrows (↔ → <->) in comments"
+    },
+    {
+      "path": "src/components/frames/_spacing.ts",
+      "rules": ["starci-fe/prefer-arrow-export"],
+      "fix": "gapClassNames / paddingValueClassNames / paddingClassNames → arrow consts"
+    },
+    {
+      "path": "src/components/frames/Container/index.tsx",
+      "rules": ["starci-fe/no-emoji-in-source"],
+      "fix": "scrubbed ⭐ → * in header comment"
+    }
+  ],
+  "skipped": [],
+  "holds": [],
+  "verification": {
+    "command": "npx eslint --format json <7 manifest files>",
+    "targetRules": [
+      "starci-fe/no-emoji-in-source",
+      "starci-fe/prefer-arrow-export"
+    ],
+    "targetRemainTotal": 0,
+    "starciFeRemainTotal": 0
+  },
+  "regressions": []
+}

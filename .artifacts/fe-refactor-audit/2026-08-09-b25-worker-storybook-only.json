@@ -1,0 +1,25 @@
+{
+  "partition": "storybook-only",
+  "manifest": [],
+  "changed": [],
+  "applied": [],
+  "skipped": [],
+  "holds": [
+    "live-prop Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton placement APIs",
+    "vendor-boundary / HeroUI / foreign mounts",
+    "DrawerShell / ShowcaseMockup / MiniCart / CvPreview / PDFView / B19–B24 contracts",
+    "Nivo / Nivoexpert / locked paths / teacher holds / skeleton ComponentType slots",
+    "no new principles, variants, slots, Box escape hatches, or eslint-disable"
+  ],
+  "evidence": {
+    "note": "Storybook already omits redundant Typography isSkeleton classNames={[\"w-1/2\"]}; no SB-only burns this wave. LabeledAccordionCard is src-only (no SB component twin)."
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "n/a — no edits"
+  },
+  "verification": {
+    "local": "deferred to aggregate"
+  },
+  "regressions": []
+}

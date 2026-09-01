@@ -1,0 +1,41 @@
+{
+  "batch": "B40",
+  "phase": "workers-running",
+  "checkpoint": "2a096210a",
+  "inventory": ".artifacts/fe-refactor-audit/2026-08-10-b40-inventory.json",
+  "workerCount": 18,
+  "safeFindingsScoped": 1094,
+  "safeFilesScoped": 640,
+  "overlapProof": "0 overlapping owns across manifests",
+  "agents": {
+    "w01-src-blocks-learn-0": "d054768c-7fe4-41ec-99cf-64e2e251d7c7",
+    "w02-src-blocks-learn-1": "f0853cd1-fb03-42e5-97e7-e6209242a18a",
+    "w03-src-blocks-learn-2": "d1e5965a-e2cc-47ae-8c7f-fe0974faa552",
+    "w04-src-pages-FlashcardsPage": "0d0e72bc-406d-451b-b940-41b70ffb3bde",
+    "w05-other": "d5d52e2c-16c4-44e8-8926-3f2a5070ee3b",
+    "w06-src-blocks-navigation": "2b6b6005-81ad-4f1c-ab26-4de9c6c642b3",
+    "w07-src-blocks-auth": "0b3e11b3-9655-410f-b13b-44ca39050988",
+    "w08-src-blocks-profile": "25e77fa5-64c3-4576-87fe-50d48e5bac61",
+    "w09-src-layouts": "1d005647-3387-4241-b2a3-f11ea23fe508",
+    "w10-src-blocks-layout": "93ead13a-22f3-47ae-b2ed-6afda171f72e",
+    "w11-src-pages-LeaguePage": "803062c4-6bcd-46a4-9c0a-f7ecf4d554e6",
+    "w12-src-overlays": "5683fd7d-61d9-4b2f-b247-15aff1080b21",
+    "w13-src-blocks-cv": "45a2d71f-3ca4-4f18-a0bf-357ada9fc66f",
+    "w14-src-pages-MockInterviewPage": "5b26ba9b-b7ef-434b-bc9c-be984586866e",
+    "w15-src-pages-DashboardPage": "69e67c74-73d1-41df-9d07-8f93abcdc6d0",
+    "w16-src-blocks-marketing": "e446d06d-c22c-4170-8092-b0d6169e7a1e",
+    "w17-src-blocks-skeleton": "273056de-dd3a-48ec-8a0f-abcf3c2f99fa",
+    "w18-src-blocks-cards": "4d5f647e-67c0-43d8-9ef6-4407ea47033b"
+  },
+  "safeRules": [
+    "starci-fe/require-export-jsdoc",
+    "starci-fe/no-inline-parameter-type",
+    "starci-fe/handler-on-prefix",
+    "starci-fe/prefer-arrow-export",
+    "starci-fe/no-vietnamese-in-source-authoring",
+    "starci-fe/require-identity-root",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-emoji-in-source"
+  ],
+  "next": "Coordinator aggregates worker JSONs, repairs compile regressions only, runs gates, writes status/handoff."
+}

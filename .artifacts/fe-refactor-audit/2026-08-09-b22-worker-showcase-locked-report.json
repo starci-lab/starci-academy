@@ -1,0 +1,25 @@
+{
+  "partition": "showcase-locked-report",
+  "changed": [],
+  "skipped": [
+    "LearnLoopScroll locked — no ShowcaseMockup/LearnLoopScroll edits"
+  ],
+  "holds": [
+    "ShowcaseMockup.contentClassName — LearnLoopScroll + TalentMarketplace"
+  ],
+  "evidence": [
+    "LearnLoopScroll: contentClassName={cn(\"flex flex-col p-4\", justify…)}",
+    "TalentMarketplace: contentClassName=\"flex flex-col gap-3 p-4\" (parent-placement candidate after unlock)"
+  ],
+  "proposals": [
+    {
+      "id": "showcase-content-parent-placement",
+      "summary": "After LearnLoopScroll unlock: move padding/justify into children StackV; then delete ShowcaseMockup.contentClassName if zero consumers",
+      "notClaimedFixed": true
+    }
+  ],
+  "verification": {
+    "edits": "none"
+  },
+  "regressions": []
+}

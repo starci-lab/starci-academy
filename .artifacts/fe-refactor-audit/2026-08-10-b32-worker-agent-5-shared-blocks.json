@@ -1,0 +1,260 @@
+{
+  "batch": "B32",
+  "date": "2026-08-10",
+  "worker": "agent-5-shared-blocks",
+  "checkpoint": "9e86cbdf",
+  "status": "partial",
+  "mission": [
+    "sentence-tier hosts",
+    "raw shapes",
+    "cn/className",
+    "direct HeroUI",
+    "fragments in frame item arrays",
+    "missing identity roots",
+    "parallel skeleton branches"
+  ],
+  "eslint": {
+    "before": 39,
+    "after": 24,
+    "delta": -15,
+    "byRuleBefore": {
+      "starci-fe/no-public-classname-prop": 13,
+      "starci-fe/no-host-element-at-sentence-tier": 12,
+      "starci-fe/require-identity-root": 7,
+      "starci-fe/require-frame-self-declare": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 2,
+      "starci-fe/no-raw-shape-at-sentence-tier": 4
+    },
+    "byRuleAfter": {
+      "starci-fe/no-public-classname-prop": 12,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/require-identity-root": 6,
+      "starci-fe/no-raw-shape-at-sentence-tier": 4,
+      "starci-fe/no-heroui-outside-vocabulary": 1
+    }
+  },
+  "closed": [
+    {
+      "file": ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+      "cluster": "sentence-tier hosts",
+      "notes": "Removed raw w-full div; TabsExtended size md already owns full-width stretch."
+    },
+    {
+      "file": ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+      "cluster": "sentence-tier hosts + identity",
+      "notes": "Ported to RailShell at=md principle=layout-split with identity, mirroring src twin."
+    },
+    {
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "cluster": "sentence-tier hosts + identity",
+      "notes": "Ported sticky rail + fill body to RailShell at=lg isRailSticky; placeholder AsyncContentEmpty rail kept."
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+      "cluster": "sentence-tier hosts",
+      "notes": "Mirrored src twin: FillAvailable title column + Box pr-8 close clearance; dropped outer host."
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+      "cluster": "sentence-tier hosts",
+      "notes": "Dropped outer host; identity stamped on SurfaceCardList (SB DrawerShell lacks identity prop)."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "cluster": "sentence-tier hosts",
+      "notes": "Band chrome moved to Box (fixed-bar) with block identity — same escape pattern as DueReview."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "cluster": "sentence-tier hosts (partial)",
+      "notes": "topSlot min-w-0 div → FillAvailable at=base. nav landmark host remains held."
+    },
+    {
+      "file": "src/components/blocks/cards/PricingCard/index.tsx",
+      "cluster": "cn/className + frame self-declare",
+      "notes": "StackV classNames flex-1 → FillAvailable at=base body=Features."
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "cluster": "direct HeroUI + identity",
+      "notes": "HeroUI Card → SurfaceCard with identity={{ tier: block, component: CVSubmissionForm }}."
+    }
+  ],
+  "holds": [
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "rules": ["starci-fe/no-host-element-at-sentence-tier"],
+      "missingOwner": "NavLandmark / rail-nav frame",
+      "missingShape": "<nav> landmark + flex min-h-0 flex-1 flex-col column that hosts DragScrollArea",
+      "reason": "Flex/Stack as= cannot render nav; no house frame owns this landmark+fill shape."
+    },
+    {
+      "file": [
+        ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+        "src/components/behaviors/DragScrollArea/index.tsx"
+      ],
+      "rules": ["starci-fe/no-public-classname-prop"],
+      "missingOwner": "DragScrollArea",
+      "missingShape": "semantic height/fill axis replacing live className values (flex-1, max-h-64)",
+      "reason": "Live consumers (CollapsibleSidebar, stories) pass className; cannot invent height enum without contract approval."
+    },
+    {
+      "file": [
+        ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+        "src/components/behaviors/ResizableRail/index.tsx"
+      ],
+      "rules": ["starci-fe/no-public-classname-prop"],
+      "missingOwner": "ResizableRail",
+      "missingShape": "semantic placement/fill axis for public className door",
+      "reason": "Live MindMap/LearnShell/Practice consumers rely on className; no approved finite axis yet."
+    },
+    {
+      "file": [
+        "src/components/blocks/chips/AiCategoryChip/index.tsx",
+        "src/components/blocks/chips/HostPlatformChip/index.tsx",
+        "src/components/blocks/form/SearchBar/index.tsx"
+      ],
+      "rules": ["starci-fe/no-public-classname-prop"],
+      "missingOwner": "sibling component.tsx (_AiCategoryChip / _HostPlatformChip / _SearchBar)",
+      "missingShape": "remove WithClassNames className from presentational half",
+      "reason": "Door lives on unassigned component.tsx; Omit-only on index trips no-css-door-type-laundering."
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/index.tsx",
+      "rules": ["starci-fe/no-public-classname-prop"],
+      "missingOwner": "MarkdownContent (block connected + component)",
+      "missingShape": "density/tone/measure variants covering live className values (text-sm, text-muted, [&_p]:m-0, min-w-0 flex-1, italic)",
+      "reason": "Multiple live callers pass heterogeneous className; composite viewer twin already has measure — block API needs approved contract, not invented doors."
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/mdxComponents.tsx",
+      "rules": ["starci-fe/no-heroui-outside-vocabulary"],
+      "missingOwner": "MDX renderer vocabulary / house Tabs+Chip atoms for MDX map",
+      "missingShape": "HeroUI imports used as MDX element map",
+      "reason": "No house MDX-host atom set covers this map; cannot invent wrappers."
+    },
+    {
+      "file": [
+        "src/components/blocks/layout/AmbientBackground/effects/FirefliesEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/RainEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/SnowEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/StarsEffect.tsx"
+      ],
+      "rules": ["starci-fe/no-raw-shape-at-sentence-tier"],
+      "missingOwner": "AmbientParticle / effect-layer frame or atom",
+      "missingShape": "absolute positioned particle span with seeded left/top/size animation",
+      "reason": "Sentence-tier effects draw absolute layout; no vocabulary owns ambient particle chrome."
+    },
+    {
+      "file": "src/components/blocks/async/AsyncContent/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "missingOwner": "ErrorContent / EmptyContent caller-identity forward (or retire legacy block toward composites/async/AsyncContent)",
+      "missingShape": "identity?: CallerIdentity on error/empty roots used as AsyncContent branches",
+      "reason": "Legacy switch returns ErrorContent/EmptyContent without identity forward; twin composite returns bare fragments. Cannot invent identity wrapper div."
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "missingOwner": "EnumChip (or house Chip)",
+      "missingShape": "identity?: CallerIdentity on enum→chip root",
+      "reason": "EnumChip does not accept identity; EnumChip itself is HeroUI-backed and unassigned."
+    },
+    {
+      "file": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "missingOwner": "ResponsiveBreadcrumb / Breadcrumbs atom",
+      "missingShape": "identity?: CallerIdentity forwarded to breadcrumb root",
+      "reason": "Root is ResponsiveBreadcrumb with no identity prop."
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "missingOwner": "CodePreviewTabs",
+      "missingShape": "identity?: CallerIdentity on preview/code tabs root",
+      "reason": "CodePreviewTabs is HeroUI Tabs host without identity; unassigned."
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "missingOwner": "TimeDisplay atom / Typography mono+muted media readout",
+      "missingShape": "monospace current/total time span (text-xs font-mono text-white/80) with identity root",
+      "reason": "Raw span chrome; Typography has tabularNums but not this media mono/white contract."
+    },
+    {
+      "file": "src/components/blocks/layout/SocketConnectionStatus/component.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "missingOwner": "require-identity-root rule exception for null-render effect hosts",
+      "missingShape": "n/a — component returns null; toast-only",
+      "reason": "Every component return is null, but useEffect cleanup ReturnStatements trip sawNonBareReturn. No DOM root to stamp identity."
+    }
+  ],
+  "proposedContracts": [
+    {
+      "name": "NavLandmark",
+      "tier": "frame",
+      "owns": ["nav landmark", "min-h-0 flex-1 flex-col fill for scrollable rail body"],
+      "earnedBy": ["CollapsibleSidebar"]
+    },
+    {
+      "name": "DragScrollArea.height / fill",
+      "tier": "behavior",
+      "owns": ["finite height or fill axis replacing className"],
+      "earnedBy": ["CollapsibleSidebar flex-1", "stories max-h-64"]
+    },
+    {
+      "name": "ResizableRail.className retirement",
+      "tier": "behavior",
+      "owns": ["finite placement/fill axis"],
+      "earnedBy": ["MindMapPage", "LearnShell", "PracticeHub"]
+    },
+    {
+      "name": "AmbientParticle",
+      "tier": "atom or frame",
+      "owns": ["absolute seeded particle span + animation vars"],
+      "earnedBy": ["FirefliesEffect", "RainEffect", "SnowEffect", "StarsEffect"]
+    },
+    {
+      "name": "MarkdownContent density/tone (block)",
+      "tier": "block/composite",
+      "owns": ["text-sm", "text-muted", "paragraph flush", "flex-fill italic variants"],
+      "earnedBy": ["QaMessageBubble", "CommunityPostCard", "MockInterviewScorecard", "..."]
+    },
+    {
+      "name": "TimeDisplay media readout atom",
+      "tier": "atom",
+      "owns": ["monospace current / total on dark media chrome"],
+      "earnedBy": ["VideoControls/TimeDisplay"]
+    },
+    {
+      "name": "CallerIdentity forward on EnumChip / ResponsiveBreadcrumb / CodePreviewTabs / ErrorContent",
+      "tier": "existing vocabulary API",
+      "owns": ["identity?: CallerIdentity"],
+      "earnedBy": ["LessonVideoKindChip", "SettingsBreadcrumb", "TabsBlock", "AsyncContent legacy"]
+    }
+  ],
+  "notInScopeFindings": {
+    "fragments": 0,
+    "parallelSkeleton": 0,
+    "note": "No no-frame-fragment-item or no-parallel-skeleton findings on assigned files at baseline."
+  },
+  "typesOnlyAssigned": [
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/account-menu.ts",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/types/index.ts",
+    "src/components/blocks/layout/shell/Navbar/types/index.ts",
+    "src/components/blocks/layout/shell/Navbar/types/navbar.ts",
+    "src/components/blocks/media/VideoRenderer/VideoControls/constants/index.ts",
+    "src/components/blocks/media/VideoRenderer/VideoControls/types/index.ts",
+    "src/components/blocks/media/VideoRenderer/VideoControls/types/quality.ts",
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/constants/index.ts",
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/constants/programming-language-tabs.ts",
+    "src/components/blocks/rendering/MarkdownContent/types/index.ts",
+    "src/components/blocks/rendering/MarkdownContent/types/markdown-content.ts",
+    "src/components/blocks/rendering/MarkdownContent/utils/index.ts",
+    "src/components/blocks/rendering/MarkdownContent/utils/markdown-table.ts",
+    "src/components/blocks/rendering/PDFView/constants/index.ts",
+    "src/components/blocks/rendering/PDFView/constants/pdf-view.ts",
+    "src/components/blocks/skeleton/AccordionSkeleton/types/index.ts",
+    "src/components/blocks/cards/verdict-band.ts"
+  ],
+  "summary": "Closed 15 starci-fe findings (39→24). Host cluster mostly cleared via RailShell/FillAvailable/Box twin ports on SB layouts/drawers/headers. PricingCard flex-1 and CVSubmissionForm HeroUI Card closed. Remaining debt held on missing NavLandmark, AmbientParticle, behavior className axes, MarkdownContent density, identity forwards, and TimeDisplay atom — no wrappers invented."
+}

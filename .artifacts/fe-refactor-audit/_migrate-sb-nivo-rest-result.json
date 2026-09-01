@@ -1,0 +1,547 @@
+{
+  "applied": [
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      "line": 261,
+      "principle": "flex-action",
+      "note": "save button row justify-end"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      "line": 135,
+      "principle": "flex-action",
+      "note": "address + publish controls"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      "line": 204,
+      "principle": "flex-action",
+      "note": "generate button row"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      "line": 108,
+      "principle": "title-subtitle",
+      "note": "draft heading over body lines at 4px"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+      "line": 187,
+      "principle": "content-row",
+      "note": "header identity | actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+      "line": 96,
+      "principle": "content-row",
+      "note": "header identity | actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+      "line": 111,
+      "principle": "sibling-stack",
+      "note": "lead row body stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 325,
+      "principle": "content-row",
+      "note": "pipeline column grid segments at step 4"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 179,
+      "principle": "icon-text",
+      "note": "at=sm icon/text compact"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "line": 153,
+      "principle": "flex-action",
+      "note": "CTA justify-end"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "line": 80,
+      "principle": "sibling-stack",
+      "note": "manager body peers"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteOfferingsEditor/ExpertSiteOfferingsEditor.tsx",
+      "line": 91,
+      "principle": "flex-action",
+      "note": "offering row actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadDetail/LeadDetail.tsx",
+      "line": 142,
+      "principle": "flex-action",
+      "note": "header actions at sm"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+      "line": 137,
+      "principle": "icon-text",
+      "note": "compact meta at=sm"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+      "line": 83,
+      "principle": "identity",
+      "note": "avatar/icon + name align"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentDetailDrawer/AgentDetailDrawer.tsx",
+      "line": 143,
+      "principle": "flex-action",
+      "note": "header actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+      "line": 189,
+      "principle": "content-row",
+      "note": "header identity | actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+      "line": 95,
+      "principle": "content-row",
+      "note": "header identity | actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      "line": 87,
+      "principle": "content-row",
+      "note": "stat/field grid"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+      "line": 118,
+      "principle": "icon-text",
+      "note": "meta icon/text align"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+      "line": 127,
+      "principle": "identity",
+      "note": "channel identity align"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/HealthCard/HealthCard.tsx",
+      "line": 61,
+      "principle": "content-row",
+      "note": "health metric row segments (gap-only false nested; seam is real)"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/PlaygroundPanel/PlaygroundPanel.tsx",
+      "line": 97,
+      "principle": "flex-action",
+      "note": "bubble align row (user end / agent start)"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ProvisioningState/ProvisioningState.tsx",
+      "line": 150,
+      "principle": "group-boundary",
+      "note": "provision state groups"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ThreadDrawer/ThreadDrawer.tsx",
+      "line": 107,
+      "principle": "flex-action",
+      "note": "message align row"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/BuyConfirmModal/BuyConfirmModal.tsx",
+      "line": 144,
+      "principle": "flex-action",
+      "note": "confirm/cancel actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+      "line": 172,
+      "principle": "flex-action",
+      "note": "confirm actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 257,
+      "principle": "content-row",
+      "note": "product card grid"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 200,
+      "principle": "content-row",
+      "note": "product card grid"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "line": 202,
+      "principle": "sibling-stack",
+      "note": "offerings card grid gap 3"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "line": 173,
+      "principle": "sibling-stack",
+      "note": "section stack align"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "line": 139,
+      "principle": "sibling-stack",
+      "note": "stat grid peers at gap 3"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "line": 127,
+      "principle": "sibling-stack",
+      "note": "hero identity stack align"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 187,
+      "principle": "icon-text",
+      "note": "tx meta at=sm"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 100,
+      "principle": "flex-action",
+      "note": "wallet header actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx",
+      "line": 109,
+      "principle": "sibling-stack",
+      "note": "profile field peers (heuristic single-slot miss)"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx",
+      "line": 186,
+      "principle": "identity",
+      "note": "security row align"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+      "line": 37,
+      "principle": "content-row",
+      "note": "kpi tile grid segments"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+      "line": 91,
+      "principle": "sibling-stack",
+      "note": "label/value/footer peers"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/dashboard/ProductQuickSelector/ProductQuickSelector.tsx",
+      "line": 43,
+      "principle": "title-subtitle",
+      "note": "product label over hint"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+      "line": 172,
+      "principle": "label-field",
+      "note": "thread header over messages"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+      "line": 110,
+      "principle": "flex-action",
+      "note": "bubble align row"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+      "line": 183,
+      "principle": "flex-action",
+      "note": "invoice actions"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+      "line": 101,
+      "principle": "title-subtitle",
+      "note": "section title over body"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+      "line": 611,
+      "principle": "content-row",
+      "note": "console header segments"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+      "line": 410,
+      "principle": "content-row",
+      "note": "console panel grid"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      "line": 138,
+      "principle": "content-row",
+      "note": "overview card grid"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      "line": 262,
+      "principle": "content-row",
+      "note": "overview card grid"
+    }
+  ],
+  "held": [
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      "line": 112,
+      "id": "draft-heading-chip-gap2",
+      "note": "heading + optional chip justify-between at gap 2 — not icon-text/title-subtitle/separator-dot"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+      "line": 116,
+      "id": "lead-row-meta-gap3",
+      "note": "name+chip | timestamp at gap 3 — content-row is step 4; no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 138,
+      "id": "pipeline-column-header-gap2",
+      "note": "title | count at gap 2 justify-between — no honest step-2 token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "line": 96,
+      "id": "manager-row-meta-gap3",
+      "note": "site row meta at gap 3 justify-between — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+      "line": 97,
+      "id": "inbox-row-meta-gap3",
+      "note": "name | meta at gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+      "line": 120,
+      "id": "channel-row-meta-gap3",
+      "note": "channel row justify-between at gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx",
+      "line": 98,
+      "id": "knowledge-row-meta-gap3",
+      "note": "knowledge row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ModelsSection/ModelsSection.tsx",
+      "line": 84,
+      "id": "models-row-meta-gap3",
+      "note": "model row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ToolsSection/ToolsSection.tsx",
+      "line": 91,
+      "id": "tools-row-meta-gap3",
+      "note": "tool row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx",
+      "line": 106,
+      "id": "order-row-meta-gap3",
+      "note": "order row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+      "line": 143,
+      "id": "upgrade-summary-row-gap3",
+      "note": "summary row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 228,
+      "id": "catalog-view-gap8-non-landing-b",
+      "note": "second gap 8 band — same as above"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 182,
+      "id": "catalog-view-gap8-non-landing",
+      "note": "gap 8 page stack — marketing-beat is landing-only; CatalogView is app catalog"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "line": 123,
+      "id": "expert-site-view-gap8-non-landing",
+      "note": "gap 8 page stack — marketing-beat landing-only"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+      "line": 96,
+      "id": "kpi-tile-label-icon-gap3",
+      "note": "label | icon justify-between gap 3 — not flex-action/identity/value-row"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx",
+      "line": 105,
+      "id": "ticket-row-meta-gap3",
+      "note": "ticket row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+      "line": 177,
+      "id": "ticket-thread-header-gap3",
+      "note": "subject | status justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/billing/InvoiceDetailModal/InvoiceDetailModal.tsx",
+      "line": 89,
+      "id": "invoice-detail-row-gap3",
+      "note": "line row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+      "line": 165,
+      "id": "invoice-list-row-gap3",
+      "note": "invoice row justify-between gap 3 — no step-3 row-segment token"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+      "line": 110,
+      "id": "dashboard-section-header-gap3",
+      "note": "title | action justify-between gap 3 — trailing may be control but gap keeps content-row off-step"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx",
+      "line": 104,
+      "id": "domain-row-meta-gap3",
+      "note": "domain row justify-between gap 3 — no step-3 row-segment token"
+    }
+  ],
+  "missed": [
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      "line": 232,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      "line": 208,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      "line": 171,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 133,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "line": 136,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadDetail/LeadDetail.tsx",
+      "line": 138,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+      "line": 92,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+      "line": 78,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentDetailDrawer/AgentDetailDrawer.tsx",
+      "line": 129,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      "line": 79,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+      "line": 112,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+      "line": 105,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/BuyConfirmModal/BuyConfirmModal.tsx",
+      "line": 120,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+      "line": 138,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 233,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 187,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "line": 196,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 181,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 158,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 149,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx",
+      "line": 66,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx",
+      "line": 181,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+      "line": 75,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      "line": 106,
+      "error": "already has principle or insert failed"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      "line": 242,
+      "error": "already has principle or insert failed"
+    }
+  ]
+}

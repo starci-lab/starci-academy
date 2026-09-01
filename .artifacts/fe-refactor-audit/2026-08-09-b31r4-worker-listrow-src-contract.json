@@ -1,0 +1,17 @@
+{
+  "worker": "listrow-src-contract",
+  "status": "done",
+  "edited": ["src/components/composites/lists/List/index.tsx"],
+  "apiBefore": { "density": null },
+  "apiAfter": { "density": "\"default\" | \"comfortable\"" },
+  "parityWithStorybook": true,
+  "warningsBefore": 8,
+  "warningsAfter": 0,
+  "zeroWarnFixes": [
+    "StackH/StackV principle+explain self-declare",
+    "removed StackH/TitledText classNames doors",
+    "ToggleRow flex-1 → FillAvailable at=base"
+  ],
+  "notEdited": ["src/components/blocks/lists/ListRow/index.tsx"],
+  "reasonBlocksListRowUntouched": "Legacy ReactNode ListRow still has 9 sentence-tier warnings; density lands on the Storybook twin (composite List.Row). ReadinessChecklist migrates onto composite ListRow."
+}

@@ -1,0 +1,308 @@
+{
+  "batch": "B33",
+  "agent": "agent-9-sentence-heroui",
+  "manifest": "agent-9-sentence-heroui",
+  "checkpoint": "139391b6",
+  "committed": false,
+  "generatedAt": "2026-08-08T13:00:00.000Z",
+  "clusterIds": [
+    "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band2",
+    "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band5",
+    "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::sentence-root::band5",
+    "src-or-sb:blocks/dashboard/WeeklyGoals::WeeklyGoals::sentence-root::band10",
+    "src-or-sb:blocks/learn/FoundationSearchBar::FoundationSearchBar::sentence-root::band4",
+    "src-or-sb:blocks/learn/KeepGoingPath::KeepGoingPath::css-contract::band2",
+    "src-or-sb:blocks/learn/LeaderboardBoard/Board::Board::sentence-root::band1",
+    "src-or-sb:blocks/learn/LeaderboardBoard::LeaderboardBoard::sentence-root::band3",
+    "src-or-sb:blocks/learn/ModuleLessonList::ModuleLessonList::css-contract::band3",
+    "src-or-sb:blocks/learn/QaConversationHeader::QaConversationHeader::sentence-root::band5",
+    "src-or-sb:blocks/learn/SubmissionAttemptSelector::SubmissionAttemptSelector::sentence-root::band7",
+    "src-or-sb:blocks/navigation/ProfileTabsBar::ProfileTabsBar::sentence-root::band4"
+  ],
+  "consumersScanned": [
+    "src/components/layouts/LearnShellLayout/index.tsx (GithubLinkGate — no className)",
+    "src/components/pages/CourseContents/component.tsx (TrialConversionStrip — no classNames)",
+    "src/components/layouts/PublicProfileLayout/component.tsx (ProfileTabsBar)",
+    "src/components/blocks/learn/QaQuestionThread/index.tsx (QaConversationHeader asker/FollowButton/i18n API)",
+    "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx (SubmissionAttemptSelector)",
+    "src/components/pages/ChallengeResultPage/component.tsx (SubmissionAttemptSelector)",
+    "src/components/pages/FoundationsCategoryPage/component.tsx (FoundationSearchBar)",
+    "ResponsiveBreadcrumb callers (LearnBreadcrumb, SettingsBreadcrumb, ContentHeader, pages)",
+    "blocks/dashboard/ChangelogList + WeeklyGoals — no live src page imports (page-local twins exist)"
+  ],
+  "consumersMigrated": [
+    "none required — removals were unused doors or internal host/className drops with zero call-site className/classNames usage"
+  ],
+  "sharedApiRemovedOrRetained": [
+    {
+      "api": "ChangelogListProps.className",
+      "action": "removed",
+      "reason": "dead door; SB twin already closed; no live consumers"
+    },
+    {
+      "api": "GithubLinkGateProps / WithClassNames",
+      "action": "removed",
+      "reason": "side-effect-only null render; LearnShellLayout passes no className"
+    },
+    {
+      "api": "TrialConversionStripProps.classNames",
+      "action": "removed",
+      "reason": "CourseContents never passes classNames; SurfaceCard no longer fed a public CSS door"
+    },
+    {
+      "api": "QaConversationHeaderProps (src username/FollowButton/i18n shape)",
+      "action": "retained",
+      "reason": "not behaviorally exact with SB asker.id/Avatar/Button follow contract; QaQuestionThread depends on current API"
+    },
+    {
+      "api": "NavbarThemeSwitch / NavbarLanguageMenu HeroUI Switch+Dropdown",
+      "action": "retained",
+      "reason": "file headers document missing atom slots (icon-in-thumb; single-select check indicator)"
+    }
+  ],
+  "changedFiles": [
+    "src/components/blocks/dashboard/ChangelogList/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+    "src/components/blocks/learn/KeepGoingPath/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+    "src/components/blocks/learn/ModuleLessonList/index.tsx",
+    "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx",
+    "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+    ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx"
+  ],
+  "beforeAfterMessages": {
+    "scope": "B32 partial-cluster src twins (10 files) owned rules only",
+    "beforeOwned": {
+      "total": 32,
+      "byRule": {
+        "starci-fe/no-host-element-at-sentence-tier": 11,
+        "starci-fe/no-public-classname-prop": 12,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4,
+        "starci-fe/no-classname-at-sentence-tier": 3,
+        "starci-fe/no-heroui-outside-vocabulary": 2
+      }
+    },
+    "afterOwnedOnTouchedPlusQa": {
+      "note": "priority twins + ResponsiveBreadcrumb/GithubLinkGate/TrialConversionStrip/QaConversationHeader after pass",
+      "byRule": {
+        "starci-fe/no-public-classname-prop": 6,
+        "starci-fe/no-host-element-at-sentence-tier": 4,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4,
+        "starci-fe/no-heroui-outside-vocabulary": 1
+      },
+      "residualOwners": {
+        "QaConversationHeader": "all remaining host/raw/heroui on this file (held)",
+        "KeepGoingPath/ModuleLessonList/WeeklyGoals": "Skeleton className shimmer dots (no exact size-5 house shimmer without HeroUI/new shelf)",
+        "TrialConversionStrip/component": "internal TitledText/Typography classNames (FillAvailable/width not applied this pass)"
+      }
+    },
+    "deltaOwnedHostOnAssignedPartials": "11 → 4 (all residual host on held QaConversationHeader)"
+  },
+  "closedClusters": [
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band2",
+      "change": "Mirrored SB: dropped className prop + host div; SurfaceCardNested carries identity"
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band5",
+      "change": "Same mirror — public className door removed"
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::sentence-root::band5",
+      "change": "Host div removed; AsyncContent/SurfaceCardNested is the root"
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/WeeklyGoals::WeeklyGoals::sentence-root::band10",
+      "change": "Mirrored SB Content: sibling-stack owns summary|grid; removed StatGridCard host div"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/FoundationSearchBar::FoundationSearchBar::sentence-root::band4",
+      "change": "Removed host div + Typography classNames; StackH content-row is root (identity added on src)"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/LeaderboardBoard/Board::Board::sentence-root::band1",
+      "change": "Mirrored SB FillAvailable at=base; dropped flex-1 host + Typography classNames"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/LeaderboardBoard::LeaderboardBoard::sentence-root::band3",
+      "change": "Removed outer host div around AsyncContent"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/SubmissionAttemptSelector::SubmissionAttemptSelector::sentence-root::band7",
+      "change": "Removed outer host div; AsyncContent is root"
+    },
+    {
+      "id": "src-or-sb:blocks/navigation/ProfileTabsBar::ProfileTabsBar::sentence-root::band4",
+      "change": "Removed w-full host + TabsExtended classNames; switched HeroTabs.* → TabsListContainer/List/Tab/Indicator (SB+src twin)"
+    }
+  ],
+  "partialClusters": [
+    {
+      "id": "src-or-sb:blocks/learn/KeepGoingPath::KeepGoingPath::css-contract::band2",
+      "remaining": ["starci-fe/no-public-classname-prop"],
+      "progress": "Renamed interface className→glyphClass (closes no-classname + prop-name door). Skeleton size-5 shimmer still needs className; IconTile isSkeleton is size-10 tile — not exact."
+    },
+    {
+      "id": "src-or-sb:blocks/learn/ModuleLessonList::ModuleLessonList::css-contract::band3",
+      "remaining": ["starci-fe/no-public-classname-prop", "starci-fe/no-inline-skeleton-branch"],
+      "progress": "Renamed interface className→glyphClass. Leading still ternaries Skeleton vs Icon with className on Skeleton."
+    }
+  ],
+  "holds": [
+    {
+      "id": "src-or-sb:blocks/learn/QaConversationHeader::QaConversationHeader::sentence-root::band5",
+      "files": [
+        "src/components/blocks/learn/QaConversationHeader/index.tsx",
+        ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx"
+      ],
+      "reason": "Src is HeroUI+UserAvatar+FollowButton+next-intl with asker.username API; SB is house Button/Avatar/Stack with asker.id/displayName/avatarUrl and block-owned follow Button. Not behaviorally exact. Consumer QaQuestionThread tied to src API. Hold pending coordinated consumer migration.",
+      "remainingRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ]
+    },
+    {
+      "files": [
+        "src/components/blocks/layout/AmbientBackground/effects/AuroraEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/BubblesEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/CircuitEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/EmberEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/FirefliesEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/RainEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/SnowEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/StarsEffect.tsx",
+        "src/components/blocks/layout/AmbientBackground/effects/WaveEffect.tsx"
+      ],
+      "reason": "Canvas/vendor ambient hosts: absolute positioned CSS animation ribbons/particles with inline style. No exact StarCi vocabulary (FillAvailable/Box/Stack) without inventing an effect shelf.",
+      "remainingRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "files": [
+        "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+        "src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx"
+      ],
+      "reason": "Documented missing atom contracts: ChoiceSwitch has no icon-in-thumb; Menu/Dropdown has no single-select check indicator matching this chrome. HeroUI retained.",
+      "remainingRules": ["starci-fe/no-heroui-outside-vocabulary"]
+    },
+    {
+      "files": [
+        "src/components/blocks/community/Discussion/CommentItem.tsx",
+        "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx"
+      ],
+      "reason": "No SB twin; deep nested host/cn/heroui tree with UserAvatar/EntityLink className doors. Vertical rewrite without exact blueprint skipped this pass.",
+      "remainingRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "files": [
+        "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx",
+        "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx"
+      ],
+      "reason": "Connected WithClassNames doors still wire into presentational halves that apply className/cn to HeroUI dropdown/tabs chrome. Closing requires presentational rewrite beyond exact single replacement.",
+      "remainingRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ]
+    }
+  ],
+  "forbiddenConsumers": [],
+  "parity": [
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ],
+      "status": "src mirrored to SB (host/className/identity)"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+        "src/components/blocks/dashboard/WeeklyGoals/index.tsx"
+      ],
+      "status": "Content host/sibling-stack mirrored; src keeps house Skeleton (SB still uses HeroSkeleton — src cannot import heroui)"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+        "src/components/blocks/learn/FoundationSearchBar/index.tsx"
+      ],
+      "status": "src mirrored (host/classNames); src adds identity"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+        "src/components/blocks/learn/KeepGoingPath/index.tsx"
+      ],
+      "status": "glyphClass rename mirrored; skeleton shimmer still house Skeleton vs SB HeroSkeleton"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx"
+      ],
+      "status": "FillAvailable row mirror complete"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/index.tsx"
+      ],
+      "status": "host removal mirrored"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+        "src/components/blocks/learn/ModuleLessonList/index.tsx"
+      ],
+      "status": "glyphClass rename mirrored; skeleton shimmer residual"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+        "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx"
+      ],
+      "status": "host removal mirrored"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+        "src/components/blocks/navigation/ProfileTabsBar/index.tsx"
+      ],
+      "status": "both updated to TabsParts vocabulary; host/classNames removed on src"
+    },
+    {
+      "pair": [
+        ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+        "src/components/blocks/learn/QaConversationHeader/index.tsx"
+      ],
+      "status": "divergent — held"
+    }
+  ],
+  "tests": {
+    "eslintTouched": "npx eslint --max-warnings=0 on changed + QaConversationHeader; owned host closed on all claimed clusters; residual owned = held Qa + Skeleton className + TrialConversionStrip internal classNames",
+    "tsc": "npx tsc --noEmit exit 0; no diagnostics on touched symbols",
+    "diffCheck": "git diff --check on changed files — pass"
+  },
+  "regressions": [],
+  "notes": [
+    "componentTier() only matches /src/components/, so no-heroui/no-classname/require-identity do not fire on .storybook twins — SB can still import @heroui/react while src must use TabsParts/Breadcrumbs atoms.",
+    "Bonus non-partial closures: ResponsiveBreadcrumb→Breadcrumbs atom (heroui+cn), GithubLinkGate dead className door, TrialConversionStrip unused classNames door.",
+    "Did not invent principles solely to silence require-frame-self-declare (agent-7 identity/frame territory) where SB also leaves undeclared gap stacks.",
+    "No nivo/nivoexpert/mia-mia, CLAUDE.md, or decision-ledger edits. No commit."
+  ]
+}

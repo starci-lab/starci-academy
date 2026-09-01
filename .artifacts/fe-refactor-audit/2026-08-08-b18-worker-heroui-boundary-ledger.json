@@ -1,0 +1,40 @@
+{
+  "partition": "heroui-boundary-ledger",
+  "consumers": {
+    "sourceArtifact": ".artifacts/fe-refactor-audit/2026-08-08-contract-worker-heroui-boundaries.json",
+    "uniqueFiles": 30,
+    "holdRows": 86
+  },
+  "currentSemantics": "HeroUI / cn usage at sentence tier where StarCi atom APIs are non-identical or missing.",
+  "proposedContract": {
+    "action": "Keep all 30 as vendor-boundary",
+    "doNot": [
+      "Create fake StarCi wrappers that only re-export HeroUI",
+      "Migrate Button children/className to atom label without redesign",
+      "Migrate Chip compounds onto ChipBase without parity",
+      "Invent CloseButton/ScrollShadow atoms mid-hold without product need"
+    ],
+    "recheckWhen": "New atoms land with identical props/behavior"
+  },
+  "existingCanonEvidence": {
+    "atom-layer-heroui-wrappers": "vendor wrapped once at vocabulary tier",
+    "buckets": {
+      "cn-vocabulary-only": true,
+      "Button-nonidentical": true,
+      "ChipBase-hard-hold": true,
+      "Card-compound": true,
+      "Accordion-compound": true,
+      "missing-atom": ["CloseButton", "ScrollShadow"],
+      "multi-compound": ["GithubTeamGate"]
+    },
+    "identicalAccidentalWrappers": 0
+  },
+  "storybookSrcParity": "n/a — classification only",
+  "implementationReady": false,
+  "implementationReadyReason": "All 30 remain non-identical; zero safe migrations.",
+  "changed": [],
+  "holds": [
+    "heroui-vendor-boundary-batch13-2026-08-08"
+  ],
+  "regressions": []
+}

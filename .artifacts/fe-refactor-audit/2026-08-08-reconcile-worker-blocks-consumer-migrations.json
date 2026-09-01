@@ -1,0 +1,332 @@
+{
+  "partition": "blocks-consumer-migrations",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "skeleton-hold; heroui-non-identical-atom-API(Card,CardContent,Skeleton); unclear-host-root-no-identity-capable-frame; api-holds(no-skeleton-twin-component,no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Alert,Button,Modal,Typography); unclear-host-root-no-identity-capable-frame; api-holds(no-raw-shape-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "no-identical-CloseButton-atom; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "skeleton-hold; heroui-non-identical-atom-API(Card); unclear-host-root-no-identity-capable-frame; api-holds(no-skeleton-twin-component,no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; identity-plumbing-present-own-root-not-cleared-here; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,require-frame-self-declare,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; identity-plumbing-present-own-root-not-cleared-here; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier,require-frame-self-declare)"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,ProgressBar,Spinner,Typography); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Card); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Typography); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Typography); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame"
+    },
+    {
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Tabs); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Spinner,Tooltip); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "skeleton-hold; heroui-non-identical-atom-API(Card,Skeleton,Typography); identity-plumbing-present-own-root-not-cleared-here; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier,no-inline-skeleton-branch)"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "cn-merge-needs-frame-not-noop-drop; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Label,Spinner,Typography); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/community/FollowButton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Spinner); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Input,Label,TextField); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Input,Label,TextField); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-emoji-in-source,no-cn-above-vocabulary)"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,FieldError,Input,Label,TextField); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Input,Label,TextField); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Input,Label,TextArea,TextField); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-emoji-in-source,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "heroui-non-identical-atom-API(Button,Dropdown,DropdownItem,DropdownMenu,DropdownPopover,DropdownTrigger); unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-emoji-in-source,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "vendor-Chip-compound-non-identical-ChipBase-hold; unclear-host-root-no-identity-capable-frame; api-holds(no-classname-at-sentence-tier,no-cn-above-vocabulary,no-raw-shape-at-sentence-tier)"
+    }
+  ],
+  "verification": {
+    "note": "Capped 40 reviewed; 0 safe rewrites. No twinExists pairs in manifest. No consumerUnit (per-part classname) entries. HeroUI symbols differ from house atom APIs (Button label/prefixIcon, Card omits className, Typography text/size, Chip→ChipBase, Tooltip compound→label API, CloseButton missing). cn-only files perform real class merges (not noop passthrough). Identity: no clear frame/composite root accepting identity={{}}; PressableCard/SurfaceListCard/TierCardBase already have resolveIdentity plumbing for callers. Skeletons hard-held.",
+    "eslintQuiet": "n/a (no changed files)"
+  },
+  "regressions": []
+}

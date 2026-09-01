@@ -1,0 +1,239 @@
+{
+  "totalSafeRemain": 38,
+  "byRule": {
+    "starci-fe/no-emoji-in-source": 10,
+    "starci-fe/require-identity-root": 17,
+    "starci-fe/no-inline-skeleton-branch": 8,
+    "starci-fe/no-vietnamese-in-source-authoring": 3
+  },
+  "remain": [
+    {
+      "file": ".storybook\\stories\\starci\\blocks\\commerce\\TrialConversionStrip\\TrialConversionStrip.stories.tsx",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 69,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": ".storybook\\stories\\starci\\blocks\\commerce\\TrialConversionStrip\\TrialConversionStrip.stories.tsx",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 78,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": ".storybook\\stories\\starci\\blocks\\commerce\\TrialConversionStrip\\TrialConversionStrip.stories.tsx",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 101,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\dashboard\\WeeklyChallengeCard\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 24,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\dashboard\\WeeklyChallengeCard\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 173,
+      "msg": "`data.endsInLabel != null || isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape wr"
+    },
+    {
+      "file": "src\\components\\blocks\\grading\\DiffViewer\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 14,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\grading\\GradeModelDropdown\\component.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 43,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ConceptMap\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 170,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ContentDiscussion\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 20,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ContentDiscussion\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 167,
+      "msg": "`!isSkeleton && comments.length === 0 ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape writ"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\CourseQaComposer\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 19,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\CourseQaQuestionList\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 16,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\MindMapContinueButton\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 21,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\MindMapContinueButton\\index.tsx",
+      "rule": "starci-fe/no-vietnamese-in-source-authoring",
+      "line": 89,
+      "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Local"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\MindMapContinueButton\\index.tsx",
+      "rule": "starci-fe/no-vietnamese-in-source-authoring",
+      "line": 90,
+      "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Local"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\MockInterviewScorecard\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 24,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\MockInterviewScorecard\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 303,
+      "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call si"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ModuleLessonList\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 110,
+      "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call si"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\PlaygroundSetupSteps\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 22,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\PlaygroundSetupSteps\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 175,
+      "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call si"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\PlaygroundSetupSteps\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 197,
+      "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call si"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\PlaygroundSetupSteps\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 243,
+      "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call si"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 10,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\index.tsx",
+      "rule": "starci-fe/no-vietnamese-in-source-authoring",
+      "line": 94,
+      "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Local"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\types.ts",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 15,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\types.ts",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 16,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\types.ts",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 17,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\types.ts",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 18,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\types.ts",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 19,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\ReactionButton\\types.ts",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 20,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\SubmissionFindingsList\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 31,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\lesson\\ContentBodySkeleton\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 11,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\personal-project\\TaskActions\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 33,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\personal-project\\TaskActions\\index.tsx",
+      "rule": "starci-fe/no-inline-skeleton-branch",
+      "line": 173,
+      "msg": "`isPending ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call sit"
+    },
+    {
+      "file": "src\\components\\blocks\\learn\\personal-project\\TaskResult\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 59,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\marketing\\MicroservicesScene\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 54,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    },
+    {
+      "file": "src\\components\\blocks\\marketing\\MicroservicesScene\\index.tsx",
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 107,
+      "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixt"
+    },
+    {
+      "file": "src\\components\\blocks\\marketing\\SitePreview\\index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "line": 50,
+      "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame"
+    }
+  ]
+}

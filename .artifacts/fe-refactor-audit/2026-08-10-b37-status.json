@@ -1,0 +1,148 @@
+{
+  "batch": "B37",
+  "title": "Whole-composite ownership and legacy card retirement",
+  "checkpoint": "84b92cd77",
+  "note": "Certified committed B36 HEAD was requested; B36 remains uncommitted on the same worktree atop 84b92cd77. B37 lands on that dirty tree.",
+  "generatedAt": "2026-08-08T17:35:00.000Z",
+  "verdict": "READY TO CERTIFY",
+  "committed": false,
+  "agents": {
+    "requested": 10,
+    "completed": 10,
+    "overlapPass": true,
+    "roster": [
+      "surface-contract-storybook",
+      "surface-contract-src",
+      "dashboard-consumers",
+      "profile-consumers-a",
+      "profile-consumers-b",
+      "learn-flashcard-consumers",
+      "feed-overlay-commerce-consumers",
+      "legacy-surface-list-remaining",
+      "labeled-card-non-list-classification",
+      "coordinator-lint-parity-gates"
+    ]
+  },
+  "inventory": {
+    "phase0": {
+      "LabeledCard": 97,
+      "frameless": 54,
+      "SurfaceListCard": 87,
+      "SurfaceCardList": 111
+    },
+    "after": {
+      "LabeledCard": 78,
+      "frameless": 46,
+      "SurfaceListCard": 52,
+      "SurfaceCardList": 146
+    },
+    "delta": {
+      "LabeledCard": -19,
+      "frameless": -8,
+      "SurfaceListCard": -35,
+      "SurfaceCardList": 35
+    },
+    "coordinatorNote": "Coordinator afterWorkers SurfaceListCard=58 used a slightly different root set; parent remeasure uses src+.storybook and reports 52."
+  },
+  "requiredFirstTargets": {
+    "TrendingContents": {
+      "status": "migrated",
+      "shape": "SurfaceCardList identity={tier:block,component:TrendingContents} label items isSkeleton",
+      "host": "TrendingContentsSurface in TrendingRow/index.tsx",
+      "removed": ["LabeledCard", "SurfaceListCard", "parallel TrendingContentsSkeleton tree"]
+    },
+    "DailyQuest": { "status": "migrated" },
+    "RecommendedCourses": { "status": "migrated" },
+    "OverviewCodeSkills": { "status": "migrated", "class": "C" },
+    "OverviewChallengeSkills": { "status": "migrated", "class": "C" },
+    "ProfileCoding": {
+      "status": "partial",
+      "migrated": ["stats list", "history list", "skeleton"],
+      "held": ["StatRibbon frameless E"]
+    },
+    "ProfileChallenges": {
+      "status": "partial",
+      "migrated": ["stats list", "skeleton"],
+      "held": ["StatRibbon E", "ChallengeCourseRow outside-owns H"]
+    },
+    "FlashcardReviewHistory": { "status": "migrated" },
+    "FlashcardQuizHistory": { "status": "migrated" },
+    "ActivityFeed": {
+      "status": "held",
+      "class": "H",
+      "mismatch": "ReactNode feed rows (message + ActivityAvatar + ReactionBar)"
+    },
+    "MindMapNodeDrawer": {
+      "status": "held",
+      "class": "A→H",
+      "mismatch": "EntityResultRow owns row chrome; outside-owns"
+    },
+    "AiUsageHistory": { "status": "migrated" },
+    "ContactChannels": {
+      "status": "partial",
+      "migrated": ["list shell where exact"],
+      "held": ["FounderCard framed F"]
+    },
+    "ProfileCapstone": { "status": "migrated" },
+    "RelatedContentList": {
+      "status": "held",
+      "class": "H",
+      "mismatch": "EntityResultRow owns SurfaceListCardItem; parent shell-only"
+    }
+  },
+  "retirement": {
+    "LabeledCard": "retained — framed F consumers remain; frameless not deleted globally",
+    "frameless": "deprecated on contract; residual consumers remain (46 files)",
+    "SurfaceListCard": "retained — held outside-owns / ReactNode / nested-row consumers remain; Decision F delete gate not met",
+    "SurfaceCardList": "gained consumers (+35 file mentions)"
+  },
+  "eslintRule": {
+    "id": "starci-fe/no-redundant-labeled-surface",
+    "severity": "warn",
+    "proof": "JSX ancestry",
+    "liveHits": 6,
+    "flippedToError": false
+  },
+  "eslintDelta": {
+    "beforeB36Certified": { "warnings": 6265, "files": 1104, "errors": 0, "a11y": 11 },
+    "afterB36": { "warnings": 6215, "files": 1086, "errors": 0, "a11y": 11 },
+    "afterB37": { "warnings": 6206, "files": 1088, "errors": 0, "a11y": 11 },
+    "b37DeltaVsB36": { "warnings": -9, "files": 2, "errors": 0, "a11y": 0 },
+    "newRuleHits": 6
+  },
+  "heldMismatchCount": 34,
+  "forbiddenProof": {
+    "nivoNivoexpertMiaMiaProductEditsThisBatch": false,
+    "preDirtyExcluded": [
+      ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"
+    ],
+    "preDirtyHolds": ["CLAUDE.md", ".claude/fe/decision-ledger.json"],
+    "pass": true
+  },
+  "gates": {
+    "tsc": 0,
+    "pluginEslintTests": 0,
+    "principleStyleTests": 0,
+    "semanticContractsTests": 0,
+    "auditFe": 0,
+    "gitDiffCheck": 0
+  },
+  "artifacts": [
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-card-topology.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-card-topology.md",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-manifests.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-surface-contract-storybook.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-surface-contract-src.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-dashboard-consumers.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-profile-consumers-a.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-profile-consumers-b.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-learn-flashcard-consumers.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-feed-overlay-commerce-consumers.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-legacy-surface-list-remaining.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-labeled-card-non-list-classification.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-worker-coordinator-lint-parity-gates.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-status.md",
+    ".artifacts/fe-refactor-audit/2026-08-10-b37-handoff.md"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "batch": "B34",
+  "wave": "B",
+  "manifest": "markdown-consumers-learn",
+  "agent": "markdown-consumers-learn",
+  "checkpoint": "6ff21c66",
+  "focus": "Add MarkdownPresentation axes on blocks/rendering MarkdownContent; migrate learn markdown className callers (except QaQuestionThread)",
+  "filesEdited": [
+    "src/components/blocks/rendering/MarkdownContent/component.tsx",
+    "src/components/blocks/rendering/MarkdownContent/index.tsx",
+    "src/components/blocks/learn/QaMessageBubble/index.tsx",
+    ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+    "src/components/blocks/learn/QaInboxRow/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx"
+  ],
+  "axesAdded": {
+    "MarkdownDensity": ["default", "compact", "caption"],
+    "MarkdownTone": ["default", "muted"],
+    "MarkdownFlow": ["document", "embedded"],
+    "MarkdownEmphasis": ["normal", "italic"],
+    "MarkdownPreviewLines": [1, 2]
+  },
+  "mappings": {
+    "density.default": "existing (no extra class)",
+    "density.compact": "text-sm",
+    "density.caption": "text-xs",
+    "tone.default": "existing (no extra class)",
+    "tone.muted": "text-muted",
+    "flow.document": "existing (no extra class)",
+    "flow.embedded": "[&_p]:m-0",
+    "emphasis.normal": "existing (no extra class)",
+    "emphasis.italic": "italic",
+    "previewLines.1": "[&_p]:line-clamp-1",
+    "previewLines.2": "[&_p]:line-clamp-2"
+  },
+  "preserved": {
+    "reading": true,
+    "arcSections": true,
+    "plain": true,
+    "codeElevated": true,
+    "className": "kept on blocks/rendering presentational + connected until coordinator burns door"
+  },
+  "consumersMigrated": [
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "from": "className=\"text-sm [&_p]:m-0\"",
+      "to": "density=\"compact\" flow=\"embedded\""
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "from": "className=\"text-sm text-foreground [&_p]:m-0 [&_p]:line-clamp-2\"",
+      "to": "density=\"compact\" flow=\"embedded\" previewLines={2}",
+      "note": "text-foreground already on prose root; tone stays default"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "from": "className=\"text-xs text-muted [&_p]:m-0 [&_p]:line-clamp-2\"",
+      "to": "density=\"caption\" tone=\"muted\" flow=\"embedded\" previewLines={2}"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "from": "wrapper div className=\"[&_p]:m-0\" around composite MarkdownContent",
+      "to": "flow=\"embedded\" on MarkdownContent; wrapper removed"
+    }
+  ],
+  "notTouched": {
+    "QaQuestionThread": "owned by qa-header-src-consumer-migration",
+    "feed/TaskResult/MockInterview/chips": "owned by markdown-consumers-feed-profile-and-chip-icons"
+  },
+  "classNameDoor": "retained on blocks/rendering MarkdownContent (coordinator burns when zero allowed consumers)",
+  "gates": {
+    "tscOwnedFiles": "clean (no errors in owned files)",
+    "tscRepo": "exit 2 — unrelated QaQuestionThread displayName error (peer agent)",
+    "placementAxes": "not invented; min-w-0/flex-1 stay parent-owned"
+  },
+  "status": "done"
+}

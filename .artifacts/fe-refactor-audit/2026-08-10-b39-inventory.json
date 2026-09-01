@@ -1,0 +1,112 @@
+{
+  "batch": "B39",
+  "checkpoint": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "recordedAt": "2026-08-08T19:00:09.267Z",
+  "scope": {
+    "primary": [
+      "src/components/blocks/navigation/**",
+      "src/components/blocks/marketing/**"
+    ],
+    "secondary": "direct StarCi consumers + exact StarCi storybook twins when present"
+  },
+  "b38Note": "B38 status artifact absent at start; dirty B38 product paths left untouched.",
+  "counts": {
+    "reactNodePropsExcludingChildrenBefore": 45,
+    "reactNodePropsExcludingChildrenAfter": 39,
+    "note": "Before/after are top-level ReactNode field declarations matching ^\\\\s+name\\\\??: ReactNode (excl children). OutlineRail.continue.label and FlexWrapButtonRadio.itemAction counted in inventory props but itemAction is (item)=>ReactNode.",
+    "byOutcome": {
+      "string": 0,
+      "ComponentType": 0,
+      "structured": 0,
+      "richRetained": 2,
+      "mixedHeld": 4,
+      "deadDeletedApplied": 6,
+      "deadRetractedByRatchet": 5,
+      "migrateRetractedByRatchet": 18,
+      "unknown": 0
+    }
+  },
+  "deletedDeadPropsApplied": [
+    "PitchCard.title",
+    "PitchCard.body",
+    "PitchCard.footer",
+    "TopicLane.icon (module deleted)",
+    "MicroservicesScene.caption (module deleted)",
+    "MicroservicesDiagram.caption (module deleted)"
+  ],
+  "modulesDeleted": [
+    "src/components/blocks/marketing/TopicLane/",
+    "src/components/blocks/marketing/MicroservicesScene/",
+    "src/components/blocks/marketing/MicroservicesDiagram/"
+  ],
+  "retainedReactNodeEvidence": [
+    {
+      "id": "TruthList.byline",
+      "classification": "rich",
+      "evidence": "LandingPage sole caller passes IconTile+StackV+social Links fragment"
+    },
+    {
+      "id": "HeroBanner.headline",
+      "classification": "rich",
+      "evidence": "LandingPage uses t.rich with accent span markup"
+    },
+    {
+      "id": "FlexWrapButtonRadio.content",
+      "classification": "mixed",
+      "evidence": "strings/numbers vs chip JSX vs TaskResult fragment"
+    },
+    {
+      "id": "SidebarNavItem.endContent",
+      "classification": "mixed",
+      "evidence": "LockIcon vs LearnNavBadge chip/typography"
+    },
+    {
+      "id": "TabsCardItem.label",
+      "classification": "mixed",
+      "evidence": "majority t() strings; minority icon-only or StackH/TabTrigger composites"
+    },
+    {
+      "id": "WorkSessionHeader.rightSlot",
+      "classification": "mixed",
+      "evidence": "timer StackH ± combo Chip; twin already timeLeft:string"
+    }
+  ],
+  "retractedBecauseRatchet": {
+    "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration",
+    "deadDeletes": [
+      "FlexWrapButtonRadio.itemAction",
+      "SelectableCardItem.icon",
+      "SelectableCardItem.badge",
+      "TabsCard.leftEnd",
+      "WorkSessionHeader.meta"
+    ],
+    "migrations": [
+      "ContentMapRow.meta→string",
+      "OutlineRail meta/labels/continue.label→string",
+      "ResponsiveBreadcrumbItem.label→string",
+      "SelectableCardItem.label/description→string",
+      "CollapsibleSidebar.topSlot→ComponentType",
+      "FlexWrapButtonRadio.trailing→ComponentType",
+      "SidebarNavItem.icon→IconComponent",
+      "TabsCardItem.icon→IconComponent",
+      "WorkSessionHeader.title/counter/finishLabel→string",
+      "TruthList.truth/fix→string",
+      "SectionHeading eyebrow/title/intro→string",
+      "HeroBanner eyebrow/subline/keywordsLabel→string; eyebrowIcon/primary/secondary/visual→ComponentType",
+      "TrackCard.icon→ComponentType",
+      "ArchitectureScene.caption→string",
+      "ShowcaseMockup.url→string"
+    ]
+  },
+  "eslintBaselineNavMarketing": {
+    "files": 43,
+    "errors": 0,
+    "warnings": 300
+  },
+  "changedFiles": [
+    "src/components/blocks/marketing/PitchCard/index.tsx",
+    "src/components/blocks/marketing/TopicLane/index.tsx (deleted)",
+    "src/components/blocks/marketing/MicroservicesScene/index.tsx (deleted)",
+    "src/components/blocks/marketing/MicroservicesDiagram/index.tsx (deleted)"
+  ]
+}

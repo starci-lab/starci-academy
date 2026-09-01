@@ -1,0 +1,27 @@
+{
+  "partition": "twin-parity",
+  "generatedAt": "2026-08-06T22:52:56.137Z",
+  "batch": 13,
+  "fileCount": 0,
+  "allowedApply": [
+    "safe-api-removal",
+    "safe-consumer-migration"
+  ],
+  "recordOnly": [
+    "new-named-slot-required",
+    "vendor-boundary",
+    "identity-decision",
+    "skeleton-decision",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "seededDecisions": [],
+  "hardHolds": [
+    "27 teacher pattern holds / Nivo / locked paths / a11y",
+    "ChipBase API / handleSide vendor boundary",
+    "No invented principle tokens / no eslint-disable / no generic className escapes",
+    "No HeroUI conversion when atom API non-identical",
+    "No prop removal while real consumers depend on it"
+  ],
+  "files": []
+}

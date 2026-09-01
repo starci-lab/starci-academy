@@ -1,0 +1,1323 @@
+{
+  "generatedAt": "2026-08-07T11:54:02.876Z",
+  "totalHits": 2492,
+  "decls": 1602,
+  "uses": 890,
+  "declCandidatesEligible": 1524,
+  "byWorker": {
+    "atoms": 172,
+    "ambiguous": 21,
+    "composites": 244,
+    "frames": 62,
+    "blocks": 719,
+    "layouts-and-app": 31,
+    "pages-secondary": 156,
+    "pages-primary": 119
+  },
+  "scanned": 130,
+  "provenDead": [
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "line": 67,
+      "prop": "classNames",
+      "component": "Button",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "line": 99,
+      "prop": "classNames",
+      "component": "Button",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "line": 63,
+      "prop": "classNames",
+      "component": "Chip",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "line": 108,
+      "prop": "classNames",
+      "component": "Chip",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "line": 145,
+      "prop": "classNames",
+      "component": "Avatar",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "line": 165,
+      "prop": "classNames",
+      "component": "Avatar",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Badge/Badge.tsx",
+      "line": 47,
+      "prop": "classNames",
+      "component": "Badge",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Badge/Badge.tsx",
+      "line": 65,
+      "prop": "classNames",
+      "component": "Badge",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Divider/Divider.tsx",
+      "line": 66,
+      "prop": "classNames",
+      "component": "Divider",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Divider/Divider.tsx",
+      "line": 79,
+      "prop": "classNames",
+      "component": "Divider",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "line": 61,
+      "prop": "classNames",
+      "component": "IconTile",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "line": 142,
+      "prop": "classNames",
+      "component": "IconTile",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Logo/Logo.tsx",
+      "line": 48,
+      "prop": "classNames",
+      "component": "Logo",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Logo/Logo.tsx",
+      "line": 66,
+      "prop": "classNames",
+      "component": "Logo",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Progress/Progress.tsx",
+      "line": 56,
+      "prop": "classNames",
+      "component": "Progress",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Progress/Progress.tsx",
+      "line": 72,
+      "prop": "classNames",
+      "component": "Progress",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Progress/Progress.tsx",
+      "line": 112,
+      "prop": "classNames",
+      "component": "Progress",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Progress/Progress.tsx",
+      "line": 162,
+      "prop": "classNames",
+      "component": "Progress",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Progress/Progress.tsx",
+      "line": 183,
+      "prop": "classNames",
+      "component": "Progress",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+      "line": 33,
+      "prop": "classNames",
+      "component": "SnippetIcon",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+      "line": 67,
+      "prop": "classNames",
+      "component": "SnippetIcon",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "line": 32,
+      "prop": "classNames",
+      "component": "Spinner",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "line": 44,
+      "prop": "classNames",
+      "component": "Spinner",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+      "line": 42,
+      "prop": "classNames",
+      "component": "StepBadge",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+      "line": 95,
+      "prop": "classNames",
+      "component": "StepBadge",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+      "line": 18,
+      "prop": "classNames",
+      "component": "ThreadConnector",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+      "line": 26,
+      "prop": "classNames",
+      "component": "ThreadConnector",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "line": 100,
+      "prop": "classNames",
+      "component": "Alert",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "line": 132,
+      "prop": "classNames",
+      "component": "Alert",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+      "line": 36,
+      "prop": "classNames",
+      "component": "ReactionPicker",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+      "line": 44,
+      "prop": "classNames",
+      "component": "ReactionPicker",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+      "line": 25,
+      "prop": "classNames",
+      "component": "ChoiceCheckbox",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+      "line": 36,
+      "prop": "classNames",
+      "component": "ChoiceCheckbox",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+      "line": 25,
+      "prop": "classNames",
+      "component": "ChoiceRadio",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+      "line": 29,
+      "prop": "classNames",
+      "component": "ChoiceRadio",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+      "line": 26,
+      "prop": "classNames",
+      "component": "ChoiceSwitch",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+      "line": 38,
+      "prop": "classNames",
+      "component": "ChoiceSwitch",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+      "line": 19,
+      "prop": "classNames",
+      "component": "InputCurrency",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+      "line": 39,
+      "prop": "classNames",
+      "component": "InputCurrency",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/InputDate/InputDate.tsx",
+      "line": 18,
+      "prop": "classNames",
+      "component": "InputDate",
+      "worker": "atoms",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+      "line": 56,
+      "prop": "classNames",
+      "component": "AsyncContent",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+      "line": 65,
+      "prop": "classNames",
+      "component": "ActionBar",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+      "line": 108,
+      "prop": "classNames",
+      "component": "ActionBar",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "line": 61,
+      "prop": "classNames",
+      "component": "ButtonGroup",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "line": 75,
+      "prop": "classNames",
+      "component": "ButtonGroup",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+      "line": 54,
+      "prop": "classNames",
+      "component": "ButtonRadioGroup",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+      "line": 47,
+      "prop": "classNames",
+      "component": "ChipButtonList",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+      "line": 76,
+      "prop": "classNames",
+      "component": "ChipButtonList",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "line": 35,
+      "prop": "classNames",
+      "component": "FloatingActionButton",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "line": 51,
+      "prop": "classNames",
+      "component": "FloatingActionButton",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+      "line": 65,
+      "prop": "classNames",
+      "component": "InputButtonLike",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+      "line": 92,
+      "prop": "classNames",
+      "component": "InputButtonLike",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/cards/HighlightCard/HighlightCard.tsx",
+      "line": 25,
+      "prop": "classNames",
+      "component": "HighlightCard",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/cards/HighlightCard/HighlightCard.tsx",
+      "line": 37,
+      "prop": "classNames",
+      "component": "HighlightCard",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+      "line": 40,
+      "prop": "classNames",
+      "component": "ChipGroup",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+      "line": 51,
+      "prop": "classNames",
+      "component": "ChipGroup",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "line": 73,
+      "prop": "className",
+      "component": "EnumChip",
+      "worker": "composites",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "line": 79,
+      "prop": "classNames",
+      "component": "EnumChip",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "line": 99,
+      "prop": "className",
+      "component": "EnumChip",
+      "worker": "composites",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "line": 99,
+      "prop": "classNames",
+      "component": "EnumChip",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "line": 13,
+      "prop": "classNames",
+      "component": "HighlightChip",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "line": 55,
+      "prop": "classNames",
+      "component": "HighlightChip",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+      "line": 56,
+      "prop": "classNames",
+      "component": "RemovableToken",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+      "line": 78,
+      "prop": "classNames",
+      "component": "RemovableToken",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/data/Table/Table.tsx",
+      "line": 80,
+      "prop": "classNames",
+      "component": "Table",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/data/Table/Table.tsx",
+      "line": 122,
+      "prop": "classNames",
+      "component": "Table",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/feedback/Callout/Callout.tsx",
+      "line": 75,
+      "prop": "classNames",
+      "component": "Callout",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx",
+      "line": 67,
+      "prop": "classNames",
+      "component": "ConfirmDialog",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx",
+      "line": 96,
+      "prop": "classNames",
+      "component": "ConfirmDialog",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+      "line": 71,
+      "prop": "classNames",
+      "component": "EmptyState",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/feedback/OneTimeReveal/OneTimeReveal.tsx",
+      "line": 75,
+      "prop": "classNames",
+      "component": "OneTimeReveal",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/feedback/Toast/Toast.tsx",
+      "line": 52,
+      "prop": "classNames",
+      "component": "Toast",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup.tsx",
+      "line": 50,
+      "prop": "classNames",
+      "component": "ChoiceRadioGroup",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup.tsx",
+      "line": 67,
+      "prop": "classNames",
+      "component": "ChoiceRadioGroup",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/form/Form/Form.tsx",
+      "line": 78,
+      "prop": "classNames",
+      "component": "Form",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/form/Form/Form.tsx",
+      "line": 99,
+      "prop": "classNames",
+      "component": "Form",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/form/Form/Form.tsx",
+      "line": 164,
+      "prop": "classNames",
+      "component": "Form",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/form/Form/Form.tsx",
+      "line": 183,
+      "prop": "classNames",
+      "component": "Form",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/form/InputTags/InputTags.tsx",
+      "line": 32,
+      "prop": "classNames",
+      "component": "InputTags",
+      "worker": "composites",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Cluster/Cluster.tsx",
+      "line": 69,
+      "prop": "classNames",
+      "component": "Cluster",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Cluster/Cluster.tsx",
+      "line": 107,
+      "prop": "classNames",
+      "component": "Cluster",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Container/Container.tsx",
+      "line": 113,
+      "prop": "classNames",
+      "component": "Container",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Container/Container.tsx",
+      "line": 163,
+      "prop": "classNames",
+      "component": "Container",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Flex/Flex.tsx",
+      "line": 115,
+      "prop": "classNames",
+      "component": "Flex",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Flex/Flex.tsx",
+      "line": 177,
+      "prop": "classNames",
+      "component": "Flex",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Grid/Grid.tsx",
+      "line": 126,
+      "prop": "classNames",
+      "component": "Grid",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Grid/Grid.tsx",
+      "line": 157,
+      "prop": "classNames",
+      "component": "Grid",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/HideAbove/HideAbove.tsx",
+      "line": 37,
+      "prop": "classNames",
+      "component": "HideAbove",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/HideAbove/HideAbove.tsx",
+      "line": 55,
+      "prop": "classNames",
+      "component": "HideAbove",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/PageEndPad/PageEndPad.tsx",
+      "line": 22,
+      "prop": "classNames",
+      "component": "PageEndPad",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/PageEndPad/PageEndPad.tsx",
+      "line": 39,
+      "prop": "classNames",
+      "component": "PageEndPad",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "line": 77,
+      "prop": "classNames",
+      "component": "PinnedTrack",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "line": 109,
+      "prop": "classNames",
+      "component": "PinnedTrack",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/RailShell/RailShell.tsx",
+      "line": 81,
+      "prop": "classNames",
+      "component": "RailShell",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/RailShell/RailShell.tsx",
+      "line": 145,
+      "prop": "classNames",
+      "component": "RailShell",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+      "line": 52,
+      "prop": "classNames",
+      "component": "ResponsiveCluster",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+      "line": 103,
+      "prop": "classNames",
+      "component": "ResponsiveCluster",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/ResponsiveRow/ResponsiveRow.tsx",
+      "line": 72,
+      "prop": "classNames",
+      "component": "ResponsiveRow",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/ResponsiveRow/ResponsiveRow.tsx",
+      "line": 123,
+      "prop": "classNames",
+      "component": "ResponsiveRow",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/ScrollArea/ScrollArea.tsx",
+      "line": 47,
+      "prop": "classNames",
+      "component": "ScrollArea",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/ScrollArea/ScrollArea.tsx",
+      "line": 86,
+      "prop": "classNames",
+      "component": "ScrollArea",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/SplitWorkspace/SplitWorkspace.tsx",
+      "line": 73,
+      "prop": "classNames",
+      "component": "SplitWorkspace",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/SplitWorkspace/SplitWorkspace.tsx",
+      "line": 125,
+      "prop": "classNames",
+      "component": "SplitWorkspace",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Split/Split.tsx",
+      "line": 52,
+      "prop": "classNames",
+      "component": "Split",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Split/Split.tsx",
+      "line": 87,
+      "prop": "classNames",
+      "component": "Split",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Stack/Stack.tsx",
+      "line": 102,
+      "prop": "classNames",
+      "component": "Stack",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Stack/Stack.tsx",
+      "line": 184,
+      "prop": "classNames",
+      "component": "Stack",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Stack/Stack.tsx",
+      "line": 235,
+      "prop": "classNames",
+      "component": "Stack",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/frames/Stage/Stage.tsx",
+      "line": 78,
+      "prop": "classNames",
+      "component": "Stage",
+      "worker": "frames",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "line": 74,
+      "prop": "classNames",
+      "component": "AiQuotaHistoryPanel",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "line": 107,
+      "prop": "classNames",
+      "component": "AiQuotaHistoryPanel",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "line": 39,
+      "prop": "className",
+      "component": "AiQuotaSubscriptionPanel",
+      "worker": "blocks",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "line": 70,
+      "prop": "className",
+      "component": "AiQuotaSubscriptionPanel",
+      "worker": "blocks",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+      "line": 60,
+      "prop": "classNames",
+      "component": "QuotaBar",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+      "line": 75,
+      "prop": "classNames",
+      "component": "QuotaBar",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+      "line": 34,
+      "prop": "classNames",
+      "component": "PhaseScarcityNote",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+      "line": 82,
+      "prop": "classNames",
+      "component": "PhaseScarcityNote",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "line": 79,
+      "prop": "classNames",
+      "component": "PriceTag",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "line": 124,
+      "prop": "classNames",
+      "component": "PriceTag",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 63,
+      "prop": "classNames",
+      "component": "TrialConversionStrip",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 80,
+      "prop": "classNames",
+      "component": "TrialConversionStrip",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+      "line": 45,
+      "prop": "className",
+      "component": "ChangelogList",
+      "worker": "blocks",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+      "line": 103,
+      "prop": "className",
+      "component": "ChangelogList",
+      "worker": "blocks",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+      "line": 33,
+      "prop": "classNames",
+      "component": "ContentAiFab",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+      "line": 45,
+      "prop": "classNames",
+      "component": "ContentAiFab",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      "line": 30,
+      "prop": "className",
+      "component": "ContentAiSelectionAsk",
+      "worker": "blocks",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      "line": 43,
+      "prop": "className",
+      "component": "ContentAiSelectionAsk",
+      "worker": "blocks",
+      "msg": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a n",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "line": 55,
+      "prop": "classNames",
+      "component": "ContentCommentComposer",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "line": 73,
+      "prop": "classNames",
+      "component": "ContentCommentComposer",
+      "worker": "blocks",
+      "msg": "Public house component prop `classNames` is forbidden. Parent layout owns placement; expose a semantic variant or use a ",
+      "consumerCount": 0,
+      "consumers": []
+    }
+  ],
+  "liveApiSample": [
+    {
+      "file": "D:/Repositories/starci-academy/.storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "line": 26,
+      "prop": "WithClassNames",
+      "component": "HighlightChip",
+      "worker": "composites",
+      "msg": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrappe",
+      "consumerCount": 479,
+      "consumers": []
+    }
+  ],
+  "holdNote": "HOLD_COMPONENTS + locked/nivo skipped"
+}

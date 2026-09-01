@@ -1,0 +1,65 @@
+{
+  "changed": [],
+  "held": [
+    "blocked with storybook-canonical"
+  ],
+  "retracted": [],
+  "storybookParity": "unchanged",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "sizeEvidence": {
+    "sm": {
+      "box": "size-10",
+      "px": 40,
+      "radius": "rounded-full"
+    },
+    "md": {
+      "box": "size-12",
+      "px": 48,
+      "radius": "rounded-xl"
+    },
+    "lg": {
+      "box": "size-16",
+      "px": 64,
+      "radius": "rounded-2xl"
+    }
+  },
+  "radiusEvidence": {
+    "sm": {
+      "box": "size-10",
+      "px": 40,
+      "radius": "rounded-full"
+    },
+    "md": {
+      "box": "size-12",
+      "px": 48,
+      "radius": "rounded-xl"
+    },
+    "lg": {
+      "box": "size-16",
+      "px": 64,
+      "radius": "rounded-2xl"
+    }
+  },
+  "consumerCountBefore": null,
+  "consumerCountAfter": null,
+  "oldPathsBefore": [
+    "src/components/atoms/display/IconTile",
+    ".storybook/components/atoms/display/IconTile",
+    ".storybook/stories/atoms/display/IconTile",
+    "src/components/blocks/identity/IconTile"
+  ],
+  "oldPathsAfter": [
+    "src/components/atoms/display/IconTile",
+    ".storybook/components/atoms/display/IconTile",
+    ".storybook/stories/atoms/display/IconTile",
+    "src/components/blocks/identity/IconTile"
+  ],
+  "canonicalPath": "src/components/composites/identity/IconTile (not created)",
+  "canonicalTier": "composite",
+  "skeletonContract": "not applied"
+}

@@ -1,0 +1,33 @@
+{
+  "batch": "B40",
+  "worker": "w12-src-overlays",
+  "owns": [
+    "src/components/composites/text/TitledText/index.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+    "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+    "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+    "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/component.tsx",
+    "src/components/overlays/modals/PaymentModal/component.tsx",
+    "src/components/pages/MyAttemptsPage/index.tsx"
+  ],
+  "safeRules": [
+    "starci-fe/require-export-jsdoc",
+    "starci-fe/no-inline-parameter-type",
+    "starci-fe/handler-on-prefix",
+    "starci-fe/prefer-arrow-export",
+    "starci-fe/no-vietnamese-in-source-authoring",
+    "starci-fe/require-identity-root",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-emoji-in-source"
+  ],
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w12-src-overlays.json"
+}

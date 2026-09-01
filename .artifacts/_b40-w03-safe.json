@@ -1,0 +1,727 @@
+{
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ChallengeHeader\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 19,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ConceptMap\\MindMapCanvas\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 11,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ConceptMap\\MindMapLegend\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 16,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ConceptMap\\RootNode\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 8,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/no-inline-parameter-type",
+      "line": 41,
+      "col": 36,
+      "msg": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentAiSelectionAsk\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 98,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentDiscussion\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 20,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 110,
+      "col": 13,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 158,
+      "col": 13,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 176,
+      "col": 17,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 183,
+      "col": 13,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ContentRelatedList\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 17,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 99,
+      "col": 13,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\CourseQaHeader\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 17,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\FlashcardModeSwitch\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 15,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\FoundationCategoryList\\index.tsx": [
+    {
+      "rule": "starci-fe/no-inline-parameter-type",
+      "line": 82,
+      "col": 58,
+      "msg": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 149,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\FoundationSearchBar\\index.tsx": [
+    {
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 5,
+      "col": 1,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LeaderboardBoard\\Confetti\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 31,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LeaderboardCategoryNav\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 16,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LeaderboardToolbar\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 19,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 79,
+      "col": 13,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\LearnPanelToggles\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 13,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\MilestoneOutline\\MilestoneOutlineSkeleton\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 14,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\MindMapContinueButton\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 21,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\MockInterviewSetup\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 25,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 150,
+      "col": 9,
+      "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 166,
+      "col": 52,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 172,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 192,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 252,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 284,
+      "col": 58,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\OnThisPage\\ContentActions\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 14,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\OnThisPage\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 29,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\PersonalProjectResultScreen\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 26,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 69,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 252,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 307,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 340,
+      "col": 12,
+      "msg": "`<Container>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\PlaygroundDeviceSnapshot\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 21,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\PlaygroundHeader\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 14,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 60,
+      "col": 13,
+      "msg": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safel",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\PlaygroundRagWorkspace\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 66,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\PlaygroundSetupSteps\\CommandSkeleton\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 17,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\PlaygroundStepGuide\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 25,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 76,
+      "col": 17,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 89,
+      "col": 17,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 117,
+      "col": 9,
+      "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 128,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 162,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 189,
+      "col": 13,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\QaMessageBubble\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 15,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\QuizCard\\index.tsx": [
+    {
+      "rule": "starci-fe/no-inline-parameter-type",
+      "line": 156,
+      "col": 36,
+      "msg": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 304,
+      "col": 13,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 309,
+      "col": 25,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ReactionButton\\ReactionGlyph\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 18,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\ReferenceLinks\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 8,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\SubmissionAttemptSelector\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 25,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 93,
+      "col": 5,
+      "msg": "`<Cluster>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can s",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\TaskBriefBody\\index.tsx": [
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 135,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 155,
+      "col": 13,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 190,
+      "col": 21,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 205,
+      "col": 17,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 244,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\TaskSubmissionPanel\\GithubGradingSettingsBody\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 15,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 16,
+      "col": 5,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\TaskSubmissionPanel\\index.tsx": [
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 63,
+      "col": 17,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\VariantChip\\VariantChipDifficulty\\index.tsx": [
+    {
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 5,
+      "col": 1,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 15,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\AiLab\\PromptPlayground\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 43,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\ChallengeBody\\ChallengeCardSkeleton\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 9,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\CodeExplainingBody\\Empty\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 8,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\CodeImplementationBody\\Empty\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 8,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\ContentBody\\ActionToolbar\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 7,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\ContentBody\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 14,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\ContentHeaderSkeleton\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 15,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/no-emoji-in-source",
+      "line": 17,
+      "col": 9,
+      "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\LessonBody\\Empty\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 8,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\LessonBody\\index.tsx": [
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 34,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 40,
+      "col": 21,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\lesson\\ReadBadge\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 14,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\personal-project\\PersonalProjectDashboard\\PersonalProjectDashboardSkeleton\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 13,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\personal-project\\PersonalProjectSubmission\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 10,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\personal-project\\TaskBrief\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 12,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\personal-project\\TaskLockedAlert\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 24,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\personal-project\\TaskResultsSkeleton\\index.tsx": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "line": 11,
+      "col": 1,
+      "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/fra",
+      "sev": 1
+    }
+  ],
+  "D:\\Repositories\\starci-academy\\src\\components\\blocks\\learn\\personal-project\\index.tsx": [
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 83,
+      "col": 9,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 88,
+      "col": 21,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "line": 102,
+      "col": 25,
+      "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can sa",
+      "sev": 1
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "batch": 25,
+  "title": "Call-site CSS-door closure",
+  "committed": false,
+  "checkpoint": "a7052eee",
+  "generatedAt": "2026-08-07T13:28:01.648Z",
+  "inventory": {
+    "rule": "starci-fe/no-public-classname-prop",
+    "before": {
+      "hits": 2216,
+      "files": 818
+    },
+    "after": {
+      "hits": 2194,
+      "files": 816
+    },
+    "delta": {
+      "hits": -22,
+      "files": -2
+    }
+  },
+  "classificationBefore": {
+    "locked": 38,
+    "live-prop": 252,
+    "ambiguous": 573,
+    "vendor-boundary": 1
+  },
+  "appliedSummary": {
+    "safeNoopTypographySkeletonW12": 18,
+    "redundantLabeledAccordionClassNameCallSites": 3,
+    "labeledAccordionWithClassNamesDoorRemoved": 1,
+    "parentPlacement": 0,
+    "totalCallSiteFixes": 21
+  },
+  "changedFiles": [
+    "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+    "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+    "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+    "src/components/blocks/learn/FoundationHeader/index.tsx",
+    "src/components/blocks/learn/LearnNudges/component.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+    "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+    "src/components/composites/lists/UserCell/index.tsx",
+    "src/components/overlays/modals/PremiumGateModal/component.tsx",
+    "src/components/pages/CommunityFeedPage/component.tsx",
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+    "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+  ],
+  "holdsPreserved": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard live APIs and call-site CSS without exact principle",
+    "Typography/Skeleton/ProgressMeter non-duplicate placement (w-full, flex-1, shrink-0, fraction widths on live text)",
+    "DrawerShell / ShowcaseMockup / MiniCart / CvPreview / PDFView / B19–B24",
+    "vendor HeroUI / Box foreign mounts",
+    "Nivo / Nivoexpert / locked paths / teacher holds / skeleton ComponentType slots",
+    "FieldFrame classNames live-api",
+    "no new principles / variants / slots / eslint-disable"
+  ],
+  "parity": {
+    "storybookAlreadyOmittedSkeletonW12": true,
+    "labeledAccordionSrcOnly": true,
+    "srcMirroredWhereApplicable": true
+  },
+  "workers": [
+    "atoms",
+    "frames",
+    "storybook-only",
+    "composites",
+    "blocks",
+    "pages-learning-commerce",
+    "pages-profile-dashboard",
+    "pages-other"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "eslintChanged": {
+      "errors": 0,
+      "warnings": 130,
+      "maxWarnings0": "fail — pre-existing holds on touched files; no new errors from B25"
+    },
+    "pluginTests": "9/9",
+    "storybookTests": "15/15",
+    "auditFe": "pass (27 teacher holds)"
+  },
+  "regressions": []
+}

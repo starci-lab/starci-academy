@@ -1,0 +1,134 @@
+{
+  "applied": [
+    {
+      "file": ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+      "line": 143,
+      "principle": "content-row",
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+      "line": 91,
+      "principle": "content-row",
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+      "line": 80,
+      "principle": "content-row",
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/overlays/modals/SetMemberRoleModal/SetMemberRoleModal.tsx",
+      "line": 89,
+      "principle": "flex-action",
+      "retuneGap": 3,
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/overlays/drawers/MemberDetailDrawer/MemberDetailDrawer.tsx",
+      "line": 185,
+      "principle": "flex-action",
+      "retuneGap": 3,
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell.tsx",
+      "line": 125,
+      "principle": "flex-action",
+      "retuneGap": 3,
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+      "line": 203,
+      "principle": "flex-action",
+      "retuneGap": 3,
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+      "line": 185,
+      "principle": "flex-action",
+      "retuneGap": 3,
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+      "line": 200,
+      "principle": "chip-row",
+      "retuneGap": 3,
+      "via": "dynamic"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/overlays/drawers/PostModerationDrawer/PostModerationDrawer.tsx",
+      "line": 115,
+      "principle": "chip-row",
+      "retuneGap": 3,
+      "via": "dynamic"
+    }
+  ],
+  "missed": [
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      "error": "find not found",
+      "find": "<Grid\n                                columns={{ base: 1, md: 3 }}\n             "
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+      "error": "find not found",
+      "find": "<Grid\n            columns={{ base: 1, sm: 2, lg: 4 }}\n            gap={4}"
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "error": "find not found",
+      "find": "<Grid\n                    columns={PIPELINE_COLUMNS}\n                    gap={4}"
+    },
+    {
+      "file": ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+      "error": "find not found",
+      "find": "<Grid\n                        columns={{ base: 1, sm: 2, lg: 4 }}\n              "
+    },
+    {
+      "file": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "error": "find not found",
+      "find": "<Grid\n                                        columns={{ base: 1, sm: 2, lg: 3 }"
+    },
+    {
+      "file": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "error": "find not found",
+      "find": "<Grid\n                                        columns={{ base: 1, sm: 2, lg: 3 }"
+    },
+    {
+      "file": ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      "error": "find not found",
+      "find": "<Grid\n                            columns={{ base: 1, lg: 2 }}\n                 "
+    },
+    {
+      "file": ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      "error": "find not found",
+      "find": "<Grid\n                        columns={{ base: 1, sm: 2, lg: 4 }}\n              "
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "error": "find not found",
+      "find": "<StackH\n                                        gap={3}\n                        "
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "error": "find not found",
+      "find": "<StackH\n                                                            gap={2}\n    "
+    },
+    {
+      "file": ".storybook/components/nivoexpert/overlays/modals/BanMemberModal/BanMemberModal.tsx",
+      "error": "find not found",
+      "find": "<StackH\n                        gap={2}\n                        justify=\"end\""
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+      "error": "find not found",
+      "find": "<StackH\n                        gap={2}\n                        align=\"center\""
+    }
+  ],
+  "skipped": []
+}

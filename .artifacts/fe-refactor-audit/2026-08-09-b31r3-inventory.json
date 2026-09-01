@@ -1,0 +1,107 @@
+{
+  "batch": "B31r3",
+  "checkpoint": "8ccf8641",
+  "checkpointMessage": "refactor(fe): migrate initial IdentityTile consumers",
+  "b31r2Commit": "94c5f8fb",
+  "contract": ".claude/fe/contracts/identity-tile.md",
+  "legacyImportCountBefore": 33,
+  "targets": [
+    {
+      "file": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "worker": "pitch-card",
+      "warningsBefore": [
+        { "line": 48, "rule": "starci-fe/no-public-classname-prop", "detail": "Typography classNames flex-1" }
+      ],
+      "legacyImport": "../../identity/IconTile",
+      "iconExpressionBefore": "icon (ReactNode prop)",
+      "size": "md",
+      "tone": "tone prop default accent",
+      "storybookTwin": null,
+      "plan": "Drop flex-1 (no live consumers); migrate IdentityTile; icon → ComponentType"
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "worker": "readiness-checklist",
+      "warningsBefore": [
+        { "line": 9, "rule": "starci-fe/require-identity-root" },
+        { "line": 58, "rule": "starci-fe/no-public-classname-prop", "detail": "ListRow className p-3" }
+      ],
+      "legacyImport": "@/components/blocks/identity/IconTile",
+      "iconExpressionBefore": "item.ready ? <CheckCircleIcon/> : item.icon (ReactNode)",
+      "size": "sm",
+      "holdsRisk": "ListRow has no padding API; icon ReactNode API leaks to PlaygroundSessionProvider outside manifest",
+      "storybookTwin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/CartLine/index.tsx",
+      "worker": "cart-line",
+      "warningsBefore": [
+        { "line": 4, "rule": "starci-fe/no-heroui-outside-vocabulary" },
+        { "line": 60, "rule": "starci-fe/no-raw-shape-at-sentence-tier" },
+        { "line": 68, "rule": "starci-fe/no-raw-shape-at-sentence-tier" }
+      ],
+      "legacyImport": "@/components/blocks/identity/IconTile",
+      "iconExpressionBefore": "<GraduationCapIcon />",
+      "size": "sm",
+      "tone": "accent",
+      "src": "item.course.coverImageUrl",
+      "plan": "StackH/StackV + house Button + Typography isButton + IdentityTile"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      "worker": "premium-paywall",
+      "warningsBefore": [
+        { "line": 60, "rule": "starci-fe/no-public-classname-prop", "detail": "Skeleton className" },
+        { "line": 81, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 95, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 108, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 115, "rule": "starci-fe/no-public-classname-prop", "detail": "Button classNames w-full" }
+      ],
+      "legacyImport": "@/components/blocks/identity/IconTile",
+      "iconExpressionBefore": "<LockIcon aria-hidden focusable=\"false\" />",
+      "size": "sm",
+      "holdsRisk": "asymmetric pt-6 has no matching principle token (block-boundary is gap not padding)"
+    },
+    {
+      "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "worker": "playground-card",
+      "warningsBefore": [
+        { "line": 4, "rule": "starci-fe/no-heroui-outside-vocabulary" },
+        { "line": 20, "rule": "starci-fe/require-identity-root" },
+        { "line": 20, "rule": "starci-fe/no-classname-at-sentence-tier" },
+        { "line": 20, "rule": "starci-fe/no-public-classname-prop" },
+        { "line": 45, "rule": "starci-fe/no-public-classname-prop" },
+        { "line": 48, "rule": "starci-fe/no-cn-above-vocabulary" },
+        { "line": 51, "rule": "starci-fe/no-raw-shape-at-sentence-tier" }
+      ],
+      "legacyImport": "@/components/blocks/identity/IconTile",
+      "iconExpressionBefore": "<TerminalWindowIcon aria-hidden focusable=\"false\" />",
+      "size": "lg",
+      "tone": "accent",
+      "plan": "SurfaceCard + IdentityTile + house Chip/Button/Typography; drop className (no consumers)",
+      "storybookTwin": null,
+      "note": "connected index.tsx not in manifest — props change must not force editing it beyond type flow"
+    },
+    {
+      "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "worker": "enroll-gate",
+      "warningsBefore": [
+        { "line": 41, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 51, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 58, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 65, "rule": "starci-fe/no-public-classname-prop" },
+        { "line": 126, "rule": "starci-fe/no-public-classname-prop" },
+        { "line": 157, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 178, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 179, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 181, "rule": "starci-fe/require-frame-self-declare" },
+        { "line": 183, "rule": "starci-fe/require-frame-self-declare" }
+      ],
+      "legacyImport": "@/components/blocks/identity/IconTile",
+      "iconExpressionBefore": "<LockIcon aria-hidden focusable=\"false\" />",
+      "size": "sm",
+      "storybookTwin": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "holdsRisk": "CARD_SURFACE/TEASER_FADE/asymmetric layout need new contracts; SB twin drifted (circular IconTile + different price API)"
+    }
+  ]
+}

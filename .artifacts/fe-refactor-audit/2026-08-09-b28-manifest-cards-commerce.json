@@ -1,0 +1,75 @@
+{
+  "worker": "cards-commerce",
+  "manifest": [
+    "src/components/blocks/cards/SectionCard/index.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "SectionCard",
+      "file": "src/components/blocks/cards/SectionCard/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "dynamic classNames passthrough"
+      },
+      "consumerCount": 4,
+      "valueSet": [
+        "classNames",
+        "size-5 text-accent-soft-foreground"
+      ],
+      "ownerships": [
+        "dynamic",
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "PhaseScarcityNote",
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+      "plan": {
+        "action": "apply-parent-box",
+        "reason": "self-center → parent EnrollGate"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "self-center"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "TierCardBase",
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "mixed intrinsic tokens"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "size-6 shrink-0 text-accent-soft-foreground",
+        "border-accent ring-2 ring-accent/30"
+      ],
+      "ownerships": [
+        "mixed",
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "LeaderboardListCard",
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "dynamic"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "className"
+      ],
+      "ownerships": [
+        "dynamic"
+      ]
+    }
+  ]
+}

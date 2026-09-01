@@ -1,0 +1,11 @@
+{
+  "total": 20,
+  "byRule": {
+    "starci-fe/no-host-element-at-sentence-tier": 6,
+    "starci-fe/require-frame-self-declare": 2,
+    "starci-fe/require-identity-root": 8,
+    "starci-fe/no-per-part-classname-prop": 1,
+    "starci-fe/no-helper-folder-in-components": 3
+  },
+  "files": 45
+}

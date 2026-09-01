@@ -1,0 +1,103 @@
+{
+  "batch": "B39",
+  "title": "ReactNode contract closure: navigation + marketing",
+  "checkpointBeforeEdit": "2a096210a20c83bcc125067a5d0da1c951fc21e2",
+  "branch": "mtp",
+  "recordedAt": "2026-08-09T02:05:00+07:00",
+  "verdict": "READY TO CERTIFY",
+  "closureStatus": "partial",
+  "b38Prerequisite": {
+    "statusArtifactPresent": false,
+    "note": "Started with recorded checkpoint; left dirty B38 product paths untouched."
+  },
+  "counts": {
+    "reactNodePropsExcludingChildrenBefore": 45,
+    "reactNodePropsExcludingChildrenAfter": 39,
+    "stringApplied": 0,
+    "componentTypeApplied": 0,
+    "structuredApplied": 0,
+    "richRetained": 2,
+    "mixedHeld": 4,
+    "deadDeletedApplied": 6,
+    "deadRetractedByRatchet": 5,
+    "migrateRetractedByRatchet": 18
+  },
+  "deletedDeadPropsApplied": [
+    "PitchCard.title",
+    "PitchCard.body",
+    "PitchCard.footer",
+    "TopicLane.icon",
+    "MicroservicesScene.caption",
+    "MicroservicesDiagram.caption"
+  ],
+  "modulesDeleted": [
+    "src/components/blocks/marketing/TopicLane/",
+    "src/components/blocks/marketing/MicroservicesScene/",
+    "src/components/blocks/marketing/MicroservicesDiagram/"
+  ],
+  "retainedReactNodeEvidence": [
+    {
+      "id": "TruthList.byline",
+      "classification": "rich",
+      "evidence": "LandingPage founder signature: IconTile + StackV + social/blog Links fragment"
+    },
+    {
+      "id": "HeroBanner.headline",
+      "classification": "rich",
+      "evidence": "LandingPage t.rich with accent span"
+    }
+  ],
+  "mixedHeld": [
+    "FlexWrapButtonRadio.content",
+    "SidebarNavItem.endContent",
+    "TabsCardItem.label",
+    "WorkSessionHeader.rightSlot"
+  ],
+  "blocker": "zero-warn-ratchet ∩ pre-existing-architecture-debt ∩ no-heroui-migration",
+  "changedFiles": [
+    "src/components/blocks/marketing/PitchCard/index.tsx",
+    "src/components/blocks/marketing/TopicLane/index.tsx",
+    "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+    "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "overlapForbiddenProof": {
+    "miaMiaNivoNivoexpert": "no edits",
+    "SubmissionResultHeader": "no edits",
+    "eslintConfigRules": "no edits",
+    "navigationProductDiff": "none",
+    "b38DirtyPaths": "untouched"
+  },
+  "storybookSrcParity": {
+    "WorkSessionHeader": "GAP held — SB twin already string/timeLeft; src ReactNode retained by ratchet",
+    "CollapsibleSidebar": "twin present; topSlot ComponentType migration held",
+    "marketing": "no StarCi twins for closed modules; nivo/mia-mia excluded"
+  },
+  "eslint": {
+    "baselineNavMarketing": { "files": 43, "errors": 0, "warnings": 300 },
+    "touchedAfter": {
+      "PitchCard": { "errors": 0, "warnings": 0, "maxWarnings0": true }
+    },
+    "introducedDiagnostics": 0
+  },
+  "verification": {
+    "tscNoEmit": {
+      "exit": 2,
+      "b39PathsInErrors": false,
+      "preexistingErrors": [
+        "src/components/pages/LandingPage/KnowledgeGraph/index.tsx (3)",
+        "src/modules/api/graphql/clients/links/options.ts (2)"
+      ]
+    },
+    "eslintTouchedMaxWarnings0": { "exit": 0 },
+    "pluginPublicContracts": { "exit": 0 },
+    "pluginSentenceTier": { "exit": 0 },
+    "pluginNamespaces": { "exit": 0 },
+    "pluginAuthoring": { "exit": 0 },
+    "principleStyle": { "exit": 0 },
+    "semanticContracts": { "exit": 0 },
+    "auditFe": { "exit": 0 },
+    "gitDiffCheck": { "exit": 0 }
+  },
+  "commit": false
+}

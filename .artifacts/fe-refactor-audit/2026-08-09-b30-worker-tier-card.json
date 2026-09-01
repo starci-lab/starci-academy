@@ -1,0 +1,33 @@
+{
+  "manifest": [
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/commerce/FreeTierCard/index.tsx"
+  ],
+  "openTagConsumers": [],
+  "valueSet": {
+    "before": [
+      "border-accent ring-2 ring-accent/30"
+    ],
+    "after": []
+  },
+  "ownership": {
+    "border-accent ring-2 ring-accent/30": "intrinsic merchandising → isFeatured"
+  },
+  "oldApi": "className?: string (WithClassNames)",
+  "newApi": "isFeatured?: boolean",
+  "changed": [
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx"
+  ],
+  "holds": [],
+  "parity": {
+    "TierCardBase": "src-only (no SB twin)",
+    "FreeTierCard": "unchanged (no featured chrome)"
+  },
+  "verification": {
+    "tsc": "pending-coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

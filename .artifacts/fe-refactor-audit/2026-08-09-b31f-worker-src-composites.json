@@ -1,0 +1,32 @@
+{
+  "worker": "src-composites",
+  "status": "done",
+  "fixed": [],
+  "held": [
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:47 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop,starci-fe/no-per-part-classname-prop)"
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:9 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare,starci-fe/no-inline-skeleton-branch)"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/composites/stats/SegmentBar/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:1 (starci-fe/require-frame-self-declare)"
+    }
+  ],
+  "findingsBefore": 5,
+  "findingsFixed": 0,
+  "findingsHeld": 5,
+  "note": "All files held: zero-warn ratchet — unrelated debt cannot close with frame-items contract alone.",
+  "twinParity": "SB twins may be fixed while src remains held when src has other debt."
+}

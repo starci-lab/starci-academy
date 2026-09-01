@@ -1,0 +1,338 @@
+{
+  "batch": "B35",
+  "agent": "profile-cv-careers-consultant",
+  "agentNumber": 7,
+  "checkpoint": "02011807",
+  "role": "Close profile/CV/careers/consultant/grading identity roots, raw hosts, HeroUI bypasses with existing vocab; contract proposals for dynamic visuals without finite owners",
+  "manifest": {
+    "key": "profile-cv-careers-consultant",
+    "focus": "Profile, CV, careers, consultant, grading",
+    "fileCount": 49
+  },
+  "ownedRules": [
+    "starci-fe/require-identity-root",
+    "starci-fe/no-host-element-at-sentence-tier",
+    "starci-fe/no-heroui-outside-vocabulary",
+    "starci-fe/no-raw-shape-at-sentence-tier",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-frame-fragment-item",
+    "starci-fe/no-cn-above-vocabulary",
+    "starci-fe/no-classname-at-sentence-tier",
+    "starci-fe/no-public-classname-prop"
+  ],
+  "changedFiles": [
+    ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+    ".storybook/components/starci/blocks/consultant/ConsultantDirectoryCompanySearch/ConsultantDirectoryCompanySearch.tsx",
+    ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+    "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+    "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+    "src/components/blocks/profile/ProfileHero/index.tsx",
+    "src/components/blocks/profile/ProfileHero/ShareProfileButton/index.tsx",
+    "src/components/blocks/profile/CvSubmission/index.tsx",
+    "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+    "src/components/blocks/grading/GradeCreditCaption/component.tsx"
+  ],
+  "closedClusters": [
+    {
+      "id": "ConsultantCard-sb",
+      "path": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "cleared": ["starci-fe/no-host-element-at-sentence-tier"],
+      "before": 3,
+      "after": 0,
+      "notes": "Mirrored src: SurfaceCard identity root; dropped inert wrappers + avatar host; principles title-subtitle/sibling-stack."
+    },
+    {
+      "id": "ConsultantDirectoryCompanySearch-hosts",
+      "paths": [
+        ".storybook/components/starci/blocks/consultant/ConsultantDirectoryCompanySearch/ConsultantDirectoryCompanySearch.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx"
+      ],
+      "cleared": ["starci-fe/no-host-element-at-sentence-tier"],
+      "remaining": ["starci-fe/require-identity-root"],
+      "notes": "Promoted SearchAutocomplete to sole root. Identity held until atom accepts CallerIdentity (CourseTrialChip pattern)."
+    },
+    {
+      "id": "ProfileLoadingState-sb-hosts",
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "cleared": ["starci-fe/no-host-element-at-sentence-tier"],
+      "before": 3,
+      "after": 0,
+      "notes": "Box identity + RailShell layout-split (src pattern). HeroSkeleton 128px/heatmap retained as documented atom gaps."
+    },
+    {
+      "id": "ProfileHero-src",
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "cleared": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-frame-fragment-item",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "before": 14,
+      "after": 0,
+      "notes": "Mirrored SB item tree onto SurfaceCard identity; dropped outer host + Button classNames."
+    },
+    {
+      "id": "ProfileSectionGuard",
+      "path": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "cleared": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "before": 3,
+      "after": 0,
+      "notes": "EmptyState identity on private branch; dropped flex host wrapper."
+    },
+    {
+      "id": "CvSplitFromTextModal",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "cleared": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "before": 4,
+      "after": 0,
+      "notes": "ModalShell + house Button/Typography/StackV."
+    },
+    {
+      "id": "CvTailorToJobModal",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "cleared": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "before": 4,
+      "after": 0,
+      "notes": "ModalShell + house Button/Typography/StackV."
+    },
+    {
+      "id": "GradeCreditCaption",
+      "path": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "cleared": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "before": 3,
+      "after": 0,
+      "notes": "Typography + StackV identity (static) / house Button (interactive). Dropped HeroUI cn."
+    }
+  ],
+  "partialClusters": [
+    {
+      "id": "ConsultantDirectoryGrid",
+      "paths": [
+        ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx"
+      ],
+      "cleared": ["inert Grid wrapper hosts"],
+      "remaining": [
+        "starci-fe/no-host-element-at-sentence-tier (role=region a11y landmark)",
+        "starci-fe/require-identity-root (src)"
+      ],
+      "holdId": "ConsultantDirectoryGrid-a11y-region-div"
+    },
+    {
+      "id": "CvTemplateGalleryModal",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "cleared": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary",
+        "most hosts"
+      ],
+      "before": 13,
+      "after": 3,
+      "remaining": [
+        "starci-fe/no-host-element-at-sentence-tier ×2",
+        "starci-fe/no-raw-shape-at-sentence-tier ×1"
+      ],
+      "notes": "ModalShell + Grid + SurfaceCard.Pressable. Thumb mount held."
+    },
+    {
+      "id": "AchievementBlockEditor",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "cleared": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "remaining": ["starci-fe/no-heroui-outside-vocabulary"],
+      "notes": "StackV identity shell; HeroUI TextField/Input/Button → CvBlockEditorFormSurface contract."
+    },
+    {
+      "id": "PersonalBlockEditor",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "cleared": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "remaining": ["starci-fe/no-heroui-outside-vocabulary"],
+      "notes": "Grid identity shell; HeroUI DatePicker/TextField → CvBlockEditorFormSurface contract."
+    },
+    {
+      "id": "CvSubmission",
+      "path": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "cleared": ["starci-fe/no-host-element-at-sentence-tier"],
+      "remaining": ["starci-fe/require-identity-root"],
+      "notes": "Promoted CVSubmissionForm (already stamps identity). Connected wrapper still flagged."
+    },
+    {
+      "id": "ShareProfileButton",
+      "path": "src/components/blocks/profile/ProfileHero/ShareProfileButton/index.tsx",
+      "cleared": ["starci-fe/require-export-jsdoc"],
+      "remaining": ["starci-fe/require-identity-root"],
+      "notes": "Atom Button root — identity held (CourseTrialChip pattern)."
+    }
+  ],
+  "contractProposals": [
+    {
+      "id": "ContributionHeatmap",
+      "files": ["src/components/blocks/profile/ContributionCalendarView/index.tsx"],
+      "reason": "Score-5 cluster (46 msgs). Framer drag viewport, LEVEL_CLASS cell tones, fixed popover — no finite vocabulary owner. Do not locally rewrite classNames.",
+      "proposal": "New atom/composite ContributionHeatmap (or calendar-cell + heatmap-viewport) owning cell level enum, drag surface, and popover placement."
+    },
+    {
+      "id": "GradeModelDropdown-vendor-boundary",
+      "files": ["src/components/blocks/grading/GradeModelDropdown/component.tsx"],
+      "reason": "Whole control is HeroUI Dropdown bypass; no Dropdown atom exists.",
+      "proposal": "Vendor-boundary Dropdown/Menu atom (or SelectSingle expansion) then migrate GradeModelDropdown."
+    },
+    {
+      "id": "DiffSurface",
+      "files": ["src/components/blocks/grading/DiffViewer/index.tsx"],
+      "reason": "Diff gutter, LINE_TONE, split grid, scroll chrome without owner.",
+      "proposal": "CodeDiff / DiffSurface composite owning line tones and split layout."
+    },
+    {
+      "id": "CvPreview-family",
+      "files": ["src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx"],
+      "reason": "Hard hold (ledger B27/B28). Paper mount + iframe + arbitrary heights.",
+      "proposal": "Retain CvPreview-family hold; do not invent height enums here."
+    },
+    {
+      "id": "UserStreak-dropdown",
+      "files": ["src/components/blocks/profile/UserStreak/index.tsx"],
+      "reason": "HeroUI Dropdown/Card surface; no Dropdown atom.",
+      "proposal": "Navbar-streak composite once Dropdown vendor boundary exists."
+    },
+    {
+      "id": "CvWorkspaceSkeleton-twin",
+      "files": ["src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx"],
+      "reason": "no-skeleton-twin-component; parallel tree.",
+      "proposal": "Delete twin; add isSkeleton on CvBlocksWorkspace parent (skeleton-contracts)."
+    },
+    {
+      "id": "CvTemplateThumbMount",
+      "files": ["src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx"],
+      "reason": "Live HTML CV scaled scale(0.34)×820px into h-52 crop — no Measure/PDFView owner.",
+      "proposal": "Named thumbFit / template-preview mount on a viewer composite; residual hosts until then."
+    },
+    {
+      "id": "CvBlockEditorFormSurface",
+      "files": [
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/*BlockEditor/index.tsx"
+      ],
+      "reason": "Remaining no-heroui-outside-vocabulary on form fields after identity shells.",
+      "proposal": "Migrate editors to house InputText/InputDate/InputTextarea/Button; shared RepeatableItemCard + AiRewriteButton same lane."
+    },
+    {
+      "id": "ConsultantProfileBody-avatar-measure",
+      "files": [
+        ".storybook/components/starci/blocks/consultant/ConsultantProfileBody/ConsultantProfileBody.tsx",
+        "src/components/blocks/consultant/ConsultantProfileBody/index.tsx"
+      ],
+      "reason": "w-28 avatar column host; Image has no finite width step for w-28.",
+      "proposal": "Measure/Fit token or Image size enum covering 7rem circular portrait."
+    },
+    {
+      "id": "ConsultantDirectoryHeader-pageheader-identity",
+      "files": [
+        ".storybook/components/starci/blocks/consultant/ConsultantDirectoryHeader/ConsultantDirectoryHeader.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx"
+      ],
+      "reason": "Prior hold ConsultantDirectoryHeader-pageheader-wrapper-div — PageHeader lacks CallerIdentity.",
+      "proposal": "Add identity to PageHeader; drop wrapper + w-fit breadcrumb host via Measure."
+    },
+    {
+      "id": "ConsultantDirectoryGrid-a11y-region",
+      "files": [
+        ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx"
+      ],
+      "reason": "Prior hold — role=region aria-label root; a11y out of burn scope.",
+      "proposal": "Frame that forwards ARIA landmark props, then stamp identity on it."
+    },
+    {
+      "id": "RankBadge-runtime-color",
+      "files": ["src/components/blocks/profile/RankBadge/index.tsx"],
+      "reason": "Runtime hex → color-mix fill; dynamic visual without finite tone owner.",
+      "proposal": "RankTone enum mapped to CSS variables, or Chip tone extension for rank palette."
+    },
+    {
+      "id": "CvHtmlDocument-document-host",
+      "files": ["src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx"],
+      "reason": "Prior hold CvHtmlDocument-html-div-tree — intentional document chrome.",
+      "proposal": "Document-root capable composite; out of safe stamp scope this batch."
+    }
+  ],
+  "holdsRetained": [
+    "ConsultantDirectoryGrid-a11y-region-div",
+    "ConsultantDirectoryHeader-pageheader-wrapper-div",
+    "ConsultantDirectoryCompanySearch identity (atom root)",
+    "CvPreview-family / CvPdfPreview",
+    "CvWorkspaceSkeleton twin",
+    "ShareProfileButton / GradeCreditCaption interactive Button atom roots",
+    "ProfileLoadingState HeroSkeleton 128px + heatmap (documented atom gaps)"
+  ],
+  "beforeAfterMessages": {
+    "scope": "16 changed files under profile-cv-careers-consultant (eslint JSON after)",
+    "changedFilesNet": {
+      "ConsultantCard-sb": { "before": 3, "after": 0 },
+      "ConsultantDirectoryCompanySearch-sb": { "before": 2, "after": 0 },
+      "ConsultantDirectoryCompanySearch-src": { "before": 3, "after": 1 },
+      "ConsultantDirectoryGrid-sb": { "before": 3, "after": 1 },
+      "ConsultantDirectoryGrid-src": { "before": 4, "after": 2 },
+      "ProfileLoadingState-sb": { "before": 3, "after": 0 },
+      "ProfileHero-src": { "before": 14, "after": 0 },
+      "ShareProfileButton": { "before": 2, "after": 1 },
+      "CvSubmission": { "before": 2, "after": 1 },
+      "ProfileSectionGuard": { "before": 3, "after": 0 },
+      "CvSplitFromTextModal": { "before": 4, "after": 0 },
+      "CvTailorToJobModal": { "before": 4, "after": 0 },
+      "CvTemplateGalleryModal": { "before": 13, "after": 3 },
+      "AchievementBlockEditor": { "before": 4, "after": 1 },
+      "PersonalBlockEditor": { "before": 4, "after": 1 },
+      "GradeCreditCaption": { "before": 3, "after": 0 }
+    },
+    "approxDeltaOnChanged": -55
+  },
+  "verification": {
+    "eslintQuietChanged": "pass (0 errors on changed set)",
+    "tscTouched": "pass (no diagnostics on touched paths)",
+    "gitDiffCheck": "pass"
+  },
+  "skipped": [
+    "pages/** — agent 9",
+    "ContributionCalendarView / DiffViewer / GradeModelDropdown / CvPdfPreview / UserStreak / CvWorkspaceSkeleton — contract only",
+    "Remaining CV BlockEditors beyond Achievement/Personal — same form-surface contract; not mass-edited this pass",
+    "src ConsultantCard — not in this agent manifest (SB only)"
+  ],
+  "doNotCommit": true,
+  "summary": "Closed ProfileHero (14→0), GradeCreditCaption, CvSplit/Tailor modals, SB ConsultantCard + ProfileLoadingState hosts, and identity shells on Achievement/Personal editors. CvTemplateGalleryModal mostly migrated to ModalShell/Grid/SurfaceCard with thumb mount held. Contract proposals filed for heatmap, dropdowns, diff, CvPreview, RankBadge, and CV form surfaces. No commit."
+}

@@ -1,0 +1,25 @@
+{
+  "partition": "surface-card",
+  "changed": [],
+  "skipped": [
+    "TILE_CHROME contentClassName hold — chrome ≠ bodyVariant"
+  ],
+  "holds": [
+    "PressableGroup → Base contentClassName TILE_CHROME + verdict",
+    "ContentPager item.classNames col-span-2 until span API",
+    "nivo SystemStoryCard classNames flex-1"
+  ],
+  "evidence": [
+    "bodyVariant tile kept on ContinueCard Item+Hero",
+    "TILE_CHROME is rounded-2xl shadow-field; tile is flex/gap/overflow — different axes"
+  ],
+  "proposals": [
+    "surface-chrome-axis (not claimed fixed)",
+    "pressable-item-span (not claimed fixed)"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "edits": "none — hold-only"
+  },
+  "regressions": []
+}

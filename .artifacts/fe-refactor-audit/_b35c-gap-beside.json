@@ -1,0 +1,1993 @@
+{
+  "gapNew": [
+    {
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Skeleton keeps one Premium lane placeholder as the panel body — not group-boundary, because there is no secti",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Premium lane and active-plan caption are same-kind siblings in the subscription panel — not group-boundary, b",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "principle": "card-caption",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"card-caption\" explain=\"Keeps the scarcity line as a caption under the price so the two read as one price cluster, not as separate blocks.\" isSkeleton={is",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Separates the loss-aversion header from the price/CTA footer so the strip reads as two blocks inside one card.\" isSkeleton={isSk",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "principle": "title-subtitle",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"title-subtitle\" explain=\"Name over role — not label-field, because neither line is a form control label.\" isSkeleton={isSkeleton} items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack of tile rows — not group-boundary, because photo/name/company/blurb are repeating vertical siblings rather t",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"ContentHeader\" }} gap={6} principle=\"sibling-stack\" explain=\"Page identity cluster and outcomes card are same-kind peers on the lesso",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"CourseQaComposer\" }} gap={3} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta doe",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack of field then actions — not group-boundary, because these are repeating vertical siblings rather than sectio",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"CourseQaQuestionList\" }} gap={4} principle=\"sibling-stack\" explain=\"Question list and pager are same-kind peers in the roll-up column",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"CourseQaToolbar\" }} gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "principle": "chip-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" items={chips} />",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Chip row and author line are same-kind peers in the meta cluster — not group-boundary, because they are repeating meta sections r",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+      "principle": "card-caption",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"VoiceHero\" }} gap={4} principle=\"card-caption\" explain=\"Holds caption text under card media so the caption stays attached to the imag",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups language and theme controls on one horizontal peer row so they share a single hit baseline.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"sibling-stack\" explain=\"Same-kind peer stack of notification skeleton rows — not group-boundary, because rows are repeating siblings rather than section ",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"sibling-stack\" explain=\"Same-kind peer stack of notification rows — not group-boundary, because rows are repeating siblings rather than section groups.\" ",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack of mobile route rows — not group-boundary, because rows are repeating siblings rather than section groups.\" ",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"SettingsSidebarNav\" }} gap={1} principle=\"group-boundary\" explain=\"Separates the desktop rail from the mobile pill bar so each leaf k",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"sibling-stack\" explain=\"Same-kind peer stack of settings rows — not group-boundary, because rows are repeating siblings rather than section groups.\" item",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"layout\", component: \"LearnShell\" }} gap={1} principle=\"group-boundary\" explain=\"Separates the learn surface from floating AI triggers so each region keep",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "principle": "layout-split",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={1} principle=\"layout-split\" explain=\"Major layout split — not block-boundary, because this separates the optional rail from the lesson body rather than adjacent blocks",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"sibling-stack\" explain=\"Same-kind peer stack of AI trigger chrome — not group-boundary, because FAB and selection-ask are alternate trigger peers rather ",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"group-boundary\" explain=\"Separates the profile tab chrome from the measured body so each region keeps its own seam owner — not sibling-stack, because the",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Skeleton title bar over attempt-row placeholders — not group-boundary, because these are peer loading bars.\" isSkeleton={isSkelet",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Count line, optional language filter, and accordion — not sibling-stack, because these are related content regions.\" isSkeleton={is",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Skeleton attempt rows — not group-boundary, because these are peer loading placeholders.\" items={skeletonRows} />",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Attempt list over optional pager — not sibling-stack, because these are related content regions.\" items={listAndPager} />",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Tabs over the active quota panel — not group-boundary, because this is the modal body's major section seam.\" items={tabsAndPanel",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Repeating unlock lines — not group-boundary, because these are peer checklist rows rather than section groups.\" isSkeleton={isSke",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Price shimmer stack — not sibling-stack, because the bars stand in for a price+scarcity content pair.\" isSkeleton={isSkeleton} item",
+      "remHadSame": false
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Unlock list over price CTA region — not group-boundary, because this is the modal body's major section seam.\" isSkeleton={isSkel",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Skeleton keeps one Premium lane placeholder as the panel body — not group-boundary, because there is no secti",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Premium lane and active-plan caption are same-kind siblings in the subscription panel — not group-boundary, b",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "title-subtitle",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"title-subtitle\" explain=\"Course title over team state — not label-field, because neither line is a form control label.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "icon-text",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<Cluster gap={3} principle=\"icon-text\" explain=\"Step index beside its instruction — not name-handle, because this pairs a badge with procedural copy.\" align=\"start\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Step copy over its CTA — not group-boundary, because these are peer pieces of one step.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Step copy over recheck CTA — not group-boundary, because these are peer pieces of one step.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "identity",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={3} principle=\"identity\" explain=\"Keeps course tile and title/state as one peer unit so the course identity stays beside its cover.\" align=\"center\" items={courseIdentit",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Ordered join steps — not group-boundary, because these are repeating procedure rows.\" items={joinSteps} />",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"group-boundary\" explain=\"Banner and guided modal share one feature surface — not sibling-stack, because the banner and the portal are not repeating peers",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Link prompt or join flow — not sibling-stack, because this is the modal body's content region.\" items={linked ? linkedBody : linkBo",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "principle": "card-caption",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"card-caption\" explain=\"Keeps the scarcity line as a caption under the price so the two read as one price cluster, not as separate blocks.\" isSkeleton={is",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.\" items={[ ()",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"CommentComposer\" }} gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"CommentComposer\" }} gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack of field then actions — not group-boundary, because these are repeating vertical siblings rather than sectio",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Submit and cancel share one action row — not content-row, because both peers are actions rather than content-plus-meta.\" items={[ (",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"Discussion\" }} gap={4} principle=\"group-boundary\" explain=\"Header+composer group above the comment list — not sibling-stack, because ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because label block and composer are repeating siblings in the header group.\" items={[",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "principle": "title-subtitle",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"title-subtitle\" explain=\"Discussion title over archive line reads as title over subtitle — not label-field (no form control), not name-handle (no identit",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because comment rows are repeating siblings rather than section groups.\" items={[ ...c",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} identity={{ tier: \"block\", component: \"AchievementBlockEditor\" }} principle=\"sibling-stack\" explain=\"Same-kind peer stack of repeatable achievement cards — not grou",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"group-boundary\" explain=\"Section group spacing — not sibling-stack, because description, input, error, and submit are distinct groups rather than same-ki",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"group-boundary\" explain=\"Section group spacing — not sibling-stack, because description, input, error, and submit are distinct groups rather than same-ki",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={2} principle=\"content-row\" explain=\"Keeps template name and ATS chip on one baseline so the chip does not drop under the title.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "principle": "title-subtitle",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"title-subtitle\" explain=\"Template name over optional Word hint — not label-field, because neither line is a form control.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Quest checklist and claim state are same-kind siblings in the daily-quest body — not group-boundary, because ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"ActivityFeed\" }} gap={6} principle=\"group-boundary\" explain=\"Day groups are section boundaries in the feed — not sibling-stack, becau",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommentThread/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because the comment row, optional reply composer, and nested replies are repeating sib",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommentThread/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because nested reply rows are repeating siblings rather than section groups.\" items={r",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommentThread/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"CommentThread\" }} gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because the root composer and",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommentThread/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because top-level comment rows are repeating siblings rather than section groups.\" ite",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"CommunityCommentRow\" }} gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because the deleted pla",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={4} principle=\"flex-action\" explain=\"Deleted-row actions share one action row — not content-row, because both peers are controls rather than content-plus-meta.\" align=\"",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "principle": "separator-dot",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={2} principle=\"separator-dot\" explain=\"Places a middle-dot separator between short meta peers so the items read as one inline list.\" align=\"center\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "principle": "icon-text",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={2} principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" align=\"center\" ite",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because markdown body and reaction/actions are repeating siblings under the byline.\" i",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={4} principle=\"flex-action\" explain=\"Reaction bar and optional reply controls share one action row — not content-row, because both peers are controls rather than conten",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because header, body, footer, and optional thread are repeating siblings in one post u",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={4} principle=\"content-row\" explain=\"Keeps the author avatar and meta column on one baseline so the pin does not drop under the title.\" align=\"center\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "principle": "title-subtitle",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"title-subtitle\" explain=\"Display name over handle/meta reads as title over subtitle — not label-field (no form control), not name-handle (the handle is m",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "principle": "icon-text",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={2} principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" align=\"center\" ite",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "principle": "separator-dot",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={3} principle=\"separator-dot\" explain=\"Places a middle-dot separator between short meta peers so the items read as one inline list.\" align=\"center\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={6} principle=\"flex-action\" explain=\"Reaction bar and comment toggle share one action row — not content-row, because both peers are controls rather than content-plus-me",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/Composer/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"Composer\" }} gap={4} principle=\"content-row\" explain=\"Keeps the optional avatar, field, and send cluster on one baseline so trailing ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/Composer/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={2} principle=\"flex-action\" explain=\"Attach slot and send share one action row — not content-row, because both peers are actions rather than content-plus-meta.\" align=\"",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/FeedItem/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because action text, timestamp, and optional footer are repeating vertical siblings in",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/FeedItem/index.tsx",
+      "principle": "title-subtitle",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"title-subtitle\" explain=\"Action line over muted timestamp reads as title over subtitle — not label-field (no form control), not name-handle (no identity ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feed/FeedItem/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"FeedItem\" }} gap={3} principle=\"content-row\" explain=\"Keeps the leading visual and the action column on one baseline so the meta does",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Consent copy beside the Accept/Reject/Customize cluster — not sibling-stack, because the sides are asymmetric roles on one bar.\" al",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={2} principle=\"flex-action\" explain=\"Equal-weight consent CTAs wrap as peers — not chip-row, because these are buttons rather than chips.\" align=\"center\" at=\"sm\" items=",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"CourseQaComposer\" }} gap={3} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta doe",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"CourseQaComposer\" }} gap={3} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta doe",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack of field then actions — not group-boundary, because these are repeating vertical siblings rather than sectio",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"CourseQaQuestionList\" }} gap={4} principle=\"sibling-stack\" explain=\"Question list and pager are same-kind peers in the roll-up column",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" isSkeleton={is",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "principle": "name-handle",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"name-handle\" explain=\"Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle.\" isSkeleton={i",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "principle": "chip-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" items={chips} />",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={2} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.\" isSkeleton={isSkeleton} items={",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "principle": "chip-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" items={metaChips} />",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Chip row and author line are same-kind peers in the meta cluster — not group-boundary, because they are repeating meta sections r",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/learn/VoiceHero/index.tsx",
+      "principle": "card-caption",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"VoiceHero\" }} gap={4} principle=\"card-caption\" explain=\"Holds caption text under card media so the caption stays attached to the imag",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "icon-text",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"icon-text\" explain=\"Avatar beside its guest prompt — not name-handle, because this pairs a glyph with instructional text rather than a name/handle identi",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={6} principle=\"flex-action\" explain=\"Groups brand mark and desktop route pills on one horizontal peer row so they share a single hit baseline.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups search, locale, theme, cart, account, and mobile menu triggers on one horizontal peer row so they share a single hit baselin",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups language and theme controls on one horizontal peer row so they share a single hit baseline.\" items={[ () =>",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"sibling-stack\" explain=\"Same-kind peer stack of notification skeleton rows — not group-boundary, because rows are repeating siblings rather than section ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"sibling-stack\" explain=\"Same-kind peer stack of notification rows — not group-boundary, because rows are repeating siblings rather than section groups.\" ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"group-boundary\" explain=\"Separates mobile route list from language/theme controls so each region keeps its own seam owner — not sibling-stack, because th",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack of mobile route rows — not group-boundary, because rows are repeating siblings rather than section groups.\" ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack of language and theme rows — not group-boundary, because these are repeating preference peers rather than se",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "principle": "group-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"SettingsSidebarNav\" }} gap={1} principle=\"group-boundary\" explain=\"Separates the desktop rail from the mobile pill bar so each leaf k",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={1} principle=\"sibling-stack\" explain=\"Same-kind peer stack of settings rows — not group-boundary, because rows are repeating siblings rather than section groups.\" item",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "principle": "chip-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" items={[ ...(isSkeleton || location ? ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"content-row\" explain=\"Primary CTA beside share — not sibling-stack, because the share control is trailing meta on the action row rather than a peer secti",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer meta rows — not group-boundary, because social links and joined date are repeating list rows rather than section g",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={2} principle=\"content-row\" explain=\"Icon beside link label — not label-field, because the icon is decorative leading chrome rather than a form label.\" isSkeleton={isSk",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "principle": "label-field",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV identity={{ tier: \"layout\", component: \"FooterNavColumn\" }} gap={4} principle=\"label-field\" explain=\"Column title over its link list — not title-subtitle, because the title",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack of link rows — not group-boundary, because these are repeating siblings rather than section groups.\" items={",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.\" divider ite",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "principle": "layout-split",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={7} principle=\"layout-split\" explain=\"Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks.\" justify=\"betwee",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "principle": "card-caption",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"card-caption\" explain=\"Brand lockup over its tagline and socials — not title-subtitle, because the social row is a separate action cluster rather than a ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups social icon controls on one horizontal peer row so they share a single hit baseline — not chip-row, because these are press ",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "principle": "layout-split",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={7} principle=\"layout-split\" explain=\"Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks.\" at=\"sm\" items={",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap",
+        "align",
+        "justify"
+      ],
+      "snippet": "<StackH gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" justify=\"betwe",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups legal stubs on one horizontal peer row so they share a single hit baseline — not chip-row, because these are press targets r",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/drawers/E2eResultDrawer/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Skeleton title bar over attempt-row placeholders — not group-boundary, because these are peer loading bars.\" isSkeleton={isSkelet",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/drawers/E2eResultDrawer/component.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Count line, optional language filter, and accordion — not sibling-stack, because these are related content regions.\" isSkeleton={is",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"sibling-stack\" explain=\"Skeleton related-content sections — not group-boundary, because these are repeating peer loading blocks.\" items={skeletonSections",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={2} principle=\"sibling-stack\" explain=\"Attempt label/chip over feedback over timestamp — not group-boundary, because these are peer pieces of one attempt row.\" isSkelet",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "principle": "flex-fill",
+      "props": [
+        "className(s)"
+      ],
+      "snippet": "<Box className=\"max-h-[60vh]\" principle=\"flex-fill\" explain=\"Caps the follow list viewport so tabs stay put while the list scrolls inside.\" >",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/LanguageModal/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Popular languages label over selectable grid — not group-boundary, because these are peer pieces of one section.\" items={popularS",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/LanguageModal/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"All-languages label over selectable grid — not group-boundary, because these are peer pieces of one section.\" items={allSectionIt",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/LanguageModal/component.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Popular section over all-languages section — not group-boundary, because this is the modal body's major section seam, and not si",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Intro mark over the link CTA — not group-boundary, because this is the modal body's major section seam, and not sibling-stack, b",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Repeating unlock lines — not group-boundary, because these are peer checklist rows rather than section groups.\" isSkeleton={isSke",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Price shimmer stack — not sibling-stack, because the bars stand in for a price+scarcity content pair.\" isSkeleton={isSkeleton} item",
+      "remHadSame": false
+    },
+    {
+      "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Unlock list over price CTA region — not group-boundary, because this is the modal body's major section seam.\" isSkeleton={isSkel",
+      "remHadSame": false
+    }
+  ],
+  "gapRetained": [
+    {
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.\" align=\"start\" isSkeleton={isSke",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={3} align=\"center\" principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\"",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" justify=\"end\" isSkeleton={isSkeleton} items",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" justify=\"between\" at=\"sm\" isSkeleton={isSke",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"FoundationCategorySearchBar\" }} gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so t",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "principle": "chip-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" align=\"center\" at=\"sm\" isSkeleton={isSk",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "padding"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" padding={{ x: 4, y: 3 }} items={flatItems.m",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "principle": "title-subtitle",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackV gap={2} principle=\"title-subtitle\" explain=\"Title over supporting line — not label-field, because neither line is a form control label.\" align=\"start\" items={[ // HOLD: no ",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "principle": "chip-row",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" at=\"sm\" items={[ () =>",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "principle": "card-caption",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"card-caption\" explain=\"Section title over its readiness cluster — not title-subtitle, because the cluster is a separate surface stack rather than a conti",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "principle": "card-caption",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={4} principle=\"card-caption\" explain=\"Readiness summary card stacked above its track list — not sibling-stack, because the list captions the summary rather than repeati",
+      "remHadSame": true
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+      "principle": "identity",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={3} principle=\"identity\" explain=\"Keeps avatar and identity text as one peer unit so the person label stays beside the face.\" align=\"center\" items={titleAndTierChip} />",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackV gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.\" align=\"start\" isSkeleton={isSke",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" justify=\"end\" isSkeleton={isSkeleton} items",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "principle": "icon-text",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={2} principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" justify=\"end\" isSk",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" at=\"sm\" isSkeleton={isSkeleton} items={[ ()",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH identity={{ tier: \"block\", component: \"FoundationCategorySearchBar\" }} gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so t",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "principle": "chip-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" align=\"center\" at=\"sm\" isSkeleton={isSk",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "control-pad",
+      "props": [
+        "gap",
+        "padding"
+      ],
+      "snippet": "<StackV gap={2} principle=\"control-pad\" explain=\"Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.\" padding={{ x:",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" justify=\"betwe",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "cell-pad",
+      "props": [
+        "gap",
+        "padding"
+      ],
+      "snippet": "<StackV gap={1} padding={4} principle=\"cell-pad\" explain=\"Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.\" body={(",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" justify=\"betwe",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap",
+        "justify"
+      ],
+      "snippet": "<StackH gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" justify=\"betwe",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "principle": "flex-action",
+      "props": [
+        "gap",
+        "padding"
+      ],
+      "snippet": "<StackH gap={3} principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" padding={{ x: 4, y: 3 }} items={flatItems.m",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" align=\"center\"",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/overlays/modals/MaintenanceModal/component.tsx",
+      "principle": "icon-text",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={2} principle=\"icon-text\" explain=\"Spinner beside its status label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" align=\"c",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap",
+        "className(s)"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" classNames={rootClassNames} explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested ",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "principle": "content-row",
+      "props": [
+        "gap",
+        "align"
+      ],
+      "snippet": "<StackH gap={4} principle=\"content-row\" align=\"start\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.\" items={[ () =>",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap",
+        "className(s)"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" classNames={[\"min-w-0\", \"flex-1\"]} explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather t",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "principle": "block-boundary",
+      "props": [
+        "gap",
+        "className(s)"
+      ],
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" classNames={rootClassNames} explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested ",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" items={[ () =>",
+      "remHadSame": true
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "principle": "sibling-stack",
+      "props": [
+        "gap"
+      ],
+      "snippet": "<StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" items={[ () =>",
+      "remHadSame": true
+    }
+  ],
+  "boxClassEscapes": [
+    {
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "sample": "<Box className=\"w-full\" identity={{ tier: \"block\", component: \"ProfileLoadingState\" }} </Box>"
+    }
+  ],
+  "novelPrinciples": [
+    {
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+      "novel": [
+        "label-field"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "novel": [
+        "card-caption",
+        "block-boundary"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "novel": [
+        "title-subtitle",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "novel": [
+        "content-row",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "novel": [
+        "content-row",
+        "flex-fill-base"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "novel": [
+        "sibling-stack",
+        "name-handle",
+        "chip-row"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "novel": [
+        "icon-text",
+        "flex-action",
+        "sibling-stack",
+        "flex-fill",
+        "group-boundary"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "novel": [
+        "group-boundary",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "novel": [
+        "layout-split"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "novel": [
+        "group-boundary",
+        "layout-split",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+      "novel": [
+        "layout-split",
+        "page-pad",
+        "group-boundary"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+      "novel": [
+        "sibling-stack",
+        "icon-text",
+        "content-row"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+      "novel": [
+        "sibling-stack",
+        "content-row"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+      "novel": [
+        "block-boundary"
+      ]
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "novel": [
+        "icon-text",
+        "sibling-stack",
+        "content-row",
+        "block-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "novel": [
+        "label-field"
+      ]
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "novel": [
+        "title-subtitle",
+        "icon-text",
+        "sibling-stack",
+        "identity",
+        "group-boundary",
+        "content-row"
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "novel": [
+        "center-measure"
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "novel": [
+        "center-measure"
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "novel": [
+        "card-caption"
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/PricingTable/index.tsx",
+      "novel": [
+        "group-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCard/index.tsx",
+      "novel": [
+        "card-caption",
+        "value-row",
+        "center-measure"
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "novel": [
+        "block-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "novel": [
+        "card-caption",
+        "block-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "novel": [
+        "content-row",
+        "sibling-stack",
+        "flex-action"
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "novel": [
+        "group-boundary",
+        "sibling-stack",
+        "title-subtitle"
+      ]
+    },
+    {
+      "path": "src/components/blocks/community/FollowButton/index.tsx",
+      "novel": [
+        "icon-text"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "novel": [
+        "group-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "novel": [
+        "group-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "novel": [
+        "card-caption",
+        "content-row",
+        "title-subtitle",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "novel": [
+        "group-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feed/CommentThread/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "novel": [
+        "sibling-stack",
+        "flex-action",
+        "separator-dot",
+        "icon-text"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "novel": [
+        "sibling-stack",
+        "content-row",
+        "title-subtitle",
+        "icon-text",
+        "separator-dot",
+        "flex-action"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feed/Composer/index.tsx",
+      "novel": [
+        "content-row",
+        "flex-action"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feed/EntityLink/index.tsx",
+      "novel": [
+        "icon-text"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feed/FeedItem/index.tsx",
+      "novel": [
+        "sibling-stack",
+        "title-subtitle",
+        "content-row"
+      ]
+    },
+    {
+      "path": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "novel": [
+        "block-boundary",
+        "flex-action"
+      ]
+    },
+    {
+      "path": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "novel": [
+        "label-field"
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "novel": [
+        "content-row",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "novel": [
+        "sibling-stack",
+        "name-handle",
+        "chip-row"
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/UpNextCard/index.tsx",
+      "novel": [
+        "icon-text",
+        "title-subtitle",
+        "flex-action"
+      ]
+    },
+    {
+      "path": "src/components/blocks/learn/VoiceHero/index.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "novel": [
+        "icon-text",
+        "flex-action",
+        "flex-fill",
+        "group-boundary"
+      ]
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "novel": [
+        "group-boundary",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "novel": [
+        "block-boundary",
+        "content-row"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "novel": [
+        "label-field",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "novel": [
+        "block-boundary",
+        "layout-split",
+        "card-caption",
+        "flex-action",
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "novel": [
+        "flex-action"
+      ]
+    },
+    {
+      "path": "src/components/layouts/PublicProfileLayout/component.tsx",
+      "novel": [
+        "group-boundary"
+      ]
+    },
+    {
+      "path": "src/components/overlays/drawers/E2eResultDrawer/component.tsx",
+      "novel": [
+        "sibling-stack",
+        "icon-text",
+        "content-row"
+      ]
+    },
+    {
+      "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "novel": [
+        "title-subtitle",
+        "sibling-stack",
+        "content-row"
+      ]
+    },
+    {
+      "path": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+      "novel": [
+        "sibling-stack"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "novel": [
+        "sibling-stack",
+        "block-boundary",
+        "flex-fill"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/LanguageModal/component.tsx",
+      "novel": [
+        "sibling-stack",
+        "block-boundary"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+      "novel": [
+        "block-boundary"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/MaintenanceModal/component.tsx",
+      "novel": [
+        "block-boundary",
+        "flex-action-between"
+      ]
+    },
+    {
+      "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "novel": [
+        "sibling-stack",
+        "content-row",
+        "block-boundary"
+      ]
+    }
+  ],
+  "componentTypeRevert": []
+}

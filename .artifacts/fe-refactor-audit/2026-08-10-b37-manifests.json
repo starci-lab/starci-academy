@@ -1,0 +1,437 @@
+{
+  "batch": "B37",
+  "phase": 0,
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T16:59:25.178Z",
+  "agents": [
+    {
+      "name": "surface-contract-storybook",
+      "owns": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCard.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardCrossList.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardNested.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPlaceholder.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardSelectableGroup.stories.tsx"
+      ],
+      "mustNotTouch": [
+        "src/**",
+        "**/eslint/**",
+        ".artifacts/**"
+      ],
+      "note": "SB SurfaceCard contract + stories only. Extend label/empty/error/identity parity doors as needed for B37 collapse. No consumers."
+    },
+    {
+      "name": "surface-contract-src",
+      "owns": [
+        "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/blocks/cards/SurfaceListCard/index.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        "src/components/composites/cards/SurfaceCard/surface-card-header.tsx"
+      ],
+      "mustNotTouch": [
+        ".storybook/**",
+        "**/pages/**",
+        "**/overlays/**",
+        "**/blocks/feed/**",
+        "**/blocks/learn/**",
+        "**/blocks/dashboard/**"
+      ],
+      "note": "src SurfaceCard + LabeledCard + SurfaceListCard (+ LabeledAccordionCard hold twin). Mirror SB contract. No product consumers."
+    },
+    {
+      "name": "dashboard-consumers",
+      "owns": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+        "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+        "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx"
+      ],
+      "requiredFirstTargets": [
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/DashboardPage/RecommendedCourses/component.tsx"
+      ],
+      "note": "Dashboard LabeledCard/Surface* topology. Trending* is class H hold — document only unless contract unlocks per-row hooks. DailyQuest is C; RecommendedCourses is A."
+    },
+    {
+      "name": "profile-consumers-a",
+      "owns": [
+        "src/components/pages/ProfileChallengeManagePage/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+        "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx"
+      ],
+      "requiredFirstTargets": [
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx"
+      ],
+      "note": "Skills/challenges/overview coding surfaces. Overview*Skills are class C (frameless={cond}+SurfaceCardList)."
+    },
+    {
+      "name": "profile-consumers-b",
+      "owns": [
+        "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+        "src/components/pages/ProfileOverviewPage/index.tsx",
+        "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+        "src/components/pages/ProfileRedirectPage/index.tsx"
+      ],
+      "requiredFirstTargets": [
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx"
+      ],
+      "note": "Capstone/pinned/activity/remaining profile surfaces not owned by profile-consumers-a."
+    },
+    {
+      "name": "learn-flashcard-consumers",
+      "owns": [
+        "src/components/blocks/learn/ChatToolResult/index.tsx",
+        "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+        "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/index.tsx"
+      ],
+      "requiredFirstTargets": [
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx"
+      ],
+      "note": "Flashcard histories + learn list shells. RelatedContentList is class H hold."
+    },
+    {
+      "name": "feed-overlay-commerce-consumers",
+      "owns": [
+        "src/components/blocks/commerce/CartLine/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "src/components/pages/BookmarksPage/index.tsx",
+        "src/components/pages/CartPage/component.tsx",
+        "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+        "src/components/pages/ContactPage/ContactChannels/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+        "src/components/pages/RewardsPage/RewardCatalog/index.tsx"
+      ],
+      "requiredFirstTargets": [
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "src/components/pages/ContactPage/ContactChannels/index.tsx"
+      ],
+      "note": "Feed/overlays/commerce/contact. ActivityFeed H hold; ContactChannels is class B (flushContent+nested List)."
+    },
+    {
+      "name": "legacy-surface-list-remaining",
+      "owns": [
+        "src/components/blocks/cards/CrossListCard/index.tsx",
+        "src/components/pages/JobListPage/component.tsx",
+        "src/components/pages/KpiPage/component.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+        "src/components/pages/LearningHistoryPage/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+        "src/components/pages/PracticeProblemPage/index.tsx",
+        "src/components/pages/SessionsPage/index.tsx"
+      ],
+      "note": "Class G (and leftover A/H list shells not claimed by domain agents). Migrate exact cases to SurfaceCardList; hold free-form."
+    },
+    {
+      "name": "labeled-card-non-list-classification",
+      "owns": [
+        "src/components/blocks/cards/FlipCard/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+        "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+        "src/components/blocks/learn/personal-project/index.tsx",
+        "src/components/pages/AiUsagePage/index.tsx",
+        "src/components/pages/AppearancePage/index.tsx",
+        "src/components/pages/ArchitecturePage/index.tsx",
+        "src/components/pages/ContactPage/ContactFaq/index.tsx",
+        "src/components/pages/ContactPage/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+        "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+        "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+        "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+        "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        "src/components/pages/MyAttemptsPage/index.tsx",
+        "src/components/pages/MyFeedbackPage/index.tsx",
+        "src/components/pages/MySubmissionsPage/index.tsx"
+      ],
+      "note": "Classes D/E/F — confirm legitimate framed bodies vs collapse to SurfaceCard label. No list migrations unless misclassified."
+    },
+    {
+      "name": "coordinator-lint-parity-gates",
+      "owns": [
+        ".artifacts/fe-refactor-audit/2026-08-10-b37-card-topology.json",
+        ".artifacts/fe-refactor-audit/2026-08-10-b37-card-topology.md",
+        ".artifacts/fe-refactor-audit/2026-08-10-b37-manifests.json",
+        "plugins/eslint/"
+      ],
+      "mayTouchArtifacts": true,
+      "mustNotTouchProductConsumers": true,
+      "note": "Owns eslint rule + audit artifacts + gate evidence. Must not edit product consumer files claimed by other agents."
+    }
+  ],
+  "zeroOverlapProof": {
+    "overlapPass": true,
+    "overlapCount": 0,
+    "overlaps": [],
+    "claimedPathCount": 116,
+    "claimedPaths": [
+      ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCard.stories.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardCrossList.stories.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardNested.stories.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPlaceholder.stories.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+      ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardSelectableGroup.stories.tsx",
+      "src/components/blocks/cards/CrossListCard/index.tsx",
+      "src/components/blocks/cards/FlipCard/index.tsx",
+      "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "src/components/blocks/cards/LabeledCard/index.tsx",
+      "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "src/components/blocks/commerce/CartLine/index.tsx",
+      "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "src/components/blocks/learn/personal-project/index.tsx",
+      "src/components/composites/cards/SurfaceCard/index.tsx",
+      "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+      "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "src/components/pages/AiUsagePage/index.tsx",
+      "src/components/pages/AppearancePage/index.tsx",
+      "src/components/pages/ArchitecturePage/index.tsx",
+      "src/components/pages/BookmarksPage/index.tsx",
+      "src/components/pages/CartPage/component.tsx",
+      "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "src/components/pages/ContactPage/ContactFaq/index.tsx",
+      "src/components/pages/ContactPage/index.tsx",
+      "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+      "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+      "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+      "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+      "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+      "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+      "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+      "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "src/components/pages/JobListPage/component.tsx",
+      "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+      "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+      "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+      "src/components/pages/KpiPage/component.tsx",
+      "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "src/components/pages/LearningHistoryPage/index.tsx",
+      "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "src/components/pages/MyAttemptsPage/index.tsx",
+      "src/components/pages/MyFeedbackPage/index.tsx",
+      "src/components/pages/MySubmissionsPage/index.tsx",
+      "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "src/components/pages/PracticeProblemPage/index.tsx",
+      "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+      "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "src/components/pages/ProfileOverviewPage/index.tsx",
+      "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+      "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+      "src/components/pages/ProfileRedirectPage/index.tsx",
+      "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "src/components/pages/SessionsPage/index.tsx"
+    ],
+    "requiredFirstTargetsAssigned": [
+      {
+        "path": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "owner": "dashboard-consumers",
+        "class": "H"
+      },
+      {
+        "path": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+        "owner": "dashboard-consumers",
+        "class": "H"
+      },
+      {
+        "path": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "owner": "dashboard-consumers",
+        "class": "C"
+      },
+      {
+        "path": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+        "owner": "dashboard-consumers",
+        "class": "A"
+      },
+      {
+        "path": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "owner": "profile-consumers-a",
+        "class": "C"
+      },
+      {
+        "path": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "owner": "profile-consumers-a",
+        "class": "C"
+      },
+      {
+        "path": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "owner": "profile-consumers-a",
+        "class": "A"
+      },
+      {
+        "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "owner": "profile-consumers-a",
+        "class": "A"
+      },
+      {
+        "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "owner": "learn-flashcard-consumers",
+        "class": "A"
+      },
+      {
+        "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "owner": "learn-flashcard-consumers",
+        "class": "A"
+      },
+      {
+        "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "owner": "feed-overlay-commerce-consumers",
+        "class": "H"
+      },
+      {
+        "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "owner": "feed-overlay-commerce-consumers",
+        "class": "A"
+      },
+      {
+        "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "owner": "feed-overlay-commerce-consumers",
+        "class": "A"
+      },
+      {
+        "path": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+        "owner": "feed-overlay-commerce-consumers",
+        "class": "B"
+      },
+      {
+        "path": "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+        "owner": "profile-consumers-b",
+        "class": "A"
+      },
+      {
+        "path": "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "owner": "learn-flashcard-consumers",
+        "class": "H"
+      }
+    ],
+    "requiredAllAssigned": true
+  }
+}

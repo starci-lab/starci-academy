@@ -1,0 +1,70 @@
+{
+  "partition": "hard-holds",
+  "manifest": [
+    "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx"
+  ],
+  "consumers": {
+    "MockInterviewWorkspace": [
+      {
+        "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+        "line": 2070,
+        "prop": "className",
+        "value": "min-h-0 flex-1",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+        "line": 2337,
+        "prop": "className",
+        "value": "min-h-0 flex-1",
+        "ownership": "parent-placement"
+      }
+    ],
+    "CvPdfPreview": []
+  },
+  "valueSet": {
+    "MockInterviewWorkspace": [
+      "min-h-0 flex-1"
+    ],
+    "CvPdfPreview": []
+  },
+  "ownership": {
+    "MockInterviewWorkspace": [
+      "parent-placement"
+    ],
+    "CvPdfPreview": []
+  },
+  "oldApi": {
+    "MockInterviewWorkspace": "className/classNames door retained",
+    "CvPdfPreview": "className/classNames door retained"
+  },
+  "newApi": {
+    "MockInterviewWorkspace": "hard-holds evidence only",
+    "CvPdfPreview": "CvPreview-family; zero consumers"
+  },
+  "changed": [],
+  "holds": [
+    {
+      "component": "MockInterviewWorkspace",
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "reason": "hard-holds evidence only",
+      "values": [
+        "min-h-0 flex-1"
+      ]
+    },
+    {
+      "component": "CvPdfPreview",
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "reason": "CvPreview-family; zero consumers",
+      "values": []
+    }
+  ],
+  "parity": "n/a — hold only",
+  "verification": {
+    "tsc": "deferred-coordinator",
+    "eslint": "n/a"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — declaration files owned once via workerFor"
+}

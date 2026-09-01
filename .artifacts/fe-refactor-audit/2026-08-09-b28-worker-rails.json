@@ -1,0 +1,166 @@
+{
+  "partition": "rails",
+  "manifest": [
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    "src/components/blocks/navigation/OutlineRail/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx"
+  ],
+  "consumers": {
+    "CollapsibleSidebar": [
+      {
+        "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+        "line": 142,
+        "prop": "className",
+        "value": "h-full",
+        "ownership": "parent-placement"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+        "line": 85,
+        "prop": "className",
+        "value": "className",
+        "ownership": "dynamic"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "line": 142,
+        "prop": "className",
+        "value": "h-full",
+        "ownership": "parent-placement"
+      }
+    ],
+    "OutlineRail": [
+      {
+        "file": "src/components/blocks/learn/ContentMap/index.tsx",
+        "line": 216,
+        "prop": "className",
+        "value": "className",
+        "ownership": "dynamic"
+      },
+      {
+        "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+        "line": 233,
+        "prop": "className",
+        "value": "@app-lg:min-h-0 @app-lg:flex-1",
+        "ownership": "parent-placement"
+      }
+    ],
+    "ArchitectureRail": [
+      {
+        "file": "src/components/pages/ArchitecturePage/index.tsx",
+        "line": 63,
+        "prop": "className",
+        "value": "min-h-0 @app-lg:flex-1",
+        "ownership": "parent-placement"
+      }
+    ],
+    "PracticeRail": [
+      {
+        "file": "src/components/pages/PracticeHubPage/index.tsx",
+        "line": 51,
+        "prop": "className",
+        "value": "min-h-0 @app-lg:flex-1",
+        "ownership": "parent-placement"
+      }
+    ]
+  },
+  "valueSet": {
+    "CollapsibleSidebar": [
+      "h-full",
+      "className"
+    ],
+    "OutlineRail": [
+      "className",
+      "@app-lg:min-h-0 @app-lg:flex-1"
+    ],
+    "ArchitectureRail": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "PracticeRail": [
+      "min-h-0 @app-lg:flex-1"
+    ]
+  },
+  "ownership": {
+    "CollapsibleSidebar": [
+      "parent-placement",
+      "dynamic"
+    ],
+    "OutlineRail": [
+      "dynamic",
+      "parent-placement"
+    ],
+    "ArchitectureRail": [
+      "parent-placement"
+    ],
+    "PracticeRail": [
+      "parent-placement"
+    ]
+  },
+  "oldApi": {
+    "CollapsibleSidebar": "className/classNames door retained",
+    "OutlineRail": "className/classNames door retained",
+    "ArchitectureRail": "className/classNames door retained",
+    "PracticeRail": "className/classNames door retained"
+  },
+  "newApi": {
+    "CollapsibleSidebar": "multi-consumer / twin; not finite in wave 1",
+    "OutlineRail": "needs value re-check / likely flex-fill",
+    "ArchitectureRail": "flex-fill hold",
+    "PracticeRail": "flex-fill hold"
+  },
+  "changed": [],
+  "holds": [
+    {
+      "component": "CollapsibleSidebar",
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "reason": "multi-consumer / twin; not finite in wave 1",
+      "values": [
+        "h-full",
+        "className"
+      ]
+    },
+    {
+      "component": "OutlineRail",
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "reason": "needs value re-check / likely flex-fill",
+      "values": [
+        "className",
+        "@app-lg:min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "component": "ArchitectureRail",
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "reason": "flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "component": "PracticeRail",
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "reason": "flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "component": "CollapsibleSidebar",
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "reason": "multi-consumer / twin; not finite in wave 1",
+      "values": [
+        "h-full",
+        "className"
+      ]
+    }
+  ],
+  "parity": "n/a — hold only",
+  "verification": {
+    "tsc": "deferred-coordinator",
+    "eslint": "n/a"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — declaration files owned once via workerFor"
+}

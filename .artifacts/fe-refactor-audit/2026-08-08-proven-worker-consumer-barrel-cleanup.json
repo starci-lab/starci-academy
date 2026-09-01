@@ -1,0 +1,14 @@
+{
+  "partition": "consumer-barrel-cleanup",
+  "changed": [],
+  "skipped": [],
+  "holds": [],
+  "decisions": [
+    {
+      "id": "no-new-barrel-work",
+      "note": "ContinueCard namespace already removed in BATCH 12; no additional proven dead barrels in this pass"
+    }
+  ],
+  "verification": { "note": "Audit only — nothing to apply" },
+  "regressions": []
+}

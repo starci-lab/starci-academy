@@ -1,0 +1,766 @@
+{
+  "partition": "app-modules-utils",
+  "generatedAt": "2026-08-06T21:49:03.294Z",
+  "checkpoint": "27127bb5",
+  "fileCount": 26,
+  "totalPartitionFiles": 173,
+  "totalPartitionMessages": 268,
+  "capped": true,
+  "allowedClassifications": [
+    "safe-mechanical",
+    "safe-structural"
+  ],
+  "holdClassifications": [
+    "semantic-hold",
+    "vendor-hold",
+    "teacher-hold",
+    "locked-path",
+    "ambiguous"
+  ],
+  "files": [
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 4,
+      "messageCount": 4,
+      "byClass": {
+        "safe-mechanical": 4
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 36,
+          "column": 5,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 42,
+          "column": 5,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 49,
+          "column": 5,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 93,
+          "column": 5,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 2,
+      "byClass": {
+        "safe-mechanical": 2
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 49,
+          "column": 5,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 53,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 2,
+      "byClass": {
+        "safe-mechanical": 2
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 39,
+          "column": 5,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 43,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 2,
+      "byClass": {
+        "safe-mechanical": 2
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 3,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 27,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/proxy.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/proxy.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 2,
+      "messageCount": 2,
+      "byClass": {
+        "safe-mechanical": 2
+      },
+      "candidateRules": [
+        "starci-fe/prefer-arrow-export",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/prefer-arrow-export",
+          "line": 106,
+          "column": 25,
+          "message": "Use an arrow const `const proxy = (…) => {…}` — no module-level `function` (structure-and-naming §5).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        },
+        {
+          "rule": "starci-fe/require-export-jsdoc",
+          "line": 144,
+          "column": 14,
+          "message": "Add JSDoc `/** … */` for export `config` — role / what it does (comments §3).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 9,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 6,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 7,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 7,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 7,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 7,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/layout.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 36,
+          "column": 2,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/not-found.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/not-found.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/prefer-arrow-export",
+          "line": 16,
+          "column": 25,
+          "message": "Use an arrow const `const NotFound = (…) => {…}` — no module-level `function` (structure-and-naming §5).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/privacy/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/privacy/page.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 16,
+          "column": 2,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/profile/[username]/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/profile/[username]/layout.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 10,
+          "column": 29,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/profile/settings/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/profile/settings/layout.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 8,
+          "column": 29,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/[locale]/terms/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/terms/page.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 16,
+          "column": 2,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/layout.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/require-export-jsdoc",
+          "line": 6,
+          "column": 14,
+          "message": "Add JSDoc `/** … */` for export `metadata` — role / what it does (comments §3).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/components/providers/HeroUIProvider.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/HeroUIProvider.tsx",
+      "twin": ".storybook/components/providers/HeroUIProvider.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/require-export-jsdoc",
+          "line": 5,
+          "column": 14,
+          "message": "Add JSDoc `/** … */` for export `HeroUIProvider` — role / what it does (comments §3).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/components/providers/NextThemesProvider.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/NextThemesProvider.tsx",
+      "twin": ".storybook/components/providers/NextThemesProvider.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/require-export-jsdoc",
+          "line": 13,
+          "column": 14,
+          "message": "Add JSDoc `/** … */` for export `NextThemesProvider` — role / what it does (comments §3).",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/components/providers/PlaygroundSessionProvider/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/PlaygroundSessionProvider/index.tsx",
+      "twin": ".storybook/components/providers/PlaygroundSessionProvider/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 102,
+          "column": 55,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/components/providers/SwrProvider.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/SwrProvider.tsx",
+      "twin": ".storybook/components/providers/SwrProvider.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 13,
+          "column": 41,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/config/seo.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/config/seo.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 24,
+          "column": 9,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/hooks/effects/useAccentOverride.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/useAccentOverride.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 37,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/hooks/effects/useDefaultRedirect.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/useDefaultRedirect.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 7,
+          "column": 1,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    },
+    {
+      "path": "src/hooks/effects/UseEffects.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/UseEffects.tsx",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe-mechanical": 1
+      },
+      "candidateRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-vietnamese-in-source-authoring",
+          "line": 30,
+          "column": 5,
+          "message": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)",
+          "severity": 1,
+          "classification": "safe-mechanical"
+        }
+      ],
+      "authoringOnly": true
+    }
+  ],
+  "note": "Only documentation/export/authoring debt allowed in this partition",
+  "allowedRules": [
+    "starci-fe/require-export-jsdoc",
+    "starci-fe/prefer-arrow-export",
+    "starci-fe/handler-on-prefix",
+    "starci-fe/no-inline-parameter-type",
+    "starci-fe/no-emoji-in-source",
+    "starci-fe/no-vietnamese-in-source-authoring",
+    "starci-fe/export-matches-folder",
+    "starci-fe/no-runtime-namespace"
+  ]
+}

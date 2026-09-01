@@ -1,0 +1,209 @@
+{
+  "batch": "B32",
+  "worker": "agent-2-frames",
+  "checkpoint": "9e86cbdf",
+  "branch": "mtp",
+  "status": "done",
+  "manifest": [
+    ".storybook/components/frames/Cluster/Cluster.tsx",
+    ".storybook/components/frames/Container/Container.tsx",
+    ".storybook/components/frames/Flex/Flex.tsx",
+    ".storybook/components/frames/Grid/Grid.tsx",
+    ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+    ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+    ".storybook/components/frames/Stage/Stage.tsx",
+    "src/components/frames/Cluster/index.tsx",
+    "src/components/frames/Container/index.tsx",
+    "src/components/frames/Flex/index.tsx",
+    "src/components/frames/Grid/index.tsx",
+    "src/components/frames/PinnedTrack/index.tsx",
+    "src/components/frames/ResponsiveCluster/index.tsx",
+    "src/components/frames/Stage/index.tsx",
+    ".storybook/components/frames/Stack/Stack.tsx",
+    "src/components/frames/Stack/index.tsx"
+  ],
+  "clustersOwned": {
+    "before": 37,
+    "after": 21,
+    "closed": 16,
+    "rule": "starci-fe/no-public-classname-prop"
+  },
+  "changed": [
+    ".storybook/components/frames/Grid/Grid.tsx",
+    ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+    ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+    ".storybook/components/frames/Stage/Stage.tsx",
+    "src/components/frames/Grid/index.tsx",
+    "src/components/frames/PinnedTrack/index.tsx",
+    "src/components/frames/ResponsiveCluster/index.tsx",
+    "src/components/frames/Stage/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": ".storybook/components/frames/Grid/Grid.tsx",
+      "action": "delete-dead-classNames-door",
+      "classification": "applied",
+      "proof": "zero open-tag classNames consumers outside frames/"
+    },
+    {
+      "file": "src/components/frames/Grid/index.tsx",
+      "action": "delete-dead-classNames-door",
+      "classification": "applied",
+      "parity": "SB twin"
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "action": "delete-dead-classNames-door",
+      "classification": "applied",
+      "proof": "InnerLayout no longer passes classNames; zero remaining consumers"
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "action": "delete-dead-classNames-door",
+      "classification": "applied",
+      "parity": "SB twin"
+    },
+    {
+      "file": ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+      "action": "delete-dead-classNames-door",
+      "classification": "applied",
+      "proof": "zero open-tag classNames consumers"
+    },
+    {
+      "file": "src/components/frames/ResponsiveCluster/index.tsx",
+      "action": "delete-dead-classNames-door",
+      "classification": "applied",
+      "parity": "SB twin"
+    },
+    {
+      "file": ".storybook/components/frames/Stage/Stage.tsx",
+      "action": "delete-dead-classNames-door; remove-unused-public-principle-explain-on-named-frame",
+      "classification": "applied",
+      "proof": "zero classNames and zero principle/explain consumers; named fill+slots contract is intrinsic"
+    },
+    {
+      "file": "src/components/frames/Stage/index.tsx",
+      "action": "delete-dead-classNames-door; remove-unused-public-principle-explain-on-named-frame",
+      "classification": "applied",
+      "parity": "SB twin"
+    }
+  ],
+  "skipped": [
+    {
+      "file": ".storybook/components/frames/Cluster/Cluster.tsx",
+      "reason": "live-api classNames consumers outside manifest"
+    },
+    {
+      "file": "src/components/frames/Cluster/index.tsx",
+      "reason": "live-api classNames consumers outside manifest"
+    },
+    {
+      "file": ".storybook/components/frames/Container/Container.tsx",
+      "reason": "live-api classNames consumer ProfileCodingProblemPage outside manifest"
+    },
+    {
+      "file": "src/components/frames/Container/index.tsx",
+      "reason": "live-api classNames consumer outside manifest"
+    },
+    {
+      "file": ".storybook/components/frames/Flex/Flex.tsx",
+      "reason": "internal forwarding path for Stack.classNames live-api; renaming would invent a CSS door"
+    },
+    {
+      "file": "src/components/frames/Flex/index.tsx",
+      "reason": "Stack classNames forwarding live-api"
+    },
+    {
+      "file": ".storybook/components/frames/Stack/Stack.tsx",
+      "reason": "live-api classNames (≥40 StackV / ≥17 StackH open-tag consumers)"
+    },
+    {
+      "file": "src/components/frames/Stack/index.tsx",
+      "reason": "live-api classNames consumers outside manifest"
+    }
+  ],
+  "holds": [
+    {
+      "id": "stack-cluster-container-classNames-live-api",
+      "items": [
+        "StackV/StackH.classNames",
+        "Flex.classNames (Stack forwarder)",
+        "Cluster.classNames",
+        "Container.classNames"
+      ],
+      "reason": "Proven live open-tag consumers remain outside this worker's file partition. Deleting the door would break tsc at those call sites; migrating them requires semantic fill/shrink owners not inventable from raw CSS alone.",
+      "next": "Consumer workers migrate min-w-0/flex-1/shrink-0/w-full placement onto FillAvailable or finite named contracts with ≥2 consumers, then burn the doors."
+    },
+    {
+      "id": "pinnedtrack-public-principle",
+      "item": "PinnedTrack.principle / explain",
+      "reason": "PinnedTrack is a named frame (pin+fill+landmark), but InnerLayout still passes principle=\"layout-split\" + explain. Removing the public prop without editing InnerLayout (out of manifest) breaks the shell.",
+      "next": "Teacher/shell worker: drop caller principle on InnerLayout; optionally hard-encode layout-split intrinsically on PinnedTrack or leave unnamed (structure already owned by the named frame)."
+    },
+    {
+      "id": "generic-gap-padding-align-justify",
+      "items": [
+        "Stack/Flex/Grid/Cluster/Container/ResponsiveCluster gap|padding|align|justify"
+      ],
+      "reason": "Generic frames keep singular principle XOR gap/padding/align/justify. Dual public CSS doors are already suppressed when principle owns layout. Not inventing tokens; not collapsing the typed scale.",
+      "next": "Continue require-frame-self-declare at call sites (other agents); widen no-public-frame-css-props only after live dual-pass sites reach zero."
+    }
+  ],
+  "proposals": [
+    {
+      "title": "Fill/shrink placement contract for Stack classNames values",
+      "valuesSeen": ["min-w-0", "flex-1", "shrink-0", "w-full", "min-h-0"],
+      "note": "Dominant live Stack/Cluster classNames payloads are flex participation, not appearance. FillAvailable already covers some flex-1 cases; a shrink-0 / min-w-0 peer contract needs ≥2 consumers and teacher naming before registration. Do not invent tokens from raw CSS alone."
+    },
+    {
+      "title": "PinnedTrack intrinsic named-frame identity",
+      "note": "After InnerLayout stops passing principle, remove PinnedTrack.principle/explain to match Stage named-frame law."
+    },
+    {
+      "title": "PinnedTrack story doc stale classNames mention",
+      "path": ".storybook/stories/frames/PinnedTrack/PinnedTrack.stories.tsx",
+      "note": "Comment still lists classNames; story file outside this manifest — leave for story parity worker."
+    }
+  ],
+  "evidence": {
+    "eslintBefore": {
+      "warnings": 37,
+      "byRule": { "starci-fe/no-public-classname-prop": 37 }
+    },
+    "eslintAfter": {
+      "warnings": 21,
+      "byRule": { "starci-fe/no-public-classname-prop": 21 },
+      "zeroWarnChangedFiles": true
+    },
+    "consumerProof": {
+      "Grid.classNames": 0,
+      "PinnedTrack.classNames": 0,
+      "ResponsiveCluster.classNames": 0,
+      "Stage.classNames": 0,
+      "Stage.principle": 0,
+      "Cluster.classNames": 2,
+      "Container.classNames": 1,
+      "StackV.classNames": 41,
+      "StackH.classNames": 17,
+      "Flex.classNamesDirect": 0
+    },
+    "requireFrameSelfDeclare": "No call-site self-declare clusters in this manifest (definition files only). Stage named-frame cleanup removed unused public principle without inventing a substitute token.",
+    "namedFrameContracts": {
+      "Stage": "fill + canvas/topCenter/bottomStart/bottomEnd intrinsic; classNames+principle+explain removed",
+      "PinnedTrack": "pinned/body/landmark intrinsic; classNames removed; principle held for InnerLayout"
+    }
+  },
+  "parity": {
+    "storybookSrc": "SB edited first; src twins mirrored. Remaining twin diffs are import alias only (@sb-components vs @/).",
+    "stories": "Stage/Grid/ResponsiveCluster stories do not pass removed props. PinnedTrack story comment still mentions classNames (out of manifest)."
+  },
+  "verification": {
+    "eslintMaxWarnings0Changed": "pass",
+    "eslintManifestRemaining": 21,
+    "gitDiffCheck": "pass",
+    "tsc": "pre-existing errors only in ProfileHero (unrelated agent file); no errors referencing touched frames"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — only agent-2-frames manifest files edited",
+  "summary": "Closed 16 dead classNames clusters on Grid/PinnedTrack/ResponsiveCluster/Stage (SB+src). Stage also dropped unused named-frame principle/explain. Held Stack/Flex/Cluster/Container classNames and PinnedTrack.principle for proven live consumers outside the partition."
+}

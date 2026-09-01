@@ -1,0 +1,109 @@
+{
+  "batch": 29,
+  "title": "Fill, media, and markdown contract closure",
+  "committed": false,
+  "checkpoint": "e6066358",
+  "generatedAt": "2026-08-07T17:38:27.272Z",
+  "workers": 8,
+  "overlapResult": "pass",
+  "overlaps": [],
+  "inventory": {
+    "rule": "starci-fe/no-public-classname-prop",
+    "before": {
+      "hits": 1573,
+      "files": 575
+    },
+    "after": {
+      "hits": 1536,
+      "files": 562
+    },
+    "delta": {
+      "hits": -37,
+      "files": -13
+    }
+  },
+  "primary": {
+    "fillAvailable": {
+      "token": "flex-fill",
+      "frame": "FillAvailable",
+      "at": {
+        "lg": "min-h-0 @app-lg:flex-1"
+      },
+      "note": "Mapped to proven consumer string (not @app-lg:min-h-0 @app-lg:flex-1)",
+      "migrated": [
+        "ContentMap",
+        "LeaderboardCategoryRail",
+        "MilestoneOutline",
+        "ArchitectureRail",
+        "PracticeRail"
+      ]
+    },
+    "videoRenderer": {
+      "doorsRemoved": [
+        "VideoRenderer.className",
+        "VideoRenderer.classNames",
+        "MpegDash.className",
+        "Standard.className",
+        "Youtube.className"
+      ]
+    },
+    "markdown": {
+      "doorsRemoved": [
+        "SB/src CodeToHtml.classNames",
+        "SB/src MermaidDiagram.classNames",
+        "blocks CodeToHtml.className",
+        "blocks MermaidDiagram.className (connected+presentational)"
+      ],
+      "spacingOwner": "MarkdownContent map private blockMy wrapper div"
+    }
+  },
+  "secondary": {
+    "applied": [],
+    "held": [
+      "SectionCard",
+      "TierCardBase",
+      "LeaderboardListCard",
+      "LabeledList",
+      "ListRow",
+      "SidebarNavItem",
+      "TabsCard",
+      "ButtonGroup"
+    ]
+  },
+  "changedFiles": [
+    ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    ".storybook/components/frames/_principle-style.ts",
+    ".storybook/components/frames/_principles.ts",
+    ".storybook/test-runner/patterns.mjs",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+    "src/components/blocks/media/VideoRenderer/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/map.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/frames/_principle-style.ts",
+    "src/components/frames/_principles.ts",
+    "src/components/layouts/LearnShellLayout/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+    "src/components/pages/PracticeHubPage/index.tsx"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "eslintQuietChanged": "pass",
+    "pluginTests": "pass",
+    "storybookContractTests": "pass",
+    "auditFe": "pass (29 teacher holds; 0 undocumented seams; ATOM-5 ModalBody fixed)"
+  },
+  "regressions": [],
+  "note": "Proposals are not fixes"
+}

@@ -1,0 +1,357 @@
+{
+  "batch": "B33",
+  "agent": "agent-4-stack-flex-cluster",
+  "checkpoint": "139391b6",
+  "branch": "mtp",
+  "status": "partial",
+  "committed": false,
+  "manifest": {
+    "key": "agent-4-stack-flex-cluster",
+    "focus": "Stack/Flex/Cluster consumer chains",
+    "clusterIds": [],
+    "fileCount": 45,
+    "source": ".artifacts/fe-refactor-audit/2026-08-10-b33-manifests.json"
+  },
+  "clusterIds": [],
+  "consumersScanned": 45,
+  "consumersMigrated": [
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "actions": [
+        "Removed dead public classNames API (no live consumers)",
+        "Named StackV principle=sibling-stack for gap-3 preview|code peers"
+      ]
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "actions": [
+        "Mirrored SB: drop classNames API; principle=sibling-stack"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+      "actions": [
+        "Removed unused public classNames API",
+        "Dropped principle-owned gap/justify/classNames escapes on StackH flex-action"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/NavLinks/index.tsx",
+      "actions": [
+        "Mirrored SB NavLinks classNames/escape burn"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "actions": [
+        "Replaced exact min-w-0 flex-1 search wrapper with FillAvailable at=base",
+        "Named outer StackV sibling-stack; dropped principle-owned gap on flex-action row"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "actions": [
+        "Replaced exact min-w-0 flex-1 content column with FillAvailable at=base",
+        "Dropped dead sibling-stack gap/align/justify/classNames escapes"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "actions": [
+        "Guide pane: FillAvailable at=base around page-pad StackV (was dead min-w-0 flex-1 under principle)",
+        "Dropped principle-owned page-pad gap/padding/classNames escapes"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "actions": [
+        "Outer StackH → principle=content-row",
+        "Body slot → FillAvailable at=base",
+        "Dropped dead flex-action classNames shrink-0"
+      ]
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/index.tsx",
+      "actions": [
+        "Wrapped page StackV in FillAvailable at=base",
+        "Removed dead classNames={min-w-0,flex-1} under block-boundary"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "actions": [
+        "Name/handle column → FillAvailable at=base",
+        "Dropped dead content-row/name-handle classNames min-w-0 escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "actions": [
+        "flex-action + justify=between → flex-action-between (singular principle)",
+        "Identity row → FillAvailable at=base for truncate",
+        "Dropped dead Stack classNames/gap/align/justify escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "actions": [
+        "Mirrored ComponentCard flex-action-between naming; stripped principle-owned escapes"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "actions": [
+        "Dropped principle-owned gap/align on icon-text StackH"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "actions": [
+        "Dropped principle-owned sibling-stack gap/align/justify/classNames escapes"
+      ]
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "actions": [
+        "Mirrored SB MermaidDiagram escape strip"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "actions": [
+        "Dropped principle-owned sibling-stack/page-pad gap/align/justify/classNames escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "actions": [
+        "Mirrored SB MindMapPage escape strip (src already had FillAvailable canvas)"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+      "actions": [
+        "Dropped principle-owned page-pad gap/padding escapes"
+      ]
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLockedState/index.tsx",
+      "actions": [
+        "Dropped principle-owned block-boundary gap/padding escapes"
+      ]
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "actions": [
+        "Dropped principle-owned cell-pad gap/padding escapes"
+      ]
+    },
+    {
+      "file": "src/components/composites/navigation/Toolbar/index.tsx",
+      "actions": [
+        "Dropped principle-owned content-row justify escape (justify was already ignored under principle)"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "actions": [
+        "Dropped principle-owned Stack gap/align/justify escapes; Cluster gap retained"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "actions": [
+        "Dropped principle-owned Stack gap escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+      "actions": [
+        "Dropped principle-owned content-row align escape"
+      ]
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "actions": [
+        "Dropped principle-owned Stack gap escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "actions": [
+        "Dropped principle-owned Stack gap escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "actions": [
+        "Dropped principle-owned identity align/gap escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "actions": [
+        "Dropped principle-owned layout-split/block-boundary gap escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "actions": [
+        "Dropped principle-owned block-boundary/name-handle gap/justify escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/index.tsx",
+      "actions": [
+        "Dropped principle-owned block-boundary gap escape"
+      ]
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "actions": [
+        "Dropped principle-owned Stack gap escapes across skeleton rows"
+      ]
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "actions": [
+        "Dropped principle-owned layout-split/block-boundary gap escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "actions": [
+        "Dropped principle-owned block-boundary/value-row/content-row gap/align escapes"
+      ]
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "actions": [
+        "Dropped principle-owned Stack gap/align escapes; Cluster gap retained"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "actions": [
+        "Dropped principle-owned block-boundary gap escape"
+      ]
+    }
+  ],
+  "sharedApiRemovedOrRetained": {
+    "Flex.classNames": {
+      "decision": "retained",
+      "reason": "Forbidden nivo consumers still pass Stack/Flex classNames (e.g. AgentOsConsole min-w-0 flex-1, ExpertSiteHeader min-w-0/shrink-0). Shared frame API stays."
+    },
+    "Container.classNames": {
+      "decision": "retained",
+      "reason": "Same forbidden-consumer constraint; not burned in this agent."
+    },
+    "StackH/StackV.classNames": {
+      "decision": "retained-on-frame",
+      "reason": "Frame prop remains for forbidden consumers; StarCi call sites migrated away where exact."
+    },
+    "NavLinks.classNames": {
+      "decision": "removed",
+      "reason": "No live consumers passed classNames; prop was only forwarded into a principle-owned StackH (ignored at runtime)."
+    },
+    "CodePreviewTabs.classNames": {
+      "decision": "removed",
+      "reason": "TabsBlock consumers never passed classNames."
+    }
+  },
+  "beforeAfterMessages": {
+    "scope": "edited agent-4 files (eslint json before vs final)",
+    "total": { "before": 216, "after": 158, "delta": -58 },
+    "stackClassNamesPassThrough": { "before": 9, "after": 1, "delta": -8 },
+    "errors": { "before": 0, "after": 0 },
+    "artifacts": {
+      "before": ".artifacts/fe-refactor-audit/_b33-a4-eslint.json",
+      "after": ".artifacts/fe-refactor-audit/_b33-a4-eslint-final.json"
+    },
+    "note": "Remaining warnings on touched files are pre-existing host/identity/heroui/skeleton/page-folder debt, not introduced Stack classNames doors."
+  },
+  "closedClusters": [],
+  "partialClusters": [],
+  "holds": [
+    {
+      "file": "src/components/composites/navigation/Toolbar/index.tsx",
+      "site": "leftGroup StackH classNames=[\"min-w-0\"]",
+      "reason": "min-w-0 alone is not exact FillAvailable (base=min-w-0 flex-1, lg=min-h-0 @app-lg:flex-1). gap={2} has no singular named principle for tabs+end cluster without inventing. Retained classNames."
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "site": "workspace StackV classNames=[\"min-h-0\",\"flex-1\"]",
+      "reason": "min-h-0 flex-1 (always) is not exact FillAvailable mapping. No principle invented. Held."
+    },
+    {
+      "file": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+      "site": "main className=min-w-0 flex-1",
+      "reason": "Exact flex-fill classes sit on landmark <main>; FillAvailable renders a div and would drop the landmark. Src twin owned by agent-5. Held."
+    },
+    {
+      "file": "src/components/frames/Flex/index.tsx",
+      "site": "public classNames prop",
+      "reason": "Shared API retained for forbidden nivo consumers."
+    },
+    {
+      "file": "src/components/frames/Container/index.tsx",
+      "site": "public classNames prop",
+      "reason": "Shared API retained; Container not the Stack focus but listed in manifest — no StarCi Stack burn applied here."
+    },
+    {
+      "files": [
+        "src/components/atoms/display/ThreadConnector/index.tsx",
+        "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+        "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+        ".storybook/components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+        "src/components/pages/FlashcardsPage/index.tsx",
+        ".storybook/components/starci/pages/LeaderboardPage/LeaderboardPage.tsx"
+      ],
+      "reason": "Scanned; no Stack/Flex/Cluster classNames pass-through and no safe exact-principle/FillAvailable migration without inventing vocabulary. Left untouched or gap-only held."
+    }
+  ],
+  "forbiddenConsumers": {
+    "edited": false,
+    "paths": [
+      ".storybook/components/nivo/**",
+      ".storybook/components/nivoexpert/**",
+      ".storybook/components/mia-mia/**",
+      "src/components/nivo/**",
+      "src/components/nivoexpert/**"
+    ],
+    "evidence": "nivo still passes Stack/Flex classNames (AgentOsConsole, ExpertSiteHeader, ChannelList, etc.). Frame classNames API retained because of them."
+  },
+  "parity": {
+    "NavLinks": "sb+src mirrored",
+    "CodePreviewTabs": "sb+src mirrored",
+    "MermaidDiagram": "sb+src mirrored escape strip",
+    "MindMapPage": "sb+src escape strip; src canvas already FillAvailable",
+    "MindMapRail": "SB FillAvailable migrated; src MindMapRail not in this manifest (already FillAvailable at checkpoint)",
+    "LearnShell": "SB only in manifest; src LearnShellLayout not owned here",
+    "PublicProfileLayout": "SB held (main landmark); src owned by agent-5"
+  },
+  "tests": {
+    "eslintEditedChunk": {
+      "command": "npx eslint -f json (agent-4 edited set)",
+      "errors": 0,
+      "stackClassNamesPassThrough": "9→1",
+      "totalMessagesOnEditedSet": "216→158"
+    },
+    "tsc": {
+      "command": "npx tsc --noEmit",
+      "note": "Repo may have unrelated peer errors; no PressableCard/NavLinks/CodePreviewTabs/ProfileOverview/ComponentCard/MindMapRail/LearnShell/TabTrigger diagnostics in filtered tsc output."
+    },
+    "gitDiffCheck": "pass on sampled key diffs"
+  },
+  "regressions": {
+    "introducedStackClassNamesDoors": 0,
+    "inventedPrinciples": 0,
+    "forbiddenPathEdits": 0,
+    "decisionLedgerEdits": 0,
+    "claudeMdEdits": 0,
+    "clusterGapStrippedIncorrectly": false,
+    "note": "Early strip script briefly over-matched nested principles; restored and re-applied attribute-scoped strips. Cluster gap={3} retained wherever principle=chip-row."
+  },
+  "summary": "Burned StarCi Stack classNames/principle-owned escapes across 35 files. FillAvailable at=base used only for exact min-w-0 flex-1. Shared Flex/Stack classNames API retained for nivo. Two non-exact Stack classNames sites held (Toolbar min-w-0; PlaygroundSession min-h-0 flex-1)."
+}

@@ -1,0 +1,317 @@
+{
+  "batch": "B40",
+  "worker": "w06-src-blocks-navigation",
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w06-src-blocks-navigation.json",
+  "status": "complete",
+  "completedAt": "2026-08-09T19:20:00.000Z",
+  "ownsCount": 36,
+  "baseline": {
+    "eslintMessages": 255,
+    "safeRuleMessages": 55,
+    "safeRulesPresent": [
+      "starci-fe/require-identity-root",
+      "starci-fe/require-frame-self-declare"
+    ],
+    "safeRulesAbsent": [
+      "starci-fe/require-export-jsdoc",
+      "starci-fe/no-inline-parameter-type",
+      "starci-fe/handler-on-prefix",
+      "starci-fe/prefer-arrow-export",
+      "starci-fe/no-vietnamese-in-source-authoring",
+      "starci-fe/no-emoji-in-source"
+    ]
+  },
+  "counts": {
+    "applied": 2,
+    "hold": 18,
+    "vendor": 13,
+    "locked": 14,
+    "ambiguous": 1,
+    "changedFiles": 2,
+    "findingsBurned": 3,
+    "note": "locked/vendor may overlap the same page-folder files; applied+hold+vendor+ambiguous unique owns ≈ 34 (+locked cluster refs)"
+  },
+  "applied": [
+    {
+      "classification": "applied",
+      "file": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "fix": "Stamped identity={{ tier: \"block\", component: \"ConsultantDirectoryCompanySearch\" }} on proven SearchAutocomplete root (atom already accepts CallerIdentity).",
+      "eslint": "pass --max-warnings=0"
+    },
+    {
+      "classification": "applied",
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "fix": "Removed empty <div className={''}> host; stamped identity on existing Box root (center-measure principle already present).",
+      "eslint": "pass --max-warnings=0"
+    }
+  ],
+  "hold": [
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "proof": "Sole root is TabsExtended atom; TabsExtended does not accept CallerIdentity. No wrapper invent; remount would be false identity."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "proof": "region+aria-label host wraps AsyncContent. Stamping identity on AsyncContent alone leaves host; removing host drops landmark (a11y out of scope). Zero-warn ratchet blocks partial edit."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "proof": "Roots on composites/layout/Page PageHeader (no identity forward) inside host divs. blocks/layout/PageHeader accepts identity but lacks isSkeleton parity — migration not exact."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "proof": "Identity already on root StackV. Remaining: undeclared StackV principles, w-28 Image host (Avatar lg is size-12 ≠ w-28), Typography classNames skeleton door. Partial principle/classname burn cannot reach --max-warnings=0."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/pages/BlogListPage/component.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "proof": "Container already has identity. Undeclared StackV/Flex/Container principles plus Skeleton/Typography classNames in co-located skeleton mirrors. Skeleton redesign forbidden; classname burn incomplete without it."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/pages/JobDetailPage/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-inline-skeleton-branch",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "proof": "Container can take identity + principles, but inline skeleton branches and classNames remain; skeleton redesign forbidden."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-frame-fragment-item",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "proof": "Frame-self-declare reachable in isolation; blocked by skeleton/classname/fragment debt under zero-warn ratchet."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "proof": "Host/cn/classname/heroui cluster; no safe path to zero warnings inside owns."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "proof": "Host/raw-shape/cn/classname/heroui cluster; zero-warn unreachable with allowed burns."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/Pagination/component.tsx",
+      "proof": "Host/cn/classname/heroui cluster."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "proof": "Host/raw-shape/cn/classname/heroui cluster."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "proof": "Host/raw-shape/cn/classname/heroui cluster."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "proof": "Host/raw-shape/cn/classname/heroui cluster."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "proof": "Host/raw-shape/cn/classname/heroui cluster."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/pages/OauthRedirectPage/index.tsx",
+      "proof": "Host/raw-shape + heroui; no identity-capable root without new vocabulary."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "proof": "Exact twin of atoms/navigation/Tabs/TabsExtended exists, but TabsExtended also lacks CallerIdentity. Collapse clears heroui/cn only; identity remains → zero-warn fail. Cannot edit atom outside owns."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "proof": "Raw button host + cn + heroui; identity has no proven frame root."
+    },
+    {
+      "classification": "hold",
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "proof": "button host + cn + heroui + frame-fragment; zero-warn unreachable."
+    }
+  ],
+  "vendor": [
+    {
+      "classification": "vendor",
+      "file": "src/components/blocks/navigation/BackLink/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "proof": "HeroUI Link root. LinkBack atom exists but API/visual not exact (gap/icon scale) and LinkBack lacks CallerIdentity. Vendor hold."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "proof": "HeroUI + host/raw-shape."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "proof": "HeroUI Accordion root + cn."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "proof": "HeroUI Link + classname/cn doors."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "proof": "HeroUI + host/cn; also page-folder locked."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "proof": "HeroUI import remains; Box needs principle but page-folder locks zero-warn."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "proof": "HeroUI + retired-async/parallel-skeleton + page-folder."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "proof": "HeroUI + retired-async/parallel-skeleton + host/classname."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "proof": "HeroUI + retired-async/parallel-skeleton + classname; page-folder locked."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "proof": "HeroUI + skeleton/host/raw; page-folder locked."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "proof": "AsyncContent can take identity but HeroUI/skeleton/page-folder remain."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "proof": "AsyncContent can take identity but HeroUI/skeleton/page-folder remain."
+    },
+    {
+      "classification": "vendor",
+      "file": "src/components/pages/SessionsPage/index.tsx",
+      "proof": "StackH can take identity but HeroUI/skeleton/host/classname remain."
+    }
+  ],
+  "locked": [
+    {
+      "classification": "locked",
+      "rule": "starci-fe/page-folder-two-files-only",
+      "files": [
+        "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+        "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+        "src/components/pages/BlogListPage/Masthead/index.tsx",
+        "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+        "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx"
+      ],
+      "proof": "Page-folder moves forbidden in B40 safe-burn."
+    },
+    {
+      "classification": "locked",
+      "rule": "skeleton-family",
+      "files": [
+        "src/components/pages/JobDetailPage/component.tsx",
+        "src/components/composites/layout/Page/index.tsx",
+        "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+        "src/components/pages/LearningHistoryPage/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+        "src/components/pages/SessionsPage/index.tsx",
+        "src/components/pages/BlogListPage/component.tsx"
+      ],
+      "proof": "no-inline-skeleton-branch / no-parallel-skeleton / no-retired-async-content — skeleton redesign forbidden."
+    },
+    {
+      "classification": "locked",
+      "files": [
+        "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+        "src/components/pages/BlogListPage/StartHereAnchor/index.tsx"
+      ],
+      "proof": "Root is i18n Link with className chrome; no identity-capable vocabulary root. Combined with page-folder lock."
+    },
+    {
+      "classification": "locked",
+      "file": "src/components/pages/BlogListPage/Masthead/index.tsx",
+      "proof": "ArchitectureScene root + dynamic loading host div + page-folder lock."
+    }
+  ],
+  "ambiguous": [
+    {
+      "classification": "ambiguous",
+      "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "note": "Block is near-exact duplicate of TabsExtended atom. Collapse is allowed as existing vocabulary migration, but identity still fails until atom gains CallerIdentity (out of owns). Counted primarily under hold; listed here for coordinator follow-up."
+    }
+  ],
+  "changed": [
+    "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+    "src/components/pages/RewardsPage/index.tsx"
+  ],
+  "gates": {
+    "eslintTouched": "pass --max-warnings=0 on both changed files",
+    "gitDiffCheck": "pass",
+    "committed": false
+  },
+  "committed": false
+}

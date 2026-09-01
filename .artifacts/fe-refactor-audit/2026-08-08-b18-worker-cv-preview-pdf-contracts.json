@@ -1,0 +1,62 @@
+{
+  "partition": "cv-preview-pdf-contracts",
+  "consumers": {
+    "ModalShell.containerClassName": [
+      {
+        "path": "src/components/overlays/modals/CvPreviewModal/component.tsx",
+        "line": 44,
+        "class": "h-[92vh] w-[96vw] max-w-[96vw]"
+      }
+    ],
+    "PDFView.heightClassName": [
+      {
+        "path": "src/components/overlays/modals/CvPreviewModal/component.tsx",
+        "line": 51,
+        "class": "h-[84vh]",
+        "kind": "product"
+      },
+      {
+        "path": ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+        "classes": ["h-[200px]", "h-[320px]", "h-[420px]", "h-[400px]", "h-[200px]"],
+        "kind": "story"
+      }
+    ],
+    "PDFView.default": "h-[560px]"
+  },
+  "currentSemantics": {
+    "containerClassName": "Near-fullscreen preview frame ≈92vh×96vw — not HeroUI cover/full",
+    "heightClassName": "Viewer canvas height — open pixel set + one vh"
+  },
+  "proposedContract": {
+    "viewportFit": {
+      "value": "near-fullscreen",
+      "bakes": "h-[92vh] w-[96vw] max-w-[96vw]",
+      "notEquivalent": {
+        "cover": "h-full min-h-full w-full keeps radius/shadow — different margins",
+        "full": "fill + rounded-none shadow-none container p-0 — not 92vh×96vw"
+      },
+      "requiresTeacherApproval": true
+    },
+    "PDFView.height": {
+      "proposal": "Hold until product locks closed scale. Future heightFit:\"modal-body\"→h-[84vh] + optional heightPx for demos — do NOT invent sm|md|lg now",
+      "requiresTeacherApproval": true
+    }
+  },
+  "existingCanonEvidence": {
+    "ModalShell.size": "HeroUI xs|sm|md|lg|cover|full only",
+    "overlay-and-feedback.md": "scroll=inside owns max-h-[85vh] — different concern; no near-fullscreen token",
+    "styling-tailwind.md": "allows arbitrary [Npx] for media/canvas; no PDF height enum"
+  },
+  "storybookSrcParity": {
+    "containerClassName": "compatible — both twins declare; only CvPreview uses",
+    "heightClassName": "compatible — SB+src+block twins; default aligned"
+  },
+  "implementationReady": false,
+  "implementationReadyReason": "Gate #3/#4 fail — viewportFit is a new API; PDF heights remain open arbitrary values with no canon enum.",
+  "changed": [],
+  "holds": [
+    "CvPreview-containerClassName-live",
+    "PDFView-heightClassName-open-set"
+  ],
+  "regressions": []
+}

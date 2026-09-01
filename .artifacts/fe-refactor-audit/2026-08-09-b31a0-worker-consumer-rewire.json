@@ -1,0 +1,20 @@
+{
+  "changed": [],
+  "retracted": [],
+  "holds": [
+    "await A+B unblock"
+  ],
+  "publicDoors": [],
+  "skeletonParity": "n/a",
+  "storybookParity": "n/a",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "consumerEvidence": [],
+  "destinationDecision": "no rewires — no product moves",
+  "warningsBefore": {},
+  "warningsAfter": null
+}

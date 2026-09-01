@@ -1,0 +1,138 @@
+{
+  "batch": "31f",
+  "date": "2026-08-09",
+  "worker": "sb-blocks-learn-a",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "contract": ".claude/fe/contracts/frame-items.md",
+  "fixedCount": 18,
+  "heldCount": 0,
+  "heldSiblingCount": 0,
+  "fragFindingsClosed": 38,
+  "classification": {
+    "peer-items": 18,
+    "nested-relationship": 0,
+    "conditional-peers": 0,
+    "single-rendered-child": 0,
+    "hold": 0
+  },
+  "fixed": [
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      "frag": 3,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeHeader/ChallengeHeader.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentArticle/ContentArticle.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "frag": 3,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "frag": 4,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentReaction/ContentReaction.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "frag": 3,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "frag": 6,
+      "classification": "peer-items",
+      "eslint": "pass"
+    }
+  ],
+  "held": [],
+  "heldSiblings": [],
+  "verification": {
+    "eslintMaxWarnings0": {
+      "exitOk": true,
+      "filesChecked": 18,
+      "failed": []
+    }
+  },
+  "note": "All attempt-list files fixed via peer item factories and conditional spreads. Existing nested frames with principles preserved; no new principles introduced."
+}

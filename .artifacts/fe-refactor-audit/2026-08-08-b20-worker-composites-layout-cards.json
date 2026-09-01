@@ -1,0 +1,30 @@
+{
+  "partition": "composites-layout-cards",
+  "changed": [
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    "src/components/composites/layout/DrawerShell/index.tsx",
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    "src/components/composites/layout/ModalShell/index.tsx"
+  ],
+  "skipped": [
+    "SurfaceCard classNames/contentClassName — TILE_CHROME hold"
+  ],
+  "holds": [
+    "SB DrawerShell.contentClassName — nivoexpert LessonEditorPanel",
+    "SurfaceCard PressableGroup TILE_CHROME contentClassName"
+  ],
+  "evidence": [
+    "Zero <DrawerShell classNames=> / <ModalShell classNames=> callers",
+    "B19 contracts dialogWidth/footerVariant/viewportFit already present; verified consumers MiniCart/CvPreview"
+  ],
+  "newVariants": [],
+  "vendorBoundaries": [
+    "Internal className on DrawerDialog/Body/Footer and ModalContainer/Body/Footer — vendor mount; rule now exempts vendor-boundary imports"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "eslintMaxWarnings0": "pass on all four shell files",
+    "rule": "starci-fe/no-public-classname-prop clean on shells"
+  },
+  "regressions": []
+}

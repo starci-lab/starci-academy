@@ -1,0 +1,48 @@
+{
+  "manifest": [
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/lists/LabeledList/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx"
+  ],
+  "warningsBefore": {
+    "LeaderboardListCard": 11,
+    "LabeledList": 1,
+    "TopLearners": 6
+  },
+  "warningsAfter": {
+    "LeaderboardListCard": "retracted-to-checkpoint",
+    "LabeledList": 0,
+    "TopLearners": "retracted-to-checkpoint"
+  },
+  "introducedByB30": [
+    "LeaderboardListCard className door burn + B30b StackV",
+    "LabeledList className door burn + Stack frames",
+    "TopLearners className passthrough removal"
+  ],
+  "preExistingInTouchedFile": [
+    "Leaderboard: heroui/raw-shape/emoji",
+    "TopLearners: page-folder-two-files-only + Skeleton className"
+  ],
+  "fixed": [
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "action": "StackV sibling-stack flatten (label + rows + action); door stays closed; 0 warnings"
+    }
+  ],
+  "retractedB30Changes": [
+    "LeaderboardListCard door burn + B30b StackV shared content (zero-warn blocked by className door law + TopLearners page-folder + Box self-declare vs escape hatch)",
+    "TopLearners passthrough removal"
+  ],
+  "holds": [
+    "LeaderboardListCard.className restored (checkpoint)",
+    "B30b Leaderboard StackV repair retracted — cannot preserve under zero-warning ratchet without forbidden contracts"
+  ],
+  "parity": {
+    "LabeledList": "src-only"
+  },
+  "verification": {
+    "LabeledList": "eslint --max-warnings=0 pass"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

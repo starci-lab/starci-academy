@@ -1,0 +1,197 @@
+{
+  "generatedAt": "2026-08-06T22:21:29.746Z",
+  "batch": 11,
+  "title": "SAFE MASS-BURN ONLY",
+  "workers": {
+    "atoms": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 4,
+      "regressions": 0,
+      "verification": {
+        "note": "No safe-candidate files in manifest — worker skipped by coordinator"
+      }
+    },
+    "composites-frames": {
+      "changed": 0,
+      "skipped": 4,
+      "holds": 2,
+      "regressions": 0,
+      "verification": {
+        "note": "No source edits — all 4 safe candidates are per-part classname props with live consumers; unused per-part props already cleared in deferred BATCH",
+        "manifestFilesProcessed": 4,
+        "eslintFocusedChanged": {
+          "exitOk": true,
+          "errorCount": 0,
+          "files": [],
+          "skipped": true
+        }
+      }
+    },
+    "blocks-layout": {
+      "changed": 6,
+      "skipped": 0,
+      "holds": 40,
+      "regressions": 0,
+      "verification": {
+        "eslint": "npx eslint on 6 changed paths — target safe rules cleared (heroui/identity/vietnamese); remaining are held frame-self-declare / classname / unclear identity",
+        "note": "starci-fe rules are warnings; --quiet reports 0. Verified with non-quiet eslint JSON. No storybook twin for BadgeImage/HostPlatformChip/LessonVideoKindChip/SandpackPanel (twinExists false; only ConsultantProfileBody has starci SB twin). No commit."
+      }
+    },
+    "blocks-domain": {
+      "changed": 14,
+      "skipped": 0,
+      "holds": 40,
+      "regressions": 0,
+      "verification": {
+        "eslintQuiet": "pass",
+        "changedCount": 14,
+        "holdCount": 40,
+        "manifestFileCount": 40,
+        "note": "Manifest is src-only (no Storybook twins in cap). Burned clear identity handoffs + JSDoc/handler/unused per-part/mechanical types. Held product emoji, skeletons, vendor HeroUI compounds (non-identical atom APIs), cn-only redirects, and unclear div/SVG host roots. No commit."
+      }
+    },
+    "pages-learning-commerce": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 34,
+      "regressions": 0,
+      "verification": {
+        "note": "No source edits — all 34 safe-candidate files held (unclear hosts, skeletons, non-identical HeroUI APIs, page-folder, cn-above). No storybook twins in manifest. eslint --quiet not run (zero changed)."
+      }
+    },
+    "pages-profile-dashboard": {
+      "changed": 2,
+      "skipped": 1,
+      "holds": 193,
+      "regressions": 0,
+      "verification": {
+        "manifestFilesProcessed": 40,
+        "changedCount": 2,
+        "skippedCount": 1,
+        "holdsCount": 193,
+        "eslintFocusedChanged": {
+          "exitOk": true,
+          "errorCount": 0,
+          "files": [
+            "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+            "src/components/pages/ContactPage/ContactFaq/index.tsx"
+          ],
+          "command": "npx eslint --quiet <changed>"
+        },
+        "note": "Safe subset: identity on clear LabeledCard roots only. All HeroUI redirects held (non-identical atom APIs / cn-only / vendor compounds). Skeletons skipped. Page-folder / missing-both / classname / raw-shape / cn held."
+      }
+    },
+    "app-modules-utils": {
+      "changed": 50,
+      "skipped": 0,
+      "holds": 0,
+      "regressions": 0,
+      "verification": {
+        "eslintQuietExit": 0,
+        "eslintWarningsExit": 0,
+        "filesChecked": 50,
+        "allowedRuleHitsRemaining": 0,
+        "rulesBurned": [
+          "starci-fe/handler-on-prefix",
+          "starci-fe/no-emoji-in-source",
+          "starci-fe/no-vietnamese-in-source-authoring",
+          "starci-fe/require-export-jsdoc"
+        ],
+        "note": "Authoring/docs/export only. eslint (quiet + full warnings) clean on all 50 manifest files."
+      }
+    },
+    "storybook-only": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 2,
+      "regressions": 0,
+      "verification": {
+        "note": "No safe-candidate files in manifest — worker skipped by coordinator"
+      }
+    }
+  },
+  "totals": {
+    "changed": 72,
+    "skipped": 5,
+    "holds": 315,
+    "regressions": 0
+  },
+  "overlaps": [],
+  "uniqueChangedFiles": 72,
+  "twinParity": {
+    "softMismatches": 0,
+    "issues": []
+  },
+  "ruleDelta": {
+    "before": 4767,
+    "after": 4690,
+    "delta": -77,
+    "rows": [
+      {
+        "r": "starci-fe/no-vietnamese-in-source-authoring",
+        "b": 66,
+        "a": 36,
+        "d": -30
+      },
+      {
+        "r": "starci-fe/require-export-jsdoc",
+        "b": 70,
+        "a": 52,
+        "d": -18
+      },
+      {
+        "r": "starci-fe/require-identity-root",
+        "b": 637,
+        "a": 626,
+        "d": -11
+      },
+      {
+        "r": "starci-fe/handler-on-prefix",
+        "b": 11,
+        "a": 7,
+        "d": -4
+      },
+      {
+        "r": "starci-fe/no-heroui-outside-vocabulary",
+        "b": 513,
+        "a": 509,
+        "d": -4
+      },
+      {
+        "r": "starci-fe/no-cn-above-vocabulary",
+        "b": 604,
+        "a": 600,
+        "d": -4
+      },
+      {
+        "r": "starci-fe/no-per-part-classname-prop",
+        "b": 18,
+        "a": 15,
+        "d": -3
+      },
+      {
+        "r": "starci-fe/no-inline-parameter-type",
+        "b": 65,
+        "a": 63,
+        "d": -2
+      },
+      {
+        "r": "starci-fe/no-emoji-in-source",
+        "b": 61,
+        "a": 60,
+        "d": -1
+      }
+    ]
+  },
+  "verification": {
+    "tsc": true,
+    "eslintQuietChanged": true,
+    "eslintMaxWarningsChanged": "fails-on-preexisting-held-warnings-only",
+    "pluginTests": true,
+    "principleStyle": true,
+    "auditFe": true,
+    "teacherHolds": 27
+  },
+  "noCommit": true
+}

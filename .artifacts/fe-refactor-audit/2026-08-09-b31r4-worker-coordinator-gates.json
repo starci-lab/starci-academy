@@ -1,0 +1,21 @@
+{
+  "worker": "coordinator-gates",
+  "status": "done",
+  "gates": {
+    "tsc --noEmit": "pass",
+    "eslint --max-warnings=0 (changed TS/TSX/MJS)": "pass",
+    "plugins/eslint/public-contracts.test.mjs": "pass",
+    "plugins/eslint/sentence-tier.test.mjs": "pass",
+    "plugins/eslint/frame-items.test.mjs": "pass",
+    "plugins/eslint/namespaces.test.mjs": "pass",
+    "plugins/eslint/authoring.test.mjs": "pass",
+    "plugins/eslint/contentpage.test.mjs": "pass",
+    ".storybook/test-runner/principle-style.test.mjs": "pass",
+    ".storybook/test-runner/semantic-contracts.test.mjs": "pass",
+    "npm run audit:fe": "pass",
+    "git diff --check": "pass"
+  },
+  "overlap": "none — disjoint manifests held",
+  "holds": [],
+  "ledgerUpdated": "b31r4-list-density-and-base-fill-2026-08-09"
+}

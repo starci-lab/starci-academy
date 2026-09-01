@@ -1,0 +1,42 @@
+{
+  "partition": "css-door-ratchet-inventory",
+  "changed": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b23-css-door-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b23-css-door-inventory.md"
+  ],
+  "skipped": [
+    "eslint vendor allowlist unchanged",
+    "rule severity not raised to error"
+  ],
+  "holds": [
+    "live-api declarations block error-ratchet",
+    "locked + teacher-hold (nivo) trees excluded from mechanical burn"
+  ],
+  "evidence": [
+    "totalHits=2492",
+    "totalFiles=936",
+    "vendor-boundary: 0 hits / 0 files",
+    "locked: 57 hits / 12 files",
+    "teacher-hold: 15 hits / 7 files",
+    "live-api: 1568 hits / 777 files",
+    "ambiguous: 0 hits / 0 files",
+    "ratchet-ready: 852 hits / 341 files"
+  ],
+  "handoff": {
+    "id": "css-door-error-ratchet",
+    "when": "after live-api declaration count → 0 (or only vendor-boundary remains)",
+    "then": "flip starci-fe/no-public-classname-prop to error; keep vendor allowlist",
+    "doNot": [
+      "eslint-disable to hide debt",
+      "expand vendor allowlist without evidence"
+    ]
+  },
+  "ratchetReady": {
+    "hits": 852,
+    "files": 341
+  },
+  "verification": {
+    "inventory": "2026-08-09-b23-css-door-inventory.md"
+  },
+  "regressions": []
+}

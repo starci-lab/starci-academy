@@ -1,0 +1,22 @@
+{
+  "worker": "identity-tile-storybook",
+  "manifest": [],
+  "sizeEvidence": {
+    "IconTileAtom": "sm40/md64/lg80 rounded-full",
+    "IdentityTileApproved": "sm48/xl md64/2xl lg80/2xl"
+  },
+  "canonicalPath": null,
+  "changed": [],
+  "held": [
+    "COMPOSITE-3/10: cannot land Storybook composite that draws HeroSkeleton",
+    "retract law while block path live"
+  ],
+  "retracted": [
+    ".storybook/components/composites/identity/IdentityTile/IdentityTile.tsx",
+    ".storybook/stories/composites/identity/IdentityTile/IdentityTile.stories.tsx"
+  ],
+  "storybookParity": "n/a",
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

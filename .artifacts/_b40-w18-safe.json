@@ -1,0 +1,380 @@
+[
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\CheckListCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 10,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\ContinueCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 184,
+    "col": 9,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\ContinueCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 213,
+    "col": 17,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\ContinueCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 220,
+    "col": 29,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\ContinueCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 221,
+    "col": 40,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\ContinueCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 230,
+    "col": 11,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\CourseCardSkeleton\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 14,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\CourseCard\\component.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 27,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\CrossListCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 8,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\FlipCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 9,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\GroupPressableCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 15,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\HighlightCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 5,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\LabeledCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 10,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\LabeledCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 173,
+    "col": 17,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\MediaCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 92,
+    "col": 9,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\MediaCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 96,
+    "col": 21,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\PressableCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 39,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SectionCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 112,
+    "col": 9,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SectionCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 131,
+    "col": 29,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SummaryCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 77,
+    "col": 13,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SummaryCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 97,
+    "col": 13,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SurfaceListCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 64,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\SurfaceListCard\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 232,
+    "col": 21,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\PhaseScarcityNote\\component.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 18,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\commerce\\TierCardBase\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 18,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\Confetti\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 12,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\LeaderboardListCard\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 128,
+    "col": 22,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\Podium\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 15,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\StandingHeroCard\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 10,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\WeeklyGoals\\index.tsx",
+    "rule": "starci-fe/no-emoji-in-source",
+    "line": 19,
+    "col": 1,
+    "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\WeeklyGoals\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 103,
+    "col": 9,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\dashboard\\WeeklyGoals\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 141,
+    "col": 9,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogPostPage\\ReadingProgress\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 10,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogPostPage\\RelatedPosts\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 15,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogPostPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 111,
+    "col": 9,
+    "msg": "`<Container>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogPostPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 116,
+    "col": 17,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\BlogPostPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 204,
+    "col": 13,
+    "msg": "`<Container>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\HeadhuntingCompanyBreadcrumbs\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 15,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\HeadhuntingCompanyLoadingState\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 17,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 16,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\HeadhuntingCompanyPage\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 57,
+    "col": 9,
+    "msg": "`<Box>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MySubmissionsPage\\index.tsx",
+    "rule": "starci-fe/require-identity-root",
+    "line": 29,
+    "col": 1,
+    "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\MySubmissionsPage\\index.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 181,
+    "col": 25,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 119,
+    "col": 13,
+    "msg": "`<Container>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 131,
+    "col": 13,
+    "msg": "`<Container>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 155,
+    "col": 17,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 157,
+    "col": 25,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 160,
+    "col": 33,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 167,
+    "col": 27,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 175,
+    "col": 17,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 177,
+    "col": 25,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 187,
+    "col": 33,
+    "msg": "`<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 196,
+    "col": 25,
+    "msg": "`<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  },
+  {
+    "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\TalentDirectoryPage\\component.tsx",
+    "rule": "starci-fe/require-frame-self-declare",
+    "line": 213,
+    "col": 9,
+    "msg": "`<Container>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+  }
+]

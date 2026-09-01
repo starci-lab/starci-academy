@@ -1,0 +1,100 @@
+{
+  "batch": "B34",
+  "wave": "B",
+  "manifest": "markdown-consumers-feed-profile-and-chip-icons",
+  "agent": "markdown-consumers-feed-profile-and-chip-icons",
+  "checkpoint": "6ff21c66",
+  "status": "done",
+  "filesEdited": [
+    "src/components/blocks/feed/CommunityPostCard/component.tsx",
+    "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+    "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/chips/StatusChip/index.tsx",
+    "src/components/blocks/chips/EnumChip/index.tsx",
+    "src/components/pages/SystemStatusPage/ComponentCard/index.tsx"
+  ],
+  "taskA": {
+    "migrations": [
+      {
+        "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+        "from": "className=\"[&_p]:m-0\"",
+        "to": "flow=\"embedded\""
+      },
+      {
+        "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+        "from": "className=\"[&_p]:m-0\"",
+        "to": "flow=\"embedded\""
+      },
+      {
+        "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "from": "className=\"min-w-0 flex-1 text-sm [&_p]:m-0 [&_p]:line-clamp-1\"",
+        "to": "FillAvailable at=\"base\" + density=\"compact\" flow=\"embedded\" previewLines={1}"
+      },
+      {
+        "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "from": "className=\"text-sm text-muted [&_p]:m-0\"",
+        "to": "density=\"compact\" tone=\"muted\" flow=\"embedded\""
+      },
+      {
+        "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+        "from": "wrapper div italic [&_p]:m-0 around composite MarkdownContent",
+        "to": "flow=\"embedded\" emphasis=\"italic\" on MarkdownContent"
+      },
+      {
+        "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "from": "className=\"text-muted\"",
+        "to": "tone=\"muted\""
+      },
+      {
+        "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "from": "className=\"min-w-0 flex-1\"",
+        "to": "FillAvailable at=\"base\""
+      },
+      {
+        "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "from": "className=\"min-w-0 flex-1 italic\"",
+        "to": "FillAvailable at=\"base\" + emphasis=\"italic\""
+      }
+    ],
+    "holds": [],
+    "note": "Page MockInterviewScorecard was not locked — migrated. blocks/rendering already exposed density/tone/flow/emphasis/previewLines (sibling Wave B)."
+  },
+  "taskB": {
+    "StatusChip": {
+      "icon": "IconComponent (from atoms/chips/Chip)",
+      "mounts": "StatusChip mounts <Icon className=\"size-4 shrink-0\" />",
+      "removed": ["ReactNode icon", "iconClassName", "JSX fallback at API"]
+    },
+    "EnumChip": {
+      "icon": "IconComponent",
+      "implementation": "house Chip atom with tone/text/icon",
+      "notForcedInto": "composites/chips/EnumChip check/cross API"
+    },
+    "ComponentCard": {
+      "change": "passes STATUS_CHIP_ICON[status] component refs; no longer uses map.tsx ReactNode visual.icon"
+    },
+    "compatibilityRetained": false,
+    "forbiddenConsumersNeedingFollowUp": [
+      {
+        "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+        "reason": "still passes JSX brand icons (<SiYoutube size={16} /> etc.) into EnumChipEntry.icon; needs icon: SiYoutube component refs"
+      },
+      {
+        "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+        "reason": "still passes JSX icons (<TwitchLogoIcon className=\"size-5\" /> etc.) into EnumChipEntry.icon; needs component refs"
+      }
+    ],
+    "staleOutsideOwned": {
+      "file": "src/components/pages/SystemStatusPage/map.tsx",
+      "note": "ComponentStatusVisual.icon remains ReactNode JSX; ComponentCard no longer consumes it (tone/dot only). Not owned — left untouched."
+    }
+  },
+  "gates": {
+    "tscOwnedSet": "clean (no diagnostics on owned files)",
+    "tscForbiddenConsumers": "HostPlatformChip + LessonVideoKindChip fail until icon refs migrated",
+    "eslintOwnedFiles": "0 errors; pre-existing warnings only (no new error introduced)",
+    "gitDiffCheck": "clean"
+  }
+}

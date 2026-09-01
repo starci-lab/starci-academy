@@ -1,0 +1,2628 @@
+{
+  "partition": "pages-core",
+  "generatedAt": "2026-08-06T21:05:14.780Z",
+  "fileCount": 237,
+  "files": [
+    {
+      "path": "src/modules/types/utils/challenge-section.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/utils/challenge-section.ts",
+      "safeCount": 8,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/InnerLayout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/InnerLayout.tsx",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/computations/amount.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/amount.ts",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/computations/operation.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/operation.ts",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/truncate.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/truncate.ts",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "safeCount": 3,
+      "messageCount": 11,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/modules/api/graphql/clients/links/attach-access-token.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/clients/links/attach-access-token.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-consultants.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-consultants.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-sandbox-repo-url.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-sandbox-repo-url.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/types.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/types.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/types/entities/content-body.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/entities/content-body.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/types/entities/content.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/entities/content.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/types/utils/programming-language.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/utils/programming-language.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/regression.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/regression.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/types/index.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/types/index.ts",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "safeCount": 2,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/pages/LegalPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/LegalPage/index.tsx",
+      "safeCount": 2,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/app/[locale]/architecture/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/architecture/page.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/blog/[slug]/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/blog/[slug]/page.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/contact/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/contact/page.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/page.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/error.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/error.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/home/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/home/page.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/status/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/status/page.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/svg/GithubIcon/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/svg/GithubIcon/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/svg/GoogleIcon/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/svg/GoogleIcon/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/svg/Logo/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/svg/Logo/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/clients/links/refresh-token/mutation.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/clients/links/refresh-token/mutation.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/dayjs/index.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/dayjs/index.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/types/entities/cv.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/entities/cv.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/computations/adjustment.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/adjustment.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/computations/bps.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/bps.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/computations/percentage.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/percentage.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/computations/pow-10.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/pow-10.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc",
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/proxy.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/proxy.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/pages/AdminLoginPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminLoginPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 10,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-hero-heading-class"
+      ]
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "safeCount": 1,
+      "messageCount": 10,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/MyAttemptsPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/MyFeedbackPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/MySubmissionsPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/PrivacySettingsPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 9,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "safeCount": 1,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-parallel-skeleton"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ]
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AppearancePage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/OauthRedirectPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/OauthRedirectPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-hero-heading-class"
+      ]
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-hero-heading-class"
+      ]
+    },
+    {
+      "path": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "safeCount": 1,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminUploadVideoPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogPostPage/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogPostPage/component.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/InstallmentPlansPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/InstallmentPlansPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ]
+    },
+    {
+      "path": "src/components/pages/LeaguePage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/LeaguePage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/LoginPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/LoginPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/RewardsPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/RewardsPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ]
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/SettingsHomePage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SettingsHomePage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogListPage/Masthead/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogListPage/Masthead/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogPostPage/ReadingProgress/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogPostPage/ReadingProgress/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/page-folder-two-files-only"
+      ]
+    },
+    {
+      "path": "src/components/pages/PublicArticlePage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/PublicArticlePage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ]
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/SepayCheckoutPage/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-identity-root"
+      ],
+      "holdRules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ]
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/layout.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/not-found.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/not-found.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/privacy/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/privacy/page.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/profile/[username]/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/profile/[username]/layout.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/profile/settings/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/profile/settings/layout.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/[locale]/terms/page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/[locale]/terms/page.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/app/layout.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/providers/HeroUIProvider.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/HeroUIProvider.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/providers/NextThemesProvider.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/NextThemesProvider.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/providers/PlaygroundSessionProvider/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/PlaygroundSessionProvider/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/providers/SwrProvider.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/providers/SwrProvider.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/config/seo.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/config/seo.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/effects/UseEffects.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/UseEffects.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/effects/useAccentOverride.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/useAccentOverride.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/effects/useDefaultRedirect.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/useDefaultRedirect.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/effects/useExchangeCodeForToken.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/useExchangeCodeForToken.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/effects/useSyncReduxTaskId.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/effects/useSyncReduxTaskId.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/rhf/useCvSubmissionForm.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/rhf/useCvSubmissionForm.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/socketio/types/mock-interview.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/socketio/types/mock-interview.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyCvGenerationsSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyCvGenerationsSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/useRepoSandpackFiles.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/useRepoSandpackFiles.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/hooks/zustand/overlay/hooks.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/hooks/zustand/overlay/hooks.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/i18n/navigation.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/i18n/navigation.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/constants.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/constants.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/clients/clients/auth.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/clients/clients/auth.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/clients/clients/no-auth.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/clients/clients/no-auth.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/clients/links/error.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/clients/links/error.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-ask-content-ai.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-ask-content-ai.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-clear-content-ai-history.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-clear-content-ai-history.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-create-content-ai-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-create-content-ai-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-generate-submit-cv-presign-url.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-generate-submit-cv-presign-url.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-mark-content-as-readed.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-mark-content-as-readed.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-rename-content-ai-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-rename-content-ai-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-set-content-ai-session-archived.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-set-content-ai-session-archived.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sign-out.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-sign-out.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-trial.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-start-trial.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-toggle-favorite.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-toggle-favorite.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-touch-content-ai-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-touch-content-ai-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-verify-submit-cv-presign-url.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/mutation-verify-submit-cv-presign-url.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/cart.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/cart.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/course-enroll.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/course-enroll.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/discussion.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/discussion.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-ai-models.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-ai-models.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-autocomplete-global-search.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-autocomplete-global-search.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-challenge-submissions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-challenge-submissions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-challenge-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-challenge-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-challenges.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-challenges.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-consultant-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-consultant-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-content-status.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-content-status.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-content-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-content-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-course-enrollment-status.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-course-enrollment-status.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-course-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-course-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-foundation-categories.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-foundation-categories.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-foundation-category-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-foundation-category-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-headhunting-companies.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-headhunting-companies.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-headhunting-company-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-headhunting-company-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-headhunting-company.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-headhunting-company.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-lesson-videos.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-lesson-videos.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-livestream-sessions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-livestream-sessions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-milestone-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-task-progress.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-milestone-task-progress.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-task-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-milestone-task-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-task.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-milestone-task.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestones.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-milestones.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-module-suggestions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-module-suggestions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-modules.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-modules.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-installment-plans.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-saved-contents.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-saved-contents.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-submission-attempts.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-submission-attempts.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-submission-feedbacks.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-submission-feedbacks.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-submit-cv-presigned-url.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-submit-cv-presigned-url.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-template-cvs.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-template-cvs.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-user-milestone-task-feedbacks.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-user-milestone-task-feedbacks.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-user-personal-task-attempts.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/query-user-personal-task-attempts.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/course-questions.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/course-questions.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/cv-blocks.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/cv-blocks.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/my-installment-plans.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/recommended-courses.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/graphql/queries/types/recommended-courses.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/redirect/github.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/redirect/github.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/api/rest/keycloak/google/redirect.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/api/rest/keycloak/google/redirect.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/keycloak/github.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/keycloak/github.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/keycloak/google.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/keycloak/google.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/storage/session/types/oauth-idp-hint.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/storage/session/types/oauth-idp-hint.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/superjson/index.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/superjson/index.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/types/entities/challenge.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/entities/challenge.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/types/entities/user-challenge-submission.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/entities/user-challenge-submission.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/types/enums/cv-block-type.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/types/enums/cv-block-type.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/computations/round.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/round.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/misc.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/misc.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/rank.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/rank.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/sanitize.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/sanitize.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/modules/utils/session-display-name.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/session-display-name.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/utils/extract-sandpack-files.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/utils/extract-sandpack-files.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    }
+  ]
+}

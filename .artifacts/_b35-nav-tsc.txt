@@ -1,0 +1,55 @@
+﻿src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx(6,41): error TS2307: Cannot find module '../../types' or its corresponding type declarations.
+src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx(4,35): error TS2307: Cannot find module '../../types' or its corresponding type declarations.
+src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx(7,8): error TS2307: Cannot find module '../../types' or its corresponding type declarations.
+src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx(14,8): error TS2307: Cannot find module '../../types' or its corresponding type declarations.
+src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx(65,22): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<UploadStatus, ReactNode>'.
+src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx(92,32): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<UploadStatus, string>'.
+src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx(95,36): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<UploadStatus, string>'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(1,8): error TS2300: Duplicate identifier 'React'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(3,15): error TS2300: Duplicate identifier 'QuizSessionReadinessData'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(3,41): error TS2300: Duplicate identifier 'QuizSessionWeakTagData'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(8,10): error TS2300: Duplicate identifier 'Button'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(10,10): error TS2300: Duplicate identifier 'Typography'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(11,10): error TS2300: Duplicate identifier 'Skeleton'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(15,10): error TS2300: Duplicate identifier 'Container'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(16,10): error TS2300: Duplicate identifier 'StackV'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(17,10): error TS2300: Duplicate identifier 'Grid'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(349,8): error TS2300: Duplicate identifier 'React'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(350,10): error TS2300: Duplicate identifier 'Button'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(350,32): error TS2300: Duplicate identifier 'Typography'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(354,15): error TS2300: Duplicate identifier 'QuizSessionReadinessData'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(354,46): error TS2300: Duplicate identifier 'QuizSessionWeakTagData'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(360,10): error TS2300: Duplicate identifier 'StackH'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(360,18): error TS2300: Duplicate identifier 'StackV'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(396,34): error TS2322: Type '{ children: string; type: string; weight: "semibold"; }' is not assignable to type 'IntrinsicAttributes & TypographyProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & TypographyProps'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(401,34): error TS2322: Type '{ children: string; type: string; color: "muted"; }' is not assignable to type 'IntrinsicAttributes & TypographyProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & TypographyProps'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(408,22): error TS2322: Type '{ children: (string | Element)[]; variant: "primary"; size: "lg"; className: string; onPress: () => void; }' is not assignable to type 'IntrinsicAttributes & ButtonBaseProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & ButtonBaseProps'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(497,26): error TS2322: Type '{ children: string; type: string; color: "muted"; }' is not assignable to type 'IntrinsicAttributes & TypographyProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & TypographyProps'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(502,26): error TS2322: Type '{ children: (string | Element)[]; variant: "primary"; className: string; onPress: () => void; }' is not assignable to type 'IntrinsicAttributes & ButtonBaseProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & ButtonBaseProps'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(514,14): error TS2322: Type '{ children: (string | Element)[]; variant: "tertiary"; size: "sm"; className: string; onPress: () => void; }' is not assignable to type 'IntrinsicAttributes & ButtonBaseProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & ButtonBaseProps'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(533,14): error TS2322: Type '{ children: (string | Element)[]; variant: "tertiary"; size: "sm"; className: string; onPress: () => void; }' is not assignable to type 'IntrinsicAttributes & ButtonBaseProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & ButtonBaseProps'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(619,8): error TS2300: Duplicate identifier 'React'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(621,10): error TS2300: Duplicate identifier 'Skeleton'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(623,10): error TS2300: Duplicate identifier 'Container'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(624,10): error TS2300: Duplicate identifier 'Grid'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(625,10): error TS2300: Duplicate identifier 'StackH'.
+src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx(625,18): error TS2300: Duplicate identifier 'StackV'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(1,8): error TS2300: Duplicate identifier 'React'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(12,10): error TS2300: Duplicate identifier 'StackV'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(12,18): error TS2300: Duplicate identifier 'StackH'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(14,10): error TS2300: Duplicate identifier 'Grid'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(15,10): error TS2300: Duplicate identifier 'Container'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(313,8): error TS2300: Duplicate identifier 'React'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(317,10): error TS2300: Duplicate identifier 'Container'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(318,10): error TS2300: Duplicate identifier 'Grid'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(319,10): error TS2300: Duplicate identifier 'StackH'.
+src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx(319,18): error TS2300: Duplicate identifier 'StackV'.
+src/components/pages/KpiPage/index.tsx(23,8): error TS2307: Cannot find module '@/components/pages/DashboardPage/WeeklyGoals/map' or its corresponding type declarations.
+src/components/pages/LandingPage/index.tsx(45,33): error TS2307: Cannot find module './KnowledgeGraph/data' or its corresponding type declarations.

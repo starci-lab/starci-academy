@@ -1,0 +1,184 @@
+{
+  "agentKey": "commerce-account-settings",
+  "checkpoint": "02011807",
+  "focus": "Commerce, cart, payment, account, settings",
+  "filesChanged": [
+    ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+    ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+    "src/components/blocks/commerce/AddToCartButton/index.tsx",
+    "src/components/blocks/commerce/FreeTierCard/index.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+    "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+    "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+    "src/components/blocks/commerce/PricingTable/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/commerce/TierGrid/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx"
+  ],
+  "closed": [
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "rules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Prior partial: dropped classNames doors; FillAvailable for title flex-fill; card-caption + block-boundary principles. Zero warnings."
+    },
+    {
+      "path": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "rules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Mirrored SB: FillAvailable replaces TitledText classNames; card-caption/block-boundary self-declare; dropped Typography classNames."
+    },
+    {
+      "path": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "reason": "House Button + Tooltip; fullWidth via center-measure StackV with identity (no Button classNames)."
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "Stamps CallerIdentity through PriceTagBase StackV root."
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "Stamps CallerIdentity through PriceTagBase StackV root."
+    },
+    {
+      "path": "src/components/blocks/commerce/PricingTable/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/explain-justifies-token-choice"
+      ],
+      "reason": "Inner StackV group-boundary with neighbour-contrast explain (not sibling-stack)."
+    },
+    {
+      "path": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "Raw grid div → Grid frame with identity + block-boundary."
+    }
+  ],
+  "partial": [
+    {
+      "path": ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+      "closedRules": [],
+      "remaining": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "reason": "Skeleton → Typography isSkeleton (parity). Host div text-warning-soft-foreground held — no frame tone / Typography warning-soft without new contract."
+    },
+    {
+      "path": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "closedRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "remaining": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "reason": "Dropped Skeleton className door → Typography isSkeleton. Soft-warning host + identity held with SB twin."
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "closedRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "remaining": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "reason": "Dropped Typography classNames; card-caption + identity on StackV. HeroUI Popover held — house Popover requires triggerLabel Button, not Chip-as-trigger."
+    },
+    {
+      "path": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "closedRules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "remaining": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "reason": "House Button/Typography; CTA full-width via center-measure. TierLevelIcon size/tone className + h-[3lh] spacer held (no intrinsic size/spacer vocab)."
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCard/index.tsx",
+      "closedRules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "remaining": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "reason": "House Button/Chip/Typography; price row → StackH value-row. popular border className on TierCardBase, TierLevelIcon className, h-[3lh] USD slot held."
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "reason": "HeroUI Card shell + WithClassNames door + raw flex hosts + inline skeleton branches — needs SurfaceCard (or named tier-card shell) redesign; no honest existing-vocab close."
+    },
+    {
+      "path": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "reason": "Root is ResponsiveBreadcrumb (HeroUI Breadcrumbs fragment); no identity prop on that owner and editing ResponsiveBreadcrumb is out of this manifest."
+    },
+    {
+      "path": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "reason": "text-warning-soft-foreground inheritance host — Typography has no warning-soft; Cluster has no tone. Needs soft-warning frame/text contract."
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "reason": "Chip-as-Popover.Trigger vendor boundary — house Popover atom is label-button only."
+    }
+  ],
+  "unchanged": [
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "reason": "Held — no edit"
+    },
+    {
+      "path": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "reason": "Held — no edit"
+    }
+  ],
+  "newVariants": [],
+  "newContracts": [],
+  "eslint": {
+    "beforeArchWarningsApprox": 52,
+    "afterOnManifest": "30 warnings / 0 errors (a11y excluded from burn)",
+    "closedZeroWarning": [
+      ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "src/components/blocks/commerce/PricingTable/index.tsx",
+      "src/components/blocks/commerce/TierGrid/index.tsx",
+      "src/components/blocks/commerce/TrialConversionStrip/component.tsx"
+    ],
+    "notes": [
+      "SB TrialConversionStrip was already partially burned; src mirrored FillAvailable + principles.",
+      "PriceTagBase Popover stays @heroui/react until Chip-trigger Popover exists.",
+      "TierCardBase / SettingsBreadcrumb / soft-warning PhaseScarcity host are explicit holds."
+    ]
+  },
+  "verification": {
+    "tsc": "pass on touched commerce/settings paths (no new errors in the 14 files)",
+    "eslintMaxWarnings0": "pass on seven closedZeroWarning files",
+    "gitDiffCheck": "pass on changed files"
+  },
+  "summary": "Closed TrialConversionStrip CSS doors (SB→src), PriceTag identity members, PricingTable principle, AddToCart house Button, TierGrid→Grid. Partial FreeTier/TierCard heroui migration. Held TierCardBase shell, SettingsBreadcrumb identity, PhaseScarcity soft-warning host, PriceTag Chip-Popover vendor."
+}

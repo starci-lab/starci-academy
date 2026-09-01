@@ -1,0 +1,83 @@
+{
+  "partition": "blocks-cards-commerce",
+  "manifest": [
+    "src/components/blocks/cards/FlipCard/index.tsx",
+    "src/components/blocks/cards/HighlightCard/index.tsx",
+    "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+    "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+    "src/components/blocks/commerce/FreeTierCard/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/commerce/TierGrid/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/cards/FlipCard/index.tsx",
+    "src/components/blocks/cards/HighlightCard/index.tsx",
+    "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+    "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+    "src/components/blocks/commerce/FreeTierCard/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/commerce/TierGrid/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/cards/FlipCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "live-api Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton",
+    "vendor / locked / Nivo / B19–B25 / teacher holds / skeleton slots",
+    "doors with JSX consumers (EntityLink restored)",
+    "rest-spread forwarding (...props)",
+    "src/components/blocks/feed/EntityLink/index.tsx — restored (live className consumer in CommentItem)",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx — restored (void className side-effect API)"
+  ],
+  "evidence": {
+    "proof": "brace-aware destructure + open-tag consumer index (locked paths counted as consumers)",
+    "inventoryBefore": {
+      "hits": 2194,
+      "files": 816
+    }
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "src-first where no SB twin; SB starci twins when present"
+  },
+  "verification": {
+    "local": "tsc pass after partition"
+  },
+  "regressions": [],
+  "overlapCheck": "partitionOf(file) — each changed file in exactly one worker"
+}

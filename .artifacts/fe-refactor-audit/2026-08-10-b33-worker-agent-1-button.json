@@ -1,0 +1,163 @@
+{
+  "manifest": "agent-1-button",
+  "batch": "B33",
+  "checkpoint": "139391b6",
+  "agent": "B33 Agent 1 — Button consumer chain",
+  "clusterIds": [],
+  "focus": "Button/ButtonGroup consumer chain",
+  "consumersScanned": 45,
+  "consumersMigrated": [
+    {
+      "file": "src/components/blocks/cards/ContinueCard/index.tsx",
+      "from": "classNames={[\"w-fit\", \"shrink-0\"]}",
+      "to": "dropped — match SB ContinueCardHero intrinsic CTA sizing",
+      "cluster": "button-width-fit-shrink"
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "from": "classNames={[\"shrink-0\"]}",
+      "to": "dropped — mirror SB TrialConversionStrip twin (already clean)",
+      "cluster": "button-shrink-placement"
+    },
+    {
+      "file": "src/components/blocks/commerce/PricingTable/index.tsx",
+      "from": "classNames={[\"w-full\"]}",
+      "to": "dropped — no finite Button width prop; SB EnrollGate/PremiumGateModal teacher pattern drops w-full rather than invent widthClassName",
+      "cluster": "button-width-full"
+    }
+  ],
+  "sharedApiRemovedOrRetained": {
+    "Button.classNames": "retained",
+    "Button.className": "n/a — house Button exposes classNames array door only",
+    "ButtonGroup.classNames": "already removed (B32); no further change",
+    "reason": "Zero forbidden (nivo/nivoexpert/mia-mia) house-Button classNames consumers, but ~52 StarCi live classNames call sites remain outside this 45-file manifest. Door cannot burn until those migrate. Record locked-consumer hold."
+  },
+  "beforeAfterMessages": {
+    "scope": "manifest Button.classNames consumer warnings on the three edited files",
+    "before": {
+      "starci-fe/no-public-classname-prop (Button classNames=)": 3,
+      "other warnings on same files": 15
+    },
+    "after": {
+      "starci-fe/no-public-classname-prop (Button classNames=)": 0,
+      "other warnings on same files": 15
+    },
+    "delta": {
+      "Button classNames warnings": -3,
+      "introduced": 0
+    },
+    "note": "Remaining warnings on ContinueCard/PricingTable/TrialConversionStrip are pre-existing StackV/Box self-declare, SurfaceCard/TitledText/Typography classNames, and TrialConversionStrip public classNames prop — owned by other door agents."
+  },
+  "closedClusters": [
+    {
+      "id": "agent-1-button::ContinueCard::button-width-fit-shrink",
+      "status": "closed",
+      "files": ["src/components/blocks/cards/ContinueCard/index.tsx"],
+      "evidence": "Removed Button classNames w-fit/shrink-0; eslint Button classNames warning gone."
+    },
+    {
+      "id": "agent-1-button::TrialConversionStrip::button-shrink-placement",
+      "status": "closed",
+      "files": ["src/components/blocks/commerce/TrialConversionStrip/component.tsx"],
+      "evidence": "Removed Button classNames shrink-0 to match SB twin; eslint Button classNames warning gone."
+    },
+    {
+      "id": "agent-1-button::PricingTable::button-width-full",
+      "status": "closed",
+      "files": ["src/components/blocks/commerce/PricingTable/index.tsx"],
+      "evidence": "Removed Button classNames w-full; eslint Button classNames warning gone."
+    }
+  ],
+  "partialClusters": [],
+  "holds": [
+    {
+      "id": "b33-button-classNames-locked-consumer",
+      "classification": "locked-consumer",
+      "paths": [
+        "src/components/atoms/buttons/Button/ButtonBase.tsx",
+        ".storybook/components/atoms/buttons/Button/ButtonBase.tsx"
+      ],
+      "summary": "Retain Button.classNames shared API after StarCi manifest migrations.",
+      "reason": "Manifest StarCi Button.classNames consumers migrated (3). ~52 remaining StarCi consumers (pages/overlays/blocks outside agent-1-button) still pass w-full/w-fit/shrink-0/flex-1/self-* via classNames. Forbidden product trees have zero house-Button classNames hits, but out-of-manifest StarCi keeps the door live. Do not delete API; do not add widthClassName/fitClassName/wrapperClassName aliases.",
+      "next": "Subsequent B33/B34 consumer agents migrate remaining StarCi Button.classNames sites onto FillAvailable/Box/Measure/ShowFrom/GridItem or drop placement matching SB twins; re-prove zero consumers before burning the door."
+    }
+  ],
+  "forbiddenConsumers": {
+    "scannedRoots": [
+      ".storybook/components/nivo",
+      ".storybook/components/nivoexpert",
+      ".storybook/components/mia-mia"
+    ],
+    "houseButtonClassNamesHits": 0,
+    "edited": false
+  },
+  "parity": {
+    "storybookFirst": true,
+    "twinsUpdatedInManifest": [
+      {
+        "pair": "TrialConversionStrip",
+        "sb": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+        "src": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "action": "SB already clean; mirrored drop of Button shrink-0 into src (in manifest)."
+      }
+    ],
+    "parityNeededOutsideManifest": [
+      {
+        "sb": ".storybook/components/starci/blocks/learn/ModuleContinueBand/ModuleContinueBand.tsx",
+        "src": "src/components/blocks/learn/ModuleContinueBand/index.tsx",
+        "gap": "SB Button has no classNames; src still has classNames={[\"shrink-0\"]}"
+      },
+      {
+        "sb": ".storybook/components/starci/blocks/learn/PersonalProjectResultScreen/PersonalProjectResultScreen.tsx",
+        "src": "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+        "gap": "SB Button clean; src still has classNames={[\"w-fit\", \"shrink-0\"]}"
+      },
+      {
+        "sb": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+        "src": "src/components/blocks/profile/ProfileHero/index.tsx",
+        "gap": "SB dropped flex-1; src Button still classNames={[\"flex-1\"]} — FillAvailable wrapper changes chrome stretch vs empty-space fill; SB chose drop"
+      },
+      {
+        "sb": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        "src": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+        "gap": "SB skeleton Buttons have no classNames; src still classNames={[\"w-full\"]} x2"
+      },
+      {
+        "sb": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+        "src": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+        "gap": "SB footer Button clean; src still classNames={[\"w-full\"]}"
+      },
+      {
+        "sb": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        "src": "src/components/blocks/navigation/Navbar/index.tsx",
+        "gap": "SB See-all Button clean; src still classNames={[\"w-full\"]} (notifications + likely mobile search twin)"
+      },
+      {
+        "sb": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+        "src": "src/components/blocks/learn/EnrollGate/index.tsx",
+        "gap": "SB Button clean; src still wraps Box + classNames={[\"w-full\"]}"
+      }
+    ],
+    "notes": [
+      "No SB edits this turn — all manifest Storybook Button.classNames sites were already clean at checkpoint.",
+      "PricingTable has no SB twin; drop followed SB CTA teacher pattern (EnrollGate/PremiumGateModal).",
+      "HeroUI Button className sites in manifest (CourseCard flex-1, GithubTeamGate self-start, Discussion, FloatingActionButton, WorkSessionHeader src) are vendor mounts — not the house Button.classNames door; left for sentence/heroui agents."
+    ]
+  },
+  "tests": {
+    "eslintFocused": "npx eslint on 3 changed files — Button classNames warnings 3→0; 15 pre-existing non-Button warnings remain; introduced 0",
+    "tsc": "not run repo-wide; edits are prop deletions only",
+    "gitDiffCheck": "pass on changed files"
+  },
+  "regressions": [
+    "None introduced: only removed Button.classNames placement arrays; no new doors, wrappers, aliases, or eslint-disable.",
+    "Visual: PricingTable CTAs no longer force w-full (intrinsic width); ContinueCard hero CTA no longer forces w-fit/shrink-0; TrialConversionStrip CTA no longer shrink-0 — matches SB teacher drops."
+  ],
+  "changedFiles": [
+    "src/components/blocks/cards/ContinueCard/index.tsx",
+    "src/components/blocks/commerce/PricingTable/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx"
+  ],
+  "changedFileCount": 3,
+  "summary": "Migrated 3 in-manifest house Button.classNames consumers (ContinueCard w-fit/shrink-0, TrialConversionStrip shrink-0, PricingTable w-full) by dropping placement to match SB teacher twins. Shared Button.classNames API retained under locked-consumer hold (~52 out-of-manifest StarCi callers). ButtonGroup.classNames already gone. Seven SB→src parity gaps noted for other agents."
+}

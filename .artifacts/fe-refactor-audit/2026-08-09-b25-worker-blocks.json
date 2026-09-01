@@ -1,0 +1,69 @@
+{
+  "partition": "blocks",
+  "manifest": [
+    "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+    "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+    "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+    "src/components/blocks/learn/FoundationHeader/index.tsx",
+    "src/components/blocks/learn/LearnNudges/component.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+    "src/components/blocks/profile/ProfileLoadingState/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+    "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+    "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+    "src/components/blocks/learn/FoundationHeader/index.tsx",
+    "src/components/blocks/learn/LearnNudges/component.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+    "src/components/blocks/profile/ProfileLoadingState/index.tsx"
+  ],
+  "applied": [
+    {
+      "kind": "safe-noop",
+      "files": [
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+        "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+        "src/components/blocks/learn/FoundationHeader/index.tsx",
+        "src/components/blocks/learn/LearnNudges/component.tsx",
+        "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+        "src/components/blocks/profile/ProfileLoadingState/index.tsx (7 sites)"
+      ],
+      "change": "Removed Typography isSkeleton classNames={[\"w-1/2\"]} duplicates",
+      "count": 13
+    },
+    {
+      "kind": "redundant-passthrough",
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "change": "Removed className={className} on LabeledAccordionCard (prop never forwarded)",
+      "consumerSearch": "LabeledAccordionCardProps extended WithClassNames but export never destructured/forwarded className; TaskCriteriaList empty path still uses Box className"
+    },
+    {
+      "kind": "redundant-passthrough",
+      "file": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "change": "Dropped WithClassNames from LabeledAccordionCardProps after zero remaining JSX consumers",
+      "consumerSearch": "rg className= on LabeledAccordionCard call sites → 0 after TaskCriteriaList/CourseOutline/CourseMilestoneOutline edits"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "TaskCriteriaList WithClassNames retained (empty Box still consumes className; zero external callers today but door not burned this wave)",
+    "ProgressMeter/Skeleton/Typography non-duplicate placement stays live-prop"
+  ],
+  "evidence": {
+    "labeledAccordionDeadDoor": "export const LabeledAccordionCard = ({ label, labelEnd, action, items, ... }) — no className"
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "LabeledAccordionCard src-only; Typography skeleton dupes had no SB call sites"
+  },
+  "verification": {
+    "local": "deferred to aggregate"
+  },
+  "regressions": []
+}

@@ -1,0 +1,230 @@
+{
+  "generatedAt": "2026-08-08T14:38:44.230Z",
+  "scans": [
+    {
+      "id": "Button.classNames (import-scoped heuristic)",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedCount": 0,
+      "allowedSample": [],
+      "decision": "burn-candidate-dead",
+      "note": "Heuristic over-counts files that import Button and use classNames on other components."
+    },
+    {
+      "id": "Typography.classNames JSX",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Avatar classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Alert classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Divider className=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Flex classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Container classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Cluster classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Chip classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "TitledText classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "StackV/H classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Page* className=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Form* className=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "RemovableToken className=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "KeyValue className=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Toolbar className=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "SurfaceCard* className=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Tabs classNames=",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedSample": [],
+      "allowedCount": 0,
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Avatar multiline classNames",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedCount": 0,
+      "allowedSample": [],
+      "samples": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Alert multiline classNames",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedCount": 0,
+      "allowedSample": [],
+      "samples": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Flex multiline classNames",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedCount": 0,
+      "allowedSample": [],
+      "samples": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Divider multiline className",
+      "hitCount": 0,
+      "fileCount": 0,
+      "forbiddenCount": 0,
+      "forbidden": [],
+      "allowedCount": 0,
+      "allowedSample": [],
+      "samples": [],
+      "decision": "burn-candidate-dead"
+    }
+  ]
+}

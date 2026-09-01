@@ -1,0 +1,692 @@
+{
+  "batch": "B31r1",
+  "checkpoint": "18f84f5b",
+  "approvedContract": {
+    "IconTile": "atoms/display/IconTile — sm40/md64/lg80 rounded-full — KEEP",
+    "IdentityTile": "composites/identity/IdentityTile — sm48/xl md64/2xl lg80/2xl — NEW from block"
+  },
+  "consumers": [
+    {
+      "consumer": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "line": 192,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "line": 50,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "lg",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/commerce/CartLine/index.tsx",
+      "line": 61,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 71,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 172,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-leaderboard-list-card"
+    },
+    {
+      "consumer": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "line": 61,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "line": 67,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "line": 48,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "line": 98,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "line": 107,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "line": 148,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      "line": 91,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+      "line": 113,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "lg",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+      "line": 79,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "line": 46,
+      "oldImport": "../../identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "md",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 108,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/composites/lists/UserCell/index.tsx",
+      "line": 135,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/composites/lists/UserCell/index.tsx",
+      "line": 157,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-identity"
+    },
+    {
+      "consumer": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "line": 204,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "glyph-IconTile",
+      "action": "review"
+    },
+    {
+      "consumer": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "line": 315,
+      "oldImport": "@/components/atoms/display/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "glyph-IconTile",
+      "action": "review"
+    },
+    {
+      "consumer": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 69,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 130,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "line": 69,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "line": 36,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "line": 42,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "line": 48,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "line": 58,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "line": 124,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "line": 104,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "line": 44,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/JobDetailPage/component.tsx",
+      "line": 195,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "md",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/JobListPage/JobListRow/index.tsx",
+      "line": 103,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/LandingPage/index.tsx",
+      "line": 291,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 33,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "md",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 235,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 265,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "line": 215,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "line": 155,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/LearningHistoryPage/index.tsx",
+      "line": 178,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "line": 73,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "line": 70,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "identity-with-image",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 227,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+      "line": 68,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "line": 111,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "line": 294,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "line": 81,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "lg",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "line": 32,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "lg",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": "src/components/pages/SettingsHomePage/index.tsx",
+      "line": 104,
+      "oldImport": "@/components/blocks/identity/IconTile",
+      "oldKind": "block-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "identity-entity-tile",
+      "action": "hold-page-folder"
+    },
+    {
+      "consumer": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+      "line": 128,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "review"
+    },
+    {
+      "consumer": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+      "line": 151,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "review"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+      "line": 134,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "hold-nivo"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+      "line": 103,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "hold-nivo"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+      "line": 43,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "hold-nivo"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+      "line": 57,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "hold-nivo"
+    },
+    {
+      "consumer": ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+      "line": 82,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "hold-nivo"
+    },
+    {
+      "consumer": ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+      "line": 174,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "hold-nivo"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 96,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      "line": 67,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "line": 123,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      "line": 98,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      "line": 107,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": true,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "line": 148,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx",
+      "line": 113,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "lg",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+      "line": 74,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 85,
+      "oldImport": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom-IconTile",
+      "size": "sm",
+      "hasSrc": false,
+      "semantic": "glyph-IconTile",
+      "action": "migrate-candidate-storybook-starci"
+    }
+  ],
+  "summary": {
+    "total": 65,
+    "byAction": {
+      "migrate-candidate-identity": 17,
+      "hold-leaderboard-list-card": 1,
+      "review": 4,
+      "hold-page-folder": 28,
+      "hold-nivo": 6,
+      "migrate-candidate-storybook-starci": 9
+    },
+    "byOldKind": {
+      "block-IconTile": 36,
+      "atom-IconTile": 29
+    },
+    "blockPathLive": 36,
+    "migrateCandidates": 26,
+    "holds": 35
+  },
+  "deletionGate": "blocks/identity/IconTile may delete only when block-IconTile open-tag imports === 0",
+  "execution": {
+    "identityTileCreated": false,
+    "retracted": true,
+    "retractReason": [
+      "COMPOSITE-3: composites must not import vendor (@heroui Skeleton)",
+      "COMPOSITE-10: composites must not draw own shimmer — forward isSkeleton to atoms",
+      "Approved path composites/identity/IdentityTile + owning isSkeleton chrome conflicts with composite gates",
+      "Atom IconTile pattern (vendor shimmer at atom tier) is the honest home for this chrome",
+      "Unlocked block consumers also fail zero-warn ratchet for import migration",
+      "blocks/identity/IconTile cannot be deleted while page+LLC holds remain"
+    ],
+    "recommendation": "Amend approved filing to atoms/display/IdentityTile (atom with isSkeleton like IconTile), OR add a leaf atom for square identity chrome that a thin composite forwards isSkeleton into"
+  }
+}

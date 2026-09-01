@@ -1,0 +1,113 @@
+{
+  "batch": "B31a0",
+  "checkpoint": {
+    "head": "18f84f5b15528163e9fca10cfb7252323f02f013",
+    "subject": "refactor(fe): enforce semantic closure ratchet"
+  },
+  "editsAllowed": false,
+  "productEdits": false,
+  "blockers": {
+    "A": {
+      "name": "CommunityTab page-folder",
+      "family": {
+        "src/components/pages/DashboardPage/CommunityTab/index.tsx": {
+          "classification": "page-specific tab arrangement (not reusable sentence)",
+          "exports": [
+            "CommunityTab",
+            "CommunityTabProps"
+          ],
+          "warningsBefore": {
+            "starci-fe/page-folder-two-files-only": 1,
+            "starci-fe/require-identity-root": 1,
+            "starci-fe/no-raw-shape-at-sentence-tier": 1
+          },
+          "composition": [
+            "LeagueCard (pages/DashboardPage/LeagueCard)",
+            "TopLearners (pages/DashboardPage/TopLearners)"
+          ],
+          "evidencePageSpecific": [
+            "sole JSX consumer is DashboardPage/index.tsx",
+            "imports page-nested connected cards via relative ../ paths",
+            "named as Dashboard Community tab; self-fetch children hide when empty",
+            "moving to blocks/** would force blocks → pages import (illegal direction)"
+          ]
+        }
+      },
+      "consumers": [
+        {
+          "file": "src/components/pages/DashboardPage/index.tsx",
+          "import": "from \"./CommunityTab\"",
+          "jsx": "<CommunityTab />",
+          "warningsBefore": {
+            "starci-fe/no-raw-shape-at-sentence-tier": 1,
+            "starci-fe/require-frame-self-declare": 1
+          },
+          "pageFolderExempt": true
+        }
+      ],
+      "destinationDecision": {
+        "forceIntoBlocks": false,
+        "reason": "page-specific arrangement composing still-page-nested LeagueCard/TopLearners",
+        "exactFilingProposal": "Inline CommunityTab body into DashboardPage/index.tsx community tabpanel: import LeagueCard + TopLearners, StackV principle=\"block-boundary\" (gap step 6 = gap-6) with identity, delete CommunityTab/. Fix DashboardPage outer raw div (Container already w-full — drop wrapper) and add Container principle/explain (center-measure pattern as ContentTabBar). Do not leave a forwarding file.",
+        "canZeroWarnIfApplied": true,
+        "blockedBySiblingPrerequisite": "B failure triggers full retract law"
+      }
+    },
+    "B": {
+      "name": "IconTile skeleton vocabulary",
+      "trees": {
+        ".storybook/components/atoms/display/IconTile/IconTile.tsx": {
+          "isSkeleton": true,
+          "smBox": "size-10 + rounded-full",
+          "storybookTwinOf": "src/components/atoms/display/IconTile"
+        },
+        "src/components/atoms/display/IconTile/index.tsx": {
+          "isSkeleton": true,
+          "smBox": "size-10 + rounded-full",
+          "warningsBefore": {
+            "starci-fe/no-public-classname-prop": 2
+          }
+        },
+        "src/components/blocks/identity/IconTile/index.tsx": {
+          "isSkeleton": false,
+          "smBox": "size-12 rounded-xl (matches TopLearners Skeleton className)",
+          "storybookTwin": "none",
+          "classNameOpenTagConsumers": 0,
+          "warningsBefore": {
+            "starci-fe/no-heroui-outside-vocabulary": 1,
+            "starci-fe/require-identity-root": 1,
+            "starci-fe/no-classname-at-sentence-tier": 1,
+            "starci-fe/no-public-classname-prop": 2,
+            "starci-fe/no-cn-above-vocabulary": 1
+          },
+          "zeroWarnBlockers": [
+            "sentence-tier leaf draws shape — require-identity-root wants frame identity; Box root is forbidden escape-hatch proliferation",
+            "HeroUI cn / HeroSkeleton at block tier",
+            "public className door (removable — 0 consumers) insufficient alone"
+          ]
+        }
+      },
+      "topLearnersEdge": {
+        "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "payload": "Skeleton className=\"size-12 shrink-0 rounded-xl\"",
+        "mirrors": "blocks/identity/IconTile size=\"sm\"",
+        "editBlockedBy": [
+          "starci-fe/page-folder-two-files-only (TopLearners still under pages/ — B31a0 forbids moving TopLearners)",
+          "additional className/WithClassNames/Skeleton className warnings",
+          "migrating only the IconTile line still leaves page-folder on the touched file"
+        ]
+      },
+      "destinationDecision": {
+        "atomAlreadyHasIsSkeleton": true,
+        "atomGeometryMatchesTopLearners": false,
+        "blockNeedsIsSkeleton": true,
+        "syncAtomGeometryToBlock": "broader visual migration across atom IconTile consumers — out of B31a0",
+        "migrateTopLearnersNow": false,
+        "reason": "Correct chrome owner is blocks/identity/IconTile (size-12 rounded-xl). Adding isSkeleton there cannot hit 0 warnings without Box or demotion. Migrating TopLearners/component.tsx cannot hit 0 warnings while page-folder remains and TopLearners move is forbidden."
+      }
+    }
+  },
+  "leaderboardListCard": "untouched; className door remains open",
+  "topLearnersMove": "forbidden in B31a0",
+  "overlapCheck": "pass — no product overlap attempted"
+}

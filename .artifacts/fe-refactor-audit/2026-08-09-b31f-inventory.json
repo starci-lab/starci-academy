@@ -1,0 +1,1925 @@
+{
+  "batch": "31f",
+  "date": "2026-08-09",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "totalFindings": 344,
+  "totalFiles": 140,
+  "byBucket": {
+    "sb-composites-cards-layout-data": 11,
+    "sb-blocks-nonlearn": 61,
+    "sb-blocks-learn": 72,
+    "sb-pages-layouts": 47,
+    "src-blocks-profile-remaining": 30,
+    "src-blocks-cdn": 25,
+    "src-blocks-learn": 65,
+    "src-composites": 5,
+    "src-pages-learning": 26,
+    "src-pages-remaining": 2
+  },
+  "manifests": {
+    "sb-composites-cards-layout-data": [
+      ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      ".storybook/components/composites/data/KeyValue/KeyValue.tsx",
+      ".storybook/components/composites/layout/Page/Page.tsx",
+      ".storybook/components/composites/layout/Section/Section.tsx",
+      ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx"
+    ],
+    "sb-blocks-learn-a": [
+      ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+      ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      ".storybook/components/starci/blocks/learn/ChallengeHeader/ChallengeHeader.tsx",
+      ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+      ".storybook/components/starci/blocks/learn/ContentArticle/ContentArticle.tsx",
+      ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      ".storybook/components/starci/blocks/learn/ContentReaction/ContentReaction.tsx",
+      ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx",
+      ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx"
+    ],
+    "sb-blocks-learn-b": [
+      ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+      ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+      ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+      ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+      ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+      ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+      ".storybook/components/starci/blocks/learn/ReactionButton/ReactionButton.tsx",
+      ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+      ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx"
+    ],
+    "sb-blocks-nonlearn": [
+      ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+      ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      ".storybook/components/starci/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+      ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+      ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+      ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+      ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+      ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+      ".storybook/components/starci/pages/LeaderboardPage/LeaderboardPage.tsx",
+      ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+      ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      ".storybook/components/starci/pages/PlaygroundHubPage/PlaygroundHubPage.tsx",
+      ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+      ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      ".storybook/components/starci/pages/QuizPage/QuizPage.tsx"
+    ],
+    "src-composites": [
+      "src/components/composites/cards/SurfaceCard/index.tsx",
+      "src/components/composites/layout/Page/index.tsx",
+      "src/components/composites/layout/Section/index.tsx",
+      "src/components/composites/stats/SegmentBar/index.tsx"
+    ],
+    "src-blocks-learn-a": [
+      "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "src/components/blocks/learn/ContentArticle/index.tsx",
+      "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "src/components/blocks/learn/ContentHeader/index.tsx",
+      "src/components/blocks/learn/ContentPager/index.tsx",
+      "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "src/components/blocks/learn/ContentReaction/index.tsx",
+      "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "src/components/blocks/learn/CourseQaToolbar/index.tsx"
+    ],
+    "src-blocks-learn-b": [
+      "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "src/components/blocks/learn/MindMapRail/index.tsx",
+      "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "src/components/blocks/learn/QuizSetup/index.tsx",
+      "src/components/blocks/learn/ReactionButton/index.tsx",
+      "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx"
+    ],
+    "src-blocks-commerce-dashboard-navigation": [
+      "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "src/components/blocks/navigation/Footer/index.tsx",
+      "src/components/blocks/navigation/Navbar/index.tsx",
+      "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "src/components/blocks/navigation/SettingsSidebarNav/index.tsx"
+    ],
+    "src-blocks-profile-remaining": [
+      "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "src/components/blocks/profile/ProfileHero/index.tsx",
+      "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "src/components/blocks/profile/ProfileLockedState/index.tsx"
+    ],
+    "src-pages-learning": [
+      "src/components/pages/ChallengeResultPage/component.tsx",
+      "src/components/pages/CourseQaPage/component.tsx",
+      "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "src/components/pages/FoundationResourcePage/component.tsx",
+      "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "src/components/pages/FoundationsGridPage/component.tsx",
+      "src/components/pages/LeaderboardPage/component.tsx",
+      "src/components/pages/MindMapPage/component.tsx",
+      "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "src/components/pages/PlaygroundHubPage/component.tsx",
+      "src/components/pages/PlaygroundPreparePage/component.tsx"
+    ],
+    "src-pages-remaining": [
+      "src/components/pages/HeadhuntingsPage/component.tsx"
+    ]
+  },
+  "findingCountByManifest": {
+    "sb-composites-cards-layout-data": 11,
+    "sb-blocks-learn-a": 42,
+    "sb-blocks-learn-b": 30,
+    "sb-blocks-nonlearn": 108,
+    "src-composites": 5,
+    "src-blocks-learn-a": 33,
+    "src-blocks-learn-b": 32,
+    "src-blocks-commerce-dashboard-navigation": 25,
+    "src-blocks-profile-remaining": 30,
+    "src-pages-learning": 26,
+    "src-pages-remaining": 2
+  },
+  "uncovered": [],
+  "findings": [
+    {
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "line": 1203,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/composites/data/KeyValue/KeyValue.tsx",
+      "line": 154,
+      "column": 21
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "line": 162,
+      "column": 96
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "line": 203,
+      "column": 81
+    },
+    {
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "line": 121,
+      "column": 123
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "line": 169,
+      "column": 97
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "line": 172,
+      "column": 93
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "line": 230,
+      "column": 96
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "line": 238,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "line": 243,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx",
+      "line": 172,
+      "column": 60
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "line": 126,
+      "column": 81
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+      "line": 147,
+      "column": 60
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+      "line": 259,
+      "column": 115
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      "line": 411,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      "line": 417,
+      "column": 104
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      "line": 490,
+      "column": 125
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeHeader/ChallengeHeader.tsx",
+      "line": 165,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+      "line": 86,
+      "column": 66
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+      "line": 105,
+      "column": 73
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentArticle/ContentArticle.tsx",
+      "line": 118,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "line": 160,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "line": 169,
+      "column": 72
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "line": 176,
+      "column": 59
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "line": 229,
+      "column": 52
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "line": 236,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "line": 342,
+      "column": 41
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "line": 111,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "line": 159,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "line": 177,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "line": 184,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "line": 145,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "line": 166,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      "line": 84,
+      "column": 104
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      "line": 112,
+      "column": 69
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      "line": 104,
+      "column": 40
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentReaction/ContentReaction.tsx",
+      "line": 81,
+      "column": 82
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx",
+      "line": 71,
+      "column": 143
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "line": 197,
+      "column": 63
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "line": 208,
+      "column": 139
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      "line": 80,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      "line": 78,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      "line": 103,
+      "column": 82
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 38,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 42,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 59,
+      "column": 82
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "line": 122,
+      "column": 75
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "line": 128,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "line": 183,
+      "column": 68
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 185,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 188,
+      "column": 69
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 192,
+      "column": 67
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 197,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 290,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 301,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+      "line": 157,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+      "line": 178,
+      "column": 49
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+      "line": 150,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      "line": 271,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "line": 164,
+      "column": 69
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "line": 199,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "line": 211,
+      "column": 115
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "line": 333,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "line": 337,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "line": 361,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "line": 367,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      "line": 165,
+      "column": 100
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      "line": 283,
+      "column": 106
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+      "line": 89,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+      "line": 189,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "line": 155,
+      "column": 64
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "line": 108,
+      "column": 89
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      "line": 65,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      "line": 94,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+      "line": 207,
+      "column": 73
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+      "line": 202,
+      "column": 53
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      "line": 166,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      "line": 177,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      "line": 207,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+      "line": 231,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionButton.tsx",
+      "line": 120,
+      "column": 60
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      "line": 164,
+      "column": 74
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      "line": 206,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+      "line": 244,
+      "column": 114
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "line": 72,
+      "column": 78
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "line": 149,
+      "column": 104
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "line": 195,
+      "column": 76
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 91,
+      "column": 41
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 113,
+      "column": 74
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 135,
+      "column": 41
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 139,
+      "column": 33
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 171,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 184,
+      "column": 25
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 194,
+      "column": 29
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "line": 203,
+      "column": 29
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "line": 37,
+      "column": 96
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 314,
+      "column": 81
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 362,
+      "column": 41
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 393,
+      "column": 41
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 432,
+      "column": 98
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 505,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 506,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 547,
+      "column": 81
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 549,
+      "column": 81
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 558,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 576,
+      "column": 29
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 589,
+      "column": 53
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "line": 54,
+      "column": 115
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "line": 203,
+      "column": 98
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "line": 89,
+      "column": 104
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "line": 157,
+      "column": 100
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "line": 32,
+      "column": 120
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "line": 258,
+      "column": 64
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "line": 306,
+      "column": 88
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "line": 320,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "line": 328,
+      "column": 64
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "line": 377,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "line": 379,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "line": 390,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "line": 59,
+      "column": 21
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 65,
+      "column": 52
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 78,
+      "column": 81
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 86,
+      "column": 76
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 91,
+      "column": 52
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 109,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 115,
+      "column": 52
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 148,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 177,
+      "column": 50
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 182,
+      "column": 78
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 184,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 189,
+      "column": 66
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 191,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 196,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 215,
+      "column": 53
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 227,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 251,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 258,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 264,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 265,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 266,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 283,
+      "column": 29
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 286,
+      "column": 72
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 294,
+      "column": 25
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "line": 71,
+      "column": 53
+    },
+    {
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "line": 61,
+      "column": 59
+    },
+    {
+      "file": ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+      "line": 250,
+      "column": 41
+    },
+    {
+      "file": ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+      "line": 266,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+      "line": 270,
+      "column": 48
+    },
+    {
+      "file": ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      "line": 292,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      "line": 314,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      "line": 318,
+      "column": 73
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+      "line": 210,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+      "line": 215,
+      "column": 74
+    },
+    {
+      "file": ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      "line": 278,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      "line": 326,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      "line": 330,
+      "column": 72
+    },
+    {
+      "file": ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      "line": 335,
+      "column": 72
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+      "line": 150,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+      "line": 156,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+      "line": 144,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+      "line": 148,
+      "column": 74
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+      "line": 122,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+      "line": 126,
+      "column": 70
+    },
+    {
+      "file": ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+      "line": 124,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+      "line": 128,
+      "column": 78
+    },
+    {
+      "file": ".storybook/components/starci/pages/LeaderboardPage/LeaderboardPage.tsx",
+      "line": 183,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/LeaderboardPage/LeaderboardPage.tsx",
+      "line": 187,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "line": 306,
+      "column": 29
+    },
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "line": 314,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      "line": 408,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      "line": 412,
+      "column": 41
+    },
+    {
+      "file": ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      "line": 416,
+      "column": 71
+    },
+    {
+      "file": ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      "line": 421,
+      "column": 51
+    },
+    {
+      "file": ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+      "line": 234,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+      "line": 240,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "line": 197,
+      "column": 47
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "line": 198,
+      "column": 47
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "line": 333,
+      "column": 57
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "line": 346,
+      "column": 60
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "line": 416,
+      "column": 93
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "line": 427,
+      "column": 77
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "line": 449,
+      "column": 60
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundHubPage/PlaygroundHubPage.tsx",
+      "line": 72,
+      "column": 73
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+      "line": 218,
+      "column": 61
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+      "line": 222,
+      "column": 73
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "line": 240,
+      "column": 29
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "line": 248,
+      "column": 37
+    },
+    {
+      "file": ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+      "line": 365,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+      "line": 369,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+      "line": 373,
+      "column": 65
+    },
+    {
+      "file": ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+      "line": 378,
+      "column": 70
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "line": 124,
+      "column": 73
+    },
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "line": 147,
+      "column": 60
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "line": 259,
+      "column": 115
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "line": 411,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "line": 417,
+      "column": 104
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "line": 490,
+      "column": 125
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "line": 161,
+      "column": 57
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "line": 86,
+      "column": 66
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "line": 105,
+      "column": 73
+    },
+    {
+      "file": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "line": 118,
+      "column": 77
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "line": 161,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "line": 170,
+      "column": 72
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "line": 177,
+      "column": 59
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "line": 229,
+      "column": 52
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "line": 236,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "line": 342,
+      "column": 41
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 111,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 159,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 177,
+      "column": 65
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "line": 184,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "line": 145,
+      "column": 57
+    },
+    {
+      "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "line": 166,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPager/index.tsx",
+      "line": 85,
+      "column": 104
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPager/index.tsx",
+      "line": 113,
+      "column": 69
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "line": 104,
+      "column": 40
+    },
+    {
+      "file": "src/components/blocks/learn/ContentReaction/index.tsx",
+      "line": 81,
+      "column": 82
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "line": 59,
+      "column": 143
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "line": 198,
+      "column": 63
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "line": 209,
+      "column": 139
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "line": 80,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 38,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 42,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "line": 59,
+      "column": 82
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "line": 130,
+      "column": 75
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "line": 138,
+      "column": 21
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 194,
+      "column": 65
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 197,
+      "column": 69
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 201,
+      "column": 67
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 206,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 298,
+      "column": 57
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 312,
+      "column": 21
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "line": 157,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "line": 178,
+      "column": 49
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "line": 150,
+      "column": 77
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "line": 271,
+      "column": 77
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "line": 164,
+      "column": 69
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "line": 203,
+      "column": 57
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "line": 215,
+      "column": 115
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 333,
+      "column": 65
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 337,
+      "column": 65
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 361,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 367,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "line": 166,
+      "column": 100
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "line": 284,
+      "column": 106
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "line": 89,
+      "column": 65
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "line": 189,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "line": 207,
+      "column": 73
+    },
+    {
+      "file": "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "line": 204,
+      "column": 53
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "line": 166,
+      "column": 77
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "line": 177,
+      "column": 65
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "line": 207,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "line": 233,
+      "column": 77
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "line": 120,
+      "column": 60
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "line": 164,
+      "column": 74
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "line": 206,
+      "column": 77
+    },
+    {
+      "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "line": 244,
+      "column": 114
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "line": 72,
+      "column": 78
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "line": 149,
+      "column": 104
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "line": 196,
+      "column": 76
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "line": 37,
+      "column": 96
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 91,
+      "column": 41
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 113,
+      "column": 74
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 135,
+      "column": 41
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 139,
+      "column": 33
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 171,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 184,
+      "column": 25
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 194,
+      "column": 29
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "line": 203,
+      "column": 29
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 316,
+      "column": 81
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 365,
+      "column": 41
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 396,
+      "column": 41
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 435,
+      "column": 98
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 510,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 511,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 552,
+      "column": 81
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 555,
+      "column": 81
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 565,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 583,
+      "column": 29
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 596,
+      "column": 53
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "line": 54,
+      "column": 115
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "line": 203,
+      "column": 98
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "line": 31,
+      "column": 120
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "line": 58,
+      "column": 21
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 258,
+      "column": 64
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 306,
+      "column": 88
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 320,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 328,
+      "column": 64
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 377,
+      "column": 57
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 379,
+      "column": 61
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 390,
+      "column": 77
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 87,
+      "column": 52
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 102,
+      "column": 47
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 109,
+      "column": 76
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 114,
+      "column": 52
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 131,
+      "column": 57
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 137,
+      "column": 52
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 198,
+      "column": 39
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 199,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 206,
+      "column": 33
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 207,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 212,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 230,
+      "column": 53
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 241,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 268,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 274,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 275,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 276,
+      "column": 37
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 289,
+      "column": 33
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 293,
+      "column": 33
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLockedState/index.tsx",
+      "line": 80,
+      "column": 21
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "line": 1213,
+      "column": 77
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "line": 177,
+      "column": 72
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "line": 217,
+      "column": 57
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "line": 149,
+      "column": 123
+    },
+    {
+      "file": "src/components/composites/stats/SegmentBar/index.tsx",
+      "line": 170,
+      "column": 36
+    },
+    {
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "line": 248,
+      "column": 41
+    },
+    {
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "line": 264,
+      "column": 37
+    },
+    {
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "line": 268,
+      "column": 48
+    },
+    {
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "line": 229,
+      "column": 65
+    },
+    {
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "line": 234,
+      "column": 74
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 1109,
+      "column": 21
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 1204,
+      "column": 21
+    },
+    {
+      "file": "src/components/pages/FoundationResourcePage/component.tsx",
+      "line": 165,
+      "column": 65
+    },
+    {
+      "file": "src/components/pages/FoundationResourcePage/component.tsx",
+      "line": 171,
+      "column": 57
+    },
+    {
+      "file": "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "line": 159,
+      "column": 61
+    },
+    {
+      "file": "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "line": 163,
+      "column": 74
+    },
+    {
+      "file": "src/components/pages/FoundationsGridPage/component.tsx",
+      "line": 143,
+      "column": 61
+    },
+    {
+      "file": "src/components/pages/FoundationsGridPage/component.tsx",
+      "line": 147,
+      "column": 70
+    },
+    {
+      "file": "src/components/pages/HeadhuntingsPage/component.tsx",
+      "line": 133,
+      "column": 61
+    },
+    {
+      "file": "src/components/pages/HeadhuntingsPage/component.tsx",
+      "line": 137,
+      "column": 78
+    },
+    {
+      "file": "src/components/pages/LeaderboardPage/component.tsx",
+      "line": 187,
+      "column": 61
+    },
+    {
+      "file": "src/components/pages/LeaderboardPage/component.tsx",
+      "line": 191,
+      "column": 77
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "line": 349,
+      "column": 69
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "line": 210,
+      "column": 47
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "line": 211,
+      "column": 47
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "line": 348,
+      "column": 57
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "line": 361,
+      "column": 60
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "line": 429,
+      "column": 93
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "line": 441,
+      "column": 77
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "line": 463,
+      "column": 60
+    },
+    {
+      "file": "src/components/pages/PlaygroundHubPage/component.tsx",
+      "line": 80,
+      "column": 73
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "line": 277,
+      "column": 61
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "line": 281,
+      "column": 73
+    }
+  ],
+  "after": {
+    "findings": 207,
+    "files": 73,
+    "note": "refreshed post-wave; remaining are held under zero-warn ratchet"
+  },
+  "fixedFindings": 137
+}

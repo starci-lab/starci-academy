@@ -1,0 +1,22 @@
+{
+  "partition": "storybook-parity-and-tests",
+  "changed": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+    "src/components/blocks/learn/ContentPager/index.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx"
+  ],
+  "skipped": [],
+  "holds": [],
+  "evidence": [
+    "span API + ContentPager migration mirrored SB→src",
+    "PagerFullWidth story updated to span: 2"
+  ],
+  "handoff": {},
+  "ratchetReady": false,
+  "verification": {
+    "gates": "see status.json"
+  },
+  "regressions": []
+}

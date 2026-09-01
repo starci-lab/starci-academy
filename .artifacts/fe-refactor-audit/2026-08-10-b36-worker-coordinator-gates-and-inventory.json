@@ -1,0 +1,62 @@
+{
+  "batch": "B36",
+  "wave": "B",
+  "agent": "coordinator-gates-and-inventory",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T17:05:00.000Z",
+  "workerPresence": {
+    "navbar-frame-storybook": true,
+    "navbar-frame-src-and-parity": true,
+    "glyphmark-muted-contract": true,
+    "identity-forwarding-storybook": true,
+    "identity-forwarding-src": true,
+    "navbar-and-glyphmark-consumers": true,
+    "identity-root-consumers": true,
+    "authentication-content-separation": true,
+    "surface-list-card-consumers": true,
+    "coordinator-gates-and-inventory": true
+  },
+  "forbiddenProof": {
+    "command": "git diff --name-only 84b92cd77 -- nivo|nivoexpert|mia-mia trees",
+    "productDiffs": [],
+    "preDirtyExcluded": [
+      ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"
+    ],
+    "pass": true
+  },
+  "gates": {
+    "tsc": 0,
+    "pluginEslintTests": 0,
+    "principleStyleTests": 0,
+    "semanticContractsTests": 0,
+    "auditFe": 0,
+    "gitDiffCheck": 0
+  },
+  "eslint": {
+    "before": { "warnings": 6265, "files": 1104, "errors": 0, "a11y": 11 },
+    "after": { "warnings": 6215, "files": 1086, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -50, "files": -18 }
+  },
+  "lowDeltaExplanation": [
+    "SurfaceListCard: inventory listed 75 import sites but only ~8 were exact SurfaceCard.List migrations; majority held (ReactNode rows, accordion hybrid, per-row hooks).",
+    "GlyphMark muted: only exact size-5+shrink-0+text-muted triad migrated (WeeklyGoals, ContentPager, FlashcardStudyCard, CourseOutline); other candidates lacked shrink-0 or used size-4/hover.",
+    "Identity: Wave A unlocked roots; Wave B stamped only 5 clean consumer roots (breadcrumbs/headers/toolbar); composites/PageHeader family held.",
+    "Authentication: ownership refactor closed ModalShell nesting hold but did not mass-burn sentence-tier host debt outside the auth tree.",
+    "NavbarFrame: outer sticky landmark closed; internal HeroUI Dropdown/Kbd/Popover vocabulary holds remain."
+  ],
+  "missingVocabularyProposals": [
+    {
+      "name": "SettingsStickyRail",
+      "need": "Named frame for sticky desktop/mobile settings rail topology",
+      "evidence": "B35 navigation worker hold + SettingsSidebarNav sticky hosts",
+      "status": "proposal-only"
+    },
+    {
+      "name": "house Dropdown/Kbd/Popover",
+      "need": "Vocabulary atoms so Navbar can clear no-heroui-outside-vocabulary",
+      "evidence": "navbar-frame workers retained HeroUI holds",
+      "status": "proposal-only"
+    }
+  ],
+  "note": "Parent authored this coordinator report after the polling coordinator stalled; gates re-run by parent."
+}

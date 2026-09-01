@@ -1,0 +1,102 @@
+{
+  "agent": "qa-header-src-consumer-migration",
+  "batch": "B34",
+  "wave": "B",
+  "manifest": "qa-header-src-consumer-migration",
+  "checkpoint": "6ff21c66",
+  "focus": "Mirror SB QaConversationHeader into src; migrate QaQuestionThread person/labels + markdown className → presentation axes",
+  "ownedFiles": [
+    "src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "src/components/blocks/learn/QaQuestionThread/index.tsx",
+    ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx"
+  ],
+  "api": {
+    "QaConversationHeaderPerson": {
+      "id": "string",
+      "displayName": "string",
+      "avatarUrl": "string?"
+    },
+    "QaConversationHeaderLabels": {
+      "collapse": "string",
+      "askedBy": "(displayName: string) => string",
+      "replies": "(count: number) => string",
+      "beFirst": "string",
+      "founderBadge": "string",
+      "follow": "string",
+      "following": "string"
+    },
+    "propsRetained": [
+      "asker",
+      "participants",
+      "replyCount",
+      "onCollapse",
+      "isFounderAsker",
+      "canFollow",
+      "isFollowing",
+      "onToggleFollow",
+      "isFollowPending",
+      "isSkeleton"
+    ],
+    "propsAdded": ["labels?"],
+    "srcDefaultLabels": "next-intl courseQa.* + follow.follow/following when labels omitted"
+  },
+  "changes": [
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "actions": [
+        "Exported QaConversationHeaderPerson + QaConversationHeaderLabels (named strings/formatters — not ReactNode)",
+        "Mirrored Wave A SB layout: StackH identity root + FillAvailable identity column + house Button/Avatar/AvatarGroup/Typography",
+        "Removed HeroUI Button/Typography, UserAvatar, FollowButton block import, raw hosts, cn, public CSS doors",
+        "Follow action via house Button (primary/secondary) — not FollowButton",
+        "Localized defaults via useTranslations when labels omitted; optional labels override"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "actions": [
+        "Mapped asker username/avatar → canonical person { id, displayName, avatarUrl } with displayName || username at boundary",
+        "Mapped participants to QaConversationHeaderPerson (CommentAuthor has no displayName → username)",
+        "Migrated MarkdownContent className=\"text-sm [&_p]:m-0\" → density=\"compact\" flow=\"embedded\" (blocks/rendering axes)"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+      "actions": [
+        "Burned [&_p]:m-0 / line-clamp wrappers; MarkdownContent flow=\"embedded\" (+ previewLines={2} collapsed)",
+        "Replaced previewColumn classNames min-w-0 flex-1 with FillAvailable at=\"base\"",
+        "Participants passed as explicit QaConversationHeaderPerson map at header call site"
+      ]
+    }
+  ],
+  "vocabulary": [
+    "Button",
+    "Avatar",
+    "AvatarGroup",
+    "Typography",
+    "StackH",
+    "StackV",
+    "FillAvailable",
+    "MarkdownContent"
+  ],
+  "markdownAxes": {
+    "srcExpandedQuestion": { "density": "compact", "flow": "embedded" },
+    "sbCollapsedPreview": { "measure": "compact", "flow": "embedded", "previewLines": 2 },
+    "sbExpandedQuestion": { "measure": "compact", "flow": "embedded" }
+  },
+  "holds": [],
+  "forbiddenAvoided": [
+    "nivo",
+    "nivoexpert",
+    "mia-mia",
+    "a11y",
+    "eslint-disable",
+    "FollowButton block import"
+  ],
+  "verification": {
+    "tscOwned": "pass (no QaConversationHeader/QaQuestionThread diagnostics)",
+    "eslintQaConversationHeader": "pass (clean)",
+    "eslintQaQuestionThread": "pre-existing host/cn/heroui warnings retained; no new markdown/header findings introduced",
+    "gitDiffCheck": "pass"
+  },
+  "status": "done"
+}

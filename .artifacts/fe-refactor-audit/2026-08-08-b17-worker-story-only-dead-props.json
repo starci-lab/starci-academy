@@ -1,0 +1,36 @@
+{
+  "partition": "story-only-dead-props",
+  "changed": [],
+  "skipped": [
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx#bodyClassName"
+  ],
+  "holds": [
+    {
+      "id": "ModalShell-bodyClassName-story-visual",
+      "classification": "API-hold",
+      "prop": "bodyClassName",
+      "file": ".storybook/components/composites/layout/ModalShell/ModalShell.tsx"
+    }
+  ],
+  "evidence": {
+    "bodyClassName": {
+      "srcTwinHasProp": false,
+      "productJsxConsumers": [],
+      "storyJsxConsumers": [
+        ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx:328 bodyClassName=\"flex flex-col gap-3\" (WithLeadingTabs visual)",
+        ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx:333 code sample"
+      ],
+      "whyNotSafeRemoval": "Story uses prop for real body stack chrome (flex flex-col gap-3). Removing changes story visuals. Allowed rule requires zero JSX consumers AND no visual behavior."
+    },
+    "otherShellPropsAfterB16": "No additional zero-consumer story-only props on ModalShell/DrawerShell/SurfaceCard/PDFView"
+  },
+  "proposals": [
+    {
+      "id": "ModalShell-bodyVariant",
+      "summary": "Future named bodyVariant/contentStack on ModalShell for denser body stacks; then rewrite WithLeadingTabs story and drop bodyClassName",
+      "doNotInventNow": true
+    }
+  ],
+  "verification": { "note": "no product edits" },
+  "regressions": []
+}

@@ -1,0 +1,21 @@
+{
+  "partition": "vendor-boundary-ledger",
+  "changed": [
+    {
+      "path": ".claude/fe/decision-ledger.json",
+      "reason": "Recorded heroui-vendor-boundary-batch13-2026-08-08 + proven apply IDs"
+    }
+  ],
+  "skipped": [],
+  "holds": [],
+  "decisions": [
+    {
+      "id": "heroui-vendor-boundary-batch13-2026-08-08",
+      "classification": "vendor-boundary",
+      "applied": false,
+      "note": "30 files documented; no product migrations"
+    }
+  ],
+  "verification": {},
+  "regressions": []
+}

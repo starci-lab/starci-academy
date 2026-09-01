@@ -1,0 +1,17 @@
+{
+  "worker": "storybook-twins",
+  "manifest": [],
+  "changed": [],
+  "held": [],
+  "retracted": [],
+  "warningsBefore": [],
+  "warningsAfter": [],
+  "legacyImportBefore": null,
+  "legacyImportAfter": null,
+  "iconExpressionBefore": null,
+  "iconComponentAfter": null,
+  "storybookParity": "no twin files owned — PitchCard/PlaygroundCard/PremiumPaywall have no SB twins; EnrollGate twin held with enroll-gate",
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

@@ -1,0 +1,36 @@
+{
+  "partition": "pages-other",
+  "manifest": [
+    "src/components/pages/CommunityFeedPage/component.tsx",
+    "src/components/overlays/modals/PremiumGateModal/component.tsx"
+  ],
+  "changed": [
+    "src/components/pages/CommunityFeedPage/component.tsx",
+    "src/components/overlays/modals/PremiumGateModal/component.tsx"
+  ],
+  "applied": [
+    {
+      "kind": "safe-noop",
+      "files": [
+        "src/components/pages/CommunityFeedPage/component.tsx",
+        "src/components/overlays/modals/PremiumGateModal/component.tsx"
+      ],
+      "change": "Removed Typography isSkeleton classNames={[\"w-1/2\"]} duplicates",
+      "count": 2,
+      "note": "PremiumGateModal assigned here as remaining eligible non-page tree outside locked/Nivo"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "All ambiguous width/flex placement without exact principle"
+  ],
+  "evidence": {},
+  "principles": [],
+  "parity": {
+    "storybookSrc": "n/a"
+  },
+  "verification": {
+    "local": "deferred to aggregate"
+  },
+  "regressions": []
+}

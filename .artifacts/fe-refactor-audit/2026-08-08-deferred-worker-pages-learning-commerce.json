@@ -1,0 +1,564 @@
+{
+  "partition": "pages-learning-commerce",
+  "checkpoint": "27127bb5",
+  "changed": [
+    {
+      "path": "src/components/pages/FlashcardReviewPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "Button/Card/Spinner/Typography atoms; dropped WithClassNames/cn; StackV grade labels"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/index.tsx",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "dropped unused WithClassNames (route never passes className)"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCtaButtons/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "StackV identity root + Button atom; dropped className/cn"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseTrustStats/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "Cluster chip-row identity root; dropped heroui cn/WithClassNames"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePricingRail/PhaseRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "Typography atom; dropped unused WithClassNames"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "reason": "Accordion → AccordionTree atom (surface variant; className door closed on atom)"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "AccordionTreeItem + Typography atom; StackV replaces raw ul flex"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "reason": "Typography atom + underlineOnGroupHover"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "Button/Typography atoms; dropped WithClassNames/cn; atom isPending owns spinner"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "identity on StackV + AsyncContentError/Empty early roots"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/index.tsx",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "dropped unused WithClassNames"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "dropped unused WithClassNames"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/index.tsx",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "dropped unused WithClassNames"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "Box identity; Button atom; StackV/H replace flex icon wrapper"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "StackV identity root"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/components/pages/ContentPage/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "closed-contentpage-box — do not reopen"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/pages/PracticeProblemPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:div + parallel-skeleton hold; raw layout needs owning frame"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/component.tsx",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-inline-skeleton-branch",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "grid className placement + inline-skeleton + missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:SurfaceListCardItem; page-folder hold"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:AsyncContent + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "reason": "skeleton-twin + page-folder; host-root:div"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div + glass Card heroui; page-folder"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "host-root:div + parallel-skeleton + missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root mixed + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:div + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:AsyncContent + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:AsyncContent + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root mixed + retired-async + parallel-skeleton"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:div; page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "host-root:AsyncContent + retired-async + parallel-skeleton + page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:StickyBottomBar; page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:PageHeader; className carries grid placement from parent"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "skeleton-twin + missing-both + page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "skeleton-twin + missing-both + page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare + page-folder; heroui/classname need owning frame"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "skeleton-twin + missing-both + page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-inline-skeleton-branch",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:LabeledCard; inline-skeleton needs leaf isSkeleton"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare + page-folder"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "rail+pane flex host-root:div — no existing frame owns responsive rail split"
+    },
+    {
+      "path": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:CourseCard (block); page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "fragment/multi-root + early AsyncContent; missing-both; page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePricingRail/PhaseRow/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "missing-both Box principle/explain; page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:AccordionTreeItem (no identity prop); page-folder"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "host-root:SurfaceListCardItem (no identity prop); page-folder"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-hero-heading-class",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "glass Card className not on atom Card; hero-heading hold; page-folder"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-hero-heading-class",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "glass Card className not on atom Card; hero-heading hold; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "inline-skeleton needs leaf isSkeleton; missing-both; page-folder"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "missing-both frame-self-declare; page-folder"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCtaButtons/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only — no mechanical importer-proven move"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseTrustStats/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only — no mechanical importer-proven move"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only — no mechanical importer-proven move"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only — no mechanical importer-proven move"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only — no mechanical importer-proven move"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only — no mechanical importer-proven move"
+    }
+  ],
+  "verification": {
+    "eslintQuiet": {
+      "changedFiles": 15,
+      "exitCode": 0,
+      "command": "npx eslint --quiet <15 changed paths>"
+    },
+    "tscFiltered": {
+      "note": "npx tsc --noEmit — no errors on changed paths"
+    }
+  },
+  "regressions": []
+}

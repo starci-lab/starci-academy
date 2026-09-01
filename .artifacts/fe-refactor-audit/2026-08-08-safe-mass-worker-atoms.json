@@ -1,0 +1,29 @@
+{
+  "partition": "atoms",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "ChipBase API hard hold (BATCH 11)"
+    },
+    {
+      "path": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "ChipBase API hard hold (BATCH 11)"
+    },
+    {
+      "path": "src/components/atoms/display/Logo/Logo.tsx",
+      "rules": ["starci-fe/no-hardcoded-user-text-in-vocabulary"],
+      "reason": "semantic hold — not in safe allowlist"
+    },
+    {
+      "path": "src/components/atoms/navigation/Pagination/Pagination.tsx",
+      "rules": ["starci-fe/no-hardcoded-user-text-in-vocabulary"],
+      "reason": "semantic hold — not in safe allowlist"
+    }
+  ],
+  "verification": { "note": "No safe-candidate files in manifest — worker skipped by coordinator" },
+  "regressions": []
+}

@@ -1,0 +1,17 @@
+{
+  "partition": "continue-card-twins",
+  "changed": [],
+  "skipped": [
+    "ContinueCard Item/Hero keep bodyVariant=\"tile\" only — default surface chrome preserved (not TILE_CHROME consumers)"
+  ],
+  "holds": [],
+  "evidence": [
+    "SB+src ContinueCardItem/Hero both bodyVariant=\"tile\", no chromeVariant",
+    "Axes independent: body layout vs outer chrome"
+  ],
+  "proposals": [],
+  "verification": {
+    "parity": "SB/src ContinueCard twins match"
+  },
+  "regressions": []
+}

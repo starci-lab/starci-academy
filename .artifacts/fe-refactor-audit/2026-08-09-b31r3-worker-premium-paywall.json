@@ -1,0 +1,24 @@
+{
+  "worker": "premium-paywall",
+  "manifest": ["src/components/blocks/learn/lesson/PremiumPaywall/index.tsx"],
+  "warningsBefore": [
+    { "line": 60, "rule": "starci-fe/no-public-classname-prop", "detail": "Skeleton className" },
+    { "line": 81, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 95, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 108, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 115, "rule": "starci-fe/no-public-classname-prop", "detail": "Button classNames w-full" }
+  ],
+  "warningsAfter": [],
+  "legacyImportBefore": "@/components/blocks/identity/IconTile",
+  "legacyImportAfter": null,
+  "iconExpressionBefore": "<LockIcon aria-hidden focusable=\"false\" />",
+  "iconComponentAfter": "LockIcon → <IdentityTile icon={LockIcon} tone=\"accent\" size=\"sm\" />",
+  "changed": ["src/components/blocks/learn/lesson/PremiumPaywall/index.tsx"],
+  "held": [],
+  "retracted": [],
+  "storybookParity": "n/a — no blocks PremiumPaywall twin; mirrored ContentPaywall layout contract",
+  "verification": { "eslintMaxWarnings0": "pass" },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "notes": "Dropped asymmetric pt-6 / max-w Boxes / raw Skeleton — parent reader gap owns seam; PriceTagInline isSkeleton owns price shimmer (ContentPaywall pattern)"
+}

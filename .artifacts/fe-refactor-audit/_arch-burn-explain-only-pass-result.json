@@ -1,0 +1,36 @@
+{
+  "mission": "require-frame-self-declare explain-only",
+  "date": "2026-08-07",
+  "baseline": {
+    "requireFrameSelfDeclareTotal": 836,
+    "explainOnly": 72,
+    "missingBoth": 764
+  },
+  "after": {
+    "explainOnlyClearedUnlocked": 1,
+    "explainOnlyRemainingLocked": 71,
+    "unlockedExplainOnlyRemaining": 0
+  },
+  "filesChanged": [
+    "src/components/blocks/cards/SectionCard/index.tsx"
+  ],
+  "hardCasesSkipped": {
+    "lockedExplainOnly": 71,
+    "lockedPaths": [
+      "MockInterviewPage/MockInterviewSession (24)",
+      "FlashcardsPage/QuizSession (+ nested) (42)",
+      "LandingPage/LearnLoopScroll (5)"
+    ],
+    "missingBoth": 764,
+    "sectionCardMissingBothBoxes": [
+      "root Box p-4 via cn — not 1:1 card-padding (canon card pad is p-3)",
+      "header Box pb-3 only — not a registered full padding token"
+    ]
+  },
+  "verification": {
+    "tsc": "exit 2 — 6 pre-existing SurfaceCard identity errors in .storybook/starci blocks (reproduced with SectionCard edit stashed; not caused by this pass)",
+    "principleStyle": "7/7 pass",
+    "checkPatternCoverage": "OK — 0 failing; 27 teacher holds"
+  },
+  "storybookTwin": "none (stories only)"
+}

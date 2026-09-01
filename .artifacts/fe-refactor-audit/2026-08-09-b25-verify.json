@@ -1,0 +1,546 @@
+{
+  "typographyDupesCount": 18,
+  "typographyDupes": [
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 84,
+      "props": "<Typography size=\"xs\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "line": 158,
+      "props": "<Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "line": 26,
+      "props": "<Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "line": 134,
+      "props": "<Typography size=\"xs\" color=\"muted\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/learn/LearnNudges/component.tsx",
+      "line": 63,
+      "props": "<Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 161,
+      "props": "<Typography size=\"sm\" weight=\"medium\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 78,
+      "props": "<Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 94,
+      "props": "<Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 128,
+      "props": "<Typography size=\"h4\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 158,
+      "props": "<Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 240,
+      "props": "<Typography size=\"h4\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 248,
+      "props": "<Typography size=\"h4\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 267,
+      "props": "<Typography size=\"h4\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/composites/lists/UserCell/index.tsx",
+      "line": 140,
+      "props": "<Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "line": 181,
+      "props": "<Typography size=\"xs\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/component.tsx",
+      "line": 43,
+      "props": "<Typography size=\"sm\" isSkeleton classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "line": 30,
+      "props": "<Typography isSkeleton size=\"xs\" classNames={[\"w-1/2\"]} "
+    },
+    {
+      "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "line": 117,
+      "props": "<Typography isSkeleton size=\"xs\" classNames={[\"w-1/2\"]} "
+    }
+  ],
+  "typographyW12LiveCount": 0,
+  "typographyW12Live": [],
+  "titledMinW0": [],
+  "emptyBlock": [],
+  "userAvatarRounded": [],
+  "simpleEmptyDup": [],
+  "labeledAccordionConsumers": [
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "line": 72,
+      "snippet": "<LabeledAccordionCard className={className} allowsMultipleExpanded items={sortedCriterias.map((criteria, index) => ({ id: criteria.id, title: `${index + 1}. ${criteria.text}`, titleEnd: () => ( <Chip "
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "line": 277,
+      "snippet": "<LabeledAccordionCard items={groupedByDeck.map((group) => ({ id: group.deckId, title: group.deckTitle, titleEnd: () => ( <Typography size=\"xs\" color=\"muted\" classNames={[\"shrink-0\"]} text={labels.deck"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "line": 189,
+      "snippet": "<LabeledAccordionCard className={className} defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined} items={milestones.map((milestone) => { const state = milestoneState(milestone) co"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "line": 177,
+      "snippet": "<LabeledAccordionCard className={className} defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined} items={modules.map((module) => { const read = module.lessons.filter((lesson) => l"
+    }
+  ],
+  "profileGuardConsumers": [
+    {
+      "file": "src/components/pages/ProfileActivityPage/index.tsx",
+      "line": 37,
+      "snippet": "<ProfileSectionGuard section=\"activity\" className={className}"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "line": 33,
+      "snippet": "<ProfileSectionGuard section=\"challenges\" className={className}"
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "line": 46,
+      "snippet": "<ProfileSectionGuard section=\"projects\" className={className}"
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "line": 33,
+      "snippet": "<ProfileSectionGuard section=\"skills\" className={className}"
+    }
+  ],
+  "wrapperInspect": [
+    {
+      "file": ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+      "prop": "className",
+      "forwarded": true,
+      "mentions": [
+        " const Base = ({ className, children, hideScrollBar = tru",
+        " size={size} className={cn(\"overflow-y-auto\", className)} ",
+        "ssName={cn(\"overflow-y-auto\", className)} > <motion.div ",
+        " <motion.div className={cn( \"min-h-min sel"
+      ],
+      "mentionCount": 4
+    },
+    {
+      "file": ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+      "prop": "className",
+      "forwarded": true,
+      "mentions": [
+        " \"right\", widthVar, className, }: ResizableRailBaseProps) => { ",
+        " return ( <div className={cn(className)} style={{ width }}> ",
+        "( <div className={cn(className)} style={{ width }}> {child",
+        "={onKeyDown} className={cn( \"group absolut",
+        " > <span className=\"h-full w-px bg-separator transition-col"
+      ],
+      "mentionCount": 5
+    },
+    {
+      "file": ".storybook/components/frames/Cluster/Cluster.tsx",
+      "prop": "classNames",
+      "forwarded": true,
+      "mentions": [
+        " separator = false, classNames, principle, explain, isS",
+        "_CLASS[justify], classNames)} > {(items ?? []).map((I"
+      ],
+      "mentionCount": 2
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "prop": "classNames",
+      "forwarded": true,
+      "mentions": [
+        " false, isSkeleton, classNames, principle, explain, ide",
+        "lassName={cn(\"flex flex-col\", classNames)} > {} "
+      ],
+      "mentionCount": 2
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "prop": "classNames",
+      "forwarded": true,
+      "mentions": [
+        "ss, onPrivacyPress, classNames, ...navbarProps }: InnerLayoutPro",
+        " <StackV gap={1} classNames={classNames} items={navMainFooter} /> ",
+        " <StackV gap={1} classNames={classNames} items={navMainFooter} /> </di"
+      ],
+      "mentionCount": 3
+    },
+    {
+      "file": "src/components/behaviors/DragScrollArea/index.tsx",
+      "prop": "className",
+      "forwarded": true,
+      "mentions": [
+        " const Base = ({ className, children, hideScrollBar = tru",
+        " size={size} className={cn(\"overflow-y-auto\", className)} ",
+        "ssName={cn(\"overflow-y-auto\", className)} > <motion.div ",
+        " <motion.div className={cn( \"min-h-min sel"
+      ],
+      "mentionCount": 4
+    },
+    {
+      "file": "src/components/behaviors/ResizableRail/index.tsx",
+      "prop": "className",
+      "forwarded": true,
+      "mentions": [
+        " \"right\", widthVar, className, }: ResizableRailBaseProps) => { ",
+        " return ( <div className={cn(className)} style={{ width }}> ",
+        "( <div className={cn(className)} style={{ width }}> {child",
+        "={onKeyDown} className={cn( \"group absolut",
+        " > <span className=\"h-full w-px bg-separator transition-col"
+      ],
+      "mentionCount": 5
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "prop": "className",
+      "forwarded": true,
+      "mentions": [
+        "ardCategoryRail = ({ variant, className }: LeaderboardCategoryRailProps) => { ",
+        " return ( <div className={cn(\"-mx-1 flex gap-2 overflow-x-auto px",
+        "2 overflow-x-auto px-1 pb-1\", className)}> {items.map((item) =>",
+        " className={cn( \"f",
+        "aria-hidden focusable=\"false\" className=\"size-4 shrink-0\" /> ",
+        " <span className=\"font-medium\">{t(\"leaderboard.xp\", { xp:",
+        " return ( <div className={cn(\"flex flex-col gap-3 overflow-y-auto",
+        "l gap-3 overflow-y-auto p-6\", className)}> <Label>{t(\"leaderboard.c",
+        " }} className=\"gap-1 p-0\" > ",
+        "led} className=\"cursor-pointer rounded-2xl px-3 py-2 da",
+        " <div className=\"flex items-center gap-3\"> ",
+        " className={cn( ",
+        " <div className=\"flex min-w-0 flex-1 flex-col gap-0\"> ",
+        " className={cn(\"line-clamp-1\", item.key === selecte",
+        " type=\"body-xs\" color=\"muted\" className=\"line-clamp-1\"> "
+      ],
+      "mentionCount": 16
+    },
+    {
+      "file": "src/components/frames/Cluster/index.tsx",
+      "prop": "classNames",
+      "forwarded": true,
+      "mentions": [
+        " separator = false, classNames, principle, explain, isS",
+        "_CLASS[justify], classNames)} > {(items ?? []).map((I"
+      ],
+      "mentionCount": 2
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "prop": "classNames",
+      "forwarded": true,
+      "mentions": [
+        " false, isSkeleton, classNames, principle, explain, ide",
+        "lassName={cn(\"flex flex-col\", classNames)} > {} "
+      ],
+      "mentionCount": 2
+    },
+    {
+      "file": "src/components/svg/Logo/index.tsx",
+      "prop": "className",
+      "forwarded": true,
+      "mentions": [
+        " export const Logo = ({ className }: LogoProps) => { return ( "
+      ],
+      "mentionCount": 1
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "prop": "className",
+      "forwarded": false,
+      "mentions": [
+        " <div className=\"flex min-w-0 flex-1 flex-col gap-0 text",
+        " <div className=\"flex shrink-0 items-center gap-3\"> ",
+        " <Accordion.Body className={cn(\"pt-0\")}> "
+      ],
+      "mentionCount": 3
+    }
+  ],
+  "consumerPassing": {
+    "Cluster_classNames": {
+      "count": 10,
+      "sample": [
+        {
+          "file": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+          "line": 94,
+          "snippet": "<Cluster gap={3} principle=\"separator-dot\" explain=\"Places a middle-dot separator between short meta peers so the items read as one inline list.\" align=\"center\" // The `·` between "
+        },
+        {
+          "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+          "line": 243,
+          "snippet": "<Cluster gap={3} principle=\"value-row\" explain=\"Holds a label and its numeric value on one baseline so the count stays readable against the label.\" align=\"baseline\" items={[ // The"
+        },
+        {
+          "file": "src/components/pages/CourseCatalogPage/component.tsx",
+          "line": 258,
+          "snippet": "<Cluster gap={3} principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" justify=\"between\" align=\"center\" items={[ "
+        },
+        {
+          "file": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+          "line": 74,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" classNames={[\"shrink-0\"]} items={[ ..."
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+          "line": 138,
+          "snippet": "<Cluster gap={3} principle=\"value-row\" explain=\"Holds a label and its numeric value on one baseline so the count stays readable against the label.\" justify=\"between\" align=\"center\""
+        },
+        {
+          "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+          "line": 180,
+          "snippet": "<Cluster gap={4} principle=\"content-row\" justify=\"between\" align=\"center\" classNames={[\"w-full\"]} explain=\"Keeps primary content and trailing meta on one baseline so the meta does "
+        },
+        {
+          "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+          "line": 85,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" classNames={[\"min-w-0\"]} items={[ () ="
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "line": 251,
+          "snippet": "<Cluster gap={4} principle=\"content-row\" justify=\"between\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.\" items={[ () "
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "line": 449,
+          "snippet": "<Cluster gap={4} principle=\"content-row\" justify=\"between\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.\" items={[ () "
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "line": 563,
+          "snippet": "<Cluster gap={3} principle=\"chip-row\" justify=\"end\" classNames={[\"shrink-0\"]} items={chipItems} explain=\"Lets chips share one wrapping row so related tags stay together without sta"
+        }
+      ]
+    },
+    "PinnedTrack_classNames": {
+      "count": 1,
+      "sample": [
+        {
+          "file": "src/components/layouts/InnerLayout/component.tsx",
+          "line": 57,
+          "snippet": "<PinnedTrack pinned={() => <Navbar {...(navbarProps as NavbarProps)} />} body={() => <>{children}</>} landmark classNames={[\"flex-1\"]} "
+        }
+      ]
+    },
+    "DragScrollArea_className": {
+      "count": 1,
+      "sample": [
+        {
+          "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+          "line": 172,
+          "snippet": "<DragScrollArea size={40} className=\"flex-1\""
+        }
+      ]
+    },
+    "ResizableRail_className": {
+      "count": 8,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+          "line": 81,
+          "snippet": "<ResizableRail storageKey=\"starci.contentAiChat.railWidth\" defaultWidth={400} minWidth={RAIL_MIN_WIDTH} maxWidth={maxWidth} // eslint-disable-next-line starci-fe/handler-on-prefix "
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 138,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.contentMap.width\" defaultWidth={320} minWidth={256} maxWidth={560} ariaLabel={t(\"courseContents.resizeRail\")} "
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 149,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.milestoneMap.width\" defaultWidth={320} minWidth={256} maxWidth={560} ariaLabel={t(\"courseContents.resizeRail\")} "
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 160,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.leaderboardRail.width\" defaultWidth={300} minWidth={240} maxWidth={420} ariaLabel={t(\"leaderboard.categories.label\")} "
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/index.tsx",
+          "line": 55,
+          "snippet": "<ResizableRail className=\"hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-lg:flex-col @app-lg:self-start\" storageKey=\"starci.architect"
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/index.tsx",
+          "line": 423,
+          "snippet": "<ResizableRail storageKey=\"starci.cv.editorSidebar.width\" defaultWidth={256} minWidth={220} maxWidth={420} ariaLabel={t(\"cv.builder.resizeSidebarAria\")} className={cn( // the resiz"
+        },
+        {
+          "file": "src/components/pages/MindMapPage/component.tsx",
+          "line": 304,
+          "snippet": "<ResizableRail storageKey={RAIL_STORAGE_KEY} defaultWidth={RAIL_DEFAULT_WIDTH} minWidth={RAIL_MIN_WIDTH} maxWidth={RAIL_MAX_WIDTH} ariaLabel={railResizeAriaLabel} handleSide=\"right"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/index.tsx",
+          "line": 43,
+          "snippet": "<ResizableRail className=\"hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-lg:flex-col @app-lg:self-start\" storageKey=\"starci.PracticeH"
+        }
+      ]
+    },
+    "LeaderboardCategoryRail_className": {
+      "count": 1,
+      "sample": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "line": 168,
+          "snippet": "<LeaderboardCategoryRail variant=\"rail\" className=\"min-h-0 @app-lg:flex-1\" "
+        }
+      ]
+    },
+    "Logo_className": {
+      "count": 3,
+      "sample": [
+        {
+          "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+          "line": 23,
+          "snippet": "<Logo className={cn(\"h-9 w-auto\", className)} "
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+          "line": 60,
+          "snippet": "<Logo className=\"flex-1 justify-start\" "
+        },
+        {
+          "file": "src/components/layouts/Navbar/index.tsx",
+          "line": 100,
+          "snippet": "<Logo className=\"justify-start\" "
+        }
+      ]
+    },
+    "InnerLayout_classNames": {
+      "count": 0,
+      "sample": []
+    },
+    "LabeledAccordionCard_className": {
+      "count": 4,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+          "line": 72,
+          "snippet": "<LabeledAccordionCard className={className} allowsMultipleExpanded items={sortedCriterias.map((criteria, index) => ({ id: criteria.id, title: `${index + 1}. ${criteria.text}`, titl"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+          "line": 277,
+          "snippet": "<LabeledAccordionCard items={groupedByDeck.map((group) => ({ id: group.deckId, title: group.deckTitle, titleEnd: () => ( <Typography size=\"xs\" color=\"muted\" classNames={[\"shrink-0\""
+        },
+        {
+          "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+          "line": 189,
+          "snippet": "<LabeledAccordionCard className={className} defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined} items={milestones.map((milestone) => { const state = mileston"
+        },
+        {
+          "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+          "line": 177,
+          "snippet": "<LabeledAccordionCard className={className} defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined} items={modules.map((module) => { const read = module.lessons."
+        }
+      ]
+    },
+    "ProfileSectionGuard_className": {
+      "count": 4,
+      "sample": [
+        {
+          "file": "src/components/pages/ProfileActivityPage/index.tsx",
+          "line": 37,
+          "snippet": "<ProfileSectionGuard section=\"activity\" className={className}"
+        },
+        {
+          "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+          "line": 33,
+          "snippet": "<ProfileSectionGuard section=\"challenges\" className={className}"
+        },
+        {
+          "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+          "line": 46,
+          "snippet": "<ProfileSectionGuard section=\"projects\" className={className}"
+        },
+        {
+          "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+          "line": 33,
+          "snippet": "<ProfileSectionGuard section=\"skills\" className={className}"
+        }
+      ]
+    }
+  },
+  "progressHits": [
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "line": 33,
+      "props": "<ProgressMeter value={score} max={max} color={isSkeleton ? \"accent\" : scoreColorOf(score, max)} isSkeleton={isSkeleton} classNames={[\"flex-1\"]} "
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "line": 242,
+      "props": "<ProgressMeter isSkeleton color={row.color} classNames={[\"flex-1\"]} "
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "line": 243,
+      "props": "<ProgressMeter value={row.count} max={gradeTotal} color={row.color} classNames={[\"flex-1\"]} "
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 429,
+      "props": "<ProgressMeter value={phaseScore.score} max={phaseScore.max} color={scoreColorOf(phaseScore.score, phaseScore.max)} classNames={[\"flex-1\"]} "
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "line": 476,
+      "props": "<ProgressMeter value={attribute.score} max={100} color={scoreColorOf(attribute.score, 100)} classNames={[\"flex-1\"]} "
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "line": 125,
+      "props": "<ProgressMeter value={Math.round(item.avgScore)} max={Math.round(item.avgMax) || 100} color={scoreColorOf(item.avgScore, item.avgMax)} showValue classNames={[\"flex-1\"]} "
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "line": 34,
+      "props": "<ProgressMeter value={score} max={max} color={isSkeleton ? \"accent\" : scoreColorOf(score, max)} isSkeleton={isSkeleton} classNames={[\"flex-1\"]} "
+    }
+  ],
+  "enumHits": [
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "line": 41,
+      "props": "<EnumChip value={hostPlatform} map={map} className={className} "
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "line": 48,
+      "props": "<EnumChip value={kind} map={map} className={className} "
+    }
+  ]
+}

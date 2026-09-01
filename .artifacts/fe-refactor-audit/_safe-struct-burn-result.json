@@ -1,0 +1,82 @@
+{
+  "generated": "2026-08-07",
+  "rules": [
+    "starci-fe/export-matches-folder",
+    "starci-fe/no-helper-folder-in-components",
+    "starci-fe/page-folder-two-files-only"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "check-pattern-coverage": "pass (27 held, 0 failing)"
+  },
+  "fixed": {
+    "export-matches-folder": [
+      {
+        "file": "src/components/atoms/buttons/ButtonGroup/index.tsx",
+        "action": "added compound namespace export const ButtonGroup = { Root, Separator }"
+      },
+      {
+        "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+        "action": "alias DarkLightModeSwitch as DarkLightMode"
+      },
+      {
+        "file": "src/components/blocks/learn/ContinueCard/index.tsx",
+        "action": "added compound namespace export const ContinueCard = { Hero, Item }"
+      },
+      {
+        "file": "src/components/blocks/learn/VariantChip/index.tsx",
+        "action": "added compound namespace export const VariantChip = { Difficulty }"
+      },
+      {
+        "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+        "action": "alias ContentDiscussion as Discussion"
+      },
+      {
+        "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "action": "alias PersonalProjectTaskResult as TaskResult"
+      }
+    ],
+    "no-helper-folder-in-components": [
+      {
+        "from": "src/components/pages/AdminUploadVideoPage/utils/format-size.ts",
+        "to": "src/modules/utils/format-size.ts",
+        "importersUpdated": ["FileSelectionCard/DropZone"]
+      },
+      {
+        "from": "src/components/blocks/learn/AiBalancer/utils/format-timestamp.ts",
+        "to": "src/modules/utils/format-balancer-timestamp.ts",
+        "importersUpdated": ["AdminAiBalancerPage/ProviderSection/KeyRow"]
+      }
+    ],
+    "page-folder-two-files-only": []
+  },
+  "skipped": {
+    "export-matches-folder": [
+      {
+        "file": "src/components/blocks/cv/BlockRegistry/index.tsx",
+        "reason": "registry consts (CV_BLOCK_TYPE_*), not a component — renaming/aliasing would invent a fake component API"
+      }
+    ],
+    "no-helper-folder-in-components": {
+      "countBaseline": 66,
+      "fixed": 3,
+      "note": "fixed 2 util modules (+ their barrels); remaining ~63 skipped",
+      "reasons": [
+        "component-private types without clear modules/types entity home",
+        "page/block-private hooks (SWR/wiring) — not clearly shared",
+        "constants destination ambiguous (resources vs modules)",
+        "parse-bank-details coupled to page-local BankDetails types",
+        "ArchitecturePage hooks skipped (adjacent to locked ArchitectureScene)",
+        "locked-path adjacency / unsure import graphs"
+      ]
+    },
+    "page-folder-two-files-only": {
+      "countBaseline": 356,
+      "fixed": 0,
+      "plusClearedByHelperMoves": [
+        "AdminUploadVideoPage/utils/* (2 files) — gone with util move"
+      ],
+      "reason": "nested page/overlay/layout subcomponents are not mechanical block extracts; prefer SKIP over risky moves. Locked paths untouched."
+    }
+  }
+}

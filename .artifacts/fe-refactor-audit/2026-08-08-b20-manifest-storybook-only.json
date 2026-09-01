@@ -1,0 +1,23 @@
+{
+  "partition": "storybook-only",
+  "files": [
+    ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+    ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+    ".storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+    ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+    ".storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+    ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+    ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+    ".storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+    ".storybook/components/composites/navigation/DoubleTabsCard/DoubleTabsCard.tsx",
+    ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+    ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+    ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+    ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx"
+  ],
+  "count": 17
+}

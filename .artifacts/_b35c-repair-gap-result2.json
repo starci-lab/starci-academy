@@ -1,0 +1,28 @@
+{
+  "repairedCount": 1,
+  "repaired": [
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "edits": [
+        {
+          "tag": "StackH",
+          "removed": [
+            "gap",
+            "align",
+            "justify"
+          ],
+          "before": "<StackH gap={6} principle=\"block-boundary\" align=\"end\" justify=\"between\" at=\"sm\" isSkeleton={isSkeleton} items={[ () => priceColumn, // ATOM `Button`, NOT the `",
+          "after": "<StackH principle=\"block-boundary\" at=\"sm\" isSkeleton={isSkeleton} items={[ () => priceColumn, // ATOM `Button`, NOT the `_legacy` version: going around the por"
+        },
+        {
+          "tag": "StackV",
+          "removed": [
+            "gap"
+          ],
+          "before": "<StackV gap={6} principle=\"block-boundary\" explain=\"Separates the loss-aversion header from the price/CTA footer so the strip reads as two blocks inside one car",
+          "after": "<StackV principle=\"block-boundary\" explain=\"Separates the loss-aversion header from the price/CTA footer so the strip reads as two blocks inside one card.\" isSk"
+        }
+      ]
+    }
+  ]
+}

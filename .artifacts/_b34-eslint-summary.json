@@ -1,0 +1,34 @@
+﻿[
+    {
+        "chunk":  1,
+        "exit":  1,
+        "problems":  0,
+        "errors":  0,
+        "warnings":  0,
+        "files":  7
+    },
+    {
+        "chunk":  2,
+        "exit":  1,
+        "problems":  0,
+        "errors":  0,
+        "warnings":  0,
+        "files":  7
+    },
+    {
+        "chunk":  3,
+        "exit":  1,
+        "problems":  0,
+        "errors":  0,
+        "warnings":  0,
+        "files":  7
+    },
+    {
+        "chunk":  4,
+        "exit":  1,
+        "problems":  0,
+        "errors":  0,
+        "warnings":  0,
+        "files":  7
+    }
+]

@@ -1,0 +1,31 @@
+{
+  "warningsBefore": {},
+  "warningsAfter": null,
+  "openTagConsumersBefore": [],
+  "openTagConsumersAfter": null,
+  "layoutOwnership": [],
+  "changed": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b31-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31-status.md"
+  ],
+  "skipped": [],
+  "holds": [],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [],
+  "parity": {},
+  "verification": {
+    "phase": 1,
+    "sourceEdits": false,
+    "tsc": "not-run (no product edits)",
+    "eslintChangedSet": "n/a",
+    "mandatorySuite": "deferred until product edits exist"
+  },
+  "regressions": [],
+  "overlapCheck": "pass-no-locked-nivo-overlap",
+  "manifest": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b31-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31-status.md"
+  ]
+}

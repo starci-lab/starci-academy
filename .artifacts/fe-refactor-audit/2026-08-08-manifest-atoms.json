@@ -1,0 +1,740 @@
+{
+  "partition": "atoms",
+  "generatedAt": "2026-08-06T21:05:14.772Z",
+  "fileCount": 73,
+  "files": [
+    {
+      "path": ".storybook/components/atoms/data/Table/Table.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/data/Table/Table.tsx",
+      "safeCount": 8,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/feedback/AlertDialog/AlertDialog.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/feedback/AlertDialog/AlertDialog.tsx",
+      "safeCount": 8,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/data/Table/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/data/Table/index.tsx",
+      "safeCount": 8,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/feedback/AlertDialog/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/feedback/AlertDialog/index.tsx",
+      "safeCount": 8,
+      "messageCount": 8,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/AccordionTree/AccordionTree.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/AccordionTree/AccordionTree.tsx",
+      "safeCount": 7,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Drawer/Drawer.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/overlay/Drawer/Drawer.tsx",
+      "safeCount": 7,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Modal/Modal.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/overlay/Modal/Modal.tsx",
+      "safeCount": 7,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/navigation/AccordionTree/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/navigation/AccordionTree/index.tsx",
+      "safeCount": 7,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/overlay/Drawer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/overlay/Drawer/index.tsx",
+      "safeCount": 7,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/overlay/Modal/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/overlay/Modal/index.tsx",
+      "safeCount": 7,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Tabs/TabsParts.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Tabs/TabsParts.tsx",
+      "safeCount": 6,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/navigation/Tabs/TabsParts.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/navigation/Tabs/TabsParts.tsx",
+      "safeCount": 6,
+      "messageCount": 6,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Select/Select.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/Select/Select.tsx",
+      "safeCount": 5,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/forms/Select/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/forms/Select/index.tsx",
+      "safeCount": 5,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Switch/Switch.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/Switch/Switch.tsx",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/forms/Switch/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/forms/Switch/index.tsx",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "safeCount": 3,
+      "messageCount": 3,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/handler-on-prefix",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ListBox/ListBox.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ListBox/ListBox.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/display/SnippetIcon/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/display/SnippetIcon/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/handler-on-prefix",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/forms/ListBox/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/forms/ListBox/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/BackToTop/BackToTop.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/buttons/BackToTop/BackToTop.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/ButtonGroup/ButtonGroup.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/buttons/ButtonGroup/ButtonGroup.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/Button/button-tokens.ts",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/buttons/Button/button-tokens.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/AvatarFallback/AvatarFallback.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/AvatarFallback/AvatarFallback.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/Badge/Badge.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Badge/Badge.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/Card/Card.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Card/Card.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/Divider/Divider.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Divider/Divider.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/Logo/Logo.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Logo/Logo.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/OMark/OMark.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/OMark/OMark.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/Progress/Progress.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Progress/Progress.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Label/Label.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/Label/Label.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/RadioGroup/RadioGroup.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/RadioGroup/RadioGroup.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Radio/Radio.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/Radio/Radio.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/forms/_input/FieldSkeleton.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/forms/_input/FieldSkeleton.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/media/CoverImage/CoverImage.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/media/CoverImage/CoverImage.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/media/Image/Image.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/media/Image/Image.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/media/QRCode/QRCode.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/overlay/Menu/Menu.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Popover/Popover.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/overlay/Popover/Popover.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Tooltip/Tooltip.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/overlay/Tooltip/Tooltip.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/atoms/text/Typography/Typography.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/atoms/text/Typography/Typography.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/buttons/BackToTop/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/buttons/BackToTop/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/buttons/ButtonGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/buttons/ButtonGroup/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/buttons/Button/button-tokens.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/buttons/Button/button-tokens.ts",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/display/AvatarFallback/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/display/AvatarFallback/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/display/Card/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/display/Card/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/display/OMark/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/display/OMark/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/display/Progress/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/display/Progress/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/forms/Label/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/forms/Label/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/forms/RadioGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/forms/RadioGroup/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/forms/Radio/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/forms/Radio/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    }
+  ]
+}

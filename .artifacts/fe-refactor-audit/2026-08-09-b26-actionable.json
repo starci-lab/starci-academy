@@ -1,0 +1,2600 @@
+{
+  "generatedAt": "2026-08-07T13:51:47.480Z",
+  "fullyDead": 26,
+  "classNamesHalfDead": 312,
+  "classNameHalfDead": 1,
+  "hold": 30,
+  "ignoredCallSites": [
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "component": "FloatingActionButton",
+      "prop": "classNames",
+      "dest": " onPress, ariaLabel, children, className, ",
+      "consumers": 1,
+      "consumerList": [
+        {
+          "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+          "line": 57,
+          "prop": "classNames",
+          "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+        }
+      ],
+      "kind": "ignored-passthrough",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "component": "GroupPressableCard",
+      "prop": "className",
+      "dest": " items, ariaLabel, columns = {",
+      "consumers": 1,
+      "consumerList": [
+        {
+          "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+          "line": 69,
+          "prop": "className",
+          "snippet": "<GroupPressableCard ariaLabel={ariaLabel} // measured: below a 384px container the hint line wraps and the tiles grow // to 104px tall; at 3"
+        }
+      ],
+      "kind": "ignored-passthrough",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "component": "LabeledList",
+      "prop": "classNames",
+      "dest": " label, icon, children, action, className, ",
+      "consumers": 1,
+      "consumerList": [
+        {
+          "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+          "line": 82,
+          "prop": "classNames",
+          "snippet": "<LabeledList label={t(\"lessonRail.challenges.title\")} action={( <Button label={t(\"lessonRail.challenges.practice\")} size=\"sm\" variant=\"prima"
+        }
+      ],
+      "kind": "ignored-passthrough",
+      "twin": null
+    }
+  ],
+  "fullyDeadList": [
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "component": "SandpackPanel",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "component": "MindMapContinueButton",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "component": "MindMapFullscreenButton",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "component": "ProgrammingLanguageTabs",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "component": "HighlightChip",
+      "twin": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/composites/stats/Legend/index.tsx",
+      "component": "Legend",
+      "twin": ".storybook/components/composites/stats/Legend/Legend.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    },
+    {
+      "file": "src/components/composites/stats/MetricCard/index.tsx",
+      "component": "MetricCard",
+      "twin": ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    },
+    {
+      "file": "src/components/composites/stats/StatRibbon/index.tsx",
+      "component": "StatRibbon",
+      "twin": ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "component": "DotLabel",
+      "twin": ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "component": "ProviderSection",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "component": "KeyRow",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "component": "DropZone",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "component": "FileSelectionCard",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "component": "ProcessResultBanner",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "component": "UploadProgressCard",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "component": "ProviderUploadRow",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "component": "BookmarkCard",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "component": "OverviewChallengeSkills",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "component": "OverviewCodeSkills",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "component": "AiKeyGroup",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "component": "ComponentCard",
+      "twin": null,
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "component": "HighlightChip",
+      "twin": "src/components/composites/chips/HighlightChip/index.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": true
+    },
+    {
+      "file": ".storybook/components/composites/stats/Legend/Legend.tsx",
+      "component": "Legend",
+      "twin": "src/components/composites/stats/Legend/index.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    },
+    {
+      "file": ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+      "component": "MetricCard",
+      "twin": "src/components/composites/stats/MetricCard/index.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx",
+      "component": "StatRibbon",
+      "twin": "src/components/composites/stats/StatRibbon/index.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    },
+    {
+      "file": ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+      "component": "DotLabel",
+      "twin": "src/components/composites/text/DotLabel/index.tsx",
+      "action": "remove-WithClassNames-and-both-props",
+      "hasWith": false
+    }
+  ],
+  "classNamesHalfDeadList": [
+    {
+      "file": "src/components/blocks/auth/GithubLinkGate/index.tsx",
+      "component": "GithubLinkGate",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/auth/Turnstile/index.tsx",
+      "component": "Turnstile",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "component": "RatingBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cards/FlipCard/index.tsx",
+      "component": "FlipCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "component": "HighlightCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "component": "PressableCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 2
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "component": "SurfaceListCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 5
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "component": "CvSubmissionFields",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "component": "CVSubmissionForm",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "component": "LanguageChip",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "component": "LessonVideoKindChip",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "component": "CodeConsole",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "component": "IOExampleCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "component": "TestCaseResultGrid",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "component": "AddToCartButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "component": "FreeTierCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "component": "TierCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "component": "TierCardBase",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "component": "TierGrid",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "component": "CommentComposer",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "component": "CommentItem",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "component": "FacebookReactionSelector",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "component": "Discussion",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "component": "InteractionBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "component": "ReactionBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "component": "ReactionEmoji",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "component": "FollowButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "component": "AchievementBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "component": "ActivityBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "component": "CertificationBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "component": "EducationBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "component": "ExperienceBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "component": "CvBlockStack",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "component": "InterestBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "component": "LanguageBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "component": "PersonalBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "component": "ProjectBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "component": "PickFromStarciSelect",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "component": "AiRewriteButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 4
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "component": "RepeatableItemCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "component": "SkillsBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "component": "SummaryBlockEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "component": "CvPdfPreview",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "component": "CvSplitFromTextModal",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "component": "CvTailorToJobModal",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "component": "CvTemplateGalleryModal",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "component": "CvTexEditor",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "component": "CvTextOrFileInput",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "component": "LeaderboardListCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 2
+    },
+    {
+      "file": "src/components/blocks/dashboard/Podium/index.tsx",
+      "component": "Podium",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "component": "StandingHeroCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/entity/EntityToken/index.tsx",
+      "component": "EntityToken",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "component": "ActivityAvatar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "component": "ChatBubble",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "component": "ChatPanel",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/CommentThread/index.tsx",
+      "component": "CommentThread",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "component": "Composer",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/feed/EntityLink/index.tsx",
+      "component": "EntityLink",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/FeedItem/index.tsx",
+      "component": "FeedItem",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "component": "ReactionBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feed/Timeline/index.tsx",
+      "component": "Timeline",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "component": "ErrorPageState",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "component": "ErrorState",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "component": "InfoTooltip",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "component": "ReadinessChecklist",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "component": "SimpleEmptyState",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/form/Dropzone/index.tsx",
+      "component": "Dropzone",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/form/OtpInput/index.tsx",
+      "component": "OtpInput",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "component": "SchedulePicker",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "component": "SearchAutocomplete",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "component": "DiffViewer",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/index.tsx",
+      "component": "SelfHostGpuMark",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "component": "AvatarUploadButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "component": "BadgeImage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "component": "BrandLockup",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "component": "BrandLogo",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 2
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "component": "IconTile",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "component": "ImageDropzone",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/identity/Logo/index.tsx",
+      "component": "Logo",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 7
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "component": "AmbientBackground",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "component": "ConnectSheet",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "component": "DragScrollArea",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 6
+    },
+    {
+      "file": "src/components/blocks/layout/PageContainer/index.tsx",
+      "component": "PageContainer",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "component": "PageHeader",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "component": "ResizableRail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 10
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "component": "AccountTrigger",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+      "component": "AppearanceRow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+      "component": "AuthActions",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+      "component": "LogoutMenu",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+      "component": "MenuList",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "component": "UserSummary",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "component": "Navbar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "component": "Logo",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 7
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+      "component": "MobileNavbar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+      "component": "NavLinks",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+      "component": "SearchButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "component": "StickyBottomBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "component": "KeyStatusChip",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "component": "ChatToolResult",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "component": "ConceptMap",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      "component": "MindMapCanvas",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+      "component": "ContentAiFab",
+      "twin": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "component": "ContentMap",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "component": "LeaderboardCategoryRail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "component": "LearnMobileBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "component": "LearnPanelToggles",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "component": "LearnSidebar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      "component": "AiLab",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "component": "LaneModelPicker",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "component": "ParamControls",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "component": "PromptPlayground",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "component": "ChallengeCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      "component": "Empty",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "component": "ExplainingCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      "component": "Empty",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "component": "ImplementationCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      "component": "ActionToolbar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "component": "ContentReactionBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "component": "ContentTabBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "component": "TabTrigger",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      "component": "Empty",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      "component": "LessonCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "component": "LessonPager",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "component": "ReadBadge",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "component": "MilestoneOutline",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "component": "MilestoneIndexStrip",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      "component": "ContentActions",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "component": "OnThisPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "component": "GithubGradingSettings",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "component": "PersonalProjectDashboard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+      "component": "PersonalProjectSubmission",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "component": "TaskActions",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "component": "TaskCodeImplementations",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "component": "TaskCriteriaList",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+      "component": "TaskLockedAlert",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "component": "TaskSubmissionPanel",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "component": "PlaygroundRagWorkspace",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "component": "QaConversationHeader",
+      "twin": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "component": "QaInboxRow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "component": "QaMessageBubble",
+      "twin": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "component": "QaQuestionThread",
+      "twin": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      "component": "ReferenceLinks",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "component": "TrialEnrollHook",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "component": "ListRow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 4
+    },
+    {
+      "file": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "component": "AdBanner",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "component": "ArchitectureFlow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "component": "HeroBanner",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "component": "MicroservicesDiagram",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "component": "MicroservicesScene",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "component": "SectionHeading",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "component": "TopicLane",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/marketing/TruthList/index.tsx",
+      "component": "TruthList",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/CoverImage/index.tsx",
+      "component": "CoverImage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/QRCode/index.tsx",
+      "component": "QRCode",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "component": "MpegDash",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "component": "Standard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "component": "FullscreenButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "component": "VideoControls",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "component": "PlayPauseButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "component": "QualitySelector",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "component": "SeekBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "component": "TimeDisplay",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "component": "VolumeControl",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "component": "Youtube",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/navigation/BackLink/index.tsx",
+      "component": "BackLink",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 2
+    },
+    {
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "component": "ContentMapRow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "component": "ExtendedTabs",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "component": "OutlineRail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 2
+    },
+    {
+      "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "component": "ResponsiveBreadcrumb",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "component": "SidebarNavAccordionGroup",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "component": "SidebarNavGroup",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "component": "SidebarNavItem",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "component": "TabsCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 4
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "component": "NotificationItem",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "component": "NotificationList",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "component": "ContributionCalendarView",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "component": "CvSubmission",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+      "component": "MascotBadge",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "component": "ProfileSectionGuard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 4
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+      "component": "ProfileTabsBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/profile/RankBadge/index.tsx",
+      "component": "RankBadge",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "component": "RankDeltaCaret",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/profile/UserStreak/index.tsx",
+      "component": "UserStreak",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "component": "CodePreviewTabs",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "component": "CodeToHtml",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "component": "LayoutWidget",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "component": "MermaidDiagram",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+      "component": "RenderReactComponent",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "component": "DeadlineCallout",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "component": "LanguageDonut",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "component": "MilestoneRoadmap",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "component": "TopicMasteryGrid",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "component": "FooterNavColumn",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Footer/index.tsx",
+      "component": "Footer",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "component": "AccountMenuAuthed",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "component": "AccountMenuGuest",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "component": "AccountTrigger",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "component": "DarkLightModeSwitch",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "component": "GuestHeader",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "component": "CartButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/index.tsx",
+      "component": "Navbar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "component": "LanguageDropdown",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/Logo/index.tsx",
+      "component": "Logo",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 7
+    },
+    {
+      "file": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "component": "NavLinks",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminLoginPage/index.tsx",
+      "component": "AdminLoginPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "component": "ConfigCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "component": "RendererTypeButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "component": "AdminMpegDashTestPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "component": "PreviewCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "component": "QuickTestUrls",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "component": "QuickTestUrlButton",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "component": "AdminUploadVideoPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "component": "LoadingScreen",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "component": "TopBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "component": "AiUsageHistory",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "component": "ArchitectureMap",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "component": "ArchitectureMobileNav",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "component": "ArchitectureRail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "component": "MetricsInline",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "component": "NodeDissectionPanel",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "component": "ContactChannels",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "component": "ContactForm",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "component": "ContactPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "component": "CourseHero",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "component": "CourseMobileEnrollBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "component": "CoursePricingRail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "component": "CvEditorToolbarBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/index.tsx",
+      "component": "CvEditorPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/CvGalleryPage/index.tsx",
+      "component": "CvGalleryPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "component": "CommunityTab",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "component": "CoursesTab",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "component": "DashboardIdentity",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "component": "ProfileMenuCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "component": "DashboardTabsBar",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "component": "ExploreTab",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "component": "DashboardPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+      "component": "LeagueCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "component": "LeagueCardContent",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "component": "LeagueTierBadge",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "component": "OverviewTab",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "component": "QuickActions",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/index.tsx",
+      "component": "RecommendedCourses",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/index.tsx",
+      "component": "TopLearners",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+      "component": "TrendingContents",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/index.tsx",
+      "component": "WeeklyChallengeCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+      "component": "AvatarUploadModal",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "component": "FlashcardMobileNav",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/index.tsx",
+      "component": "FlashcardReviewer",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/index.tsx",
+      "component": "FlashcardStudyRail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "component": "FlashcardsPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+      "component": "HeadhuntingCompanyPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/index.tsx",
+      "component": "JobPostFormPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "component": "LandingPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "component": "KnowledgeGraph",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LandingPage/StatStrip/index.tsx",
+      "component": "StatStrip",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "component": "TalentMarketplace",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/index.tsx",
+      "component": "GlobalBoard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "component": "LeaguePage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/index.tsx",
+      "component": "WeeklyBoard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "component": "CourseDayTimeline",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "component": "CourseDetail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "component": "CourseMilestoneOutline",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "component": "CourseOutline",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "component": "LearningHistoryPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "component": "LoginPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "component": "InterviewerPresence",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "component": "MockInterviewHistory",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "component": "MockInterviewScorecard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "component": "MockInterviewStats",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "component": "MockInterviewTrackSnapshot",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "component": "MockInterviewWorkspace",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "component": "VoiceHero",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "component": "VoiceUnavailableModal",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "component": "MyAttemptsPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MyFeedbackPage/index.tsx",
+      "component": "MyFeedbackPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "component": "MySubmissionsPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "component": "NotificationsPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/OauthRedirectPage/index.tsx",
+      "component": "OauthRedirectPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "component": "PracticeFilters",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "component": "PracticeRail",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "component": "PracticeMobileNav",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "component": "ProblemCatalog",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "component": "ProblemRow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "component": "ProgressCockpit",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/index.tsx",
+      "component": "ProfileActivityPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "component": "ProfileChallengeManagePage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "component": "ProfileChallengesPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "component": "ChallengeCourseRow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "component": "ProfileChallenges",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "component": "ProfileChallengeSubmissionPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "component": "ProfileCodingProblemPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/index.tsx",
+      "component": "ProfileOverviewPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "component": "ProfileProjectRoadmapPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "component": "ProfileProjectsPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "component": "PinnedProjectCard",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "component": "ProfileRedirectPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "component": "ProfileSkillsPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "component": "ProfileCoding",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "component": "RewardsPage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "component": "MyVouchers",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "component": "RewardCatalog",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "component": "DetailRow",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/SettingsHomePage/index.tsx",
+      "component": "SettingsHomePage",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "component": "OverallBanner",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 0
+    },
+    {
+      "file": "src/components/svg/GithubIcon/index.tsx",
+      "component": "GithubIcon",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 6
+    },
+    {
+      "file": "src/components/svg/GoogleIcon/index.tsx",
+      "component": "GoogleIcon",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/svg/Logo/index.tsx",
+      "component": "Logo",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 7
+    },
+    {
+      "file": "src/components/svg/LogoMark/index.tsx",
+      "component": "LogoMark",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/svg/TierLevelIcon/index.tsx",
+      "component": "TierLevelIcon",
+      "twin": null,
+      "action": "narrow-WithClassNames-to-className-only",
+      "classNameConsumers": 2
+    }
+  ],
+  "classNameHalfDeadList": [
+    {
+      "file": "src/components/pages/KpiPage/index.tsx",
+      "component": "KpiPage",
+      "twin": null,
+      "action": "narrow-to-classNames-only",
+      "classNamesConsumers": 0
+    }
+  ],
+  "holdSample": [
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "CourseCardSkeleton"
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "reason": "live-or-ambiguous",
+      "destNames": false,
+      "destName": false,
+      "cNames": 0,
+      "cName": 1
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "CvWorkspaceSkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "ContentMapSkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "ChallengeCardSkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "CodeBodySkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "ContentBodySkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "LessonCardSkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "MilestoneOutlineSkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "PersonalProjectDashboardSkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "TaskResultsSkeleton"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "TaskSkeleton"
+    },
+    {
+      "file": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "PaginationSkeleton"
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "AdminAiBalancerSkeleton"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "ChangelogListSkeleton"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "ContinueLearningSkeleton"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "FeedTabsSkeleton"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "LeagueCardSkeleton"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "OverviewContributionsSkeleton"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "TopLearnersSkeleton"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "DueReviewSkeleton"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "FlashcardDeckListSkeleton"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "FlashcardReviewerSkeleton"
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "GlobalBoardSkeleton"
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "WeeklyBoardSkeleton"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "MockInterviewSessionSkeleton"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "MockInterviewSetupSkeleton"
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "reason": "skeleton-hold",
+      "name": "SystemStatusSkeleton"
+    },
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "reason": "live-or-ambiguous",
+      "destNames": false,
+      "destName": true,
+      "cNames": 1,
+      "cName": 1
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "reason": "live-or-ambiguous",
+      "destNames": false,
+      "destName": true,
+      "cNames": 1,
+      "cName": 1
+    }
+  ]
+}

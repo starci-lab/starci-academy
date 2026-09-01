@@ -1,0 +1,169 @@
+{
+  "batch": "B40",
+  "worker": "w07-src-blocks-auth",
+  "checkpoint": "2a096210a",
+  "manifest": ".artifacts/fe-refactor-audit/b40-manifests/w07-src-blocks-auth.json",
+  "ownsCount": 42,
+  "safeFindingsBefore": 55,
+  "counts": {
+    "applied": 12,
+    "hold": 43,
+    "vendor": 0,
+    "locked": 0,
+    "ambiguous": 0,
+    "filesChanged": 5,
+    "filesEslintClean": 5
+  },
+  "byRule": {
+    "applied": {
+      "require-frame-self-declare": 12
+    },
+    "hold": {
+      "require-identity-root": 34,
+      "require-frame-self-declare": 9
+    }
+  },
+  "edited": [
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/OauthButtons/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx"
+  ],
+  "applied": [
+    {
+      "classification": "applied",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/OauthButtons/index.tsx"
+      ],
+      "change": "StackV → principle=sibling-stack + explain; dropped Button classNames w-full (B33 teacher drop; StackV stretch owns width)"
+    },
+    {
+      "classification": "applied",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx"
+      ],
+      "change": "Box pr-8 → control-pad; oauth/divider StackV → group-boundary; fields StackV → sibling-stack; root StackV → block-boundary; dropped submit Button classNames w-full"
+    },
+    {
+      "classification": "applied",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx"
+      ],
+      "change": "Box pr-8 → control-pad + explain; dropped submit Button classNames w-full"
+    },
+    {
+      "classification": "applied",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx"
+      ],
+      "change": "Box pr-8 → control-pad + explain; dropped submit Button classNames w-full"
+    },
+    {
+      "classification": "applied",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx"
+      ],
+      "change": "Root/form/actions StackVs → block-boundary; fields StackV → sibling-stack; Box pr-8 → control-pad; dropped submit Button classNames w-full"
+    }
+  ],
+  "holds": [
+    {
+      "classification": "hold",
+      "rule": "require-identity-root",
+      "files": [
+        "src/components/blocks/auth/AuthenticationPanel/SignInSection/index.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/SignUpSection/index.tsx",
+        "src/components/blocks/auth/AuthenticationPanel/component.tsx"
+      ],
+      "reason": "Thin step/tab switches returning child state roots. Identity belongs on Credentials/Registration/Otp leaves; wrapping invents a second shape (same hold as B32 AuthenticationModal sections)."
+    },
+    {
+      "classification": "hold",
+      "rule": "require-identity-root",
+      "files": [
+        "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx"
+      ],
+      "reason": "Returns fragment or CodePreviewTabs; fragment cannot wear identity; dual return shapes are ambiguous for a proven single identity root."
+    },
+    {
+      "classification": "hold",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/pages/PlaygroundSessionPage/index.tsx"
+      ],
+      "reason": "Stage named-frame contract forbids public principle/classNames; fill+slots are intrinsic. Rule fires but principle door does not exist."
+    },
+    {
+      "classification": "hold",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/composites/chips/RemovableToken/index.tsx"
+      ],
+      "reason": "StackH needs min-w-0/shrink-0 classNames for truncate/flex; principle mode drops classNames — not proven redundant. File also cannot reach eslint --max-warnings=0 without unsafe layout loss."
+    },
+    {
+      "classification": "hold",
+      "rule": "require-frame-self-declare",
+      "files": [
+        "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+        "src/components/pages/CommunityChatPage/ChatPane/component.tsx"
+      ],
+      "reason": "Co-blocked by non-safe debt (host-element/identity-wrapper/page-folder/skeleton). Changing frames alone cannot clear --max-warnings=0; revert+hold."
+    },
+    {
+      "classification": "hold",
+      "rule": "require-identity-root",
+      "files": [
+        "src/components/blocks/auth/Turnstile/index.tsx",
+        "src/components/blocks/form/Dropzone/index.tsx",
+        "src/components/blocks/form/OtpInput/index.tsx",
+        "src/components/blocks/form/SchedulePicker/index.tsx",
+        "src/components/blocks/form/SearchAutocomplete/index.tsx",
+        "src/components/blocks/form/SearchBar/component.tsx",
+        "src/components/blocks/form/SearchInput/component.tsx",
+        "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+        "src/components/blocks/identity/BadgeImage/index.tsx",
+        "src/components/blocks/identity/BrandLockup/index.tsx",
+        "src/components/blocks/identity/BrandLogo/index.tsx",
+        "src/components/blocks/identity/IconTile/index.tsx",
+        "src/components/blocks/identity/ImageDropzone/index.tsx",
+        "src/components/blocks/identity/Logo/index.tsx",
+        "src/components/blocks/identity/UserAvatar/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+        "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+        "src/components/blocks/rendering/MarkdownContent/component.tsx",
+        "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+        "src/components/blocks/rendering/PDFView/index.tsx",
+        "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+        "src/components/pages/CommunityChatPage/index.tsx",
+        "src/components/pages/PublicArticlePage/index.tsx",
+        "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+        "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+        "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+        "src/components/pages/SepayCheckoutPage/index.tsx"
+      ],
+      "reason": "Not proven identity-root: root is vendor/host/heroui mount, size-via-className Logo wrapper, or file still fails --max-warnings=0 on non-safe rules (no-heroui-outside-vocabulary, no-host-element-at-sentence-tier, no-raw-shape, no-public-classname-prop, page-folder-two-files-only). No Box wrap invented."
+    }
+  ],
+  "eslint": {
+    "before": ".artifacts/_b40-w07-eslint-before.json",
+    "changedFilesCommand": "npx eslint --max-warnings=0 <5 edited files>",
+    "changedFilesExitCode": 0,
+    "gitDiffCheck": "clean"
+  },
+  "notes": [
+    "Collateral: 5 Button classNames={['w-full']} drops (allowed existing vocabulary / B33 teacher pattern) so edited files clear --max-warnings=0.",
+    "No CredentialsState types restored.",
+    "No commit/push/branch/checkout/reset.",
+    "Safe rules with zero hits in owns: require-export-jsdoc, no-inline-parameter-type, handler-on-prefix, prefer-arrow-export, no-vietnamese-in-source-authoring, no-emoji-in-source."
+  ]
+}

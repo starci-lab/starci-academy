@@ -1,0 +1,213 @@
+{
+  "generatedAt": "2026-08-08T14:38:05.224Z",
+  "results": [
+    {
+      "id": "Button.classNames",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Typography.classNames",
+      "consumerCount": 20,
+      "buckets": {
+        "in-manifest": 2,
+        "other-allowed": 18
+      },
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [
+        "src/components/composites/data/KeyValue/index.tsx",
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "src/components/pages/JobListPage/component.tsx",
+        "src/components/pages/JobDetailPage/component.tsx",
+        "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/blocks/learn/MockInterviewScorecard/index.tsx"
+      ],
+      "decision": "migrate-then-burn-if-zero"
+    },
+    {
+      "id": "Chip.classNames",
+      "consumerCount": 3,
+      "buckets": {
+        "other-allowed": 3
+      },
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx"
+      ],
+      "decision": "migrate-then-burn-if-zero"
+    },
+    {
+      "id": "Avatar.classNames",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Alert.classNames",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Divider.className",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Stack.classNames",
+      "consumerCount": 30,
+      "buckets": {
+        "other-allowed": 26,
+        "in-manifest": 4
+      },
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [
+        "src/components/pages/TalentDirectoryPage/component.tsx",
+        "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/ProfileRedirectPage/index.tsx",
+        "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileChallengeManagePage/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+        "src/components/pages/NotificationsPage/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx"
+      ],
+      "decision": "migrate-then-burn-if-zero"
+    },
+    {
+      "id": "Flex.classNames",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Container.classNames",
+      "consumerCount": 1,
+      "buckets": {
+        "other-allowed": 1
+      },
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [
+        "src/components/pages/ProfileCodingProblemPage/index.tsx"
+      ],
+      "decision": "migrate-then-burn-if-zero"
+    },
+    {
+      "id": "Cluster.classNames",
+      "consumerCount": 2,
+      "buckets": {
+        "other-allowed": 2
+      },
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/ProfileChallengeManagePage/index.tsx"
+      ],
+      "decision": "migrate-then-burn-if-zero"
+    },
+    {
+      "id": "TitledText.classNames",
+      "consumerCount": 1,
+      "buckets": {
+        "other-allowed": 1
+      },
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx"
+      ],
+      "decision": "migrate-then-burn-if-zero"
+    },
+    {
+      "id": "Page.className",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Form.className",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "RemovableToken.className",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "KeyValue.className",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "Toolbar.className",
+      "consumerCount": 0,
+      "buckets": {},
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [],
+      "decision": "burn-candidate-dead"
+    },
+    {
+      "id": "SurfaceCard.classNames",
+      "consumerCount": 1,
+      "buckets": {
+        "other-allowed": 1
+      },
+      "forbiddenCount": 0,
+      "forbiddenSample": [],
+      "allowedSample": [
+        "src/components/blocks/learn/LearnNudges/component.tsx"
+      ],
+      "decision": "migrate-then-burn-if-zero"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "partition": "per-part-props",
+  "changed": [],
+  "skipped": [
+    "src/components/composites/layout/DrawerShell/index.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    "src/components/composites/layout/ModalShell/index.tsx",
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/viewers/PDFView/index.tsx",
+    ".storybook/components/composites/viewers/PDFView/PDFView.tsx",
+    "src/components/blocks/rendering/PDFView/index.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/index.tsx",
+    "src/components/overlays/modals/CvPreviewModal/component.tsx",
+    "src/components/overlays/modals/CvPreviewModal/index.tsx",
+    "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+    ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+    "src/components/blocks/cards/LabeledCard/index.tsx",
+    "src/components/blocks/marketing/ShowcaseMockup/index.tsx"
+  ],
+  "holds": [
+    "DrawerShell-dialog-footer",
+    "ModalShell-container-CvPreview",
+    "PDFView-heightClassName",
+    "SurfaceCard-contentClassName",
+    "MiniCart-require-frame-self-declare",
+    "LabeledCard-contentClassName",
+    "ShowcaseMockup-contentClassName",
+    "blocks-PDFView-vendor-and-height",
+    "LivestreamCalendarModal-vendor"
+  ],
+  "decisions": [
+    {
+      "id": "DrawerShell-dialog-footer",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/layout/DrawerShell/index.tsx",
+        ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx"
+      ],
+      "proposal": "Repo-wide: only MiniCartDrawer passes dialogClassName/footerClassName. dialogClassName=\"sm:max-w-md\" is a real dialog width (DrawerShell has no size prop; DrawerDialog only owns gap-3). footerClassName forces a vertical stacked footer (flex-col! items-stretch! justify-start! gap-3! border-t) because HeroUI Drawer.Footer hard-codes flex-row justify-end. Honest API: dialogWidth=\"md\" (maps to sm:max-w-md inside DrawerShell) + footerVariant=\"stacked\" (column stretch + top border, owned by shell). Do NOT remove props while MiniCart depends on them. Apply when both named props land on src+Storybook twins and MiniCart migrates in the same change.",
+      "applied": false,
+      "proof": {
+        "consumers": {
+          "dialogClassName": ["src/components/overlays/drawers/MiniCartDrawer/component.tsx:302"],
+          "footerClassName": ["src/components/overlays/drawers/MiniCartDrawer/component.tsx:310"]
+        },
+        "defs": [
+          "src/components/composites/layout/DrawerShell/index.tsx:71-73",
+          ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx:74-78"
+        ],
+        "whyNotSafeRemoval": "MiniCart is a live consumer; removal would drop max-width and stacked footer layout.",
+        "whyNotSafeMigration": "No existing named prop/token on DrawerShell or Drawer atom covers max-w-md or stacked footer; inventing className escapes is forbidden."
+      }
+    },
+    {
+      "id": "ModalShell-container-CvPreview",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/layout/ModalShell/index.tsx",
+        ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+        "src/components/overlays/modals/CvPreviewModal/component.tsx"
+      ],
+      "proposal": "Repo-wide: only CvPreviewModal passes containerClassName=\"h-[92vh] w-[96vw] max-w-[96vw]\". HeroUI ModalContainer size tokens are xs|sm|md|lg|cover|full. cover = full screen with 16px/40px margins; full = 100dvh edge-to-edge no radius. Neither equals 92vh×96vw. Honest API: viewportFit=\"near-fullscreen\" (or size=\"preview\") owned by ModalShell with those exact classes baked in — not size=\"cover\"/\"full\". Pair with PDFView height ownership (see PDFView-heightClassName). Manifest lint row marked safe-consumer-migration is a classifier false positive (generic containerClassName message missed the h-[92vh] consumer); treat as new-named-slot-required.",
+      "applied": false,
+      "proof": {
+        "consumers": {
+          "containerClassName": ["src/components/overlays/modals/CvPreviewModal/component.tsx:44"]
+        },
+        "herouiSizeTokens": ["xs", "sm", "md", "lg", "cover", "full"],
+        "notEquivalent": {
+          "cover": "margins 16px mobile / 40px desktop — not 96vw/92vh",
+          "full": "100dvh, no margins/radius — not 92vh×96vw with modal chrome"
+        },
+        "canon": "enforce/authoring/overlay-and-feedback.md §4 documents scroll=inside → max-h-[85vh] only; no near-fullscreen token",
+        "whyNotSafeMigration": "Migrating to size=cover or size=full would change CvPreview geometry; preserve exact sizing."
+      }
+    },
+    {
+      "id": "PDFView-heightClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/viewers/PDFView/index.tsx",
+        ".storybook/components/composites/viewers/PDFView/PDFView.tsx",
+        "src/components/blocks/rendering/PDFView/index.tsx",
+        ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+        "src/components/overlays/modals/CvPreviewModal/component.tsx"
+      ],
+      "proposal": "heightClassName remains until canon defines a closed viewer-height scale. Observed values: default h-[560px]; stories h-[200|320|400|420px]; CvPreview h-[84vh]. Canon (styling-tailwind.md §1) allows arbitrary [Npx] for media/canvas, but no named height enum exists — do NOT invent sm/md/lg tokens. Honest future API once product locks sizes: heightPx:number (canvas) + heightFit:\"modal-body\" → h-[84vh] owned by PDFView. Preserve every current pixel/vh exactly; Storybook/src/block twins must stay aligned. Block PDFView also carries vendor/identity/cn holds — out of scope for per-part apply.",
+      "applied": false,
+      "proof": {
+        "consumers": [
+          ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx (200/320/420/400/200)",
+          "src/components/overlays/modals/CvPreviewModal/component.tsx:51 (h-[84vh])",
+          "src/components/blocks/rendering/PDFView/index.tsx (forwards prop, default h-[560px])"
+        ],
+        "canonHeightEnum": null,
+        "whyNotSafeRemoval": "Multiple real consumers depend on distinct heights; CvPreview 84vh is not the 560px default."
+      }
+    },
+    {
+      "id": "SurfaceCard-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+      ],
+      "proposal": "Keep contentClassName. External SurfaceCard consumers need distinct body chrome: ContinueCard* relative flex-col gap-3 overflow-hidden (stacking-layout owns ContinueCard — do not edit those files here); LeagueCard/LeaderboardListCard flex-col gap-3; TalentMarketplace/LearnLoopScroll add p-4 + justify; PersonalProject* use grid cols; PressableGroup internally injects TILE_CHROME. Honest eventual API: bodyVariant closed set owned by SurfaceCard, e.g. stack | stack-clip | padded-stack | two-col — but values are not yet one semantic; inventing a partial enum while ContinueCard still needs clip+relative would leave an escape hatch. Coordinate with stacking-layout: they migrate ContinueCard once SurfaceCard exposes bodyVariant; this worker does not steal ContinueCard files.",
+      "applied": false,
+      "proof": {
+        "surfaceCardConsumers": [
+          "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+          "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+          ".storybook/components/starci/blocks/learn/ContinueCard/* (twins)",
+          "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+          "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+          "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+          "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+          "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+          "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+          "src/components/composites/cards/SurfaceCard/index.tsx (PressableGroup TILE_CHROME)"
+        ],
+        "coordinate": "stacking-layout owns ContinueCard; record-only handoff via this decision",
+        "whyNotSafeRemoval": "Many live consumers; ContinueCard hero clip depends on the prop"
+      }
+    },
+    {
+      "id": "MiniCart-require-frame-self-declare",
+      "classification": "ambiguous",
+      "files": [
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx"
+      ],
+      "proposal": "Five StackV nodes lack principle/explain (combo meter, skeleton text stack, cart body, total summary, footer). Manifest classifier marked safe-consumer-migration because MiniCart path matched per-part heuristics, but fixing requires choosing a singular canon principle per seam — inventing principles is forbidden. Hold until a principle audit names each seam (likely content-stack / form-section / action-stack analogues already used nearby: content-row, flex-action, card-padding). Not a per-part classname migration.",
+      "applied": false,
+      "proof": {
+        "lines": [142, 155, 218, 269, 293],
+        "nearbyDeclaredPrinciples": ["flex-action", "card-padding", "content-row"],
+        "hardRule": "no invented principles; singular principle only; prefer hold over guess"
+      }
+    },
+    {
+      "id": "LabeledCard-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/blocks/cards/LabeledCard/index.tsx"
+      ],
+      "proposal": "LabeledCard exposes its own contentClassName (separate from SurfaceCard). Consumers: TaskResult/TaskSubmissionPanel flex-col gap-*, FlipCard flex-col gap-3. Same family as SurfaceCard bodyVariant — propose bodyLayout=\"stack\" | \"stack-lg\" once SurfaceCard settles; also carries no-heroui/identity/cn holds (vendor/identity partitions). No apply.",
+      "applied": false,
+      "proof": {
+        "consumers": [
+          "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+          "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+          "src/components/blocks/cards/FlipCard/index.tsx"
+        ]
+      }
+    },
+    {
+      "id": "ShowcaseMockup-contentClassName",
+      "classification": "new-named-slot-required",
+      "files": [
+        "src/components/blocks/marketing/ShowcaseMockup/index.tsx"
+      ],
+      "proposal": "Block-tier contentClassName + className + raw absolute/relative/flex + HeroUI import. Needs named media/content slots on a composite below sentence tier, not a className escape. Record-only; overlaps vendor-boundary/identity work.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-per-part-classname-prop",
+          "no-classname-at-sentence-tier",
+          "no-heroui-outside-vocabulary",
+          "no-raw-shape-at-sentence-tier"
+        ]
+      }
+    },
+    {
+      "id": "blocks-PDFView-vendor-and-height",
+      "classification": "vendor-boundary",
+      "files": [
+        "src/components/blocks/rendering/PDFView/index.tsx"
+      ],
+      "proposal": "Block PDFView still imports @heroui/react, uses WithClassNames, cn, raw flex, and forwards heightClassName. Height follows PDFView-heightClassName; HeroUI/cn/identity are vendor/identity partition work — not safe apply here.",
+      "applied": false,
+      "proof": {
+        "rules": [
+          "no-heroui-outside-vocabulary",
+          "require-identity-root",
+          "no-classname-at-sentence-tier",
+          "no-per-part-classname-prop",
+          "no-cn-above-vocabulary",
+          "no-raw-shape-at-sentence-tier"
+        ]
+      }
+    },
+    {
+      "id": "LivestreamCalendarModal-vendor",
+      "classification": "vendor-boundary",
+      "files": [
+        "src/components/overlays/modals/LivestreamCalendarModal/component.tsx"
+      ],
+      "proposal": "HeroUI import + undeclared frames. No per-part classname prop to migrate; hold for heroui-boundaries / principle audit. Not safe-api-removal.",
+      "applied": false,
+      "proof": {
+        "rules": ["no-heroui-outside-vocabulary", "require-frame-self-declare"]
+      }
+    }
+  ],
+  "verification": {
+    "eslintQuietOnChanged": "n/a — no source files changed",
+    "repoWideConsumerSearch": [
+      "dialogClassName|footerClassName",
+      "containerClassName",
+      "heightClassName",
+      "contentClassName"
+    ],
+    "safeApiRemovalCandidates": 0,
+    "safeConsumerMigrationCandidates": 0,
+    "note": "All seeded per-part holds remain record-only. Classifier false-positive safe-consumer-migration on ModalShell containerClassName and MiniCart require-frame-self-declare reclassified to new-named-slot-required / ambiguous."
+  },
+  "regressions": []
+}

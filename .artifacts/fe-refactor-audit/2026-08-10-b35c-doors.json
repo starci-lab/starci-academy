@@ -1,0 +1,282 @@
+{
+  "batch": "B35c",
+  "proof": "css-doors",
+  "checkpoint": "02011807",
+  "source": ".artifacts/fe-refactor-audit/2026-08-10-b35-worker-shared-consumer-chains-coordinator.json#doorsBurned",
+  "generatedAt": "2026-08-08T15:15:00.000Z",
+  "doors": [
+    {
+      "id": "Alert.classNames",
+      "component": "Alert",
+      "prop": "classNames",
+      "twins": ["sb", "src"],
+      "declarationRemoved": {
+        "sb": true,
+        "src": true,
+        "paths": [
+          ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+          "src/components/atoms/feedback/Alert/index.tsx"
+        ],
+        "evidence": "Removed `classNames?: Array<AllowedClassName>` from props + destructure; host cn() no longer spreads classNames"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false,
+      "note": "Hardcoded host `className={cn(\"shadow-none\", …)}` retained; no Box escape introduced for the burned door"
+    },
+    {
+      "id": "TabsExtended.classNames",
+      "component": "TabsExtended",
+      "prop": "classNames",
+      "twins": ["sb", "src"],
+      "declarationRemoved": {
+        "sb": true,
+        "src": true,
+        "paths": [
+          ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+          "src/components/atoms/navigation/Tabs/TabsExtended.tsx"
+        ],
+        "evidence": "Removed `classNames?: Array<AllowedClassName>` from props + forwarding into underlying Tabs"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "EmptyContent.classNames",
+      "component": "EmptyContent",
+      "prop": "classNames",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/async/EmptyContent/index.tsx"],
+        "evidence": "EmptyContentProps has no classNames; StackV no longer receives classNames={['w-full', …]}"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false,
+      "note": "Dropped Stack w-full classNames; no Box className escape for the door"
+    },
+    {
+      "id": "ErrorContent.classNames",
+      "component": "ErrorContent",
+      "prop": "classNames",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/async/ErrorContent/index.tsx"],
+        "evidence": "Removed classNames?: from props + forwarding"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "InfiniteScrollSentinel.classNames",
+      "component": "InfiniteScrollSentinel",
+      "prop": "classNames",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/async/InfiniteScrollSentinel/index.tsx"],
+        "evidence": "Removed classNames?:; sentinel host fixed to className=\"h-px w-full\""
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false,
+      "note": "Fixed intrinsic host class string only; not a Box escape for a public door"
+    },
+    {
+      "id": "CourseCard.className / WithClassNames",
+      "component": "CourseCard",
+      "prop": "className",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/cards/CourseCard/component.tsx"],
+        "evidence": "Removed `extends WithClassNames<undefined>` and className destructure; Card cn() no longer merges public className"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false,
+      "note": "Public door burned only; internal Card/div className hosts remain (held HeroUI/raw-shape cluster)"
+    },
+    {
+      "id": "CheckListCard.classNames",
+      "component": "CheckListCard",
+      "prop": "classNames",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/cards/CheckListCard/index.tsx"],
+        "evidence": "Removed classNames?: from props + SurfaceListCard forwarding"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "CrossListCard.classNames",
+      "component": "CrossListCard",
+      "prop": "classNames",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/cards/CrossListCard/index.tsx"],
+        "evidence": "Removed classNames?: from props + SurfaceListCard forwarding"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "SummaryCard.classNames",
+      "component": "SummaryCard",
+      "prop": "classNames",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/cards/SummaryCard/index.tsx"],
+        "evidence": "Removed classNames?: from props + forwarding"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "AiCategoryChip.className",
+      "component": "AiCategoryChip",
+      "prop": "className",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": [
+          "src/components/blocks/chips/AiCategoryChip/component.tsx",
+          "src/components/blocks/chips/AiCategoryChip/index.tsx"
+        ],
+        "evidence": "Removed WithClassNames + className from presentational + connected; span fixed to intrinsic className string"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "SearchBar.className",
+      "component": "SearchBar",
+      "prop": "className",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": [
+          "src/components/blocks/form/SearchBar/component.tsx",
+          "src/components/blocks/form/SearchBar/index.tsx"
+        ],
+        "evidence": "Removed WithClassNames/className?: from presentational + connected; TextField fixed to className=\"w-full\""
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "StickyBottomBar.className",
+      "component": "StickyBottomBar",
+      "prop": "className",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/layout/StickyBottomBar/index.tsx"],
+        "evidence": "Removed WithClassNames + className merge; host div uses fixed intrinsic className string"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    },
+    {
+      "id": "SubPageHeader.className",
+      "component": "SubPageHeader",
+      "prop": "className",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/layout/SubPageHeader/component.tsx"],
+        "evidence": "Removed WithClassNames + outer `<div className={className}>` wrapper; layout flattened to intrinsic hosts"
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false,
+      "note": "Wrapper removal is not a Box className escape for the burned door"
+    },
+    {
+      "id": "PaginationSkeleton.className",
+      "component": "PaginationSkeleton",
+      "prop": "className",
+      "twins": ["src-only"],
+      "declarationRemoved": {
+        "sb": null,
+        "src": true,
+        "paths": ["src/components/blocks/skeleton/PaginationSkeleton/index.tsx"],
+        "evidence": "Removed WithClassNames/className?:; wrapper fixed to className=\"flex justify-center\""
+      },
+      "jsxConsumers": 0,
+      "forbiddenConsumers": 0,
+      "forbiddenSample": [],
+      "rawCssReplacementForDoor": false
+    }
+  ],
+  "collapsibleSidebarClassNameRetained": true,
+  "collapsibleSidebarEvidence": {
+    "path": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    "line": 73,
+    "snippet": "className?: string"
+  },
+  "reactionButtonDiffEmpty": true,
+  "reactionButtonEvidence": {
+    "command": "git diff 02011807 -- src/components/blocks/learn/ReactionButton/types.ts",
+    "stdout": ""
+  },
+  "forbiddenDiffs": [],
+  "forbiddenTreesEvidence": {
+    "command": "git diff --name-only 02011807 -- <nivo|nivoexpert|mia-mia trees>",
+    "rawNameOnly": [
+      ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"
+    ],
+    "classification": "pre-B35 dirty (excludedPredirty in 2026-08-10-b35c-scope.json); copyright ©→Copyright string only — not a B35 CSS-door / product consumer change",
+    "b35ProductForbiddenDiffs": [],
+    "untrackedUnderForbiddenTrees": [
+      ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+      ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx"
+    ],
+    "untrackedNote": "Untracked; absent from git diff --name-only vs 02011807; scope lists as excludedForbiddenDirty"
+  },
+  "scanMethod": {
+    "declaration": "rg prop?: / WithClassNames on component twin paths",
+    "jsxConsumers": "multiline rg `<Component\\b[\\s\\S]{0,400}?\\bprop\\s*=` excluding .artifacts/node_modules",
+    "forbidden": "same consumer hits filtered to nivo|nivoexpert|mia-mia paths"
+  },
+  "failures": [],
+  "summary": "All 14 burned doors: declarations removed, 0 JSX prop consumers, 0 forbidden consumers, no Box escape introduced for the doors. CollapsibleSidebar.className retained. ReactionButton/types.ts diff empty. B35 product forbiddenDiffs empty (SiteFooter story pre-dirty only)."
+}

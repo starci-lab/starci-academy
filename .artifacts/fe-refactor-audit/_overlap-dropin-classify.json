@@ -1,0 +1,620 @@
+{
+  "spinnerSafe": [
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "usages": [
+        "<Spinner />"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "usages": [
+        "<Spinner size=\"lg\" />"
+      ]
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/map.tsx",
+      "usages": [
+        "<Spinner size=\"sm\" />"
+      ]
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/index.tsx",
+      "usages": [
+        "<Spinner size=\"lg\" />"
+      ]
+    }
+  ],
+  "chipSafe": [
+    {
+      "file": "src/components/blocks/blog/PostRow/index.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/components/blocks/course/CourseTrialChip/index.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+      "count": 2
+    }
+  ],
+  "skeletonSafe": [
+    {
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "aliased": true
+    },
+    {
+      "file": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "aliased": false
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "aliased": false
+    }
+  ],
+  "typographyHardCount": 40,
+  "buttonHardCount": 23,
+  "otherCount": 147,
+  "typographyHard": [
+    "src/components/blocks/chips/AiCategoryChip/component.tsx",
+    "src/components/blocks/chips/LanguageChip/index.tsx",
+    "src/components/blocks/dashboard/Podium/index.tsx",
+    "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+    "src/components/blocks/feed/FeedItem/index.tsx",
+    "src/components/blocks/feed/ReactionBar/index.tsx",
+    "src/components/blocks/feedback/ErrorPageState/index.tsx",
+    "src/components/blocks/grading/DiffViewer/index.tsx",
+    "src/components/blocks/identity/ImageDropzone/index.tsx",
+    "src/components/blocks/layout/AppSplash/component.tsx",
+    "src/components/blocks/layout/PageHeader/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ConceptMap/index.tsx",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/PlaygroundHeader/index.tsx",
+    "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+    "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+    "src/components/blocks/marketing/ShowcaseMockup/index.tsx"
+  ],
+  "buttonHard": [
+    "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+    "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+    "src/components/blocks/layout/SubPageHeader/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+    "src/components/blocks/learn/ContentAiFab/index.tsx",
+    "src/components/blocks/learn/ContentAiSelectionAsk/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+    "src/components/pages/CommunityChatPage/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseCtaButtons/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx"
+  ],
+  "otherSample": [
+    {
+      "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Alert",
+        "Button",
+        "Modal",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Chip",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Accordion",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "ProgressBar",
+        "Spinner",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Card"
+      ]
+    },
+    {
+      "file": "src/components/blocks/chips/StatusChip/index.tsx",
+      "kind": "chip-complex"
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Tabs"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/CartLine/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Link",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Popover"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Chip",
+        "Spinner",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Card",
+        "Skeleton",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Popover"
+      ]
+    },
+    {
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Spinner"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Spinner"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Spinner",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Modal",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Modal",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Chip",
+        "Modal",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Link",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/entity/EntityToken/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feed/EntityLink/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Badge",
+        "Button"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Switch"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Badge"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Link"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/EntityResultRow/component.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Chip",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Chip",
+        "Typography"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Typography",
+        "Separator"
+      ]
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "kind": "multi",
+      "symbols": [
+        "Button",
+        "Typography"
+      ]
+    }
+  ]
+}

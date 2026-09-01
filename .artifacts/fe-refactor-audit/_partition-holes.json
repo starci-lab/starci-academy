@@ -1,0 +1,191 @@
+[
+  {
+    "rel": "src/components/pages/CvEditorPage/index.tsx",
+    "line": 399,
+    "frame": "raw",
+    "gap": "px-6",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<div className=\"px-6 pt-4 @app-lg:hidden\">"
+  },
+  {
+    "rel": "src/components/pages/ProfileRedirectPage/index.tsx",
+    "line": 37,
+    "frame": "raw",
+    "gap": "px-6",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<div className=\"w-full px-6 py-3\">"
+  },
+  {
+    "rel": "src/components/pages/ProfileRedirectPage/index.tsx",
+    "line": 46,
+    "frame": "raw",
+    "gap": "mx-auto",
+    "cls": "padding-plus-gap",
+    "action": "split pad+gap into nested frames",
+    "snip": "<div className=\"mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 @app-md:flex-row @app-md:items-start\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "line": 338,
+    "frame": "raw",
+    "gap": "py-6",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<Typography type=\"body-sm\" color=\"muted\" align=\"center\" className=\"py-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1840,
+    "frame": "raw",
+    "gap": "px-4",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<div className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2002,
+    "frame": "raw",
+    "gap": "px-4",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<Box className=\"flex min-w-0 flex-col @app-lg:overflow-y-auto px-4 py-6 @app-sm:px-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2137,
+    "frame": "raw",
+    "gap": "px-4",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<Box className=\"flex min-w-0 flex-col @app-lg:overflow-y-auto px-4 py-6 @app-sm:px-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2156,
+    "frame": "raw",
+    "gap": "gap-3",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<ul className=\"flex flex-wrap gap-3\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2162,
+    "frame": "raw",
+    "gap": "px-1",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<li key={phaseKey} className=\"px-1 py-2\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+    "line": 55,
+    "frame": "raw",
+    "gap": "px-4",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<div className=\"px-4 pb-2 @app-sm:px-6\" role=\"presentation\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+    "line": 67,
+    "frame": "raw",
+    "gap": "gap-6",
+    "cls": "padding-plus-gap",
+    "action": "split pad+gap into nested frames",
+    "snip": "<div className=\"grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 @app-sm:px-6 @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]\">"
+  },
+  {
+    "rel": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+    "line": 140,
+    "frame": "raw",
+    "gap": "gap-1",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "className=\"gap-1 p-0\""
+  },
+  {
+    "rel": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+    "line": 153,
+    "frame": "raw",
+    "gap": "gap-3",
+    "cls": "padding-plus-gap",
+    "action": "split pad+gap into nested frames",
+    "snip": "className=\"flex cursor-pointer items-center gap-3 rounded-large px-2 py-2 text-foreground outline-none data-[focus-visible=true]:ring-2 data"
+  },
+  {
+    "rel": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "line": 201,
+    "frame": "raw",
+    "gap": "p-5",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+  },
+  {
+    "rel": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "line": 34,
+    "frame": "raw",
+    "gap": "p-5",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+  },
+  {
+    "rel": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "line": 101,
+    "frame": "raw",
+    "gap": "p-5",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+  },
+  {
+    "rel": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "line": 35,
+    "frame": "raw",
+    "gap": "p-5",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+  },
+  {
+    "rel": "src/components/pages/LegalPage/index.tsx",
+    "line": 61,
+    "frame": "raw",
+    "gap": "gap-2",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "<li key={item.label ?? item.text} className=\"flex gap-2\">"
+  },
+  {
+    "rel": "src/components/pages/PrivacySettingsPage/index.tsx",
+    "line": 241,
+    "frame": "raw",
+    "gap": "px-8",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "className=\"h-12 self-end px-8 text-base\""
+  },
+  {
+    "rel": "src/components/composites/form/InputTags/index.tsx",
+    "line": 121,
+    "frame": "raw",
+    "gap": "px-1",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "className=\"min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none\""
+  },
+  {
+    "rel": ".storybook/components/composites/form/InputTags/InputTags.tsx",
+    "line": 119,
+    "frame": "raw",
+    "gap": "px-1",
+    "cls": "raw-vendor-foreign",
+    "action": "convert to house frame+principle or Box hatch",
+    "snip": "className=\"min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none\""
+  }
+]

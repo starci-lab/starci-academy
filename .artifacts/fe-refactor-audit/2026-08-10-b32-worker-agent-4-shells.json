@@ -1,0 +1,118 @@
+{
+  "batch": "B32",
+  "agent": "agent-4-shells",
+  "checkpoint": "9e86cbdf",
+  "branch": "mtp",
+  "status": "partial",
+  "summary": "Closed shell CSS-door, frame self-declare, FillAvailable title fill, and honest identity roots across SettingsLayout / ContentAiChatDrawer / AiQuotaModal / CookieConsent / GlobalSearch / ShareModal / auth field rows / theme switches / UserSummary. Six identity roots remain held (vendor Dropdown.Menu, thin view switches, AuthenticationModal chrome-only ModalShell gap).",
+  "edited": [
+    "src/components/layouts/SettingsLayout/component.tsx",
+    "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+    "src/components/overlays/modals/AiQuotaModal/component.tsx",
+    "src/components/overlays/modals/CookieConsentModal/component.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/component.tsx",
+    "src/components/overlays/modals/ShareModal/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+    "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx"
+  ],
+  "closed": {
+    "require-frame-self-declare": [
+      "SettingsLayout Container → principle=center-measure + explain",
+      "ContentAiChatDrawer header Box pr-8 → control-pad + neighbour explain",
+      "AiQuotaModal header Box pr-8 + body StackV → block-boundary",
+      "CookieConsentModal body StackV → sibling-stack",
+      "GlobalSearchModal StackV + Cluster → block-boundary / chip-row",
+      "ShareModal QR Box → card-padding",
+      "RememberMeRow Box → flex-action-between"
+    ],
+    "no-public-classname-prop": [
+      "ContentAiChatDrawer: Typography classNames min-w-0/flex-1 → FillAvailable at=base"
+    ],
+    "no-per-part-classname-prop": [
+      "ShareModal: internal SharePlatform.colorClassName → colorClass (not a public *ClassName door)"
+    ],
+    "require-identity-root": [
+      "NavbarThemeSwitch / DarkLightModeSwitch → Box as=span + identity",
+      "UserSummary → Box identity",
+      "Sign-in/sign-up EmailField/PasswordField/AgreeToTermsRow → Box identity + label-field"
+    ]
+  },
+  "held": [
+    {
+      "files": [
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+        "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx"
+      ],
+      "rule": "require-identity-root",
+      "reason": "Root is HeroUI Dropdown.Menu (compound child of Dropdown). Wrapping in Box breaks menu ownership; Menu atom migration is redesign, not a shell host swap."
+    },
+    {
+      "files": [
+        "src/components/layouts/PersonalProjectWorkspaceLayout/component.tsx"
+      ],
+      "rule": "require-identity-root",
+      "reason": "Thin view dispatcher; leaves are PersonalProjectDashboard / PersonalProjectTaskPage / PersonalProjectResultScreen outside this manifest and do not accept caller identity. File header already documents BLOCK-2 hold."
+    },
+    {
+      "files": [
+        "src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx",
+        "src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx"
+      ],
+      "rule": "require-identity-root",
+      "reason": "Thin step switches returning Credentials/Registration/Otp states. Identity belongs on those step roots (partially outside manifest); wrapping would invent a second shape around Modal.Header/Body siblings."
+    },
+    {
+      "files": [
+        "src/components/overlays/modals/AuthenticationModal/component.tsx"
+      ],
+      "rule": "require-identity-root",
+      "reason": "Cannot use ModalShell: SignIn/SignUp sections already own Modal.CloseTrigger/Header/Body for /login reuse. Hand-painted data-tier on HeroUI Modal is the current workaround."
+    }
+  ],
+  "unrelatedRemaining": {
+    "starci-fe/no-heroui-outside-vocabulary": 6,
+    "starci-fe/page-folder-two-files-only": 25,
+    "note": "HeroUI imports and page-folder nesting are outside this shell host/CSS/identity mission; not burned here."
+  },
+  "proposeAgent10": [
+    {
+      "id": "chrome-only-modal-frame",
+      "need": "Modal frame that owns only backdrop/container/dialog (+ optional identity) without forcing Header/Body/CloseTrigger",
+      "why": "AuthenticationModal sections are also mounted bare on LoginPage and must keep their own chrome; ModalShell nesting doubles Body/CloseTrigger",
+      "consumers": [
+        "src/components/overlays/modals/AuthenticationModal/component.tsx"
+      ]
+    }
+  ],
+  "focusDelta": {
+    "before": {
+      "require-identity-root": 14,
+      "require-frame-self-declare": 9,
+      "no-public-classname-prop": 1,
+      "no-per-part-classname-prop": 1
+    },
+    "after": {
+      "require-identity-root": 6,
+      "require-frame-self-declare": 0,
+      "no-public-classname-prop": 0,
+      "no-per-part-classname-prop": 0
+    }
+  },
+  "eslint": {
+    "command": "npx eslint --format json <agent-4-shells manifest files>",
+    "artifactAfter": ".artifacts/fe-refactor-audit/2026-08-10-b32-a4-eslint-after.json"
+  },
+  "didNotEdit": [
+    "src/components/layouts/Navbar/index.tsx",
+    "src/components/blocks/navigation/Navbar/index.tsx",
+    "src/components/layouts/InnerLayout/**",
+    "any feature blocks/pages outside agents.agent-4-shells"
+  ]
+}

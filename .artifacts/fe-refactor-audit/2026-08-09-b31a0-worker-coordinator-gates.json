@@ -1,0 +1,31 @@
+{
+  "changed": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b31a0-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31a0-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31a0-status.md",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "retracted": [],
+  "holds": [
+    "A filing proposal only",
+    "B contract blocked"
+  ],
+  "publicDoors": [],
+  "skeletonParity": "n/a",
+  "storybookParity": "n/a",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b31a0-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31a0-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31a0-status.md",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "consumerEvidence": "see inventory",
+  "destinationDecision": "blocked — no product checkpoint",
+  "warningsBefore": {},
+  "warningsAfter": null
+}

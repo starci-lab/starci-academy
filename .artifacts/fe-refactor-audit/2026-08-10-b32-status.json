@@ -1,0 +1,801 @@
+{
+  "batch": "B32",
+  "title": "Topology-driven ESLint closure",
+  "checkpoint": "9e86cbdf",
+  "committed": false,
+  "generatedAt": "2026-08-08T11:54:55.108Z",
+  "workersPresent": [
+    "agent-1-atoms",
+    "agent-2-frames",
+    "agent-3-composites",
+    "agent-4-shells",
+    "agent-5-shared-blocks",
+    "agent-6-domain-a",
+    "agent-7-domain-b",
+    "agent-8-pages",
+    "agent-9-app-modules",
+    "agent-10-eslint-oracle"
+  ],
+  "workersMissing": [],
+  "baselineTelemetry": {
+    "rawMessages": 7428,
+    "affectedFiles": 1434,
+    "errors": 0,
+    "starciMessages": 7417,
+    "clusters": 7131,
+    "actionableClusters": 6433
+  },
+  "perAgent": {
+    "agent-1-atoms": {
+      "changedCount": 26,
+      "closedCount": 13,
+      "holdCount": 8,
+      "proposalCount": 3,
+      "summary": null,
+      "eslint": {
+        "before": 91,
+        "after": 33,
+        "delta": -58
+      }
+    },
+    "agent-2-frames": {
+      "changedCount": 8,
+      "closedCount": 8,
+      "holdCount": 11,
+      "proposalCount": 3,
+      "summary": "Closed 16 dead classNames clusters on Grid/PinnedTrack/ResponsiveCluster/Stage (SB+src). Stage also dropped unused named-frame principle/explain. Held Stack/Flex/Cluster/Container classNames and PinnedTrack.principle for proven live consumers outside the partition.",
+      "eslint": null
+    },
+    "agent-3-composites": {
+      "changedCount": 38,
+      "closedCount": 3,
+      "holdCount": 5,
+      "proposalCount": 0,
+      "summary": "Closed dead CSS doors and frame self-declare on most agent-3 composites (83→16). Held EnumChip legacy className, ProgressMeter/TitledText/Markdown viewer doors needing out-of-manifest twins, and domain refile proposals without inventing shelves.",
+      "eslint": {
+        "focusedMessages": 83,
+        "byRule": {
+          "starci-fe/no-public-classname-prop": 72,
+          "starci-fe/require-frame-self-declare": 11
+        }
+      }
+    },
+    "agent-4-shells": {
+      "changedCount": 15,
+      "closedCount": 4,
+      "holdCount": 4,
+      "proposalCount": 1,
+      "summary": "Closed shell CSS-door, frame self-declare, FillAvailable title fill, and honest identity roots across SettingsLayout / ContentAiChatDrawer / AiQuotaModal / CookieConsent / GlobalSearch / ShareModal / auth field rows / theme switches / UserSummary. Six identity roots remain held (vendor Dropdown.Menu, thin view switches, AuthenticationModal chrome-only ModalShell gap).",
+      "eslint": {
+        "command": "npx eslint --format json <agent-4-shells manifest files>",
+        "artifactAfter": ".artifacts/fe-refactor-audit/2026-08-10-b32-a4-eslint-after.json"
+      }
+    },
+    "agent-5-shared-blocks": {
+      "changedCount": 9,
+      "closedCount": 9,
+      "holdCount": 13,
+      "proposalCount": 7,
+      "summary": "Closed 15 starci-fe findings (39→24). Host cluster mostly cleared via RailShell/FillAvailable/Box twin ports on SB layouts/drawers/headers. PricingCard flex-1 and CVSubmissionForm HeroUI Card closed. Remaining debt held on missing NavLandmark, AmbientParticle, behavior className axes, MarkdownContent density, identity forwards, and TimeDisplay atom — no wrappers invented.",
+      "eslint": {
+        "before": 39,
+        "after": 24,
+        "delta": -15,
+        "byRuleBefore": {
+          "starci-fe/no-public-classname-prop": 13,
+          "starci-fe/no-host-element-at-sentence-tier": 12,
+          "starci-fe/require-identity-root": 7,
+          "starci-fe/require-frame-self-declare": 1,
+          "starci-fe/no-heroui-outside-vocabulary": 2,
+          "starci-fe/no-raw-shape-at-sentence-tier": 4
+        },
+        "byRuleAfter": {
+          "starci-fe/no-public-classname-prop": 12,
+          "starci-fe/no-host-element-at-sentence-tier": 1,
+          "starci-fe/require-identity-root": 6,
+          "starci-fe/no-raw-shape-at-sentence-tier": 4,
+          "starci-fe/no-heroui-outside-vocabulary": 1
+        }
+      }
+    },
+    "agent-6-domain-a": {
+      "changedCount": 25,
+      "closedCount": 8,
+      "holdCount": 16,
+      "proposalCount": 0,
+      "summary": "Closed 25/45 actionable clusters: SB passthrough hosts, Avatar/FillAvailable placement hosts, KeepGoingPath/ModuleLessonList glyphClass rename, ContinueCardHero classNames + ContinueLearning/FoundationResourceEmpty identity, SelectionHintCallout Box removal. Held 20 for missing vocabulary (warning-soft, Image width, sticky top-4, chat/command chrome), gap-token mismatch, out-of-manifest PriceTagBase/KeyStatusChip/hooks consumers, and identity-incapable roots (Toolbar/PageHeader/StatRibbon/Button/Legend/Panel).",
+      "eslint": null
+    },
+    "agent-7-domain-b": {
+      "changedCount": 14,
+      "closedCount": 10,
+      "holdCount": 4,
+      "proposalCount": 4,
+      "summary": "Closed 14 complete vertical clusters (−25 starci-fe messages: 306→281). SB dashboard/profile twins and community comment/grading leaf clusters reached zero warnings via existing Stack/SurfaceCard/Tooltip/Typography. Held HeroUI-heavy discussion/feed/league/profile-src surfaces pending missing owners or out-of-manifest consumers.",
+      "eslint": {
+        "before": {
+          "starciFeMessages": 306,
+          "byRule": {
+            "starci-fe/no-host-element-at-sentence-tier": 108,
+            "starci-fe/no-raw-shape-at-sentence-tier": 75,
+            "starci-fe/require-identity-root": 29,
+            "starci-fe/no-cn-above-vocabulary": 26,
+            "starci-fe/no-heroui-outside-vocabulary": 24,
+            "starci-fe/no-public-classname-prop": 22,
+            "starci-fe/require-frame-self-declare": 9,
+            "starci-fe/no-frame-fragment-item": 7,
+            "starci-fe/no-classname-at-sentence-tier": 4,
+            "starci-fe/no-emoji-in-source": 1,
+            "starci-fe/no-inline-skeleton-branch": 1
+          }
+        },
+        "after": {
+          "starciFeMessages": 281,
+          "byRule": {
+            "starci-fe/no-host-element-at-sentence-tier": 99,
+            "starci-fe/no-raw-shape-at-sentence-tier": 74,
+            "starci-fe/require-identity-root": 25,
+            "starci-fe/no-cn-above-vocabulary": 25,
+            "starci-fe/no-heroui-outside-vocabulary": 22,
+            "starci-fe/no-public-classname-prop": 20,
+            "starci-fe/require-frame-self-declare": 4,
+            "starci-fe/no-frame-fragment-item": 7,
+            "starci-fe/no-classname-at-sentence-tier": 4,
+            "starci-fe/no-emoji-in-source": 1
+          }
+        },
+        "delta": -25,
+        "fullyClosedFiles": 14
+      }
+    },
+    "agent-8-pages": {
+      "changedCount": 1,
+      "closedCount": 1,
+      "holdCount": 4,
+      "proposalCount": 0,
+      "summary": "Closed require-frame-self-declare on AiSubscriptionPage. Held 38 page-folder-two-files-only extras and 1 SB device-fixture host: destinations/importers outside manifest; refused Box/fake-principle false closure and refused blind block promotions.",
+      "eslint": null
+    },
+    "agent-9-app-modules": {
+      "changedCount": 50,
+      "closedCount": 2,
+      "holdCount": 0,
+      "proposalCount": 0,
+      "summary": "Closed 50 authoring findings across 50 GraphQL module files (18 Vietnamese authoring comments → English; 32 missing export JSDoc). Focused eslint clean.",
+      "eslint": null
+    },
+    "agent-10-eslint-oracle": {
+      "changedCount": 5,
+      "closedCount": 0,
+      "holdCount": 0,
+      "proposalCount": 0,
+      "summary": "complete",
+      "eslint": null
+    }
+  },
+  "changedFiles": [
+    ".storybook/components/atoms/display/Badge/Badge.tsx",
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+    ".storybook/components/atoms/display/Logo/Logo.tsx",
+    ".storybook/components/atoms/display/Progress/Progress.tsx",
+    ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+    ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/data/Table/Table.tsx",
+    ".storybook/components/composites/feedback/Callout/Callout.tsx",
+    ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+    ".storybook/components/composites/form/_field/FieldFrame.tsx",
+    ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+    ".storybook/components/composites/stats/Legend/Legend.tsx",
+    ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+    ".storybook/components/frames/Grid/Grid.tsx",
+    ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+    ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+    ".storybook/components/frames/Stage/Stage.tsx",
+    ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+    ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+    ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+    ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+    ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+    ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+    ".storybook/components/starci/blocks/learn/QuizEnrollGate/QuizEnrollGate.tsx",
+    ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+    ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+    ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+    ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+    ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+    ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+    ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+    "plugins/eslint/architectural-oracle.test.mjs",
+    "plugins/eslint/frame-items.test.mjs",
+    "plugins/eslint/index.mjs",
+    "plugins/eslint/sentence-hosts.test.mjs",
+    "plugins/eslint/sentence-tier.test.mjs",
+    "src/components/atoms/display/Badge/index.tsx",
+    "src/components/atoms/display/IconTile/index.tsx",
+    "src/components/atoms/display/Logo/index.tsx",
+    "src/components/atoms/display/Progress/index.tsx",
+    "src/components/atoms/display/Spinner/index.tsx",
+    "src/components/atoms/media/QRCode/index.tsx",
+    "src/components/atoms/navigation/Accordion/index.tsx",
+    "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+    "src/components/atoms/navigation/Link/LinkBack.tsx",
+    "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    "src/components/atoms/navigation/Pagination/index.tsx",
+    "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+    "src/components/atoms/overlay/Menu/index.tsx",
+    "src/components/blocks/blog/PostRow/index.tsx",
+    "src/components/blocks/cards/PricingCard/index.tsx",
+    "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+    "src/components/blocks/community/CommunityCommentItem/component.tsx",
+    "src/components/blocks/community/CommunityCommentThread/component.tsx",
+    "src/components/blocks/community/CommunityPost/index.tsx",
+    "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+    "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+    "src/components/blocks/grading/GradingByline/component.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+    "src/components/blocks/learn/ContentAiSelectionAsk/SelectionHintCallout.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    "src/components/blocks/learn/ContinueLearning/index.tsx",
+    "src/components/blocks/learn/FoundationResourceEmpty/index.tsx",
+    "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+    "src/components/composites/async/AsyncContent/index.tsx",
+    "src/components/composites/buttons/ButtonGroup/index.tsx",
+    "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "src/components/composites/buttons/InputButtonLike/index.tsx",
+    "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    "src/components/composites/data/Table/index.tsx",
+    "src/components/composites/feedback/Callout/index.tsx",
+    "src/components/composites/feedback/EmptyState/index.tsx",
+    "src/components/composites/form/Dropzone/index.tsx",
+    "src/components/composites/form/_field/FieldFrame.tsx",
+    "src/components/composites/layout/Disclosure/index.tsx",
+    "src/components/composites/lists/AuthorByline/index.tsx",
+    "src/components/composites/lists/IconLabelValueRow/index.tsx",
+    "src/components/composites/lists/IdentityContentRow/index.tsx",
+    "src/components/composites/lists/UserCell/index.tsx",
+    "src/components/composites/stats/CourseProgressBar/index.tsx",
+    "src/components/composites/stats/Legend/index.tsx",
+    "src/components/composites/stats/MetricCard/index.tsx",
+    "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    "src/components/composites/text/DotLabel/index.tsx",
+    "src/components/composites/text/MetaDotRow/index.tsx",
+    "src/components/composites/text/PricePeriod/index.tsx",
+    "src/components/composites/text/ScoreValue/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/composites/viewers/PDFView/index.tsx",
+    "src/components/frames/Grid/index.tsx",
+    "src/components/frames/PinnedTrack/index.tsx",
+    "src/components/frames/ResponsiveCluster/index.tsx",
+    "src/components/frames/Stage/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+    "src/components/layouts/SettingsLayout/component.tsx",
+    "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+    "src/components/overlays/modals/AiQuotaModal/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+    "src/components/overlays/modals/CookieConsentModal/component.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/component.tsx",
+    "src/components/overlays/modals/ShareModal/component.tsx",
+    "src/components/pages/AiSubscriptionPage/component.tsx",
+    "src/modules/api/graphql/mutations/types/course-enroll.ts",
+    "src/modules/api/graphql/mutations/types/discussion.ts",
+    "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+    "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+    "src/modules/api/graphql/queries/query-ai-models.ts",
+    "src/modules/api/graphql/queries/query-autocomplete-global-search.ts",
+    "src/modules/api/graphql/queries/query-challenge-submissions.ts",
+    "src/modules/api/graphql/queries/query-challenge-suggestions.ts",
+    "src/modules/api/graphql/queries/query-challenges.ts",
+    "src/modules/api/graphql/queries/query-consultant-suggestions.ts",
+    "src/modules/api/graphql/queries/query-content-status.ts",
+    "src/modules/api/graphql/queries/query-content-suggestions.ts",
+    "src/modules/api/graphql/queries/query-course-enrollment-status.ts",
+    "src/modules/api/graphql/queries/query-course-suggestions.ts",
+    "src/modules/api/graphql/queries/query-foundation-categories.ts",
+    "src/modules/api/graphql/queries/query-foundation-category-suggestions.ts",
+    "src/modules/api/graphql/queries/query-headhunting-companies.ts",
+    "src/modules/api/graphql/queries/query-headhunting-company-suggestions.ts",
+    "src/modules/api/graphql/queries/query-headhunting-company.ts",
+    "src/modules/api/graphql/queries/query-lesson-videos.ts",
+    "src/modules/api/graphql/queries/query-livestream-sessions.ts",
+    "src/modules/api/graphql/queries/query-milestone-suggestions.ts",
+    "src/modules/api/graphql/queries/query-milestone-task-progress.ts",
+    "src/modules/api/graphql/queries/query-milestone-task-suggestions.ts",
+    "src/modules/api/graphql/queries/query-milestone-task.ts",
+    "src/modules/api/graphql/queries/query-milestones.ts",
+    "src/modules/api/graphql/queries/query-module-suggestions.ts",
+    "src/modules/api/graphql/queries/query-modules.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+    "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+    "src/modules/api/graphql/queries/query-saved-contents.ts",
+    "src/modules/api/graphql/queries/query-submission-attempts.ts",
+    "src/modules/api/graphql/queries/query-submission-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-submit-cv-presigned-url.ts",
+    "src/modules/api/graphql/queries/query-template-cvs.ts",
+    "src/modules/api/graphql/queries/query-user-milestone-task-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-user-personal-task-attempts.ts",
+    "src/modules/api/graphql/queries/types/course-questions.ts",
+    "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+    "src/modules/api/graphql/queries/types/cv-blocks.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts"
+  ],
+  "changedCount": 191,
+  "gateCandidateFiles": [
+    ".storybook/components/atoms/display/Badge/Badge.tsx",
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+    ".storybook/components/atoms/display/Logo/Logo.tsx",
+    ".storybook/components/atoms/display/Progress/Progress.tsx",
+    ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+    ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    "src/components/atoms/display/Badge/index.tsx",
+    "src/components/atoms/display/IconTile/index.tsx",
+    "src/components/atoms/display/Logo/index.tsx",
+    "src/components/atoms/display/Progress/index.tsx",
+    "src/components/atoms/display/Spinner/index.tsx",
+    "src/components/atoms/media/QRCode/index.tsx",
+    "src/components/atoms/navigation/Accordion/index.tsx",
+    "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+    "src/components/atoms/navigation/Link/LinkBack.tsx",
+    "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    "src/components/atoms/navigation/Pagination/index.tsx",
+    "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+    "src/components/atoms/overlay/Menu/index.tsx",
+    ".storybook/components/frames/Grid/Grid.tsx",
+    ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+    ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+    ".storybook/components/frames/Stage/Stage.tsx",
+    "src/components/frames/Grid/index.tsx",
+    "src/components/frames/PinnedTrack/index.tsx",
+    "src/components/frames/ResponsiveCluster/index.tsx",
+    "src/components/frames/Stage/index.tsx",
+    ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+    "src/components/composites/async/AsyncContent/index.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    "src/components/composites/buttons/ButtonGroup/index.tsx",
+    ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+    "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    ".storybook/components/composites/data/Table/Table.tsx",
+    "src/components/composites/data/Table/index.tsx",
+    ".storybook/components/composites/feedback/Callout/Callout.tsx",
+    "src/components/composites/feedback/Callout/index.tsx",
+    ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+    "src/components/composites/feedback/EmptyState/index.tsx",
+    ".storybook/components/composites/form/_field/FieldFrame.tsx",
+    "src/components/composites/form/_field/FieldFrame.tsx",
+    ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+    "src/components/composites/lists/UserCell/index.tsx",
+    ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    ".storybook/components/composites/stats/Legend/Legend.tsx",
+    "src/components/composites/stats/Legend/index.tsx",
+    ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+    "src/components/composites/text/DotLabel/index.tsx",
+    "src/components/composites/text/ScoreValue/index.tsx",
+    "src/components/composites/text/MetaDotRow/index.tsx",
+    "src/components/composites/text/PricePeriod/index.tsx",
+    "src/components/composites/lists/AuthorByline/index.tsx",
+    "src/components/composites/layout/Disclosure/index.tsx",
+    "src/components/composites/stats/CourseProgressBar/index.tsx",
+    "src/components/composites/stats/MetricCard/index.tsx",
+    "src/components/composites/lists/IdentityContentRow/index.tsx",
+    "src/components/composites/lists/IconLabelValueRow/index.tsx",
+    "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    "src/components/composites/viewers/PDFView/index.tsx",
+    "src/components/composites/buttons/InputButtonLike/index.tsx",
+    "src/components/composites/form/Dropzone/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/layouts/SettingsLayout/component.tsx",
+    "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+    "src/components/overlays/modals/AiQuotaModal/component.tsx",
+    "src/components/overlays/modals/CookieConsentModal/component.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/component.tsx",
+    "src/components/overlays/modals/ShareModal/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+    "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+    ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+    ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+    ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+    ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+    ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+    ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    "src/components/blocks/cards/PricingCard/index.tsx",
+    "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+    ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+    ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+    ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+    ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+    ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+    ".storybook/components/starci/blocks/learn/QuizEnrollGate/QuizEnrollGate.tsx",
+    ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+    ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+    "src/components/blocks/learn/ContentAiSelectionAsk/SelectionHintCallout.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    "src/components/blocks/learn/ContinueLearning/index.tsx",
+    "src/components/blocks/learn/FoundationResourceEmpty/index.tsx",
+    ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+    "src/components/blocks/blog/PostRow/index.tsx",
+    "src/components/blocks/community/CommunityCommentItem/component.tsx",
+    "src/components/blocks/community/CommunityCommentThread/component.tsx",
+    "src/components/blocks/community/CommunityPost/index.tsx",
+    "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+    "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+    "src/components/blocks/grading/GradingByline/component.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+    "src/components/pages/AiSubscriptionPage/component.tsx",
+    "src/modules/api/graphql/mutations/types/course-enroll.ts",
+    "src/modules/api/graphql/mutations/types/discussion.ts",
+    "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+    "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+    "src/modules/api/graphql/queries/query-ai-models.ts",
+    "src/modules/api/graphql/queries/query-autocomplete-global-search.ts",
+    "src/modules/api/graphql/queries/query-challenge-submissions.ts",
+    "src/modules/api/graphql/queries/query-challenge-suggestions.ts",
+    "src/modules/api/graphql/queries/query-challenges.ts",
+    "src/modules/api/graphql/queries/query-consultant-suggestions.ts",
+    "src/modules/api/graphql/queries/query-content-status.ts",
+    "src/modules/api/graphql/queries/query-content-suggestions.ts",
+    "src/modules/api/graphql/queries/query-course-enrollment-status.ts",
+    "src/modules/api/graphql/queries/query-course-suggestions.ts",
+    "src/modules/api/graphql/queries/query-foundation-categories.ts",
+    "src/modules/api/graphql/queries/query-foundation-category-suggestions.ts",
+    "src/modules/api/graphql/queries/query-headhunting-companies.ts",
+    "src/modules/api/graphql/queries/query-headhunting-company-suggestions.ts",
+    "src/modules/api/graphql/queries/query-headhunting-company.ts",
+    "src/modules/api/graphql/queries/query-lesson-videos.ts",
+    "src/modules/api/graphql/queries/query-livestream-sessions.ts",
+    "src/modules/api/graphql/queries/query-milestone-suggestions.ts",
+    "src/modules/api/graphql/queries/query-milestone-task-progress.ts",
+    "src/modules/api/graphql/queries/query-milestone-task-suggestions.ts",
+    "src/modules/api/graphql/queries/query-milestone-task.ts",
+    "src/modules/api/graphql/queries/query-milestones.ts",
+    "src/modules/api/graphql/queries/query-module-suggestions.ts",
+    "src/modules/api/graphql/queries/query-modules.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+    "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+    "src/modules/api/graphql/queries/query-saved-contents.ts",
+    "src/modules/api/graphql/queries/query-submission-attempts.ts",
+    "src/modules/api/graphql/queries/query-submission-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-submit-cv-presigned-url.ts",
+    "src/modules/api/graphql/queries/query-template-cvs.ts",
+    "src/modules/api/graphql/queries/query-user-milestone-task-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-user-personal-task-attempts.ts",
+    "src/modules/api/graphql/queries/types/course-questions.ts",
+    "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+    "src/modules/api/graphql/queries/types/cv-blocks.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+    "plugins/eslint/architectural-oracle.test.mjs",
+    "plugins/eslint/sentence-hosts.test.mjs",
+    "plugins/eslint/frame-items.test.mjs",
+    "plugins/eslint/sentence-tier.test.mjs",
+    "plugins/eslint/index.mjs"
+  ],
+  "clustersClosedClaimed": 58,
+  "holdsClaimed": 65,
+  "proposedContracts": [
+    {
+      "agent": "agent-1-atoms",
+      "item": {
+        "id": "propose-QRCode-icon-ComponentTypeWithSkeleton",
+        "summary": "Replace QRCode `icon?: React.ReactNode` with a typed component/slot that can receive isSkeleton if the overlay should shimmer with the QR.",
+        "blockedBy": "Out-of-manifest consumers; no ComponentTypeWithSkeleton helper under atoms/_slot in this repo path used by atoms yet (composites use frames/_slot)."
+      }
+    },
+    {
+      "agent": "agent-1-atoms",
+      "item": {
+        "id": "propose-Button-width-fit-semantic",
+        "summary": "If Button classNames burn is desired, introduce an existing-canon width/fit semantic (not invented spacing) and migrate w-full/w-fit/shrink-0 call sites, then delete classNames.",
+        "blockedBy": "No approved atom width vocabulary; consumers outside this manifest."
+      }
+    },
+    {
+      "agent": "agent-1-atoms",
+      "item": {
+        "id": "propose-Typography-skeletonWidth-only",
+        "summary": "Many Typography classNames are skeleton fraction widths — may already overlap skeletonWidth; audit then delete residual placement doors.",
+        "blockedBy": "Large consumer set outside manifest."
+      }
+    },
+    {
+      "agent": "agent-2-frames",
+      "item": {
+        "title": "Fill/shrink placement contract for Stack classNames values",
+        "valuesSeen": [
+          "min-w-0",
+          "flex-1",
+          "shrink-0",
+          "w-full",
+          "min-h-0"
+        ],
+        "note": "Dominant live Stack/Cluster classNames payloads are flex participation, not appearance. FillAvailable already covers some flex-1 cases; a shrink-0 / min-w-0 peer contract needs ≥2 consumers and teacher naming before registration. Do not invent tokens from raw CSS alone."
+      }
+    },
+    {
+      "agent": "agent-2-frames",
+      "item": {
+        "title": "PinnedTrack intrinsic named-frame identity",
+        "note": "After InnerLayout stops passing principle, remove PinnedTrack.principle/explain to match Stage named-frame law."
+      }
+    },
+    {
+      "agent": "agent-2-frames",
+      "item": {
+        "title": "PinnedTrack story doc stale classNames mention",
+        "path": ".storybook/stories/frames/PinnedTrack/PinnedTrack.stories.tsx",
+        "note": "Comment still lists classNames; story file outside this manifest — leave for story parity worker."
+      }
+    },
+    {
+      "agent": "agent-4-shells",
+      "item": {
+        "id": "chrome-only-modal-frame",
+        "need": "Modal frame that owns only backdrop/container/dialog (+ optional identity) without forcing Header/Body/CloseTrigger",
+        "why": "AuthenticationModal sections are also mounted bare on LoginPage and must keep their own chrome; ModalShell nesting doubles Body/CloseTrigger",
+        "consumers": [
+          "src/components/overlays/modals/AuthenticationModal/component.tsx"
+        ]
+      }
+    },
+    {
+      "agent": "agent-5-shared-blocks",
+      "item": {
+        "name": "NavLandmark",
+        "tier": "frame",
+        "owns": [
+          "nav landmark",
+          "min-h-0 flex-1 flex-col fill for scrollable rail body"
+        ],
+        "earnedBy": [
+          "CollapsibleSidebar"
+        ]
+      }
+    },
+    {
+      "agent": "agent-5-shared-blocks",
+      "item": {
+        "name": "DragScrollArea.height / fill",
+        "tier": "behavior",
+        "owns": [
+          "finite height or fill axis replacing className"
+        ],
+        "earnedBy": [
+          "CollapsibleSidebar flex-1",
+          "stories max-h-64"
+        ]
+      }
+    },
+    {
+      "agent": "agent-5-shared-blocks",
+      "item": {
+        "name": "ResizableRail.className retirement",
+        "tier": "behavior",
+        "owns": [
+          "finite placement/fill axis"
+        ],
+        "earnedBy": [
+          "MindMapPage",
+          "LearnShell",
+          "PracticeHub"
+        ]
+      }
+    },
+    {
+      "agent": "agent-5-shared-blocks",
+      "item": {
+        "name": "AmbientParticle",
+        "tier": "atom or frame",
+        "owns": [
+          "absolute seeded particle span + animation vars"
+        ],
+        "earnedBy": [
+          "FirefliesEffect",
+          "RainEffect",
+          "SnowEffect",
+          "StarsEffect"
+        ]
+      }
+    },
+    {
+      "agent": "agent-5-shared-blocks",
+      "item": {
+        "name": "MarkdownContent density/tone (block)",
+        "tier": "block/composite",
+        "owns": [
+          "text-sm",
+          "text-muted",
+          "paragraph flush",
+          "flex-fill italic variants"
+        ],
+        "earnedBy": [
+          "QaMessageBubble",
+          "CommunityPostCard",
+          "MockInterviewScorecard",
+          "..."
+        ]
+      }
+    },
+    {
+      "agent": "agent-5-shared-blocks",
+      "item": {
+        "name": "TimeDisplay media readout atom",
+        "tier": "atom",
+        "owns": [
+          "monospace current / total on dark media chrome"
+        ],
+        "earnedBy": [
+          "VideoControls/TimeDisplay"
+        ]
+      }
+    },
+    {
+      "agent": "agent-5-shared-blocks",
+      "item": {
+        "name": "CallerIdentity forward on EnumChip / ResponsiveBreadcrumb / CodePreviewTabs / ErrorContent",
+        "tier": "existing vocabulary API",
+        "owns": [
+          "identity?: CallerIdentity"
+        ],
+        "earnedBy": [
+          "LessonVideoKindChip",
+          "SettingsBreadcrumb",
+          "TabsBlock",
+          "AsyncContent legacy"
+        ]
+      }
+    },
+    {
+      "agent": "agent-7-domain-b",
+      "item": {
+        "missingOwner": "ShowFrom / responsive split frame (or approved @app-md overview shell)",
+        "shape": "Profile overview column that is stacked on base and row+fixed sidebar from md up",
+        "blockedFiles": [
+          ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+          "src/components/blocks/profile/ProfileHero/index.tsx"
+        ]
+      }
+    },
+    {
+      "agent": "agent-7-domain-b",
+      "item": {
+        "missingOwner": "RankBadge / dynamic-tone pill atom",
+        "shape": "inline pill with runtime hex color-mix fill + dot, no public className",
+        "blockedFiles": [
+          "src/components/blocks/profile/RankBadge/index.tsx"
+        ]
+      }
+    },
+    {
+      "agent": "agent-7-domain-b",
+      "item": {
+        "missingOwner": "GradeCreditCaption interactive caption",
+        "shape": "muted/danger caption with optional warning icon and press-to-open quota details",
+        "blockedFiles": [
+          "src/components/blocks/grading/GradeCreditCaption/component.tsx"
+        ]
+      }
+    },
+    {
+      "agent": "agent-7-domain-b",
+      "item": {
+        "missingOwner": "Community/feed post card composite (house Card + identity header + reaction footer)",
+        "shape": "Replace HeroUI Card/Typography trees in CommunityPostCard / Discussion / feed twins",
+        "blockedFiles": [
+          "src/components/blocks/feed/CommunityPostCard/component.tsx",
+          "src/components/blocks/community/Discussion/index.tsx"
+        ]
+      }
+    }
+  ],
+  "overlapOk": true,
+  "ownershipViolations": [],
+  "notes": [
+    "Worker report schemas varied; counts are best-effort extractions.",
+    "Ownership violations may include legitimate SB/src twins of ranked files.",
+    "Raw warning reduction is not claimed as architectural closure without cluster proof."
+  ],
+  "gates": {
+    "pluginTests": "22/22 pass",
+    "principleSemantic": "15/15 pass",
+    "tsc": "pass after coordinator consumer repair",
+    "auditFe": "pass (29 ledger holds)",
+    "gitDiffCheck": "pass after FieldFrame whitespace",
+    "eslintChangedChunks": "partial — unrelated Logo/Pagination aria + AuthModal page-folder warnings remain"
+  },
+  "coordinatorRepair": [
+    "Removed classNames consumers after dead-door API burns (SurfaceCard Grid, ButtonGroup x2, FAB, ButtonRadioGroup, Callout, Stage→FillAvailable, UserCell→FillAvailable)",
+    "eslint --fix community comment indent",
+    "FieldFrame trailing whitespace"
+  ],
+  "handoff": ".artifacts/fe-refactor-audit/2026-08-10-b32-handoff.md"
+}

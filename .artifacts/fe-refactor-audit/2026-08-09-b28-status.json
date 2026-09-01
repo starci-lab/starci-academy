@@ -1,0 +1,541 @@
+{
+  "batch": 28,
+  "title": "Live CSS-door semantic closure, wave 1",
+  "committed": false,
+  "checkpoint": "3afbadda",
+  "generatedAt": "2026-08-07T16:06:38.224Z",
+  "workers": 12,
+  "overlapResult": "pass",
+  "overlaps": [],
+  "inventory": {
+    "rule": "starci-fe/no-public-classname-prop",
+    "before": {
+      "hits": 1618,
+      "files": 593
+    },
+    "after": {
+      "hits": 1573,
+      "files": 575
+    },
+    "delta": {
+      "hits": -45,
+      "files": -18
+    }
+  },
+  "applied": [
+    {
+      "component": "GoogleIcon",
+      "kind": "intrinsic-bake",
+      "detail": "bake size-3.5; delete className door"
+    },
+    {
+      "component": "LogoMark",
+      "kind": "intrinsic-bake",
+      "detail": "bake size-10; delete className door"
+    },
+    {
+      "component": "BrandLogo",
+      "kind": "semantic-prop",
+      "detail": "size?: sm|md|lg → h-9|h-10|h-14"
+    },
+    {
+      "component": "BrandLockup",
+      "kind": "parent-placement",
+      "detail": "self-start → Footer Box; delete door"
+    },
+    {
+      "component": "ElementCloseButton",
+      "kind": "intrinsic-bake",
+      "detail": "bake shrink-0; delete classNames door"
+    },
+    {
+      "component": "FollowButton",
+      "kind": "intrinsic-bake+parent",
+      "detail": "bake shrink-0; ml-1 → parent span"
+    },
+    {
+      "component": "AddToCartButton",
+      "kind": "parent-placement",
+      "detail": "flex-1 → CatalogCourseCard Box"
+    },
+    {
+      "component": "AiRewriteButton",
+      "kind": "intrinsic-bake",
+      "detail": "bake w-fit self-start; delete door"
+    },
+    {
+      "component": "CommentComposer",
+      "kind": "intrinsic-bake",
+      "detail": "bake w-full; delete door"
+    },
+    {
+      "component": "PhaseScarcityNote",
+      "kind": "parent-placement",
+      "detail": "self-center → EnrollGate Box; SB+src"
+    },
+    {
+      "component": "CourseMobileEnrollBar",
+      "kind": "parent-placement",
+      "detail": "@app-md:hidden → HideAbove at=md"
+    },
+    {
+      "component": "BackLink",
+      "kind": "parent-placement",
+      "detail": "@app-sm:hidden → HideAbove; shrink-0 → Box"
+    }
+  ],
+  "doorsRemoved": [
+    "GoogleIcon",
+    "LogoMark",
+    "BrandLogo",
+    "BrandLockup",
+    "ElementCloseButton",
+    "FollowButton",
+    "AddToCartButton",
+    "AiRewriteButton",
+    "CommentComposer",
+    "PhaseScarcityNote",
+    "CourseMobileEnrollBar",
+    "BackLink"
+  ],
+  "semanticPropsAdded": [
+    {
+      "component": "BrandLogo",
+      "prop": "size",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    }
+  ],
+  "parentPlacementMigrations": [
+    {
+      "component": "BrandLockup",
+      "detail": "self-start → Footer Box; delete door"
+    },
+    {
+      "component": "FollowButton",
+      "detail": "bake shrink-0; ml-1 → parent span"
+    },
+    {
+      "component": "AddToCartButton",
+      "detail": "flex-1 → CatalogCourseCard Box"
+    },
+    {
+      "component": "PhaseScarcityNote",
+      "detail": "self-center → EnrollGate Box; SB+src"
+    },
+    {
+      "component": "CourseMobileEnrollBar",
+      "detail": "@app-md:hidden → HideAbove at=md"
+    },
+    {
+      "component": "BackLink",
+      "detail": "@app-sm:hidden → HideAbove; shrink-0 → Box"
+    }
+  ],
+  "holds": [
+    {
+      "worker": "buttons-actions",
+      "hold": "src/components/blocks/buttons/FloatingActionButton/index.tsx — passthrough from ContentAiFab (locked) / dynamic"
+    },
+    {
+      "worker": "buttons-actions",
+      "hold": "src/components/blocks/feedback/InfoTooltip/index.tsx — className lands on HeroUI Tooltip.Trigger (vendor boundary)"
+    },
+    {
+      "worker": "cards-commerce",
+      "hold": "SectionCard — dynamic classNames passthrough (4 consumers)"
+    },
+    {
+      "worker": "cards-commerce",
+      "hold": "TierCardBase — mixed intrinsic tokens"
+    },
+    {
+      "worker": "cards-commerce",
+      "hold": "LeaderboardListCard — dynamic className"
+    },
+    {
+      "worker": "community-feed",
+      "hold": "Discussion — dynamic className passthrough from ContentBodyV2/Discussion"
+    },
+    {
+      "worker": "community-feed",
+      "hold": "Composer — pl-9 thread indent; needs indentLevel teacher axis"
+    },
+    {
+      "worker": "community-feed",
+      "hold": "FollowButton and other manifest-adjacent doors outside B28 apply scope"
+    },
+    {
+      "worker": "identity-svg",
+      "hold": "src/components/blocks/identity/BadgeImage/index.tsx — dynamic cn() scale/opacity"
+    },
+    {
+      "worker": "identity-svg",
+      "hold": "src/components/blocks/identity/IconTile/index.tsx — size-5 text-accent mixes size+tone"
+    },
+    {
+      "worker": "identity-svg",
+      "hold": "src/components/blocks/profile/RankDeltaCaret/index.tsx — w-8 justify-end mixes width+align"
+    },
+    {
+      "worker": "identity-svg",
+      "hold": "src/components/svg/GithubIcon/index.tsx — LearnLoopScroll locked consumer blocks door deletion"
+    },
+    {
+      "worker": "identity-svg",
+      "hold": "src/components/svg/TierLevelIcon/index.tsx — re-check consumers"
+    },
+    {
+      "worker": "layout-shells",
+      "component": "AmbientBackground",
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "reason": "layout shell",
+      "values": [
+        "absolute inset-0 -z-0"
+      ]
+    },
+    {
+      "worker": "layout-shells",
+      "component": "PageHeader",
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "reason": "layout shell",
+      "values": [
+        "w-fit",
+        "flex flex-wrap items-center gap-2",
+        "className",
+        "size-4",
+        "scoreToneClass(score)"
+      ]
+    },
+    {
+      "worker": "layout-shells",
+      "component": "StickyBottomBar",
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "reason": "layout shell",
+      "values": [
+        "className"
+      ]
+    },
+    {
+      "worker": "learn-content",
+      "component": "CodeConsole",
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "reason": "arbitrary h-[42%] — no finite token",
+      "values": [
+        "h-[42%]"
+      ]
+    },
+    {
+      "worker": "learn-content",
+      "component": "ChatToolResult",
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "reason": "ContentAiChat locked consumer",
+      "values": [
+        "size-4"
+      ]
+    },
+    {
+      "worker": "learn-content",
+      "component": "ContentMap",
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "reason": "min-h-0 @app-lg:flex-1 — no exact existing flex-fill principle",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "worker": "learn-content",
+      "component": "LeaderboardCategoryRail",
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "reason": "same flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "worker": "learn-content",
+      "component": "MilestoneOutline",
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "reason": "same flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "worker": "learn-content",
+      "component": "PlaygroundRagWorkspace",
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "reason": "h-full parent fill — hold without named fill wrapper",
+      "values": [
+        "h-full"
+      ]
+    },
+    {
+      "worker": "lists-navigation",
+      "hold": "LabeledList — no className/classNames consumers; scan attributed self-start to wrong component (Button in LessonChallenges action)"
+    },
+    {
+      "worker": "lists-navigation",
+      "hold": "ListRow — multi-value / 9 consumers"
+    },
+    {
+      "worker": "lists-navigation",
+      "hold": "SidebarNavItem — 5 consumers"
+    },
+    {
+      "worker": "lists-navigation",
+      "hold": "TabsCard — 12 consumers"
+    },
+    {
+      "worker": "media-rendering",
+      "component": "MpegDash",
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "reason": "media fill — re-check",
+      "values": [
+        "classNames?.content"
+      ]
+    },
+    {
+      "worker": "media-rendering",
+      "component": "Standard",
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "reason": "media fill",
+      "values": [
+        "classNames?.content"
+      ]
+    },
+    {
+      "worker": "media-rendering",
+      "component": "Youtube",
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "reason": "media fill",
+      "values": [
+        "classNames?.content"
+      ]
+    },
+    {
+      "worker": "media-rendering",
+      "component": "CodeToHtml",
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "reason": "blockMy AllowedClassName — markdown spacing contract",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "worker": "media-rendering",
+      "component": "MermaidDiagram",
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "reason": "blockMy markdown spacing",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "worker": "rails",
+      "component": "CollapsibleSidebar",
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "reason": "multi-consumer / twin; not finite in wave 1",
+      "values": [
+        "h-full",
+        "className"
+      ]
+    },
+    {
+      "worker": "rails",
+      "component": "OutlineRail",
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "reason": "needs value re-check / likely flex-fill",
+      "values": [
+        "className",
+        "@app-lg:min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "worker": "rails",
+      "component": "ArchitectureRail",
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "reason": "flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "worker": "rails",
+      "component": "PracticeRail",
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "reason": "flex-fill hold",
+      "values": [
+        "min-h-0 @app-lg:flex-1"
+      ]
+    },
+    {
+      "worker": "rails",
+      "component": "CollapsibleSidebar",
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "reason": "multi-consumer / twin; not finite in wave 1",
+      "values": [
+        "h-full",
+        "className"
+      ]
+    },
+    {
+      "worker": "course-pages",
+      "hold": "CourseHero — grid col-start/row-start not on Grid API"
+    },
+    {
+      "worker": "course-pages",
+      "hold": "CoursePricingRail — grid placement; no existing start prop"
+    },
+    {
+      "worker": "course-pages",
+      "hold": "MetricsInline — text-xs text-muted mixes type+tone"
+    },
+    {
+      "worker": "composite-twins",
+      "component": "ButtonGroup",
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "reason": "composite twin; multi door",
+      "values": [
+        "w-fit",
+        "!top-0 !h-full !bg-border !opacity-100",
+        "w-full"
+      ]
+    },
+    {
+      "worker": "composite-twins",
+      "component": "FloatingActionButton",
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "reason": "passthrough from ContentAiFab (locked) / dynamic",
+      "values": [
+        "className",
+        "classNames"
+      ]
+    },
+    {
+      "worker": "composite-twins",
+      "component": "CodeToHtml",
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "reason": "blockMy AllowedClassName — markdown spacing contract",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "worker": "composite-twins",
+      "component": "MermaidDiagram",
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "reason": "blockMy markdown spacing",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "worker": "composite-twins",
+      "component": "ButtonGroup",
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "reason": "composite twin; multi door",
+      "values": [
+        "w-fit",
+        "!top-0 !h-full !bg-border !opacity-100",
+        "w-full"
+      ]
+    },
+    {
+      "worker": "composite-twins",
+      "component": "FloatingActionButton",
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "reason": "passthrough from ContentAiFab (locked) / dynamic",
+      "values": [
+        "className",
+        "classNames"
+      ]
+    },
+    {
+      "worker": "composite-twins",
+      "component": "CodeToHtml",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "reason": "blockMy AllowedClassName — markdown spacing contract",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "worker": "composite-twins",
+      "component": "MermaidDiagram",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "reason": "blockMy markdown spacing",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "worker": "hard-holds",
+      "component": "MockInterviewWorkspace",
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "reason": "hard-holds evidence only",
+      "values": [
+        "min-h-0 flex-1"
+      ]
+    },
+    {
+      "worker": "hard-holds",
+      "component": "CvPdfPreview",
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "reason": "CvPreview-family; zero consumers",
+      "values": []
+    }
+  ],
+  "holdCount": 49,
+  "changedFiles": [
+    ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+    ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+    "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+    "src/components/blocks/chips/StatusChip/index.tsx",
+    "src/components/blocks/commerce/AddToCartButton/index.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+    "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+    "src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "src/components/blocks/community/FollowButton/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+    "src/components/blocks/identity/BrandLockup/index.tsx",
+    "src/components/blocks/identity/BrandLogo/index.tsx",
+    "src/components/blocks/layout/AppSplash/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+    "src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "src/components/blocks/learn/QaMessageBubble/index.tsx",
+    "src/components/blocks/navigation/BackLink/component.tsx",
+    "src/components/blocks/navigation/BackLink/index.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/layouts/Footer/index.tsx",
+    "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "src/components/pages/CourseDetailPage/component.tsx",
+    "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+    "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/pages/SettingsHomePage/index.tsx",
+    "src/components/svg/GoogleIcon/index.tsx",
+    "src/components/svg/LogoMark/index.tsx"
+  ],
+  "parity": {
+    "PhaseScarcityNote": "SB twin updated first, src mirrored",
+    "others": "src-only (no SB twins) or parent-only consumer edits"
+  },
+  "verification": {
+    "tsc": "pass",
+    "eslintQuietChanged": "pass (0 errors on changed files)",
+    "pluginTests": "pass",
+    "storybookContractTests": "pass",
+    "auditFe": "pass (27 teacher holds; 0 undocumented seams)"
+  },
+  "regressions": [],
+  "note": "Proposals and classifications are not counted as fixes"
+}

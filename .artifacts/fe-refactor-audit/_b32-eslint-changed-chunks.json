@@ -1,0 +1,58 @@
+[
+  {
+    "index": 1,
+    "files": 25,
+    "exit": 1,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\nESLint found too many warnings (maximum: 0).\n",
+    "stdout": "\nD:\\Repositories\\starci-academy\\src\\components\\atoms\\display\\Logo\\index.tsx\n  60:13  warning  `aria-label=\"StarCi Academy\"` hardcodes copy in an atom — i18n belongs to the connected file; take a resolved string prop instead  starci-fe/no-hardcoded-user-text-in-vocabulary\n\nD:\\Repositories\\starci-academy\\src\\components\\atoms\\navigation\\Pagination\\index.tsx\n  106:29  warning  `aria-label=\"Previous page\"` hardcodes copy in an atom — i18n belongs to the connected file; take a resolved string prop instead  starci-fe/no-hardcoded-user-text-in-vocabulary\n  130:29  warning  `aria-label=\"Trang sau\"` hardcodes copy in an atom — i18n belongs to the connected file; take a resolved string prop instead      starci-fe/no-hardcoded-user-text-in-vocabulary\n\n✖ 3 problems (0 errors, 3 warnings)\n\n"
+  },
+  {
+    "index": 2,
+    "files": 25,
+    "exit": 0,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\n",
+    "stdout": ""
+  },
+  {
+    "index": 3,
+    "files": 25,
+    "exit": 0,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\n",
+    "stdout": ""
+  },
+  {
+    "index": 4,
+    "files": 25,
+    "exit": 1,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\nESLint found too many warnings (maximum: 0).\n",
+    "stdout": "e\\EmailField\\index.tsx\n  1:1  warning  `overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/EmailField/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase  starci-fe/page-folder-two-files-only\n\nD:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\AuthenticationModal\\SignInSection\\CredentialsState\\PasswordField\\index.tsx\n  1:1  warning  `overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/PasswordField/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase  starci-fe/page-folder-two-files-only\n\nD:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\AuthenticationModal\\SignInSection\\CredentialsState\\RememberMeRow\\index.tsx\n  1:1  warning  `overlays/AuthenticationModal/` contains `SignInSection/CredentialsState/RememberMeRow/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase  starci-fe/page-folder-two-files-only\n\nD:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\AuthenticationModal\\SignUpSection\\RegistrationState\\AgreeToTermsRow\\index.tsx\n  1:1  warning  `overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase  starci-fe/page-folder-two-files-only\n\nD:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\AuthenticationModal\\SignUpSection\\RegistrationState\\EmailField\\index.tsx\n  1:1  warning  `overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/EmailField/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase  starci-fe/page-folder-two-files-only\n\nD:\\Repositories\\starci-academy\\src\\components\\overlays\\modals\\AuthenticationModal\\SignUpSection\\RegistrationState\\PasswordField\\index.tsx\n  1:1  warning  `overlays/AuthenticationModal/` contains `SignUpSection/RegistrationState/PasswordField/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase  starci-fe/page-folder-two-files-only\n\n✖ 11 problems (0 errors, 11 warnings)\n\n"
+  },
+  {
+    "index": 5,
+    "files": 25,
+    "exit": 0,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\n",
+    "stdout": ""
+  },
+  {
+    "index": 6,
+    "files": 25,
+    "exit": 1,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\n",
+    "stdout": "\nD:\\Repositories\\starci-academy\\src\\components\\blocks\\community\\CommunityCommentItem\\component.tsx\n  120:1  error  Expected indentation of 20 spaces but found 16  indent\n  121:1  error  Expected indentation of 24 spaces but found 20  indent\n  122:1  error  Expected indentation of 20 spaces but found 16  indent\n  123:1  error  Expected indentation of 20 spaces but found 16  indent\n  124:1  error  Expected indentation of 24 spaces but found 20  indent\n  125:1  error  Expected indentation of 28 spaces but found 24  indent\n  126:1  error  Expected indentation of 28 spaces but found 24  indent\n  127:1  error  Expected indentation of 28 spaces but found 24  indent\n  128:1  error  Expected indentation of 28 spaces but found 24  indent\n  129:1  error  Expected indentation of 28 spaces but found 24  indent\n  130:1  error  Expected indentation of 24 spaces but found 20  indent\n  131:1  error  Expected indentation of 20 spaces but found 16  indent\n  132:1  error  Expected indentation of 16 spaces but found 12  indent\n\nD:\\Repositories\\starci-academy\\src\\components\\blocks\\community\\CommunityCommentThread\\component.tsx\n  144:1  error  Expected indentation of 28 spaces but found 24  indent\n  145:1  error  Expected indentation of 32 spaces but found 28  indent\n  146:1  error  Expected indentation of 36 spaces but found 32  indent\n  147:1  error  Expected indentation of 36 spaces but found 32  indent\n  148:1  error  Expected indentation of 36 spaces but found 32  indent\n  149:1  error  Expected indentation of 36 spaces but found 32  indent\n  150:1  error  Expected indentation of 36 spaces but found 32  indent\n  151:1  error  Expected indentation of 36 spaces but found 32  indent\n  152:1  error  Expected indentation of 32 spaces but found 28  indent\n  153:1  error  Expected indentation of 28 spaces but found 24  indent\n  154:1  error  Expected indentation of 28 spaces but found 24  indent\n  155:1  error  Expected indentation of 32 spaces but found 28  indent\n  156:1  error  Expected indentation of 36 spaces but found 32  indent\n  157:1  error  Expected indentation of 36 spaces but found 32  indent\n  158:1  error  Expected indentation of 40 spaces but found 36  indent\n  159:1  error  Expected indentation of 40 spaces but found 36  indent\n  160:1  error  Expected indentation of 40 spaces but found 36  indent\n  161:1  error  Expected indentation of 40 spaces but found 36  indent\n  162:1  error  Expected indentation of 40 spaces but found 36  indent\n  163:1  error  Expected indentation of 40 spaces but found 36  indent\n  164:1  error  Expected indentation of 36 spaces but found 32  indent\n  165:1  error  Expected indentation of 32 spaces but found 28  indent\n  166:1  error  Expected indentation of 28 spaces but found 24  indent\n  167:1  error  Expected indentation of 24 spaces but found 20  indent\n\n✖ 37 problems (37 errors, 0 warnings)\n  37 errors and 0 warnings potentially fixable with the `--fix` option.\n\n"
+  },
+  {
+    "index": 7,
+    "files": 25,
+    "exit": 0,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\n",
+    "stdout": ""
+  },
+  {
+    "index": 8,
+    "files": 16,
+    "exit": 0,
+    "stderr": "Warning: React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration .\n",
+    "stdout": ""
+  }
+]

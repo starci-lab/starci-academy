@@ -1,0 +1,899 @@
+{
+  "partition": "heroui-boundaries",
+  "batch": 13,
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Alert",
+        "Button",
+        "Modal",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Alert: Alert atom is Alert.* data props (title/description/body); HeroUI Alert.Indicator/Content/Title/Description compound + className — non-identical | Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Modal: Modal is vendor compound (Backdrop/Container/Dialog/Header/Body); no identical non-compound atom drop-in — compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Alert.Indicator, Alert.Content, Alert.Title, Alert.Description, Modal.Backdrop, Modal.Container, Modal.Dialog, Modal.CloseTrigger, Modal.Header, Modal.Body"
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "CloseButton",
+        "cn"
+      ],
+      "reason": "CloseButton: No CloseButton atom; ElementCloseButton wraps HeroUI CloseButton with className — cannot migrate without new atom | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Button",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Chip",
+        "Typography"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | compound usage observed: Chip.Label"
+    },
+    {
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "classification": "skeleton-decision",
+      "reason": "Co-located skeleton-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "ScrollShadow",
+        "cn"
+      ],
+      "reason": "ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Accordion",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Accordion: Accordion atom is data-driven `items[]` over DisclosureGroup; HeroUI Accordion.* compound (Item/Heading/Trigger/Panel/Body) — vendor compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Accordion.Item, Accordion.Heading, Accordion.Trigger, Accordion.Indicator, Accordion.Panel, Accordion.Body"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Button",
+        "ProgressBar",
+        "Spinner",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | ProgressBar: Progress atom is Progress.Bar with value/max/color (Track/Fill internal); HeroUI ProgressBar.Track/Fill compound + className — non-identical | Spinner: Spinner atom uses size/tone/label + classNames array; usage co-imported with non-identical Button/Typography/ProgressBar — cannot clear heroui import by Spinner alone | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: ProgressBar.Track, ProgressBar.Fill"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Chip",
+        "Tooltip",
+        "cn"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Chip"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | compound usage observed: Chip.Label"
+    },
+    {
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Chip",
+        "ScrollShadow",
+        "Tooltip"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "Tabs",
+        "cn"
+      ],
+      "reason": "Tabs: Tabs atom is data-driven TabsBase/TabsExtended; HeroUI Tabs.ListContainer/List/Tab/Indicator compound — vendor compound redesign forbidden | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Tabs.ListContainer, Tabs.List, Tabs.Tab, Tabs.Indicator"
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "classification": "vendor-boundary",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "classification": "identity-decision",
+      "reason": "Co-located identity-decision on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "classification": "ambiguous",
+      "reason": "Co-located ambiguous on heroui-boundaries file — record-only; no apply in this partition (identity/skeleton/ambiguous lanes)"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "heroui-boundary:components.blocks.async.InfiniteScrollSentinel.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.auth.GithubTeamGate.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "imports": [
+        "Alert",
+        "Button",
+        "Modal",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Alert: Alert atom is Alert.* data props (title/description/body); HeroUI Alert.Indicator/Content/Title/Description compound + className — non-identical | Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Modal: Modal is vendor compound (Backdrop/Container/Dialog/Header/Body); no identical non-compound atom drop-in — compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Alert.Indicator, Alert.Content, Alert.Title, Alert.Description, Modal.Backdrop, Modal.Container, Modal.Dialog, Modal.CloseTrigger, Modal.Header, Modal.Body"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.auth.Turnstile.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.buttons.ElementCloseButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "imports": [
+        "CloseButton",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "CloseButton: No CloseButton atom; ElementCloseButton wraps HeroUI CloseButton with className — cannot migrate without new atom | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.buttons.FloatingActionButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "imports": [
+        "Button",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.buttons.RatingBar.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "imports": [
+        "Chip",
+        "Typography"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | compound usage observed: Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CheckListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CourseCardSkeleton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CourseCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CrossListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.FlipCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "imports": [
+        "ScrollShadow",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.GroupPressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.HighlightCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.LabeledAccordionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "imports": [
+        "Accordion",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Accordion: Accordion atom is data-driven `items[]` over DisclosureGroup; HeroUI Accordion.* compound (Item/Heading/Trigger/Panel/Body) — vendor compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Accordion.Item, Accordion.Heading, Accordion.Trigger, Accordion.Indicator, Accordion.Panel, Accordion.Body"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.PlaygroundCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.PressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.SectionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.SummaryCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.SurfaceListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.verdict-band.ts",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.CvSubmissionFields.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "imports": [
+        "Button",
+        "ProgressBar",
+        "Spinner",
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | ProgressBar: Progress atom is Progress.Bar with value/max/color (Track/Fill internal); HeroUI ProgressBar.Track/Fill compound + className — non-identical | Spinner: Spinner atom uses size/tone/label + classNames array; usage co-imported with non-identical Button/Typography/ProgressBar — cannot clear heroui import by Spinner alone | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: ProgressBar.Track, ProgressBar.Fill"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.AiCategoryChip.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.DifficultyChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.EnumChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "imports": [
+        "Chip",
+        "Tooltip",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.LanguageChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.StatusChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "imports": [
+        "Chip"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | compound usage observed: Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.TagChips.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "imports": [
+        "Chip",
+        "ScrollShadow",
+        "Tooltip"
+      ],
+      "apply": false,
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.code.CodeConsole.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "imports": [
+        "Tabs",
+        "cn"
+      ],
+      "apply": false,
+      "reason": "Tabs: Tabs atom is data-driven TabsBase/TabsExtended; HeroUI Tabs.ListContainer/List/Tab/Indicator compound — vendor compound redesign forbidden | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Tabs.ListContainer, Tabs.List, Tabs.Tab, Tabs.Indicator"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.code.IOExampleCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "apply": false,
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    }
+  ],
+  "verification": {
+    "eslintQuiet": "skipped — no product code changes (Edit ONLY manifest files; 0 safe-consumer-migration)",
+    "safeConsumerMigrationCount": 0,
+    "vendorBoundaryCount": 30,
+    "note": "BATCH 12 already proved HeroUI→atom APIs mostly non-identical. Re-audited all 30 files; every @heroui/react import has an exact API mismatch (children vs label/text, compound vs data-driven, cn vocabulary-only, ChipBase hard-hold, or missing atom). No ChipBase redesign; no vendor compound namespace redesign; no eslint-disable."
+  },
+  "regressions": []
+}

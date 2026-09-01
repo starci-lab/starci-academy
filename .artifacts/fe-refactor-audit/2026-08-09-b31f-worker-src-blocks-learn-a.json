@@ -1,0 +1,97 @@
+{
+  "worker": "src-blocks-learn-a",
+  "status": "done",
+  "fixed": [],
+  "held": [
+    {
+      "file": "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:3 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "frag": 3,
+      "reason": "other-debt:4 (starci-fe/no-emoji-in-source,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:1 (starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "frag": 3,
+      "reason": "other-debt:7 (starci-fe/no-classname-at-sentence-tier,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "frag": 3,
+      "reason": "other-debt:6 (starci-fe/no-emoji-in-source,starci-fe/require-identity-root,starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "frag": 4,
+      "reason": "other-debt:9 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare,starci-fe/no-inline-skeleton-branch)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:4 (starci-fe/require-identity-root,starci-fe/no-inline-skeleton-branch,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPager/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:1 (starci-fe/require-identity-root)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentReaction/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "frag": 1,
+      "reason": "other-debt:4 (starci-fe/no-raw-shape-at-sentence-tier,starci-fe/require-frame-self-declare,starci-fe/no-public-classname-prop)"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:6 (starci-fe/require-identity-root,starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 (starci-fe/require-identity-root,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "frag": 3,
+      "reason": "other-debt:9 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:3 (starci-fe/no-public-classname-prop,starci-fe/require-frame-self-declare)"
+    }
+  ],
+  "findingsBefore": 33,
+  "findingsFixed": 0,
+  "findingsHeld": 33,
+  "note": "All files held: zero-warn ratchet — unrelated debt cannot close with frame-items contract alone.",
+  "twinParity": "SB twins may be fixed while src remains held when src has other debt."
+}

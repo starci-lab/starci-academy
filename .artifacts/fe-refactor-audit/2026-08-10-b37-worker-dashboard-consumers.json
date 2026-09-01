@@ -1,0 +1,210 @@
+{
+  "batch": "B37",
+  "wave": "consumers",
+  "agent": "dashboard-consumers",
+  "status": "complete",
+  "completedAt": "2026-08-09T00:15:00.000Z",
+  "checkpoint": "84b92cd77",
+  "note": "Worktree atop 84b92cd77 with B36 uncommitted OK. Decisions A–C, E only. No CSS doors, ReactNode fallbacks, new variants, nivo/mia-mia, or commit.",
+  "owns": [
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+    "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+    "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx"
+  ],
+  "requiredFirstTargets": {
+    "TrendingContents": {
+      "classBefore": "H",
+      "classAfter": "unlocked→SurfaceCardList",
+      "status": "migrated",
+      "decision": "A",
+      "files": [
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx"
+      ],
+      "shape": "<SurfaceCardList identity={{ tier: \"block\", component: \"TrendingContents\" }} label={label} items={listItems} isSkeleton={isSkeleton} />",
+      "unlock": {
+        "blockerWas": "per-row useResolveRouteNavigation in TrendingRow blocked items[] without hooks-in-loop",
+        "resolution": "Lifted locale/router/pending + queryResolveRoute into owned TrendingRow/index.tsx as TrendingContentsSurface (parent map builds onPress). component.tsx stays presentational-pure (empty hide + delegate). Skeleton twin folded to isSkeleton placeholders on the same list; TrendingContentsSkeleton file is a stub.",
+        "whyNotInComponentTsx": "starci-fe/presentational-purity forbids useLocale/queryResolveRoute in component.tsx; TrendingContents/index.tsx is not in owns"
+      },
+      "removed": [
+        "LabeledCard",
+        "SurfaceListCard",
+        "SurfaceListCardItem",
+        "SurfaceListCardRow",
+        "parallel TrendingContentsSkeleton tree",
+        "per-row TrendingRow shell"
+      ]
+    },
+    "DailyQuest": {
+      "classBefore": "C",
+      "classAfter": "SurfaceCardList",
+      "status": "migrated",
+      "decision": "A+C",
+      "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "shape": "<SurfaceCardList identity label action items isSkeleton error errorState />",
+      "notes": [
+        "Collapsed LabeledCard frameless + nested SurfaceCardList into one SurfaceCardList.",
+        "Claim/prompt UI moved from LabeledCard description (ComponentType below card) to SurfaceLabelProps.action (ComponentTypeWithSkeleton) — description remains string-only (Decision B / no ReactNode fallback).",
+        "Skeleton uses fixed-shape title rows + isSkeleton (no free-form Skeleton.ListRow mirror)."
+      ]
+    },
+    "RecommendedCourses": {
+      "classBefore": "A",
+      "classAfter": "SurfaceCardList",
+      "status": "migrated",
+      "decision": "A",
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "shape": "<SurfaceCardList identity label items isSkeleton error errorState />",
+      "notes": [
+        "Migrated SurfaceListCard children rows to SurfaceCardListItem free-form content + href/hover.",
+        "Collapsed LabeledCard frameless={cond} shell; SurfaceCardList owns label in all states.",
+        "Empty still returns null; error uses error/errorState."
+      ]
+    }
+  },
+  "otherOwnedExactABC": {
+    "migrated": [],
+    "held": [
+      {
+        "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+        "class": "A",
+        "status": "hold",
+        "reason": "Exact A (LabeledCard frameless={cond} + SurfaceListCard) but rows are CourseRow which lives OUTSIDE owns and still calls useResolveRouteNavigation + renders SurfaceListCardItem. Migrating items[] requires editing or deleting CourseRow (out of scope) or duplicating it.",
+        "mismatch": "per-row hook island owned by sibling CourseRow/index.tsx (not in dashboard-consumers owns)"
+      }
+    ]
+  },
+  "heldH": [
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "class": "H",
+      "reason": "Bespoke ReactNode rows (rank/UserCell/valueLabel/trailing) + standing header; not expressible as fixed SurfaceCardListItem without inventing slots or ReactNode doors."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "class": "H",
+      "reason": "EntryRow free-form (date/chip/external link/body) beyond fixed list item; category chip class map is free-form chrome."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "class": "H",
+      "reason": "Delegates to LeaderboardListCard (H); skeleton branch is LabeledCard + standing header + bordered SurfaceListCard — not a pure list label collapse."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "class": "H",
+      "reason": "LabeledCard framed body mixes EntityToken/CTA/Chip with optional SurfaceListCard leaderboard — multi-region body, not exact A/B/C list shell."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "class": "H",
+      "reason": "Skeleton twin of WeeklyChallengeCard H body (framed + list region)."
+    }
+  ],
+  "leftUntouchedNotABC": [
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list ContinueLearning body. Comment-only touch (DailyQuest self-frame note). Decision E documents frameless deprecation; no collapse invented."
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label — not exact A/B/C"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard skeleton — not exact A/B/C"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "class": "G",
+      "note": "LeaderboardListCard path; topology G at this file — not exact A/B/C"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard skeleton — not exact A/B/C"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard skeleton — not exact A/B/C"
+    }
+  ],
+  "changed": [
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "kind": "collapse+delegate",
+      "detail": "Empty hide retained; delegates to TrendingContentsSurface for one SurfaceCardList tree."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+      "kind": "unlock-host",
+      "detail": "Replaced per-row SurfaceListCardRow with TrendingContentsSurface: parent-lifted nav + SurfaceCardList items[]."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "kind": "stub-fold",
+      "detail": "Parallel skeleton tree removed; stub documents isSkeleton fold."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "kind": "class-C-collapse",
+      "detail": "Single SurfaceCardList with label/identity/isSkeleton/action/error."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "kind": "class-A-collapse",
+      "detail": "SurfaceCardListItem data rows; LabeledCard+SurfaceListCard removed."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "kind": "comment",
+      "detail": "Updated DailyQuest framing comment only."
+    }
+  ],
+  "untouchedOwned": [
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+    "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+    "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx"
+  ],
+  "decisionsApplied": {
+    "A": "Collapse target is SurfaceCardList owning SurfaceLabelProps (label/action/isSkeleton/identity).",
+    "B": "DailyQuest claim stays ComponentType via action; description not widened to ReactNode.",
+    "C": "isSkeleton on one SurfaceCardList tree; TrendingContentsSkeleton parallel tree stubbed.",
+    "E": "No new frameless call sites; OverviewTab existing frameless ContinueLearning left (class E hold)."
+  },
+  "verification": {
+    "tscOwned": "pass — no diagnostics under owned migrated paths (repo tsc exit 2 from unrelated ProfileChallengeSubmissionPage outside owns)",
+    "eslintOwnedMigrated": "pass — 0 errors on TrendingContents/DailyQuest/RecommendedCourses (pre-existing warnings only)",
+    "gitDiffCheck": "pass",
+    "committed": false,
+    "touchedOutsideOwns": false
+  }
+}

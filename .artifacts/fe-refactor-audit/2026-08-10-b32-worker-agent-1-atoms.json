@@ -1,0 +1,261 @@
+{
+  "batch": 32,
+  "agent": "agent-1-atoms",
+  "checkpoint": "9e86cbdf",
+  "branch": "mtp",
+  "manifest": [
+    ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+    ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+    ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+    ".storybook/components/atoms/display/Badge/Badge.tsx",
+    ".storybook/components/atoms/display/Divider/Divider.tsx",
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+    ".storybook/components/atoms/display/Logo/Logo.tsx",
+    ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+    ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+    ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    ".storybook/components/atoms/text/Typography/Typography.tsx",
+    "src/components/atoms/buttons/Button/ButtonBase.tsx",
+    "src/components/atoms/display/Avatar/AvatarBase.tsx",
+    "src/components/atoms/display/Badge/index.tsx",
+    "src/components/atoms/display/Divider/index.tsx",
+    "src/components/atoms/display/IconTile/index.tsx",
+    "src/components/atoms/display/Spinner/index.tsx",
+    "src/components/atoms/feedback/Alert/index.tsx",
+    "src/components/atoms/media/QRCode/index.tsx",
+    "src/components/atoms/navigation/Accordion/index.tsx",
+    "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+    "src/components/atoms/navigation/Link/LinkBack.tsx",
+    "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+    "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    "src/components/atoms/overlay/Menu/index.tsx",
+    "src/components/atoms/text/Typography/index.tsx",
+    "src/components/atoms/display/Logo/index.tsx",
+    "src/components/atoms/chips/Chip/ChipBase.tsx",
+    "src/components/atoms/navigation/Pagination/index.tsx",
+    ".storybook/components/atoms/display/Progress/Progress.tsx",
+    "src/components/atoms/display/Progress/index.tsx"
+  ],
+  "clustersInspected": [
+    "dead-public-classNames-doors",
+    "per-part-dotClassName",
+    "ReactNode-mount-slots",
+    "parallel-intrinsic-skeletons",
+    "missing-named-types-jsdoc",
+    "runtime-namespaces",
+    "vendor-wrapper-inconsistencies",
+    "hardcoded-user-text-in-vocabulary"
+  ],
+  "rootCauses": [
+    {
+      "cluster": "dead-public-classNames-doors",
+      "cause": "House atoms still exposed `classNames?: Array<AllowedClassName>` placement doors forbidden by TOPOLOGY; many had zero opening-tag consumers (or only definition sites).",
+      "action": "Removed proven-dead `classNames` doors and internal `cn(..., classNames)` merges on Storybook twin then src mirror."
+    },
+    {
+      "cluster": "live-classNames-doors",
+      "cause": "Button/Chip/Avatar/Typography/Divider/Alert/TabsExtended still have out-of-manifest `classNames=` consumers (placement width/shrink/flex).",
+      "action": "Held — migrating those consumers is outside this frozen manifest; no partial public API migration."
+    },
+    {
+      "cluster": "Chip.dotClassName",
+      "cause": "`dotClassName` is a per-part CSS door with live out-of-manifest consumers.",
+      "action": "Held."
+    },
+    {
+      "cluster": "hardcoded-user-text-in-vocabulary",
+      "cause": "Logo/Pagination hardcode aria-label copy; i18n/a11y-adjacent and out of architectural burn scope.",
+      "action": "Held unchanged (counts did not increase)."
+    },
+    {
+      "cluster": "QRCode.icon ReactNode",
+      "cause": "`icon?: React.ReactNode` is a free mount slot; converting to ComponentTypeWithSkeleton would change public API and out-of-manifest callers.",
+      "action": "Proposed contract only — not applied."
+    }
+  ],
+  "changedFiles": [
+    ".storybook/components/atoms/display/Badge/Badge.tsx",
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+    ".storybook/components/atoms/display/Logo/Logo.tsx",
+    ".storybook/components/atoms/display/Progress/Progress.tsx",
+    ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+    ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    "src/components/atoms/display/Badge/index.tsx",
+    "src/components/atoms/display/IconTile/index.tsx",
+    "src/components/atoms/display/Logo/index.tsx",
+    "src/components/atoms/display/Progress/index.tsx",
+    "src/components/atoms/display/Spinner/index.tsx",
+    "src/components/atoms/media/QRCode/index.tsx",
+    "src/components/atoms/navigation/Accordion/index.tsx",
+    "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+    "src/components/atoms/navigation/Link/LinkBack.tsx",
+    "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    "src/components/atoms/navigation/Pagination/index.tsx",
+    "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+    "src/components/atoms/overlay/Menu/index.tsx"
+  ],
+  "rules": {
+    "before": {
+      "starci-fe/no-public-classname-prop": 86,
+      "starci-fe/no-per-part-classname-prop": 2,
+      "starci-fe/no-hardcoded-user-text-in-vocabulary": 3
+    },
+    "after": {
+      "starci-fe/no-public-classname-prop": 28,
+      "starci-fe/no-per-part-classname-prop": 2,
+      "starci-fe/no-hardcoded-user-text-in-vocabulary": 3
+    }
+  },
+  "raw": {
+    "before": 91,
+    "after": 33,
+    "delta": -58
+  },
+  "clustersClosed": [
+    "dead-classNames-Badge",
+    "dead-classNames-IconTile",
+    "dead-classNames-Logo",
+    "dead-classNames-Spinner",
+    "dead-classNames-QRCode",
+    "dead-classNames-Accordion",
+    "dead-classNames-Breadcrumbs",
+    "dead-classNames-LinkBack",
+    "dead-classNames-LinkSeeMore",
+    "dead-classNames-Pagination",
+    "dead-classNames-TabsBase",
+    "dead-classNames-Menu",
+    "dead-classNames-ProgressBar-Circle-Gauge"
+  ],
+  "consumersMigrated": [],
+  "contractsReused": [
+    "TOPOLOGY atom: no public className/classNames/style",
+    "Existing finite appearance props (size/tone/variant/trackDensity) remain the only appearance surface"
+  ],
+  "holds": [
+    {
+      "id": "b32-atoms-Button-classNames-live-consumers",
+      "paths": [
+        "src/components/atoms/buttons/Button/ButtonBase.tsx",
+        ".storybook/components/atoms/buttons/Button/ButtonBase.tsx"
+      ],
+      "reason": "Exported as `Button`; many out-of-manifest callers pass classNames for w-full/w-fit/shrink placement. Cannot delete door without migrating those consumers."
+    },
+    {
+      "id": "b32-atoms-Chip-classNames-dotClassName-live",
+      "paths": [
+        "src/components/atoms/chips/Chip/ChipBase.tsx",
+        ".storybook/components/atoms/chips/Chip/ChipBase.tsx"
+      ],
+      "reason": "Chip alias has live classNames consumers; dotClassName has live per-part consumers (AgentCard, VariantChipDifficulty, PlaygroundConnectSheet)."
+    },
+    {
+      "id": "b32-atoms-Avatar-classNames-live",
+      "paths": [
+        "src/components/atoms/display/Avatar/AvatarBase.tsx",
+        ".storybook/components/atoms/display/Avatar/AvatarBase.tsx"
+      ],
+      "reason": "Avatar alias has at least CourseQaComposer classNames consumer out of manifest."
+    },
+    {
+      "id": "b32-atoms-Typography-classNames-live",
+      "paths": [
+        "src/components/atoms/text/Typography/index.tsx",
+        ".storybook/components/atoms/text/Typography/Typography.tsx"
+      ],
+      "reason": "Widespread skeleton width / shrink-0 classNames consumers across pages/blocks/composites."
+    },
+    {
+      "id": "b32-atoms-Divider-classNames-Stack",
+      "paths": [
+        "src/components/atoms/display/Divider/index.tsx",
+        ".storybook/components/atoms/display/Divider/Divider.tsx"
+      ],
+      "reason": "Stack interleaveDividers passes classNames={['self-stretch']} for vertical rules — frame consumer outside manifest."
+    },
+    {
+      "id": "b32-atoms-Alert-classNames-Callout",
+      "paths": [
+        "src/components/atoms/feedback/Alert/index.tsx",
+        ".storybook/components/atoms/feedback/Alert/Alert.tsx"
+      ],
+      "reason": "Callout composite forwards classNames into Alert."
+    },
+    {
+      "id": "b32-atoms-TabsExtended-classNames-ProfileTabsBar",
+      "paths": [
+        "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+        ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx"
+      ],
+      "reason": "ProfileTabsBar passes classNames={['w-full']}."
+    },
+    {
+      "id": "b32-atoms-hardcoded-aria-labels",
+      "paths": [
+        "src/components/atoms/display/Logo/index.tsx",
+        "src/components/atoms/navigation/Pagination/index.tsx"
+      ],
+      "reason": "Pre-existing no-hardcoded-user-text-in-vocabulary (aria-label). a11y/i18n; left unchanged; count stable."
+    }
+  ],
+  "proposedContracts": [
+    {
+      "id": "propose-QRCode-icon-ComponentTypeWithSkeleton",
+      "summary": "Replace QRCode `icon?: React.ReactNode` with a typed component/slot that can receive isSkeleton if the overlay should shimmer with the QR.",
+      "blockedBy": "Out-of-manifest consumers; no ComponentTypeWithSkeleton helper under atoms/_slot in this repo path used by atoms yet (composites use frames/_slot)."
+    },
+    {
+      "id": "propose-Button-width-fit-semantic",
+      "summary": "If Button classNames burn is desired, introduce an existing-canon width/fit semantic (not invented spacing) and migrate w-full/w-fit/shrink-0 call sites, then delete classNames.",
+      "blockedBy": "No approved atom width vocabulary; consumers outside this manifest."
+    },
+    {
+      "id": "propose-Typography-skeletonWidth-only",
+      "summary": "Many Typography classNames are skeleton fraction widths — may already overlap skeletonWidth; audit then delete residual placement doors.",
+      "blockedBy": "Large consumer set outside manifest."
+    }
+  ],
+  "parity": {
+    "storybookFirst": true,
+    "twinsUpdated": [
+      "Badge",
+      "IconTile",
+      "Logo",
+      "Spinner",
+      "QRCode",
+      "Accordion",
+      "Breadcrumbs",
+      "LinkBack",
+      "LinkSeeMore",
+      "Pagination",
+      "TabsBase",
+      "Menu",
+      "Progress"
+    ],
+    "notes": "Storybook twin edited first; src mirrors follow. Progress runtime namespace `Progress = { Bar, Circle, Gauge }` retained (export-matches-folder / ATOM-11); not flagged by eslint on these files."
+  },
+  "verification": {
+    "eslintFocused": "manifest paths; before 91 / after 33 (−58); no-public-classname-prop 86→28",
+    "tsc": "no errors in changed atom paths; repo still has unrelated Callout.tsx parse error outside manifest",
+    "gitDiffCheck": "clean on changed files",
+    "consumerProof": ".artifacts/fe-refactor-audit/_b32-agent1-consumer-scan4.json and _b32-agent1-scan5.json"
+  },
+  "regressions": [
+    "None in changed files: architectural door counts only decreased; hardcoded-text and Chip per-part counts stable; no eslint-disable added."
+  ]
+}

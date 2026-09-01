@@ -1,0 +1,23 @@
+{
+  "batch": "B38",
+  "note": "Audit-only residual redundant labeled-surface patterns after B38. Not an ESLint rule (ruleset freeze).",
+  "generatedAt": "2026-08-08T19:15:00.000Z",
+  "checkpoint": "2a096210a",
+  "beforeCount": 6,
+  "afterCount": 1,
+  "hits": [
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "child": "SurfaceListCard",
+      "frameless": true,
+      "pattern": "LabeledCard frameless wraps self-framed surface",
+      "hold": "b38-profile-challenges-labeled-surface"
+    }
+  ],
+  "closed": [
+    "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "src/components/blocks/learn/RelatedContentList/component.tsx",
+    "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+    "src/components/blocks/profile/ProfileJobReadiness/index.tsx (was pages/ProfileOverviewPage/ProfileJobReadiness ×2)"
+  ]
+}

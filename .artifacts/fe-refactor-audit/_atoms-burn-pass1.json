@@ -1,0 +1,520 @@
+{
+  "changed": [
+    {
+      "path": ".storybook/components/atoms/data/Table/Table.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 8 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/feedback/AlertDialog/AlertDialog.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 8 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/AccordionTree/AccordionTree.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 7 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Drawer/Drawer.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 7 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Modal/Modal.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 7 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Tabs/TabsParts.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 6 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Select/Select.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 5 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Switch/Switch.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 4 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 3 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 2 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 2 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "rename handleCopy → onCopy; added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ListBox/ListBox.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 2 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "scrub Extended_Pictographic arrow in comment; added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/BackToTop/BackToTop.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/ButtonGroup/ButtonGroup.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/buttons/Button/button-tokens.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/AvatarFallback/AvatarFallback.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/Badge/Badge.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/Card/Card.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/Divider/Divider.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/Logo/Logo.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/OMark/OMark.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/Progress/Progress.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Label/Label.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/RadioGroup/RadioGroup.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/Radio/Radio.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/_input/FieldSkeleton.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/media/CoverImage/CoverImage.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/media/Image/Image.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Popover/Popover.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/overlay/Tooltip/Tooltip.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": ".storybook/components/atoms/text/Typography/Typography.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/data/Table/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 8 export(s)"
+    },
+    {
+      "path": "src/components/atoms/feedback/AlertDialog/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 8 export(s)"
+    },
+    {
+      "path": "src/components/atoms/navigation/AccordionTree/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 7 export(s)"
+    },
+    {
+      "path": "src/components/atoms/overlay/Drawer/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 7 export(s)"
+    },
+    {
+      "path": "src/components/atoms/overlay/Modal/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 7 export(s)"
+    },
+    {
+      "path": "src/components/atoms/navigation/Tabs/TabsParts.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 6 export(s)"
+    },
+    {
+      "path": "src/components/atoms/forms/Select/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 5 export(s)"
+    },
+    {
+      "path": "src/components/atoms/forms/Switch/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 4 export(s)"
+    },
+    {
+      "path": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 3 export(s)"
+    },
+    {
+      "path": "src/components/atoms/display/SnippetIcon/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "rename handleCopy → onCopy; added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/forms/ListBox/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 2 export(s)"
+    },
+    {
+      "path": "src/components/atoms/buttons/BackToTop/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/buttons/ButtonGroup/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/buttons/Button/button-tokens.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/display/AvatarFallback/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/display/Card/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/display/OMark/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/display/Progress/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/forms/Label/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/forms/RadioGroup/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/forms/Radio/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "added JSDoc on 1 export(s)"
+    },
+    {
+      "path": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "scrub Extended_Pictographic arrow in comment"
+    }
+  ],
+  "skipped": [],
+  "holds": []
+}

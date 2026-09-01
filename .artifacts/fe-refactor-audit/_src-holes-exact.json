@@ -1,0 +1,114 @@
+﻿[
+  {
+    "rel": ".storybook/components/composites/form/InputTags/InputTags.tsx",
+    "line": 119,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-1",
+    "head": "className=\"min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none\""
+  },
+  {
+    "rel": "src/components/composites/form/InputTags/index.tsx",
+    "line": 121,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-1",
+    "head": "className=\"min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none\""
+  },
+  {
+    "rel": "src/components/pages/CvEditorPage/index.tsx",
+    "line": 399,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-6",
+    "head": "<div className=\"px-6 pt-4 @app-lg:hidden\">"
+  },
+  {
+    "rel": "src/components/pages/LegalPage/index.tsx",
+    "line": 61,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "gap-2",
+    "head": "<li key={item.label ?? item.text} className=\"flex gap-2\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "line": 338,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "py-6",
+    "head": "<Typography type=\"body-sm\" color=\"muted\" align=\"center\" className=\"py-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 1840,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-4",
+    "head": "<div className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2002,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-4",
+    "head": "<Box className=\"flex min-w-0 flex-col @app-lg:overflow-y-auto px-4 py-6 @app-sm:px-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2137,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-4",
+    "head": "<Box className=\"flex min-w-0 flex-col @app-lg:overflow-y-auto px-4 py-6 @app-sm:px-6\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2156,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "gap-3",
+    "head": "<ul className=\"flex flex-wrap gap-3\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "line": 2162,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-1",
+    "head": "<li key={phaseKey} className=\"px-1 py-2\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+    "line": 55,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-4",
+    "head": "<div className=\"px-4 pb-2 @app-sm:px-6\" role=\"presentation\">"
+  },
+  {
+    "rel": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+    "line": 67,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "gap-6",
+    "head": "<div className=\"grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 @app-sm:px-6 @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]\">"
+  },
+  {
+    "rel": "src/components/pages/PrivacySettingsPage/index.tsx",
+    "line": 241,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-8",
+    "head": "className=\"h-12 self-end px-8 text-base\""
+  },
+  {
+    "rel": "src/components/pages/ProfileRedirectPage/index.tsx",
+    "line": 37,
+    "name": "raw",
+    "kind": "raw",
+    "raw": "px-6",
+    "head": "<div className=\"w-full px-6 py-3\">"
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "batch": 20,
+  "title": "Strict house-component CSS-door migration",
+  "committed": false,
+  "generatedAt": "2026-08-07T01:24:37.563Z",
+  "inventory": {
+    "hits": 2885,
+    "files": 979,
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-08-b20-classname-inventory.json"
+  },
+  "overlapCheck": {
+    "ok": true,
+    "overlaps": []
+  },
+  "approvedContracts": {
+    "DrawerShell": "verified-b19 (dialogWidth/footerVariant)",
+    "ModalShell": "verified-b19 (viewportFit)",
+    "PDFView": "verified-b19 (height) + dead classNames removed",
+    "SurfaceCard_bodyVariant": "kept — ContinueCard Item+Hero ≥2 tile consumers; no new bodyVariant"
+  },
+  "resolvedCssDoors": [
+    "DrawerShell.classNames (SB+src)",
+    "ModalShell.classNames (SB+src)",
+    "PDFView.classNames (SB+src composites)",
+    "blocks/rendering/PDFView WithClassNames/className",
+    "ShowcaseMockup.className",
+    "LabeledCard WithClassNames/className + transitive passthroughs",
+    "AiQuotaModal.classNames (SB)"
+  ],
+  "vendorBoundaries": [
+    "ESLint usage exempt for vendor-boundary imports",
+    "HeroUI wrapper atoms + Box declaration-exempt"
+  ],
+  "lockedAndHolds": [
+    "SB DrawerShell.contentClassName (nivoexpert)",
+    "SurfaceCard TILE_CHROME contentClassName",
+    "LabeledCard.contentClassName / ShowcaseMockup.contentClassName",
+    "List/KeyValue public classNames (deferred)",
+    "atoms/pages mass debt remaining as ambiguous",
+    "27 teacher pattern holds"
+  ],
+  "ambiguousHolds": [
+    "~2467 inventory hits still classified ambiguous — future batches"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "eslintMaxWarnings0_cleanSet": "pass — shells SB+src, SB PDFView, AiQuotaModal",
+    "eslintMaxWarnings0_partialDebt": "LabeledCard/ShowcaseMockup/src PDFView retain pre-existing non-door warnings",
+    "publicContractsTest": "pass",
+    "namespacesAuthoringContentpagePrincipleSemantic": "pass (22)",
+    "auditFe": "0 failing / 27 held"
+  }
+}

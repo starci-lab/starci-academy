@@ -1,0 +1,146 @@
+{
+  "partition": "atoms-composites-consumers",
+  "changed": [
+    {
+      "path": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "unit": "ModalShell-classNames",
+      "action": "dropped redundant containerClassName=\"max-w-lg\" — size=\"lg\" already applies modal__dialog--lg → max-w-lg"
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+      "unit": "DrawerShell-classNames",
+      "action": "dropped unused className → dialogClassName passthrough (no callers; aligns with src twin)"
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "unit": "SurfaceCard-contentClassName",
+      "action": "dropped unused className → contentClassName passthrough (body already StackV; no callers)"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+      "unit": "SurfaceCard-contentClassName",
+      "action": "dropped unused className → contentClassName passthrough (SB twin parity)"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "unit": "SurfaceCard-contentClassName",
+      "action": "stopped forwarding unused className into contentClassName; kept fixed stack classes pending CardBody StackV ownership"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "unit": "SurfaceCard-contentClassName",
+      "action": "stopped forwarding unused className into contentClassName; kept fixed stack classes pending CardBody StackV ownership"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "unit": "SurfaceCard-contentClassName",
+      "action": "SB twin of ContinueCardItem className cleanup"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "unit": "SurfaceCard-contentClassName",
+      "action": "SB twin of ContinueCardHero className cleanup"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "reason": "contentClassName targets ShowcaseMockup, not SurfaceCard — false-positive importer"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "reason": "contentClassName targets LabeledCard, not SurfaceCard — false-positive importer"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "reason": "contentClassName targets LabeledCard, not SurfaceCard — false-positive importer"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "reason": "own contentClassName API (not SurfaceCard consumer); page-folder/cn holds out of scope"
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "reason": "contentClassName targets LabeledCard, not SurfaceCard"
+    },
+    {
+      "path": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "reason": "own contentClassName API (not SurfaceCard consumer)"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "reason": "contentClassName targets LabeledCard, not SurfaceCard"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "reason": "contentClassName targets LabeledCard, not SurfaceCard"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "reason": "contentClassName targets LabeledCard; skeleton/AsyncContent holds"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "reason": "contentClassName targets LabeledCard; skeleton holds"
+    },
+    {
+      "path": ".storybook/stories/behaviors/ResizableRail/ResizableRail.stories.tsx",
+      "reason": "heightClassName is a fixture prop on PracticeShellDemo, not PDFView — false-positive importer"
+    },
+    {
+      "path": ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+      "reason": "listed as DrawerShell importer only because it declares its own dialogClassName/footerClassName; not a DrawerShell consumer"
+    }
+  ],
+  "holds": [
+    {
+      "unit": "DrawerShell-classNames",
+      "props": ["dialogClassName", "footerClassName"],
+      "reason": "MiniCartDrawer still needs dialogClassName=\"sm:max-w-md\" and footerClassName flex-col override; named alternatives (size/footerLayout) would be unproven public API renames. Cannot remove from defs."
+    },
+    {
+      "unit": "DrawerShell-classNames",
+      "path": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "reason": "SB twin still has contentClassName/bodyClassName/titleClassName that src already dropped — APIs not identical; Nivo LessonEditorPanel still uses contentClassName (vendor-hold). Prefer hold over force-align."
+    },
+    {
+      "unit": "ModalShell-classNames",
+      "props": ["containerClassName"],
+      "reason": "CvPreviewModal still needs near-fullscreen containerClassName=\"h-[92vh] w-[96vw] max-w-[96vw]\" — size=\"cover\"/\"full\" are not proven visual equivalents. Cannot remove from defs."
+    },
+    {
+      "unit": "ModalShell-classNames",
+      "path": ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+      "reason": "SB twin still has dialogClassName/bodyClassName/footerClassName/titleClassName that src dropped — APIs not identical; hold twin sync."
+    },
+    {
+      "unit": "SurfaceCard-contentClassName",
+      "props": ["contentClassName"],
+      "reason": "ContinueCard Item/Hero still require contentClassName for CardBody peer stacking (CardBody not in manifest). Internal PressableGroup still passes TILE_CHROME via contentClassName. Named chrome/layout props would be unproven renames. Cannot remove from defs."
+    },
+    {
+      "unit": "PDFView-heightClassName",
+      "props": ["heightClassName"],
+      "reason": "CvPreviewModal (h-[84vh]) + PDFView.stories (many demo heights) + blocks/rendering twin still need per-call heights; no proven named height enum. Hold over inventing height=\"sm|md|lg\"."
+    }
+  ],
+  "verification": {
+    "eslintQuietChanged": {
+      "exitOk": true,
+      "errorCount": 0,
+      "files": [
+        "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+        ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+        "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+        ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+        "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+        "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+        ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx"
+      ]
+    },
+    "defsRemoved": [],
+    "note": "No per-part props removed from composite defs — live consumers remain for each. No commit."
+  },
+  "regressions": []
+}

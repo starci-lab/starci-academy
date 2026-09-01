@@ -1,0 +1,27 @@
+{
+  "partition": "surface-card-chrome",
+  "changed": [
+    ".storybook/components/composites/_semantic-contracts.ts",
+    ".storybook/components/composites/_semantic-contracts.mjs",
+    "src/components/composites/_semantic-contracts.ts",
+    "src/components/composites/_semantic-contracts.mjs",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    ".storybook/test-runner/semantic-contracts.test.mjs"
+  ],
+  "skipped": [],
+  "holds": [
+    "contentClassName retained for verdict band + item.classNames (span proposal)"
+  ],
+  "evidence": [
+    "chromeVariant tile → rounded-2xl shadow-field (former TILE_CHROME)",
+    "PressableGroup Base now chromeVariant=\"tile\"; TILE_CHROME stripped from contentClassName",
+    "bodyVariant axis unchanged and independent"
+  ],
+  "proposals": [],
+  "verification": {
+    "tsc": "pass",
+    "semanticContracts": "8/8"
+  },
+  "regressions": []
+}

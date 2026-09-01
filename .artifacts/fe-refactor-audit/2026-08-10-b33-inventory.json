@@ -1,0 +1,403 @@
+{
+  "batch": "B33",
+  "checkpoint": "139391b6",
+  "generatedAt": "2026-08-08T12:49:20.985Z",
+  "command": "npx eslint --format json --no-error-on-unmatched-pattern src .storybook",
+  "baselineB32cAfter": {
+    "raw": 7136,
+    "files": 1260,
+    "errors": 0
+  },
+  "current": {
+    "rawMessages": 7136,
+    "affectedFiles": 1260,
+    "errors": 0,
+    "warnings": 7136,
+    "a11y": 11,
+    "starci": 7125,
+    "forbiddenMessages": 719
+  },
+  "byRule": {
+    "starci-fe/no-public-classname-prop": 1337,
+    "starci-fe/no-frame-fragment-item": 107,
+    "starci-fe/require-export-jsdoc": 18,
+    "starci-fe/no-host-element-at-sentence-tier": 1705,
+    "starci-fe/no-inline-parameter-type": 63,
+    "starci-fe/no-emoji-in-source": 50,
+    "starci-fe/no-css-door-type-laundering": 2,
+    "starci-fe/no-parallel-skeleton": 68,
+    "starci-fe/handler-on-prefix": 6,
+    "jsx-a11y/aria-role": 8,
+    "starci-fe/no-per-part-classname-prop": 8,
+    "starci-fe/no-hardcoded-user-text-in-vocabulary": 4,
+    "starci-fe/require-frame-self-declare": 734,
+    "starci-fe/no-raw-shape-at-sentence-tier": 834,
+    "starci-fe/require-identity-root": 577,
+    "starci-fe/no-classname-at-sentence-tier": 214,
+    "starci-fe/no-heroui-outside-vocabulary": 445,
+    "starci-fe/no-cn-above-vocabulary": 376,
+    "starci-fe/no-skeleton-twin-component": 39,
+    "starci-fe/no-inline-skeleton-branch": 46,
+    "starci-fe/no-helper-folder-in-components": 63,
+    "starci-fe/no-vietnamese-in-source-authoring": 9,
+    "starci-fe/no-retired-async-content": 40,
+    "starci-fe/no-arbitrary-token": 16,
+    "jsx-a11y/no-static-element-interactions": 2,
+    "starci-fe/no-identity-wrapper-div": 1,
+    "starci-fe/no-hero-heading-class": 8,
+    "starci-fe/page-folder-two-files-only": 354,
+    "jsx-a11y/click-events-have-key-events": 1,
+    "starci-fe/prefer-arrow-export": 1
+  },
+  "byFamily": {
+    "sb-atoms": 14,
+    "other": 353,
+    "sb-composites": 53,
+    "sb-frames": 9,
+    "sb-starci": 215,
+    "src-atoms": 19,
+    "src-blocks": 3624,
+    "src-composites": 117,
+    "src-frames": 12,
+    "src-layouts": 127,
+    "src-overlays": 185,
+    "src-pages": 2408
+  },
+  "partialClustersFromB32c": 18,
+  "partialResolved": [
+    {
+      "id": "src-or-sb:blocks/ai/AiQuotaLane::AiQuotaLane::sentence-root::band2",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "afterRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+        "src/components/blocks/ai/AiQuotaLane/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band2",
+      "beforeRaw": 3,
+      "afterRaw": 2,
+      "beforeRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band5",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::sentence-root::band5",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/WeeklyGoals::WeeklyGoals::sentence-root::band10",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+        "src/components/blocks/dashboard/WeeklyGoals/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/CourseQaQuestionList/SkeletonQuestionRow::SkeletonQuestionRow::sentence-root::band1",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "afterRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+        "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/FoundationSearchBar::FoundationSearchBar::sentence-root::band4",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+        "src/components/blocks/learn/FoundationSearchBar/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/InterviewerPresence::InterviewerPresence::sentence-root::band12",
+      "beforeRaw": 3,
+      "afterRaw": 2,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+        "src/components/blocks/learn/InterviewerPresence/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/KeepGoingPath::KeepGoingPath::css-contract::band2",
+      "beforeRaw": 3,
+      "afterRaw": 2,
+      "beforeRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+        "src/components/blocks/learn/KeepGoingPath/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/LeaderboardBoard/Board::Board::sentence-root::band1",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/LeaderboardBoard::LeaderboardBoard::sentence-root::band3",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/ModuleLessonList::ModuleLessonList::css-contract::band3",
+      "beforeRaw": 3,
+      "afterRaw": 2,
+      "beforeRules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+        "src/components/blocks/learn/ModuleLessonList/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/QaConversationHeader::QaConversationHeader::sentence-root::band5",
+      "beforeRaw": 3,
+      "afterRaw": 2,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+        "src/components/blocks/learn/QaConversationHeader/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/learn/SubmissionAttemptSelector::SubmissionAttemptSelector::sentence-root::band7",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+        "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8",
+      "beforeRaw": 4,
+      "afterRaw": 3,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+        "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:blocks/navigation/ProfileTabsBar::ProfileTabsBar::sentence-root::band4",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+        "src/components/blocks/navigation/ProfileTabsBar/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band58",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx"
+      ]
+    },
+    {
+      "id": "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band88",
+      "beforeRaw": 2,
+      "afterRaw": 1,
+      "beforeRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "partially-closed",
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx"
+      ]
+    }
+  ],
+  "consumerIndexSummary": {
+    "Button": 314,
+    "Chip": 195,
+    "Avatar": 59,
+    "Typography": 648,
+    "Stack": 473,
+    "Flex": 26,
+    "Cluster": 82,
+    "Container": 166,
+    "ButtonGroup": 31,
+    "EnumChip": 35,
+    "ProgressMeter": 53,
+    "MarkdownContent": 101,
+    "SurfaceCard": 203,
+    "PinnedTrack": 6
+  },
+  "overlapPass": true,
+  "overlap": [],
+  "manifestFileCounts": {
+    "agent-1-button": 45,
+    "agent-2-chip-avatar": 40,
+    "agent-3-typography": 40,
+    "agent-4-stack-flex-cluster": 45,
+    "agent-5-container-grid": 40,
+    "agent-6-composites": 40,
+    "agent-7-identity": 50,
+    "agent-8-page-folder": 40,
+    "agent-9-sentence-heroui": 55,
+    "agent-10-oracle": 0
+  }
+}

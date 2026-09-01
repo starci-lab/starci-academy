@@ -1,0 +1,713 @@
+{
+  "partition": "blocks-domain-profile",
+  "manifest": [
+    "src/components/blocks/auth/Turnstile/index.tsx",
+    "src/components/blocks/buttons/RatingBar/index.tsx",
+    "src/components/blocks/chips/LanguageChip/index.tsx",
+    "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+    "src/components/blocks/community/Discussion/CommentItem.tsx",
+    "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+    "src/components/blocks/community/Discussion/ReactionBar.tsx",
+    "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+    "src/components/blocks/dashboard/Podium/index.tsx",
+    "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+    "src/components/blocks/entity/EntityToken/index.tsx",
+    "src/components/blocks/feed/ActivityAvatar/index.tsx",
+    "src/components/blocks/feed/ChatBubble/index.tsx",
+    "src/components/blocks/feed/ChatPanel/index.tsx",
+    "src/components/blocks/feed/CommentThread/index.tsx",
+    "src/components/blocks/feed/FeedItem/index.tsx",
+    "src/components/blocks/feed/ReactionBar/index.tsx",
+    "src/components/blocks/feed/Timeline/index.tsx",
+    "src/components/blocks/feedback/ErrorPageState/index.tsx",
+    "src/components/blocks/feedback/ErrorState/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/blocks/form/Dropzone/index.tsx",
+    "src/components/blocks/form/OtpInput/index.tsx",
+    "src/components/blocks/form/SchedulePicker/index.tsx",
+    "src/components/blocks/form/SearchAutocomplete/index.tsx",
+    "src/components/blocks/grading/DiffViewer/index.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/index.tsx",
+    "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+    "src/components/blocks/identity/ImageDropzone/index.tsx",
+    "src/components/blocks/layout/ConnectSheet/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/index.tsx",
+    "src/components/blocks/marketing/AdBanner/index.tsx",
+    "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+    "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+    "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+    "src/components/blocks/marketing/SectionHeading/index.tsx",
+    "src/components/blocks/marketing/TopicLane/index.tsx",
+    "src/components/blocks/marketing/TruthList/index.tsx",
+    "src/components/blocks/media/CoverImage/index.tsx",
+    "src/components/blocks/media/QRCode/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+    "src/components/blocks/navigation/ContentMapRow/index.tsx",
+    "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+    "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+    "src/components/blocks/notifications/NotificationBell/index.tsx",
+    "src/components/blocks/notifications/NotificationItem/index.tsx",
+    "src/components/blocks/notifications/NotificationList/index.tsx",
+    "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+    "src/components/blocks/profile/CvSubmission/index.tsx",
+    "src/components/blocks/profile/MascotBadge/index.tsx",
+    "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+    "src/components/blocks/profile/RankBadge/index.tsx",
+    "src/components/blocks/profile/UserStreak/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+    "src/components/blocks/stats/DeadlineCallout/index.tsx",
+    "src/components/blocks/stats/LanguageDonut/index.tsx",
+    "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+    "src/components/blocks/stats/TopicMasteryGrid/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/auth/Turnstile/index.tsx",
+    "src/components/blocks/buttons/RatingBar/index.tsx",
+    "src/components/blocks/chips/LanguageChip/index.tsx",
+    "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+    "src/components/blocks/community/Discussion/CommentItem.tsx",
+    "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+    "src/components/blocks/community/Discussion/ReactionBar.tsx",
+    "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+    "src/components/blocks/dashboard/Podium/index.tsx",
+    "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+    "src/components/blocks/entity/EntityToken/index.tsx",
+    "src/components/blocks/feed/ActivityAvatar/index.tsx",
+    "src/components/blocks/feed/ChatBubble/index.tsx",
+    "src/components/blocks/feed/ChatPanel/index.tsx",
+    "src/components/blocks/feed/CommentThread/index.tsx",
+    "src/components/blocks/feed/FeedItem/index.tsx",
+    "src/components/blocks/feed/ReactionBar/index.tsx",
+    "src/components/blocks/feed/Timeline/index.tsx",
+    "src/components/blocks/feedback/ErrorPageState/index.tsx",
+    "src/components/blocks/feedback/ErrorState/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/blocks/form/Dropzone/index.tsx",
+    "src/components/blocks/form/OtpInput/index.tsx",
+    "src/components/blocks/form/SchedulePicker/index.tsx",
+    "src/components/blocks/form/SearchAutocomplete/index.tsx",
+    "src/components/blocks/grading/DiffViewer/index.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/index.tsx",
+    "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+    "src/components/blocks/identity/ImageDropzone/index.tsx",
+    "src/components/blocks/layout/ConnectSheet/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/index.tsx",
+    "src/components/blocks/marketing/AdBanner/index.tsx",
+    "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+    "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+    "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+    "src/components/blocks/marketing/SectionHeading/index.tsx",
+    "src/components/blocks/marketing/TopicLane/index.tsx",
+    "src/components/blocks/marketing/TruthList/index.tsx",
+    "src/components/blocks/media/CoverImage/index.tsx",
+    "src/components/blocks/media/QRCode/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+    "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+    "src/components/blocks/navigation/ContentMapRow/index.tsx",
+    "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+    "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+    "src/components/blocks/notifications/NotificationBell/index.tsx",
+    "src/components/blocks/notifications/NotificationItem/index.tsx",
+    "src/components/blocks/notifications/NotificationList/index.tsx",
+    "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+    "src/components/blocks/profile/CvSubmission/index.tsx",
+    "src/components/blocks/profile/MascotBadge/index.tsx",
+    "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+    "src/components/blocks/profile/RankBadge/index.tsx",
+    "src/components/blocks/profile/UserStreak/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+    "src/components/blocks/stats/DeadlineCallout/index.tsx",
+    "src/components/blocks/stats/LanguageDonut/index.tsx",
+    "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+    "src/components/blocks/stats/TopicMasteryGrid/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/auth/Turnstile/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/dashboard/Podium/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/entity/EntityToken/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feed/CommentThread/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feed/FeedItem/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feed/Timeline/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/form/Dropzone/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/form/OtpInput/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/marketing/TruthList/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/CoverImage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/QRCode/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationBell/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/profile/RankBadge/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/profile/UserStreak/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "live-api Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton",
+    "vendor / locked / Nivo / B19–B25 / teacher holds / skeleton slots",
+    "doors with JSX consumers (EntityLink restored)",
+    "rest-spread forwarding (...props)",
+    "src/components/blocks/feed/EntityLink/index.tsx — restored (live className consumer in CommentItem)",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx — restored (void className side-effect API)"
+  ],
+  "evidence": {
+    "proof": "brace-aware destructure + open-tag consumer index (locked paths counted as consumers)",
+    "inventoryBefore": {
+      "hits": 2194,
+      "files": 816
+    }
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "src-first where no SB twin; SB starci twins when present"
+  },
+  "verification": {
+    "local": "tsc pass after partition"
+  },
+  "regressions": [],
+  "overlapCheck": "partitionOf(file) — each changed file in exactly one worker"
+}

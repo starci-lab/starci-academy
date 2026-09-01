@@ -1,0 +1,116 @@
+import fs from "node:fs"
+import { createRequire } from "node:module"
+// inline extract from scan
+function extractOpens(src, component) {
+  const hits = []
+  const re = new RegExp(`<${component.replace(/\./g, "\\.")}\\b`, "g")
+  let m
+  while ((m = re.exec(src))) {
+    const start = m.index
+    let i = start + m[0].length
+    let depth = 0
+    let quote = null
+    let tag = m[0]
+    for (; i < src.length; i++) {
+      const ch = src[i]
+      tag += ch
+      if (quote) {
+        if (ch === "\\" && quote !== "`") {
+          if (i + 1 < src.length) tag += src[++i]
+          continue
+        }
+        if (ch === quote) quote = null
+        continue
+      }
+      if (ch === '"' || ch === "'" || ch === "`") {
+        quote = ch
+        continue
+      }
+      if (ch === "{") {
+        depth++
+        continue
+      }
+      if (ch === "}") {
+        depth = Math.max(0, depth - 1)
+        continue
+      }
+      if (depth === 0 && ch === ">") break
+    }
+    hits.push({ line: src.slice(0, start).split(/\n/).length, tag })
+  }
+  return hits
+}
+function propValue(tag, prop) {
+  let i = 1
+  while (i < tag.length && /[\w.]/.test(tag[i])) i++
+  let depth = 0
+  let quote = null
+  while (i < tag.length) {
+    const ch = tag[i]
+    if (quote) {
+      if (ch === "\\" && quote !== "`") {
+        i += 2
+        continue
+      }
+      if (ch === quote) quote = null
+      i++
+      continue
+    }
+    if (ch === '"' || ch === "'" || ch === "`") {
+      quote = ch
+      i++
+      continue
+    }
+    if (ch === "{") {
+      depth++
+      i++
+      continue
+    }
+    if (ch === "}") {
+      depth = Math.max(0, depth - 1)
+      i++
+      continue
+    }
+    if (depth === 0) {
+      const rest = tag.slice(i)
+      const named = new RegExp(`^${prop}\\s*=\\s*`)
+      const m = named.exec(rest)
+      if (m) {
+        i += m[0].length
+        if (tag[i] === '"' || tag[i] === "'") {
+          const q = tag[i]
+          let j = i + 1
+          let out = ""
+          while (j < tag.length && tag[j] !== q) out += tag[j++]
+          return { kind: "string", value: out }
+        }
+        if (tag[i] === "{") {
+          let d = 0
+          let j = i
+          for (; j < tag.length; j++) {
+            if (tag[j] === "{") d++
+            else if (tag[j] === "}") {
+              d--
+              if (d === 0) {
+                j++
+                break
+              }
+            }
+          }
+          return { kind: "expr", value: tag.slice(i + 1, j - 1).trim() }
+        }
+        return null
+      }
+    }
+    i++
+  }
+  return null
+}
+const src = fs.readFileSync("src/components/blocks/feedback/ReadinessChecklist/index.tsx", "utf8")
+const opens = extractOpens(src, "ListRow")
+console.log("opens", opens.length)
+for (const o of opens) {
+  console.log("---")
+  console.log(o.tag.slice(0, 300))
+  console.log("className", propValue(o.tag, "className"))
+}

@@ -1,0 +1,205 @@
+{
+  "batch": "B32",
+  "worker": "agent-6-domain-a",
+  "checkpoint": "9e86cbdf",
+  "manifest": "agents[\"agent-6-domain-a\"] from 2026-08-10-b32-manifests.json",
+  "status": "partial",
+  "telemetry": {
+    "before": 45,
+    "after": 20,
+    "closed": 25,
+    "held": 20
+  },
+  "changed": [
+    ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+    ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+    ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+    ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+    ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+    ".storybook/components/starci/blocks/learn/QuizEnrollGate/QuizEnrollGate.tsx",
+    ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+    ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+    "src/components/blocks/learn/ContentAiSelectionAsk/SelectionHintCallout.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    "src/components/blocks/learn/ContinueLearning/index.tsx",
+    "src/components/blocks/learn/FoundationResourceEmpty/index.tsx"
+  ],
+  "closures": [
+    {
+      "files": [
+        ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+        ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+        ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+        ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+        ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+        ".storybook/components/starci/blocks/learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot.tsx",
+        ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+        ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+        ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+        ".storybook/components/starci/blocks/learn/QuizEnrollGate/QuizEnrollGate.tsx",
+        ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+        ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+        ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+        ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+        ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx"
+      ],
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "action": "Removed bare passthrough <div> wrappers; vocabulary root (Stack/SurfaceCard/AsyncContent/PageHeader/EmptyState/StatRibbon) is now the component root"
+    },
+    {
+      "files": [
+        ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+        ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx"
+      ],
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "action": "Dropped redundant shrink-0 host around fixed-size Avatar"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "action": "Replaced min-w-0 flex-1 host with FillAvailable at=base around UserCell"
+    },
+    {
+      "files": [
+        ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+        ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx"
+      ],
+      "rule": "starci-fe/no-public-classname-prop",
+      "action": "Renamed internal leading-style className field to glyphClass (not a public CSS door)"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "rule": "starci-fe/no-public-classname-prop",
+      "action": "Removed Button classNames w-fit/shrink-0; Button owns intrinsic width; optional identity forward for callers"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueLearning/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "action": "Pass identity ContinueLearning into ContinueCardHero → SurfaceCard"
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceEmpty/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "action": "Pass identity onto AsyncContentEmpty"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiSelectionAsk/SelectionHintCallout.tsx",
+      "rule": "starci-fe/require-frame-self-declare",
+      "action": "Removed Box mb-4 placement laundering; parent ContentPage StackV gap={5} owns the seam to the article"
+    }
+  ],
+  "holds": [
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "reason": "text-warning-soft-foreground chrome on wrapper; Typography has warning but not warning-soft"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantProfileBody/ConsultantProfileBody.tsx",
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "reason": "w-28 size shell around Image; Image has no width/size contract for 7rem"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "reason": "fixed fullscreen overlay host for framer-motion confetti — genuine foreign mount"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "reason": "Command surface chrome (rounded border bg) — no command-panel vocabulary; parallel skeleton held"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaChatBubble/QaChatBubble.tsx",
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "reason": "Role-tinted bubble chrome host; feed ChatBubble is a different contract/look"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskSubmissionPanel.tsx",
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "reason": "sticky top-4 z-10; sticky-top principle is top-0 only"
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "rule": "starci-fe/require-frame-self-declare",
+      "reason": "StackV gap={4} (12px) between peer bars — sibling-stack=8px, group-boundary=16px; no honest token without retune"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundResourcePanel/index.tsx",
+      "rule": "starci-fe/require-frame-self-declare",
+      "reason": "Same gap={4} header|body seam — no matching vertical group token at 12px"
+    },
+    {
+      "files": [
+        "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+        "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx"
+      ],
+      "rule": "starci-fe/require-identity-root",
+      "reason": "PriceTagBase (out of manifest) does not accept identity; no wrapper allowed"
+    },
+    {
+      "file": "src/components/blocks/learn/AiBalancer/map.tsx",
+      "rule": "starci-fe/no-per-part-classname-prop",
+      "reason": "chipClassName consumed by KeyStatusChip outside manifest — hold API change"
+    },
+    {
+      "files": [
+        "src/components/blocks/learn/ConceptMap/hooks/index.ts",
+        "src/components/blocks/learn/ConceptMap/hooks/useMindMapFitView.ts",
+        "src/components/blocks/learn/OnThisPage/hooks/useTableOfContents.ts"
+      ],
+      "rule": "starci-fe/no-helper-folder-in-components",
+      "reason": "Moving hooks requires consumers (Canvas, OnThisPage, LearnMobileTabBar) outside manifest"
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "reason": "xyflow Panel vendor root + Legend lacks identity prop"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentModeNav/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "reason": "Toolbar composite does not accept identity yet (Wave 1 owner)"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "reason": "ResponsiveBreadcrumb does not accept identity"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "reason": "Root is Button atom / Box chrome; Button lacks caller identity"
+    },
+    {
+      "files": [
+        "src/components/blocks/learn/PlaygroundDeviceSnapshot/index.tsx",
+        "src/components/blocks/learn/PlaygroundHubHeader/index.tsx"
+      ],
+      "rule": "starci-fe/require-identity-root",
+      "reason": "StatRibbon / PageHeader do not accept identity yet (Wave 1 owner)"
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0Changed": "pass",
+    "eslintManifestRemaining": 20,
+    "gitDiffCheck": "pass",
+    "newVariants": [],
+    "eslintDisable": false
+  },
+  "summary": "Closed 25/45 actionable clusters: SB passthrough hosts, Avatar/FillAvailable placement hosts, KeepGoingPath/ModuleLessonList glyphClass rename, ContinueCardHero classNames + ContinueLearning/FoundationResourceEmpty identity, SelectionHintCallout Box removal. Held 20 for missing vocabulary (warning-soft, Image width, sticky top-4, chat/command chrome), gap-token mismatch, out-of-manifest PriceTagBase/KeyStatusChip/hooks consumers, and identity-incapable roots (Toolbar/PageHeader/StatRibbon/Button/Legend/Panel)."
+}

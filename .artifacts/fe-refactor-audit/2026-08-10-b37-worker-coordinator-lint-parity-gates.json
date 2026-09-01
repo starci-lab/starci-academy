@@ -1,0 +1,136 @@
+{
+  "batch": "B37",
+  "wave": "coordinator",
+  "agent": "coordinator-lint-parity-gates",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T17:21:00.000Z",
+  "workerPresence": {
+    "surface-contract-storybook": true,
+    "surface-contract-src": true,
+    "dashboard-consumers": true,
+    "profile-consumers-a": true,
+    "profile-consumers-b": true,
+    "learn-flashcard-consumers": true,
+    "feed-overlay-commerce-consumers": true,
+    "legacy-surface-list-remaining": true,
+    "labeled-card-non-list-classification": true,
+    "coordinator-lint-parity-gates": true
+  },
+  "workerPoll": {
+    "startedAt": "2026-08-09T00:09:43+07:00",
+    "allPresentAt": "2026-08-09T00:17:44+07:00",
+    "timeoutMinutes": 30,
+    "pass": true
+  },
+  "rule": {
+    "id": "starci-fe/no-redundant-labeled-surface",
+    "severity": "warn",
+    "files": [
+      "plugins/eslint/labeled-surface.mjs",
+      "plugins/eslint/labeled-surface.test.mjs",
+      "plugins/eslint/index.mjs",
+      "eslint.config.mjs"
+    ],
+    "docsTouch": [
+      ".claude/fe/ESLINT-RULESET.md"
+    ],
+    "semantics": {
+      "proof": "JSX ancestry walk to LabeledCard ancestor (not bare name co-occurrence)",
+      "alwaysReject": [
+        "LabeledCard wrapping SurfaceCardList / SurfaceCard.List",
+        "LabeledCard wrapping SurfaceCardAccordion / SurfaceCard.Accordion"
+      ],
+      "framelessReject": [
+        "LabeledCard frameless wrapping SurfaceListCard",
+        "LabeledCard frameless wrapping self-framed SurfaceCard members (Base/Nested/PressableGroup/SelectableGroup/CrossList/Placeholder)"
+      ]
+    },
+    "liveHits": {
+      "count": 6,
+      "note": "Residual held H / deferred frameless+SurfaceListCard sites; warn telemetry only",
+      "files": [
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx"
+      ]
+    }
+  },
+  "inventory": {
+    "method": "substring containment in src + .storybook/components + .storybook/stories",
+    "phase0": {
+      "LabeledCard": 97,
+      "frameless": 54,
+      "SurfaceListCard": 87,
+      "SurfaceCardList": 111,
+      "SurfaceCardAccordion": 24
+    },
+    "afterWorkers": {
+      "LabeledCard": 78,
+      "frameless": 46,
+      "SurfaceListCard": 58,
+      "SurfaceCardList": 146,
+      "SurfaceCardAccordion": 27
+    },
+    "delta": {
+      "LabeledCard": -19,
+      "frameless": -8,
+      "SurfaceListCard": -29,
+      "SurfaceCardList": 35,
+      "SurfaceCardAccordion": 3
+    }
+  },
+  "forbiddenProof": {
+    "command": "git diff --name-only HEAD plus untracked; exclude pre-dirty vendor trees",
+    "productDiffs": [],
+    "preDirtyExcluded": [
+      ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+      ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx"
+    ],
+    "coordinatorOwnedDiffs": [
+      "eslint.config.mjs",
+      "plugins/eslint/index.mjs",
+      "plugins/eslint/labeled-surface.mjs",
+      "plugins/eslint/labeled-surface.test.mjs",
+      ".claude/fe/ESLINT-RULESET.md"
+    ],
+    "coordinatorTouchedForbiddenTrees": false,
+    "pass": true
+  },
+  "gates": {
+    "tsc": 0,
+    "pluginEslintTests": 0,
+    "principleStyleTests": 0,
+    "semanticContractsTests": 0,
+    "auditFe": 0,
+    "gitDiffCheck": 0
+  },
+  "gateCommands": {
+    "tsc": "npx tsc --noEmit",
+    "pluginEslintTests": "node --test plugins/eslint/*.test.mjs",
+    "principleStyleTests": "node --test .storybook/test-runner/principle-style.test.mjs",
+    "semanticContractsTests": "node --test .storybook/test-runner/semantic-contracts.test.mjs",
+    "auditFe": "npm run audit:fe",
+    "gitDiffCheck": "git diff --check"
+  },
+  "eslint": {
+    "after": {
+      "warnings": 6206,
+      "files": 1088,
+      "errors": 0,
+      "a11y": 11,
+      "noRedundantLabeledSurface": 6
+    },
+    "artifact": ".artifacts/_b37-eslint-summary.json",
+    "note": "Optional full-tree summary after rule registration; B36 after was 6215/1086/0/11"
+  },
+  "pluginTests": {
+    "total": 23,
+    "pass": 23,
+    "includesNewRule": true
+  },
+  "productEditsByCoordinator": false,
+  "note": "Coordinator owns eslint rule + gate evidence only. Parent writes final status/handoff. Do not commit."
+}

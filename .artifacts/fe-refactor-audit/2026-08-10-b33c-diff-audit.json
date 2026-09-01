@@ -1,0 +1,16 @@
+{
+  "batch": "B33c",
+  "generatedAt": "2026-08-08T13:27:32.679Z",
+  "findings": [],
+  "forbiddenPathDiff": [
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"
+  ],
+  "forbiddenPathDiffProof": true,
+  "note": "mia-mia SiteFooter is pre-dirty hold-out, not a B33 edit. No nivo/nivoexpert component edits.",
+  "coordinatorRepairs": [
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx"
+  ]
+}

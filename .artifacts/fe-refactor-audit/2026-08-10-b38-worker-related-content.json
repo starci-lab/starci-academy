@@ -1,0 +1,61 @@
+{
+  "batch": "B38",
+  "agent": "related-content",
+  "status": "complete-with-hold",
+  "claimedAt": "2026-08-08T18:32:00.000Z",
+  "completedAt": "2026-08-08T19:10:00.000Z",
+  "checkpoint": "2a096210a",
+  "owns": [
+    "src/components/blocks/learn/RelatedContentList/component.tsx",
+    "src/components/blocks/learn/RelatedContentList/index.tsx",
+    "src/components/blocks/learn/EntityResultRow/component.tsx",
+    "src/components/blocks/learn/EntityResultRow/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/index.tsx"
+  ],
+  "criticalUnlock": {
+    "EntityResultRow": {
+      "from": "self-<button> + absolute after: separator + onSelect required",
+      "to": "list-safe StackV body (Chip/Typography slots + isSkeleton); optional onSelect restores standalone button for held ContentAiChat search",
+      "exports": ["ENTITY_RESULT_PLACEHOLDER", "KIND_META", "metaForKind"]
+    }
+  },
+  "migrated": [
+    {
+      "file": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "class": "A",
+      "from": "LabeledCard frameless + SurfaceListCard bordered + EntityResultRow self-button; parallel Skeleton.Typography tree",
+      "to": "SurfaceCardList identity=RelatedContentList label variant=nested isSkeleton items content=EntityResultRow hover=underline onPress"
+    },
+    {
+      "file": "src/components/blocks/learn/EntityResultRow/component.tsx",
+      "class": "unlock",
+      "from": "button chrome + separator",
+      "to": "presentational body by default; optional onSelect wraps button for held hosts"
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "class": "co-consumer",
+      "from": "raw bordered div + SurfaceListCardItem Skeleton twin + EntityResultRow buttons",
+      "to": "SurfaceCardList nested + EntityResultRow content + onPress; unused icon?: unknown for ContentAiChat API compat"
+    }
+  ],
+  "holds": [
+    {
+      "id": "b38-content-ai-chat-search-shell",
+      "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "action": "reverted / not retained",
+      "reason": "Search co-migration closed the EntityResultRow button nesting, but ContentAiChat carries ≥64 pre-existing HeroUI/host/className warnings. Touched-file ratchet forbids retaining it dirty. Left at checkpoint; uses EntityResultRow onSelect + ChatToolResult icon?: unknown bridge."
+    }
+  ],
+  "gates": {
+    "eslint": {
+      "RelatedContentList/component.tsx": "pass max-warnings=0",
+      "EntityResultRow/*": "pass max-warnings=0",
+      "ChatToolResult/index.tsx": "pass max-warnings=0",
+      "ContentAiChat/index.tsx": "unchanged vs checkpoint — not in retained package"
+    },
+    "gitDiffCheck": "pass"
+  },
+  "summary": "RelatedContentList Exact A closed. EntityResultRow list-safe with optional onSelect bridge. ContentAiChat held."
+}

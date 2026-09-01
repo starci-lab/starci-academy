@@ -1,0 +1,57 @@
+{
+  "batch": "B34",
+  "wave": "A",
+  "manifest": "markdown-presentation-contract",
+  "agent": "markdown-presentation-contract",
+  "checkpoint": "6ff21c66",
+  "contract": "D-MarkdownPresentation",
+  "focus": "Add MarkdownPresentation finite axes on composite twins (keep className until Wave B migrates consumers)",
+  "filesEdited": [
+    ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+    "src/components/composites/viewers/MarkdownContent/index.tsx"
+  ],
+  "filesTouchedOptional": {
+    "map.tsx": "not needed — presentation classes apply on the prose root via cn(), not element renderers"
+  },
+  "axesAdded": {
+    "MarkdownDensity": ["default", "compact", "caption"],
+    "MarkdownTone": ["default", "muted"],
+    "MarkdownFlow": ["document", "embedded"],
+    "MarkdownEmphasis": ["normal", "italic"],
+    "MarkdownPreviewLines": [1, 2]
+  },
+  "mappings": {
+    "density.default": "existing (no extra class)",
+    "density.compact": "text-sm",
+    "density.caption": "text-xs",
+    "tone.default": "existing (no extra class)",
+    "tone.muted": "text-muted",
+    "flow.document": "existing (no extra class)",
+    "flow.embedded": "[&_p]:m-0",
+    "emphasis.normal": "existing (no extra class)",
+    "emphasis.italic": "italic",
+    "previewLines.1": "[&_p]:line-clamp-1",
+    "previewLines.2": "[&_p]:line-clamp-2"
+  },
+  "preserved": {
+    "measure": "reading | compact (existing reading-room axis)",
+    "isSkeleton": true,
+    "arcSections": "not on composite twin yet (blocks/rendering hold; not removed)",
+    "plain": "not on composite twin yet (blocks/rendering hold; not removed)",
+    "codeElevated": "not on composite twin yet (blocks/rendering hold; not removed)",
+    "className": "composite twin had no public className door; not invented. Internal prose-root cn() retained. blocks/rendering MarkdownContent className retained for Wave B."
+  },
+  "parity": {
+    "storybook": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+    "src": "src/components/composites/viewers/MarkdownContent/index.tsx",
+    "status": "axes + cn mappings mirrored"
+  },
+  "consumersMigrated": [],
+  "note": "Wave A contract only — no consumer migration. Wave B maps live blocks/rendering className callers onto these axes then burns the door.",
+  "gates": {
+    "tsc": "clean (no MarkdownContent errors; full tsc exit 0)",
+    "eslintOwnedFiles": "clean",
+    "gitDiffCheck": "clean"
+  },
+  "status": "done"
+}

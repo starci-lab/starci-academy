@@ -1,0 +1,1568 @@
+{
+  "viCommentCount": 122,
+  "emojiCommentCount": 138,
+  "viComments": [
+    {
+      "file": ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+      "pos": 1351,
+      "end": 2038,
+      "text": "/**\r\n * The neo-brutalist pill: a small bordered, optionally hard-shadowed label. It is the\r\n * marketing surface's smallest labelled value — the hero eyebrow, a card's meta tag\r\n * (`50 câu · 60′`), a status chip (`Đã nộp`). Extracting it keeps the blocks and cards\r\n * free of hand-rolled chip chro"
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+      "pos": 1444,
+      "end": 1514,
+      "text": "/** Button copy for the \"not yet following\" state (e.g. \"Kết bạn\"). */"
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+      "pos": 1545,
+      "end": 1618,
+      "text": "/** Button copy for the \"already following\" state (e.g. \"Đã kết bạn\"). */"
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+      "pos": 1755,
+      "end": 1829,
+      "text": "/** Rank badge text (e.g. \"Hạng Vàng\"); the chip is hidden when absent. */"
+    },
+    {
+      "file": ".storybook/story-kit.tsx",
+      "pos": 80,
+      "end": 1147,
+      "text": "/**\r\n * Shared SCAFFOLD helpers for GALLERY stories — render every variant/state of a component in\r\n * ONE story, laid out identically everywhere.\r\n *\r\n * Deliberately NOT called \"layout primitives\": these are the story's own scaffold, not a tier\r\n * of the tree. Reaching for the real frame tier her"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "pos": 99,
+      "end": 882,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * ĐỒ NGHỀ — AnatomyOverlay: đánh dấu MỘT part để cây anatomy nhận ra nó.\r\n *\r\n * Rút gọn 2026-07-26 (thầy chốt): anatomy chỉ còn là CÔNG CỤ XEM CÂY DOM, nên\r\n * overlay KHÔNG vẽ gì lên hình nữa — không viền nét đ"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "pos": 1007,
+      "end": 1048,
+      "text": "/** Tên part — hiện trong cây anatomy. */"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "pos": 1073,
+      "end": 1141,
+      "text": "/** Giữ cho tương thích call-site cũ; cây lấy tier từ `annotate`. */"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "pos": 1171,
+      "end": 1238,
+      "text": "/** Giữ cho tương thích call-site cũ; overlay không còn vẽ link. */"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "pos": 1264,
+      "end": 1316,
+      "text": "/** Marker vô hình đánh dấu part cho cây anatomy. */"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "pos": 1808,
+      "end": 2311,
+      "text": "/**\r\n * ⭐ `heroui` thêm 2026-07-27. Node đến thẳng từ `@heroui/react` không có story của TA để\r\n * bấm sang, nên danh sách trắng cũ loại nó ra và cây NÓI DỐI BẰNG CÁCH BỎ SÓT: `PriceTag`\r\n * render một `Popover` thật, mở được, mà cây không hiện gì.\r\n *\r\n * Gọi đúng tên tầng thư viện thì trung thực h"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "pos": 2313,
+      "end": 3023,
+      "text": "/**\r\n * ⭐ `design` XOÁ 2026-07-28 (thầy chốt \"coi như block import block\").\r\n *\r\n * Ranh giới cũ là \"chức năng hoàn chỉnh vs chỉ UI/UX\", và nó MỜ: `PhaseScarcityNote` tự ẩn\r\n * theo điều kiện nghiệp vụ (nghe như block) trong khi `PriceTag` chỉ format tiền (nghe như\r\n * design), nên mỗi ca lại phải p"
+    },
+    {
+      "file": ".storybook/utils/block-anatomy.tsx",
+      "pos": 1286,
+      "end": 1360,
+      "text": "/** Only present in ONE state (e.g. `\"Đang tải\"`) — not a general part. */"
+    },
+    {
+      "file": "src/app/InnerLayout.tsx",
+      "pos": 2057,
+      "end": 2138,
+      "text": "// Footer hiện ở LANDING — cả locale root (\"/\", \"/vi\", \"/en\") LẪN /home (\"/home\","
+    },
+    {
+      "file": "src/app/InnerLayout.tsx",
+      "pos": 2144,
+      "end": 2230,
+      "text": "// \"/vi/home\"): /home là bản ungated của CÙNG trang landing (user đã login xem ở đây)."
+    },
+    {
+      "file": "src/app/InnerLayout.tsx",
+      "pos": 2236,
+      "end": 2334,
+      "text": "// Mọi trang khác (dashboard / learn / profile / auth / …) KHÔNG có footer — thầy chốt 2026-06-26."
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "pos": 106,
+      "end": 459,
+      "text": "/**\r\n * Modules route layout. The content-column shell + right module-outline rail live in the\r\n * shared learn layout; the lesson breadcrumb now lives INSIDE the PageHeader (ContentHeader)\r\n * so the whole header reads as one unit (challenge solve pages keep their own \"← Quay lại\r\n * bài học\" back "
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "pos": 113,
+      "end": 433,
+      "text": "/**\r\n * Learn / flashcards — QUIZ mode (\"Hỏi nhanh\"): a fixed-length random voice\r\n * session over the whole course. Mode = the route slug (`…/flashcards/quiz`).\r\n * Named \"quiz\", not \"interview\" — a separate feature from AI Mock Interview\r\n * (`learn/mock-interview`); the old naming collided and ca"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "pos": 158,
+      "end": 731,
+      "text": "/**\r\n * Learn / flashcards / quiz / sessions / [sessionId] — the dedicated, resumable\r\n * URL for an in-progress \"Hỏi nhanh\" run. `startFlashcardQuizSession` records\r\n * this id server-side right after drawing a session; returning to it later\r\n * (within its 24h TTL) resumes the persisted progress i"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "pos": 158,
+      "end": 994,
+      "text": "/**\r\n * Learn / flashcards / quiz / sessions / [sessionId] / result — the dedicated\r\n * RESULT URL for a FINISHED \"Hỏi nhanh\" run, separate from the live\r\n * `.../sessions/[sessionId]` route (2026-07-12). Whether a session is \"done\"\r\n * is now answered by the ROUTE itself instead of re-derived clien"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "pos": 152,
+      "end": 751,
+      "text": "/**\n * Learn / flashcards / review / sessions / [sessionId] — the ONE dedicated,\n * resumable URL for a live \"Học thẻ\" run, whichever kind started it (thầy\n * 2026-07-11: \"bỏ deck đi, only session thôi\" — supersedes the earlier\n * `review/decks/[deckId]/sessions/[sessionId]` route; deck-review and\n "
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "pos": 158,
+      "end": 860,
+      "text": "/**\r\n * Learn / flashcards / review / sessions / [sessionId] / result — the\r\n * dedicated RESULT URL for a FINISHED \"Học thẻ\" run (either kind — single-deck\r\n * review or cross-deck due), separate from the live\r\n * `.../sessions/[sessionId]` route (2026-07-12). Mirrors\r\n * `flashcards/quiz/sessions/"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "pos": 123,
+      "end": 613,
+      "text": "/**\r\n * Shared shell for ONE playground exercise. Mounts\r\n * {@link PlaygroundSessionProvider} so the socket + session (and the pairing\r\n * code the learner already ran `npx` with) survive navigation between the two\r\n * child routes — Setup (`[slug]`) and Session (`[slug]/session`).\r\n *\r\n * Without "
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "pos": 2786,
+      "end": 2963,
+      "text": "/**\r\n     * Locked-callout body — the place to surface the required CV score (e.g.\r\n     * \"cần điểm CV ≥ 70\"). Falls back to the block's own English copy when omitted.\r\n     */"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "pos": 3115,
+      "end": 3193,
+      "text": "// TODO(atom): skin-shape đậm (rounded-full + border + bg + shadow — pill nổi)"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "pos": 3207,
+      "end": 3284,
+      "text": "// nên thành atom/composite (Chip/Button/SurfaceCard) — frame không làm được,"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      "pos": 3298,
+      "end": 3326,
+      "text": "// tạm bọc Box + principles."
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 1259,
+      "end": 1587,
+      "text": "/**\r\n * Learn surfaces that require enrollment. Only the capstone (personal-project) is gated:\r\n * it's the enrolled-only hands-on outcome. Trial viewers (\"Học thử\") may freely browse the\r\n * rest — flashcards (non-premium), leaderboard, foundations, content + mind-map — so those\r\n * are NOT gated. "
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 4622,
+      "end": 4712,
+      "text": "// for the whole Ôn tập surface). The deck list lives IN the pane (study overview) and the"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 4870,
+      "end": 4948,
+      "text": "// the \"Hỏi nhanh\" quiz goes full-bleed ONLY during a live run (a focused work"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 5300,
+      "end": 5379,
+      "text": "// \"Học thẻ\"/\"Ôn thẻ đến hạn\" review goes full-bleed ONLY during a live session"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 5450,
+      "end": 5526,
+      "text": "// (`flashcards/review/sessions/[sessionId]`, 2026-07-11 đính chính: \"ôn thẻ"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 5532,
+      "end": 5604,
+      "text": "// giao diện y chang\"). This ONE route now serves BOTH FlashcardReviewer"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 6149,
+      "end": 6224,
+      "text": "// (thầy: \"bỏ padding-6 ở đây này\", pointed at DevTools showing the shell's"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "pos": 8957,
+      "end": 9048,
+      "text": "// (Đề bài / Nộp bài), so it needs no on-this-page outline. Only the right rail is dropped."
+    },
+    {
+      "file": "src/hooks/effects/UseEffects.tsx",
+      "pos": 1624,
+      "end": 1711,
+      "text": "/** Apply the user's custom accent color (Settings → \"Giao diện\") as a CSS override. */"
+    },
+    {
+      "file": "src/hooks/effects/useAccentOverride.ts",
+      "pos": 1242,
+      "end": 1891,
+      "text": "/**\r\n * Applies the signed-in user's custom accent color (Settings → \"Giao diện\")\r\n * as a `<html>`-level CSS variable override on top of whatever light/dark\r\n * theme is active — independent axes, so \"dark + a custom hue\" or\r\n * \"light + a custom hue\" both just work. Clears the override (falls back"
+    },
+    {
+      "file": "src/hooks/effects/useDefaultRedirect.ts",
+      "pos": 229,
+      "end": 792,
+      "text": "/**\r\n * Graceful fallback for the removed module index/overview. `/learn/content/modules`\r\n * has no page anymore — the content dashboard (`/learn/content`) + the lesson reader\r\n * (`/learn/content/modules/<id>/contents/<id>`) replaced it. Anything that still lands\r\n * on the bare module index is fo"
+    },
+    {
+      "file": "src/hooks/socketio/types/mock-interview.ts",
+      "pos": 3407,
+      "end": 3521,
+      "text": "/** 0-based index of the question this turn belongs to (Q&A kinds), for \"Câu N\" phrasing + first-ask detection. */"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+      "pos": 330,
+      "end": 512,
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateRenderCvBlocks} — renders a CV\r\n * document to PDF (feeds the live preview pane, debounced, and the \"Tải PDF\"\r\n * download button).\r\n */"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "pos": 330,
+      "end": 619,
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateRewriteCvBlock} — the \"✨ AI viết\r\n * giúp\" per-block rewrite. Each block editor keeps its OWN call/spinner (this\r\n * hook is instantiated per block-in-flight, never shared), so one block's AI\r\n * failure never blocks the rest of the form.\r\n */"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+      "pos": 350,
+      "end": 631,
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateSetCvBlocksPublic} — flags one CV as the\r\n * user's public résumé (single-public-per-user, BE-enforced). After triggering,\r\n * refetch `myCvBlocks` so the whole set reflects the new state (turning one on\r\n * turns the others off).\r\n */"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+      "pos": 304,
+      "end": 498,
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateStartTrial} (Bearer from Keycloak).\r\n * Triggered by the \"Học thử\" CTA to create a trial enrollment before routing\r\n * into the course content.\r\n */"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "pos": 888,
+      "end": 1426,
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardDueReviewSessionProgress}.\r\n * Best-effort, fire-and-forget persistence of the in-progress batch —\r\n * callers should NOT `await` this before advancing to the next card, but must\r\n * still route failures through `runGraphQL` (`useGraphQLWithToast`,\r"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "pos": 846,
+      "end": 1369,
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardQuizSessionProgress}. Best-effort,\r\n * fire-and-forget persistence of the in-progress run — callers should NOT\r\n * `await` this before advancing the quiz, but must still route failures\r\n * through `runGraphQL` (`useGraphQLWithToast`, `{ showSuccessT"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "pos": 862,
+      "end": 1411,
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardReviewSessionProgress}.\r\n * Best-effort, fire-and-forget persistence of the in-progress run — callers\r\n * should NOT `await` this before advancing the reviewer, but must still route\r\n * failures through `runGraphQL` (`useGraphQLWithToast`, `{ showSu"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "pos": 566,
+      "end": 1228,
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncMockInterviewSessionTurns}. Best-effort,\r\n * fire-and-forget persistence of the in-progress transcript — callers should\r\n * NOT `await` this before continuing the interview, but must still route\r\n * failures through `runGraphQL` (`useGraphQLWithToast`, `{ sh"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+      "pos": 423,
+      "end": 2085,
+      "text": "/**\r\n * Offset-paginated SWR hook for the content-AI conversations list (infinite\r\n * scroll). Each page skips `index * PAGE_LIMIT`; a page shorter than the limit\r\n * ends the list. Re-keys on `(scope, contentId, taskId, challengeId, quizId,\r\n * foundationId, courseId, search)` so a new search or su"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+      "pos": 117,
+      "end": 1036,
+      "text": "/**\r\n * Resolves the FIRST id in a mock-interview session's `matchedContentIds` into its\r\n * title + owning module id — just enough to render a \"Xem trong bài học\" citation\r\n * with a working deep link (`learn().module(moduleId).content(contentId)` needs both).\r\n *\r\n * Deliberately resolves only the"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+      "pos": 423,
+      "end": 920,
+      "text": "/**\r\n * Infinite (offset-paginated) SWR hook for the viewer's AI credit charge history\r\n * — the \"Lịch sử dùng AI\" page list. Each page = `myCreditUsageHistory(limit,\r\n * offset)` (offset = pageIndex × {@link CREDIT_USAGE_HISTORY_PAGE_LIMIT}); stops\r\n * once a page returns fewer than a full page. Us"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+      "pos": 428,
+      "end": 1139,
+      "text": "/**\n * SWR wrapper for {@link queryMyFlashcardQuizSessionBySessionId} — resolves ONE\n * \"Hỏi nhanh\" quiz session's persisted snapshot by its id alone, owner-scoped and\n * status-agnostic. Feeds the URL-addressable quiz RESULT surface and the\n * revisit-a-finished-session-by-URL fork: the returned `s"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+      "pos": 436,
+      "end": 1083,
+      "text": "/**\n * SWR wrapper for {@link queryMyFlashcardReviewSessionBySessionId} — resolves a\n * \"Học thẻ\" session (deck-review or cross-deck due-review) by its id ALONE.\n * The unified `flashcards/review/sessions/[sessionId]` route (thầy\n * 2026-07-11: \"bỏ deck đi, only session thôi\") uses this to learn whi"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+      "pos": 428,
+      "end": 986,
+      "text": "/**\r\n * SWR wrapper for {@link queryMyInProgressFlashcardQuizSession}. `data` is the\r\n * viewer's resumable in-progress \"Hỏi nhanh\" quiz session for the given\r\n * course (24h TTL, `status=\"in_progress\"` only), or `null` when there is\r\n * none. Course-scoped and enrolled-only — only runs once a `cour"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+      "pos": 436,
+      "end": 1112,
+      "text": "/**\r\n * SWR wrapper for {@link queryMyInProgressFlashcardReviewSession}. `data` is\r\n * the viewer's resumable in-progress \"Học thẻ\" review session for the given\r\n * deck (24h TTL, `status=\"in_progress\"` only), or `null` when there is none.\r\n * Deck-scoped and enrolled-only — only runs once a `deckId"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+      "pos": 269,
+      "end": 481,
+      "text": "/**\r\n * SWR wrapper for {@link queryMyRewardWallet}. `data` is the viewer's reward\r\n * wallet (điểm quà balance + redemption history), or `null`. User-scoped — only\r\n * runs once the viewer is authenticated.\r\n */"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "pos": 250,
+      "end": 561,
+      "text": "/**\r\n * SWR wrapper for {@link queryMyVouchers}. `data` is the viewer's Coin-shop\r\n * vouchers (newest first), or `null`. User-scoped — only runs once the viewer\r\n * is authenticated. Shares its key with nothing else — mutate directly after a\r\n * `voucher`-kind redemption to refresh the \"Ví của tôi\""
+    },
+    {
+      "file": "src/hooks/zustand/overlay/hooks.ts",
+      "pos": 2838,
+      "end": 2922,
+      "text": "/** Cookie preferences modal overlay state (\"Tùy chỉnh\" granular cookie consent). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+      "pos": 1099,
+      "end": 1413,
+      "text": "/**\r\n * Records a finished \"Học thẻ\" review run — flips the persisted session to\r\n * \"completed\" and snapshots the final reviewed-count/xpEarned bookkeeping\r\n * values (no server-side XP grant; `reviewFlashcard` itself grants none).\r\n * Mirrors backend `mutations/flashcard/complete-flashcard-review-"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+      "pos": 1010,
+      "end": 1201,
+      "text": "/**\r\n * Pays the current cycle of an installment (trả góp) plan.\r\n *\r\n * Mirrors `payNextInstallment` (mutations/installment-plans/pay-next-installment/pay-next-installment.resolver.ts).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+      "pos": 882,
+      "end": 1197,
+      "text": "/**\r\n * Compiles a CV document to PDF: the FE builds the `.tex` (from blocks+style, or\r\n * the user's own edits to it) and sends it; the server compiles with `tectonic`\r\n * → MinIO, synchronous (no BullMQ queue). Feeds the live PDF preview (debounced\r\n * ~1-2s after an edit) and the \"Tải PDF\" downlo"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "pos": 852,
+      "end": 1101,
+      "text": "/**\r\n * AI-rewrites one block's prose, grounded (RAG) on the real capstone data when\r\n * `capstoneAttemptId` is set. Per-block \"✨ AI viết giúp\" — never blocks the\r\n * rest of the form; the caller owns that one block's spinner/retry-in-place UI.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+      "pos": 749,
+      "end": 1066,
+      "text": "/**\r\n * Sets the current user's AI model CEILING for a surface (or the global default\r\n * when `surface` is omitted) — the per-hạng-mục cap for cost control. Clients\r\n * refetch `myAiQuota` after to read the refreshed state.\r\n *\r\n * Mirrors backend `setAiCeil` (mutations/ai/set-ai-ceil/set-ai-ceil.r"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+      "pos": 919,
+      "end": 1233,
+      "text": "/**\r\n * Flags (or un-flags) one CV as the user's PUBLIC CV — the single résumé shown\r\n * read-only on their public profile. Auth + owner-only + single-public-per-user\r\n * are enforced BE-side (turning one on turns any other off), so callers should\r\n * refetch `myCvBlocks` afterwards to reflect the w"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+      "pos": 1032,
+      "end": 1479,
+      "text": "/**\r\n * Draws a \"Hỏi nhanh\" quiz session server-side and returns its id — called right\r\n * after the client draws `sessionCards`, before showing question 1, so every\r\n * subsequent call (`syncFlashcardQuizSessionProgress`, `completeFlashcardQuizSession`,\r\n * the resumable `.../quiz/[sessionId]` rout"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+      "pos": 1038,
+      "end": 1431,
+      "text": "/**\r\n * Draws a \"Học thẻ\" review session server-side and returns its id — called\r\n * right after the deck's cards are fetched/sorted, before the reviewer opens\r\n * its first card, so every subsequent call\r\n * (`syncFlashcardReviewSessionProgress`, `completeFlashcardReviewSession`)\r\n * shares one ser"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-start-trial.ts",
+      "pos": 791,
+      "end": 1008,
+      "text": "/**\r\n * Starts a trial (preview) enrollment for a course — the \"Học thử\" flow.\r\n * Idempotent server-side: a no-op when any enrollment already exists.\r\n *\r\n * Mirrors `startTrial` (mutations/courses/start-trial).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+      "pos": 1102,
+      "end": 1401,
+      "text": "/**\r\n * Best-effort, fire-and-forget persistence of an in-progress \"Hỏi nhanh\" quiz\r\n * run — called after every card so the session can be resumed later within its\r\n * 24h TTL (`myInProgressFlashcardQuizSession`). Mirrors backend\r\n * `mutations/flashcard/sync-flashcard-quiz-session-progress`.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts",
+      "pos": 1128,
+      "end": 1438,
+      "text": "/**\r\n * Best-effort, fire-and-forget persistence of an in-progress \"Học thẻ\" review\r\n * run — called after every graded card so the session can be resumed later\r\n * within its 24h TTL (`myInProgressFlashcardReviewSession`). Mirrors backend\r\n * `mutations/flashcard/sync-flashcard-review-session-progr"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/cart.ts",
+      "pos": 2318,
+      "end": 2445,
+      "text": "/** Pay the whole cart in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/course-enroll.ts",
+      "pos": 1196,
+      "end": 1308,
+      "text": "/** Pay in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/discussion.ts",
+      "pos": 169,
+      "end": 433,
+      "text": "/**\r\n * GraphQL `CreateCommentRequest` body. A top-level comment must set exactly one of\r\n * `contentId` (a lesson question) or `courseId` (a course-general \"hỏi chung khóa\"\r\n * question); a reply only needs `parentCommentId` (it inherits the parent's scope).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "pos": 328,
+      "end": 400,
+      "text": "/** Answer is solid for the card's level — clear hire signal (\"đạt\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "pos": 426,
+      "end": 495,
+      "text": "/** Answer is partial — some substance, notable gaps (\"chưa đạt\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "pos": 533,
+      "end": 612,
+      "text": "/** Answer misses the point or is largely wrong for the level (\"không đạt\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+      "pos": 683,
+      "end": 760,
+      "text": "/** Optional free-text steering for the rewrite (e.g. \"làm ngắn gọn hơn\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "pos": 124,
+      "end": 292,
+      "text": "/**\r\n * AI surface (hạng mục) a per-feature model ceiling applies to. Mirrors backend\r\n * `AiCeilSurface`. Omit `surface` in the request to set the global default.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "pos": 327,
+      "end": 368,
+      "text": "/** Hỏi AI khi đọc bài (lesson tutor). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "pos": 400,
+      "end": 439,
+      "text": "/** Chấm bài (challenge + capstone). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "pos": 471,
+      "end": 509,
+      "text": "/** Phỏng vấn thử (mock interview). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+      "pos": 208,
+      "end": 292,
+      "text": "/** Raw pasted CvGalleryPage text (from an existing résumé) to parse into blocks. */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+      "pos": 862,
+      "end": 1133,
+      "text": "/**\r\n     * Learner-chosen name for this session, set at setup (\"Cấu hình luyện\").\r\n     * Optional — omitted/blank falls back to a TIME-BASED display name derived\r\n     * from the session's `createdAt` (see `sessionDisplayName`), never\r\n     * random-generated.\r\n     */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "pos": 505,
+      "end": 760,
+      "text": "/**\r\n     * Which cards to persist into the session (thầy 2026-07-13 \"modal chọn mode\"):\r\n     * `\"full\"` (default) keeps the whole deck; `\"due\"` keeps only the cards\r\n     * needing review (no review row yet or past due). Omit for the full deck.\r\n     */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "pos": 1831,
+      "end": 2073,
+      "text": "/**\r\n     * Subset of cognitive frames (\"theory\" | \"reasoning\" | \"scenario\") to draw\r\n     * questions from for a `mode=\"qna\"` session. Ignored for `mode=\"design\"`.\r\n     * Empty/omitted draws from all 3 kinds (the \"Tất cả\" default).\r\n     */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "pos": 2106,
+      "end": 2436,
+      "text": "/**\r\n     * Whether this run should count toward job-readiness's rolling interview\r\n     * average. `true` (default) for an \"Tự động\" (random, mock-exam) run;\r\n     * `false` for a \"Tùy chỉnh\" (configurable, deliberate-practice) run — the\r\n     * server always forces `true` for `mode=\"design\"` regar"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "pos": 2475,
+      "end": 2747,
+      "text": "/**\r\n     * Learner-chosen name for this session, set at setup (\"Tùy chỉnh phiên\").\r\n     * Optional — omitted/blank falls back to a TIME-BASED display name derived\r\n     * from the session's `createdAt` (see `sessionDisplayName`), never\r\n     * random-generated.\r\n     */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "pos": 4503,
+      "end": 4620,
+      "text": "/** The drawn prompt's title, localized — for Q&A kinds a summary like \"4 câu · theory\", not a single system name. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "pos": 1271,
+      "end": 1319,
+      "text": "/** Id of the \"Hỏi nhanh\" session to resolve. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "pos": 1349,
+      "end": 1815,
+      "text": "/**\r\n * Fetches the persisted snapshot of one \"Hỏi nhanh\" quiz session by its id alone —\r\n * mode, level, coverage, XP, per-card blank breakdown, and weak tags — owner-scoped\r\n * and status-agnostic (resolves completed/abandoned/in-progress). `null` when not\r\n * found / not owned. Mirrors backend\r\n "
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+      "pos": 1288,
+      "end": 1497,
+      "text": "/**\r\n * Fetches the learner's completed flashcard review (\"Học thẻ\") session\r\n * history for one course (paginated). Mirrors `myFlashcardReviewHistory`\r\n * (queries/flashcard/my-flashcard-review-history).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "pos": 1148,
+      "end": 1558,
+      "text": "/**\r\n * Fetches a flashcard \"Học thẻ\" session by its id alone (whichever kind it\r\n * is) — `null` when not found/not owned by the caller. Mirrors backend\r\n * `queries/flashcard/my-flashcard-review-session-by-session-id`; this is the\r\n * unified live route's resolve step (thầy 2026-07-11: \"bỏ deck đi"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+      "pos": 1301,
+      "end": 1627,
+      "text": "/**\r\n * Fetches the learner's aggregate flashcard review (\"Học thẻ\") stats for one\r\n * course (reviewed-count/XP trend, per-deck progress — no per-tag breakdown,\r\n * review sessions carry no per-card correctness data to derive one from).\r\n * Mirrors `myFlashcardReviewStats` (queries/flashcard/my-fla"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "pos": 1067,
+      "end": 1134,
+      "text": "/** Course to check for a resumable in-progress \"Hỏi nhanh\" run. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "pos": 1163,
+      "end": 1415,
+      "text": "/**\r\n * Fetches the viewer's resumable in-progress \"Hỏi nhanh\" quiz session for a\r\n * course, if any (24h TTL, `status=\"in_progress\"` only) — `null` when there\r\n * is none. Mirrors backend `queries/flashcard/my-in-progress-flashcard-quiz-session`.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "pos": 1013,
+      "end": 1076,
+      "text": "/** Deck to check for a resumable in-progress \"Học thẻ\" run. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "pos": 1103,
+      "end": 1355,
+      "text": "/**\r\n * Fetches the viewer's resumable in-progress \"Học thẻ\" review session for a\r\n * deck, if any (24h TTL, `status=\"in_progress\"` only) — `null` when there is\r\n * none. Mirrors backend `queries/flashcard/my-in-progress-flashcard-review-session`.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+      "pos": 1008,
+      "end": 1262,
+      "text": "/**\r\n * Fetches the current user's non-completed installment (trả góp) plans via Apollo.\r\n *\r\n * Mirrors `myInstallmentPlans` (queries/installment-plans/my-installment-plans.resolver.ts);\r\n * the plan list is at `data.myInstallmentPlans.data.plans`.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+      "pos": 698,
+      "end": 855,
+      "text": "/**\r\n * Fetches the viewer's reward wallet (điểm quà balance + redemption history).\r\n *\r\n * Mirrors `myRewardWallet` (queries/rewards/my-reward-wallet).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "pos": 188,
+      "end": 435,
+      "text": "/**\r\n * One offered installment (\"trả góp\") term for a course's discounted price\r\n * (mirrors backend `InstallmentOptionItem`). The payment modal renders these as\r\n * the 3/6/12-month choices, each with its per-month + total (markup applied).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "pos": 2646,
+      "end": 2752,
+      "text": "/** Offered installment (trả góp) terms for the discounted VND price; empty for a free/USD-only course. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-questions.ts",
+      "pos": 2023,
+      "end": 2134,
+      "text": "/** Title of the lesson this question belongs to (for the \"Bài: …\" tag); null for a course-general question. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+      "pos": 2082,
+      "end": 2192,
+      "text": "/** Offered installment (trả góp) terms for the order's charged VND total; empty for a free/USD-only order. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/cv-blocks.ts",
+      "pos": 1098,
+      "end": 1189,
+      "text": "/** Whether this CvGalleryPage is the user's ONE public résumé (single-public-per-user). */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "pos": 410,
+      "end": 468,
+      "text": "/** Hỏi AI khi đọc bài override; null = follow default. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "pos": 511,
+      "end": 559,
+      "text": "/** Chấm bài override; null = follow default. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "pos": 602,
+      "end": 655,
+      "text": "/** Phỏng vấn thử override; null = follow default. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "pos": 54,
+      "end": 206,
+      "text": "/** One weak tag from a finished \"Hỏi nhanh\" run, ranked worst-first, with an\r\n *  optional lesson/module to revisit (deep link derived server-side). */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "pos": 1193,
+      "end": 1568,
+      "text": "/**\r\n * Payload inside `myFlashcardQuizSessionBySessionId.data` — the persisted snapshot\r\n * of ONE \"Hỏi nhanh\" quiz session, resolved by session id alone, owner-scoped and\r\n * STATUS-AGNOSTIC (resolves `completed`/`abandoned`/`in_progress`). Every field is\r\n * read straight off the snapshotted row "
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+      "pos": 54,
+      "end": 137,
+      "text": "/** One completed flashcard review (\"Học thẻ\") session in the learner's history. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+      "pos": 54,
+      "end": 274,
+      "text": "/**\r\n * Payload inside `myFlashcardReviewSessionBySessionId.data` — a flashcard\r\n * \"Học thẻ\" session resolved by its id ALONE, whichever kind it is. Absent/null\r\n * when the id is not found/not owned by the caller.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+      "pos": 1789,
+      "end": 1887,
+      "text": "/** Reason-tagged leech cards (lapsed vs stuck-on-Hard), worst first — the \"viết lại\" fix-list. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+      "pos": 54,
+      "end": 195,
+      "text": "/** One recorded card outcome of an in-progress \"Hỏi nhanh\" run so far. Mirrors\r\n *  backend `MyInProgressFlashcardQuizSessionResultItem`. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+      "pos": 247,
+      "end": 350,
+      "text": "/** One of the current user's installment (\"trả góp\") plans (mirrors backend `InstallmentPlanItem`). */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "pos": 311,
+      "end": 360,
+      "text": "/** Cost in điểm quà paid for this redemption. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "pos": 676,
+      "end": 718,
+      "text": "/** Current spendable điểm quà balance. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "pos": 745,
+      "end": 776,
+      "text": "/** Lifetime điểm quà spent. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+      "pos": 54,
+      "end": 437,
+      "text": "/**\r\n * One passed capstone/milestone task attempt the learner can pick into a CV\r\n * \"Dự án\" block. Existence of this row is the Verified trust signal — mirrors\r\n * the BE `PickableMilestoneAchievement` GraphQL type.\r\n *\r\n * CAPSTONE ONLY: challenges and StarCi \"achievements\" (leaderboard/coding/\r\n"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/recommended-courses.ts",
+      "pos": 1207,
+      "end": 1277,
+      "text": "/** Courses the viewer already owns (for the \"đã học N khóa\" copy). */"
+    },
+    {
+      "file": "src/modules/dayjs/index.ts",
+      "pos": 200,
+      "end": 626,
+      "text": "/**\r\n * Format an absolute timestamp as a localized \"time + date\" string:\r\n * - vi → `HH:mm D tháng M, YYYY` (e.g. `12:33 23 tháng 5, 2023`)\r\n * - en → `HH:mm MMMM D, YYYY` (e.g. `12:33 May 23, 2023`)\r\n *\r\n * Locale is applied per-instance (no global mutation).\r\n *\r\n * @param date - Day.js input (IS"
+    },
+    {
+      "file": "src/modules/types/entities/challenge.ts",
+      "pos": 1050,
+      "end": 1134,
+      "text": "/** Optional hint text (markdown) — when present the card shows a \"có gợi ý\" tag. */"
+    },
+    {
+      "file": "src/modules/types/enums/cv-block-type.ts",
+      "pos": 0,
+      "end": 237,
+      "text": "/**\r\n * The kind of a CV block (`cv_blocks.blocks[].type`) — drives which per-block\r\n * editor component + PDF template partial renders it. Mirrors the frozen block\r\n * table in `CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md` (\"CHỐT CUỐI\").\r\n */"
+    },
+    {
+      "file": "src/modules/utils/rank.ts",
+      "pos": 1237,
+      "end": 1290,
+      "text": "/** Ring colour per rank: xám → đồng → bạc → vàng. */"
+    },
+    {
+      "file": "src/modules/utils/session-display-name.ts",
+      "pos": 863,
+      "end": 1708,
+      "text": "/**\r\n * Display name for a mock-interview / flashcard-quiz session — the learner's own\r\n * name when they set one at setup, else a TIME-BASED fallback derived from the\r\n * session's own `createdAt` (\"Phiên 14:30 · 12/7\"). Never random-generated: an\r\n * unnamed session always reads by exactly when it"
+    }
+  ],
+  "emojiComments": [
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "pos": 276,
+      "end": 1008,
+      "text": "/**\r\n * `Tabs` — the single tab-strip atom wrapping HeroUI `Tabs`.\r\n *\r\n * Data-driven: pass `items` (id + label + optional `icon`/`badge`/`isDisabled`);\r\n * the atom renders the full HeroUI compound internally, plus the `sr-only` panels\r\n * react-aria needs to keep the tab↔tabpanel ARIA relationshi"
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "pos": 2768,
+      "end": 3056,
+      "text": "/**\r\n     * Vertical rhythm between the form's sub-regions. Default `{6}` (`gap-6`,\r\n     * §10b: design ↔ design within one block). Drop to `{4}` (`gap-3`) for a\r\n     * short form inside a modal.\r\n     * Optional when `principle` owns the seam — then the resolver supplies gap.\r\n     */"
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "pos": 3084,
+      "end": 3281,
+      "text": "/**\r\n     * Semantic seam for body ↔ actions (and the fieldset column). When set,\r\n     * owns gap CSS — do not also pass `gap` / `classNames`. Query as\r\n     * `[data-principle=\"token\"]`.\r\n     */"
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "pos": 7284,
+      "end": 7558,
+      "text": "/**\r\n     * Vertical rhythm: used for BOTH of the section's seams (header ↔ body, and\r\n     * field ↔ field). Default `{4}` (`gap-3`, §10b: rows/blocks stacked within\r\n     * one block). One token, one owner — change the group's rhythm in exactly\r\n     * one place.\r\n     */"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "pos": 8834,
+      "end": 8909,
+      "text": "// outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "pos": 8919,
+      "end": 8993,
+      "text": "// title ↔ description stay a related gap={3} pair inside the title block."
+    },
+    {
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "pos": 4565,
+      "end": 4637,
+      "text": "// eyebrow ↔ title ↔ description are ONE text unit → tight gap={2} (§10b"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "pos": 7415,
+      "end": 7662,
+      "text": "/**\r\n     * Vertical rhythm between header ↔ body ↔ footer, on the §10c scale ONLY.\r\n     * Default `{6}` (`gap-6`) — the rhythm between regions of a page. Drop to\r\n     * `{4}` (`gap-3`) when the header is just a label over a tight list.\r\n     */"
+    },
+    {
+      "file": ".storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+      "pos": 285,
+      "end": 875,
+      "text": "/**\r\n * COMPOSITE — `IconLabelValueRow`: a leading icon + flex-1 label + trailing\r\n * value, one `content-row` seam (12px) across all three segments. For a flat\r\n * \"spec line\" — a permission row, a plan-limit line, a settings line reporting\r\n * its current value — where `ListRow`'s own title↔subtit"
+    },
+    {
+      "file": ".storybook/components/composites/lists/List/List.tsx",
+      "pos": 10743,
+      "end": 11179,
+      "text": "/**\n * A labeled vertical list — NO card frame: an icon + `Label` header, a `gap-2`\n * stack of {@link ListRow}s built from `items`, and an optional footer action,\n * with the three groups spaced `gap-3` (label ↔ list ↔ action). For rail / panel\n * blocks that are a \"label + short list (+ CTA)\" wher"
+    },
+    {
+      "file": ".storybook/components/composites/text/TitledText/TitledText.tsx",
+      "pos": 418,
+      "end": 809,
+      "text": "/**\r\n * `TitledText` — a primary line + optional muted secondary (and optional hint) stacked\r\n * vertically as one composite; a title↔subtitle pair is a single semantic unit rather than raw\r\n * `<Typography>` hand-rolled at every row. The composite owns the type scale per `size`; the\r\n * caller pass"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "pos": 551,
+      "end": 1107,
+      "text": "/**\r\n * `MarkdownContent` — a viewer that paints an authored markdown document faithfully. Unlike\r\n * other composites it cannot know its shape before rendering — the payload decides it. Handles\r\n * Shiki-highlighted fenced code, mermaid diagrams (click-to-zoom, caption pairing),\r\n * `:::tab`/`:::co"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "pos": 1091,
+      "end": 2021,
+      "text": "/**\r\n * The element-renderer MAP for `MarkdownContent` — the whole grammar (headings,\r\n * tables, code, mermaid, custom directive tags) in one file.\r\n *\r\n * Handles: Shiki syntax highlighting, mermaid diagrams, `:::tab`/`:::code`/\r\n * `:::preview` → Preview↔Code tabs, GFM tables → house `TableRoot`,"
+    },
+    {
+      "file": ".storybook/components/frames/Container/Container.tsx",
+      "pos": 511,
+      "end": 3302,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * LAYOUT (khung) -- `Container.*`: CONTENT MEASURE. One member, `Container`\r\n * (one measure has one shape; width and padding are PROPS, §6b).\r\n *\r\n * KHUNG API LAW (§13b): a wrapping khung ⇒ ONE named slot `body"
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "pos": 536,
+      "end": 1693,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * LAYOUT (frame) -- `Split.*`: the LEFT ↔ RIGHT row (`items-center justify-between`).\r\n * One member, `Split`: the shape has no second form -- a split is a split.\r\n *\r\n * WHY IT IS ITS OWN FRAME and not \"a `Stack"
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "pos": 4142,
+      "end": 4271,
+      "text": "/**\r\n * The LEFT ↔ RIGHT row. See the file header for why the sides are named.\r\n *\r\n * @param props - {@link SplitBaseProps}\r\n */"
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "pos": 5353,
+      "end": 5469,
+      "text": "/**\r\n * `Split.*` -- the left↔right row frame namespace. Namespace only -- no bare\r\n * component export (§13a).\r\n */"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "pos": 6757,
+      "end": 6831,
+      "text": "// Those four rows are all ONE shape: label left ↔ value right, repeated ⇒"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "pos": 6336,
+      "end": 6380,
+      "text": "// beside it. Applying \"design ↔ design = 6\""
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+      "pos": 2744,
+      "end": 2871,
+      "text": "/** One row's text: title (leading) ↔ current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      "pos": 1795,
+      "end": 1885,
+      "text": "// rhythm) — the `Button`↔`Chip` seam is owned by `StackH` below, never hand-written here."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LearnNudges/LearnNudges.tsx",
+      "pos": 1701,
+      "end": 2075,
+      "text": "/**\r\n     * ⏳ This strip's source is LATER the page's main data → the waiting stage\r\n     * must hold its PLACE, not disappear and reappear.\r\n     *\r\n     * `dueSwr`/`leaderboardSwr` resolve AFTER `outline`, so while waiting\r\n     * `dueCount`/`rank` default to 0/null. Without this state the block w"
+    },
+    {
+      "file": ".storybook/stories/composites/layout/Section/SectionHeader.stories.tsx",
+      "pos": 360,
+      "end": 1156,
+      "text": "/**\r\n * `SectionHeader` — the title frame of ONE region in a page: `eyebrow` ·\r\n * `title` · `description` stack in the left column, `action` pins right. NO\r\n * children (everything is a named slot), NO chrome (no background/border/\r\n * radius/padding) — it sits directly on the page background.\r\n *\r"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/IconLabelValueRow/IconLabelValueRow.stories.tsx",
+      "pos": 283,
+      "end": 873,
+      "text": "/**\r\n * COMPOSITE — `IconLabelValueRow`: a leading icon + flex-1 label + trailing\r\n * value, one `content-row` seam (12px) across all three segments. For a flat\r\n * \"spec line\" — a permission row, a plan-limit line, a settings line reporting\r\n * its current value — where `ListRow`'s own title↔subtit"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/List/ListRow.stories.tsx",
+      "pos": 207,
+      "end": 282,
+      "text": "// ONE ICON SET ONLY = Phosphor (§5.0). Size scale per §5a: leading ↔ title"
+    },
+    {
+      "file": ".storybook/stories/composites/lists/List/ListRow.stories.tsx",
+      "pos": 17002,
+      "end": 17072,
+      "text": "// circle (`weight=\"fill\"`), in progress = circle with ▶, not opened ="
+    },
+    {
+      "file": ".storybook/stories/composites/text/TitledText/TitledText.stories.tsx",
+      "pos": 234,
+      "end": 625,
+      "text": "/**\r\n * `TitledText` — a primary line + optional muted secondary (and optional hint) stacked\r\n * vertically as one composite; a title↔subtitle pair is a single semantic unit rather than raw\r\n * `<Typography>` hand-rolled at every row. The composite owns the type scale per `size`; the\r\n * caller pass"
+    },
+    {
+      "file": ".storybook/stories/composites/viewers/MarkdownContent/MarkdownContent.stories.tsx",
+      "pos": 252,
+      "end": 808,
+      "text": "/**\r\n * `MarkdownContent` — a viewer that paints an authored markdown document faithfully. Unlike\r\n * other composites it cannot know its shape before rendering — the payload decides it. Handles\r\n * Shiki-highlighted fenced code, mermaid diagrams (click-to-zoom, caption pairing),\r\n * `:::tab`/`:::co"
+    },
+    {
+      "file": ".storybook/stories/frames/Split/Split.stories.tsx",
+      "pos": 393,
+      "end": 745,
+      "text": "/**\r\n * WARNING: STATE SCOPE: `Split` is a LEFT ↔ RIGHT row FRAME. The state it produces is\r\n * the relationship BETWEEN THE TWO NAMED SIDES: the seam `gap`, the cross-axis\r\n * alignment `align`. No `wrap`/`justify` — `justify-between` is this frame's\r\n * DEFINITION, not an option; a row with many i"
+    },
+    {
+      "file": ".storybook/stories/starci/blocks/commerce/PriceTag/PriceTag.stories.tsx",
+      "pos": 5044,
+      "end": 5106,
+      "text": "// The four \"label ↔ value\" rows go through the `KeyValueList`"
+    },
+    {
+      "file": ".storybook/test-runner.ts",
+      "pos": 186,
+      "end": 2996,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * RENDERED-TREE AUDIT — a DOM assertion, not a source regex.\r\n *\r\n * Every gate in this system today (`scripts/check-seams.mjs`, `check-padding.mjs`, …) reads\r\n * SOURCE. In one session that style of gate produce"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "pos": 1808,
+      "end": 2311,
+      "text": "/**\r\n * ⭐ `heroui` thêm 2026-07-27. Node đến thẳng từ `@heroui/react` không có story của TA để\r\n * bấm sang, nên danh sách trắng cũ loại nó ra và cây NÓI DỐI BẰNG CÁCH BỎ SÓT: `PriceTag`\r\n * render một `Popover` thật, mở được, mà cây không hiện gì.\r\n *\r\n * Gọi đúng tên tầng thư viện thì trung thực h"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "pos": 2313,
+      "end": 3023,
+      "text": "/**\r\n * ⭐ `design` XOÁ 2026-07-28 (thầy chốt \"coi như block import block\").\r\n *\r\n * Ranh giới cũ là \"chức năng hoàn chỉnh vs chỉ UI/UX\", và nó MỜ: `PhaseScarcityNote` tự ẩn\r\n * theo điều kiện nghiệp vụ (nghe như block) trong khi `PriceTag` chỉ format tiền (nghe như\r\n * design), nên mỗi ca lại phải p"
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "pos": 274,
+      "end": 1279,
+      "text": "/**\r\n * `Tabs` — the single tab-strip atom wrapping HeroUI `Tabs`.\r\n *\r\n * Data-driven: pass `items` (id + label + optional `icon`/`badge`/`isDisabled`);\r\n * the atom renders the full HeroUI compound internally —\r\n * `Tabs.ListContainer > Tabs.List > Tabs.Tab` (+ `Tabs.Indicator`) plus the\r\n * `sr-o"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "pos": 7453,
+      "end": 7527,
+      "text": "// Those four rows are all ONE shape: label left ↔ value right, repeated ⇒"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "pos": 7856,
+      "end": 7930,
+      "text": "// ⚠️ The frame does NOT format for you: every money string coming in here"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "pos": 7992,
+      "end": 8072,
+      "text": "// ⚠️ This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "pos": 802,
+      "end": 1175,
+      "text": "/**\r\n * Extracurricular / volunteering activity block editor — repeatable entries\r\n * (title / description), each with its OWN \"✨ AI writes it for you\" (rewrites that\r\n * one item's `description`) and reorder/remove — mirrors\r\n * `AchievementBlockEditor` but AI-assisted (per `CV_BLOCK_TYPE_REGISTRY["
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "pos": 823,
+      "end": 1090,
+      "text": "/**\r\n * Work-experience block editor — repeatable entries (company / role / dates /\r\n * bullets), each with its OWN \"✨ AI write it for me\" (rewrites that one item's\r\n * `bullets` text) and reorder/remove.\r\n *\r\n * @param props - {@link ExperienceBlockEditorProps}\r\n */"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "pos": 1080,
+      "end": 1676,
+      "text": "/**\r\n * Project block editor — the ONLY block whose items carry `source` /\r\n * `sourceRef`: picked from a passed StarCi capstone (tagged \"Verified\",\r\n * success) via {@link PickFromStarciSelect}, or typed manually via \"+ Add outside\r\n * project\" (tagged \"Self-reported\", muted). Every item — verified"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "pos": 526,
+      "end": 820,
+      "text": "/**\r\n * Summary/objective paragraph editor — singleton, non-repeatable, holds its\r\n * one `text` field on `block.items[0]`. Has the \"✨ AI write for me\" affordance\r\n * (`onAiRewrite`, no `itemId` — the whole block's single fields set).\r\n *\r\n * @param props - {@link SummaryBlockEditorProps}\r\n */"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "pos": 1332,
+      "end": 1634,
+      "text": "/**\r\n     * \"✨ AI writes it for you\" for ONE block/item — omit to render every block WITHOUT\r\n     * the AI affordance (e.g. while the mutation isn't wired yet). Resolves to\r\n     * the rewritten item's `fields` (or the block's own single fields set for\r\n     * `summary`, `itemId` undefined).\r\n     "
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "pos": 665,
+      "end": 929,
+      "text": "/**\r\n * \"✨ AI rewrite\" — a tertiary button with its OWN spinner/retry-in-place\r\n * state, so one block/item's AI failure never blocks the rest of the form\r\n * (per `CvBlockEditorProps.onAiRewrite` contract).\r\n *\r\n * @param props - {@link AiRewriteButtonProps}\r\n */"
+    },
+    {
+      "file": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "pos": 2678,
+      "end": 2805,
+      "text": "/** One row's text: title (leading) ↔ current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */"
+    },
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "pos": 708,
+      "end": 1257,
+      "text": "/**\r\n * BLOCK — `JobReadinessWidget`: \"My Job Readiness\" — the self job-readiness\r\n * summary for the viewer's strongest purchased-course track. See the\r\n * component's own file header for the full contract; this file only adds the\r\n * states.\r\n *\r\n * 📐 LEAF by STRUCTURE (§14d.2): which pillar bars"
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "pos": 590,
+      "end": 1132,
+      "text": "/**\r\n * BLOCK — `WeeklyChallengeCard`: \"Weekly Challenge\" — the featured challenge of\r\n * the week. See the component's own file header for the full contract; this\r\n * file only adds the states.\r\n *\r\n * 📐 LEAF by STRUCTURE (§14d.2): whether the viewer already passed, already\r\n * claimed, or the lea"
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "pos": 712,
+      "end": 1300,
+      "text": "/**\r\n * BLOCK — `WeeklyGoals`: \"Weekly Goals\" — the composite summary + six-metric\r\n * breakdown. See the component's own file header for the full contract; this\r\n * file only adds the states.\r\n *\r\n * 📐 LEAF by STRUCTURE (§14d.2): the six metrics never change the SHAPE of the\r\n * tree, only the num"
+    },
+    {
+      "file": "src/components/blocks/dashboard/rankBadge.tsx",
+      "pos": 1256,
+      "end": 1565,
+      "text": "/**\r\n * The small place-medal art for a leaderboard ROW's rank cell — `🥇🥈🥉` for rank\r\n * 1–3, `null` for rank 4+ (the caller shows the plain number). Compact `size-5`\r\n * for an inline rank column. Used on the DashboardPage cards' \"1,2,3\" list (the /league\r\n * page shows top-3 on the podium inste"
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "pos": 1327,
+      "end": 2090,
+      "text": "/**\r\n * A PERSISTENT, draggable bottom sheet docked to the bottom of a `relative`\r\n * parent (NOT a modal — no backdrop, the content above stays interactive). Two\r\n * snap points: COLLAPSED (grabber + peek row only) ↔ EXPANDED (peek + body,\r\n * capped at {@link MAX_VIEWPORT_FRACTION} of the viewport"
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "pos": 3033,
+      "end": 3106,
+      "text": "// outer gap-3: breadcrumb ↔ title-block ↔ meta (different header tiers);"
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "pos": 3116,
+      "end": 3186,
+      "text": "// title ↔ description stay a tight gap-2 pair inside the title block."
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "pos": 8388,
+      "end": 9464,
+      "text": "/**\r\n * Job status → content of the grading-status strip (`Callout`).\r\n *\r\n * Wording matches the `aiProcessing.submitChallenge.*` set in\r\n * `src/messages/vi.json` EXACTLY — never recomposed, since this is the exact\r\n * copy the learner already reads in the real app.\r\n *\r\n * `status` follows the sa"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "pos": 446,
+      "end": 1044,
+      "text": "/**\r\n * BLOCK — `ContentCommentComposer`: the textarea + submit control for new\r\n * comments, replies, and edits — ONE component, three call shapes, ported\r\n * verbatim from real `src`'s `CommentComposer`. See the component's own file\r\n * header for why `variant=\"primary\"` (real `Discussion` is fram"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "pos": 628,
+      "end": 1163,
+      "text": "/**\r\n * BLOCK — `ContentCommentThread`: one threaded comment — author, reaction,\r\n * reply/edit/delete actions, and its recursively-rendered replies. Ported\r\n * verbatim from real `src`'s `CommentItem`. See the component's own file\r\n * header for the massive gap this fills against the earlier flat-l"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "pos": 4003,
+      "end": 4081,
+      "text": "// \"discussion\" (not a universal symbol like ✓/🔒), and the label text already"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/types.ts",
+      "pos": 1062,
+      "end": 1632,
+      "text": "/**\r\n     * Navigation target — ONLY `.Item` can use it (its CTA is `LinkSeeMore`, a real link).\r\n     *\r\n     * ⚠️ `.Hero` does NOT accept it: its CTA is `Button`, and the Button atom\r\n     * **has no `href`** (it's a button, not a link). The old version dodged this by\r\n     * hand-rolling a `<Link"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/types.ts",
+      "pos": 1772,
+      "end": 2853,
+      "text": "/**\r\n     * `true` → mirror shimmer INSTEAD of waiting for data. Applies to BOTH members\r\n     * (`.Hero`/`.Item`) since both share `ContinueCardDataProps`.\r\n     *\r\n     * The flag FLOWS DOWN to the atom wherever an atom already has `isSkeleton`\r\n     * (`Typography` for the title, `Button` for `.H"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+      "pos": 1328,
+      "end": 1705,
+      "text": "/**\r\n     * ⛔ NO pre-formatted `meta` string prop.\r\n     * Passing `meta=\"8 modules · ~14h · 2,481 learners\"` is **breaking the\r\n     * structure**: the caller ends up deciding the join, units, and separator —\r\n     * the block loses ownership of its own shape. Below are separate NUMBER\r\n     * fiel"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "pos": 326,
+      "end": 764,
+      "text": "/**\r\n * One placeholder row for the Loading branch — avatar + 2 text bars +\r\n * chip-pill row + status dot, ported verbatim from the real\r\n * `CourseQaSkeleton.tsx` shape (★1).\r\n *\r\n * `align=\"start\"` on the outer row (instead of the real file's `mt-2` on the\r\n * dot) top-aligns all three children w"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "pos": 2315,
+      "end": 2413,
+      "text": "// status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 2309,
+      "end": 2411,
+      "text": "/** The signed-in viewer's own identity — threaded through for the `QaQuestionThread` swap (★2/★6). */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 3239,
+      "end": 3320,
+      "text": "/** Signed-in viewer's id (drives the \"You\" swap, ★6); `null` when signed out. */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 3360,
+      "end": 3447,
+      "text": "/** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (★2). */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 3498,
+      "end": 3604,
+      "text": "/** Fired after an answer is posted/edited/deleted — pass-through for the `QaQuestionThread` swap (★2). */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 3639,
+      "end": 3688,
+      "text": "/** Accessible name for the pager region (★4). */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 3722,
+      "end": 3788,
+      "text": "/** External skeleton override, distinct from `isLoading` (★5). */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 4639,
+      "end": 4732,
+      "text": "/** The Loading branch's rows — see ★1 for why these are NOT `SurfaceCardList.isSkeleton`. */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 5579,
+      "end": 5805,
+      "text": "/**\r\n * The course-wide Q&A roll-up list. See the file header for the full contract,\r\n * the GAP note on `QaQuestionThread` (★2), and the remaining judgement calls.\r\n *\r\n * @param props - {@link CourseQaQuestionListProps}\r\n */"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 6467,
+      "end": 6540,
+      "text": "// ★5 — an external override (`isSkeleton`) converges on the same Loading"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "pos": 7527,
+      "end": 7589,
+      "text": "// ★4 — `Pagination` hard-codes its own aria-label; a wrapping"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseTeamGate/index.tsx",
+      "pos": 1076,
+      "end": 1838,
+      "text": "/**\r\n     * `true` → render the shimmer mirror INSTEAD of waiting on `isEnrolled`/`isInTeam`\r\n     * (not knowing yet means we can't decide whether to SELF-HIDE — the mirror must\r\n     * show to hold the slot in the loading tree).\r\n     *\r\n     * ⚠️ `Callout` (the frame this block still uses on the "
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "pos": 321,
+      "end": 958,
+      "text": "/**\r\n * BLOCK — `FoundationCategorySearchBar`: the Foundations hub's search row —\r\n * a debounced autocomplete field plus a live \"N topics\" count riding beside\r\n * it, one `StackH` seam apart. See the component file header for why this\r\n * earns its own layer over the bare `SearchAutocomplete` atom "
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "pos": 230,
+      "end": 934,
+      "text": "/**\r\n * BLOCK — `FoundationSearchBar`: the search row — debounced-typeahead field\r\n * left, a live match count right, one `StackH` seam apart. See the component\r\n * file header for why this is a SIBLING of `FoundationCategorySearchBar`\r\n * (not a reach past it) and for the independent-count-loading "
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "pos": 483,
+      "end": 980,
+      "text": "/**\r\n * BLOCK — `LeaderboardBoard`: the ranked board itself. See the component's own\r\n * file header for the full reuse contract; this file only adds the states.\r\n *\r\n * 📐 LEAF by STRUCTURE (§14d.2): loading / empty / error / how many rows / whether\r\n * the viewer needs pinning are all DATA — `Asyn"
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+      "pos": 3279,
+      "end": 3356,
+      "text": "// (not a universal symbol like ✓/🔒), and the text already carries the fact."
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "pos": 352,
+      "end": 1106,
+      "text": "/**\r\n * BLOCK — `MilestoneUpNextCard`: the passed-attempt handoff to the NEXT\r\n * unlocked milestone task on a capstone track. Distinct from the challenge\r\n * flow (no such fixed handoff exists there) — see the component file header.\r\n *\r\n * 📐 TWO LEAVES (§14d.2). `showCheck` and `isSkeleton` only "
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "pos": 2158,
+      "end": 2246,
+      "text": "/** Fired with the lesson id on ANY row press, premium or not (see the ⛔ note above). */"
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "pos": 6477,
+      "end": 6526,
+      "text": "// leading icon (see the ⭐ judgement call above)."
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "pos": 631,
+      "end": 1403,
+      "text": "/**\n * Right-rail \"review this lesson\" panel: flashcard decks RAG-related to the\n * lesson currently being read (`searchCourseContent`, filtered to\n * `kind: \"flashcard\"` — the `flashcard_deck_contents` M2M this used to read\n * from was dropped; deck↔lesson association is RAG-derived now, same as\n *"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "pos": 600,
+      "end": 1170,
+      "text": "/**\r\n * BLOCK — `ReactionButton`: the Facebook-style six-emotion reaction control —\r\n * pill trigger + Popover picker + compact summary. Shared verbatim between\r\n * `ContentReaction` (the lesson-level reaction) and each comment row in\r\n * `ContentDiscussion`'s thread — the SAME control real `src`'s "
+    },
+    {
+      "file": "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+      "pos": 150,
+      "end": 768,
+      "text": "/**\r\n * BLOCK — `TaskLockedAlert`: warning shown while previewing a personal-project\r\n * task that isn't unlocked yet, with a \"go to current task\" CTA.\r\n *\r\n * Composed from `Callout` (which itself is an `Alert` + one owned CTA\r\n * `Button`) rather than hand-rolled — see the component's file header "
+    },
+    {
+      "file": "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+      "pos": 173,
+      "end": 582,
+      "text": "/**\r\n * `VariantChipDifficulty` — a color dot by tier + a difficulty word (GitHub\r\n * language-dot style). A thin wrapper over the `Chip` atom; color comes from\r\n * {@link DIFFICULTY_COLOR}.\r\n *\r\n * The shape is ALWAYS a pill — the atom's default, and design doesn't expose a\r\n * shape axis to the ca"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "pos": 2604,
+      "end": 2684,
+      "text": "// surface fetch failures (e.g. the FE↔BE schema drift that broke this tab) as a"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "pos": 1845,
+      "end": 1916,
+      "text": "// gap-2 = heading ↔ paragraph (a tight sub-cluster within one section)"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "pos": 2876,
+      "end": 2932,
+      "text": "// gap-3 = toolbar ↔ article (within one skeleton block)"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "pos": 612,
+      "end": 701,
+      "text": "// mirror PageHeader: breadcrumb ↔ title-block ↔ meta at gap-3; title ↔ description gap-2"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "pos": 6021,
+      "end": 6100,
+      "text": "// button row ↔ AI processing status = gap-3 (same block), no manual h-* spacer"
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "pos": 783,
+      "end": 1290,
+      "text": "/**\r\n * A labeled vertical list — NO card frame: an icon + `Label` header, a `gap-2`\r\n * stack of item rows, and an optional footer action, with the three groups spaced\r\n * `gap-3` (label ↔ list ↔ action). For rail / panel blocks that are a\r\n * \"label + short list (+ CTA)\" where a full card would be"
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "pos": 1150,
+      "end": 2106,
+      "text": "/**\r\n     * Optional per-item trailing action(s) — e.g. a delete button and/or a \"⋮\"\r\n     * (kebab) menu trigger. When provided, the item's select button and these\r\n     * action buttons render as ONE connected {@link ButtonGroup} per item\r\n     * (`[select | 🗑 | ⋮]`) — touching, a full-height sep"
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "pos": 3427,
+      "end": 5713,
+      "text": "/**\r\n * A single-select toggle-button group laid out as a flex-wrap row (buttons wrap\r\n * to the next line, never scroll). Every option is a real HeroUI `<Button>`:\r\n * standalone, selected = filled `tertiary` (NEUTRAL, not accent — a facet/config\r\n * toggle isn't a CTA), unselected = hollow `ghost`"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "pos": 7101,
+      "end": 7173,
+      "text": "// ⚠️ couldNotFix (no-heroui-outside-vocabulary): no atom offers a 128px"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "pos": 11107,
+      "end": 11174,
+      "text": "// ⚠️ couldNotFix (no-heroui-outside-vocabulary): no atom offers an"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "pos": 13149,
+      "end": 13223,
+      "text": "// ⚠️ couldNotFix (require-identity-root / no-raw-shape-at-sentence-tier):"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "pos": 470,
+      "end": 819,
+      "text": "/**\r\n * Skeleton matching a HeroUI <RadioGroup/>.\r\n * Group stacks vertically with gap-2 (matches the house RadioGroup `flex flex-col\r\n * gap-2`). Each radio is a circular size-4 dot (rounded-full) plus a text-sm\r\n * (body-sm 14/24) label bar centered in its box, dot↔label separated by gap-3\r\n * (ma"
+    },
+    {
+      "file": "src/components/composites/async/AsyncContent/index.tsx",
+      "pos": 8174,
+      "end": 8480,
+      "text": "/**\r\n     * The ERROR branch slot, passed as PROPS — forwarded straight to\r\n     * {@link AsyncContentError}. ⚠️ Left empty, the error branch does NOT\r\n     * activate (the frame falls through to loading/empty/content) — keeping the\r\n     * old contract, no behaviour change in this consolidation.\r\n "
+    },
+    {
+      "file": "src/components/composites/chips/Chip/index.tsx",
+      "pos": 225,
+      "end": 2634,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * STORYBOOK-LOCAL DESIGN SPEC — `Chip.*` compound namespace.\r\n *\r\n * Groups the chips that are **COMPOSITE, same tier** (Composites/Chips) into ONE\r\n * root, like `Skeleton.*` — one `Chip` import, easy to discove"
+    },
+    {
+      "file": "src/components/composites/chips/EnumChip/index.tsx",
+      "pos": 3926,
+      "end": 4765,
+      "text": "/**\r\n * The canonical \"enum → soft chip\" composite: a `Chip` whose\r\n * tone / label / optional tooltip / optional leading icon come from a per-value map.\r\n * Domain badges (AI-model category, difficulty, video host …) shrink to just their map\r\n * table + this delegate. Deliberately does NOT force wi"
+    },
+    {
+      "file": "src/components/composites/feedback/Callout/index.tsx",
+      "pos": 349,
+      "end": 1633,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * STORYBOOK-LOCAL DESIGN SPEC — `Callout`, a tinted flat strip LIVING INSIDE a\r\n * surface (`title`/`description`/`body`/`action`).\r\n *\r\n * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its ow"
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "pos": 451,
+      "end": 1432,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * STORYBOOK-LOCAL DESIGN SPEC — `EmptyState`, a CENTERED vertical stack that\r\n * fills an empty/error spot (`code`/`icon`/`title`/`description`/`body`/`action`).\r\n *\r\n * ⚠️ Split out of the `Feedback.*` namespace"
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "pos": 6842,
+      "end": 6926,
+      "text": "// ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every"
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "pos": 4459,
+      "end": 4747,
+      "text": "/**\r\n     * Vertical rhythm between the form's sub-regions. Default `{6}` (`gap-6`,\r\n     * §10b: design ↔ design within one block). Drop to `{4}` (`gap-3`) for a\r\n     * short form inside a modal.\r\n     * Optional when `principle` owns the seam — then the resolver supplies gap.\r\n     */"
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "pos": 4775,
+      "end": 4972,
+      "text": "/**\r\n     * Semantic seam for body ↔ actions (and the fieldset column). When set,\r\n     * owns gap CSS — do not also pass `gap` / `classNames`. Query as\r\n     * `[data-principle=\"token\"]`.\r\n     */"
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "pos": 8972,
+      "end": 9246,
+      "text": "/**\r\n     * Vertical rhythm: used for BOTH of the section's seams (header ↔ body, and\r\n     * field ↔ field). Default `{4}` (`gap-3`, §10b: rows/blocks stacked within\r\n     * one block). One token, one owner — change the group's rhythm in exactly\r\n     * one place.\r\n     */"
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "pos": 10008,
+      "end": 10083,
+      "text": "// outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);"
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "pos": 10093,
+      "end": 10167,
+      "text": "// title ↔ description stay a related gap={3} pair inside the title block."
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "pos": 455,
+      "end": 2669,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * COMPOSITE TIER (§13) — `Section.*`, the frame of a REGION inside a page.\r\n *\r\n * A section is the region between a page and a card: a titled band of a route\r\n * (\"My courses\", \"Recent activity\") that owns NO ch"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "pos": 6362,
+      "end": 6434,
+      "text": "// eyebrow ↔ title ↔ description are ONE text unit → tight gap={2} (§10b"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "pos": 9334,
+      "end": 9581,
+      "text": "/**\r\n     * Vertical rhythm between header ↔ body ↔ footer, on the §10c scale ONLY.\r\n     * Default `{6}` (`gap-6`) — the rhythm between regions of a page. Drop to\r\n     * `{4}` (`gap-3`) when the header is just a label over a tight list.\r\n     */"
+    },
+    {
+      "file": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "pos": 257,
+      "end": 2674,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * COMPOSITE — `IconLabelValueRow`: a leading icon beside a flex-1 label with a\r\n * trailing value pinned to the row's end — the flat \"spec line\" shape (a\r\n * permission row, a plan-limit line, a settings line rep"
+    },
+    {
+      "file": "src/components/composites/lists/IdentityContentRow/index.tsx",
+      "pos": 295,
+      "end": 2945,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * COMPOSITE — `IdentityContentRow`: avatar leading a byline line + whatever\r\n * content sits under it (comment body, actions, nested replies…). Extracted\r\n * 2026-07-29 (teacher: \"group the recurring shape into i"
+    },
+    {
+      "file": "src/components/composites/lists/List/index.tsx",
+      "pos": 11160,
+      "end": 11596,
+      "text": "/**\n * A labeled vertical list — NO card frame: an icon + `Label` header, a `gap-2`\n * stack of {@link ListRow}s built from `items`, and an optional footer action,\n * with the three groups spaced `gap-3` (label ↔ list ↔ action). For rail / panel\n * blocks that are a \"label + short list (+ CTA)\" wher"
+    },
+    {
+      "file": "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+      "pos": 496,
+      "end": 1723,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * STORYBOOK-LOCAL DESIGN SPEC — `DoubleTabsCard`: a `Toolbar` (two tab groups)\r\n * living inside a `SurfaceCard` face, instead of sitting bare on the page\r\n * canvas the way `ContentModeNav` does today.\r\n *\r\n * ⭐"
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "pos": 285,
+      "end": 2540,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * COMPOSITE — `DotLabel`: a colour swatch + an inline text label, as ONE unit —\r\n * NO pill/background around it (a status line inside a card, an \"Online\" row\r\n * beside a name, a category line in a dense list — "
+    },
+    {
+      "file": "src/components/composites/text/ScoreValue/index.tsx",
+      "pos": 94,
+      "end": 1496,
+      "text": "/**\r\n * STORYBOOK-LOCAL DESIGN SPEC — ScoreValue: \"N points\", the\r\n * free-form point value a grading row is worth. A rubric point count has no\r\n * closed set of values (it is not an enum/status/badge), so it renders as\r\n * TEXT, never a `Chip`.\r\n *\r\n * ⭐ RULING (2026-07-29, teacher's call): the exa"
+    },
+    {
+      "file": "src/components/composites/text/TitledText/index.tsx",
+      "pos": 226,
+      "end": 878,
+      "text": "/**\r\n * STORYBOOK-LOCAL DESIGN SPEC — TitledText: a primary line + optional muted\r\n * secondary (and optional hint) stacked vertically as ONE composite. A\r\n * \"title↔subtitle\" pair is a semantic UNIT, so it is a single component (one\r\n * anatomy node), NOT two/three raw `<Typography>` hand-rolled at"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/index.tsx",
+      "pos": 526,
+      "end": 2944,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * VIEWER — `MarkdownContent`: paint an authored markdown document faithfully.\r\n *\r\n * WHY IT IS A VIEWER AND NOT A COMPOSITE OF ITS OWN SHAPE (§4b): every other\r\n * composite KNOWS its shape before it renders — a"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/map.tsx",
+      "pos": 1033,
+      "end": 1963,
+      "text": "/**\r\n * The element-renderer MAP for `MarkdownContent` — the whole grammar (headings,\r\n * tables, code, mermaid, custom directive tags) in one file.\r\n *\r\n * Handles: Shiki syntax highlighting, mermaid diagrams, `:::tab`/`:::code`/\r\n * `:::preview` → Preview↔Code tabs, GFM tables → house `TableRoot`,"
+    },
+    {
+      "file": "src/components/frames/Container/index.tsx",
+      "pos": 501,
+      "end": 3292,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * LAYOUT (khung) -- `Container.*`: CONTENT MEASURE. One member, `Container`\r\n * (one measure has one shape; width and padding are PROPS, §6b).\r\n *\r\n * KHUNG API LAW (§13b): a wrapping khung ⇒ ONE named slot `body"
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "pos": 526,
+      "end": 1683,
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * LAYOUT (frame) -- `Split.*`: the LEFT ↔ RIGHT row (`items-center justify-between`).\r\n * One member, `Split`: the shape has no second form -- a split is a split.\r\n *\r\n * WHY IT IS ITS OWN FRAME and not \"a `Stack"
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "pos": 4132,
+      "end": 4261,
+      "text": "/**\r\n * The LEFT ↔ RIGHT row. See the file header for why the sides are named.\r\n *\r\n * @param props - {@link SplitBaseProps}\r\n */"
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "pos": 5343,
+      "end": 5459,
+      "text": "/**\r\n * `Split.*` -- the left↔right row frame namespace. Namespace only -- no bare\r\n * component export (§13a).\r\n */"
+    },
+    {
+      "file": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "pos": 8099,
+      "end": 8174,
+      "text": "// Tabs ↔ list-below = 2 different-function zones (nav vs content) → gap-6,"
+    },
+    {
+      "file": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "pos": 3795,
+      "end": 5369,
+      "text": "/**\r\n * `_LivestreamCalendarModal` — the presentational half of `LivestreamCalendarModal`:\r\n * a date-picker calendar (dims any weekday with no recurring session) above a bounded\r\n * list of the course's recurring livestream sessions (day + time-range chip row, next\r\n * occurrence, an optional markd"
+    },
+    {
+      "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "pos": 3462,
+      "end": 3546,
+      "text": "/** The gateway group for the active currency (domestic VND ↔ international USD). */"
+    },
+    {
+      "file": "src/components/overlays/modals/PaymentModal/index.tsx",
+      "pos": 4639,
+      "end": 5422,
+      "text": "/**\n * Shared payment modal for every paid flow (course enroll · membership · AI subscription).\n * CONNECTED half: owns the overlay store, every mutation/query the four flows need, and\n * resolves i18n; hands everything to the presentational {@link _PaymentModal}. See\n * `tiers/split.md`.\n *\n * Summ"
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+      "pos": 4380,
+      "end": 4468,
+      "text": "// ⚠️ LabeledAccordionCard takes no `identity` prop (unlike LabeledCard) and there is no"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FlashcardReview/component.tsx",
+      "pos": 1490,
+      "end": 2112,
+      "text": "/**\r\n * Centre-column \"flashcards due today\" nudge — the presentational half of\r\n * {@link FlashcardReview}. Renders ONE row (icon + due-count label ↔ \"start\r\n * review\" CTA), with `isSkeleton` threaded to both sides of the {@link Split}\r\n * so the shimmer mirrors the loaded shape (loading-and-skele"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "pos": 2005,
+      "end": 2083,
+      "text": "// RailShell owns the identity↔content layout seam (stack → row at md, gap-8)."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/useFlashcardNav.ts",
+      "pos": 811,
+      "end": 2053,
+      "text": "/**\r\n * URL-backed navigation for the flashcards surface. The MODE is a route segment\r\n * (`…/flashcards/review` | `…/flashcards/quiz`) so each mode is its own page\r\n * with a readable English slug. Both \"Study cards\" session kinds — a single deck or\r\n * the cross-deck due queue — now share ONE live"
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "pos": 2197,
+      "end": 2306,
+      "text": "/** Edges — ALL are light connecting lines (solid, thin, faint — like sharding↔cdc); NO dashed, NO accent. */"
+    },
+    {
+      "file": "src/hooks/effects/useSyncReduxTaskId.ts",
+      "pos": 1084,
+      "end": 1152,
+      "text": "// then wrongly resolves to 🎯 Task there (grounding on an unrelated"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "pos": 330,
+      "end": 619,
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateRewriteCvBlock} — the \"✨ AI viết\r\n * giúp\" per-block rewrite. Each block editor keeps its OWN call/spinner (this\r\n * hook is instantiated per block-in-flight, never shared), so one block's AI\r\n * failure never blocks the rest of the form.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/clients/links/attach-access-token.ts",
+      "pos": 277,
+      "end": 373,
+      "text": "// `@/modules/api` → api↔storage cycle). `local` does not depend on api, so it breaks the cycle."
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "pos": 852,
+      "end": 1101,
+      "text": "/**\r\n * AI-rewrites one block's prose, grounded (RAG) on the real capstone data when\r\n * `capstoneAttemptId` is set. Per-block \"✨ AI viết giúp\" — never blocks the\r\n * rest of the form; the caller owns that one block's spinner/retry-in-place UI.\r\n */"
+    },
+    {
+      "file": "src/modules/storage/session/types/oauth-idp-hint.ts",
+      "pos": 99,
+      "end": 198,
+      "text": "// breaks the api↔storage cycle in both the module graph and at runtime (the type is erased by TS)."
+    },
+    {
+      "file": "src/modules/types/entities/cv.ts",
+      "pos": 6336,
+      "end": 8037,
+      "text": "/**\r\n * Per-block-editor component contract.\r\n *\r\n * Every block editor (`ExperienceBlockEditor`, `ProjectBlockEditor`, ...) is a\r\n * dumb, controlled component that plugs into the big-form stack with EXACTLY\r\n * this prop shape — the stack (not yet built in this pass) owns the\r\n * `blocks: CvBlock["
+    },
+    {
+      "file": "src/modules/types/entities/cv.ts",
+      "pos": 9436,
+      "end": 9510,
+      "text": "/** Whether this block type has an \"✨ AI writes it for you\" affordance. */"
+    },
+    {
+      "file": "src/modules/types/entities/user-challenge-submission.ts",
+      "pos": 325,
+      "end": 451,
+      "text": "/**\r\n * Join row user ↔ challenge submission (`user_submissions`).\r\n * Mirrors `ref/user-challenge-submission.entity.ts`.\r\n */"
+    }
+  ]
+}

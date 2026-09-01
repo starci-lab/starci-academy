@@ -1,0 +1,20 @@
+{
+  "partition": "showcase-mockup",
+  "changed": [],
+  "skipped": [
+    "contentClassName door — LearnLoopScroll locked path still consumes it"
+  ],
+  "holds": [
+    "ShowcaseMockup.contentClassName (LearnLoopScroll locked + TalentMarketplace parent-placement)"
+  ],
+  "evidence": [
+    "LearnLoopScroll is mandatory locked — cannot migrate/delete door this batch"
+  ],
+  "proposals": [
+    "Migrate TalentMarketplace children to StackV after LearnLoopScroll unlock"
+  ],
+  "verification": {
+    "edits": "none — hold-only"
+  },
+  "regressions": []
+}

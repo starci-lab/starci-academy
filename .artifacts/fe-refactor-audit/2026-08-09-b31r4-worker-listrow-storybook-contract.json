@@ -1,0 +1,16 @@
+{
+  "worker": "listrow-storybook-contract",
+  "status": "done",
+  "edited": [
+    ".storybook/components/composites/lists/List/List.tsx",
+    ".storybook/stories/composites/lists/List/ListRow.stories.tsx"
+  ],
+  "apiBefore": { "density": null },
+  "apiAfter": { "density": "\"default\" | \"comfortable\"" },
+  "mapping": {
+    "default": "py-2 (unchanged)",
+    "comfortable": "p-3 (exact)"
+  },
+  "stories": ["Density leaf with default + comfortable states"],
+  "notes": "Also mirrored FillAvailable at=base into List.ToggleRow for SB/src parity with the src List toggle flex-1 burn."
+}

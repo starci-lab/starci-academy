@@ -1,0 +1,2955 @@
+{
+  "batch": "B32c",
+  "phase": 1,
+  "checkpoint": "9e86cbdf",
+  "generatedAt": "2026-08-08T12:18:24.078Z",
+  "totals": {
+    "diffVsCheckpoint": 205,
+    "untrackedProductish": 3,
+    "entries": 208,
+    "productEntries": 207,
+    "unownedProduct": 0
+  },
+  "byClassification": {
+    "b32-worker": 183,
+    "coordinator-repair": 18,
+    "coordinator-required-consumer-repair": 2,
+    "unrelated-locked-or-nivo": 3,
+    "pre-b32-dirty": 2
+  },
+  "appliedExceptions": [
+    {
+      "id": "b32-button-group-nivoexpert-transitive-repair",
+      "classification": "coordinator-required-consumer-repair",
+      "ledger": ".claude/fe/decision-ledger.json",
+      "scope": [
+        ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+      ],
+      "reason": "removed usage of deleted ButtonGroup.classNames house API after dead-door burn; required transitive compile repair only — not a Nivo architectural unlock",
+      "inCommitManifest": true
+    }
+  ],
+  "ownershipOk": true,
+  "unownedFiles": [],
+  "b32CertifyManifest": [
+    ".storybook/components/atoms/display/Badge/Badge.tsx",
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+    ".storybook/components/atoms/display/Logo/Logo.tsx",
+    ".storybook/components/atoms/display/Progress/Progress.tsx",
+    ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+    ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+    ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+    ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+    ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+    ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+    ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/data/Table/Table.tsx",
+    ".storybook/components/composites/feedback/Callout/Callout.tsx",
+    ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+    ".storybook/components/composites/form/_field/FieldFrame.tsx",
+    ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+    ".storybook/components/composites/stats/Legend/Legend.tsx",
+    ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+    ".storybook/components/frames/Grid/Grid.tsx",
+    ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+    ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+    ".storybook/components/frames/Stage/Stage.tsx",
+    ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+    ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+    ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+    ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+    ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+    ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx",
+    ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+    ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+    ".storybook/components/starci/blocks/learn/QuizEnrollGate/QuizEnrollGate.tsx",
+    ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+    ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+    ".storybook/components/starci/blocks/learn/TaskLockedAlert/TaskLockedAlert.tsx",
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+    ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+    ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+    ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+    ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+    ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+    "plugins/eslint/architectural-oracle.test.mjs",
+    "plugins/eslint/frame-items.test.mjs",
+    "plugins/eslint/index.mjs",
+    "plugins/eslint/sentence-hosts.test.mjs",
+    "plugins/eslint/sentence-tier.test.mjs",
+    "src/components/atoms/display/Badge/index.tsx",
+    "src/components/atoms/display/IconTile/index.tsx",
+    "src/components/atoms/display/Logo/index.tsx",
+    "src/components/atoms/display/Progress/index.tsx",
+    "src/components/atoms/display/Spinner/index.tsx",
+    "src/components/atoms/media/QRCode/index.tsx",
+    "src/components/atoms/navigation/Accordion/index.tsx",
+    "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+    "src/components/atoms/navigation/Link/LinkBack.tsx",
+    "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+    "src/components/atoms/navigation/Pagination/index.tsx",
+    "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+    "src/components/atoms/overlay/Menu/index.tsx",
+    "src/components/blocks/blog/PostRow/index.tsx",
+    "src/components/blocks/cards/PricingCard/index.tsx",
+    "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+    "src/components/blocks/community/CommunityCommentItem/component.tsx",
+    "src/components/blocks/community/CommunityCommentThread/component.tsx",
+    "src/components/blocks/community/CommunityPost/index.tsx",
+    "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+    "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+    "src/components/blocks/grading/GradingByline/component.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+    "src/components/blocks/learn/ContentAiSelectionAsk/SelectionHintCallout.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    "src/components/blocks/learn/ContinueLearning/index.tsx",
+    "src/components/blocks/learn/FoundationResourceEmpty/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+    "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+    "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+    "src/components/composites/async/AsyncContent/index.tsx",
+    "src/components/composites/buttons/ButtonGroup/index.tsx",
+    "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "src/components/composites/buttons/InputButtonLike/index.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    "src/components/composites/data/Table/index.tsx",
+    "src/components/composites/feedback/Callout/index.tsx",
+    "src/components/composites/feedback/EmptyState/index.tsx",
+    "src/components/composites/form/Dropzone/index.tsx",
+    "src/components/composites/form/_field/FieldFrame.tsx",
+    "src/components/composites/layout/Disclosure/index.tsx",
+    "src/components/composites/lists/AuthorByline/index.tsx",
+    "src/components/composites/lists/IconLabelValueRow/index.tsx",
+    "src/components/composites/lists/IdentityContentRow/index.tsx",
+    "src/components/composites/lists/UserCell/index.tsx",
+    "src/components/composites/stats/CourseProgressBar/index.tsx",
+    "src/components/composites/stats/Legend/index.tsx",
+    "src/components/composites/stats/MetricCard/index.tsx",
+    "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+    "src/components/composites/text/DotLabel/index.tsx",
+    "src/components/composites/text/MetaDotRow/index.tsx",
+    "src/components/composites/text/PricePeriod/index.tsx",
+    "src/components/composites/text/ScoreValue/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/composites/viewers/PDFView/index.tsx",
+    "src/components/frames/Grid/index.tsx",
+    "src/components/frames/PinnedTrack/index.tsx",
+    "src/components/frames/ResponsiveCluster/index.tsx",
+    "src/components/frames/Stage/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+    "src/components/layouts/SettingsLayout/component.tsx",
+    "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+    "src/components/overlays/modals/AiQuotaModal/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+    "src/components/overlays/modals/CookieConsentModal/component.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/component.tsx",
+    "src/components/overlays/modals/ShareModal/component.tsx",
+    "src/components/pages/AiSubscriptionPage/component.tsx",
+    "src/components/pages/MindMapPage/component.tsx",
+    "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+    "src/modules/api/graphql/mutations/types/course-enroll.ts",
+    "src/modules/api/graphql/mutations/types/discussion.ts",
+    "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+    "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+    "src/modules/api/graphql/queries/query-ai-models.ts",
+    "src/modules/api/graphql/queries/query-autocomplete-global-search.ts",
+    "src/modules/api/graphql/queries/query-challenge-submissions.ts",
+    "src/modules/api/graphql/queries/query-challenge-suggestions.ts",
+    "src/modules/api/graphql/queries/query-challenges.ts",
+    "src/modules/api/graphql/queries/query-consultant-suggestions.ts",
+    "src/modules/api/graphql/queries/query-content-status.ts",
+    "src/modules/api/graphql/queries/query-content-suggestions.ts",
+    "src/modules/api/graphql/queries/query-course-enrollment-status.ts",
+    "src/modules/api/graphql/queries/query-course-suggestions.ts",
+    "src/modules/api/graphql/queries/query-foundation-categories.ts",
+    "src/modules/api/graphql/queries/query-foundation-category-suggestions.ts",
+    "src/modules/api/graphql/queries/query-headhunting-companies.ts",
+    "src/modules/api/graphql/queries/query-headhunting-company-suggestions.ts",
+    "src/modules/api/graphql/queries/query-headhunting-company.ts",
+    "src/modules/api/graphql/queries/query-lesson-videos.ts",
+    "src/modules/api/graphql/queries/query-livestream-sessions.ts",
+    "src/modules/api/graphql/queries/query-milestone-suggestions.ts",
+    "src/modules/api/graphql/queries/query-milestone-task-progress.ts",
+    "src/modules/api/graphql/queries/query-milestone-task-suggestions.ts",
+    "src/modules/api/graphql/queries/query-milestone-task.ts",
+    "src/modules/api/graphql/queries/query-milestones.ts",
+    "src/modules/api/graphql/queries/query-module-suggestions.ts",
+    "src/modules/api/graphql/queries/query-modules.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+    "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+    "src/modules/api/graphql/queries/query-saved-contents.ts",
+    "src/modules/api/graphql/queries/query-submission-attempts.ts",
+    "src/modules/api/graphql/queries/query-submission-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-submit-cv-presigned-url.ts",
+    "src/modules/api/graphql/queries/query-template-cvs.ts",
+    "src/modules/api/graphql/queries/query-user-milestone-task-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks.ts",
+    "src/modules/api/graphql/queries/query-user-personal-task-attempts.ts",
+    "src/modules/api/graphql/queries/types/course-questions.ts",
+    "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+    "src/modules/api/graphql/queries/types/cv-blocks.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts"
+  ],
+  "preB32Dirty": [
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+    "CLAUDE.md",
+    "src/components/blocks/learn/ReactionButton/types.ts"
+  ],
+  "coordinatorRequiredConsumerRepair": [
+    ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+    ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+  ],
+  "coordinatorRepair": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx",
+    ".storybook/components/starci/blocks/learn/TaskLockedAlert/TaskLockedAlert.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+    "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+    "src/components/pages/MindMapPage/component.tsx",
+    "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+    "src/components/blocks/community/CommunityCommentItem/component.tsx",
+    "src/components/blocks/community/CommunityCommentThread/component.tsx",
+    ".storybook/components/composites/form/_field/FieldFrame.tsx",
+    "src/components/composites/form/_field/FieldFrame.tsx",
+    "plugins/eslint/index.mjs",
+    "plugins/eslint/architectural-oracle.test.mjs",
+    "plugins/eslint/css-door-laundering.mjs",
+    "plugins/eslint/css-door-laundering.test.mjs",
+    "plugins/eslint/frame-items.test.mjs",
+    "plugins/eslint/sentence-hosts.test.mjs",
+    "plugins/eslint/sentence-tier.test.mjs",
+    "eslint.config.mjs"
+  ],
+  "entries": [
+    {
+      "file": ".storybook/components/atoms/display/Badge/Badge.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/display/Logo/Logo.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/data/Table/Table.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/feedback/Callout/Callout.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/form/_field/FieldFrame.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/stats/Legend/Legend.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/frames/Grid/Grid.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/frames/Stage/Stage.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+      "tracked": false,
+      "untracked": true,
+      "classification": "unrelated-locked-or-nivo",
+      "owner": "unrelated-locked",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-required-consumer-repair",
+      "owner": "coordinator-repair",
+      "exceptionId": "b32-button-group-nivoexpert-transitive-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true,
+      "note": "Transitive compile repair after ButtonGroup.classNames deletion; not a Nivo unlock."
+    },
+    {
+      "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-required-consumer-repair",
+      "owner": "coordinator-repair",
+      "exceptionId": "b32-button-group-nivoexpert-transitive-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true,
+      "note": "Transitive compile repair after ButtonGroup.classNames deletion; not a Nivo unlock."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizEnrollGate/QuizEnrollGate.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskLockedAlert/TaskLockedAlert.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "unrelated-locked-or-nivo",
+      "owner": "unrelated-locked",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx",
+      "tracked": false,
+      "untracked": true,
+      "classification": "unrelated-locked-or-nivo",
+      "owner": "unrelated-locked",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "CLAUDE.md",
+      "tracked": true,
+      "untracked": false,
+      "classification": "pre-b32-dirty",
+      "owner": "pre-b32",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": false
+    },
+    {
+      "file": "plugins/eslint/architectural-oracle.test.mjs",
+      "tracked": false,
+      "untracked": true,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-10-eslint-oracle"
+      ],
+      "inManifest": false,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "plugins/eslint/frame-items.test.mjs",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-10-eslint-oracle"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "plugins/eslint/index.mjs",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-10-eslint-oracle"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "plugins/eslint/sentence-hosts.test.mjs",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-10-eslint-oracle"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "plugins/eslint/sentence-tier.test.mjs",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-10-eslint-oracle"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/display/Badge/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/display/IconTile/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/display/Logo/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/display/Progress/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/display/Spinner/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/media/QRCode/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/navigation/Accordion/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkBack.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/navigation/Pagination/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/atoms/overlay/Menu/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-1-atoms",
+      "workerAgents": [
+        "agent-1-atoms"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/blog/PostRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/cards/PricingCard/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-5-shared-blocks",
+      "workerAgents": [
+        "agent-5-shared-blocks"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/community/CommunityCommentItem/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/community/CommunityCommentThread/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/community/CommunityPost/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/grading/GradingByline/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-7-domain-b",
+      "workerAgents": [
+        "agent-7-domain-b"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiSelectionAsk/SelectionHintCallout.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueLearning/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceEmpty/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-6-domain-a",
+      "workerAgents": [
+        "agent-6-domain-a"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "pre-b32-dirty",
+      "owner": "pre-b32",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/async/AsyncContent/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/buttons/InputButtonLike/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/data/Table/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/feedback/Callout/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/form/Dropzone/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/form/_field/FieldFrame.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": true,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/layout/Disclosure/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/lists/AuthorByline/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/lists/IdentityContentRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/lists/UserCell/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/stats/CourseProgressBar/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/stats/Legend/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/stats/MetricCard/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/text/MetaDotRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/text/PricePeriod/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/text/ScoreValue/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/composites/viewers/PDFView/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-3-composites",
+      "workerAgents": [
+        "agent-3-composites"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/frames/Grid/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/frames/ResponsiveCluster/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/frames/Stage/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-2-frames",
+      "workerAgents": [
+        "agent-2-frames"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/layouts/SettingsLayout/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/AiQuotaModal/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/CookieConsentModal/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/overlays/modals/ShareModal/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-4-shells",
+      "workerAgents": [
+        "agent-4-shells"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/pages/AiSubscriptionPage/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-8-pages",
+      "workerAgents": [
+        "agent-8-pages"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "tracked": true,
+      "untracked": false,
+      "classification": "coordinator-repair",
+      "owner": "coordinator-repair",
+      "workerAgents": [],
+      "inManifest": false,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/course-enroll.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/discussion.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-ai-models.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-autocomplete-global-search.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-challenge-submissions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-challenge-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-challenges.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-consultant-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-content-status.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-content-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-course-enrollment-status.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-course-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-foundation-categories.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-foundation-category-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-headhunting-companies.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-headhunting-company-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-headhunting-company.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-lesson-videos.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-livestream-sessions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-milestone-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-milestone-task-progress.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-milestone-task-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-milestone-task.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-milestones.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-module-suggestions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-modules.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-saved-contents.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-submission-attempts.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-submission-feedbacks.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-submit-cv-presigned-url.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-template-cvs.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-user-milestone-task-feedbacks.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-user-personal-task-attempts.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-questions.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/cv-blocks.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+      "tracked": true,
+      "untracked": false,
+      "classification": "b32-worker",
+      "owner": "agent-9-app-modules",
+      "workerAgents": [
+        "agent-9-app-modules"
+      ],
+      "inManifest": true,
+      "dualOwnership": false,
+      "requiresOwner": true
+    }
+  ],
+  "notes": [
+    "Pre-B32 dirty files must not be absorbed into B32 certify claims.",
+    "Coordinator repair includes cross-partition classNames consumer migrations after dead-door burns.",
+    "Every product/plugin file in the certify manifest must have an owner."
+  ]
+}

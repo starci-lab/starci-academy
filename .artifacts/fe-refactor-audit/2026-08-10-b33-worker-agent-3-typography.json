@@ -1,0 +1,223 @@
+{
+  "batch": "B33",
+  "agent": "agent-3-typography",
+  "checkpoint": "139391b6",
+  "branch": "mtp",
+  "manifest": "agent-3-typography",
+  "clusterIds": [],
+  "focus": "Typography CSS-door consumers",
+  "consumersScanned": 40,
+  "payloadClassification": {
+    "skeletonWidth": [
+      {
+        "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+        "payloads": ["w-1/4", "w-1/3", "w-1/2"],
+        "note": "w-1/2 duplicated Typography default skeleton geometry; other fractions were decorative width doors"
+      },
+      {
+        "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+        "payloads": ["w-1/4"]
+      },
+      {
+        "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "payloads": ["w-1/4", "w-2/3"]
+      },
+      {
+        "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+        "payloads": ["w-1/2", "w-2/3", "w-full", "w-3/4"],
+        "note": "BRIEF_SKELETON_LINE_WIDTHS table collapsed to BRIEF_SKELETON_LINE_COUNT matching SB"
+      },
+      {
+        "file": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+        "payloads": ["w-1/4", "w-2/3"]
+      }
+    ],
+    "typedTextVariant": [],
+    "parentPlacement": [
+      {
+        "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+        "payloads": ["shrink-0"],
+        "owner": "StackH principle=content-row (SB already omitted Typography classNames)"
+      },
+      {
+        "file": ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+        "payloads": ["min-w-0/flex-1 (already migrated)"],
+        "owner": "FillAvailable — closed in B32 shells; no further Typography classNames"
+      }
+    ],
+    "unsupportedLiveAppearance": [],
+    "lockedConsumer": [],
+    "alreadyCleanSbNoDoor": [
+      ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+      ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+      ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+      ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+      ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+      ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      ".storybook/components/starci/blocks/learn/ChallengeHeader/ChallengeHeader.tsx",
+      ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+      ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      ".storybook/components/starci/blocks/learn/ContentRelatedList/ContentRelatedList.tsx",
+      ".storybook/components/starci/blocks/learn/ContinueCard/types.ts",
+      ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+      ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+      ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+      ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+      ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+      ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+      ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+      ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      ".storybook/components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner.tsx",
+      ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+      ".storybook/components/starci/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx"
+    ]
+  },
+  "consumersMigrated": [
+    {
+      "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "change": "Removed Typography skeleton classNames w-1/4|w-1/3|w-1/2; rely on atom default w-1/2 geometry. Dropped stale classNames JSDoc residue."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+      "change": "Removed proven-dead public classNames door (zero opening-tag consumers); StackV no longer forwards placement."
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "change": "Removed Typography skeleton classNames w-1/4 to match SB twin."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "change": "Removed Typography skeleton classNames w-1/4|w-2/3 to match SB twin."
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "change": "Removed Typography shrink-0 placement doors (skeleton + live count); StackH content-row owns trailing meta placement."
+    },
+    {
+      "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "change": "Removed title/description/brief skeleton width classNames; replaced BRIEF_SKELETON_LINE_WIDTHS with BRIEF_SKELETON_LINE_COUNT=4 matching SB."
+    },
+    {
+      "file": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+      "change": "Removed Typography skeleton classNames w-1/4|w-2/3 to match SB twin."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.tsx",
+      "change": "Removed proven-dead public classNames door (stories/callers never pass it)."
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      "change": "Mirrored SB: removed proven-dead public classNames door."
+    }
+  ],
+  "sharedApiRemovedOrRetained": {
+    "Typography.classNames": "retained",
+    "reason": "Out-of-manifest live consumers remain across pages/blocks (ProfileLoadingState, CourseQaQuestionList/SkeletonQuestionRow, PriceTag, PlaygroundSetupSteps, LabeledCard, etc.). Atom declaration not in this manifest; no partial API delete."
+  },
+  "beforeAfterMessages": {
+    "scope": "focused eslint on migrated chunks",
+    "typographyClassNamesDoorsRemoved": 14,
+    "deadBlockClassNamesDoorsRemoved": 2,
+    "note": "no-public-classname-prop cleared on QuotaBar SB + PersonalProjectGatePreview twins. Remaining warnings are pre-existing host/frame-self-declare/identity/fragment debt, not Typography CSS doors."
+  },
+  "closedClusters": [
+    "typography-skeletonWidth-src-twin-parity:QuotaBar",
+    "typography-skeletonWidth-src-twin-parity:ChallengeHeader",
+    "typography-skeletonWidth-src-twin-parity:ContentDiscussion",
+    "typography-skeletonWidth-src-twin-parity:TaskBriefBody",
+    "typography-skeletonWidth-src-twin-parity:PersonalProjectTaskAttemptsDrawer",
+    "typography-parentPlacement-src-twin-parity:FoundationCategorySearchBar",
+    "dead-public-classNames:QuotaBar",
+    "dead-public-classNames:PersonalProjectGatePreview"
+  ],
+  "partialClusters": [],
+  "holds": [
+    {
+      "id": "b33-a3-typography-atom-classNames-retained",
+      "classification": "lockedConsumer",
+      "paths": [
+        "src/components/atoms/text/Typography/index.tsx",
+        ".storybook/components/atoms/text/Typography/Typography.tsx"
+      ],
+      "reason": "Typography.classNames still required by out-of-manifest StarCi consumers. Manifest was SB Typography-mention files (phase0 rg overclaim), not a complete consumer burn."
+    },
+    {
+      "id": "b33-a3-ScoreRow-ProgressMeter-flex-1",
+      "classification": "parentPlacement",
+      "paths": [
+        ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+        "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx"
+      ],
+      "reason": "classNames={['flex-1']} is on ProgressMeter, not Typography. Belongs to agent-6 ProgressMeter chain; left untouched."
+    },
+    {
+      "id": "b33-a3-ContentCommentThread-composer-fill",
+      "classification": "parentPlacement",
+      "paths": [
+        "src/components/blocks/learn/ContentCommentThread/index.tsx"
+      ],
+      "reason": "min-w-0/flex-1 sits on ContentCommentComposer, not Typography. SB twin already clean for Typography; composer door out of Typography ownership."
+    },
+    {
+      "id": "b33-a3-DailyQuest-Button-w-fit",
+      "classification": "parentPlacement",
+      "paths": [
+        "src/components/blocks/dashboard/DailyQuest/index.tsx"
+      ],
+      "reason": "w-fit is Button classNames in src twin; Typography call sites are clean. Button chain owns this."
+    },
+    {
+      "id": "b33-a3-sentence-host-preexisting",
+      "classification": "unsupportedLiveAppearance",
+      "paths": [
+        ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+        "src/components/blocks/ai/QuotaBar/index.tsx",
+        "src/components/blocks/learn/ChallengeHeader/index.tsx",
+        "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx"
+      ],
+      "reason": "Pre-existing no-host-element / require-identity-root / frame-self-declare warnings remain; not Typography CSS-door work. Not invented wrappers to burn them."
+    },
+    {
+      "id": "propose-Typography-skeletonWidth-not-invented",
+      "classification": "skeletonWidth",
+      "summary": "B32 proposed skeletonWidth for fraction widths. This batch deleted residual width doors and kept Typography default w-1/2 instead of inventing skeletonWidth / textClassName / arbitrary variants.",
+      "blockedBy": "No approved finite skeletonWidth vocabulary in canon; default geometry is sufficient for migrated twins."
+    }
+  ],
+  "forbiddenConsumers": [],
+  "parity": {
+    "storybookFirst": true,
+    "mirrored": [
+      "QuotaBar",
+      "ChallengeHeader",
+      "ContentDiscussion",
+      "FoundationCategorySearchBar",
+      "TaskBriefBody",
+      "PersonalProjectTaskAttemptsDrawer",
+      "PersonalProjectGatePreview"
+    ],
+    "note": "SB twins were already Typography-classNames-clean; src lagged. Migrations closed twin parity for those doors."
+  },
+  "tests": {
+    "eslintFocused": "npx eslint --max-warnings=0 on migrated files — pre-existing non-Typography warnings remain; zero Typography classNames doors left on touched files",
+    "tsc": "npx tsc --noEmit — no diagnostics matching touched paths",
+    "gitDiffCheck": "clean"
+  },
+  "regressions": [],
+  "summary": "Migrated 6 src Typography CSS-door consumers to SB parity by deleting skeleton width + shrink-0 classNames (no skeletonWidth/textClassName invented). Removed 2 proven-dead block classNames doors (QuotaBar, PersonalProjectGatePreview). Typography atom classNames retained for out-of-manifest consumers. ScoreRow/CommentThread/DailyQuest non-Typography doors held."
+}

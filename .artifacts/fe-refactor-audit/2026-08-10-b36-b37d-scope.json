@@ -1,0 +1,1280 @@
+{
+  "batch": "B36+B37d",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T18:13:22.484Z",
+  "totals": {
+    "allChanged": 1455,
+    "productManifest": 134,
+    "unowned": 0,
+    "unexplainedDual": 0,
+    "forbidden": 0,
+    "unrelatedInProductPackage": 0,
+    "excludedOutOfScope": 11,
+    "preDirty": 5,
+    "generatedArtifact": 1305
+  },
+  "required": {
+    "productManifestExact": true,
+    "unowned": true,
+    "unexplainedDual": true,
+    "forbidden": true,
+    "unrelated": true
+  },
+  "byClass": {
+    "B36-contract": 22,
+    "B36-consumer": 43,
+    "B37-whole-composite": 64,
+    "B37c-correction": 5,
+    "required-import-move-delete": 0,
+    "required-regression-repair": 0,
+    "pre-dirty": 5,
+    "generated-artifact": 1305,
+    "forbidden": 0,
+    "unrelated": 0,
+    "unowned": 0,
+    "excluded-out-of-scope": 11
+  },
+  "productManifest": [
+    ".claude/fe/ESLINT-RULESET.md",
+    ".storybook/components/atoms/_identity.ts",
+    ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx",
+    ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+    ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+    ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/feedback/Callout/Callout.tsx",
+    ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+    ".storybook/components/frames/NavbarFrame/NavbarFrame.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+    ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+    ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+    ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+    ".storybook/stories/frames/NavbarFrame/NavbarFrame.stories.tsx",
+    ".storybook/stories/starci/blocks/navigation/Navbar/Navbar.stories.tsx",
+    "src/components/atoms/_identity.ts",
+    "src/components/atoms/display/GlyphMark/index.tsx",
+    "src/components/atoms/feedback/Alert/index.tsx",
+    "src/components/atoms/forms/SearchAutocomplete/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/EmailField/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/OauthButtons/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/PasswordField/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/SignUpPrompt/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/map.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/EmailField/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/PasswordField/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/SignInPrompt/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignUpSection/index.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/component.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/index.tsx",
+    "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+    "src/components/blocks/cards/LabeledCard/index.tsx",
+    "src/components/blocks/cards/SurfaceListCard/index.tsx",
+    "src/components/blocks/commerce/CartLine/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/layout/PageHeader/index.tsx",
+    "src/components/blocks/learn/ContentModeNav/index.tsx",
+    "src/components/blocks/learn/ContentPager/index.tsx",
+    "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+    "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+    "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+    "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+    "src/components/blocks/navigation/Navbar/index.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+    "src/components/composites/feedback/Callout/index.tsx",
+    "src/components/composites/navigation/Toolbar/index.tsx",
+    "src/components/frames/NavbarFrame/index.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/index.ts",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/index.tsx",
+    "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "src/components/pages/AiUsagePage/index.tsx",
+    "src/components/pages/AppearancePage/index.tsx",
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/CartPage/component.tsx",
+    "src/components/pages/ContactPage/ContactChannels/index.tsx",
+    "src/components/pages/ContactPage/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+    "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+    "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+    "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+    "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+    "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+    "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+    "src/components/pages/KpiPage/component.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/index.tsx",
+    "src/components/pages/LoginPage/component.tsx",
+    "src/components/pages/LoginPage/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "src/components/pages/MyAttemptsPage/index.tsx",
+    "src/components/pages/MyFeedbackPage/index.tsx",
+    "src/components/pages/MySubmissionsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+    "src/components/pages/PracticeProblemPage/index.tsx",
+    "src/components/pages/ProfileChallengeManagePage/index.tsx",
+    "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "src/components/pages/ProfileCodingProblemPage/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+    "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+    "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+    "src/components/pages/SessionsPage/index.tsx"
+  ],
+  "unowned": [],
+  "unexplainedDual": [],
+  "forbidden": [],
+  "unrelated": [],
+  "excludedOutOfScope": [
+    ".claude/fe/TOPOLOGY.md",
+    ".claude/fe/prompts/claude/FINAL-HANDOFF-MASTER32.md",
+    ".claude/fe/prompts/cursor/31-leaderboard-vertical-closure.md",
+    ".claude/fe/prompts/cursor/31a-promote-top-learners.md",
+    ".claude/fe/prompts/cursor/31a0-unblock-top-learners.md",
+    ".claude/fe/prompts/cursor/31f2-unlock-held-frame-items.md",
+    ".claude/fe/prompts/cursor/31r-contract-icon-tile.md",
+    ".claude/fe/prompts/cursor/31r-non-atom-tier-placement.md",
+    ".claude/fe/prompts/cursor/31r1-identity-tile-split.md",
+    ".claude/fe/prompts/cursor/31r2-identity-tile-mass-migration.md",
+    ".claude/fe/prompts/cursor/31r3-unlock-block-identity-consumers.md"
+  ],
+  "preDirty": [
+    ".claude/fe/decision-ledger.json",
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+    "CLAUDE.md",
+    ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+    ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx"
+  ],
+  "entries": [
+    {
+      "path": ".claude/fe/decision-ledger.json",
+      "class": "pre-dirty",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/composites/feedback/Callout/Callout.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "class": "pre-dirty",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/navigation/Navbar/Navbar.stories.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "CLAUDE.md",
+      "class": "pre-dirty",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/atoms/display/GlyphMark/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/atoms/feedback/Alert/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/atoms/forms/SearchAutocomplete/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/EmailField/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/OauthButtons/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/SignUpPrompt/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/map.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignInSection/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/SignInPrompt/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/layout/PageHeader/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentModeNav/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentPager/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/composites/feedback/Callout/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/composites/navigation/Toolbar/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "deleted"
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/index.ts",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "deleted"
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "deleted"
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/component.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/CartPage/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ContactPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "class": "B37c-correction",
+      "alsoClaimed": [
+        "B36-consumer",
+        "B37-whole-composite",
+        "required-import-move-delete"
+      ],
+      "dualExplained": true,
+      "status": "deleted"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+      "class": "B37c-correction",
+      "alsoClaimed": [
+        "B36-consumer",
+        "B37-whole-composite",
+        "required-import-move-delete"
+      ],
+      "dualExplained": true,
+      "status": "deleted"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "class": "B37c-correction",
+      "alsoClaimed": [
+        "B36-consumer",
+        "B37-whole-composite"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+      "class": "B37c-correction",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/KpiPage/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/LoginPage/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/NotificationsPage/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [
+        "B36-consumer"
+      ],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": "src/components/pages/SessionsPage/index.tsx",
+      "class": "B37-whole-composite",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "modified"
+    },
+    {
+      "path": ".claude/fe/ESLINT-RULESET.md",
+      "class": "B37c-correction",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/TOPOLOGY.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/claude/FINAL-HANDOFF-MASTER32.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31-leaderboard-vertical-closure.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31a-promote-top-learners.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31a0-unblock-top-learners.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31f2-unlock-held-frame-items.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31r-contract-icon-tile.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31r-non-atom-tier-placement.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31r1-identity-tile-split.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31r2-identity-tile-mass-migration.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".claude/fe/prompts/cursor/31r3-unlock-block-identity-consumers.md",
+      "class": "excluded-out-of-scope",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".storybook/components/atoms/_identity.ts",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".storybook/components/frames/NavbarFrame/NavbarFrame.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+      "class": "pre-dirty",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".storybook/stories/frames/NavbarFrame/NavbarFrame.stories.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx",
+      "class": "pre-dirty",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": "src/components/atoms/_identity.ts",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/component.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": "src/components/blocks/auth/AuthenticationPanel/index.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": "src/components/frames/NavbarFrame/index.tsx",
+      "class": "B36-contract",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    },
+    {
+      "path": "src/components/pages/LoginPage/component.tsx",
+      "class": "B36-consumer",
+      "alsoClaimed": [],
+      "dualExplained": true,
+      "status": "added"
+    }
+  ]
+}

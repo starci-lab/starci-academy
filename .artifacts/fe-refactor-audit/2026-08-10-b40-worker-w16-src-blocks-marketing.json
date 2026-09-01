@@ -1,0 +1,172 @@
+{
+  "batch": "B40",
+  "worker": "w16-src-blocks-marketing",
+  "checkpoint": "2a096210a",
+  "ownsCount": 23,
+  "counts": {
+    "applied": 4,
+    "hold": 15,
+    "vendor": 0,
+    "locked": 1,
+    "ambiguous": 0,
+    "excluded": 1,
+    "missingHeld": 3
+  },
+  "applied": [
+    {
+      "path": "src/components/pages/ProfileActivityPage/index.tsx",
+      "classification": "applied",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "change": "Replaced flex host with StackV identity root; principle=block-boundary (neighbour-named explain)."
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/index.tsx",
+      "classification": "applied",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "change": "Root StackV layout-split + body block-boundary; migrated Chip/Button/Typography to house atoms."
+    },
+    {
+      "path": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "classification": "applied",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "change": "StackV/StackH + house Chip/Typography; deep-link via Typography isLink; dropped cn/HeroUI."
+    },
+    {
+      "path": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "classification": "applied",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "change": "Cluster chip-row identity root; node labels via Chip; caret via Typography prefixIcon."
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "classification": "hold",
+      "reason": "Already deleted (B39); prefer hold — do not resurrect."
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "classification": "hold",
+      "reason": "Already deleted (B39); prefer hold — do not resurrect."
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "classification": "hold",
+      "reason": "Already deleted (B39); prefer hold — do not resurrect."
+    },
+    {
+      "path": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "classification": "locked",
+      "reason": "Locked product path (prior B35 hold); residual HeroUI/host/cn + emoji/inline-param debt cannot close under safe burn without redesign."
+    },
+    {
+      "path": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "classification": "hold",
+      "reason": "HeroUI Card + raw img/video/carousel hosts; no exact composite collapse to zero-warn."
+    },
+    {
+      "path": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "classification": "hold",
+      "reason": "HeroUI + host/cn/classname cluster; rich headline ReactNode retained (B39)."
+    },
+    {
+      "path": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "classification": "hold",
+      "reason": "contentClassName/LearnLoopScroll unlock hold + host/raw-shape/cn cluster."
+    },
+    {
+      "path": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "classification": "hold",
+      "reason": "Heavy raw-shape/host marketing chrome; no honest vocabulary owner without inventing wrappers."
+    },
+    {
+      "path": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "classification": "hold",
+      "reason": "HeroUI + host/raw-shape/cn; not a root-only safe close."
+    },
+    {
+      "path": "src/components/blocks/marketing/TruthList/index.tsx",
+      "classification": "hold",
+      "reason": "Surface Accordion chrome + rich byline (B39 retained); accordion flush/radius not exact Accordion atom collapse."
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "classification": "hold",
+      "reason": "page-folder-two-files-only (forbidden move) + skeleton-twin + HeroUI/classname cluster."
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "classification": "hold",
+      "reason": "page-folder-two-files-only remains after any identity stamp — ratchet forbids dirty retain."
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "classification": "hold",
+      "reason": "page-folder-two-files-only + HeroUI/host cluster."
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "classification": "hold",
+      "reason": "page-folder-two-files-only + HeroUI Button/host; forbidden page-folder move."
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "classification": "hold",
+      "reason": "page-folder-two-files-only + retired AsyncContent/parallel-skeleton (skeleton redesign forbidden)."
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "classification": "hold",
+      "reason": "HeroUI Card/Chip + retired AsyncContent/parallel-skeleton; skeleton redesign forbidden."
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "classification": "hold",
+      "reason": "page-folder-two-files-only + AsyncContent/parallel-skeleton/classname cluster."
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "classification": "hold",
+      "reason": "page-folder-two-files-only + AsyncContent/parallel-skeleton/classname cluster."
+    },
+    {
+      "path": "src/components/pages/ProfilePublicCvPage/index.tsx",
+      "classification": "hold",
+      "reason": "Skeleton className door + undeclared height Boxes/host; skeleton redesign forbidden."
+    }
+  ],
+  "excluded": [
+    {
+      "path": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "classification": "excluded",
+      "reason": "Manifest excludes PitchCard — not edited."
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": "pass on all 4 applied files",
+    "gitDiffCheck": "pass on applied files",
+    "commit": "none"
+  },
+  "summary": "applied 4 / hold 15 / locked 1 / excluded PitchCard / missingHeld 3 (TopicLane+Microservices*). Admin/profile-async/marketing-chrome clusters held under page-folder, skeleton, or locked/product-chrome constraints."
+}

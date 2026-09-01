@@ -1,0 +1,559 @@
+[
+  {
+    "rel": ".storybook\\components\\starci\\blocks\\navigation\\Footer\\Footer.tsx",
+    "msgs": [
+      {
+        "line": 168,
+        "col": 23,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "line": 168,
+        "col": 32,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      }
+    ]
+  },
+  {
+    "rel": ".storybook\\components\\starci\\layouts\\LearnShell\\LearnShell.tsx",
+    "msgs": [
+      {
+        "line": 113,
+        "col": 17,
+        "rule": "starci-fe/handler-on-prefix",
+        "msg": "`handleSide` ΓåÆ rename to `onSide` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\cards\\SurfaceListCard\\index.tsx",
+    "msgs": [
+      {
+        "line": 32,
+        "col": 2,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 54,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\AuroraEffect.tsx",
+    "msgs": [
+      {
+        "line": 8,
+        "col": 2,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\BubblesEffect.tsx",
+    "msgs": [
+      {
+        "line": 7,
+        "col": 45,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\EmberEffect.tsx",
+    "msgs": [
+      {
+        "line": 7,
+        "col": 43,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\FirefliesEffect.tsx",
+    "msgs": [
+      {
+        "line": 7,
+        "col": 47,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\RainEffect.tsx",
+    "msgs": [
+      {
+        "line": 7,
+        "col": 42,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\SnowEffect.tsx",
+    "msgs": [
+      {
+        "line": 7,
+        "col": 42,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\StarsEffect.tsx",
+    "msgs": [
+      {
+        "line": 7,
+        "col": 43,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\AmbientBackground\\effects\\WaveEffect.tsx",
+    "msgs": [
+      {
+        "line": 9,
+        "col": 2,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\ConnectSheet\\index.tsx",
+    "msgs": [
+      {
+        "line": 18,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 31,
+        "col": 1,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\layout\\PageHeader\\index.tsx",
+    "msgs": [
+      {
+        "line": 12,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 82,
+        "col": 9,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "line": 83,
+        "col": 9,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\navigation\\FlexWrapButtonRadio\\index.tsx",
+    "msgs": [
+      {
+        "line": 9,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 29,
+        "col": 5,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "line": 75,
+        "col": 1,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "line": 116,
+        "col": 11,
+        "rule": "starci-fe/handler-on-prefix",
+        "msg": "`handlePress` ΓåÆ rename to `onPress` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\navigation\\Footer\\index.tsx",
+    "msgs": [
+      {
+        "line": 23,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 168,
+        "col": 23,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "line": 168,
+        "col": 32,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\navigation\\Navbar\\index.tsx",
+    "msgs": [
+      {
+        "line": 49,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 179,
+        "col": 40,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\navigation\\TabsCard\\index.tsx",
+    "msgs": [
+      {
+        "line": 21,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 183,
+        "col": 14,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\rendering\\MarkdownContent\\TabsBlock\\index.tsx",
+    "msgs": [
+      {
+        "line": 12,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 13,
+        "col": 17,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 34,
+        "col": 39,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\rendering\\MarkdownContent\\map.tsx",
+    "msgs": [
+      {
+        "line": 51,
+        "col": 2,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 111,
+        "col": 18,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 153,
+        "col": 40,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 243,
+        "col": 34,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 246,
+        "col": 33,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 254,
+        "col": 30,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 262,
+        "col": 32,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 263,
+        "col": 31,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 264,
+        "col": 34,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 271,
+        "col": 38,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 278,
+        "col": 45,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\blocks\\skeleton\\Skeleton\\RadioGroup\\index.tsx",
+    "msgs": [
+      {
+        "line": 6,
+        "col": 1,
+        "rule": "starci-fe/require-identity-root",
+        "msg": "JSX file without an `identity` prop on the root ΓÇö add `identity={{ tier: \"ΓÇª\", component: \"ΓÇª\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "line": 13,
+        "col": 1,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\layouts\\LearnShellLayout\\index.tsx",
+    "msgs": [
+      {
+        "line": 20,
+        "col": 1,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 40,
+        "col": 14,
+        "rule": "starci-fe/require-export-jsdoc",
+        "msg": "Add JSDoc `/** ΓÇª */` for export `LearnShellLayout` ΓÇö role / what it does (comments ┬º3)."
+      },
+      {
+        "line": 73,
+        "col": 5,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 76,
+        "col": 5,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 81,
+        "col": 5,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 83,
+        "col": 5,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 84,
+        "col": 5,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 92,
+        "col": 5,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 126,
+        "col": 5,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      },
+      {
+        "line": 214,
+        "col": 14,
+        "rule": "starci-fe/no-vietnamese-in-source-authoring",
+        "msg": "Vietnamese is not allowed in source authoring ΓÇö write comments, JSDoc, identifiers, and diagnostics in English. (Locale content modules are allowlisted; use `vn-ok: <reason>` for functional literals.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\layouts\\PersonalProjectWorkspaceLayout\\index.tsx",
+    "msgs": [
+      {
+        "line": 345,
+        "col": 29,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      },
+      {
+        "line": 543,
+        "col": 31,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\layouts\\PublicProfileLayout\\index.tsx",
+    "msgs": [
+      {
+        "line": 70,
+        "col": 2,
+        "rule": "starci-fe/no-inline-parameter-type",
+        "msg": "Name this parameter type (`type` / `interface` in the module) ΓÇö do not inline `{ ΓÇª }` on a destructured parameter."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\drawers\\DrawerContainer.tsx",
+    "msgs": [
+      {
+        "line": 8,
+        "col": 14,
+        "rule": "starci-fe/require-export-jsdoc",
+        "msg": "Add JSDoc `/** ΓÇª */` for export `DrawerContainer` ΓÇö role / what it does (comments ┬º3)."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\drawers\\MiniCartDrawer\\component.tsx",
+    "msgs": [
+      {
+        "line": 138,
+        "col": 16,
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "msg": "`isSkeleton ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\modals\\CvReviewLevelDetailsModal\\index.tsx",
+    "msgs": [
+      {
+        "line": 38,
+        "col": 11,
+        "rule": "starci-fe/handler-on-prefix",
+        "msg": "`handleSelectReviewLevel` ΓåÆ rename to `onSelectReviewLevel` (handlers are `onXxx`, not `handleXxx` ΓÇö react-idioms ┬º7)."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\modals\\FollowListModal\\component.tsx",
+    "msgs": [
+      {
+        "line": 193,
+        "col": 5,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\modals\\LivestreamCalendarModal\\component.tsx",
+    "msgs": [
+      {
+        "line": 78,
+        "col": 1,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\modals\\ModalContainer.tsx",
+    "msgs": [
+      {
+        "line": 20,
+        "col": 14,
+        "rule": "starci-fe/require-export-jsdoc",
+        "msg": "Add JSDoc `/** ΓÇª */` for export `ModalContainer` ΓÇö role / what it does (comments ┬º3)."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\modals\\PaymentModal\\component.tsx",
+    "msgs": [
+      {
+        "line": 74,
+        "col": 1,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "line": 389,
+        "col": 9,
+        "rule": "starci-fe/no-inline-skeleton-branch",
+        "msg": "`method.isPending ? ΓÇª : ΓÇª` picks between two DIFFERENT elements ΓÇö that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component."
+      }
+    ]
+  },
+  {
+    "rel": "src\\components\\overlays\\modals\\PaymentModal\\index.tsx",
+    "msgs": [
+      {
+        "line": 90,
+        "col": 1,
+        "rule": "starci-fe/no-emoji-in-source",
+        "msg": "Emoji is not allowed in source authoring ΓÇö use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ]
+  }
+]

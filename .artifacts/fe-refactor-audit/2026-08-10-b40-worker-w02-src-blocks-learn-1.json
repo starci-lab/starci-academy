@@ -1,0 +1,215 @@
+{
+  "batch": "B40",
+  "worker": "w02-src-blocks-learn-1",
+  "owns": [
+    "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+    "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+    "src/components/blocks/learn/ContentAiFab/index.tsx",
+    "src/components/blocks/learn/ContentCommentThread/index.tsx",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/CourseBrief/index.tsx",
+    "src/components/blocks/learn/EnrollGate/index.tsx",
+    "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+    "src/components/blocks/learn/FoundationResourceList/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+    "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+    "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+    "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/learn/ModuleHeader/index.tsx",
+    "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+    "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+    "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+    "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+    "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+    "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+    "src/components/blocks/learn/QaInboxRow/index.tsx",
+    "src/components/blocks/learn/QaReactionBar/index.tsx",
+    "src/components/blocks/learn/QuizSetup/index.tsx",
+    "src/components/blocks/learn/ReactionButton/types.ts",
+    "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+    "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+    "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+    "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+    "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+    "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+    "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+    "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+    "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+    "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "rule": "require-frame-self-declare",
+      "count": 2,
+      "fix": "Added principle=title-subtitle (standing labels) and principle=sibling-stack (root) with neighbour-aware explains."
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      "rule": "require-frame-self-declare",
+      "count": 2,
+      "fix": "Added principle=sibling-stack on task list and root StackV with neighbour-aware explains."
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+      "rule": "require-identity-root",
+      "count": 1,
+      "fix": "Passed identity on existing StackH root (already had principle)."
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+      "rule": "require-identity-root",
+      "count": 1,
+      "fix": "Passed identity on existing StackH root (already had principle)."
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "rule": "require-frame-self-declare",
+      "count": 1,
+      "fix": "Collapsed identity-only Box into Callout (Callout accepts identity); removed Box import."
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/types.ts",
+      "rule": "no-emoji-in-source",
+      "count": 6,
+      "fix": "Removed dead emoji field from ReactionDescriptor/REACTIONS; zero consumers (ReactionGlyph uses label + SVG paths)."
+    }
+  ],
+  "holds": [
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "rules": ["require-identity-root", "no-emoji-in-source"],
+      "reason": "AsyncContent.Base is a fragment state-switch and does not accept identity; emoji-in-comment alone cannot clear the file under max-warnings=0."
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "rules": ["require-identity-root", "no-emoji-in-source"],
+      "reason": "LabeledList hardcodes its own identity and has no caller identity prop; JSDoc U+2194 alone cannot clear the file under max-warnings=0."
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+      "rules": ["require-identity-root"],
+      "reason": "PageHeader composite does not accept identity."
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+      "rules": ["require-identity-root"],
+      "reason": "LearnBreadcrumb hardcodes its own identity; no caller identity prop."
+    },
+    {
+      "scope": "41 blocked owns files with safe findings plus non-safe debt",
+      "rules": ["require-identity-root", "require-frame-self-declare", "no-emoji-in-source"],
+      "reason": "Non-safe findings remain (no-host-element-at-sentence-tier, no-raw-shape-at-sentence-tier, no-public-classname-prop, no-heroui-outside-vocabulary, skeleton rules, etc.). Editing would fail max-warnings=0; safe findings held without edit.",
+      "files": [
+        "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+        "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+        "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+        "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+        "src/components/blocks/learn/ContentAiFab/index.tsx",
+        "src/components/blocks/learn/ContentCommentThread/index.tsx",
+        "src/components/blocks/learn/ContentMap/index.tsx",
+        "src/components/blocks/learn/CourseBrief/index.tsx",
+        "src/components/blocks/learn/EnrollGate/index.tsx",
+        "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+        "src/components/blocks/learn/FoundationResourceList/index.tsx",
+        "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+        "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+        "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+        "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+        "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+        "src/components/blocks/learn/ModuleHeader/index.tsx",
+        "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+        "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+        "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+        "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+        "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+        "src/components/blocks/learn/QaInboxRow/index.tsx",
+        "src/components/blocks/learn/QaReactionBar/index.tsx",
+        "src/components/blocks/learn/QuizSetup/index.tsx",
+        "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+        "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+        "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+        "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+        "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+        "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+        "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+        "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+        "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+        "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx"
+      ]
+    }
+  ],
+  "vendor": [
+    {
+      "rule": "no-heroui-outside-vocabulary",
+      "fileCount": 21,
+      "reason": "HeroUI imports outside vocabulary boundary; not in safeRules."
+    }
+  ],
+  "locked": [
+    {
+      "rule": "no-parallel-skeleton",
+      "reason": "Skeleton redesign / parallel-skeleton debt outside safe burn."
+    },
+    {
+      "rule": "no-inline-skeleton-branch",
+      "reason": "Skeleton redesign outside safe burn."
+    },
+    {
+      "rule": "no-skeleton-twin-component",
+      "reason": "Skeleton twin retirement outside safe burn."
+    }
+  ],
+  "ambiguous": [],
+  "changedFiles": [
+    "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/ReactionButton/types.ts",
+    "src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx",
+    "src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx",
+    "src/components/blocks/learn/TrialEnrollHook/index.tsx"
+  ],
+  "eslintProof": {
+    "command": "npx eslint --max-warnings=0 src/components/blocks/learn/LeaderboardBoard/Board/index.tsx src/components/blocks/learn/PersonalProjectGatePreview/index.tsx src/components/blocks/learn/TaskSubmissionPanel/EvaluateActionRow/index.tsx src/components/blocks/learn/TaskSubmissionPanel/SettingsSummaryRow/index.tsx src/components/blocks/learn/TrialEnrollHook/index.tsx src/components/blocks/learn/ReactionButton/types.ts",
+    "exitCode": 0
+  },
+  "notes": [
+    "Only edited cleanable owns files (safe findings only) so touched files can reach max-warnings=0.",
+    "Safe finding telemetry before: require-identity-root 39, require-frame-self-declare 50, no-emoji-in-source 11 across owns.",
+    "Applied finding count: 13 (2+2+1+1+1+6) across 6 files.",
+    "No commit/push/reset/checkout/branch."
+  ],
+  "counts": {
+    "owns": 51,
+    "appliedFiles": 6,
+    "appliedFindings": 13,
+    "holdGroups": 5,
+    "vendorGroups": 1,
+    "lockedGroups": 3,
+    "ambiguous": 0,
+    "changedFiles": 6
+  }
+}

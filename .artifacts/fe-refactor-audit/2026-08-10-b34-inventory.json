@@ -1,0 +1,23 @@
+{
+  "batch": "B34",
+  "checkpoint": "6ff21c66",
+  "generatedAt": "2026-08-08T13:50:00.000Z",
+  "baseline": {
+    "raw": 6911,
+    "files": 1237,
+    "errors": 0,
+    "a11y": 11,
+    "source": "B33c after / B34 start"
+  },
+  "partialFamilies": [
+    "KeepGoingPath / ModuleLessonList skeleton shimmer → GlyphMark",
+    "CollapsibleSidebar nav landmark → NavigationRail",
+    "QaConversationHeader API drift → canonical person + labels"
+  ],
+  "contracts": ["A-GlyphMark", "B-NavigationRail", "C-QaConversationHeader", "D-MarkdownPresentation", "E-typed-chip-icon"],
+  "forbidden": ["nivo", "nivoexpert", "mia-mia", "CLAUDE.md", "decision-ledger.json", "a11y"],
+  "waves": {
+    "A": "contract owners — types/twins/tests only",
+    "B": "consumer migrations — after Wave A tsc pass"
+  }
+}

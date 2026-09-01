@@ -1,0 +1,43 @@
+{
+  "batch": 19,
+  "title": "IMPLEMENT APPROVED SEMANTIC CONTRACTS",
+  "date": "2026-08-08",
+  "committed": false,
+  "contracts": {
+    "DrawerDialogWidth": ["default", "cart"],
+    "DrawerFooterVariant": ["default", "stacked"],
+    "ModalViewportFit": ["default", "near-fullscreen"],
+    "PDFViewHeight": ["compact", "standard", "tall", "expanded", "document", "viewport"],
+    "SurfaceCardBodyVariant": ["default", "stacked", "tile"]
+  },
+  "removedProps": [
+    "DrawerShell.dialogClassName",
+    "DrawerShell.footerClassName",
+    "ModalShell.containerClassName",
+    "PDFView.heightClassName"
+  ],
+  "migratedConsumers": [
+    "MiniCartDrawer",
+    "CvPreviewModal",
+    "ContinueCardItem",
+    "ContinueCardHero",
+    "PDFView.stories"
+  ],
+  "remainingHolds": [
+    "PressableGroup-contentClassName-TILE_CHROME",
+    "LabeledCard-contentClassName",
+    "ShowcaseMockup-contentClassName",
+    "DrawerShell-contentClassName-nivoexpert",
+    "ResizableRail-story-heightClassName",
+    "heroui-30",
+    "skeletons",
+    "teacher-27"
+  ],
+  "inventedVariants": false,
+  "verification": {
+    "tsc": 0,
+    "eslintErrors": 0,
+    "semanticContractTests": "7/7",
+    "auditFe": { "failing": 0, "held": 27 }
+  }
+}

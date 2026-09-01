@@ -1,0 +1,371 @@
+[
+  {
+    "tags": "ButtonBase|Button",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "ButtonBase|Button",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "ChipBase|Chip",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "ChipBase|Chip",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "ChipBase|Chip",
+    "door": "dotClassName",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "AvatarBase|Avatar",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "AvatarBase|Avatar",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Badge",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Badge",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Divider",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Divider",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "IconTile",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "IconTile",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Logo",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Logo",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Spinner",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Spinner",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Alert",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Alert",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "QRCode",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "QRCode",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Accordion",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Accordion",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Breadcrumbs",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Breadcrumbs",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "LinkBack",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "LinkBack",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "LinkSeeMore",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "LinkSeeMore",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Pagination",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Pagination",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "TabsBase|Tabs",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "TabsBase|Tabs",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "TabsExtended",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "TabsExtended",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Menu",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Menu",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Typography",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Typography",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Progress",
+    "door": "className",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  },
+  {
+    "tags": "Progress",
+    "door": "classNames",
+    "consumers": 0,
+    "outOfManifest": 0,
+    "outSample": [],
+    "inSample": [],
+    "actionable": true
+  }
+]

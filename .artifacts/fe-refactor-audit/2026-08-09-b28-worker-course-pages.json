@@ -1,0 +1,122 @@
+{
+  "worker": "course-pages",
+  "manifest": [
+    "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx"
+  ],
+  "consumers": [
+    {
+      "component": "CourseMobileEnrollBar",
+      "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "before": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "line": 145,
+          "prop": "className",
+          "value": "@app-md:hidden",
+          "ownership": "parent-placement"
+        }
+      ],
+      "after": []
+    },
+    {
+      "component": "CourseHero",
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "before": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "prop": "className",
+          "value": "@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1",
+          "ownership": "parent-placement"
+        }
+      ],
+      "after": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "prop": "className",
+          "value": "@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1",
+          "ownership": "parent-placement"
+        }
+      ]
+    },
+    {
+      "component": "CoursePricingRail",
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "before": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "prop": "className",
+          "value": "@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1",
+          "ownership": "parent-placement"
+        }
+      ],
+      "after": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "prop": "className",
+          "value": "@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1",
+          "ownership": "parent-placement"
+        }
+      ]
+    },
+    {
+      "component": "MetricsInline",
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "before": [
+        {
+          "prop": "className",
+          "value": "text-xs text-muted",
+          "ownership": "intrinsic"
+        }
+      ],
+      "after": [
+        {
+          "prop": "className",
+          "value": "text-xs text-muted",
+          "ownership": "intrinsic"
+        }
+      ]
+    }
+  ],
+  "valueSet": {
+    "CourseMobileEnrollBar": ["@app-md:hidden"],
+    "CourseHero": ["@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1"],
+    "CoursePricingRail": ["@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1"],
+    "MetricsInline": ["text-xs text-muted"]
+  },
+  "ownership": {
+    "CourseMobileEnrollBar": ["parent-placement"],
+    "CourseHero": ["parent-placement"],
+    "CoursePricingRail": ["parent-placement"],
+    "MetricsInline": ["intrinsic"]
+  },
+  "oldApi": {
+    "CourseMobileEnrollBar": "WithClassNames<undefined> — className forwarded to StickyBottomBar for @app-md:hidden"
+  },
+  "newApi": {
+    "CourseMobileEnrollBar": "Record<string, never>; visibility owned by parent HideAbove at=\"md\" in _CourseDetailPage"
+  },
+  "changed": [
+    "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "src/components/pages/CourseDetailPage/component.tsx"
+  ],
+  "holds": [
+    "CourseHero — grid col-start/row-start not on Grid API",
+    "CoursePricingRail — grid placement; no existing start prop",
+    "MetricsInline — text-xs text-muted mixes type+tone"
+  ],
+  "parity": {
+    "CourseMobileEnrollBar": "src-only page child; HideAbove frame is shared src/SB",
+    "CourseHero": "hold",
+    "CoursePricingRail": "hold",
+    "MetricsInline": "hold"
+  },
+  "verification": {
+    "eslint": "read_lints clean on changed src files",
+    "tsc": "deferred to coordinator chunk"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — HideAbove import added to presentational CourseDetailPage component only; no StickyBottomBar door change outside this bar"
+}

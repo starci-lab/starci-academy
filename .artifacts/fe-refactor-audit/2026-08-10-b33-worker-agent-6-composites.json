@@ -1,0 +1,253 @@
+{
+  "batch": "B33",
+  "manifest": "agent-6-composites",
+  "agent": "agent-6-composites",
+  "checkpoint": "139391b6",
+  "focus": "EnumChip/ProgressMeter/Markdown/SurfaceCard/PinnedTrack",
+  "clusterIds": [
+    "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band58",
+    "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band88"
+  ],
+  "consumersScanned": [
+    "SurfaceCardSelectableGroup RadioContent className=\"block w-full\" (SB+src)",
+    "SurfaceCardAccordion title StackH/StackV classNames=[\"min-w-0\",\"flex-1\"] (SB+src)",
+    "SurfaceCardAccordion public classNames door — zero live callers",
+    "NestedCard classNames passthrough — zero live callers",
+    "ProgressMeter classNames=[\"flex-1\"] consumers: ScoreRow (src+SB), FlashcardSessionStats, MockInterviewScorecard page, MockInterviewStats",
+    "EnumChip className/classNames — only HostPlatformChip forwarded; no external HostPlatformChip className callers",
+    "composite MarkdownContent classNames — zero live callers",
+    "MarkdownTableParts classNames — map.tsx never passes",
+    "PinnedTrack — no public className/classNames API",
+    "blocks MarkdownContent free className — multi-dimension live callers (held)"
+  ],
+  "consumersMigrated": [
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "change": "band58: drop RadioContent className (inner w-full already owns stretch); band88: Accordion title StackH/StackV → FillAvailable at=base + principle/explain; delete dead SurfaceCardAccordion.classNames"
+    },
+    {
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "change": "Twin of SurfaceCard band58/band88 Accordion + RadioContent migrations"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "change": "ProgressMeter classNames=[\"flex-1\"] → FillAvailable at=base wrapper; identity+JSDoc"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "change": "Twin ScoreRow FillAvailable migration"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "change": "ProgressMeter flex-1 → FillAvailable at=base"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "change": "Two ProgressMeter flex-1 rows → FillAvailable at=base"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "change": "ProgressMeter flex-1 → FillAvailable at=base"
+    },
+    {
+      "file": "src/components/composites/stats/ProgressMeter/index.tsx",
+      "change": "Removed public classNames door; StackV self-declares principle/explain"
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx",
+      "change": "Twin ProgressMeter door delete"
+    },
+    {
+      "file": "src/components/composites/chips/EnumChip/index.tsx",
+      "change": "Removed dead className + classNames doors (no live callers after HostPlatformChip cleanup)"
+    },
+    {
+      "file": ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "change": "Twin EnumChip door delete"
+    },
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "change": "Dropped WithClassNames / className forward into EnumChip"
+    },
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/index.tsx",
+      "change": "Connected HostPlatformChip no longer accepts/forwards className"
+    },
+    {
+      "file": "src/components/blocks/cards/NestedCard/index.tsx",
+      "change": "Removed dead classNames passthrough to SurfaceCardNested"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/index.tsx",
+      "change": "Removed public classNames door; skeleton StackV self-declares; drop Typography skeleton width classNames"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "change": "Twin MarkdownContent classNames door delete"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+      "change": "Removed unused classNames doors on table parts (map never passes)"
+    }
+  ],
+  "sharedApiRemovedOrRetained": [
+    {
+      "api": "ProgressMeter.classNames",
+      "status": "removed",
+      "twins": ["src", "storybook"]
+    },
+    {
+      "api": "EnumChip.className + EnumChip.classNames",
+      "status": "removed",
+      "twins": ["src", "storybook"]
+    },
+    {
+      "api": "HostPlatformChip.className / WithClassNames",
+      "status": "removed",
+      "note": "blocks EnumChip already had no className door; HostPlatformChip was forwarding a dead prop"
+    },
+    {
+      "api": "NestedCard.classNames",
+      "status": "removed"
+    },
+    {
+      "api": "composite MarkdownContent.classNames",
+      "status": "removed",
+      "twins": ["src", "storybook"]
+    },
+    {
+      "api": "MarkdownTableParts.*.classNames",
+      "status": "removed"
+    },
+    {
+      "api": "SurfaceCardAccordion.classNames",
+      "status": "removed",
+      "twins": ["src", "storybook"]
+    },
+    {
+      "api": "SurfaceCard Base/Nested/List/PressableGroup/CrossList/Placeholder.classNames + contentClassName",
+      "status": "retained",
+      "reason": "Still declared on other SurfaceCard members outside band58/band88; MediaCard/TrialConversionStrip/LearnNudges passthrough doors remain with zero live value suppliers but adapters not fully burned this pass"
+    },
+    {
+      "api": "PinnedTrack className/classNames",
+      "status": "already-absent",
+      "note": "Hard-owns sticky/flex-1; no public CSS door"
+    },
+    {
+      "api": "blocks/rendering/MarkdownContent.className",
+      "status": "retained-held",
+      "reason": "Live multi-dimension free-string payloads; no finite existing API covers tone+prose-reset+clamp+flex together"
+    }
+  ],
+  "beforeAfterMessages": {
+    "SurfaceCard.band58.no-public-classname-prop": { "before": 1, "after": 0, "note": "B32c residual 2→1; B33 closed remaining RadioContent className in band" },
+    "SurfaceCard.band88.no-public-classname-prop": { "before": 1, "after": 0, "note": "B32c residual 2→1; B33 closed Accordion flex classNames + dead Accordion.classNames door" },
+    "ProgressMeter.twins.no-public-classname-prop": { "before": 4, "after": 0, "note": "prop decl + StackV pass on SB+src" },
+    "EnumChip.twins.no-public-classname-prop": { "before": "8+", "after": 0, "note": "className/classNames decl + Chip forwards" },
+    "composite.MarkdownContent.classNames": { "before": "2+", "after": 0 },
+    "closedDoorFocusedEslintMaxWarnings0": "pass"
+  },
+  "closedClusters": [
+    "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band58",
+    "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band88",
+    "ProgressMeter-public-classNames-door",
+    "EnumChip-public-className-classNames-doors",
+    "composite-MarkdownContent-public-classNames-door",
+    "MarkdownTableParts-unused-classNames-doors",
+    "NestedCard-dead-classNames-passthrough",
+    "HostPlatformChip-dead-className-forward"
+  ],
+  "partialClusters": [
+    {
+      "id": "SurfaceCard-family-remaining-classNames-outside-band58-88",
+      "status": "partial",
+      "remaining": "Base/Nested/List/PressableGroup/CrossList/Placeholder still declare public classNames; contentClassName internal escape retained for PressableGroup verdict/item placement",
+      "note": "Only assigned B32 partials band58/band88 claimed closed; wider SurfaceCard CSS contract not zeroed"
+    }
+  ],
+  "holds": [
+    {
+      "id": "b33-a6-blocks-markdowncontent-classname-multidim",
+      "files": [
+        "src/components/blocks/rendering/MarkdownContent/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/component.tsx"
+      ],
+      "consumers": [
+        {
+          "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+          "payload": "[&_p]:m-0"
+        },
+        {
+          "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+          "payload": "[&_p]:m-0"
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+          "payload": "text-xs text-muted [&_p]:m-0 [&_p]:line-clamp-2"
+        },
+        {
+          "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+          "payload": "min-w-0 flex-1 text-sm [&_p]:m-0 [&_p]:line-clamp-1 ; text-sm text-muted [&_p]:m-0"
+        },
+        {
+          "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+          "payload": "text-sm text-foreground [&_p]:m-0 [&_p]:line-clamp-2"
+        },
+        {
+          "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+          "payload": "text-sm [&_p]:m-0"
+        },
+        {
+          "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+          "payload": "text-sm [&_p]:m-0"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "payload": "text-muted ; min-w-0 flex-1 ; min-w-0 flex-1 italic"
+        }
+      ],
+      "reason": "Free className combines orthogonal dimensions (Typography size/tone, prose paragraph reset, line-clamp, flex fill, italic) with no single finite existing API.",
+      "b34Proposal": {
+        "doNotImplementNow": true,
+        "options": [
+          "Prefer composite MarkdownContent (measure + no className) for full documents",
+          "Parent-owned wrappers for prose resets: outer div [&_p]:m-0 / line-clamp (pattern already used by block MockInterviewScorecard twin)",
+          "Placement-only tokens via FillAvailable at=base for min-w-0 flex-1",
+          "If a finite contract is still required: propose a named density/proseMode enum (e.g. compact-plain | muted-clamp) owned by blocks MarkdownContent — teacher approval before inventing"
+        ],
+        "forbidden": "Do not invent CSS-shaped public props or per-part className escapes to burn the count"
+      }
+    },
+    {
+      "id": "b33-a6-surfacecard-remaining-member-classnames",
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx"
+      ],
+      "reason": "Assigned partials band58/band88 closed; other SurfaceCard member classNames doors remain outside those bands. Adapter passthroughs (MediaCard/TrialConversionStrip/LearnNudges) currently supply no live values but were not fully deleted this pass.",
+      "b34Proposal": {
+        "doNotImplementNow": true,
+        "options": [
+          "Burn dead adapter passthroughs then delete member classNames when consumers prove zero",
+          "Map remaining live placement to FillAvailable / GridItem.span / bodyVariant / chromeVariant only"
+        ]
+      }
+    }
+  ],
+  "forbiddenConsumers": [],
+  "parity": {
+    "SurfaceCard": "SB-first Accordion/RadioContent/FillAvailable mirrored to src",
+    "ProgressMeter": "SB+src doors deleted together; ScoreRow SB twin migrated",
+    "EnumChip": "SB+src doors deleted together",
+    "MarkdownContent.composite": "SB+src doors deleted together",
+    "PinnedTrack": "already mirrored; no door work"
+  },
+  "tests": {
+    "eslintMaxWarnings0ClosedDoors": "pass",
+    "surfaceCardBand58Band88ClassnameCount": { "band58": 0, "band88": 0 },
+    "tscNoEmit": "pass-for-touched-composite-chains; unrelated CollapsibleSidebar className errors remain outside this agent (SettingsSidebarNav / mia-mia DashboardSidebar)"
+  },
+  "regressions": [],
+  "summary": "Closed SurfaceCard B32 partials band58/band88 (RadioContent className + Accordion flex → FillAvailable + dead Accordion.classNames). Closed ProgressMeter/EnumChip/composite MarkdownContent/MarkdownTableParts/NestedCard/HostPlatformChip CSS doors with full flex-1 consumer migration via FillAvailable. PinnedTrack already doorless. Held blocks MarkdownContent free className with exact multi-dimension consumer evidence + B34 proposal fields."
+}

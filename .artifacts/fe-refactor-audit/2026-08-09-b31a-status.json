@@ -1,0 +1,42 @@
+{
+  "batch": "B31a",
+  "complete": false,
+  "status": "blocked",
+  "checkpoint": {
+    "head": "18f84f5b15528163e9fca10cfb7252323f02f013",
+    "subject": "refactor(fe): enforce semantic closure ratchet"
+  },
+  "productEdits": false,
+  "retracted": false,
+  "reason": "atomic completion impossible under touched-file zero-warning ratchet",
+  "blockers": [
+    {
+      "id": "community-tab-import-ratchet",
+      "severity": "atomic",
+      "detail": "The only live import site is CommunityTab/index.tsx under pages/DashboardPage/. page-folder-two-files-only always fires on rest=CommunityTab/index.tsx. Import-only edit leaves ≥1 warning. Promoting/inlining CommunityTab is forbidden (no CommunityTab refactor beyond mechanically required import). Therefore no changed-set can include the required import update at 0 warnings.",
+      "eslint": {
+        "starci-fe/page-folder-two-files-only": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      },
+      "noteOnGap6": "block-boundary owns gap step 6 (=gap-6) — raw-shape is fixable with StackV principle=block-boundary + identity, but page-folder remains."
+    },
+    {
+      "id": "top-learners-colocated-skeleton-classname",
+      "severity": "family-zero-warn",
+      "detail": "After page-folder clears at blocks/, co-located skeleton still passes className to Skeleton bars (size-12 rounded-xl IconTile stand-in, h-3 w-6 rank slot, h-3 w-10 value, h-8 w-24 follow) and classNames to StackV/Typography. Skeleton.Avatar size=lg is size-12 but rounded-full — not exact IconTile chrome. No typed Skeleton.* preserves exact shimmer without redesign. Batch forbids skeleton redesign → stop."
+    }
+  ],
+  "publicDoorsRemoved": [],
+  "leaderboardListCardClassName": "remains open (B31a does not touch LeaderboardListCard)",
+  "oldTopLearnersPath": "still present — no move performed",
+  "importsFromOldPath": 1,
+  "compatibilityExportsAtOldPath": 0,
+  "changedSetWarnings": "n/a — no product TS/TSX changes",
+  "overlappingEdits": 0,
+  "next": [
+    "Promote or inline CommunityTab (and/or other DashboardPage nested peers) under an explicit page-folder batch so the TopLearners import site can be zero-warn",
+    "Add typed Skeleton vocabulary for IconTile-sized rounded-xl shimmer (and rank/value/follow bars) OR accept a dedicated skeleton-contract batch before TopLearners promotion",
+    "Then re-run B31a promotion; LeaderboardListCard.className stays for B31b"
+  ]
+}

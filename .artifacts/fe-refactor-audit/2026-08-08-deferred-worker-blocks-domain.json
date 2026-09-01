@@ -1,0 +1,1034 @@
+{
+  "partition": "blocks-domain",
+  "changed": [
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/blocks/stats/CourseProgressBar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "safe-structural-sync-to-composite"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "held-remaining-after-partial-mechanical-burn"
+    },
+    {
+      "path": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-arbitrary-token"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "held-remaining-after-partial-mechanical-burn"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/AIProcessingText/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/dashboard/Podium/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/profile/UserStreak/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-remaining-after-partial-mechanical-burn"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    },
+    {
+      "path": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "held-only-no-safe-clear-structural-edit"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-arbitrary-token"
+      ],
+      "reason": "arbitrary-token-no-fake-scale"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel-skeleton-semantic-hold"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "product-ui-emoji-place-medals"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "product-ui-emoji-reaction-glyphs"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "inline-skeleton-preserve-loading-unclear"
+    },
+    {
+      "path": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/AIProcessingText/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-per-part-classname-prop",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "ambiguous-frame-self-declare-missing-both"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "skeleton-twin-semantic-hold"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "ambiguous-frame-self-declare-missing-both"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/dashboard/Podium/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "skeleton-twin-semantic-hold"
+    },
+    {
+      "path": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/profile/UserStreak/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "skeleton-twin-semantic-hold"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "skeleton-twin-semantic-hold"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    },
+    {
+      "path": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "unclear-identity-host-root-or-principle-invent-risk"
+    }
+  ],
+  "verification": {
+    "manifestFileCount": 45,
+    "changedCount": 4,
+    "holdCount": 44,
+    "skippedCount": 44,
+    "eslintQuiet": "pass",
+    "mechanicalCleared": [
+      "starci-fe/handler-on-prefix",
+      "starci-fe/no-inline-parameter-type"
+    ],
+    "structuralCleared": {
+      "src/components/blocks/stats/CourseProgressBar/index.tsx": "re-export composite (storybook-authored sync)"
+    },
+    "remainingByRuleNote": "Host/HeroUI roots cannot take identity without frame conversion; frame conversion needs honest singular principle (gap/step match) — inventing tokens held. Product reaction/medal emoji held. Skeleton twin/parallel/arbitrary/retired-async held. Nivo/Mia-Mia/locked absent from manifest.",
+    "checkpoint": "27127bb5"
+  },
+  "regressions": []
+}

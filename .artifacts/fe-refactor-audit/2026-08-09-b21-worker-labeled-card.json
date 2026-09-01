@@ -1,0 +1,24 @@
+{
+  "partition": "labeled-card",
+  "changed": [
+    "src/components/blocks/cards/LabeledCard/index.tsx",
+    "src/components/blocks/cards/FlipCard/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx"
+  ],
+  "skipped": [],
+  "holds": [],
+  "evidence": [
+    "All contentClassName consumers migrated to StackV sibling-stack / block-boundary or Grid",
+    "Door deleted after zero remaining consumers"
+  ],
+  "proposals": [],
+  "verification": {
+    "tsc": "pass"
+  },
+  "regressions": []
+}

@@ -1,0 +1,1834 @@
+{
+  "partition": "pages-core",
+  "generatedAt": "2026-08-06T21:14:20.413Z",
+  "changed": [
+    {
+      "path": "src/modules/types/utils/challenge-section.ts",
+      "rules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/InnerLayout.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/utils/computations/amount.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/utils/computations/operation.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/utils/truncate.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/clients/links/attach-access-token.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-consultants.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-sandbox-repo-url.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/types.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/types/entities/content-body.ts",
+      "rules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/types/entities/content.ts",
+      "rules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/types/utils/programming-language.ts",
+      "rules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/utils/regression.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/types/index.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/architecture/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/blog/[slug]/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/contact/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/error.tsx",
+      "rules": [
+        "starci-fe/prefer-arrow-export",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/home/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/status/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/svg/GithubIcon/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/svg/GoogleIcon/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/svg/Logo/index.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/clients/links/refresh-token/mutation.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/dayjs/index.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/types/entities/cv.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/utils/computations/adjustment.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/utils/computations/bps.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/utils/computations/percentage.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "safe-authoring-burn"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/modules/utils/computations/pow-10.ts",
+      "rules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "reason": "overload-signatures-block-arrow-export"
+    },
+    {
+      "path": "src/proxy.ts",
+      "rules": [
+        "starci-fe/prefer-arrow-export",
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/layout.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/not-found.tsx",
+      "rules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/privacy/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/profile/[username]/layout.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/profile/settings/layout.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/[locale]/terms/page.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/providers/HeroUIProvider.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/providers/NextThemesProvider.tsx",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/providers/PlaygroundSessionProvider/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/components/providers/SwrProvider.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/config/seo.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/effects/UseEffects.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/effects/useAccentOverride.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/effects/useDefaultRedirect.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/effects/useExchangeCodeForToken.ts",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/effects/useSyncReduxTaskId.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/rhf/useCvSubmissionForm.ts",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/socketio/types/mock-interview.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyCvGenerationsSwr.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/useRepoSandpackFiles.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/hooks/zustand/overlay/hooks.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/i18n/navigation.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/constants.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/clients/clients/auth.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/clients/clients/no-auth.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/clients/links/error.ts",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-ask-content-ai.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-clear-content-ai-history.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-create-content-ai-session.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-generate-submit-cv-presign-url.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-mark-content-as-readed.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-rename-content-ai-session.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-set-content-ai-session-archived.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sign-out.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-trial.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-toggle-favorite.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-touch-content-ai-session.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-verify-submit-cv-presign-url.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/cart.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/course-enroll.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/discussion.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-ai-models.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-autocomplete-global-search.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-challenge-submissions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-challenge-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-challenges.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-consultant-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-content-status.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-content-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-course-enrollment-status.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-course-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-foundation-categories.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-foundation-category-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-headhunting-companies.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-headhunting-company-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-headhunting-company.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-lesson-videos.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-livestream-sessions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-task-progress.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-task-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestone-task.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-milestones.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-module-suggestions.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-modules.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-saved-contents.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-submission-attempts.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-submission-feedbacks.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-submit-cv-presigned-url.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-template-cvs.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-user-milestone-task-feedbacks.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-user-personal-task-attempts.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/course-questions.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/cv-blocks.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/recommended-courses.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/redirect/github.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/api/rest/keycloak/google/redirect.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/keycloak/github.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/keycloak/google.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/storage/session/types/oauth-idp-hint.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/superjson/index.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/types/entities/challenge.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/types/entities/user-challenge-submission.ts",
+      "rules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/types/enums/cv-block-type.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/utils/computations/round.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/utils/misc.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/utils/rank.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/utils/sanitize.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/modules/utils/session-display-name.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "deferred-batch-size"
+    },
+    {
+      "path": "src/utils/extract-sandpack-files.ts",
+      "rules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "reason": "deferred-batch-size"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/LegalPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/components/pages/AdminLoginPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/OauthRedirectPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/BlogPostPage/component.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/InstallmentPlansPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/LoginPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/SettingsHomePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/BlogListPage/Masthead/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/BlogPostPage/ReadingProgress/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "hold-page-folder-two-files-only-and-or-raw-cn-heroui-piles"
+    },
+    {
+      "path": "src/components/pages/PublicArticlePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/index.tsx",
+      "rules": [
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "hold-non-safe-rules"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "locked-MockInterview-Quiz-LearnLoop-path"
+    }
+  ],
+  "verification": {
+    "eslintQuietChanged": "pass",
+    "eslintSafeRemainingInBatch": {
+      "src/modules/utils/computations/pow-10.ts": [
+        "starci-fe/prefer-arrow-export"
+      ]
+    },
+    "tscNoEmit": "preexisting-fail:src/components/blocks/marketing/MicroservicesScene/index.tsx(TS1382); no errors in pages-core changed files",
+    "storybookTwinsInManifest": 0
+  },
+  "regressions": [
+    {
+      "path": "src/app/[locale]/error.tsx",
+      "note": "pass1 arrow conversion briefly corrupted default export; repaired manually to ErrorBoundaryProps + arrow const",
+      "resolved": true
+    }
+  ],
+  "counts": {
+    "manifestFiles": 237,
+    "changed": 39,
+    "skipped": 130,
+    "holds": 68
+  }
+}

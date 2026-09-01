@@ -1,0 +1,122 @@
+{
+  "batch": 17,
+  "title": "Hold triage and safe closure",
+  "date": "2026-08-08",
+  "baseHead": "6c787529",
+  "priorProduct": "aa364202",
+  "branch": "mtp",
+  "committed": false,
+  "changedFiles": [
+    "src/components/blocks/learn/UpNextCard/index.tsx",
+    "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "safeFixes": {
+    "identity": [
+      {
+        "component": "UpNextCard",
+        "root": "SectionCard",
+        "files": ["src/components/blocks/learn/UpNextCard/index.tsx"]
+      },
+      {
+        "component": "PlaygroundSetupSteps",
+        "root": "StackV",
+        "files": [
+          "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+          ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx"
+        ]
+      }
+    ],
+    "deadPropsRemoved": [],
+    "storyOnlyDeadPropsRemoved": []
+  },
+  "proposalsAndHolds": {
+    "storyOnly": [
+      {
+        "prop": "ModalShell.bodyClassName",
+        "class": "API-hold",
+        "proposal": "bodyVariant after story rewrite"
+      }
+    ],
+    "liveProps": [
+      {
+        "prop": "DrawerShell.dialogClassName",
+        "consumer": "MiniCartDrawer:302",
+        "proposal": "dialogWidth"
+      },
+      {
+        "prop": "DrawerShell.footerClassName",
+        "consumer": "MiniCartDrawer:310",
+        "proposal": "footerVariant=stacked"
+      },
+      {
+        "prop": "ModalShell.containerClassName",
+        "consumer": "CvPreviewModal:44",
+        "proposal": "viewportFit near-fullscreen"
+      },
+      {
+        "prop": "PDFView.heightClassName",
+        "consumer": "CvPreviewModal:51 + stories",
+        "proposal": "height token/enum when canon locks"
+      },
+      {
+        "prop": "SurfaceCard.contentClassName",
+        "consumer": "ContinueCard + others",
+        "proposal": "bodyVariant"
+      }
+    ],
+    "nivoexpert": [
+      {
+        "prop": "DrawerShell.contentClassName",
+        "consumer": "LessonEditorPanel:150",
+        "class": "nivoexpert-boundary"
+      }
+    ],
+    "heroui": {
+      "count": 30,
+      "identicalWrappers": 0,
+      "class": "vendor-boundary"
+    },
+    "skeleton": "redesign hold — 0 mechanical",
+    "teacher": { "count": 27, "edited": false }
+  },
+  "proposedApisNotInvented": [
+    "dialogWidth",
+    "footerVariant",
+    "viewportFit",
+    "PDF height enum",
+    "bodyVariant",
+    "contentStack"
+  ],
+  "coordinator": {
+    "overlappingEdits": 0,
+    "changedUniqueProductFiles": 3,
+    "storybookSrcParity": {
+      "PlaygroundSetupSteps": "aligned",
+      "UpNextCard": "src-only-no-twin"
+    },
+    "runtimeNamespaceRegression": false,
+    "pluralPrincipleRegression": false,
+    "teacherHoldEdits": false,
+    "vendorBoundariesIntact": true
+  },
+  "verification": {
+    "tsc": { "exit": 0 },
+    "eslintQuiet": { "exit": 0 },
+    "eslintMaxWarnings": {
+      "exit": 1,
+      "note": "pre-existing held warnings on UpNextCard/PlaygroundSetupSteps; 0 errors"
+    },
+    "nodeTests": { "pass": 15, "fail": 0 },
+    "auditFe": { "exit": 0, "teacherHolds": 27, "failing": 0 }
+  },
+  "partitions": {
+    "story-only-dead-props": "documented-hold",
+    "clear-identity-hosts": "applied",
+    "live-prop-consumer-proof": "documented-hold",
+    "heroui-boundary-classification": "documented-hold",
+    "nivoexpert-boundaries": "documented-hold",
+    "skeleton-and-teacher-hold-audit": "documented-hold"
+  }
+}

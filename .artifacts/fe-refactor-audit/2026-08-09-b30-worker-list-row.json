@@ -1,0 +1,39 @@
+{
+  "manifest": [
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/lists/ListRow/README.md",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx"
+  ],
+  "openTagConsumers": [
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "normalized": "p-3",
+      "note": "sole live root className before migration"
+    }
+  ],
+  "valueSet": {
+    "before": [
+      "p-3"
+    ],
+    "after": []
+  },
+  "ownership": {
+    "p-3": "intrinsic density → density=comfortable"
+  },
+  "oldApi": "className?: string",
+  "newApi": "density?: \"default\" | \"comfortable\"",
+  "changed": [
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/lists/ListRow/README.md",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx"
+  ],
+  "holds": [],
+  "parity": {
+    "ListRow": "src-only (no SB twin)"
+  },
+  "verification": {
+    "tsc": "pending-coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

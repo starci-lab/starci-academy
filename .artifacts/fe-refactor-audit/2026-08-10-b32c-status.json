@@ -1,0 +1,128 @@
+{
+  "batch": "B32c",
+  "title": "Certify and stabilize B32 before commit",
+  "checkpoint": "9e86cbdf",
+  "headAtCert": "9e86cbdfcf3e71ac33c1431ede98d12593460ef4",
+  "generatedAt": "2026-08-08T12:45:00.000Z",
+  "verdict": "READY TO COMMIT",
+  "committed": false,
+  "certificationCorrection": {
+    "id": "b32-button-group-nivoexpert-transitive-repair",
+    "classification": "coordinator-required-consumer-repair",
+    "scope": [
+      ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+      ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+    ],
+    "reason": "removed usage of a deleted house API (ButtonGroup.classNames); no Nivo behavior, structure, identity, principle, styling, or public contract was redesigned",
+    "nivoUnlockBroadened": false,
+    "keptInCommitManifest": true,
+    "ledger": ".claude/fe/decision-ledger.json"
+  },
+  "phases": {
+    "1_scope": {
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b32c-scope.json",
+      "ownershipOk": true,
+      "unownedProduct": 0,
+      "b32Worker": 183,
+      "coordinatorRepair": 18,
+      "coordinatorRequiredConsumerRepair": 2,
+      "preB32Dirty": 2,
+      "unrelatedLockedOrNivo": 3,
+      "certifyManifestCount": 203
+    },
+    "2_eslint": {
+      "command": "npx eslint --format json --no-error-on-unmatched-pattern src .storybook",
+      "before": { "raw": 7444, "files": 1437, "errors": 0, "warnings": 7444 },
+      "after": { "raw": 7136, "files": 1260, "errors": 0, "warnings": 7136 },
+      "delta": { "raw": -308, "files": -177, "errors": 0 },
+      "holdClassDelta": {
+        "actionable": { "before": 6721, "after": 6417, "delta": -304 },
+        "locked": { "before": 712, "after": 708, "delta": -4 },
+        "a11y-observed": { "before": 11, "after": 11, "delta": 0 }
+      },
+      "freezeAuditDiscarded": { "raw": 7347, "files": 1358 },
+      "b32InventoryDiscarded": { "raw": 7428, "files": 1434 },
+      "artifacts": [
+        ".artifacts/fe-refactor-audit/2026-08-10-b32c-eslint-before.json",
+        ".artifacts/fe-refactor-audit/2026-08-10-b32c-eslint-after.json",
+        ".artifacts/fe-refactor-audit/2026-08-10-b32c-eslint-delta.md"
+      ]
+    },
+    "3_clusters": {
+      "method": "twinFamily + exportHint + ruleKind + lineBand20 (semantic owner key; multi-rule on same key = one cluster)",
+      "beforeClusters": 4805,
+      "afterClusters": 4576,
+      "closed": 231,
+      "partiallyClosed": 18,
+      "unchangedActionable": 4050,
+      "introducedActionableClusters": 2,
+      "introducedNote": "Two keys appeared only after; traced to identity-root message-template / line-band churn, not new debt. Cert phase treats matching ruleIds as pre-existing.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b32c-clusters.json",
+      "workerClosedClaimsDiscarded": 58
+    },
+    "4_diffAudit": {
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b32c-diff-audit.json",
+      "nivoLockedEdits": [],
+      "heuristicFindings": 46,
+      "realRegressionsOpen": 0,
+      "repairsThisBatch": [
+        "Removed unused classNames destructures / AllowedClassName imports after dead-door API removals (ContentAiFab, TaskLockedAlert, LeaderboardCategoryNav, SurfaceCard SelectableGroup) — cleared 7 @typescript-eslint/no-unused-vars errors"
+      ],
+      "triage": "Door→literal className conversions on atom roots are lawful fixed styling, not CSS-door laundering."
+    },
+    "5_eslintCert": {
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b32c-eslint-cert.json",
+      "certifyFileCount": 203,
+      "introducedErrors": 0,
+      "introducedWarnings": 0,
+      "closedClusterDoorWarnings": 0,
+      "unclassified": 0,
+      "remainingOnCertifySet": 113,
+      "bucketCounts": {
+        "introduced-by-b32": 0,
+        "pre-existing-related": 113,
+        "pre-existing-unrelated": 0,
+        "observed-a11y": 0
+      },
+      "ok": true
+    }
+  },
+  "gates": {
+    "tscNoEmit": "pass",
+    "pluginEslintTests": "22/22 pass",
+    "principleStyleAndSemanticContracts": "15/15 pass",
+    "auditFe": "pass (29 ledger holds only)",
+    "gitDiffCheck": "pass",
+    "gatesRerunAt": "2026-08-08T12:45:00.000Z",
+    "gatesRerunNote": "B32c certification correction: tsc + audit:fe + git diff --check re-verified after ledger/exception recording"
+  },
+  "commit": {
+    "fileCount": 203,
+    "manifestArtifact": ".artifacts/fe-refactor-audit/_b32c-commit-manifest.json",
+    "includesNivoexpertTransitiveRepairs": true,
+    "nivoexpertTransitiveRepairs": [
+      ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+      ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+    ],
+    "holdOut": [
+      { "file": ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx", "reason": "unrelated-locked-or-nivo" },
+      { "file": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx", "reason": "unrelated-locked-or-nivo / pre-b32 dirty" },
+      { "file": ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx", "reason": "unrelated-locked-or-nivo" },
+      { "file": "CLAUDE.md", "reason": "pre-b32-dirty" },
+      { "file": "src/components/blocks/learn/ReactionButton/types.ts", "reason": "pre-b32-dirty" }
+    ],
+    "recommendedMessage": "refactor(fe): close B32 topology-safe dead CSS-door and authoring clusters\n\nRemove proven-dead classNames/className APIs across atom/frame/composite twins, migrate live consumers, and harden the ESLint oracle without inventing new doors or wrappers."
+  },
+  "remainingActionableClusters": 4050,
+  "holds": {
+    "ledgerHoldsFromAuditFe": 29,
+    "lockedMessagesAfter": 708,
+    "liveConsumerDoors": [
+      "Button/Chip/Avatar/Typography classNames",
+      "Stack/Flex/Cluster/Container classNames",
+      "EnumChip/ProgressMeter/Markdown holds",
+      "page-folder-two-files-only (Auth modal helpers)",
+      "HeroUI sentence debt on feed/discussion/league/profile"
+    ]
+  }
+}

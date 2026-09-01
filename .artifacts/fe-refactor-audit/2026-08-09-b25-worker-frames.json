@@ -1,0 +1,25 @@
+{
+  "partition": "frames",
+  "manifest": [],
+  "changed": [],
+  "applied": [],
+  "skipped": [],
+  "holds": [
+    "live-prop Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton placement APIs",
+    "vendor-boundary / HeroUI / foreign mounts",
+    "DrawerShell / ShowcaseMockup / MiniCart / CvPreview / PDFView / B19–B24 contracts",
+    "Nivo / Nivoexpert / locked paths / teacher holds / skeleton ComponentType slots",
+    "no new principles, variants, slots, Box escape hatches, or eslint-disable"
+  ],
+  "evidence": {
+    "note": "No proven call-site burns in frames. PinnedTrack/Cluster classNames remain live."
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "n/a — no edits"
+  },
+  "verification": {
+    "local": "deferred to aggregate"
+  },
+  "regressions": []
+}

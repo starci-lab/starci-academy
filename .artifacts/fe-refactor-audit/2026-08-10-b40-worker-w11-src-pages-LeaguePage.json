@@ -1,0 +1,186 @@
+{
+  "batch": "B40",
+  "worker": "w11-src-pages-LeaguePage",
+  "mode": "mass-safe-burn",
+  "checkpoint": "2a096210a",
+  "manifest": ".artifacts/fe-refactor-audit/b40-manifests/w11-src-pages-LeaguePage.json",
+  "status": "done",
+  "owns": [
+    "src/components/blocks/code/CodeConsole/index.tsx",
+    "src/components/blocks/code/IOExampleCard/index.tsx",
+    "src/components/blocks/code/SandpackPanel/index.tsx",
+    "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+    "src/components/blocks/feed/ActivityAvatar/index.tsx",
+    "src/components/blocks/feed/ChatBubble/index.tsx",
+    "src/components/blocks/feed/ChatPanel/index.tsx",
+    "src/components/blocks/feed/ReactionBar/index.tsx",
+    "src/components/blocks/feed/Timeline/index.tsx",
+    "src/components/pages/AdminLoginPage/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+    "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/KpiPage/component.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "src/components/pages/LeaguePage/index.tsx",
+    "src/components/pages/LegalPage/index.tsx",
+    "src/components/pages/ProfileRedirectPage/index.tsx"
+  ],
+  "changedFiles": [
+    "src/components/pages/LeaguePage/index.tsx"
+  ],
+  "applied": [
+    {
+      "id": "league-page-container-identity",
+      "classification": "applied",
+      "rule": "starci-fe/require-identity-root",
+      "findingCount": 1,
+      "files": [
+        "src/components/pages/LeaguePage/index.tsx"
+      ],
+      "change": "Existing vocabulary migration: raw measure div → Container size=\"sm\" padding={4} principle=\"cell-pad\" identity={{ tier: \"page\", component: \"LeaguePage\" }} with body slot (LeaderboardPage pattern). Also cleared co-located no-host-element on that root.",
+      "eslint": "npx eslint --max-warnings=0 src/components/pages/LeaguePage/index.tsx → exit 0"
+    }
+  ],
+  "holds": [
+    {
+      "id": "page-folder-league-boards-frame-and-inline",
+      "classification": "hold",
+      "rule": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "findingCount": 16,
+      "files": [
+        "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/component.tsx"
+      ],
+      "reason": "Nested League board children keep page-folder-two-files-only plus public-classname / skeleton-twin / inline-skeleton. Page-folder moves and skeleton redesign forbidden; edits fail eslint --max-warnings=0. Includes WeeklyBoard Row inline-parameter-type.",
+      "next": "Filing wave out of page folder, then burn frame-self-declare + named RowProps."
+    },
+    {
+      "id": "identity-root-residual-sentence-debt",
+      "classification": "hold",
+      "rule": "starci-fe/require-identity-root",
+      "findingCount": 16,
+      "files": [
+        "src/components/blocks/code/CodeConsole/index.tsx",
+        "src/components/blocks/code/IOExampleCard/index.tsx",
+        "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+        "src/components/blocks/feed/ActivityAvatar/index.tsx",
+        "src/components/blocks/feed/ChatBubble/index.tsx",
+        "src/components/blocks/feed/ChatPanel/index.tsx",
+        "src/components/blocks/feed/ReactionBar/index.tsx",
+        "src/components/blocks/feed/Timeline/index.tsx",
+        "src/components/pages/AdminLoginPage/index.tsx",
+        "src/components/pages/ArchitecturePage/index.tsx",
+        "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+        "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+        "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+        "src/components/pages/ProfileRedirectPage/index.tsx"
+      ],
+      "reason": "Roots are not already identity-capable frames with an unambiguous stamp; remount would leave host/raw/cn/heroui/classname and (Architecture nested) page-folder debt. Proven identity-root only; eslint gate blocks partial stamps.",
+      "next": "Sentence-host remount onto proven frames/composites, then stamp identity."
+    },
+    {
+      "id": "kpi-frame-self-declare-classname-skeleton",
+      "classification": "hold",
+      "rule": "starci-fe/require-frame-self-declare",
+      "findingCount": 4,
+      "files": [
+        "src/components/pages/KpiPage/component.tsx"
+      ],
+      "reason": "Container/StackV seams lack principle, but file keeps classname + inline-skeleton debt. classNames threaded from index.tsx outside owns. Cannot reach eslint --max-warnings=0 inside owns.",
+      "next": "Burn classNames across index+component with consumer proof, collapse inline skeleton, declare existing principles."
+    },
+    {
+      "id": "legal-page-identity-and-section-stack",
+      "classification": "hold",
+      "rule": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "findingCount": 2,
+      "files": [
+        "src/components/pages/LegalPage/index.tsx"
+      ],
+      "reason": "Could stamp identity / Section principle, but @heroui/react + raw-shape residual blocks eslint --max-warnings=0.",
+      "next": "Migrate vendor Typography/Breadcrumbs/Button to house atoms, then stamp."
+    },
+    {
+      "id": "profile-redirect-frame-self-declare",
+      "classification": "hold",
+      "rule": "starci-fe/require-frame-self-declare",
+      "findingCount": 8,
+      "files": [
+        "src/components/pages/ProfileRedirectPage/index.tsx"
+      ],
+      "reason": "Box/Stack seams undeclared; host/raw/public-classname/heroui residual blocks eslint gate. Identity finding counted under identity-root-residual-sentence-debt.",
+      "next": "Remount skeleton shell, burn classname doors, declare existing principles."
+    },
+    {
+      "id": "reaction-bar-emoji-glyphs",
+      "classification": "hold",
+      "rule": "starci-fe/no-emoji-in-source",
+      "findingCount": 6,
+      "files": [
+        "src/components/blocks/feed/ReactionBar/index.tsx"
+      ],
+      "reason": "Six reaction glyphs are intentional product UX, not authoring noise. Icon-token replacement not proven; file also keeps heroui/host/raw/cn residual.",
+      "next": "Teacher-approved ReactionType → icon map, then remount host chrome."
+    }
+  ],
+  "vendor": [
+    {
+      "id": "sandpack-panel-foreign-mount",
+      "classification": "vendor",
+      "rule": "starci-fe/require-identity-root",
+      "findingCount": 1,
+      "files": [
+        "src/components/blocks/code/SandpackPanel/index.tsx"
+      ],
+      "reason": "Raw div around @codesandbox/sandpack-react. Box identity stamp attempted then reverted: require-frame-self-declare demands principle/explain and no existing PrincipleToken names a zero-seam vendor mount without inventing one.",
+      "next": "Teacher call: explain-only vendor Box mounts, or named Sandpack composite."
+    }
+  ],
+  "locked": [],
+  "ambiguous": [],
+  "eslintProof": {
+    "command": "npx eslint --max-warnings=0 src/components/pages/LeaguePage/index.tsx",
+    "exitCode": 0,
+    "maxWarnings": 0,
+    "clean": true
+  },
+  "safeFindingsScoped": {
+    "total": 54,
+    "byRule": {
+      "starci-fe/require-frame-self-declare": 28,
+      "starci-fe/require-identity-root": 19,
+      "starci-fe/no-emoji-in-source": 6,
+      "starci-fe/no-inline-parameter-type": 1
+    }
+  },
+  "counts": {
+    "applied": 1,
+    "hold": 52,
+    "vendor": 1,
+    "locked": 0,
+    "ambiguous": 0,
+    "filesOwned": 24,
+    "filesChanged": 1
+  },
+  "notes": [
+    "Finding counts: applied 1 + hold 52 + vendor 1 = 54 scoped safe findings.",
+    "Only LeaguePage/index.tsx reached eslint --max-warnings=0 under allowed fixes.",
+    "No commit/push/branch. No page-folder moves. No eslint-disable."
+  ]
+}

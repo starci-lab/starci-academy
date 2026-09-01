@@ -1,0 +1,112 @@
+{
+  "batch": "B36",
+  "wave": "A",
+  "agent": "identity-forwarding-src",
+  "checkpoint": "84b92cd77",
+  "scope": "src/components only — Storybook twin is a separate agent",
+  "pattern": "identity?: CallerIdentity + resolveIdentity from @/components/frames/_identity on the actual rendered root (or forward to a root that already accepts identity). No wrapper div. No Button/Chip/Typography identity. No className doors. No consumer migration (Wave B).",
+  "mirroredFrom": ".artifacts/fe-refactor-audit/2026-08-10-b36-worker-identity-forwarding-storybook.json",
+  "roots": [
+    {
+      "name": "PageHeader",
+      "path": "src/components/blocks/layout/PageHeader/index.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "div (existing flex column)",
+      "resolution": "resolveIdentity(identity, { tier: \"block\", name: \"PageHeader\" }) on the existing outer div. No wrapper. Src-only / no SB component twin.",
+      "noTwin": true
+    },
+    {
+      "name": "Toolbar",
+      "path": "src/components/composites/navigation/Toolbar/index.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "StackH",
+      "resolution": "Forward identity={identity} to StackH (actual root via Flex). No wrapper. Mirrors SB."
+    },
+    {
+      "name": "Callout",
+      "path": "src/components/composites/feedback/Callout/index.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "Alert",
+      "resolution": "Forward identity={identity} to Alert root. No wrapper. Mirrors SB."
+    },
+    {
+      "name": "Alert",
+      "path": "src/components/atoms/feedback/Alert/index.tsx",
+      "before": { "hasIdentity": false, "hardcoded": "data-tier=atom data-component=Alert on HeroAlert" },
+      "after": { "hasIdentity": true },
+      "rootHost": "HeroAlert",
+      "resolution": "resolveIdentity(identity, { tier: \"atom\", name: \"Alert\" }) on HeroAlert. Approved Contract C exception. Mirrors SB."
+    },
+    {
+      "name": "FloatingActionButton",
+      "path": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "div (placement shell)",
+      "resolution": "resolveIdentity(identity, { tier: \"composite\", name: \"FloatingActionButton\" }) on the fixed placement div. Inner Button left unstamped. Mirrors SB."
+    },
+    {
+      "name": "ResponsiveBreadcrumb",
+      "path": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "Breadcrumbs (always mounted)",
+      "resolution": "resolveIdentity(identity, { tier: \"block\", name: \"ResponsiveBreadcrumb\" }) on the always-mounted HeroUI Breadcrumbs host. No wrapper. Src-only / no SB component twin.",
+      "residualHold": "BackLink co-path (mobile/long trail) does not accept CallerIdentity; identity lands on the durable Breadcrumbs host which remains mounted (often CSS-hidden). Visible BackLink identity deferred until BackLink is Contract-C capable or the dual-path collapses to one root.",
+      "noTwin": true
+    },
+    {
+      "name": "SearchAutocomplete",
+      "path": "src/components/atoms/forms/SearchAutocomplete/index.tsx",
+      "before": { "hasIdentity": false, "hardcoded": "data-tier=atom data-component=SearchAutocomplete on ComboBox" },
+      "after": { "hasIdentity": true },
+      "rootHost": "ComboBox",
+      "resolution": "resolveIdentity(identity, { tier: \"atom\", name: \"SearchAutocomplete\" }) on ComboBox (existing stamp site; FieldFrame bare-passthrough keeps this the DOM root when unlabeled). Approved Contract C. Mirrors SB."
+    }
+  ],
+  "holds": [
+    {
+      "id": "blocks-buttons-FloatingActionButton-renamed-atom",
+      "classification": "demotion-hold",
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "reason": "Legacy block roots on raw HeroUI Button with placement className — renamed/thin HeroUI atom, not the house composite twin (composites/buttons/FloatingActionButton). Stamping CallerIdentity here would dishonestly name a vendor Button as a sentence/composite root. Do not stamp. Consumer ContentAiFab still imports this path — Wave B should remount onto the composite.",
+      "applied": false,
+      "hasIdentity": false
+    },
+    {
+      "id": "blocks-form-SearchAutocomplete-renamed-atom",
+      "classification": "demotion-hold",
+      "path": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "reason": "Legacy block is a renamed ComboBox atom without FieldFrame — duplicate of atoms/forms/SearchAutocomplete. No live src consumers found. Do not stamp CallerIdentity dishonestly; prefer demotion/delete once stories/consumers are gone.",
+      "applied": false,
+      "hasIdentity": false
+    }
+  ],
+  "untouched": [
+    ".storybook/**",
+    "**/Navbar/**",
+    "**/GlyphMark/**",
+    "src/components/blocks/buttons/FloatingActionButton/**",
+    "src/components/blocks/form/SearchAutocomplete/**"
+  ],
+  "gates": {
+    "tsc": "pass (exit 0)",
+    "eslintTouched": "pass with pre-existing warnings only (PageHeader host/classname/identity-root debt; ResponsiveBreadcrumb heroui/cn; Toolbar className/self-declare). Alert/Callout/FAB/SearchAutocomplete clean. max-warnings 0 fails on pre-existing PageHeader/Toolbar/ResponsiveBreadcrumb debt — not introduced by identity prop.",
+    "gitDiffCheck": "pass",
+    "storybookTouched": false,
+    "consumersMigrated": false,
+    "committed": false
+  },
+  "changed": [
+    "src/components/blocks/layout/PageHeader/index.tsx",
+    "src/components/composites/navigation/Toolbar/index.tsx",
+    "src/components/composites/feedback/Callout/index.tsx",
+    "src/components/atoms/feedback/Alert/index.tsx",
+    "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/atoms/forms/SearchAutocomplete/index.tsx"
+  ]
+}

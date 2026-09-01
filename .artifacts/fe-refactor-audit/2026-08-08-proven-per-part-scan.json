@@ -1,0 +1,72 @@
+{
+  "dialogClassName": [
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/composites/layout/DrawerShell/index.tsx",
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx"
+  ],
+  "footerClassName": [
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/composites/layout/DrawerShell/index.tsx"
+  ],
+  "containerClassName": [
+    "src/components/composites/layout/ModalShell/index.tsx",
+    "src/components/overlays/modals/CvPreviewModal/component.tsx",
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx"
+  ],
+  "contentClassName": [
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+    ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+    ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+    "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    "src/components/blocks/cards/LabeledCard/index.tsx",
+    "src/components/blocks/cards/FlipCard/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResult/index.tsx"
+  ],
+  "heightClassName": [
+    ".storybook/stories/behaviors/ResizableRail/ResizableRail.stories.tsx",
+    ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+    "src/components/overlays/modals/CvPreviewModal/component.tsx",
+    "src/components/blocks/rendering/PDFView/index.tsx",
+    "src/components/composites/viewers/PDFView/index.tsx",
+    ".storybook/components/composites/viewers/PDFView/PDFView.tsx"
+  ],
+  "titleClassName": [
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx"
+  ],
+  "bodyClassName": [
+    ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx"
+  ],
+  "chipClassName": [
+    "src/components/blocks/learn/AiBalancer/map.tsx",
+    "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+    "src/components/pages/ArchitecturePage/statusVisual.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx"
+  ],
+  "colorClassName": [
+    "src/components/overlays/modals/ShareModal/component.tsx"
+  ]
+}

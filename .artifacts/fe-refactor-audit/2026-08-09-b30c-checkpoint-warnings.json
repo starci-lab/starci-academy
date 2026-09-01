@@ -1,0 +1,83 @@
+{
+  "checkpoint": "8c13fd52",
+  "byOrig": {
+    "src/components/blocks/commerce/TierCardBase/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/commerce/TierCard/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/lists/LabeledList/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/lists/ListRow/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/pages/DashboardPage/TopLearners/component.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/pages/FlashcardsPage/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    },
+    "src/components/pages/NotificationsPage/index.tsx": {
+      "count": 1,
+      "rules": {
+        "null": 1
+      }
+    }
+  }
+}

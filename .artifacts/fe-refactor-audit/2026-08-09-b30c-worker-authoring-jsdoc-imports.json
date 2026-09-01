@@ -1,0 +1,25 @@
+{
+  "manifest": [
+    "plugins/eslint/sentence-tier.test.mjs"
+  ],
+  "warningsBefore": {
+    "sentence-tier.test.mjs": 0
+  },
+  "warningsAfter": {
+    "sentence-tier.test.mjs": 0
+  },
+  "introducedByB30": [
+    "coordinator regression test (untracked)"
+  ],
+  "preExistingInTouchedFile": [],
+  "fixed": [],
+  "retractedB30Changes": [],
+  "holds": [],
+  "parity": "n/a test",
+  "verification": {
+    "eslint": "pass",
+    "nodeTest": "pending-coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

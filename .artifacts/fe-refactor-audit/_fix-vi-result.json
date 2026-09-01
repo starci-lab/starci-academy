@@ -1,0 +1,368 @@
+{
+  "changed": [
+    ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+    ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+    ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+    ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+    ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+    ".storybook/utils/block-anatomy.tsx",
+    "src/app/InnerLayout.tsx",
+    "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+    "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+    "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+    "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+    "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+    "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+    "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+    "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+    "src/components/layouts/LearnShellLayout/index.tsx",
+    "src/hooks/effects/UseEffects.tsx",
+    "src/hooks/effects/useAccentOverride.ts",
+    "src/hooks/socketio/types/mock-interview.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+    "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+    "src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+    "src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+    "src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+    "src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+    "src/modules/api/graphql/mutations/mutation-start-trial.ts",
+    "src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+    "src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts",
+    "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/query-my-flashcard-review-stats.ts",
+    "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+    "src/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-history.ts",
+    "src/modules/api/graphql/queries/types/my-flashcard-review-session-by-session-id.ts",
+    "src/modules/api/graphql/queries/types/my-in-progress-flashcard-quiz-session.ts",
+    "src/modules/dayjs/index.ts"
+  ],
+  "remainingViComments": [
+    {
+      "file": ".storybook/story-kit.tsx",
+      "text": "/**\r\n * Shared SCAFFOLD helpers for GALLERY stories — render every variant/state of a component in\r\n * ONE story, laid out identically everywhere.\r\n *\r\n * Deliberately NOT called \"layout primitives\": these are the story's own scaffold, not "
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/AnatomyOverlay.tsx",
+      "text": "/**\r\n * ─────────────────────────────────────────────────────────────────────────────\r\n * ĐỒ NGHỀ — AnatomyOverlay: đánh dấu MỘT part để cây anatomy nhận ra nó.\r\n *\r\n * Rút gọn 2026-07-26 (teacher ruling): anatomy chỉ còn là CÔNG CỤ XEM CÂY"
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "text": "/**\r\n * * `heroui` thêm 2026-07-27. Node đến thẳng từ `@heroui/react` không có story của TA để\r\n * bấm sang, nên danh sách trắng cũ loại nó ra và cây NÓI DỐI BẰNG CÁCH BỎ SÓT: `PriceTag`\r\n * render một `Popover` thật, mở được, mà cây không "
+    },
+    {
+      "file": ".storybook/utils/AnatomyOverlay/anatomy-context.tsx",
+      "text": "/**\r\n * * `design` XOÁ 2026-07-28 (teacher ruling \"coi như block import block\").\r\n *\r\n * Ranh giới cũ là \"chức năng hoàn chỉnh vs chỉ UI/UX\", và nó MỜ: `PhaseScarcityNote` tự ẩn\r\n * theo điều kiện nghiệp vụ (nghe như block) trong khi `Price"
+    },
+    {
+      "file": "src/app/InnerLayout.tsx",
+      "text": "// Footer renders on LANDING — cả locale root (\"/\", \"/vi\", \"/en\") AND /home (\"/home\","
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "text": "/**\r\n * Modules route layout. The content-column shell + right module-outline rail live in the\r\n * shared learn layout; the lesson breadcrumb now lives INSIDE the PageHeader (ContentHeader)\r\n * so the whole header reads as one unit (challen"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "text": "/**\n * Learn / flashcards / review / sessions / [sessionId] — the ONE dedicated,\n * resumable URL for a live \"Flashcard study\" run, whichever kind started it (teacher\n * 2026-07-11: \"drop the deck route; session only\" — supersedes the earli"
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "text": "/**\r\n * Shared shell for ONE playground exercise. Mounts\r\n * {@link PlaygroundSessionProvider} so the socket + session (and the pairing\r\n * code the learner already ran `npx` with) survive navigation between the two\r\n * child routes — Setup"
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "text": "// (`flashcards/review/sessions/[sessionId]`, 2026-07-11 clarification: \"ôn thẻ"
+    },
+    {
+      "file": "src/hooks/effects/useDefaultRedirect.ts",
+      "text": "/**\r\n * Graceful fallback for the removed module index/overview. `/learn/content/modules`\r\n * has no page anymore — the content dashboard (`/learn/content`) + the lesson reader\r\n * (`/learn/content/modules/<id>/contents/<id>`) replaced it. "
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateRewriteCvBlockSwr.ts",
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateRewriteCvBlock} — the \"* AI viết\r\n * giúp\" per-block rewrite. Each block editor keeps its OWN call/spinner (this\r\n * hook is instantiated per block-in-flight, never shared), so one block's AI\r\n "
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+      "text": "/**\r\n * SWR mutation wrapper for {@link mutateSetCvBlocksPublic} — flags one CV as the\r\n * user's public résumé (single-public-per-user, BE-enforced). After triggering,\r\n * refetch `myCvBlocks` so the whole set reflects the new state (turni"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardDueReviewSessionProgress}.\r\n * Best-effort, fire-and-forget persistence of the in-progress batch —\r\n * callers should NOT `await` this before advancing to the next card, but must\r\n * still "
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardQuizSessionProgress}. Best-effort,\r\n * fire-and-forget persistence of the in-progress run — callers should NOT\r\n * `await` this before advancing the quiz, but must still route failures\r\n * "
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncFlashcardReviewSessionProgress}.\r\n * Best-effort, fire-and-forget persistence of the in-progress run — callers\r\n * should NOT `await` this before advancing the reviewer, but must still route\r\n * fai"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "text": "/**\r\n * SWR mutation for {@link mutateSyncMockInterviewSessionTurns}. Best-effort,\r\n * fire-and-forget persistence of the in-progress transcript — callers should\r\n * NOT `await` this before continuing the interview, but must still route\r\n *"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+      "text": "/**\r\n * Offset-paginated SWR hook for the content-AI conversations list (infinite\r\n * scroll). Each page skips `index * PAGE_LIMIT`; a page shorter than the limit\r\n * ends the list. Re-keys on `(scope, contentId, taskId, challengeId, quizId"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+      "text": "/**\r\n * Resolves the FIRST id in a mock-interview session's `matchedContentIds` into its\r\n * title + owning module id — just enough to render a \"Xem trong bài học\" citation\r\n * with a working deep link (`learn().module(moduleId).content(con"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+      "text": "/**\r\n * Infinite (offset-paginated) SWR hook for the viewer's AI credit charge history\r\n * — the \"Lịch sử dùng AI\" page list. Each page = `myCreditUsageHistory(limit,\r\n * offset)` (offset = pageIndex × {@link CREDIT_USAGE_HISTORY_PAGE_LIMIT"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+      "text": "/**\r\n * SWR wrapper for {@link queryMyRewardWallet}. `data` is the viewer's reward\r\n * wallet (điểm quà balance + redemption history), or `null`. User-scoped — only\r\n * runs once the viewer is authenticated.\r\n */"
+    },
+    {
+      "file": "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "text": "/**\r\n * SWR wrapper for {@link queryMyVouchers}. `data` is the viewer's Coin-shop\r\n * vouchers (newest first), or `null`. User-scoped — only runs once the viewer\r\n * is authenticated. Shares its key with nothing else — mutate directly after"
+    },
+    {
+      "file": "src/hooks/zustand/overlay/hooks.ts",
+      "text": "/** Cookie preferences modal overlay state (\"Tùy chỉnh\" granular cookie consent). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+      "text": "/**\r\n * Pays the current cycle of an installment (trả góp) plan.\r\n *\r\n * Mirrors `payNextInstallment` (mutations/installment-plans/pay-next-installment/pay-next-installment.resolver.ts).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-rewrite-cv-block.ts",
+      "text": "/**\r\n * AI-rewrites one block's prose, grounded (RAG) on the real capstone data when\r\n * `capstoneAttemptId` is set. Per-block \"* AI viết giúp\" — never blocks the\r\n * rest of the form; the caller owns that one block's spinner/retry-in-place"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+      "text": "/**\r\n * Sets the current user's AI model CEILING for a surface (or the global default\r\n * when `surface` is omitted) — the per-hạng-mục cap for cost control. Clients\r\n * refetch `myAiQuota` after to read the refreshed state.\r\n *\r\n * Mirrors"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+      "text": "/**\r\n * Flags (or un-flags) one CV as the user's PUBLIC CV — the single résumé shown\r\n * read-only on their public profile. Auth + owner-only + single-public-per-user\r\n * are enforced BE-side (turning one on turns any other off), so callers"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/cart.ts",
+      "text": "/** Pay the whole cart in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/course-enroll.ts",
+      "text": "/** Pay in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/discussion.ts",
+      "text": "/**\r\n * GraphQL `CreateCommentRequest` body. A top-level comment must set exactly one of\r\n * `contentId` (a lesson question) or `courseId` (a course-general \"hỏi chung khóa\"\r\n * question); a reply only needs `parentCommentId` (it inherits t"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "text": "/** Answer is solid for the card's level — clear hire signal (\"đạt\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "text": "/** Answer is partial — some substance, notable gaps (\"chưa đạt\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/grade-interview-answer.ts",
+      "text": "/** Answer misses the point or is largely wrong for the level (\"không đạt\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/rewrite-cv-block.ts",
+      "text": "/** Optional free-text steering for the rewrite (e.g. \"làm ngắn gọn hơn\"). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "text": "/**\r\n * AI surface (hạng mục) a per-feature model ceiling applies to. Mirrors backend\r\n * `AiCeilSurface`. Omit `surface` in the request to set the global default.\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "text": "/** Hỏi AI khi đọc bài (lesson tutor). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "text": "/** Chấm bài (challenge + capstone). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/set-ai-ceil.ts",
+      "text": "/** Phỏng vấn thử (mock interview). */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/split-cv-from-text.ts",
+      "text": "/** Raw pasted CvGalleryPage text (from an existing résumé) to parse into blocks. */"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-quiz-session.ts",
+      "text": "/**\r\n     * Learner-chosen name for this session, set at setup (\"Cấu hình luyện\").\r\n     * Optional — omitted/blank falls back to a TIME-BASED display name derived\r\n     * from the session's `createdAt` (see `sessionDisplayName`), never\r\n  "
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-flashcard-review-session.ts",
+      "text": "/**\r\n     * Which cards to persist into the session (teacher 2026-07-13 \"modal chọn mode\"):\r\n     * `\"full\"` (default) keeps the whole deck; `\"due\"` keeps only the cards\r\n     * needing review (no review row yet or past due). Omit for the f"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "text": "/**\r\n     * Subset of cognitive frames (\"theory\" | \"reasoning\" | \"scenario\") to draw\r\n     * questions from for a `mode=\"qna\"` session. Ignored for `mode=\"design\"`.\r\n     * Empty/omitted draws from all 3 kinds (the \"Tất cả\" default).\r\n     "
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "text": "/**\r\n     * Whether this run should count toward job-readiness's rolling interview\r\n     * average. `true` (default) for an \"Tự động\" (random, mock-exam) run;\r\n     * `false` for a \"Tùy chỉnh\" (configurable, deliberate-practice) run — the\r\n"
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "text": "/**\r\n     * Learner-chosen name for this session, set at setup (\"Tùy chỉnh phiên\").\r\n     * Optional — omitted/blank falls back to a TIME-BASED display name derived\r\n     * from the session's `createdAt` (see `sessionDisplayName`), never\r\n "
+    },
+    {
+      "file": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "text": "/** The drawn prompt's title, localized — for Q&A kinds a summary like \"4 câu · theory\", not a single system name. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-flashcard-review-session-by-session-id.ts",
+      "text": "/**\r\n * Fetches a flashcard \"Flashcard study\" session by its id alone (whichever kind it\r\n * is) — `null` when not found/not owned by the caller. Mirrors backend\r\n * `queries/flashcard/my-flashcard-review-session-by-session-id`; this is the"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-installment-plans.ts",
+      "text": "/**\r\n * Fetches the current user's non-completed installment (trả góp) plans via Apollo.\r\n *\r\n * Mirrors `myInstallmentPlans` (queries/installment-plans/my-installment-plans.resolver.ts);\r\n * the plan list is at `data.myInstallmentPlans.dat"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/query-my-reward-wallet.ts",
+      "text": "/**\r\n * Fetches the viewer's reward wallet (điểm quà balance + redemption history).\r\n *\r\n * Mirrors `myRewardWallet` (queries/rewards/my-reward-wallet).\r\n */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "text": "/**\r\n * One offered installment (\"trả góp\") term for a course's discounted price\r\n * (mirrors backend `InstallmentOptionItem`). The payment modal renders these as\r\n * the 3/6/12-month choices, each with its per-month + total (markup applied"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-price-preview.ts",
+      "text": "/** Offered installment (trả góp) terms for the discounted VND price; empty for a free/USD-only course. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/course-questions.ts",
+      "text": "/** Title of the lesson this question belongs to (for the \"Bài: …\" tag); null for a course-general question. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/courses-checkout-preview.ts",
+      "text": "/** Offered installment (trả góp) terms for the order's charged VND total; empty for a free/USD-only order. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/cv-blocks.ts",
+      "text": "/** Whether this CvGalleryPage is the user's ONE public résumé (single-public-per-user). */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "text": "/** Hỏi AI khi đọc bài override; null = follow default. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "text": "/** Chấm bài override; null = follow default. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-ai-quota.ts",
+      "text": "/** Phỏng vấn thử override; null = follow default. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-flashcard-review-stats.ts",
+      "text": "/** Reason-tagged leech cards (lapsed vs stuck-on-Hard), worst first — the \"viết lại\" fix-list. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+      "text": "/** One of the current user's installment (\"trả góp\") plans (mirrors backend `InstallmentPlanItem`). */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "text": "/** Cost in điểm quà paid for this redemption. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "text": "/** Current spendable điểm quà balance. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/my-reward-wallet.ts",
+      "text": "/** Lifetime điểm quà spent. */"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+      "text": "/**\r\n * One passed capstone/milestone task attempt the learner can pick into a CV\r\n * \"Dự án\" block. Existence of this row is the Verified trust signal — mirrors\r\n * the BE `PickableMilestoneAchievement` GraphQL type.\r\n *\r\n * CAPSTONE ONLY:"
+    },
+    {
+      "file": "src/modules/api/graphql/queries/types/recommended-courses.ts",
+      "text": "/** Courses the viewer already owns (for the \"đã học N khóa\" copy). */"
+    },
+    {
+      "file": "src/modules/types/entities/challenge.ts",
+      "text": "/** Optional hint text (markdown) — when present the card shows a \"có gợi ý\" tag. */"
+    },
+    {
+      "file": "src/modules/types/enums/cv-block-type.ts",
+      "text": "/**\r\n * The kind of a CV block (`cv_blocks.blocks[].type`) — drives which per-block\r\n * editor component + PDF template partial renders it. Mirrors the frozen block\r\n * table in `CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md` (\"CHỐT CUỐI\").\r\n */"
+    },
+    {
+      "file": "src/modules/utils/rank.ts",
+      "text": "/** Ring colour per rank: xám → đồng → bạc → vàng. */"
+    },
+    {
+      "file": "src/modules/utils/session-display-name.ts",
+      "text": "/**\r\n * Display name for a mock-interview / flashcard-quiz session — the learner's own\r\n * name when they set one at setup, else a TIME-BASED fallback derived from the\r\n * session's own `createdAt` (\"Phiên 14:30 · 12/7\"). Never random-gener"
+    }
+  ],
+  "skippedStrings": [
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/Hero/Hero.stories.tsx",
+      "text": "Đề THPT thật, chấm ngay with no lộ đáp án. Vocabulary bằng game, thi cùng bạn trong virtual exam roo"
+    },
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "text": "Học tiếng Anh, pass the exam — luyện thật, chơi thật, thi cùng nhau."
+    },
+    {
+      "file": ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      "text": "© 2026 Mia Mia. Học tiếng Anh, pass the exam."
+    },
+    {
+      "file": ".storybook/stories/mia-mia/composites/cards/FeatureCard/FeatureCard.stories.tsx",
+      "text": "Đề thật của các Sở, chấm ngay theo đáp án server — with no lộ đáp án khi đang làm. Xem lại từng câu "
+    },
+    {
+      "file": ".storybook/stories/mia-mia/composites/cards/FeatureCard/FeatureCard.stories.tsx",
+      "text": "Vocabulary bằng game"
+    },
+    {
+      "file": ".storybook/utils/block-anatomy.tsx",
+      "text": "Cấu thành (block + primitive)"
+    },
+    {
+      "file": ".storybook/utils/block-anatomy.tsx",
+      "text": "Vì sao dùng composite này"
+    },
+    {
+      "file": "src/app/[locale]/architecture/page.tsx",
+      "text": "Hệ thống StarCi, đang sống"
+    },
+    {
+      "file": "src/app/[locale]/contact/page.tsx",
+      "text": "Liên hệ"
+    },
+    {
+      "file": "src/app/[locale]/status/page.tsx",
+      "text": "Trạng thái hệ thống"
+    },
+    {
+      "file": "src/config/seo.ts",
+      "text": "StarCi Academy — học Fullstack, System Design và AI/LLM Engineering qua dự án thật, thực hành chấm đ"
+    },
+    {
+      "file": "src/modules/dayjs/index.ts",
+      "text": "HH:mm D [tháng] M, YYYY"
+    }
+  ]
+}

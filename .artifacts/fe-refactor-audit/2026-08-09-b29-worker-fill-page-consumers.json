@@ -1,0 +1,83 @@
+{
+  "partition": "fill-page-consumers",
+  "manifest": [
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/PracticeHubPage/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/index.tsx"
+  ],
+  "consumerEvidence": [
+    {
+      "component": "ArchitectureRail",
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "line": 64,
+      "prop": "className",
+      "value": "min-h-0 @app-lg:flex-1",
+      "ownership": "parent-placement",
+      "migration": "FillAvailable at=lg body={() => <ArchitectureRail healthByName selectedId onSelect />}"
+    },
+    {
+      "component": "PracticeRail",
+      "file": "src/components/pages/PracticeHubPage/index.tsx",
+      "line": 52,
+      "prop": "className",
+      "value": "min-h-0 @app-lg:flex-1",
+      "ownership": "parent-placement",
+      "migration": "FillAvailable at=lg body={() => <PracticeRail />}"
+    }
+  ],
+  "valueSet": {
+    "ArchitectureRail": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "PracticeRail": [
+      "min-h-0 @app-lg:flex-1"
+    ]
+  },
+  "oldApi": {
+    "ArchitectureRail": {
+      "className": "string (WithClassNames door)",
+      "healthByName": "HealthByName | null",
+      "selectedId": "string",
+      "onSelect": "(id: string) => void"
+    },
+    "PracticeRail": {
+      "className": "string (WithClassNames door)"
+    }
+  },
+  "newApi": {
+    "ArchitectureRail": {
+      "healthByName": "HealthByName | null",
+      "selectedId": "string",
+      "onSelect": "(id: string) => void"
+    },
+    "PracticeRail": {},
+    "ArchitecturePage": {
+      "FillAvailable": "at=lg body slot wrapping ArchitectureRail"
+    },
+    "PracticeHubPage": {
+      "FillAvailable": "at=lg body slot wrapping PracticeRail"
+    }
+  },
+  "changed": [
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/PracticeHubPage/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/index.tsx"
+  ],
+  "holds": [
+    "ArchitectureRail intrinsic root classes (relative flex min-h-0 min-w-0 flex-col gap-3 p-6) retained",
+    "PracticeRail intrinsic root classes (relative flex min-h-0 min-w-0 flex-col gap-3 p-6) retained",
+    "ArchitectureMobileNav and PracticeMobileNav unchanged (mobile chip rows, no flex-fill)"
+  ],
+  "parity": {
+    "storybookSrc": "src-only — no SB twins for ArchitectureRail/PracticeRail in this worker"
+  },
+  "verification": {
+    "consumerScan": "grep className on ArchitectureRail/PracticeRail open tags → 0 in src",
+    "importsRemoved": "WithClassNames removed from ArchitectureRail and PracticeRail; cn removed from PracticeRail",
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — page consumer files scoped to fill-page-consumers; FillAvailable frame owned by fill-frame-contract worker"
+}

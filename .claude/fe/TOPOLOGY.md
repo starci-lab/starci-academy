@@ -14,10 +14,10 @@ canon changes deliberately, update this projection and its lint rules together.
 resources / modules / hooks
               |
               v
-            atoms
+            leaves
               |
               v
-            frames
+           branches
               |
               v
          composites
@@ -34,10 +34,11 @@ resources / modules / hooks
 
 The important dependency rule is directional:
 
-- atoms import no higher visual tier;
-- frames depend on low-level types/atoms only and never domain components;
-- composites may arrange atoms with frames;
-- blocks compose atoms, frames and composites;
+- leaves import no higher visual tier;
+- branches depend on low-level types/leaves only and never domain components;
+- composites arrange independently meaningful leaves into one fixed reusable shape;
+- shells isolate vendor mechanics whose interior shape they deliberately do not interpret;
+- blocks compose leaves, branches and composites;
 - pages/layouts/overlays compose blocks and lower vocabulary;
 - app owns framework providers and route wiring.
 
@@ -59,9 +60,9 @@ No lower tier imports a higher tier.
 - contain visual chrome decisions;
 - hide reusable helpers inside component folders.
 
-## Atom
+## Leaf (`src/components/leaves/`)
 
-An atom owns one intrinsic visual or control behavior.
+A leaf owns one intrinsic visual value or one control behavior.
 
 ### Owns
 
@@ -74,16 +75,22 @@ An atom owns one intrinsic visual or control behavior.
 
 - expose `className`, `classNames` or `style`;
 - accept placement, gap, margin, width or flex-participation decisions;
-- render a reusable arrangement of other atoms;
+- render a reusable arrangement of independently meaningful leaves;
 - know domain entities;
 - accept arbitrary ReactNode composition;
 - export a house runtime namespace.
 
-If it arranges icon + label + hint/error, it is a composite.
+One leaf may render another leaf only when that child is an intrinsic part of the SAME value or
+control: Button + its icon, Link + its caret, Text + its glyph. If the parts retain independent
+meaning, loading, reading order or action, the owner is a composite.
 
-## Frame
+`Fixed interior` and `always rendered together` do not make a leaf. The phrase `cluster leaf` is
+not a valid tier and must never be used as an escape hatch. Icon + label + fact, label + input +
+hint, seven day cells, or title + figure + progress bar are composites.
 
-A frame owns structural grammar: direction, seam, measure, responsive
+## Branch (`src/components/branches/`)
+
+A branch owns contract-driven structural grammar: direction, seam, measure, responsive
 visibility, landmark, pin/fill behavior or shell topology.
 
 ### Generic frame
@@ -124,16 +131,19 @@ The owner is either one principle on a generic frame or the named frame itself.
 - inspect child identity to decide layout;
 - accept unconstrained children.
 
-## Composite
+## Composite (`src/components/composites/`)
 
-A composite is a reusable semantic shape made from atoms and frames.
+A composite is a fixed reusable semantic arrangement of independently meaningful leaves.
 
 ### Owns
 
 - reusable arrangements independent of domain;
+- its own internal host and the stable seams among its leaves;
+- `CompositeProps<Data, Actions>` and source marker `shape: "composite"`;
+- contract identity through `defineCompositeComponent`, declared as `composite:` in the registry;
 - finite semantic variants;
 - which children rest and how many during skeleton state;
-- typed buildable slots using `ComponentTypeWithSkeleton`;
+- typed buildable slots; arbitrary ReactNode holes remain forbidden;
 - optional caller identity only when it is genuinely root-capable.
 
 ### Must not
@@ -251,24 +261,47 @@ workflow.
 - identity is not styling and is not a principle;
 - one identity is not spread to multiple nodes.
 
+### Avatar fallback
+
+- the Avatar vocabulary leaf alone owns profile-image fallback;
+- a non-empty real `src` wins; an absent or failed image falls back to DiceBear `lorelei`;
+- the already-resolved person name is the stable DiceBear seed; an absent name uses the fixed
+  `StarCi` seed, never randomness;
+- generate the SVG data URI locally with `@dicebear/core` and `@dicebear/styles`; product render
+  paths must not depend on the DiceBear HTTP API;
+- callers pass only identity data (`name`, optional `src`, finite `size`), never initials, a seed,
+  generated SVG, fallback URL, fallback component or fallback children;
+- the loading pass remains the Avatar leaf's intrinsic shimmer and does not reveal either the real
+  image or the generated fallback.
+
 ## Skeleton
 
-- atom owns its intrinsic shimmer;
+- leaf owns its intrinsic shimmer;
 - composite decides which children rest and how many;
-- block/page forwards `isSkeleton`;
+- request state is pending while `data === undefined` and no terminal error exists, including when
+  a viewer/session prerequisite temporarily disables the request key;
+- `isLoading` is a transport observation, not the definition of unresolved domain data, and must
+  never be the only condition that selects a pending shape;
+- `null` means settled empty only when that request contract explicitly assigns it that meaning;
+- each independently settling block keeps its own real tree in loading form until its own data
+  settles; no settled zero/default/empty value may impersonate loading;
+- block/page forwards resolved pending state as `isLoading` to the pure tree;
+- a skeleton leaf reserves both width and line height even when resolved copy is absent; a width
+  class on an empty zero-height node is not a visible skeleton;
 - no `FooSkeleton` mirror tree;
 - no inline branch between unrelated skeleton and real shapes;
 - skeleton controls are zero-prop ComponentTypes.
 
 ## Classification test
 
-1. Owns intrinsic vendor appearance? Atom.
-2. Owns structural grammar? Frame.
-3. Reusable semantic arrangement without domain? Composite.
+1. Owns one intrinsic value/control (including an inseparable icon)? Leaf.
+2. Owns variable contract-driven structural grammar? Branch.
+3. Fixes a reusable arrangement of independently meaningful leaves? Composite.
 4. Expresses domain data/actions? Block.
 5. Owns screen composition? Page.
 6. Owns route-stable shell topology? Layout.
-7. Owns modal/drawer/popover workflow? Overlay.
+7. Owns uninterpreted vendor mechanics for modal/drawer/dropdown? Shell.
+8. Owns modal/drawer/popover product workflow? Overlay.
 
 ## Non-negotiable public contract
 

@@ -1,0 +1,218 @@
+{
+  "batch": "B33",
+  "agent": "agent-7-identity",
+  "role": "identity + frame-self-declare closure",
+  "checkpoint": "139391b6",
+  "manifest": {
+    "key": "agent-7-identity",
+    "focus": "identity + frame-self-declare",
+    "clusterIds": [
+      "src-or-sb:blocks/ai/AiQuotaLane::AiQuotaLane::sentence-root::band2",
+      "src-or-sb:blocks/learn/CourseQaQuestionList/SkeletonQuestionRow::SkeletonQuestionRow::sentence-root::band1",
+      "src-or-sb:blocks/learn/InterviewerPresence::InterviewerPresence::sentence-root::band12",
+      "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8"
+    ],
+    "fileCount": 50
+  },
+  "clusterIds": [
+    "src-or-sb:blocks/ai/AiQuotaLane::AiQuotaLane::sentence-root::band2",
+    "src-or-sb:blocks/learn/CourseQaQuestionList/SkeletonQuestionRow::SkeletonQuestionRow::sentence-root::band1",
+    "src-or-sb:blocks/learn/InterviewerPresence::InterviewerPresence::sentence-root::band12",
+    "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8"
+  ],
+  "ownedRules": [
+    "starci-fe/require-identity-root",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-identity-wrapper-div"
+  ],
+  "consumersScanned": [
+    "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+    "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+    "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/blocks/learn/ResumeRail/index.tsx"
+  ],
+  "consumersMigrated": [],
+  "sharedApiRemovedOrRetained": [
+    {
+      "api": "CollapsibleSidebarProps.className",
+      "decision": "removed",
+      "reason": "Zero live StarCi callers passed className; Storybook twin already omitted the door. Removed for twin parity — not retained."
+    },
+    {
+      "api": "CollapsibleSidebar <nav> landmark + column flex-fill",
+      "decision": "retained",
+      "reason": "No house NavLandmark frame owns <nav> + flex-fill yet (SB HOLD comment preserved). Host/raw-shape remain."
+    },
+    {
+      "api": "InterviewerPresence pulse <span> relative/absolute chrome",
+      "decision": "retained",
+      "reason": "Outside assigned cluster remaining rules; no existing vocabulary owner for decorative pulse ring. Pre-existing no-raw-shape."
+    },
+    {
+      "api": "SkeletonQuestionRow StackV.classNames / Skeleton.className escape hatch",
+      "decision": "retained",
+      "reason": "Pre-existing classname doors outside require-frame-self-declare cluster; not invented this batch."
+    }
+  ],
+  "changedFiles": [
+    ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+    "src/components/blocks/ai/AiQuotaLane/index.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+    "src/components/blocks/learn/InterviewerPresence/index.tsx",
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+  ],
+  "beforeAfterMessages": {
+    "scope": "agent-7-identity src files (46 with owned findings) + 4 storybook twins for assigned clusters",
+    "ownedRules": {
+      "starci-fe/require-frame-self-declare": { "before": 8, "after": 0 },
+      "starci-fe/require-identity-root": { "before": 44, "after": 42 },
+      "starci-fe/no-identity-wrapper-div": { "before": 0, "after": 0 }
+    },
+    "assignedClusters": {
+      "src-or-sb:blocks/ai/AiQuotaLane::AiQuotaLane::sentence-root::band2": {
+        "beforeRules": ["starci-fe/require-frame-self-declare"],
+        "afterRules": [],
+        "notes": "Added principle+explain on root StackV; SB twin gained identity+principle+explain for parity."
+      },
+      "src-or-sb:blocks/learn/CourseQaQuestionList/SkeletonQuestionRow::SkeletonQuestionRow::sentence-root::band1": {
+        "beforeRules": ["starci-fe/require-frame-self-declare"],
+        "afterRules": [],
+        "notes": "Mirrored SB item tree into src; declared principle+explain on nested StackV/StackH. Residual no-public-classname-prop outside cluster."
+      },
+      "src-or-sb:blocks/learn/InterviewerPresence::InterviewerPresence::sentence-root::band12": {
+        "beforeRules": [
+          "starci-fe/no-host-element-at-sentence-tier",
+          "starci-fe/require-frame-self-declare"
+        ],
+        "afterRules": [],
+        "notes": "Dropped wrapper <div>; stamped identity on root StackV; declared principle+explain on root + question StackV. Residual no-raw-shape on pulse spans outside cluster."
+      },
+      "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8": {
+        "beforeRules": [
+          "starci-fe/no-host-element-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier",
+          "starci-fe/require-frame-self-declare"
+        ],
+        "afterRules": [
+          "starci-fe/no-host-element-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ],
+        "notes": "Identity on panel StackV; principle+explain on panel + nav StackV; src aligned toward SB (FillAvailable topSlot, item tree). Nav landmark HOLD remains."
+      }
+    }
+  },
+  "closedClusters": [
+    "src-or-sb:blocks/ai/AiQuotaLane::AiQuotaLane::sentence-root::band2",
+    "src-or-sb:blocks/learn/CourseQaQuestionList/SkeletonQuestionRow::SkeletonQuestionRow::sentence-root::band1",
+    "src-or-sb:blocks/learn/InterviewerPresence::InterviewerPresence::sentence-root::band12"
+  ],
+  "partialClusters": [
+    {
+      "id": "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8",
+      "cleared": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/require-identity-root"
+      ],
+      "remaining": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "hold": "No NavLandmark vocabulary owner for <nav> + column flex-fill."
+    }
+  ],
+  "holds": [
+    {
+      "rule": "starci-fe/require-identity-root",
+      "countAfter": 42,
+      "reason": "Exported roots are host elements, vendor atoms, or other blocks that do not accept CallerIdentity. No wrapper hosts and no atom identity stamps.",
+      "examples": [
+        "src/components/blocks/async/AsyncContent/index.tsx",
+        "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+        "src/components/blocks/auth/Turnstile/index.tsx",
+        "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+        "src/components/blocks/cards/FlipCard/index.tsx",
+        "src/components/blocks/cards/HighlightCard/index.tsx",
+        "src/components/blocks/code/CodeConsole/index.tsx",
+        "src/components/blocks/code/IOExampleCard/index.tsx",
+        "src/components/blocks/code/SandpackPanel/index.tsx",
+        "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+        "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+        "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+        "src/components/blocks/commerce/TierGrid/index.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+        "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+        "src/components/blocks/dashboard/Confetti/index.tsx",
+        "src/components/blocks/entity/EntityToken/index.tsx",
+        "src/components/blocks/feed/ActivityAvatar/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/feed/ChatBubble/index.tsx",
+        "src/components/blocks/feed/ChatPanel/index.tsx",
+        "src/components/blocks/feed/EntityLink/index.tsx",
+        "src/components/blocks/feed/Timeline/index.tsx",
+        "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+        "src/components/blocks/form/Dropzone/index.tsx",
+        "src/components/blocks/form/SearchInput/component.tsx",
+        "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+        "src/components/blocks/identity/BadgeImage/index.tsx",
+        "src/components/blocks/identity/BrandLockup/index.tsx",
+        "src/components/blocks/identity/BrandLogo/index.tsx",
+        "src/components/blocks/identity/IconTile/index.tsx",
+        "src/components/blocks/identity/Logo/index.tsx",
+        "src/components/blocks/layout/AmbientBackground/index.tsx",
+        "src/components/blocks/layout/ConnectSheet/index.tsx",
+        "src/components/blocks/layout/DragScrollArea/index.tsx",
+        "src/components/blocks/layout/PageContainer/index.tsx",
+        "src/components/blocks/layout/ResizableRail/index.tsx"
+      ]
+    },
+    {
+      "rule": "starci-fe/no-host-element-at-sentence-tier + no-raw-shape-at-sentence-tier",
+      "files": [
+        "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+        ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx"
+      ],
+      "reason": "NavLandmark vocabulary missing for <nav className=\"flex min-h-0 flex-1 flex-col\">."
+    }
+  ],
+  "forbiddenConsumers": [],
+  "parity": {
+    "AiQuotaLane": "SB+src both identity + sibling-stack self-declare on StackV",
+    "SkeletonQuestionRow": "SB-first item tree mirrored to src; status-dot atom differs (HeroSkeleton vs Skeleton) as prior twin variance",
+    "InterviewerPresence": "src dropped wrapper div to match SB; both stamp identity on root StackV",
+    "CollapsibleSidebar": "src restructured toward SB (FillAvailable + item tree); className door removed; both stamp identity on panel StackV"
+  },
+  "tests": {
+    "eslintOwnedPriority": {
+      "command": "npx eslint --format json on 8 priority twin files",
+      "result": "owned rules CLEAR on all 8"
+    },
+    "eslintMaxWarningsAiQuotaLane": {
+      "command": "npx eslint --max-warnings=0 src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "result": "pass"
+    },
+    "eslintAssignedClusterResidue": {
+      "AiQuotaLane": "0 cluster rules",
+      "SkeletonQuestionRow": "0 cluster rules (2 pre-existing no-public-classname-prop)",
+      "InterviewerPresence": "0 cluster rules (2 pre-existing no-raw-shape)",
+      "CollapsibleSidebar": "host+raw remain on <nav>"
+    },
+    "tsc": {
+      "command": "npx tsc --noEmit",
+      "touchedFiles": "no errors in changed files",
+      "note": "Pre-existing PriceTag classNames errors elsewhere (out of scope)"
+    },
+    "gitDiffCheck": "pass on changed files"
+  },
+  "regressions": [],
+  "status": "partial-complete",
+  "summary": "Closed 3 of 4 assigned partial clusters (AiQuotaLane, SkeletonQuestionRow, InterviewerPresence). CollapsibleSidebar cleared identity + frame-self-declare but remains partial on nav landmark host/raw-shape. 42 require-identity-root holds remain where roots are not CallerIdentity-capable vocabulary owners."
+}

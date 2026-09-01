@@ -1,0 +1,34 @@
+{
+  "partition": "showcase-locked-handoff",
+  "changed": [],
+  "skipped": [
+    "LearnLoopScroll locked — no ShowcaseMockup/LearnLoopScroll edits"
+  ],
+  "holds": [
+    "ShowcaseMockup.contentClassName"
+  ],
+  "evidence": [
+    "LearnLoopScroll StepVisual: contentClassName={cn(\"flex flex-col p-4\", align==='start' ? justify-start : justify-center)}",
+    "Inner motion.div already owns flex flex-col gap-3 (content-row) — outer also sets flex-col + padding + justify",
+    "TalentMarketplace (unlocked twin consumer): contentClassName=\"flex flex-col gap-3 p-4\" — parent-placement candidate after unlock coordination"
+  ],
+  "handoff": {
+    "id": "showcase-mockup-content-layout",
+    "whyNotMechanical": [
+      "LearnLoopScroll is a locked path — cannot migrate the consumer that proves the door",
+      "Payload mixes padding (p-4), flex direction, and conditional justify — not one proven bodyVariant",
+      "Inner child already applies flex-col gap-3; deleting outer flex without unlock risks double-stack / justify loss"
+    ],
+    "owningFuture": {
+      "composite": "ShowcaseMockup",
+      "candidate": "contentVariant or inset+align props (e.g. padded-stack | padded-start) — design must pick one closed set after LearnLoopScroll unlock",
+      "interim": "keep contentClassName; migrate TalentMarketplace only together with LearnLoopScroll in an unlock batch"
+    },
+    "notClaimedFixed": true
+  },
+  "ratchetReady": false,
+  "verification": {
+    "edits": "none"
+  },
+  "regressions": []
+}

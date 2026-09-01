@@ -1,0 +1,51 @@
+﻿node.exe : Warning: React version not specified in eslint-plugin-react settings. See 
+https://github.com/jsx-eslint/eslint-plugin-react#configuration .
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: React ...configuration .:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+D:\Repositories\starci-academy\.storybook\components\starci\blocks\consultant\ConsultantDirectoryGrid\ConsultantDirectoryGrid.tsx
+  100:9  warning  Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)  starci-fe/no-host-element-at-sentence-tier
+
+D:\Repositories\starci-academy\src\components\blocks\consultant\ConsultantDirectoryCompanySearch\index.tsx
+  16:1  warning  JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div  starci-fe/require-identity-root
+
+D:\Repositories\starci-academy\src\components\blocks\consultant\ConsultantDirectoryGrid\index.tsx
+  17:1  warning  JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div  starci-fe/require-identity-root
+  95:9  warning  Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)                                   starci-fe/no-host-element-at-sentence-tier
+
+D:\Repositories\starci-academy\src\components\blocks\cv\CvBlocksWorkspace\CvBlockStack\AchievementBlockEditor\index.tsx
+   4:1   warning  Import '@heroui/react' outside the vocabulary tier ΓÇö use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly  starci-fe/no-heroui-outside-vocabulary
+  61:51  error    'block.items' is missing in props validation                                                                                                                    react/prop-types
+  61:57  error    'block.items.length' is missing in props validation                                                                                                             react/prop-types
+
+D:\Repositories\starci-academy\src\components\blocks\cv\CvBlocksWorkspace\CvBlockStack\PersonalBlockEditor\index.tsx
+    4:1   warning  Import '@heroui/react' outside the vocabulary tier ΓÇö use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly  starci-fe/no-heroui-outside-vocabulary
+  150:13  error    Use one semantic `principle` (emitted as `data-principle`). CSS layout props are not public frame decisions (forbid `gap` on Grid)                              starci-fe/no-public-frame-css-props
+
+D:\Repositories\starci-academy\src\components\blocks\cv\CvBlocksWorkspace\CvTemplateGalleryModal\index.tsx
+   71:25  warning  `<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)  starci-fe/require-frame-self-declare
+   77:37  warning  Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)                                                               starci-fe/no-host-element-at-sentence-tier
+   77:54  warning  `overflow-hidden` on <div> at sentence tier ΓÇö this tier composes frames/composites and does not draw layout; push the class down into a frame/composite                                                                                  starci-fe/no-raw-shape-at-sentence-tier
+   78:41  warning  Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)                                                               starci-fe/no-host-element-at-sentence-tier
+  147:21  error    Use one semantic `principle` (emitted as `data-principle`). CSS layout props are not public frame decisions (forbid `gap` on Grid)                                                                                                       starci-fe/no-public-frame-css-props
+
+D:\Repositories\starci-academy\src\components\blocks\grading\GradeCreditCaption\component.tsx
+  52:9  warning  `<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)  starci-fe/require-frame-self-declare
+
+D:\Repositories\starci-academy\src\components\blocks\profile\CvSubmission\index.tsx
+  29:1  warning  JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div  starci-fe/require-identity-root
+
+D:\Repositories\starci-academy\src\components\blocks\profile\ProfileHero\ShareProfileButton\index.tsx
+  6:1  warning  JSX file without an `identity` prop on the root ΓÇö add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div  starci-fe/require-identity-root
+
+D:\Repositories\starci-academy\src\components\blocks\profile\ProfileHero\index.tsx
+  354:29  warning  `<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)  starci-fe/require-frame-self-declare
+  379:37  warning  `<StackV>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)  starci-fe/require-frame-self-declare
+  384:49  warning  `<StackH>` declares neither `principle` nor `explain` ΓÇö a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)  starci-fe/require-frame-self-declare
+
+Γ£û 20 problems (4 errors, 16 warnings)
+

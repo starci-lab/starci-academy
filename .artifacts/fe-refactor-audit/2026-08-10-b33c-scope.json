@@ -1,0 +1,3262 @@
+{
+  "batch": "B33c",
+  "checkpoint": "139391b6",
+  "generatedAt": "2026-08-08T13:24:05.235Z",
+  "ownershipOk": true,
+  "unowned": [],
+  "dualOwnership": [],
+  "forbiddenHits": [],
+  "preDirtyHoldOuts": [
+    "CLAUDE.md",
+    ".claude/fe/decision-ledger.json",
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+    "src/components/blocks/learn/ReactionButton/types.ts"
+  ],
+  "preDirtyPresentInWorktree": [
+    ".claude/fe/decision-ledger.json",
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+    "CLAUDE.md",
+    "src/components/blocks/learn/ReactionButton/types.ts"
+  ],
+  "coordinatorRepairs": [
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx"
+  ],
+  "commitManifestCount": 132,
+  "commitManifest": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+    ".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+    ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+    ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+    ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+    ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+    ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+    ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+    ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+    ".storybook/components/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.tsx",
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+    ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+    ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+    ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+    ".storybook/components/starci/pages/ChallengePage/ChallengePage.tsx",
+    ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+    ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+    ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+    ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+    ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+    ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+    ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+    ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+    ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+    ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+    ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+    ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+    ".storybook/components/starci/pages/PlaygroundHubPage/PlaygroundHubPage.tsx",
+    ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+    ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+    ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+    "src/components/blocks/ai/AiQuotaLane/index.tsx",
+    "src/components/blocks/ai/QuotaBar/index.tsx",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx",
+    "src/components/blocks/buttons/RatingBar/index.tsx",
+    "src/components/blocks/cards/ContinueCard/index.tsx",
+    "src/components/blocks/cards/NestedCard/index.tsx",
+    "src/components/blocks/cards/PressableCard/index.tsx",
+    "src/components/blocks/chips/EnumChip/index.tsx",
+    "src/components/blocks/chips/HostPlatformChip/component.tsx",
+    "src/components/blocks/chips/HostPlatformChip/index.tsx",
+    "src/components/blocks/chips/TagChips/component.tsx",
+    "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+    "src/components/blocks/commerce/PricingTable/index.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+    "src/components/blocks/commerce/TrialConversionStrip/index.tsx",
+    "src/components/blocks/course/CourseTrialChip/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+    "src/components/blocks/dashboard/ChangelogList/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/learn/ChallengeHeader/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ContentDiscussion/index.tsx",
+    "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    "src/components/blocks/learn/EntityResultRow/component.tsx",
+    "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+    "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+    "src/components/blocks/learn/InterviewerPresence/index.tsx",
+    "src/components/blocks/learn/KeepGoingPath/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+    "src/components/blocks/learn/LearnSidebar/index.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+    "src/components/blocks/learn/ModuleLessonList/index.tsx",
+    "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx",
+    "src/components/blocks/learn/TaskBriefBody/index.tsx",
+    "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+    "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+    "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+    "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    "src/components/blocks/navigation/NavLinks/index.tsx",
+    "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+    "src/components/blocks/profile/ProfileLockedState/index.tsx",
+    "src/components/composites/cards/SurfaceCard/index.tsx",
+    "src/components/composites/chips/EnumChip/index.tsx",
+    "src/components/composites/navigation/Toolbar/index.tsx",
+    "src/components/composites/stats/ProgressMeter/index.tsx",
+    "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+    "src/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+    "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "src/components/composites/viewers/MarkdownContent/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+    "src/components/layouts/PublicProfileLayout/component.tsx",
+    "src/components/layouts/SettingsLayout/component.tsx",
+    "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+    "src/components/overlays/modals/PaymentModal/component.tsx",
+    "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+    "src/components/pages/AiUsagePage/hooks/index.ts",
+    "src/components/pages/AiUsagePage/hooks/quota-lane-variant.ts",
+    "src/components/pages/AiUsagePage/hooks/useQuotaLaneData.ts",
+    "src/components/pages/AiUsagePage/index.tsx",
+    "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+    "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+    "src/components/pages/ChallengePage/component.tsx",
+    "src/components/pages/ChallengeResultPage/component.tsx",
+    "src/components/pages/ContentPage/component.tsx",
+    "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+    "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+    "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+    "src/components/pages/FoundationsCategoryPage/component.tsx",
+    "src/components/pages/LeaderboardPage/component.tsx",
+    "src/components/pages/LeaguePage/index.tsx",
+    "src/components/pages/LoginPage/index.tsx",
+    "src/components/pages/MindMapPage/component.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "src/components/pages/MockInterviewPage/index.tsx",
+    "src/components/pages/ModulePage/component.tsx",
+    "src/components/pages/PracticeHubPage/index.tsx",
+    "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx",
+    "src/components/pages/RewardsPage/index.tsx",
+    "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+    "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+    "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+    "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+    "src/hooks/quota-lane-variant.ts",
+    "src/hooks/useQuotaLaneData.ts"
+  ],
+  "byOwner": {
+    "agent-6-composites": 15,
+    "agent-4-stack-flex-cluster": 35,
+    "agent-2-chip-avatar": 18,
+    "agent-7-identity": 8,
+    "agent-3-typography": 10,
+    "agent-1-button": 4,
+    "agent-9-sentence-heroui": 12,
+    "agent-5-container-grid": 24,
+    "agent-8-page-folder": 6
+  },
+  "entries": [
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantProfileBody/ConsultantProfileBody.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardToolbar/LeaderboardToolbar.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapContinueButton/MindMapContinueButton.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ModuleContinueBand/ModuleContinueBand.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PersonalProjectResultScreen/PersonalProjectResultScreen.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundConnectSheet/PlaygroundConnectSheet.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionButton.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskSubmissionPanel.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseContents/CourseContents.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/async/EmptyContent/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/ContinueCard/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/PricingTable/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/community/CommunityCommentItem/component.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/community/CommunityCommentThread/component.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "owner": "agent-1-button",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ModuleHeader/ModuleHeader.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/blog/PostRow/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/chips/EnumChip/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/chips/StatusChip/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/chips/TagChips/component.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/course/CourseTrialChip/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/EntityResultRow/component.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleHeader/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeHeader/ChallengeHeader.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentRelatedList/ContentRelatedList.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/types.ts",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/LeaderboardPage/LeaderboardPage.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/atoms/display/ThreadConnector/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/navigation/NavLinks/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLockedState/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/navigation/Toolbar/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/frames/Container/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/frames/Flex/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+      "owner": "agent-4-stack-flex-cluster",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/ChallengePage/ChallengePage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundHubPage/PlaygroundHubPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/pages/QuizPage/QuizPage.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/layouts/PublicProfileLayout/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/layouts/SettingsLayout/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/scene.ts",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/modules.ts",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ChallengePage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ContentPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/FoundationResourcePage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/FoundationsGridPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/HeadhuntingsPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/LeaderboardPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/index.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ModulePage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/PlaygroundHubPage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "owner": "agent-5-container-grid",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": true,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentArticle/ContentArticle.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaInvite/CourseQaInvite.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationResourceBody/FoundationResourceBody.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ModuleChallengeList/ModuleChallengeList.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaChatBubble/QaChatBubble.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/NestedCard/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaInvite/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceBody/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/hooks/useTableOfContents.ts",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/QaChatBubble/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/E2eBody/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": true,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/chips/Chip/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/TabsBlock.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/markdown-table.ts",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": true,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/async/AsyncContent/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/auth/Turnstile/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/FlipCard/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/dashboard/Confetti/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/entity/EntityToken/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/feed/EntityLink/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/feed/Timeline/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/form/Dropzone/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/form/SearchInput/component.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/identity/Logo/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/PageContainer/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/InterviewerPresence/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "owner": "agent-7-identity",
+      "classification": "b33-manifest",
+      "coordinatorRepair": true,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/map.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/index.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/constants/index.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/constants/quick-test-urls.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/map.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/types/admin-mpeg-dash-test.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/types/index.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/enums/index.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/enums/upload-status.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/map.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/types/admin-upload-video.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/types/index.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/hooks/index.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/hooks/quota-lane-variant.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/hooks/useQuotaLaneData.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/future-scene.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/CurlTester/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/constants.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/hooks/useArchitectureNode.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/hooks/useSystemHealthPoll.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/metricsFormat.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/statusVisual.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/BlogListPage/Masthead/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryCompanySearch/ConsultantDirectoryCompanySearch.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryHeader/ConsultantDirectoryHeader.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaHeader/CourseQaHeader.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationCategoryHeader/FoundationCategoryHeader.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationsHeader/FoundationsHeader.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardHeader/LeaderboardHeader.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupHeader/PlaygroundSetupHeader.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/auth/GithubLinkGate/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/cards/verdict-band.ts",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/dashboard/ChangelogList/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/AuroraEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/BubblesEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/CircuitEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/EmberEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/FirefliesEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/RainEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/SnowEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/StarsEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/WaveEffect.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/NavbarThemeSwitch/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/mdxComponents.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-manifest",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/index.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "CourseTrialChip — dropped Chip classNames shrink-0 (placement; Chip owns w-fit)",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "AiQuotaHistoryPanel SB — removed dead public classNames door; mirrored src identity StackV root",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "PriceTagBase SB+src — removed dead public classNames door",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "EnrollGate SB — PriceTag self-center moved to Box parent (transitive after door burn)",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "PaymentModal — dropped PriceTag shrink-0 classNames (transitive; Chip/PriceTag intrinsic width)",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "EnumChip block — removed dead WithClassNames/className door",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "HostPlatformChip — transitive stop-passing className after EnumChip door burn",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "TagChips — removed dead per-part classNames door",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "EntityResultRow — removed WithClassNames; HeroUI Chip+w-fit → house Chip tone",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "ChatToolResult — removed dead className door",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "ReadBadge — HeroUI Chip soft-tint className → house Chip tone=success + icon",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "LearnSidebar badge — HeroUI soft-tint className → house Chip tone=warning",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "ImplementationCard — HeroUI Chip+w-fit → house Chip tone=accent",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "ExplainingCard — HeroUI Chip → house Chip tone",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "RatingBar — HeroUI Chip/Typography → house Chip + Typography",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "ContentHeader minutes chip — HeroUI Chip → house Chip + ClockIcon",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "PersonalProjectDashboard github chip — HeroUI soft-tint → house Chip + GithubLogoIcon (SB parity)",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "CvTemplateGalleryModal ATS chip — soft-tint/cn appearance → house Chip tone warning|success",
+      "owner": "agent-2-chip-avatar",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      "owner": "agent-3-typography",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/stats/ProgressMeter/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/chips/EnumChip/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/index.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "owner": "agent-6-composites",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/hooks/quota-lane-variant.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/hooks/useQuotaLaneData.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/modules/types/auth/oauth-button-item.ts",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/index.tsx",
+      "owner": "agent-8-page-folder",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    },
+    {
+      "file": "none required — removals were unused doors or internal host/className drops with zero call-site className/classNames usage",
+      "owner": "agent-9-sentence-heroui",
+      "classification": "b33-worker-extra",
+      "coordinatorRepair": false,
+      "forbidden": false
+    }
+  ]
+}

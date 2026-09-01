@@ -1,0 +1,40 @@
+{
+  "batch": "B40",
+  "worker": "w14-src-pages-MockInterviewPage",
+  "owns": [
+    "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/pages/CourseContents/component.tsx",
+    "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "src/components/pages/CourseDetailPage/CoursePricingRail/PhaseRow/index.tsx",
+    "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+    "src/components/pages/CourseDetailPage/component.tsx",
+    "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+    "src/components/pages/EditProfilePage/index.tsx",
+    "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewGatePreview/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewResult/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+    "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+    "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+    "src/components/pages/MockInterviewPage/index.tsx"
+  ],
+  "safeRules": [
+    "starci-fe/require-export-jsdoc",
+    "starci-fe/no-inline-parameter-type",
+    "starci-fe/handler-on-prefix",
+    "starci-fe/prefer-arrow-export",
+    "starci-fe/no-vietnamese-in-source-authoring",
+    "starci-fe/require-identity-root",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-emoji-in-source"
+  ],
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w14-src-pages-MockInterviewPage.json"
+}

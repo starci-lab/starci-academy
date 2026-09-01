@@ -1,0 +1,221 @@
+{
+  "partition": "pages-dashboard-learning",
+  "manifest": [
+    "src/components/pages/CommunityFeedPage/component.tsx",
+    "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+    "src/components/pages/CourseCatalogPage/CatalogLineCardSkeleton/index.tsx",
+    "src/components/pages/CourseCatalogPage/component.tsx",
+    "src/components/pages/CourseContents/component.tsx",
+    "src/components/pages/CourseDetailPage/CourseCtaButtons/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "src/components/pages/CourseDetailPage/CoursePricingRail/PhaseRow/index.tsx",
+    "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+    "src/components/pages/CourseDetailPage/component.tsx",
+    "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+    "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+    "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+    "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+    "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+    "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+    "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+    "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+    "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+    "src/components/pages/FlashcardReviewPage/index.tsx",
+    "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/index.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/index.tsx",
+    "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+    "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+    "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+    "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+    "src/components/pages/PracticeHubPage/index.tsx",
+    "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+    "src/components/pages/PracticeProblemPage/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx"
+  ],
+  "changed": [
+    "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed CourseDetailProps=WithClassNames and className; no-arg export",
+      "consumers": "LearningHistoryPage mounts <CourseDetail /> with no props"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "kind": "parent-placement",
+      "change": "Replaced raw flex flex-col gap-6 shell with StackV gap={6} principle=block-boundary (existing principle)",
+      "consumers": "n/a — intrinsic shell, not a public className door"
+    }
+  ],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 1,
+    "parentPlacementApplied": 1,
+    "proposals": 4
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "evidence": "LearningHistoryPage mounts <CourseDetail /> with no props"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "evidence": "n/a — intrinsic shell, not a public className door"
+    }
+  ],
+  "proposals": [
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "component": "CourseHero",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/component.tsx",
+            "prop": "className",
+            "line": 120,
+            "snippet": "<CourseHero className=\"@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "component": "CourseMobileEnrollBar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/component.tsx",
+            "prop": "className",
+            "line": 145,
+            "snippet": "<CourseMobileEnrollBar className=\"@app-md:hidden\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "component": "CoursePricingRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/component.tsx",
+            "prop": "className",
+            "line": 125,
+            "snippet": "<CoursePricingRail className=\"@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "component": "PracticeRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/PracticeHubPage/index.tsx",
+            "prop": "className",
+            "line": 51,
+            "snippet": "<PracticeRail className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    }
+  ],
+  "parity": {
+    "storybookSrc": "src-only burns this wave (no SB twins for applied files)"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

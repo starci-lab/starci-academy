@@ -1,0 +1,98 @@
+[
+  {
+    "key": "frac",
+    "text": "Spacing lẻ '{{cls}}' ngoài thang 0·2·3·6·8 — dùng nấc gần nhất (vd gap-1.5 → gap-2)."
+  },
+  {
+    "key": "adj",
+    "text": "≥2 <Chip> kề nhau — giữ 1 chip (trục phân loại chính), phần còn lại để text + icon inline."
+  },
+  {
+    "key": "tc",
+    "text": "Bỏ `titleClassName` — để ModalShell render header default (body semibold); đừng nâng thành hero/H-scale."
+  },
+  {
+    "key": "hero",
+    "text": "Heading hand-roll (text-xl+ + font-bold) — dùng <Typography type=\\\"h3|h4\\\"> thay className thô."
+  },
+  {
+    "key": "space",
+    "text": "Arbitrary spacing '{{cls}}' — dùng nấc scale (0·2·3·6·8); ngoại lệ thật → eslint-disable + lý do."
+  },
+  {
+    "key": "hex",
+    "text": "Màu hex arbitrary '{{cls}}' — dùng token semantic (text-accent…); brand-color thật → eslint-disable + lý do."
+  },
+  {
+    "key": "fn",
+    "text": "Dùng arrow const `const {{name}} = (…) => {…}` — không `function` ở module-level (structure-and-naming §5)."
+  },
+  {
+    "key": "jsdoc",
+    "text": "Thêm JSDoc `/** … */` cho export `{{name}}` — role/what-it-does (comments §3)."
+  },
+  {
+    "key": "handle",
+    "text": "`{{name}}` → đặt `on{{rest}}` (handler là `onXxx`, không `handleXxx` — react-idioms §7)."
+  },
+  {
+    "key": "mismatch",
+    "text": "index.tsx của folder `{{folder}}` không export `{{folder}}` (đang export: {{names}}) — named export phải trùng tên folder (structure-and-naming §5)."
+  },
+  {
+    "key": "heroui",
+    "text": "Import '@heroui/react' ngoài tier vocabulary — dùng atom tương ứng (đã bọc vendor); nếu atom chưa có, thêm atom mới thay vì import thẳng."
+  },
+  {
+    "key": "member",
+    "text": "Prop `{{name}}` ở sentence tier là cửa hậu (BLOCK-4) — đặt tên khác biệt thật (1 variant/composite mới) thay vì nhận className."
+  },
+  {
+    "key": "withClassNames",
+    "text": "`WithClassNames<…>` ở sentence tier mở cửa hậu className (BLOCK-4) — đẩy khác biệt xuống 1 tier, đặt tên cho nó."
+  },
+  {
+    "key": "cn",
+    "text": "`cn(...)` ngoài tier vocabulary (BLOCK-5) — đọc như thiếu 1 composite hoặc composite có sẵn thiếu variant, đừng tự ghép class ở đây."
+  },
+  {
+    "key": "retired",
+    "text": "`{{name}}` đã retired — dùng isSkeleton thread xuống từng leaf, cộng AsyncContentEmpty/AsyncContentError từ '@/components/composites/async/AsyncContent'."
+  },
+  {
+    "key": "ident",
+    "text": "`{{name}}` là overlay dev-tool đã retired — bỏ hẳn; identity của component là cặp attr data-tier + data-component."
+  },
+  {
+    "key": "attr",
+    "text": "`{{name}}` là overlay dev-tool đã retired — bỏ hẳn; identity của component là cặp attr data-tier + data-component."
+  },
+  {
+    "key": "call",
+    "text": "`{{name}}(...)` trong component.tsx — component.tsx là nửa presentational, phải nhận qua props; đặt call này ở index.tsx (nửa connected) rồi truyền xuống."
+  },
+  {
+    "key": "identity",
+    "text": "File có JSX nhưng không truyền prop `identity` cho root — thêm `identity={{ tier: \\\"…\\\", component: \\\"…\\\" }}` ở frame/composite làm root (xem components/frames/_identity.ts); đừng tự vẽ div data-tier bọc ngoài."
+  },
+  {
+    "key": "wrapper",
+    "text": "`<{{tag}} data-tier=\\\"{{value}}\\\">` là wrapper identity đã retired — truyền `identity={{ tier: \\\"{{value}}\\\", component: \\\"…\\\" }}` cho root frame/composite thay vì tự vẽ div này (xem components/frames/_identity.ts)."
+  },
+  {
+    "key": "shape",
+    "text": "`{{cls}}` trên <{{tag}}> ở sentence tier — tier này compose frame/composite, không tự vẽ layout; đưa class này xuống 1 frame/composite."
+  },
+  {
+    "key": "prop",
+    "text": "Prop `skeleton={<…>}` là cây skeleton tay-giữ, dễ trôi khỏi bản thật — thread `isSkeleton` xuống từng leaf để shimmer tự mirror hình đã load."
+  },
+  {
+    "key": "import",
+    "text": "Import `{{name}}` (relative) là skeleton tay-giữ, dễ trôi khỏi bản thật — thread `isSkeleton` xuống từng leaf thay vì giữ cây skeleton song song."
+  },
+  {
+    "key": "hardcoded",
+    "text": "`{{attr}}=\\\"{{text}}\\\"` hardcode câu văn ở atom — i18n là data của file connected; đổi thành prop nhận string đã resolve sẵn."
+  }
+]

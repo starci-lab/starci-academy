@@ -1,0 +1,17 @@
+{
+  "worker": "src-pages-remaining",
+  "status": "done",
+  "fixed": [],
+  "held": [
+    {
+      "file": "src/components/pages/HeadhuntingsPage/component.tsx",
+      "frag": 2,
+      "reason": "other-debt:3 (starci-fe/require-frame-self-declare)"
+    }
+  ],
+  "findingsBefore": 2,
+  "findingsFixed": 0,
+  "findingsHeld": 2,
+  "note": "All files held: zero-warn ratchet — unrelated debt cannot close with frame-items contract alone.",
+  "twinParity": "SB twins may be fixed while src remains held when src has other debt."
+}

@@ -1,0 +1,38 @@
+{
+  "partition": "dead-prop-consumers",
+  "changed": [
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx"
+  ],
+  "skipped": [],
+  "holds": [
+    {
+      "prop": "ModalShell.bodyClassName",
+      "reason": "story consumer ModalShell.stories.tsx:328"
+    },
+    {
+      "prop": "DrawerShell.contentClassName",
+      "reason": "LessonEditorPanel nivoexpert consumer"
+    },
+    {
+      "prop": "DrawerShell.dialogClassName/footerClassName",
+      "reason": "present on src for MiniCart twin API; kept for parity"
+    },
+    {
+      "prop": "MiniCart/CvPreview/PDF heightClassName",
+      "reason": "API-hold — live layout; no invented slots"
+    }
+  ],
+  "evidence": {
+    "removed": {
+      "ModalShell.titleClassName": { "jsxConsumers": [], "srcHasProp": false },
+      "ModalShell.dialogClassName": { "jsxConsumers": [], "srcHasProp": false },
+      "ModalShell.footerClassName": { "jsxConsumers": [], "srcHasProp": false },
+      "DrawerShell.titleClassName": { "jsxConsumers": [], "srcHasProp": false },
+      "DrawerShell.bodyClassName": { "jsxConsumers": [], "srcHasProp": false }
+    },
+    "search": "rg titleClassName=|footerClassName=|dialogClassName=|bodyClassName= across repo; only MiniCart (DrawerShell dialog/footer) and ModalShell.stories bodyClassName"
+  },
+  "verification": {},
+  "regressions": []
+}

@@ -1,0 +1,103 @@
+{
+  "worker": "learn-content",
+  "manifest": [
+    "src/components/blocks/code/CodeConsole/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "CodeConsole",
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "arbitrary h-[42%] — no finite token"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "h-[42%]"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "ChatToolResult",
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "ContentAiChat locked consumer"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "size-4"
+      ],
+      "ownerships": [
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "ContentMap",
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "min-h-0 @app-lg:flex-1 — no exact existing flex-fill principle"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "min-h-0 @app-lg:flex-1"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "LeaderboardCategoryRail",
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "same flex-fill hold"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "min-h-0 @app-lg:flex-1"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "MilestoneOutline",
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "same flex-fill hold"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "min-h-0 @app-lg:flex-1"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "PlaygroundRagWorkspace",
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "h-full parent fill — hold without named fill wrapper"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "h-full"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    }
+  ]
+}

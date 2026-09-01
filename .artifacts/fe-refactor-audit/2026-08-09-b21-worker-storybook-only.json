@@ -1,0 +1,17 @@
+{
+  "partition": "storybook-only",
+  "changed": [
+    ".storybook/components/composites/lists/List/List.tsx",
+    ".storybook/components/composites/data/KeyValue/KeyValue.tsx"
+  ],
+  "skipped": [],
+  "holds": [],
+  "evidence": [
+    "SB twins for List/KeyValue dead classNames — owned with list/key-value partitions"
+  ],
+  "proposals": [],
+  "verification": {
+    "note": "Storybook files listed in list/key-value workers; no exclusive storybook-only product edits"
+  },
+  "regressions": []
+}

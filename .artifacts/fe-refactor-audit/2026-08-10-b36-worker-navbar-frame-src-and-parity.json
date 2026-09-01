@@ -1,0 +1,71 @@
+{
+  "agent": "navbar-frame-src-and-parity",
+  "batch": "B36",
+  "wave": "A",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T16:14:00.000Z",
+  "changed": [
+    "src/components/frames/NavbarFrame/index.tsx",
+    "src/components/blocks/navigation/Navbar/index.tsx"
+  ],
+  "mirroredFrom": ".storybook/components/frames/NavbarFrame/NavbarFrame.tsx",
+  "parity": "byte-for-API identical to SB NavbarFrame (alias paths only)",
+  "api": {
+    "props": {
+      "identity": "CallerIdentity?",
+      "primary": "ComponentTypeWithSkeleton (required)",
+      "secondary": "ComponentTypeWithSkeleton?",
+      "isSkeleton": "boolean?"
+    },
+    "intrinsic": {
+      "root": "nav.sticky.top-0.z-50.border-b.border-default.bg-surface + resolveIdentity",
+      "primaryRow": "div.h-16.min-h-16 wrapping primary slot",
+      "secondary": "optional sibling below primary; does not change primary height"
+    },
+    "forbidden": [
+      "public principle",
+      "className/classNames",
+      "gap/padding/align/justify",
+      "children/ReactNode",
+      "sticky/zIndex variants"
+    ],
+    "exports": ["NavbarFrame", "NavbarFrameProps", "meta"]
+  },
+  "migration": {
+    "block": "src/components/blocks/navigation/Navbar/index.tsx",
+    "root": "NavbarFrame identity={{ tier: \"block\", component: \"Navbar\" }}",
+    "primary": "former h-16 StackH chrome content",
+    "secondary": "DrawerShell mobile menu (sibling of primary band)",
+    "closed": [
+      "raw outer <nav> host",
+      "raw h-16 min-h-16 row host",
+      "require-identity-root on block shell",
+      "no-host-element-at-sentence-tier on outer nav/row"
+    ]
+  },
+  "holds": [
+    {
+      "id": "navbar-heroui-atoms",
+      "rule": "starci-fe/no-heroui-outside-vocabulary",
+      "files": ["src/components/blocks/navigation/Navbar/index.tsx"],
+      "proof": "Missing house Dropdown / Kbd / Popover badge-trigger atoms. Direct HeroUI kept inside primary for vendor gap."
+    }
+  ],
+  "untouched": [
+    ".storybook/**",
+    "src/components/layouts/Navbar/**",
+    "src/components/blocks/layout/shell/Navbar/**",
+    "GlyphMark",
+    "decision-ledger",
+    "CLAUDE.md"
+  ],
+  "verification": {
+    "navbarFrameApiParity": "identical body to SB after alias rewrite",
+    "tscOwned": "clean (no NavbarFrame / blocks/navigation/Navbar diagnostics)",
+    "eslintNavbarFrame": "0 warnings",
+    "eslintNavbarBlock": "1 held warning (no-heroui-outside-vocabulary)",
+    "gitDiffCheck": "pass"
+  },
+  "regressions": [],
+  "skipped": []
+}

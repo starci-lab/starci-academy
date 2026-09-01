@@ -1,0 +1,354 @@
+{
+  "residualCount": 35,
+  "residual": [
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 178,
+      "tag": "StackH",
+      "props": [
+        "gap",
+        "align",
+        "justify"
+      ],
+      "classDoor": false,
+      "snippet": "<StackH gap={6} principle=\"block-boundary\" align=\"end\" justify=\"between\" at=\"sm\" isSkeleton={isSkeleton} items={[ () => priceColumn, // ATOM `Button`, NOT the `_legacy` version: go"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 213,
+      "tag": "StackV",
+      "props": [
+        "gap"
+      ],
+      "classDoor": false,
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Separates the loss-aversion header from the price/CTA footer so the strip reads as two blocks inside one card.\" isSkeleton={isSk"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "line": 87,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"ContentHeader\" }} principle=\"sibling-stack\" explain=\"Page identity cluster and outcomes card are same-kind peers on the lesson header"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 145,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" isSkeleton={isSkeleton"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "line": 194,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" isSkeleton={isSkeleton} it"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 286,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"block-boundary\" explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.\" items={[ () => ( <S"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 291,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups brand mark and desktop route pills on one horizontal peer row so they share a single hit baseline.\" items={[ () => ( <span role=\"but"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "line": 329,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups search, locale, theme, cart, account, and mobile menu triggers on one horizontal peer row so they share a single hit baseline.\" item"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "line": 143,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"SettingsSidebarNav\" }} principle=\"group-boundary\" explain=\"Separates the desktop rail from the mobile pill bar so each leaf keeps its"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "line": 180,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" items={flatItems.map((item) => () => { const isActi"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "line": 196,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" items={[ () => <Icon aria-"
+    },
+    {
+      "path": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "line": 151,
+      "tag": "Cluster",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<Cluster principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" items={[ () => ( <CheckCi"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "line": 53,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"AchievementBlockEditor\" }} principle=\"sibling-stack\" explain=\"Same-kind peer stack of repeatable achievement cards — not group-bounda"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "line": 70,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"card-caption\" explain=\"Thumbnail crop over template caption row — not sibling-stack, because the caption belongs to the media above it.\" items={[ () => ( // HOLD"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "line": 76,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"CommunityCommentRow\" }} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because this comment row is a s"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "line": 87,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"separator-dot\" explain=\"Places a middle-dot separator between short meta peers so the items read as one inline list.\" items={[ () => ( <StackH principle=\"icon-te"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "line": 92,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" items={[ () => ( <Typograp"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "line": 60,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because header, body, footer, and optional thread are repeating siblings in one post unit.\" it"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "line": 65,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"content-row\" explain=\"Keeps the author avatar and meta column on one baseline so the pin does not drop under the title.\" items={[ () => ( <Avatar src={post.autho"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "line": 80,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"title-subtitle\" explain=\"Display name over handle/meta reads as title over subtitle — not label-field (no form control), not name-handle (the handle is muted sec"
+    },
+    {
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "line": 85,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" items={[ () => ( <Typograp"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 154,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" isSkeleton={isSkeleton"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "line": 203,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" isSkeleton={isSkeleton} it"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 286,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"block-boundary\" explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.\" items={[ () => ( <S"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 291,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups brand mark and desktop route pills on one horizontal peer row so they share a single hit baseline.\" items={[ () => ( <span role=\"but"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 329,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups search, locale, theme, cart, account, and mobile menu triggers on one horizontal peer row so they share a single hit baseline.\" item"
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "line": 143,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV identity={{ tier: \"block\", component: \"SettingsSidebarNav\" }} principle=\"group-boundary\" explain=\"Separates the desktop rail from the mobile pill bar so each leaf keeps its"
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "line": 181,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups action controls on one horizontal peer row so they share a single hit baseline.\" items={flatItems.map((item) => () => { const isActi"
+    },
+    {
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "line": 197,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" items={[ () => <Icon aria-"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 220,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"block-boundary\" explain=\"Block-to-block spacing — not group-boundary, because this separates major profile hero sections rather than nested groups.\" isSkeleton={"
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 375,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"sibling-stack\" explain=\"Same-kind peer meta rows — not group-boundary, because social links and joined date are repeating list rows rather than section groups.\" "
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "line": 381,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"content-row\" explain=\"Icon beside link label — not label-field, because the icon is decorative leading chrome rather than a form label.\" isSkeleton={isSkeleton} "
+    },
+    {
+      "path": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "line": 195,
+      "tag": "StackV",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackV principle=\"block-boundary\" explain=\"Tabs over the follow list — not group-boundary, because this is the modal body's major section seam, and not sibling-stack, because nav "
+    },
+    {
+      "path": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "line": 218,
+      "tag": "Box",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<Box className=\"max-h-[60vh]\" principle=\"flex-fill\" explain=\"Caps the follow list viewport so tabs stay put while the list scrolls inside.\" >"
+    },
+    {
+      "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "line": 150,
+      "tag": "Cluster",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<Cluster principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" items={[ () => ( <CheckCi"
+    }
+  ],
+  "sampleChecked": [
+    "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+    ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+    "src/components/overlays/modals/PremiumGateModal/component.tsx",
+    "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+    "src/components/blocks/navigation/Navbar/index.tsx"
+  ],
+  "sampleHits": [
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 178,
+      "tag": "StackH",
+      "props": [
+        "gap",
+        "align",
+        "justify"
+      ],
+      "classDoor": false,
+      "snippet": "<StackH gap={6} principle=\"block-boundary\" align=\"end\" justify=\"between\" at=\"sm\" isSkeleton={isSkeleton} items={[ () => priceColumn, // ATOM `Button`, NOT the `_legacy` version: go"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 213,
+      "tag": "StackV",
+      "props": [
+        "gap"
+      ],
+      "classDoor": false,
+      "snippet": "<StackV gap={6} principle=\"block-boundary\" explain=\"Separates the loss-aversion header from the price/CTA footer so the strip reads as two blocks inside one card.\" isSkeleton={isSk"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 286,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"block-boundary\" explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.\" items={[ () => ( <S"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 291,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups brand mark and desktop route pills on one horizontal peer row so they share a single hit baseline.\" items={[ () => ( <span role=\"but"
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "line": 329,
+      "tag": "StackH",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<StackH principle=\"flex-action\" explain=\"Groups search, locale, theme, cart, account, and mobile menu triggers on one horizontal peer row so they share a single hit baseline.\" item"
+    },
+    {
+      "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "line": 150,
+      "tag": "Cluster",
+      "props": [],
+      "classDoor": true,
+      "snippet": "<Cluster principle=\"icon-text\" explain=\"Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity.\" items={[ () => ( <CheckCi"
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "batch": "B35",
+  "agent": "shared-consumer-chains-coordinator",
+  "agentKey": "shared-consumer-chains-coordinator",
+  "checkpoint": "02011807",
+  "doNotCommit": true,
+  "manifestFileCount": 215,
+  "sliceBaseline": {
+    "filesWithFindings": 215,
+    "totalMessages": 1303,
+    "note": "From 2026-08-10-b35-eslint-before.json scoped to this manifest"
+  },
+  "changed": [
+    ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+    ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    "src/components/atoms/feedback/Alert/index.tsx",
+    "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+    "src/components/blocks/async/EmptyContent/index.tsx",
+    "src/components/blocks/async/ErrorContent/index.tsx",
+    "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+    "src/components/blocks/cards/CheckListCard/index.tsx",
+    "src/components/blocks/cards/CourseCard/component.tsx",
+    "src/components/blocks/cards/CrossListCard/index.tsx",
+    "src/components/blocks/cards/SummaryCard/index.tsx",
+    "src/components/blocks/chips/AiCategoryChip/component.tsx",
+    "src/components/blocks/chips/AiCategoryChip/index.tsx",
+    "src/components/blocks/form/SearchBar/component.tsx",
+    "src/components/blocks/form/SearchBar/index.tsx",
+    "src/components/blocks/layout/StickyBottomBar/index.tsx",
+    "src/components/blocks/layout/SubPageHeader/component.tsx",
+    "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+    "src/components/composites/chips/RemovableToken/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx"
+  ],
+  "doorsBurned": [
+    {
+      "id": "Alert.classNames",
+      "twins": ["sb", "src"],
+      "consumers": 0,
+      "forbidden": 0,
+      "evidence": "repo walk found zero <Alert classNames=>; SB then src door deleted"
+    },
+    {
+      "id": "TabsExtended.classNames",
+      "twins": ["sb", "src"],
+      "consumers": 0,
+      "forbidden": 0,
+      "evidence": "repo walk found zero consumers; SB then src door deleted"
+    },
+    {
+      "id": "EmptyContent.classNames",
+      "twins": ["src-only"],
+      "consumers": 0,
+      "forbidden": 0
+    },
+    {
+      "id": "ErrorContent.classNames",
+      "twins": ["src-only"],
+      "consumers": 0,
+      "forbidden": 0
+    },
+    {
+      "id": "InfiniteScrollSentinel.classNames",
+      "twins": ["src-only"],
+      "consumers": 0,
+      "forbidden": 0
+    },
+    {
+      "id": "CourseCard.className / WithClassNames",
+      "twins": ["src-only"],
+      "consumers": 0,
+      "forbidden": 0,
+      "note": "Public door burned only; HeroUI Card host/raw-shape cluster remains held"
+    },
+    {
+      "id": "CheckListCard.classNames",
+      "consumers": 0
+    },
+    {
+      "id": "CrossListCard.classNames",
+      "consumers": 0
+    },
+    {
+      "id": "SummaryCard.classNames",
+      "consumers": 0
+    },
+    {
+      "id": "AiCategoryChip.className",
+      "consumers": 0
+    },
+    {
+      "id": "SearchBar.className",
+      "consumers": 0
+    },
+    {
+      "id": "StickyBottomBar.className",
+      "consumers": 0
+    },
+    {
+      "id": "SubPageHeader.className",
+      "consumers": 0
+    },
+    {
+      "id": "PaginationSkeleton.className",
+      "consumers": 0
+    }
+  ],
+  "doorsRetainedLockedConsumer": [
+    {
+      "id": "Avatar.classNames",
+      "forbiddenCount": 3,
+      "forbiddenSample": [
+        ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+        ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+        ".storybook/components/nivoexpert/blocks/landing/CommunityPreviewCard/CommunityPreviewCard.tsx"
+      ],
+      "classification": "locked-consumer"
+    },
+    {
+      "id": "Divider.classNames",
+      "forbiddenCount": 2,
+      "classification": "locked-consumer",
+      "note": "Also Navbar (other agent) still consumes"
+    },
+    {
+      "id": "Typography.classNames",
+      "forbiddenCount": 3,
+      "classification": "locked-consumer"
+    },
+    {
+      "id": "Stack.classNames",
+      "forbiddenCount": 12,
+      "classification": "locked-consumer"
+    },
+    {
+      "id": "Button.classNames",
+      "forbiddenCount": 0,
+      "allowedRemaining": 39,
+      "classification": "locked-consumer",
+      "reason": "Many StarCi consumers outside this manifest; migrate in-manifest only"
+    },
+    {
+      "id": "SurfaceListCard.className",
+      "allowedRemaining": 13,
+      "classification": "locked-consumer",
+      "reason": "Consumers owned by other agents; cannot burn door"
+    },
+    {
+      "id": "Flex.classNames",
+      "classification": "retain",
+      "reason": "Only Stack twins forward classNames into Flex; Stack door retained"
+    },
+    {
+      "id": "Container.classNames / Cluster.classNames / Chip.classNames",
+      "classification": "retain",
+      "reason": "Consumers in pages / other agents"
+    }
+  ],
+  "consumersMigrated": [
+    {
+      "file": "src/components/composites/chips/RemovableToken/index.tsx",
+      "from": "Button.classNames shrink-0 + Typography skeleton classNames",
+      "to": "match SB RemovableToken (span shrink-0; intrinsic Typography skeleton); Stack classNames retained for SB parity"
+    },
+    {
+      "file": "src/components/blocks/async/EmptyContent/index.tsx",
+      "from": "StackV classNames w-full + public EmptyContent.classNames",
+      "to": "public door burned; dropped Stack w-full classNames"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+      "from": "className forwarded into community Discussion",
+      "to": "removed (peer burned Discussion.className; transitive tsc repair)"
+    }
+  ],
+  "closedClusters": [
+    {
+      "id": "shared-dead-css-doors",
+      "status": "closed",
+      "summary": "Burned proven-dead public className/classNames on Alert, TabsExtended, Empty/Error/InfiniteScrollSentinel, CourseCard door, Check/Cross/Summary cards, AiCategoryChip, SearchBar, StickyBottomBar, SubPageHeader, PaginationSkeleton"
+    }
+  ],
+  "partialClusters": [
+    {
+      "id": "SurfaceListCard",
+      "status": "partial",
+      "overlapScore": 6,
+      "summary": "Door retained (13 out-of-manifest consumers). Host/cn/raw-shape remain — needs SurfaceCard.List migration or new contract; not invented here"
+    },
+    {
+      "id": "CourseCard",
+      "status": "partial",
+      "overlapScore": 5,
+      "summary": "Public className door burned (0 consumers). HeroUI Card/host/raw-shape/identity remain"
+    },
+    {
+      "id": "SitePreview / ShowcaseMockup",
+      "status": "held",
+      "overlapScore": 5,
+      "summary": "Marketing illustration raw hosts; no existing vocabulary exact owner without inventing"
+    },
+    {
+      "id": "SurfaceCard",
+      "status": "held",
+      "summary": "B34c unchanged-hold for css-contract; still high public classname findings; not reopened"
+    }
+  ],
+  "holds": [
+    {
+      "id": "b35-a10-avatar-classNames-locked-consumer",
+      "classification": "locked-consumer"
+    },
+    {
+      "id": "b35-a10-stack-typography-button-doors-locked-consumer",
+      "classification": "locked-consumer"
+    },
+    {
+      "id": "b35-a10-surface-list-card-locked-consumer",
+      "classification": "locked-consumer"
+    },
+    {
+      "id": "b35-a10-surfacecard-b34c-hold",
+      "classification": "unchanged-hold",
+      "reason": "Prior B34c SurfaceCard css-contract bands remain held"
+    }
+  ],
+  "contractProposals": [
+    {
+      "target": "SurfaceListCard / CourseCard HeroUI Card chrome",
+      "proposal": "Reuse SurfaceCard.List / house Card atom contracts already in composites; mass call-site migration outside single-agent door burn"
+    }
+  ],
+  "repairs": [
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+      "reason": "tsc: peer removed Discussion.className; drop forwarding"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "reason": "git diff --check trailing whitespace on peer import line"
+    }
+  ],
+  "gates": {
+    "tsc": "pass",
+    "eslintPluginTests": "pass (22)",
+    "principleStyleTests": "pass (7)",
+    "semanticContractsTests": "pass (8)",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass (after whitespace repair)",
+    "eslintChangedFilesMaxWarnings0": "fail (pre-existing host/cn/identity warnings remain on door-burned blocks; public classname doors removed)",
+    "fullEslintAfter": ".artifacts/fe-refactor-audit/2026-08-10-b35-eslint-after.json"
+  },
+  "summary": "Burned 14 proven-dead CSS doors (Alert/TabsExtended twins + leftover block doors). Migrated RemovableToken Button/Typography consumers to SB parity. Retained Avatar/Stack/Typography/Button/SurfaceListCard doors under locked-consumer holds. High-overlap SurfaceListCard/CourseCard/SitePreview/SurfaceCard held or partial. Mission C: tsc/plugin/principle/semantic/audit:fe pass; product ESLint 6872→6275 (−597) across all agents."
+}

@@ -1,0 +1,32 @@
+{
+  "batch": "B34",
+  "wave": "A",
+  "worker": "navigationrail-twins-contract",
+  "checkpoint": "6ff21c66",
+  "status": "done",
+  "contract": "B-NavigationRail",
+  "shape": {
+    "identity": "optional CallerIdentity",
+    "body": "ComponentTypeWithSkeleton",
+    "isSkeleton": "optional boolean",
+    "publicPrinciple": false,
+    "host": "nav",
+    "hostClassName": "flex min-h-0 flex-1 flex-col",
+    "identityEmit": "resolveIdentity(identity, { tier: \"frame\", name: \"NavigationRail\" })"
+  },
+  "fixed": [
+    ".storybook/components/frames/NavigationRail/NavigationRail.tsx",
+    "src/components/frames/NavigationRail/index.tsx"
+  ],
+  "parity": "SB and src twins equivalent; slot/identity imports mirror FooterFrame / FillAvailable path aliases",
+  "deferred": [
+    "CollapsibleSidebar nav landmark migration (Wave B)"
+  ],
+  "notTouched": [
+    "nivo",
+    "mia-mia",
+    "CLAUDE.md",
+    "decision-ledger.json",
+    "CollapsibleSidebar"
+  ]
+}

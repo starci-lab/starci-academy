@@ -1,0 +1,123 @@
+{
+  "batch": 14,
+  "title": "APPLY PROVEN CONTRACT DECISIONS",
+  "date": "2026-08-08",
+  "head": "22f28f4e",
+  "branch": "mtp",
+  "committed": false,
+  "changedFiles": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "artifactOnly": [
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-inventory.md",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-per-part-scan.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-worker-weekly-challenge-parity.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-worker-identity-proven-roots.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-worker-dead-per-part-props.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-worker-consumer-barrel-cleanup.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-worker-vendor-boundary-ledger.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-worker-storybook-parity-audit.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-08-proven-status.md"
+  ],
+  "applied": [
+    {
+      "id": "proven-apply-weeklychallenge-surfacecard-identity-2026-08-08",
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx"
+      ],
+      "proof": "Src SurfaceCard already accepted identity?: CallerIdentity. SB Base now ports resolveIdentity. WeeklyChallengeCard SB stamps identity={{ tier: \"block\", component: \"WeeklyChallengeCard\" }} matching src."
+    },
+    {
+      "id": "heroui-vendor-boundary-batch13-2026-08-08",
+      "files": [".claude/fe/decision-ledger.json"],
+      "proof": "Ledger documentation only — 30 HeroUI non-identical APIs recorded as vendor-boundary; zero migrations."
+    }
+  ],
+  "reverted": [
+    {
+      "id": "proven-apply-drawershell-contentclassname-dead-2026-08-08",
+      "reason": "False zero-consumer proof. LessonEditorPanel passes contentClassName. Prop restored; decision status=reverted."
+    }
+  ],
+  "removedProps": [],
+  "removedPropProof": {
+    "note": "No props removed after corrected consumer scan.",
+    "contentClassName": {
+      "attemptedRemoval": true,
+      "kept": true,
+      "consumers": [
+        ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx:150"
+      ]
+    }
+  },
+  "storybookSrcParity": {
+    "WeeklyChallengeCard": {
+      "status": "aligned",
+      "detail": "Both stamp identity on SurfaceCard root; SB SurfaceCard Base accepts identity"
+    },
+    "SurfaceCard": {
+      "status": "partial",
+      "detail": "Base identity aligned; Nested/List/Accordion/… still hard-code data-tier on SB"
+    },
+    "DrawerShell": {
+      "status": "drift-held",
+      "detail": "SB retains contentClassName (LessonEditorPanel), bodyClassName, titleClassName, footerClassName, dialogClassName; src twin narrower"
+    },
+    "ModalShell": {
+      "status": "drift-held",
+      "detail": "SB dialogClassName/bodyClassName/footerClassName/titleClassName vs src containerClassName (+ identity)"
+    }
+  },
+  "remainingHolds": [
+    "27 teacher pattern seams (audit:fe OK)",
+    "30 HeroUI vendor-boundary files (no migrate)",
+    "29 unclear identity hosts",
+    "DrawerShell contentClassName (nivoexpert LessonEditorPanel)",
+    "MiniCart dialogClassName/footerClassName",
+    "CvPreview containerClassName + heightClassName",
+    "ModalShell bodyClassName (story consumers)",
+    "skeleton redesign holds",
+    "teacher / Nivo / Nivoexpert / locked paths / a11y"
+  ],
+  "proposedApisNotInvented": [
+    "dialogWidth",
+    "footerVariant",
+    "viewportFit",
+    "PDF height enum",
+    "bodyVariant",
+    "contentStack"
+  ],
+  "verification": {
+    "tsc": { "command": "npx tsc --noEmit", "exit": 0 },
+    "eslint": {
+      "command": "npx eslint --max-warnings=0 <changed product files>",
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+        ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx"
+      ],
+      "exit": 0
+    },
+    "nodeTests": {
+      "plugins/eslint/namespaces.test.mjs": "pass",
+      "plugins/eslint/authoring.test.mjs": "pass",
+      "plugins/eslint/contentpage.test.mjs": "pass",
+      ".storybook/test-runner/principle-style.test.mjs": "pass",
+      "totals": "15 pass / 0 fail"
+    },
+    "auditFe": { "command": "npm run audit:fe", "exit": 0, "teacherHolds": 27, "failing": 0 }
+  },
+  "partitions": {
+    "weekly-challenge-parity": "applied",
+    "identity-proven-roots": "noop",
+    "dead-per-part-props": "noop-after-revert",
+    "consumer-barrel-cleanup": "noop",
+    "vendor-boundary-ledger": "documented",
+    "storybook-parity-audit": "documented"
+  }
+}

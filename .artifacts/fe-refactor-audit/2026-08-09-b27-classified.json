@@ -1,0 +1,3239 @@
+{
+  "generatedAt": "2026-08-07T15:07:06.027Z",
+  "totalHits": 1618,
+  "files": 593,
+  "uses": 820,
+  "decls": 798,
+  "byClass": {
+    "live-api": 1542,
+    "locked": 76
+  },
+  "deadSafe": [
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "component": "CvPdfPreview",
+      "action": "remove-className-door-and-impl",
+      "twin": null,
+      "worker": "blocks-cv-grading",
+      "consumers": {
+        "className": 0,
+        "classNames": 0
+      }
+    }
+  ],
+  "emptyNoops": [],
+  "liveApiMapSample": [
+    {
+      "file": "src/components/atoms/display/Divider/index.tsx",
+      "component": "Divider",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 2,
+      "sampleConsumers": [
+        {
+          "file": "src/components/frames/Stack/index.tsx",
+          "prop": "classNames",
+          "line": 157,
+          "snippet": "<Divider key={`stack-divider-${index}`} orientation={ruleOrientation} classNames={ruleOrientation === \"vertical\" ? [\"sel"
+        },
+        {
+          "file": ".storybook/components/frames/Stack/Stack.tsx",
+          "prop": "classNames",
+          "line": 157,
+          "snippet": "<Divider key={`stack-divider-${index}`} orientation={ruleOrientation} classNames={ruleOrientation === \"vertical\" ? [\"sel"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/atoms/display/Divider/Divider.tsx"
+    },
+    {
+      "file": "src/components/atoms/display/Logo/index.tsx",
+      "component": "Logo",
+      "classNameConsumers": 7,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+          "prop": "className",
+          "line": 23,
+          "snippet": "<Logo className={cn(\"h-9 w-auto\", className)} /"
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+          "prop": "className",
+          "line": 55,
+          "snippet": "<Logo className=\"flex-1 justify-start\" /"
+        },
+        {
+          "file": "src/components/layouts/Navbar/index.tsx",
+          "prop": "className",
+          "line": 93,
+          "snippet": "<Logo className=\"justify-start\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 64,
+          "snippet": "<Logo className=\\\"h-9\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 77,
+          "snippet": "<Logo className=\\\"h-10\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 90,
+          "snippet": "<Logo className=\\\"h-14\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 105,
+          "snippet": "<Logo className=\"h-10\" /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/atoms/display/Logo/Logo.tsx"
+    },
+    {
+      "file": "src/components/atoms/display/Spinner/index.tsx",
+      "component": "Spinner",
+      "classNameConsumers": 3,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+          "prop": "className",
+          "line": 115,
+          "snippet": "<Spinner size=\"sm\" color=\"current\" className=\"text-white\" /"
+        },
+        {
+          "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+          "prop": "className",
+          "line": 45,
+          "snippet": "<Spinner className=\"size-5\" /"
+        },
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+          "prop": "className",
+          "line": 40,
+          "snippet": "<Spinner size=\"sm\" aria-label=\"Rendering\" className={cn(className)} /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/atoms/display/Spinner/Spinner.tsx"
+    },
+    {
+      "file": "src/components/atoms/text/Typography/index.tsx",
+      "component": "Typography",
+      "classNameConsumers": 174,
+      "classNamesConsumers": 126,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "prop": "className",
+          "line": 165,
+          "snippet": "<Typography type=\"body\" weight=\"semibold\" className=\"pr-8\">"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 195,
+          "snippet": "<Typography type=\"body-sm\" color=\"muted\" className=\"line-clamp-1\">"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 249,
+          "snippet": "<Typography type=\"body-sm\" weight=\"semibold\" align=\"center\" className=\"ml-2\">"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 270,
+          "snippet": "<Typography type=\"body-sm\" color=\"muted\" className=\"line-clamp-2\">"
+        },
+        {
+          "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+          "prop": "className",
+          "line": 73,
+          "snippet": "<Typography type=\"body-sm\" className=\"text-success-soft-foreground\">"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 101,
+          "snippet": "<Typography type=\"body-sm\" color=\"muted\" className=\"line-clamp-3\">"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 112,
+          "snippet": "<Typography type=\"body-sm\" weight=\"medium\" className=\"text-success-soft-foreground\">"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+          "prop": "className",
+          "line": 66,
+          "snippet": "<Typography type=\"body\" weight=\"semibold\" className=\"pr-8\">"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/atoms/text/Typography/Typography.tsx"
+    },
+    {
+      "file": "src/components/behaviors/DragScrollArea/index.tsx",
+      "component": "DragScrollArea",
+      "classNameConsumers": 6,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+          "prop": "className",
+          "line": 172,
+          "snippet": "<DragScrollArea size={40} className=\"flex-1\">"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+          "prop": "className",
+          "line": 171,
+          "snippet": "<DragScrollArea size={40} className=\"flex-1\">"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 71,
+          "snippet": "<DragScrollArea className=\"max-h-64\">"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 82,
+          "snippet": "<DragScrollArea className=\"max-h-64\">"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 93,
+          "snippet": "<DragScrollArea className=\"max-h-64\" hideScrollBar={false}>"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 104,
+          "snippet": "<DragScrollArea className=\"max-h-64\" size={80}>"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx"
+    },
+    {
+      "file": "src/components/behaviors/ResizableRail/index.tsx",
+      "component": "ResizableRail",
+      "classNameConsumers": 10,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 138,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.contentMap.width\" defaultWidth={320} minWidth={256} maxWid"
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 149,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.milestoneMap.width\" defaultWidth={320} minWidth={256} maxW"
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 160,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.leaderboardRail.width\" defaultWidth={300} minWidth={240} m"
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/index.tsx",
+          "prop": "className",
+          "line": 55,
+          "snippet": "<ResizableRail className=\"hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-"
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/index.tsx",
+          "prop": "className",
+          "line": 422,
+          "snippet": "<ResizableRail storageKey=\"starci.cv.editorSidebar.width\" defaultWidth={256} minWidth={220} maxWidth={420} ariaLabel={t("
+        },
+        {
+          "file": "src/components/pages/MindMapPage/component.tsx",
+          "prop": "className",
+          "line": 304,
+          "snippet": "<ResizableRail storageKey={RAIL_STORAGE_KEY} defaultWidth={RAIL_DEFAULT_WIDTH} minWidth={RAIL_MIN_WIDTH} maxWidth={RAIL_"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/index.tsx",
+          "prop": "className",
+          "line": 43,
+          "snippet": "<ResizableRail className=\"hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-"
+        },
+        {
+          "file": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+          "prop": "className",
+          "line": 107,
+          "snippet": "<ResizableRail storageKey={RAIL_STORAGE_KEY} defaultWidth={RAIL_DEFAULT_WIDTH} minWidth={RAIL_MIN_WIDTH} maxWidth={RAIL_"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx"
+    },
+    {
+      "file": "src/components/blocks/auth/GithubLinkGate/index.tsx",
+      "component": "GithubLinkGate",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-auth-commerce",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "component": "PressableCard",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+          "prop": "className",
+          "line": 219,
+          "snippet": "<PressableCard key={item.key} onPress={item.onPress} href={item.href} isDisabled={item.isDisabled} label={item.label} cl"
+        },
+        {
+          "file": "src/components/blocks/cards/SummaryCard/index.tsx",
+          "prop": "className",
+          "line": 96,
+          "snippet": "<PressableCard identity={{ tier: \"block\", component: \"SummaryCard\" }} onPress={onPress} className={cn( \"card card--defau"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "component": "SurfaceListCard",
+      "classNameConsumers": 3,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+          "prop": "className",
+          "line": 23,
+          "snippet": "<SurfaceListCard className={className}>"
+        },
+        {
+          "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+          "prop": "className",
+          "line": 104,
+          "snippet": "<SurfaceListCard className=\"h-full\">"
+        },
+        {
+          "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+          "prop": "className",
+          "line": 117,
+          "snippet": "<SurfaceListCard className=\"h-full\">"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/chips/EnumChip/index.tsx",
+      "component": "EnumChip",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+          "prop": "className",
+          "line": 41,
+          "snippet": "<EnumChip value={hostPlatform} map={map} className={className} /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "component": "CvWorkspaceSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-cv-grading",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/EntityLink/index.tsx",
+      "component": "EntityLink",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "component": "SimpleEmptyState",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/Logo/index.tsx",
+      "component": "Logo",
+      "classNameConsumers": 7,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+          "prop": "className",
+          "line": 23,
+          "snippet": "<Logo className={cn(\"h-9 w-auto\", className)} /"
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+          "prop": "className",
+          "line": 55,
+          "snippet": "<Logo className=\"flex-1 justify-start\" /"
+        },
+        {
+          "file": "src/components/layouts/Navbar/index.tsx",
+          "prop": "className",
+          "line": 93,
+          "snippet": "<Logo className=\"justify-start\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 64,
+          "snippet": "<Logo className=\\\"h-9\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 77,
+          "snippet": "<Logo className=\\\"h-10\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 90,
+          "snippet": "<Logo className=\\\"h-14\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 105,
+          "snippet": "<Logo className=\"h-10\" /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/UserAvatar/index.tsx",
+      "component": "UserAvatar",
+      "classNameConsumers": 19,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+          "prop": "className",
+          "line": 98,
+          "snippet": "<UserAvatar size=\"sm\" username={currentUser.username} avatar={currentUser.avatar} className=\"shrink-0\" /"
+        },
+        {
+          "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+          "prop": "className",
+          "line": 148,
+          "snippet": "<UserAvatar size=\"sm\" username={currentUser.username} avatar={currentUser.avatar} className=\"shrink-0\" /"
+        },
+        {
+          "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+          "prop": "className",
+          "line": 86,
+          "snippet": "<UserAvatar size=\"sm\" username={comment.author.username} avatar={comment.author.avatar} className=\"mt-0 shrink-0\" /"
+        },
+        {
+          "file": "src/components/blocks/dashboard/Podium/index.tsx",
+          "prop": "className",
+          "line": 68,
+          "snippet": "<UserAvatar // the viewer's own avatar is ringed (accent-system §3 \"mine\" // = ring + value accent, NOT a filled step) c"
+        },
+        {
+          "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+          "prop": "className",
+          "line": 31,
+          "snippet": "<UserAvatar className=\"size-9\" username={username} avatar={avatar ?? undefined} seed={username} /"
+        },
+        {
+          "file": "src/components/blocks/feed/Composer/index.tsx",
+          "prop": "className",
+          "line": 112,
+          "snippet": "<UserAvatar size=\"sm\" avatar={avatarSrc} className=\"mb-1 shrink-0\" /"
+        },
+        {
+          "file": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+          "prop": "className",
+          "line": 48,
+          "snippet": "<UserAvatar username={displayName} avatar={avatar} seed={seed} size=\"lg\" className=\"size-20 text-2xl\" /"
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+          "prop": "className",
+          "line": 50,
+          "snippet": "<UserAvatar size=\"sm\" className=\"cursor-pointer\" username={username} avatar={avatar} seed={email ?? username} /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "component": "DragScrollArea",
+      "classNameConsumers": 6,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+          "prop": "className",
+          "line": 172,
+          "snippet": "<DragScrollArea size={40} className=\"flex-1\">"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+          "prop": "className",
+          "line": 171,
+          "snippet": "<DragScrollArea size={40} className=\"flex-1\">"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 71,
+          "snippet": "<DragScrollArea className=\"max-h-64\">"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 82,
+          "snippet": "<DragScrollArea className=\"max-h-64\">"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 93,
+          "snippet": "<DragScrollArea className=\"max-h-64\" hideScrollBar={false}>"
+        },
+        {
+          "file": ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+          "prop": "className",
+          "line": 104,
+          "snippet": "<DragScrollArea className=\"max-h-64\" size={80}>"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "component": "ResizableRail",
+      "classNameConsumers": 10,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 138,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.contentMap.width\" defaultWidth={320} minWidth={256} maxWid"
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 149,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.milestoneMap.width\" defaultWidth={320} minWidth={256} maxW"
+        },
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 160,
+          "snippet": "<ResizableRail className={railClass} storageKey=\"starci.learn.leaderboardRail.width\" defaultWidth={300} minWidth={240} m"
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/index.tsx",
+          "prop": "className",
+          "line": 55,
+          "snippet": "<ResizableRail className=\"hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-"
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/index.tsx",
+          "prop": "className",
+          "line": 422,
+          "snippet": "<ResizableRail storageKey=\"starci.cv.editorSidebar.width\" defaultWidth={256} minWidth={220} maxWidth={420} ariaLabel={t("
+        },
+        {
+          "file": "src/components/pages/MindMapPage/component.tsx",
+          "prop": "className",
+          "line": 304,
+          "snippet": "<ResizableRail storageKey={RAIL_STORAGE_KEY} defaultWidth={RAIL_DEFAULT_WIDTH} minWidth={RAIL_MIN_WIDTH} maxWidth={RAIL_"
+        },
+        {
+          "file": "src/components/pages/PracticeHubPage/index.tsx",
+          "prop": "className",
+          "line": 43,
+          "snippet": "<ResizableRail className=\"hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-"
+        },
+        {
+          "file": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+          "prop": "className",
+          "line": 107,
+          "snippet": "<ResizableRail storageKey={RAIL_STORAGE_KEY} defaultWidth={RAIL_DEFAULT_WIDTH} minWidth={RAIL_MIN_WIDTH} maxWidth={RAIL_"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "component": "Logo",
+      "classNameConsumers": 7,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+          "prop": "className",
+          "line": 23,
+          "snippet": "<Logo className={cn(\"h-9 w-auto\", className)} /"
+        },
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+          "prop": "className",
+          "line": 55,
+          "snippet": "<Logo className=\"flex-1 justify-start\" /"
+        },
+        {
+          "file": "src/components/layouts/Navbar/index.tsx",
+          "prop": "className",
+          "line": 93,
+          "snippet": "<Logo className=\"justify-start\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 64,
+          "snippet": "<Logo className=\\\"h-9\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 77,
+          "snippet": "<Logo className=\\\"h-10\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 90,
+          "snippet": "<Logo className=\\\"h-14\\\" /"
+        },
+        {
+          "file": ".storybook/stories/atoms/display/Logo/Logo.stories.tsx",
+          "prop": "className",
+          "line": 105,
+          "snippet": "<Logo className=\"h-10\" /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/Spacer/index.tsx",
+      "component": "Spacer",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "component": "ContentMapSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "component": "ChallengeCardSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "component": "CodeBodySkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "component": "ContentBodySkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "component": "LessonCardSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "component": "MilestoneOutlineSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "component": "PersonalProjectDashboardSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "component": "TaskResultsSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "component": "TaskSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/AccordionSkeleton/types/accordion-skeleton.ts",
+      "component": "accordion-skeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "component": "PaginationSkeleton",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "component": "Avatar",
+      "classNameConsumers": 6,
+      "classNamesConsumers": 1,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/identity/UserAvatar/index.tsx",
+          "prop": "className",
+          "line": 54,
+          "snippet": "<Avatar size={size} className={cn(\"rounded-full\", className)}>"
+        },
+        {
+          "file": ".storybook/stories/composites/async/AsyncContent/AsyncContent.stories.tsx",
+          "prop": "className",
+          "line": 36,
+          "snippet": "<Avatar className=\"size-10 shrink-0\">"
+        },
+        {
+          "file": ".storybook/stories/composites/cards/HighlightCard/HighlightCard.stories.tsx",
+          "prop": "className",
+          "line": 31,
+          "snippet": "<Avatar className=\"size-10 shrink-0\">"
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+          "prop": "className",
+          "line": 36,
+          "snippet": "<Avatar className=\"size-10 shrink-0\">"
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+          "prop": "className",
+          "line": 37,
+          "snippet": "<Avatar className=\"size-10 shrink-0\">"
+        },
+        {
+          "file": ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+          "prop": "className",
+          "line": 31,
+          "snippet": "<Avatar className=\"size-10 shrink-0\">"
+        },
+        {
+          "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+          "prop": "classNames",
+          "line": 123,
+          "snippet": "<Avatar name={currentUser?.name} src={currentUser?.avatarSrc} size=\"sm\" isSkeleton={isSkeleton} classNames={[\"shrink-0\"]"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "component": "Button",
+      "classNameConsumers": 113,
+      "classNamesConsumers": 53,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "prop": "className",
+          "line": 175,
+          "snippet": "<Button variant=\"primary\" className=\"self-start\" onPress={() =>"
+        },
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "prop": "className",
+          "line": 214,
+          "snippet": "<Button variant=\"primary\" size=\"sm\" className=\"self-start\" isDisabled={requesting || anySending} onPress={onRequest}>"
+        },
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "prop": "className",
+          "line": 235,
+          "snippet": "<Button variant=\"secondary\" size=\"sm\" className=\"self-start\" isDisabled={isLoading} onPress={() =>"
+        },
+        {
+          "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+          "prop": "className",
+          "line": 36,
+          "snippet": "<Button isIconOnly variant=\"primary\" aria-label={ariaLabel} onPress={onPress} className={cn( \"fixed bottom-6 right-[calc"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 133,
+          "snippet": "<Button variant=\"secondary\" onPress={onViewDetail} className=\"flex-1\" >"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 215,
+          "snippet": "<Button variant=\"primary\" onPress={onView} className=\"flex-1\" >"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 314,
+          "snippet": "<Button variant=\"primary\" onPress={onView} className=\"flex-1\" >"
+        },
+        {
+          "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+          "prop": "className",
+          "line": 64,
+          "snippet": "<Button variant=\"primary\" className=\"w-full\" onPress={onOpen}>"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "component": "Chip",
+      "classNameConsumers": 46,
+      "classNamesConsumers": 11,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 187,
+          "snippet": "<Chip variant=\"secondary\" color=\"accent\" size=\"sm\" className=\"shrink-0\">"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 262,
+          "snippet": "<Chip variant=\"secondary\" color=\"accent\" size=\"sm\" className=\"shrink-0\">"
+        },
+        {
+          "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+          "prop": "className",
+          "line": 55,
+          "snippet": "<Chip size=\"sm\" variant=\"secondary\" className=\"w-fit\">"
+        },
+        {
+          "file": "src/components/blocks/chips/EnumChip/index.tsx",
+          "prop": "className",
+          "line": 54,
+          "snippet": "<Chip color={entry.color} size=\"sm\" variant=\"soft\" className={cn(className)}>"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+          "prop": "className",
+          "line": 49,
+          "snippet": "<Chip key={item.id} size=\"sm\" className=\"bg-accent-soft text-accent-soft-foreground\">"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+          "prop": "className",
+          "line": 102,
+          "snippet": "<Chip size=\"sm\" className={isVerified ? \"bg-success-soft text-success-soft-foreground\" : \"bg-default text-muted\"} >"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+          "prop": "className",
+          "line": 76,
+          "snippet": "<Chip key={item.id} size=\"sm\" className=\"bg-accent-soft text-accent-soft-foreground\">"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+          "prop": "className",
+          "line": 111,
+          "snippet": "<Chip size=\"sm\" className={cn( \"shrink-0\", isTwoColumn ? \"bg-warning-soft text-warning-soft-foreground\" : \"bg-success-so"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/index.tsx",
+      "component": "Skeleton",
+      "classNameConsumers": 395,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+          "prop": "className",
+          "line": 19,
+          "snippet": "<Skeleton className=\"aspect-video w-full rounded-2xl\" /"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+          "prop": "className",
+          "line": 30,
+          "snippet": "<Skeleton className=\"size-4 shrink-0 rounded-full\" /"
+        },
+        {
+          "file": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+          "prop": "className",
+          "line": 72,
+          "snippet": "<Skeleton className={[\"h-4\", \"w-64\", \"max-w-full\", \"rounded\", ...(classNames ?? [])].join(\" \")} /"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 92,
+          "snippet": "<Skeleton className=\"size-6 shrink-0 rounded-full\" /"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 95,
+          "snippet": "<Skeleton className=\"h-5 w-16 rounded\" /"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 102,
+          "snippet": "<Skeleton className=\"h-4 w-3/4 rounded\" /"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 106,
+          "snippet": "<Skeleton className=\"h-9 w-24 rounded\" /"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 109,
+          "snippet": "<Skeleton className=\"h-10 w-full rounded-3xl\" /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "component": "Typography",
+      "classNameConsumers": 174,
+      "classNamesConsumers": 126,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "prop": "className",
+          "line": 165,
+          "snippet": "<Typography type=\"body\" weight=\"semibold\" className=\"pr-8\">"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 195,
+          "snippet": "<Typography type=\"body-sm\" color=\"muted\" className=\"line-clamp-1\">"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 249,
+          "snippet": "<Typography type=\"body-sm\" weight=\"semibold\" align=\"center\" className=\"ml-2\">"
+        },
+        {
+          "file": "src/components/blocks/cards/CourseCard/component.tsx",
+          "prop": "className",
+          "line": 270,
+          "snippet": "<Typography type=\"body-sm\" color=\"muted\" className=\"line-clamp-2\">"
+        },
+        {
+          "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+          "prop": "className",
+          "line": 73,
+          "snippet": "<Typography type=\"body-sm\" className=\"text-success-soft-foreground\">"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 101,
+          "snippet": "<Typography type=\"body-sm\" color=\"muted\" className=\"line-clamp-3\">"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+          "prop": "className",
+          "line": 112,
+          "snippet": "<Typography type=\"body-sm\" weight=\"medium\" className=\"text-success-soft-foreground\">"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+          "prop": "className",
+          "line": 66,
+          "snippet": "<Typography type=\"body\" weight=\"semibold\" className=\"pr-8\">"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "component": "SurfaceCard",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 4,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/cards/MediaCard/index.tsx",
+          "prop": "classNames",
+          "line": 128,
+          "snippet": "<SurfaceCard identity={{ tier: \"block\", component: \"MediaCard\" }} variant=\"nested\" padding={1} onPress={onPress} href={h"
+        },
+        {
+          "file": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "prop": "classNames",
+          "line": 133,
+          "snippet": "<SurfaceCard identity={{ tier: \"block\", component: \"TrialConversionStrip\" }} classNames={classNames} body={() =>"
+        },
+        {
+          "file": ".storybook/components/nivo/blocks/landing/SystemStoryCard/SystemStoryCard.tsx",
+          "prop": "classNames",
+          "line": 39,
+          "snippet": "<SurfaceCard padding={3} label={side.label} subtleLabel classNames={[\"flex-1\"]} body={() =>"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+          "prop": "classNames",
+          "line": 205,
+          "snippet": "<SurfaceCard classNames={classNames} body={({ isSkeleton }: SkeletonProps) =>"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+    },
+    {
+      "file": "src/components/composites/chips/EnumChip/index.tsx",
+      "component": "EnumChip",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+          "prop": "className",
+          "line": 41,
+          "snippet": "<EnumChip value={hostPlatform} map={map} className={className} /"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/chips/EnumChip/EnumChip.tsx"
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "component": "EmptyState",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 4,
+      "sampleConsumers": [
+        {
+          "file": "src/components/composites/async/AsyncContent/index.tsx",
+          "prop": "classNames",
+          "line": 234,
+          "snippet": "<EmptyState identity={identity} classNames={classNames} icon={withDuotone(icon ?? TrayIcon)} title={title} description={"
+        },
+        {
+          "file": "src/components/composites/async/AsyncContent/index.tsx",
+          "prop": "classNames",
+          "line": 265,
+          "snippet": "<EmptyState identity={identity} classNames={classNames} tone=\"danger\" icon={withDuotone(icon ?? WarningIcon)} title={tit"
+        },
+        {
+          "file": ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+          "prop": "classNames",
+          "line": 199,
+          "snippet": "<EmptyState classNames={classNames} icon={withDuotone(icon ?? TrayIcon)} title={title} description={description} action="
+        },
+        {
+          "file": ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+          "prop": "classNames",
+          "line": 229,
+          "snippet": "<EmptyState classNames={classNames} tone=\"danger\" icon={withDuotone(icon ?? WarningIcon)} title={title} description={des"
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx"
+    },
+    {
+      "file": "src/components/composites/form/_field/FieldFrame.tsx",
+      "component": "FieldFrame",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 0,
+      "sampleConsumers": [],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/composites/stats/ProgressMeter/index.tsx",
+      "component": "ProgressMeter",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 7,
+      "sampleConsumers": [
+        {
+          "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+          "prop": "classNames",
+          "line": 33,
+          "snippet": "<ProgressMeter value={score} max={max} color={isSkeleton ? \"accent\" : scoreColorOf(score, max)} isSkeleton={isSkeleton} "
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+          "prop": "classNames",
+          "line": 242,
+          "snippet": "<ProgressMeter isSkeleton color={row.color} classNames={[\"flex-1\"]} /"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+          "prop": "classNames",
+          "line": 243,
+          "snippet": "<ProgressMeter value={row.count} max={gradeTotal} color={row.color} classNames={[\"flex-1\"]} /"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "prop": "classNames",
+          "line": 426,
+          "snippet": "<ProgressMeter value={phaseScore.score} max={phaseScore.max} color={scoreColorOf(phaseScore.score, phaseScore.max)} clas"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+          "prop": "classNames",
+          "line": 473,
+          "snippet": "<ProgressMeter value={attribute.score} max={100} color={scoreColorOf(attribute.score, 100)} classNames={[\"flex-1\"]} /"
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+          "prop": "classNames",
+          "line": 124,
+          "snippet": "<ProgressMeter value={Math.round(item.avgScore)} max={Math.round(item.avgMax) || 100} color={scoreColorOf(item.avgScore,"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+          "prop": "classNames",
+          "line": 34,
+          "snippet": "<ProgressMeter value={score} max={max} color={isSkeleton ? \"accent\" : scoreColorOf(score, max)} isSkeleton={isSkeleton} "
+        }
+      ],
+      "classification": "live-api",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx"
+    }
+  ],
+  "liveApiMapCount": 82,
+  "proposals": [
+    {
+      "file": "src/components/atoms/buttons/Button/ButtonBase.tsx",
+      "component": "ButtonBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "component": "ChipBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "component": "AvatarBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkBack.tsx",
+      "component": "LinkBack",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "component": "LinkSeeMore",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "component": "TabsBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "component": "TabsExtended",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/blocks/async/EmptyContent/index.tsx",
+      "component": "EmptyContent",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "component": "ErrorContent",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "component": "InfiniteScrollSentinel",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "component": "ElementCloseButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": "src/components/blocks/chips/StatusChip/index.tsx",
+            "prop": "classNames",
+            "line": 116,
+            "snippet": "<ElementCloseButton label={cancelLabel ?? \"\"} onPress={onCancel} tone={tone} classNames={[\"shrink-0\"]} /"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "component": "FloatingActionButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+            "prop": "className",
+            "line": 126,
+            "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+            "prop": "classNames",
+            "line": 57,
+            "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+          }
+        ],
+        "classNameCount": 1,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "component": "CheckListCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "component": "CrossListCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/MediaCard/index.tsx",
+      "component": "MediaCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/NestedCard/index.tsx",
+      "component": "NestedCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/SectionCard/index.tsx",
+      "component": "SectionCard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": "src/components/blocks/learn/QuizCard/index.tsx",
+            "prop": "classNames",
+            "line": 300,
+            "snippet": "<SectionCard identity={{ tier: \"block\", component: \"QuizCard\" }} classNames={classNames} >"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "component": "SummaryCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "component": "DifficultyChip",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "component": "CodeConsole",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/PracticeProblemPage/index.tsx",
+            "prop": "className",
+            "line": 751,
+            "snippet": "<CodeConsole className=\"h-[42%]\" ariaLabel={t(\"codingPractice.consoleLabel\")} selectedTab={consoleTab} onSelectTab={(key"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "component": "AddToCartButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+            "prop": "className",
+            "line": 45,
+            "snippet": "<AddToCartButton course={course} isEnrolled={course.isEnrolled ?? undefined} variant=\"secondary\" className=\"flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-auth-commerce",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+      "component": "PhaseScarcityNote",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+            "prop": "classNames",
+            "line": 108,
+            "snippet": "<PhaseScarcityNote currentPhase={price.currentPhase} seatsRemaining={price.seatsRemaining ?? null} nextPhasePriceVnd={pr"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-auth-commerce",
+      "twin": ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx"
+    },
+    {
+      "file": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "component": "PriceTagBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-auth-commerce"
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "component": "TierCardBase",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/commerce/TierCard/index.tsx",
+            "prop": "className",
+            "line": 92,
+            "snippet": "<TierCardBase identity={{ tier: \"block\", component: \"TierCard\" }} className={tier.popular ? \"border-accent ring-2 ring-a"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-auth-commerce",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TrialConversionStrip/index.tsx",
+      "component": "TrialConversionStrip",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-auth-commerce"
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "component": "CommentComposer",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+            "prop": "className",
+            "line": 186,
+            "snippet": "<CommentComposer className=\"w-full\" placeholder={t(\"discussion.replyPlaceholder\")} submitLabel={t(\"discussion.reply\")} c"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "component": "Discussion",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+            "prop": "className",
+            "line": 293,
+            "snippet": "<Discussion className={className} // discussion data currentUserId={currentUserId} currentUser={currentUser ? { username"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "component": "FollowButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+            "prop": "className",
+            "line": 103,
+            "snippet": "<FollowButton quiet following={isFollowing} isPending={isFollowPending} onToggle={onToggleFollow} className=\"ml-1 shrink"
+          },
+          {
+            "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+            "prop": "className",
+            "line": 105,
+            "snippet": "<FollowButton className=\"shrink-0\" following={user.following} isPending={user.isPending} onToggle={() =>"
+          },
+          {
+            "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+            "prop": "className",
+            "line": 336,
+            "snippet": "<FollowButton className=\"shrink-0\" quiet following={row.following} isPending={row.isPending} onToggle={row.onToggleFollo"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "component": "AiRewriteButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 94,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+          },
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 131,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+          },
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 147,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+          },
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 52,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={onRewrite} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 4,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-cv-grading",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "component": "LeaderboardListCard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+            "prop": "className",
+            "line": 132,
+            "snippet": "<LeaderboardListCard className={className} title={labels.title} onSeeMore={onSeeMore} seeMoreLabel={labels.seeMoreLabel}"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-profile-stats-marketing",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "component": "Composer",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/feed/CommentThread/index.tsx",
+            "prop": "className",
+            "line": 117,
+            "snippet": "<Composer value={replyValue} onChange={setReplyValue} onSubmit={submitReply} avatarSrc={avatarSrc} placeholder=\"Write a "
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "component": "InfoTooltip",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+            "prop": "className",
+            "line": 155,
+            "snippet": "<InfoTooltip className=\"text-sm font-medium\" title={labels.streakLabel} description={labels.streakHelp}>"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "component": "BadgeImage",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+            "prop": "className",
+            "line": 68,
+            "snippet": "<BadgeImage objectKey={objectKey} size={innerSize} alt={name} className={cn( // scale up to eat the art's built-in trans"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "component": "BrandLockup",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/Footer/index.tsx",
+            "prop": "className",
+            "line": 78,
+            "snippet": "<BrandLockup className=\"self-start\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "component": "BrandLogo",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+            "prop": "className",
+            "line": 27,
+            "snippet": "<BrandLogo className=\"h-10\" /"
+          },
+          {
+            "file": "src/components/blocks/layout/AppSplash/component.tsx",
+            "prop": "className",
+            "line": 73,
+            "snippet": "<BrandLogo className=\"h-14\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "component": "IconTile",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+            "prop": "className",
+            "line": 294,
+            "snippet": "<IconTile size=\"sm\" tone=\"accent\" icon={REWARD_ICON[reward.key] ?? ( <GiftIcon aria-hidden focusable=\"false\" className=\""
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "component": "AmbientBackground",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/AppearancePage/index.tsx",
+            "prop": "className",
+            "line": 256,
+            "snippet": "<AmbientBackground effect={option} className=\"absolute inset-0 -z-0\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "component": "PageHeader",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+            "prop": "className",
+            "line": 33,
+            "snippet": "<PageHeader className={className} breadcrumb={<LearnBreadcrumb /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "component": "StickyBottomBar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+            "prop": "className",
+            "line": 53,
+            "snippet": "<StickyBottomBar className={className}>"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "component": "ChatToolResult",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+            "prop": "className",
+            "line": 1025,
+            "snippet": "<ChatToolResult items={tr.items} isLoading={tr.isLoading} label={t(meta.labelKey)} icon={<Icon className=\"size-4\" aria-h"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "component": "ContentMap",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/LearnShellLayout/index.tsx",
+            "prop": "className",
+            "line": 146,
+            "snippet": "<ContentMap className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "component": "LeaderboardCategoryRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/LearnShellLayout/index.tsx",
+            "prop": "className",
+            "line": 168,
+            "snippet": "<LeaderboardCategoryRail variant=\"rail\" className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "component": "MilestoneOutline",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/LearnShellLayout/index.tsx",
+            "prop": "className",
+            "line": 157,
+            "snippet": "<MilestoneOutline className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "component": "PlaygroundRagWorkspace",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+            "prop": "className",
+            "line": 103,
+            "snippet": "<PlaygroundRagWorkspace className=\"h-full\" ragAnswer={byomState.ragAnswer} ragCitations={byomState.ragCitations} sendRag"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/QuizCard/index.tsx",
+      "component": "QuizCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-learn-practice"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      "component": "ReactionGlyph",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": false,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-learn-practice"
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "component": "LabeledList",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+            "prop": "classNames",
+            "line": 82,
+            "snippet": "<LabeledList label={t(\"lessonRail.challenges.title\")} action={( <Button label={t(\"lessonRail.challenges.practice\")} size"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "component": "ListRow",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+            "prop": "className",
+            "line": 52,
+            "snippet": "<ListRow key={item.id} // p-3, not ListRow's bare py-2: this checklist always renders // INSIDE a bounded card, where a "
+          },
+          {
+            "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+            "prop": "className",
+            "line": 199,
+            "snippet": "<ListRow key={notification.id} leading={!notification.isRead ? ( <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\""
+          },
+          {
+            "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+            "prop": "className",
+            "line": 209,
+            "snippet": "<ListRow key={task.id} leading={task.completed ? ( <CheckCircleIcon aria-hidden focusable=\"false\" className=\"size-5 text"
+          },
+          {
+            "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+            "prop": "className",
+            "line": 245,
+            "snippet": "<ListRow key={challenge.id} leading={( <PuzzlePieceIcon aria-hidden focusable=\"false\" className=\"size-5 text-foreground\""
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 4,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+      "component": "VideoRenderer",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "component": "MpegDash",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+            "prop": "className",
+            "line": 92,
+            "snippet": "<MpegDash src={url} className={classNames?.content} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "component": "Standard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+            "prop": "className",
+            "line": 108,
+            "snippet": "<Standard src={url} className={classNames?.content} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "component": "Youtube",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+            "prop": "className",
+            "line": 99,
+            "snippet": "<Youtube url={url} title={title} className={classNames?.content} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/BackLink/index.tsx",
+      "component": "BackLink",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+            "prop": "className",
+            "line": 60,
+            "snippet": "<BackLink onPress={parent.onPress} className={cn(isLongTrail ? undefined : \"@app-sm:hidden\")} /"
+          },
+          {
+            "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+            "prop": "className",
+            "line": 45,
+            "snippet": "<BackLink className=\"shrink-0\" target={t(\"cv.builder.galleryTarget\")} onPress={onBack} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "component": "CollapsibleSidebar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          },
+          {
+            "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+            "prop": "className",
+            "line": 85,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlo"
+          },
+          {
+            "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx"
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "component": "OutlineRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentMap/index.tsx",
+            "prop": "className",
+            "line": 216,
+            "snippet": "<OutlineRail className={className} header={progress ? { label: t(\"courseContents.progress\"), progress: { done: progress."
+          },
+          {
+            "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+            "prop": "className",
+            "line": 233,
+            "snippet": "<OutlineRail className={cn(\"@app-lg:min-h-0 @app-lg:flex-1\", className)} header={taskTotals.total >"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "component": "ProgrammingLanguageTabs",
+      "classification": "ambiguous",
+      "reason": "rest-spread may forward className",
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "component": "SidebarNavItem",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+            "prop": "className",
+            "line": 100,
+            "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+            "prop": "className",
+            "line": 72,
+            "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+            "prop": "className",
+            "line": 119,
+            "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+          },
+          {
+            "file": ".storybook/stories/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
+            "prop": "className",
+            "line": 64,
+            "snippet": "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" endContent={ <span className=\"rounded-full bg-accent px-2 py-0 text-"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 4,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "component": "TabsCard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+            "prop": "className",
+            "line": 75,
+            "snippet": "<TabsCard className=\"mx-auto w-full max-w-3xl\" leftTabs={leftTabs} rightTabs={rightTabs} collapseRightOnMobile rightTabs"
+          },
+          {
+            "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+            "prop": "className",
+            "line": 108,
+            "snippet": "<TabsCard variant=\"primary\" className=\"w-full max-w-xs\" leftTabs={{ selectedKey: era, ariaLabel: t(\"view.eraAria\"), onSe"
+          },
+          {
+            "file": "src/components/pages/FlashcardsPage/index.tsx",
+            "prop": "className",
+            "line": 371,
+            "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"overview\", label: t(\"flashcard.review.over"
+          },
+          {
+            "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+            "prop": "className",
+            "line": 812,
+            "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"begin\", label: t(\"flashcard.quiz.setupTabB"
+          },
+          {
+            "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+            "prop": "className",
+            "line": 227,
+            "snippet": "<TabsCard leftTabs={{ items: [ { key: \"contents\", label: t(\"profileSettings.learning.detail.contents\"), icon: <ListBulle"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 5,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "component": "RankDeltaCaret",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+            "prop": "className",
+            "line": 96,
+            "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" /"
+          },
+          {
+            "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+            "prop": "className",
+            "line": 105,
+            "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" /"
+          },
+          {
+            "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+            "prop": "className",
+            "line": 189,
+            "snippet": "<RankDeltaCaret delta={row.rankDelta} className=\"w-8 shrink-0 justify-end\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-profile-stats-marketing",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "component": "CodeToHtml",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 389,
+            "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "component": "MermaidDiagram",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 370,
+            "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "component": "ButtonGroup",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 152,
+            "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+          },
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 167,
+            "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" /"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+            "prop": "classNames",
+            "line": 124,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          },
+          {
+            "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+            "prop": "classNames",
+            "line": 112,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          }
+        ],
+        "classNameCount": 2,
+        "classNamesCount": 2
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx"
+    },
+    {
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "component": "FloatingActionButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+            "prop": "className",
+            "line": 126,
+            "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+            "prop": "classNames",
+            "line": 57,
+            "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+          }
+        ],
+        "classNameCount": 1,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "component": "CodePreviewTabs",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "component": "CodeToHtml",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 389,
+            "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "component": "MermaidDiagram",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 370,
+            "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "component": "ArchitectureRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/ArchitecturePage/index.tsx",
+            "prop": "className",
+            "line": 63,
+            "snippet": "<ArchitectureRail className=\"min-h-0 @app-lg:flex-1\" healthByName={healthByName} selectedId={node} onSelect={setNode} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-profile-admin-other",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "component": "MetricsInline",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+            "prop": "className",
+            "line": 48,
+            "snippet": "<MetricsInline metrics={metrics} className=\"text-xs text-muted\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-profile-admin-other",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "component": "CourseHero",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/component.tsx",
+            "prop": "className",
+            "line": 120,
+            "snippet": "<CourseHero className=\"@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "component": "CourseMobileEnrollBar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/component.tsx",
+            "prop": "className",
+            "line": 145,
+            "snippet": "<CourseMobileEnrollBar className=\"@app-md:hidden\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "component": "CoursePricingRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/component.tsx",
+            "prop": "className",
+            "line": 125,
+            "snippet": "<CoursePricingRail className=\"@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/KpiPage/index.tsx",
+      "component": "KpiPage",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "pages-profile-admin-other"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "component": "MockInterviewWorkspace",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+            "prop": "className",
+            "line": 2070,
+            "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState="
+          },
+          {
+            "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+            "prop": "className",
+            "line": 2337,
+            "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState="
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-profile-admin-other",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "component": "PracticeRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/PracticeHubPage/index.tsx",
+            "prop": "className",
+            "line": 51,
+            "snippet": "<PracticeRail className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "pages-dashboard-learning",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/GithubIcon/index.tsx",
+      "component": "GithubIcon",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+            "prop": "className",
+            "line": 144,
+            "snippet": "<GithubIcon className=\"size-5\" /"
+          },
+          {
+            "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+            "prop": "className",
+            "line": 183,
+            "snippet": "<GithubIcon className=\"size-4\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+            "prop": "className",
+            "line": 188,
+            "snippet": "<GithubIcon className=\"size-5\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+            "prop": "className",
+            "line": 236,
+            "snippet": "<GithubIcon aria-hidden className=\"size-4\" /"
+          },
+          {
+            "file": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+            "prop": "className",
+            "line": 54,
+            "snippet": "<GithubIcon className=\"w-16 h-16\" /"
+          },
+          {
+            "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+            "prop": "className",
+            "line": 274,
+            "snippet": "<GithubIcon className=\"size-3.5\" /"
+          },
+          {
+            "file": "src/components/pages/SettingsHomePage/index.tsx",
+            "prop": "className",
+            "line": 52,
+            "snippet": "<GithubIcon className=\"size-3.5\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 7,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/GoogleIcon/index.tsx",
+      "component": "GoogleIcon",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/SettingsHomePage/index.tsx",
+            "prop": "className",
+            "line": 54,
+            "snippet": "<GoogleIcon className=\"size-3.5\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/LogoMark/index.tsx",
+      "component": "LogoMark",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+            "prop": "className",
+            "line": 45,
+            "snippet": "<LogoMark className=\"size-10\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": "src/components/svg/TierLevelIcon/index.tsx",
+      "component": "TierLevelIcon",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+            "prop": "className",
+            "line": 46,
+            "snippet": "<TierLevelIcon level={1} className=\"size-6 shrink-0 text-accent-soft-foreground\" /"
+          },
+          {
+            "file": "src/components/blocks/commerce/TierCard/index.tsx",
+            "prop": "className",
+            "line": 96,
+            "snippet": "<TierLevelIcon level={tierLevel} className=\"size-6 shrink-0 text-accent-soft-foreground\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": null
+    },
+    {
+      "file": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "component": "ButtonBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "component": "ChipBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "component": "AvatarBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "component": "LinkBack",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "component": "LinkSeeMore",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "component": "TabsBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "component": "TabsExtended",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "component": "ButtonGroup",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 152,
+            "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+          },
+          {
+            "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+            "prop": "className",
+            "line": 167,
+            "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" /"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+            "prop": "classNames",
+            "line": 124,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          },
+          {
+            "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+            "prop": "classNames",
+            "line": 112,
+            "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+          }
+        ],
+        "classNameCount": 2,
+        "classNamesCount": 2
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/buttons/ButtonGroup/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "component": "FloatingActionButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+            "prop": "className",
+            "line": 126,
+            "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+            "prop": "classNames",
+            "line": 57,
+            "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+          }
+        ],
+        "classNameCount": 1,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/buttons/FloatingActionButton/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "component": "CodePreviewTabs",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "storybook-only-and-residual"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "component": "CodeToHtml",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 389,
+            "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/viewers/MarkdownContent/index.tsx"
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "component": "MermaidDiagram",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 370,
+            "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "storybook-only-and-residual",
+      "twin": "src/components/composites/viewers/MarkdownContent/index.tsx"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "component": "AiQuotaHistoryPanel",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "component": "PriceTagBase",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-auth-commerce"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      "component": "ReactionGlyph",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": false,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-learn-practice"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "component": "CollapsibleSidebar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          },
+          {
+            "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+            "prop": "className",
+            "line": 85,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlo"
+          },
+          {
+            "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "component": "ProfileLoadingState",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": false,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-profile-stats-marketing"
+    }
+  ]
+}

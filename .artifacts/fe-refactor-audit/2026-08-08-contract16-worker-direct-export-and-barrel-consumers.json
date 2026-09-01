@@ -1,0 +1,25 @@
+{
+  "partition": "direct-export-and-barrel-consumers",
+  "changed": [
+    "src/components/atoms/navigation/Link/index.tsx",
+    ".storybook/components/atoms/navigation/Link/Link.tsx",
+    "src/components/frames/Stack/index.tsx",
+    ".storybook/components/frames/Stack/Stack.tsx"
+  ],
+  "skipped": [],
+  "holds": [],
+  "evidence": {
+    "Link": {
+      "removed": "export const Link = { Back, SeeMore }",
+      "kept": ["LinkBack", "LinkSeeMore"],
+      "consumersOfLinkDot": []
+    },
+    "Stack": {
+      "removed": "export const Stack = { V, H }",
+      "kept": ["StackV", "StackH"],
+      "consumersOfStackDot": ["BlockAnatomy comment only — not a call site"]
+    }
+  },
+  "verification": {},
+  "regressions": []
+}

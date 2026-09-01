@@ -1,0 +1,207 @@
+{
+  "batch": "B36",
+  "wave": "B",
+  "agent": "surface-list-card-consumers",
+  "status": "complete",
+  "claimedAt": "2026-08-08T16:36:00.000Z",
+  "completedAt": "2026-08-08T16:55:00.000Z",
+  "pattern": "Migrate exact SurfaceListCard consumers to SurfaceCardList (SurfaceCard.List). Stamp identity on exported roots when the list is the root. Move placement (mt-*/w-full/h-full) to parent frames or AllowedClassName classNames. Hold non-exact (ReactNode children chrome, accordion hybrid, per-row hooks). No new SurfaceCard variants. Burn SurfaceListCard.className only at zero remaining consumers.",
+  "migrated": [
+    {
+      "file": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "shape": "fixed-row",
+      "from": "SurfaceListCard + SurfaceListCardRow (leading/title/meta)",
+      "to": "SurfaceCardList items[]",
+      "identity": "unchanged on LabeledCard root (IDENTITY already stamped)",
+      "notes": "Skeleton branch uses content slots with Skeleton.ListRow; live tasks use fixed leading/title/meta."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "shape": "fixed-row",
+      "from": "SurfaceListCard bordered + SurfaceListCardRow",
+      "to": "SurfaceCardList variant=nested items[]",
+      "identity": "SectionCard remains exported root — no list identity stamp",
+      "notes": "href/title/subtitle/leading/meta map 1:1."
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "shape": "fixed-row",
+      "from": "SurfaceListCard bordered + SurfaceListCardRow x3",
+      "to": "SurfaceCardList variant=nested items[]",
+      "identity": "LabeledCard remains section root",
+      "notes": "Static email/phone/hours rows — exact title/subtitle/leading/href."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "shape": "fixed-row",
+      "from": "SurfaceListCard + SurfaceListCardRow",
+      "to": "SurfaceCardList items[] (skeleton + live)",
+      "identity": "page Box already stamped NotificationsPage",
+      "notes": "leading/title/subtitle/meta/trailing/onPress map 1:1."
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard className=h-full + SurfaceListCardItem children",
+      "to": "SurfaceCardList classNames=[h-full] + content ComponentType",
+      "identity": "LabeledCard remains exported root",
+      "notes": "Removed WithClassNames className door; h-full via AllowedClassName classNames."
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard className=h-full + SurfaceListCardItem children",
+      "to": "SurfaceCardList classNames=[h-full] + content ComponentType",
+      "identity": "LabeledCard remains exported root",
+      "notes": "Same className-door burn as OverviewChallengeSkills."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard className={className} + SurfaceListCardItem",
+      "to": "placement wrapper div + SurfaceCardList items[]",
+      "identity": { "tier": "block", "component": "ChangelogListSkeleton" },
+      "notes": "className moved to parent placement frame; list is exported root → identity stamped."
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard bordered + SurfaceListCardRow className=font-mono",
+      "to": "SurfaceCardList variant=nested + content (font-mono inside content)",
+      "identity": "workspace owns outer chrome — list nested",
+      "notes": "font-mono is not AllowedClassName; kept inside free-form content rather than a classNames door."
+    }
+  ],
+  "held": [
+    {
+      "id": "LeaderboardListCard-freeform-reactnode",
+      "files": ["src/components/blocks/dashboard/LeaderboardListCard/index.tsx"],
+      "mismatch": "SurfaceListCardItem children are bespoke ReactNode rows (rank medal + UserCell Link + valueLabel ReactNode + trailing ReactNode). Not expressible as fixed title/subtitle/leading without losing nested Link/UserCell chrome.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "ContentAiChat-conversation-drawer",
+      "files": ["src/components/blocks/learn/ContentAiChat/index.tsx"],
+      "mismatch": "Rows embed inline rename <input>, overflow Dropdown menus, and selection tint — custom nested interactive chrome, not SurfaceCardListItem fixed/content slots without rewriting the drawer.",
+      "classification": "custom-nested-chrome"
+    },
+    {
+      "id": "PromptPlayground-chip-meta",
+      "files": ["src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx"],
+      "mismatch": "Free-form rows pair truncated prompt text with HeroUI Chip status — not fixed title/meta without inventing a Chip-as-meta contract. Deferrable content migration; held this pass to keep priority exact-first.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "RelatedContentList-EntityResultRow",
+      "files": ["src/components/blocks/learn/RelatedContentList/component.tsx"],
+      "mismatch": "Rows are EntityResultRow components (own SurfaceListCardItem / bespoke layout). Parent only shells the list; migrating requires EntityResultRow contract change.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "LabeledAccordionCard-accordion-hybrid",
+      "files": ["src/components/blocks/cards/LabeledAccordionCard/index.tsx"],
+      "mismatch": "SurfaceListCard wraps HeroUI Accordion for full-bleed separators — accordion hybrid. Exact twin is SurfaceCardAccordion, not SurfaceCardList. Out of List-migration scope.",
+      "classification": "accordion-hybrid"
+    },
+    {
+      "id": "CartLine-row-component",
+      "files": ["src/components/blocks/commerce/CartLine/index.tsx"],
+      "mismatch": "Exports a single SurfaceListCardItem row (IdentityTile + price + remove Button), not a list. Parent owns SurfaceListCard. Free-form row with independent actions — not a clean List.items migration without parent co-change.",
+      "classification": "row-not-list"
+    },
+    {
+      "id": "ActivityFeed-freeform",
+      "files": ["src/components/blocks/feed/ActivityFeed/component.tsx"],
+      "mismatch": "Day-grouped SurfaceListCardItem children render ActivityAvatar + rich sentence ReactNode + ReactionBar — free-form ReactNode rows.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "ChatToolResult-EntityResultRow",
+      "files": ["src/components/blocks/learn/ChatToolResult/index.tsx"],
+      "mismatch": "Renders SurfaceListCardItem skeletons + EntityResultRow; no owning SurfaceListCard shell in this file; custom footer button. Same EntityResultRow hold as RelatedContentList.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "ChangelogList-EntryRow-custom",
+      "files": ["src/components/pages/DashboardPage/ChangelogList/component.tsx"],
+      "mismatch": "EntryRow is free-form (date + category chip span + optional external link title + body). Not fixed-row; content migration possible later — held to keep skeleton sibling migrated first.",
+      "classification": "children-ReactNode-rows"
+    },
+    {
+      "id": "TrendingContents-per-row-hook",
+      "files": [
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx"
+      ],
+      "mismatch": "TrendingRow needs useResolveRouteNavigation per row to supply onPress/isDisabled. Cannot build SurfaceCardListItem[] in the parent map without hooks-in-loop. Nested button-inside-content would duplicate/break row chrome — not exact.",
+      "classification": "per-row-hook-blocks-items"
+    },
+    {
+      "id": "CrossListCard-children-api",
+      "files": ["src/components/blocks/cards/CrossListCard/index.tsx"],
+      "mismatch": "Children-based marked list; exact twin is SurfaceCard.CrossList (items), not SurfaceCard.List. Separate migration.",
+      "classification": "wrong-member-twin"
+    },
+    {
+      "id": "SummaryCard-no-SurfaceListCard",
+      "files": ["src/components/blocks/cards/SummaryCard/**"],
+      "mismatch": "No SurfaceListCard usage found — nothing to migrate.",
+      "classification": "not-a-consumer"
+    },
+    {
+      "id": "remaining-mass-consumers",
+      "files": [
+        "src/components/pages/SessionsPage/index.tsx",
+        "src/components/pages/CartPage/component.tsx",
+        "src/components/pages/JobListPage/**",
+        "src/components/pages/LeaguePage/**",
+        "src/components/pages/FlashcardsPage/**",
+        "src/components/pages/PracticeHubPage/**",
+        "src/components/pages/Profile*/**",
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx"
+      ],
+      "mismatch": "Dozens of remaining consumers; most are free-form SurfaceListCardItem children or row components. Prefer ≥5 exact migrations this pass; mass burn deferred.",
+      "classification": "deferred-mass"
+    }
+  ],
+  "doorStatus": {
+    "SurfaceListCard.className": "retained",
+    "WithClassNames": "retained",
+    "reason": "rg still finds many SurfaceListCard consumers across pages/blocks/overlays; className door cannot burn until zero remaining. This pass removed className=h-full doors on Overview* and className placement on ChangelogListSkeleton.",
+    "forbiddenConsumers": 0,
+    "burnAttempted": false
+  },
+  "courseCardTierCardNotes": {
+    "CourseCard": "Inspected src/components/blocks/cards/CourseCard/component.tsx — uses HeroUI Card/Chip/Typography; cover+outcomes+price layout is a featured marketing card, not a SurfaceCard.List row list. No exact SurfaceCard member reuse without inventing a new variant. HOLD — no edit.",
+    "TierCardBase": "Inspected src/components/blocks/commerce/TierCardBase/index.tsx — HeroUI Card shell with icon/title/price/CTA/feature footer. Feature rows are seal-check + text, closer to SurfaceCard.CrossList shape than List, but shell is a pricing tier card (not a list surface). Exact List reuse: none. HOLD — no edit, no new variants."
+  },
+  "changedFiles": [
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+    "src/components/pages/ContactPage/ContactChannels/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+    "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+    ".artifacts/fe-refactor-audit/2026-08-10-b36-worker-surface-list-card-consumers.json"
+  ],
+  "gates": {
+    "tsc": "exit 0 (npx tsc --noEmit)",
+    "commit": "not requested — skipped"
+  },
+  "hardExclusionsHonored": [
+    "AuthenticationModal",
+    "LoginPage",
+    "blocks/auth",
+    "Navbar",
+    "WeeklyGoals",
+    "ContentPager",
+    "GlyphMark",
+    "nivo/nivoexpert/mia-mia",
+    "CLAUDE.md",
+    "decision-ledger",
+    "commit"
+  ]
+}

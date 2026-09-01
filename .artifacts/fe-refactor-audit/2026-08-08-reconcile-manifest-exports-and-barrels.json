@@ -1,0 +1,80 @@
+{
+  "partition": "exports-and-barrels",
+  "generatedAt": "2026-08-06T22:31:27.721Z",
+  "batch": 12,
+  "fileCount": 2,
+  "totalCandidates": 2,
+  "capped": false,
+  "allowedClassifications": [
+    "consumer-safe",
+    "twin-safe",
+    "export-safe",
+    "identity-safe"
+  ],
+  "holdClassifications": [
+    "vendor-hold",
+    "api-hold",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "hardHolds": [
+    "ChipBase API / handleSide / non-identical twins",
+    "missing-both principles / page-folder / parallel skeleton",
+    "Nivo / locked / teacher holds / a11y",
+    "new principle tokens / unproven public API renames"
+  ],
+  "files": [
+    {
+      "path": "src/components/blocks/learn/ContinueCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/index.tsx",
+      "twin": ".storybook/components/blocks/learn/ContinueCard/index.tsx",
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "export-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/no-runtime-namespace"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-runtime-namespace",
+          "line": 20,
+          "column": 14,
+          "message": "`ContinueCard` is a runtime component namespace. Export its members directly; the folder is only a filesystem grouping.",
+          "severity": 1,
+          "classification": "export-safe"
+        }
+      ]
+    },
+    {
+      "path": "src/modules/utils/computations/pow-10.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/modules/utils/computations/pow-10.ts",
+      "twin": null,
+      "twinExists": false,
+      "candidateCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "export-safe": 1
+      },
+      "consumerUnit": null,
+      "role": "finding",
+      "candidateRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/prefer-arrow-export",
+          "line": 22,
+          "column": 17,
+          "message": "Use an arrow const `const pow10 = (…) => {…}` — no module-level `function` (structure-and-naming §5).",
+          "severity": 1,
+          "classification": "export-safe"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "partition": "layouts-and-overlays",
+  "manifest": [
+    ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+    ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+    ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+    "src/components/layouts/Footer/index.tsx",
+    "src/components/layouts/InnerLayout/component.tsx",
+    "src/components/layouts/LearnShellLayout/component.tsx",
+    "src/components/layouts/LearnShellLayout/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+    "src/components/layouts/Navbar/Logo/index.tsx",
+    "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+    "src/components/overlays/drawers/E2eResultDrawer/component.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+    "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/types/credentials-state.ts",
+    "src/components/overlays/modals/AuthenticationModal/SignInSection/OtpState/index.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx",
+    "src/components/overlays/modals/AuthenticationModal/SignUpSection/RegistrationState/component.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+    "src/components/overlays/modals/LinkGithubModal/component.tsx",
+    "src/components/overlays/modals/MaintenanceModal/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/component.tsx",
+    "src/components/overlays/modals/PaymentModal/component.tsx",
+    "src/components/overlays/modals/PremiumGateModal/component.tsx"
+  ],
+  "changed": [
+    "src/components/layouts/LearnShellLayout/component.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/layouts/LearnShellLayout/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    }
+  ],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 1,
+    "parentPlacementApplied": 0,
+    "proposals": 0
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [
+    {
+      "file": "src/components/layouts/LearnShellLayout/component.tsx",
+      "evidence": "open-tag className consumers = 0"
+    }
+  ],
+  "proposals": [],
+  "parity": {
+    "storybookSrc": "src-only burns this wave (no SB twins for applied files)"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

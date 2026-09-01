@@ -1,0 +1,29 @@
+{
+  "manifest": [],
+  "classification": {},
+  "importsBefore": [],
+  "importsAfter": null,
+  "warningsBefore": {},
+  "warningsAfter": null,
+  "changed": [],
+  "moved": [],
+  "deleted": [],
+  "skipped": [],
+  "holds": [],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [],
+  "skeletonParity": "n/a — no product edits",
+  "storybookParity": "none",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "status": "artifacts-only",
+  "proofs": {
+    "oldPathAbsent": false,
+    "oldPathImports": "unchanged (≥1)",
+    "compatibilityExports": 0,
+    "productDiff": "empty"
+  }
+}

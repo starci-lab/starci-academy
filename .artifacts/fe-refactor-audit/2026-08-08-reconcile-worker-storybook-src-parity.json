@@ -1,0 +1,10 @@
+{
+  "partition": "storybook-src-parity",
+  "changed": [],
+  "skipped": [],
+  "holds": [],
+  "verification": {
+    "note": "No candidate files after exclusive claim — worker omitted by coordinator"
+  },
+  "regressions": []
+}

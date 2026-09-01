@@ -1,0 +1,19 @@
+{
+  "before": {
+    "raw": 7136,
+    "files": 1260,
+    "errors": 0,
+    "a11y": 11
+  },
+  "after": {
+    "raw": 6903,
+    "files": 1230,
+    "errors": 1,
+    "a11y": 11
+  },
+  "delta": {
+    "raw": -233,
+    "files": -30,
+    "errors": 1
+  }
+}

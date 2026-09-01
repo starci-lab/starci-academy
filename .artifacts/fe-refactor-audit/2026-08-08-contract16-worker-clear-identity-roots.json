@@ -1,0 +1,32 @@
+{
+  "partition": "clear-identity-roots",
+  "changed": [
+    "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+    ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+    "src/components/blocks/learn/QuizCard/index.tsx",
+    "src/components/blocks/marketing/PitchCard/index.tsx",
+    "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+    ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx"
+  ],
+  "skipped": [
+    "src/components/pages/DashboardPage/WeeklyGoals/component.tsx — already stamps identity on StackV export root",
+    "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx — already stamps identity on StackV export root",
+    "29 unclear identity hosts from BATCH 13"
+  ],
+  "holds": [
+    "unclear-identity-hosts-batch13"
+  ],
+  "evidence": {
+    "MilestoneUpNextCard": "sole JSX root SurfaceCard; CallerIdentity already on SurfaceCard",
+    "QuizCard": "sole JSX root SectionCard; SectionCard.identity exists",
+    "PitchCard": "sole JSX root SectionCard",
+    "VerdictHeroCard": "sole JSX root SectionCard",
+    "WeeklyGoals": "export root SurfaceCard; relocated stamp from inner StackV cells/content",
+    "JobReadinessWidget": "export root SurfaceCard; relocated stamp from inner Content StackV"
+  },
+  "verification": {},
+  "regressions": []
+}

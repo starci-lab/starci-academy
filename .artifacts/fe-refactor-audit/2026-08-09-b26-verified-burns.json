@@ -1,0 +1,2364 @@
+{
+  "generatedAt": "2026-08-07T13:57:30.405Z",
+  "verifiedCount": 268,
+  "heldCount": 195,
+  "verified": [
+    {
+      "file": "src/components/blocks/auth/GithubLinkGate/index.tsx",
+      "component": "GithubLinkGate",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/auth/Turnstile/index.tsx",
+      "component": "Turnstile",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " onVerify, onExpire, onError, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "component": "RatingBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " options, onRate, ariaLabel, isPending = false, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/FlipCard/index.tsx",
+      "component": "FlipCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " revealed, questionLabel, answerLabel, front: Front, belowFront: BelowFront, back: Back, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "component": "HighlightCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " children, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "component": "CvSubmissionFields",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " cv, cvError, isSubmitting, onCvChange, onSubmit, isUploading, isProcessing, uploadProgress, uploadedFileName, uploadedS",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "component": "CVSubmissionForm",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " isUploading, isProcessing, uploadProgress, uploadedFileName, uploadedS3Key, onSubmit, onProcess, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "component": "LanguageChip",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " language, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "component": "LessonVideoKindChip",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " kind, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "component": "IOExampleCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " rows, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "component": "SandpackPanel",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " files, dependencies = {}, isDark = true, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "component": "TestCaseResultGrid",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " cases, labels, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "component": "FreeTierCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " isCurrent, className, isSkeleton = false, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "component": "TierCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " tier, isCurrent, className, isSkeleton = false, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "component": "TierGrid",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, isSkeleton = false, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "component": "CommentItem",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " comment, currentUserId, depth, repliesByParent, onReply, onEdit, onDelete, onReactComment, onLoadReplies, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "component": "FacebookReactionSelector",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " active, onSelect, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "component": "ReactionBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " summary, onReact, disabled, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "component": "ReactionEmoji",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " descriptor, size = \"xs\", className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "component": "AchievementBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "component": "ActivityBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange, onAiRewrite ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "component": "CertificationBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "component": "EducationBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "component": "ExperienceBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange, onAiRewrite ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "component": "CvBlockStack",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, blocks, onChange, addableTypes, onAddBlock, onAiRewrite, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "component": "InterestBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "component": "LanguageBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "component": "PersonalBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "component": "ProjectBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange, onAiRewrite ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "component": "PickFromStarciSelect",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, onPick, excludeIds = [] ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "component": "RepeatableItemCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, children, onRemove, onMoveUp, onMoveDown, headerEnd, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "component": "SkillsBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "component": "SummaryBlockEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, block, onChange, onAiRewrite ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "component": "CvSplitFromTextModal",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, isOpen, onOpenChange, onSplit ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "component": "CvTailorToJobModal",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, isOpen, onOpenChange, blocks, selectedModel, selectedModelProvider, onTailored, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "component": "CvTemplateGalleryModal",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, isOpen, onOpenChange, doc, onSelect, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "component": "CvTexEditor",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, value, onChange ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "component": "CvTextOrFileInput",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, value, onChange, fieldId, label, placeholder, onExtractingChange, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/dashboard/Podium/index.tsx",
+      "component": "Podium",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " entries, meLabel, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "component": "StandingHeroCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " badge, rankLabel, meta, progress, ctaLabel, onCta, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/entity/EntityToken/index.tsx",
+      "component": "EntityToken",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " globalId, href, label, block = false, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "component": "ActivityAvatar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " username, avatar, icon, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "component": "ChatBubble",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " role, children, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "component": "ChatPanel",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " messages, composer, isTyping = false, emptyState, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/CommentThread/index.tsx",
+      "component": "CommentThread",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " comments, onReply, onReact, avatarSrc, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/EntityLink/index.tsx",
+      "component": "EntityLink",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " label, onPress, isPending, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/FeedItem/index.tsx",
+      "component": "FeedItem",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " leading, children, timestamp, footer, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "component": "ReactionBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " count, myReaction, onReact, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/Timeline/index.tsx",
+      "component": "Timeline",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " children, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "component": "ErrorPageState",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " code, title, description, actions, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "component": "ErrorState",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " title, description, retryLabel, onRetry, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "component": "ReadinessChecklist",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " items, readyLabel, pendingLabel, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/Dropzone/index.tsx",
+      "component": "Dropzone",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " hint, file, errorMessage, acceptedMimeTypes, maxSizeInBytes, onChange, onBlur, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/OtpInput/index.tsx",
+      "component": "OtpInput",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " length = 6, value, onChange, isInvalid, errorMessage, autoFocus, label, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "component": "SchedulePicker",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " dateValue, onDateChange, availableSlots, selectedSlotId, onSlotChange, minDate, slotsLabel = \"Choose a time slot\", clas",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "component": "SearchAutocomplete",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " items, inputValue, onInputChange, onSelect, placeholder = \"Search courses, topics...\", isLoading = false, emptyLabel = ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "component": "DiffViewer",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " filename, hunks, variant = \"unified\", className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/index.tsx",
+      "component": "SelfHostGpuMark",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "component": "AvatarUploadButton",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " avatar, displayName, seed, label, onPress, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "component": "ImageDropzone",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " onFile, label, hint, icon, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "component": "ConnectSheet",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " open, onOpenChange, peek, children, toggleLabel, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "component": "AccountTrigger",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+      "component": "AppearanceRow",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+      "component": "AuthActions",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+      "component": "LogoutMenu",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+      "component": "MenuList",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "component": "UserSummary",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "component": "Navbar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+      "component": "MobileNavbar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+      "component": "NavLinks",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+      "component": "SearchButton",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "component": "KeyStatusChip",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " status, label, variant = KeyStatusChipVariant.Dark, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "component": "ConceptMap",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " data, query, tier, selectedId, onSelectId, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      "component": "MindMapCanvas",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "component": "MindMapContinueButton",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " resumeHref, allContentDone ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "component": "MindMapFullscreenButton",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " targetRef ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "component": "LearnMobileBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "component": "LearnPanelToggles",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "component": "LearnSidebar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      "component": "AiLab",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "component": "LaneModelPicker",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " models, selection, canPremium, isDisabled = false, onSelect, onUpgrade, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "component": "ParamControls",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " params, isDisabled = false, onChange, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "component": "PromptPlayground",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " playground, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "component": "ChallengeCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " challenge, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      "component": "Empty",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "component": "ExplainingCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " item, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      "component": "Empty",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "component": "ImplementationCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " item, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      "component": "ActionToolbar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " isFavorite, isShareVisible, isFavoritePending, onToggleFavorite, onShare, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "component": "ContentReactionBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "component": "ContentTabBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " tabItems, selectedKey, ariaLabel, onSelectionChange, className, rightTabs, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "component": "TabTrigger",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " icon: TabIcon, label, locked, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      "component": "Empty",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      "component": "LessonCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " lessonVideo, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "component": "LessonPager",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "component": "ReadBadge",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " size, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "component": "MilestoneIndexStrip",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " milestones, activeMilestoneId, onSelectMilestone, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      "component": "ContentActions",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "component": "OnThisPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, mobile = false ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "component": "GithubGradingSettings",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "component": "PersonalProjectDashboard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+      "component": "PersonalProjectSubmission",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "component": "TaskActions",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "component": "TaskCodeImplementations",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "component": "TaskCriteriaList",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+      "component": "TaskLockedAlert",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "component": "TaskSubmissionPanel",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "component": "QaConversationHeader",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " asker, isFounderAsker, participants, replyCount, onCollapse, canFollow = false, isFollowing = false, onToggleFollow, is",
+      "twin": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx"
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "component": "QaMessageBubble",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " comment, currentUserId, currentUser, repliesByParent, replyToName, canAccept = false, onAcceptAnswer, onReply, onEdit, ",
+      "twin": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx"
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "component": "QaQuestionThread",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " question, currentUserId, currentUser, onAnswered, className ",
+      "twin": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx"
+    },
+    {
+      "file": "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      "component": "ReferenceLinks",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " references, titleKey, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "component": "TrialEnrollHook",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "component": "AdBanner",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " ad, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "component": "ArchitectureFlow",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " nodes, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "component": "MicroservicesDiagram",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " caption, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "component": "MicroservicesScene",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " caption, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "component": "SectionHeading",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " eyebrow, title, intro, level = 3, align = \"center\", anchorId, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "component": "TopicLane",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " icon, title, items, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/marketing/TruthList/index.tsx",
+      "component": "TruthList",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " items, byline, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/CoverImage/index.tsx",
+      "component": "CoverImage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " src, alt, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/QRCode/index.tsx",
+      "component": "QRCode",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " size, data, icon, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "component": "FullscreenButton",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " onFullscreen, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "component": "VideoControls",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " isPlaying, currentTime, duration, volume, isMuted, onPlayPause, onSeek, onVolumeChange, onMuteToggle, onFullscreen, qua",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "component": "PlayPauseButton",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " isPlaying, onPlayPause, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "component": "QualitySelector",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " qualityLevels, selectedQuality, onQualityChange, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "component": "SeekBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " currentTime, duration, onSeek, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "component": "TimeDisplay",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " currentTime, duration, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "component": "VolumeControl",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " volume, isMuted, onVolumeChange, onMuteToggle, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "component": "ContentMapRow",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " title, isActive, isRead, isLocked = false, isPremium, meta, onPress, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "component": "ExtendedTabs",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " selectedKey, onSelectionChange, children, className, variant = \"secondary\", size = \"md\", ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "component": "ResponsiveBreadcrumb",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " items, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "component": "SidebarNavAccordionGroup",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " icon: Icon, label, items, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "component": "SidebarNavGroup",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " label, divider = false, children, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " unreadCount, groups, onMarkAllRead, title = \"Notifications\", emptyState, ariaLabel = \"Notifications\", isOpen, onOpenCha",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "component": "NotificationItem",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " title, body, timeLabel, icon, tone = \"default\", isUnread = false, onPress, actionSlot, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "component": "NotificationList",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " groups, title, onMarkAllRead, markAllReadLabel = \"Mark all as read\", emptyState, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "component": "ContributionCalendarView",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " days, year, onYearChange, isSkeleton = false, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "component": "CvSubmission",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+      "component": "MascotBadge",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " objectKey, name, earned, tierReached, size = 64, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+      "component": "ProfileTabsBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " username, isSelf, hasPublicCv, sectionVisibility, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/RankBadge/index.tsx",
+      "component": "RankBadge",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " label, color, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/UserStreak/index.tsx",
+      "component": "UserStreak",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "component": "CodePreviewTabs",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " preview, code, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "component": "LayoutWidget",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " html, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+      "component": "RenderReactComponent",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " code, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "component": "DeadlineCallout",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " count, title, hint, forecast, caption, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "component": "LanguageDonut",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " items, unitLabel, ariaLabel, size = 128, thickness = 8, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "component": "MilestoneRoadmap",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " milestones, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "component": "TopicMasteryGrid",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " topics, ariaLabel, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "component": "HighlightChip",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " tone = \"default\", icon, value, label, isSkeleton = false ",
+      "twin": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx"
+    },
+    {
+      "file": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "component": "FooterNavColumn",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " title, links, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Footer/index.tsx",
+      "component": "Footer",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "component": "AccountMenuAuthed",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "component": "AccountMenuGuest",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "component": "AccountTrigger",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "component": "DarkLightModeSwitch",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "component": "GuestHeader",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "component": "CartButton",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/index.tsx",
+      "component": "Navbar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "component": "LanguageDropdown",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "component": "NavLinks",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "component": "NotificationBell",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "component": "ProviderSection",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " providerHealth, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "component": "KeyRow",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " keyHealth, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminLoginPage/index.tsx",
+      "component": "AdminLoginPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "component": "ConfigCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " url, activeType, onChangeUrl, onSelectType, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "component": "RendererTypeButton",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " option, isActive, onSelect, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "component": "AdminMpegDashTestPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "component": "PreviewCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " url, activeType, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "component": "QuickTestUrls",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " onSelect, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "component": "QuickTestUrlButton",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " item, onSelect, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "component": "DropZone",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " file, fileInputRef, onClickZone, onDragOver, onDrop, onFileChange, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "component": "FileSelectionCard",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " file, fileInputRef, objectKey, isRequesting, isUploading, uploadDone, isProcessing, processResult, onClickZone, onDragO",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "component": "ProcessResultBanner",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " processResult, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "component": "AdminUploadVideoPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "component": "LoadingScreen",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "component": "TopBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "component": "UploadProgressCard",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " uploads, uploadDone, onCopyUrl, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "component": "ProviderUploadRow",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " upload, index, onCopyUrl, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "component": "AiUsageHistory",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "component": "ArchitectureMap",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " healthByName, selectedId, onSelectNode, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "component": "ArchitectureMobileNav",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " healthByName, selectedId, onSelect, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "component": "NodeDissectionPanel",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " nodeId, healthByName, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "component": "BookmarkCard",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " content, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "component": "ContactChannels",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "component": "ContactForm",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "component": "ContactPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "component": "CvEditorToolbarBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/index.tsx",
+      "component": "CvEditorPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, cvId ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/CvGalleryPage/index.tsx",
+      "component": "CvGalleryPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "component": "CommunityTab",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "component": "CoursesTab",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "component": "DashboardIdentity",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "component": "ProfileMenuCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "component": "DashboardTabsBar",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "component": "ExploreTab",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "component": "DashboardPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+      "component": "LeagueCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, framed = false, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "component": "LeagueCardContent",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " data, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "component": "LeagueTierBadge",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " tier, size = 24, showLabel = false, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "component": "OverviewTab",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "component": "QuickActions",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/index.tsx",
+      "component": "RecommendedCourses",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/index.tsx",
+      "component": "TopLearners",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+      "component": "TrendingContents",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/index.tsx",
+      "component": "WeeklyChallengeCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+      "component": "AvatarUploadModal",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " onFile, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "component": "FlashcardMobileNav",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/index.tsx",
+      "component": "FlashcardReviewer",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " deckId, sessionId, className, onBack ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/index.tsx",
+      "component": "FlashcardStudyRail",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "component": "FlashcardsPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, resumeQuizSessionId, resumeStudySessionId, resultQuizSessionId, resultStudySessionId, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+      "component": "HeadhuntingCompanyPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/index.tsx",
+      "component": "JobPostFormPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "component": "LandingPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "component": "KnowledgeGraph",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/StatStrip/index.tsx",
+      "component": "StatStrip",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "component": "TalentMarketplace",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/index.tsx",
+      "component": "GlobalBoard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "component": "LeaguePage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/index.tsx",
+      "component": "WeeklyBoard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "component": "CourseDayTimeline",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " courseGlobalId, query, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "component": "CourseMilestoneOutline",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " search = \"\", className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "component": "CourseOutline",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " search = \"\", className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "component": "LearningHistoryPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "component": "LoginPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "component": "InterviewerPresence",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " persona, speaking, speakingLabel, ttsSupported, ttsEnabled, onToggleTts, muteLabel, unmuteLabel, children, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "component": "MockInterviewHistory",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " courseId, courseDisplayId, onStartInterview, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "component": "MockInterviewScorecard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " grade, courseId, courseDisplayId, promptTitle, createdAt, onRetry, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "component": "MockInterviewStats",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " courseId, courseDisplayId, onStartInterview, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "component": "MockInterviewTrackSnapshot",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " courseId, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "component": "VoiceHero",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " sttSupported, listening, interimTranscript, value, onValueChange, onToggleListen, answerMode, labels, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "component": "VoiceUnavailableModal",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " isOpen, onOpenChange, onRecheck: recheckVoices, hasLocaleVoice, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "component": "MyAttemptsPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MyFeedbackPage/index.tsx",
+      "component": "MyFeedbackPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "component": "MySubmissionsPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "component": "NotificationsPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/OauthRedirectPage/index.tsx",
+      "component": "OauthRedirectPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " action, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "component": "PracticeFilters",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "component": "PracticeMobileNav",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "component": "ProblemCatalog",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "component": "ProblemRow",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " problem, status, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "component": "ProgressCockpit",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/index.tsx",
+      "component": "ProfileActivityPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "component": "ProfileChallengeManagePage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "component": "ProfileChallengesPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "component": "ChallengeCourseRow",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " username, courseTitle, courseSlug, items, totalChallenges, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "component": "ProfileChallenges",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "component": "ProfileChallengeSubmissionPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "component": "ProfileCodingProblemPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/index.tsx",
+      "component": "ProfileOverviewPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "component": "OverviewChallengeSkills",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " label, onSeeMore, seeMoreLabel, fillHeight ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "component": "OverviewCodeSkills",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " label, onSeeMore, seeMoreLabel, fillHeight ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "component": "ProfileProjectRoadmapPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "component": "ProfileProjectsPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "component": "PinnedProjectCard",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " pin, className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "component": "ProfileRedirectPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "component": "ProfileSkillsPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "component": "ProfileCoding",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "component": "RewardsPage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "component": "MyVouchers",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "component": "RewardCatalog",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "component": "DetailRow",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " label, value, showCopy = false, copyValue, isHighlighted = false, onCopy, className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SettingsHomePage/index.tsx",
+      "component": "SettingsHomePage",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " className, ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "component": "AiKeyGroup",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " group ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "component": "ComponentCard",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " component ",
+      "twin": null
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "component": "OverallBanner",
+      "action": "remove-className-door-and-impl",
+      "classNameConsumers": 0,
+      "dest": " allUp, label, className ",
+      "twin": null
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "component": "HighlightChip",
+      "action": "remove-WithClassNames-entirely",
+      "dest": " tone = \"default\", icon, value, label, isSkeleton = false ",
+      "twin": "src/components/composites/chips/HighlightChip/index.tsx"
+    }
+  ],
+  "heldSample": [
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "reason": "other",
+      "name": "FloatingActionButton",
+      "destClassName": true,
+      "destClassNames": false,
+      "cName": 1,
+      "cNames": 1
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "reason": "hold-name-or-skeleton",
+      "name": "CourseCardSkeleton"
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "reason": "live-className-api",
+      "name": "GroupPressableCard",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "reason": "hold-name-or-skeleton",
+      "name": "PressableCard"
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "reason": "hold-name-or-skeleton",
+      "name": "SurfaceListCard"
+    },
+    {
+      "file": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/chips/EnumChip/index.tsx",
+      "reason": "no-destructure",
+      "name": "EnumChip"
+    },
+    {
+      "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/chips/TagChips/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "reason": "live-className-api",
+      "name": "CodeConsole",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "reason": "live-className-api",
+      "name": "AddToCartButton",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "reason": "live-className-api",
+      "name": "TierCardBase",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "reason": "live-className-api",
+      "name": "CommentComposer",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "reason": "live-className-api",
+      "name": "Discussion",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "reason": "live-className-api",
+      "name": "InteractionBar",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "reason": "live-className-api",
+      "name": "FollowButton",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "reason": "live-className-api",
+      "name": "AiRewriteButton",
+      "classNameConsumers": 4
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "reason": "hold-name-or-skeleton",
+      "name": "CvPdfPreview"
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "reason": "hold-name-or-skeleton",
+      "name": "CvWorkspaceSkeleton"
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "reason": "live-className-api",
+      "name": "LeaderboardListCard",
+      "classNameConsumers": 2
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "reason": "live-className-api",
+      "name": "Composer",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "reason": "live-className-api",
+      "name": "InfoTooltip",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "reason": "live-className-api",
+      "name": "SimpleEmptyState",
+      "classNameConsumers": 3
+    },
+    {
+      "file": "src/components/blocks/form/SearchBar/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/form/SearchInput/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+      "reason": "no-destructure",
+      "name": "component"
+    },
+    {
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "reason": "live-className-api",
+      "name": "BadgeImage",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "reason": "live-className-api",
+      "name": "BrandLockup",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "reason": "live-className-api",
+      "name": "BrandLogo",
+      "classNameConsumers": 2
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "reason": "live-className-api",
+      "name": "IconTile",
+      "classNameConsumers": 1
+    },
+    {
+      "file": "src/components/blocks/identity/Logo/index.tsx",
+      "reason": "hold-name-or-skeleton",
+      "name": "Logo"
+    },
+    {
+      "file": "src/components/blocks/identity/UserAvatar/index.tsx",
+      "reason": "live-className-api",
+      "name": "UserAvatar",
+      "classNameConsumers": 19
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "reason": "live-className-api",
+      "name": "AmbientBackground",
+      "classNameConsumers": 1
+    }
+  ],
+  "byAction": {
+    "remove-className-door-and-impl": 252,
+    "remove-WithClassNames-entirely": 16
+  }
+}

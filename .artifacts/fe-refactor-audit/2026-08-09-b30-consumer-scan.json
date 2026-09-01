@@ -1,0 +1,102 @@
+{
+  "TierCardBase": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "ListRow": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "ButtonGroup": {
+    "consumerCount": 2,
+    "valueSet": [
+      "w-full"
+    ],
+    "consumers": [
+      {
+        "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        "line": 124,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"w-full\"]",
+        "normalized": "w-full",
+        "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm\", label: labels.confirmLabel, variant: \"danger\", isDisabled"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+        "line": 112,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"w-full\"]",
+        "normalized": "w-full",
+        "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm\", label: labels.confirmLabel, variant: \"danger\", isPending:"
+      }
+    ]
+  },
+  "ButtonGroup.Separator": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "ButtonGroupRoot": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "ButtonGroupSeparator": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "TabsCard": {
+    "consumerCount": 1,
+    "valueSet": [
+      "w-full"
+    ],
+    "consumers": [
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+        "line": 812,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-full",
+        "normalized": "w-full",
+        "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"begin\", label: t(\"flashcard.quiz.setupTabBegin\") }, { key: \"history\", label: t(\"flashcard.quiz.setupTabHistory\") }, { key: \"stats\", label: t(\"flashcard.quiz.setupTabStats\") }, ], selectedKey: setupTab, "
+      }
+    ]
+  },
+  "LeaderboardListCard": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "SidebarNavItem": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "LabeledList": {
+    "consumerCount": 0,
+    "valueSet": [],
+    "consumers": []
+  },
+  "SectionCard": {
+    "consumerCount": 1,
+    "valueSet": [
+      "classNames"
+    ],
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/QuizCard/index.tsx",
+        "line": 300,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "classNames",
+        "normalized": "classNames",
+        "snippet": "<SectionCard identity={{ tier: \"block\", component: \"QuizCard\" }} classNames={classNames} >"
+      }
+    ]
+  }
+}

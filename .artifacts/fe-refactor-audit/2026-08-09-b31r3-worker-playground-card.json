@@ -1,0 +1,25 @@
+{
+  "worker": "playground-card",
+  "manifest": ["src/components/blocks/cards/PlaygroundCard/component.tsx"],
+  "warningsBefore": [
+    { "line": 4, "rule": "starci-fe/no-heroui-outside-vocabulary" },
+    { "line": 20, "rule": "starci-fe/require-identity-root" },
+    { "line": 20, "rule": "starci-fe/no-classname-at-sentence-tier" },
+    { "line": 20, "rule": "starci-fe/no-public-classname-prop" },
+    { "line": 45, "rule": "starci-fe/no-public-classname-prop" },
+    { "line": 48, "rule": "starci-fe/no-cn-above-vocabulary" },
+    { "line": 51, "rule": "starci-fe/no-raw-shape-at-sentence-tier" }
+  ],
+  "warningsAfter": [],
+  "legacyImportBefore": "@/components/blocks/identity/IconTile",
+  "legacyImportAfter": null,
+  "iconExpressionBefore": "<TerminalWindowIcon aria-hidden focusable=\"false\" />",
+  "iconComponentAfter": "TerminalWindowIcon → <IdentityTile icon={TerminalWindowIcon} size=\"lg\" />",
+  "changed": ["src/components/blocks/cards/PlaygroundCard/component.tsx"],
+  "held": [],
+  "retracted": [],
+  "storybookParity": "n/a — no Storybook twin",
+  "verification": { "eslintMaxWarnings0": "pass", "landedIn": "8ccf8641" },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

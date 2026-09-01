@@ -1,0 +1,2037 @@
+{
+  "total": 229,
+  "holes": [
+    {
+      "rel": ".storybook/components/composites/form/InputTags/InputTags.tsx",
+      "line": 119,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "className=\"min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none\""
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      "line": 88,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, md: 3 }} gap={4} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx",
+      "line": 98,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ModelsSection/ModelsSection.tsx",
+      "line": 84,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ToolsSection/ToolsSection.tsx",
+      "line": 91,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/billing/InvoiceDetailModal/InvoiceDetailModal.tsx",
+      "line": 89,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} items={[ () ="
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+      "line": 165,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" items={[ "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx",
+      "line": 106,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+      "line": 144,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+      "line": 37,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, sm: 2, lg: 4 }} gap={4} isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+      "line": 97,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx",
+      "line": 104,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      "line": 113,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={2} justify=\"between\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+      "line": 117,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 139,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={2} justify=\"between\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 327,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={PIPELINE_COLUMNS} gap={4} isSkeleton={isSk"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "line": 97,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"end\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+      "line": 98,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/AuditCta/AuditCta.tsx",
+      "line": 43,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={4} align=\"center\" items={[ "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+      "line": 143,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, lg: 2 }} gap={4} items={[ "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/DemoFlow/DemoFlow.tsx",
+      "line": 48,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={2} align=\"start\" items={[ () => <StepBadge number={step.stepNumber}"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/HumanInTheLoop/HumanInTheLoop.tsx",
+      "line": 73,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={4} align=\"start\" ite"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+      "line": 39,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "1",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={1} align=\"center\" items={[ () => <IconTile icon={node.icon} tone={i"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/ProblemStatement/ProblemStatement.tsx",
+      "line": 64,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={4} align=\"start\" ite"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/ProductQuickSelector/ProductQuickSelector.tsx",
+      "line": 40,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={2} align=\"start\" items={[ () => <Typography size=\"sm\" weight=\"semib"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+      "line": 59,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align=",
+        "justify="
+      ],
+      "head": "<StackH gap={2} align=\"center\" ju"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+      "line": 91,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, md: 3 }} gap={4} it"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+      "line": 53,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={2} align=\"center\" items={[ () => <I"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+      "line": 80,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx",
+      "line": 105,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+      "line": 179,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 100,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} "
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 191,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "at="
+      ],
+      "head": "<StackH gap={2} "
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+      "line": 410,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, sm: 2, lg: 4 }} gap={4} "
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 201,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, sm: 2, lg: 3 }} "
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 259,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, sm: 2, lg: 3 }} "
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      "line": 139,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, lg: 2 }} gap={4} "
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+      "line": 112,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} "
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      "line": 263,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, sm: 2, lg: 4 }} gap={4} "
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+      "line": 203,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackH gap={2} align=\"end\" "
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+      "line": 174,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackH gap={2} align=\"center\" items={[ "
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+      "line": 200,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackH gap={2} align=\"center\""
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell.tsx",
+      "line": 125,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackH gap={2} align=\"center\" items={[ "
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/overlays/drawers/MemberDetailDrawer/MemberDetailDrawer.tsx",
+      "line": 185,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={2} justify=\"end\" items={footerBu"
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/overlays/drawers/PostModerationDrawer/PostModerationDrawer.tsx",
+      "line": 115,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackH gap={2} align=\"center\" "
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/overlays/modals/BanMemberModal/BanMemberModal.tsx",
+      "line": 105,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={2} justify=\"end\" items={[ "
+    },
+    {
+      "rel": ".storybook/components/nivoexpert/overlays/modals/SetMemberRoleModal/SetMemberRoleModal.tsx",
+      "line": 89,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={2} justify=\"end\" items={[ "
+    },
+    {
+      "rel": "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+      "line": 117,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackH gap={2} align=\"baseline\" items={[ () => "
+    },
+    {
+      "rel": "src/components/composites/form/InputTags/index.tsx",
+      "line": 121,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "className=\"min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none\""
+    },
+    {
+      "rel": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+      "line": 43,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "1",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={1} justify=\"between\" items={items} />"
+    },
+    {
+      "rel": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "line": 129,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "1",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={1} align=\"center\" body={calendarSlot} />"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 102,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<ScrollShadow orientation=\"horizontal\" hideScrollBar className=\"flex gap-2 overflow-x-auto pb-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 117,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<ScrollShadow orientation=\"horizontal\" hideScrollBar className=\"flex gap-2 overflow-x-auto pb-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "line": 132,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<ScrollShadow orientation=\"horizontal\" hideScrollBar className=\"flex gap-2 overflow-x-auto pb-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 114,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "<ScrollShadow hideScrollBar className=\"-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 115,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 117,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "<Label className=\"px-1 text-xs text-muted\">{t(\"rail.ownGroup\")}</Label>"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 123,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 130,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-3",
+      "head": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 139,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "<Label className=\"px-1 text-xs text-muted\">{t(\"rail.externalGroup\")}</Label>"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 145,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 152,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-3",
+      "head": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 161,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "<Label className=\"px-1 text-xs text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 169,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "line": 176,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-3",
+      "head": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft\""
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 61,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-4",
+      "head": "<CardContent className=\"flex flex-col gap-4 p-6\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 83,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-2",
+      "head": "<span key={name} className=\"rounded-full bg-default px-2 py-1 font-mono text-xs text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 97,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-6",
+      "head": "<CardContent className=\"p-6\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 111,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-4",
+      "head": "<CardContent className=\"flex flex-col gap-4 p-6\">"
+    },
+    {
+      "rel": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 150,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<Link href={blogHref} className=\"group inline-flex items-center gap-2 text-accent-soft-foreground\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "line": 62,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex shrink-0 items-center gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 378,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-6",
+      "head": "skeleton={<div className=\"p-6\"><CvWorkspaceSkeleton /></div>}"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 394,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"px-6 pt-4 @app-lg:hidden\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 438,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-6",
+      "head": "className=\"flex flex-col gap-6 p-6 @app-lg:min-h-0 @app-lg:flex-1 @app-lg:overflow-y-auto\""
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 445,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 461,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 486,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 488,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div role=\"group\" aria-label={t(\"cv.builder.accentLabel\")} className=\"flex flex-wrap items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 506,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 540,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 581,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 603,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 623,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 624,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex items-center justify-between gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 651,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "mt-auto",
+      "head": "<div className=\"mt-auto\">"
+    },
+    {
+      "rel": "src/components/pages/CvEditorPage/index.tsx",
+      "line": 680,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-6",
+      "head": "<div className=\"grid min-w-0 flex-1 grid-cols-1 gap-6 p-6 @app-lg:grid-cols-2 @app-lg:overflow-hidden\">"
+    },
+    {
+      "rel": "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+      "line": 179,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={2} align=\"center\" items={[ () => ( <Button v"
+    },
+    {
+      "rel": "src/components/pages/DashboardPage/FlashcardReview/component.tsx",
+      "line": 56,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "1",
+      "decisions": [
+        "padding="
+      ],
+      "head": "<StackV gap={1} padding={4} identity={{ tier: \"block\", component: \"FlashcardRevie"
+    },
+    {
+      "rel": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "line": 140,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "line": 153,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "className=\"flex cursor-pointer items-center gap-3 rounded-large px-2 py-2 text-foreground outline-none data-[focus-visible=true]:ring-2 data"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "line": 197,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "<Box className=\"flex gap-1 px-4 pb-2 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "line": 353,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<Box className=\"px-4 pb-6 pt-10 @app-sm:px-6\">{body}</Box>"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "line": 50,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<div className=\"px-4 pb-2 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "line": 274,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 1, sm: 2 }} gap={4} items={gridItems} />"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+      "line": 242,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid gap={4} columns={{ base: 1, sm: 3 }} isSke"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "line": 27,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid gap={4} columns={{ base: 1, sm: 3 }} "
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "line": 41,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<Box className=\"rounded-2xl border border-default bg-default px-6 py-8 text-center\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 178,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex items-center gap-3 px-4 py-2 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 185,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "<div className=\"flex gap-1 px-4 pb-2 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 191,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<div className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 192,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "mx-auto",
+      "head": "<div className=\"mx-auto flex w-full max-w-3xl flex-col gap-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 193,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-wrap items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 197,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 199,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3 rounded-3xl bg-surface p-6 shadow-surface\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 204,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex items-center justify-between gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 226,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<div className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 227,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "mx-auto",
+      "head": "<div className=\"mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 270,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<div className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 271,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "mx-auto",
+      "head": "<div className=\"mx-auto flex w-full max-w-3xl flex-col gap-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 280,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-wrap items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 297,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-1 flex-col items-center justify-center gap-3 text-center\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "line": 347,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-wrap items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 19,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex items-center gap-3 px-4 py-2 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 26,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "<div className=\"flex gap-1 px-4 pb-2 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 34,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "mx-auto",
+      "head": "<div className=\"mx-auto flex w-full max-w-3xl flex-col gap-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 36,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-wrap items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 41,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 43,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3 rounded-3xl bg-surface p-6 shadow-surface\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "line": 49,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex items-center justify-between gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "line": 206,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify=",
+        "at="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" at=\"sm\" items={[ () => ( <InputSearch "
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "line": 287,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-2",
+      "head": "className=\"rounded-lg px-2 py-2 text-left transition-colors hover:bg-default\""
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+      "line": 86,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-4",
+      "head": "<div className=\"flex flex-col gap-4\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 179,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "6",
+      "decisions": [
+        "align=",
+        "padding="
+      ],
+      "head": "<StackV gap={6} items={[ // ZONE 1 — \"Memory health\" hero (◎ vs target). `VerdictHeroCard` has no `isSkelet"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 187,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "align=",
+        "padding="
+      ],
+      "head": "<StackV gap={4} items={[ () => ( <StackH gap={2} a"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 189,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackH gap={2} align=\"baseline\" items={[ () => <Skeleton className=\"h-9 w-20 r"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 199,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "1",
+      "decisions": [
+        "align=",
+        "padding="
+      ],
+      "head": "<StackH gap={1} align=\"stretch\" divider items={[ () => ( "
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 201,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "padding="
+      ],
+      "head": "<StackV gap={2} padding={4} classNames={[\"flex-1\"]} items={[ () => "
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 207,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "2",
+      "decisions": [
+        "padding="
+      ],
+      "head": "<StackV gap={2} padding={4} classNames={[\"flex-1\"]} items={[ () => "
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "line": 159,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div key={`pending-${index}`} className=\"flex items-center gap-3 p-3\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "line": 251,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid columns={{ base: 2, md: 4 }} gap={4} isSkeleton={isSkeleton} items={metricItems} />"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "line": 58,
+      "name": "Grid",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "columns="
+      ],
+      "head": "<Grid gap={4} columns={{ base:"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "line": 121,
+      "name": "StackH",
+      "kind": "frame",
+      "gap": "3",
+      "decisions": [
+        "justify="
+      ],
+      "head": "<StackH gap={3} justify=\"between\" isSkeleton={isSkeleton} items={[ () => ( "
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "line": 128,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "line": 136,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-3",
+      "head": "className=\"cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft\""
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "line": 211,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "<ScrollShadow hideScrollBar className=\"-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "line": 442,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "py-6",
+      "head": "<Typography type=\"body-sm\" color=\"muted\" align=\"center\" className=\"py-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 990,
+      "name": "StackV",
+      "kind": "frame",
+      "gap": "4",
+      "decisions": [
+        "align="
+      ],
+      "head": "<StackV gap={4} align=\"center\" items={[ () => <Spinner size=\"lg\" />, "
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 987,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<Box className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 1109,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<Box className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 1202,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<Box className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 1250,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "className=\"rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]\""
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 1362,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-3",
+      "head": "className=\"rounded-full border border-default bg-surface px-3 py-0 text-sm font-medium\""
+    },
+    {
+      "rel": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+      "line": 57,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<div className=\"px-4 pb-2 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 127,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "mx-auto",
+      "head": "<div className=\"mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 @app-sm:px-6 @app-md:gap-20 @app-md:pb-20 @app-md:pt-10 @app-lg:px-8\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 192,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-6",
+      "head": "<div className=\"grid grid-cols-1 gap-6 @app-md:grid-cols-3\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 305,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex items-center gap-3 @app-sm:ml-auto\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/index.tsx",
+      "line": 319,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<Link href={pathConfig().locale(locale).blog().build()} className=\"inline-flex items-center gap-2 text-accent-soft-foreground\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "line": 73,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-3",
+      "head": "className=\"nodrag nopan absolute bottom-full left-1/2 z-50 mb-2 w-60 -translate-x-1/2 cursor-default rounded-2xl border border-default bg-su"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "line": 77,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"mb-1 flex items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "line": 80,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "ml-auto",
+      "head": "<span className=\"ml-auto text-[10px] text-muted\">{LANDING_TRACK_TAG[track]}</span>"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/KnowledgeGraph/ShuffleBeacon.tsx",
+      "line": 55,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "className=\"nodrag nopan group flex cursor-pointer items-center gap-2 rounded-full border border-default bg-surface/80 py-2 pr-3 pl-2 text-xs"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 138,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div aria-hidden className=\"flex flex-col items-end gap-2 border-r border-default/70 px-3 py-4 text-muted/60 select-none\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 141,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2 overflow-x-auto px-4 py-4\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 190,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "className=\"flex flex-col gap-3\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 200,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-4",
+      "head": "<motion.div variants={childVariants} className=\"flex flex-wrap gap-4 border-b border-default text-xs\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 238,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<motion.div variants={childVariants} className=\"flex items-center gap-3 rounded-xl bg-success-soft px-3 py-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 244,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-3",
+      "head": "<span className=\"shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success-soft-foreground\">+120 XP</span>"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 246,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 248,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<span key={item.text} className=\"flex items-center gap-2 text-sm text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 273,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<span className=\"flex items-center gap-2 text-xs text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 278,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 287,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 289,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<span key={item.label} className=\"flex items-center gap-2 text-sm\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 308,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<motion.div variants={childVariants} className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 341,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"mt-1 flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 345,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "<span className=\"flex items-center gap-1 text-xs text-success-soft-foreground\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "line": 375,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "line": 146,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "className=\"flex flex-col items-center gap-2 px-4 @app-md:border-l @app-md:border-default @app-md:first:border-l-0\""
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 98,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2 border-t border-default pt-3\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 112,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-wrap items-center gap-2 border-t border-default pt-3\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 118,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "ml-auto",
+      "head": "<span className=\"ml-auto inline-flex items-center gap-2 text-sm text-muted\">"
+    },
+    {
+      "rel": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 172,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-wrap items-center gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 201,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-5",
+      "head": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+    },
+    {
+      "rel": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "line": 34,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-5",
+      "head": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+    },
+    {
+      "rel": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 101,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-5",
+      "head": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+    },
+    {
+      "rel": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "line": 35,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-5",
+      "head": "<Box className=\"rounded-3xl bg-surface p-5 shadow-surface\">"
+    },
+    {
+      "rel": "src/components/pages/LegalPage/index.tsx",
+      "line": 61,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<li key={item.label ?? item.text} className=\"flex gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "line": 338,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "py-6",
+      "head": "<Typography type=\"body-sm\" color=\"muted\" align=\"center\" className=\"py-6\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "line": 1840,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<div className=\"px-4 pb-6 pt-10 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "line": 2002,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<Box className=\"flex min-w-0 flex-col @app-lg:overflow-y-auto px-4 py-6 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "line": 2137,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<Box className=\"flex min-w-0 flex-col @app-lg:overflow-y-auto px-4 py-6 @app-sm:px-6\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "line": 2156,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<ul className=\"flex flex-wrap gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "line": 2162,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "<li key={phaseKey} className=\"px-1 py-2\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "line": 55,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-4",
+      "head": "<div className=\"px-4 pb-2 @app-sm:px-6\" role=\"presentation\">"
+    },
+    {
+      "rel": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "line": 67,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-6",
+      "head": "<div className=\"grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 @app-sm:px-6 @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/index.tsx",
+      "line": 82,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "py-2",
+      "head": "<PracticeFilters className=\"sticky top-16 z-40 bg-background py-2\" />"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 104,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "() => <Label className=\"px-1 text-xs text-muted\">{t(\"PracticeHubPage.rail.topicsLabel\")}</Label>,"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 124,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-1",
+      "head": "className=\"-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1\""
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 145,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "className=\"gap-1 p-0\""
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "line": 152,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-3",
+      "head": "className=\"cursor-pointer rounded-2xl px-3 py-2 text-foreground data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "line": 80,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "className=\"flex gap-2 overflow-x-auto\""
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "line": 115,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"grid grid-cols-2 gap-3 @app-sm:grid-cols-4\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "line": 136,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"grid grid-cols-2 gap-3 @app-sm:grid-cols-4\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 360,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"flex flex-col border-b border-default px-6 py-3\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 363,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"flex min-h-0 flex-1 items-center justify-center px-6\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 608,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "p-3",
+      "head": "<pre className=\"whitespace-pre-wrap rounded-2xl bg-danger-soft p-3 text-xs text-danger-soft-foreground\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 624,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"flex flex-col border-b border-default px-6 py-3\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 652,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"min-h-0 flex-1 overflow-auto px-6 py-5\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 22,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"flex flex-col border-b border-default px-6 py-3\">"
+    },
+    {
+      "rel": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "line": 34,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"flex flex-col px-6 py-5\">"
+    },
+    {
+      "rel": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "line": 241,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-8",
+      "head": "className=\"h-12 self-end px-8 text-base\""
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 177,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-wrap items-center justify-between gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 178,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex min-w-0 flex-1 items-center gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 202,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-col gap-3 p-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 203,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 216,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 233,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 269,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 314,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-6",
+      "head": "<div className=\"flex items-center justify-between gap-6\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 315,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex min-w-0 flex-1 flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "line": 319,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-wrap items-center gap-2 @app-sm:grid @app-sm:grid-cols-[6rem_5.5rem_1fr]\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 105,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-wrap items-center gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 125,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-6",
+      "head": "<div className=\"flex flex-col gap-6\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 148,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-6",
+      "head": "<div className=\"flex flex-col gap-6\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 151,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-1",
+      "head": "<div className=\"flex flex-col gap-1\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 159,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "className=\"flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separ"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 181,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 182,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex flex-wrap items-center justify-between gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "line": 205,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "className=\"flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separ"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 120,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex flex-col gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 121,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 162,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex items-start gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 165,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex min-w-0 flex-1 flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 173,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div key={task} className=\"flex items-center gap-3 py-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 207,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex items-start gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 212,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-3",
+      "head": "<div className=\"flex min-w-0 flex-1 flex-col gap-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 246,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "gap-2",
+      "head": "<div className=\"flex shrink-0 items-center gap-2\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "line": 37,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "px-6",
+      "head": "<div className=\"w-full px-6 py-3\">"
+    },
+    {
+      "rel": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "line": 46,
+      "name": "raw",
+      "kind": "raw",
+      "raw": "mx-auto",
+      "head": "<div className=\"mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 @app-md:flex-row @app-md:items-start\">"
+    }
+  ]
+}

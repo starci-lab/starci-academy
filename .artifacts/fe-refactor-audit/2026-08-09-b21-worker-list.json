@@ -1,0 +1,24 @@
+{
+  "partition": "list",
+  "changed": [
+    ".storybook/components/composites/lists/List/List.tsx",
+    "src/components/composites/lists/List/index.tsx"
+  ],
+  "skipped": [],
+  "holds": [],
+  "evidence": [
+    "Pre-delete rg: zero external <ListRow|ListLabeled|ListMeta|ListToggleRow … classNames=> in src or .storybook (excluding List definition twins)",
+    "Composite List consumers (src): PersonalProjectTaskPage, Navbar, ContinueCard/CardBody, PlaygroundResourcePanel — none pass classNames to List members",
+    "Composite List consumers (.storybook): same twins + CourseView, OfferSection + four List stories — none pass classNames",
+    "Stories under .storybook/stories/composites/lists/List have zero classNames references",
+    "Inventory id list-classNames classified dead with action delete",
+    "Post-delete: public classNames?: doors removed from ListRowProps/ListLabeledProps/ListMetaProps/ListToggleRowProps; internal hardcoded classNames={['shrink-0']}|['min-w-0']|['flex-1'] retained"
+  ],
+  "proposals": [],
+  "verification": {
+    "consumerRecheck": "pass — zero external classNames= on List members",
+    "twinParity": "pass — SB and src List twins match on remaining internal classNames lines only",
+    "stories": "untouched — none passed classNames"
+  },
+  "regressions": []
+}

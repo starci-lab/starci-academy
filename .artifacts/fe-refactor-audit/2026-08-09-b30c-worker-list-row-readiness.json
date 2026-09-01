@@ -1,0 +1,37 @@
+{
+  "manifest": [
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/lists/ListRow/README.md",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx"
+  ],
+  "warningsBefore": {
+    "ListRow": 6,
+    "ReadinessChecklist": 1
+  },
+  "warningsAfter": "retracted-to-checkpoint",
+  "introducedByB30": [
+    "density prop",
+    "ReadinessChecklist density=comfortable"
+  ],
+  "preExistingInTouchedFile": [
+    "no-heroui-outside-vocabulary",
+    "no-raw-shape-at-sentence-tier",
+    "no-cn-above-vocabulary",
+    "require-identity-root"
+  ],
+  "fixed": [],
+  "retractedB30Changes": [
+    "ListRow.density",
+    "ReadinessChecklist density migration",
+    "ListRow.className door burn"
+  ],
+  "holds": [
+    "ListRow.className door restored"
+  ],
+  "parity": "n/a retracted",
+  "verification": {
+    "action": "git checkout 8c13fd52"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

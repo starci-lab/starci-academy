@@ -1,0 +1,25 @@
+{
+  "worker": "readiness-checklist",
+  "manifest": [],
+  "warningsBefore": [
+    { "line": 9, "rule": "starci-fe/require-identity-root" },
+    { "line": 58, "rule": "starci-fe/no-public-classname-prop", "detail": "ListRow className p-3" }
+  ],
+  "warningsAfter": "unchanged — not edited",
+  "legacyImportBefore": "@/components/blocks/identity/IconTile",
+  "legacyImportAfter": "@/components/blocks/identity/IconTile",
+  "iconExpressionBefore": "item.ready ? <CheckCircleIcon/> : item.icon (ReactNode)",
+  "iconComponentAfter": null,
+  "changed": [],
+  "held": [
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "reason": "IdentityTile requires ComponentType icons; ReadinessChecklistItem.icon is ReactNode and PlaygroundSessionProvider constructs JSX icons (type-only import but tsc-breaking). Worker cannot edit the provider. SurfaceCardList would clear ListRow/p-3 but not the icon API leak."
+    }
+  ],
+  "retracted": [],
+  "storybookParity": "n/a — no twin; zero JSX call sites of ReadinessChecklist",
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

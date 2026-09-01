@@ -1,0 +1,61 @@
+{
+  "manifest": [
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+    "src/components/blocks/navigation/TabsCard/index.tsx"
+  ],
+  "openTagConsumers": [
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "line": 812,
+      "prop": "className",
+      "kind": "string",
+      "value": "w-full",
+      "normalized": "w-full",
+      "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"begin\", label: t(\"flashcard.quiz.setupTabBegin\") }, { key: \"history\", label: t(\"flashcard.quiz.setupTabHistory\") }, { key: \"stats\", label: t(\"flashcard.quiz.setupTabStats\") }, ], selectedKey: setupTab, "
+    }
+  ],
+  "valueSet": {
+    "before": [
+      "mx-auto w-full max-w-3xl",
+      "w-full max-w-xs",
+      "w-full",
+      "overflow-x-auto"
+    ],
+    "after": [
+      "w-full"
+    ]
+  },
+  "ownership": {
+    "mx-auto w-full max-w-3xl": "parent Container size=md (max-w-app-md ≡ 48rem)",
+    "w-full max-w-xs": "parent Box exact className (no Container size for 20rem)",
+    "w-full": "parent Box on FlashcardsPage; QuizSession locked residual",
+    "overflow-x-auto": "parent Box principle=reel"
+  },
+  "oldApi": "TabsCard className door (unchanged API; residual locked consumer)",
+  "newApi": "no new TabsCard props; parent Container/Box placement only",
+  "changed": [
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx"
+  ],
+  "holds": [
+    {
+      "component": "TabsCard",
+      "reason": "Locked QuizSession keeps className=\"w-full\"; door remains live; not edited",
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx"
+    }
+  ],
+  "parity": {
+    "TabsCard": "src-only consumers; no SB twin edits"
+  },
+  "verification": {
+    "tsc": "pending-coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

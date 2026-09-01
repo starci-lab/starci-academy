@@ -1,0 +1,177 @@
+{
+  "batch": "B40",
+  "worker": "w17-src-blocks-skeleton",
+  "checkpoint": "2a096210a",
+  "completedAt": "2026-08-08T19:20:00.000Z",
+  "ownsCount": 46,
+  "safeFindingsBefore": 54,
+  "safeByRuleBefore": {
+    "starci-fe/require-identity-root": 42,
+    "starci-fe/no-emoji-in-source": 6,
+    "starci-fe/require-frame-self-declare": 5,
+    "starci-fe/handler-on-prefix": 1
+  },
+  "counts": {
+    "applied": 6,
+    "hold": 18,
+    "vendor": 29,
+    "locked": 0,
+    "ambiguous": 1,
+    "filesChanged": 1,
+    "filesReverted": 0,
+    "safeFindingsAccounted": 54
+  },
+  "productEdits": [
+    "src/components/blocks/community/Discussion/constants.ts"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/community/Discussion/constants.ts",
+      "rule": "starci-fe/no-emoji-in-source",
+      "count": 6,
+      "classification": "applied",
+      "fix": "dead-prop-zero-consumer",
+      "detail": "Removed unused `emoji` + `fbType` fields from ReactionDescriptor/REACTIONS. Glyphs are `/reactions/<type>.svg` via ReactionEmoji; no Discussion consumer read `.emoji` or `.fbType`.",
+      "eslintAfter": "npx eslint --max-warnings=0 src/components/blocks/community/Discussion/constants.ts → exit 0"
+    }
+  ],
+  "hold": [
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "rule": "starci-fe/handler-on-prefix",
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ residual debt (no-heroui-outside-vocabulary, host/raw-shape). Renaming handlePick→onPick alone cannot clear file; HeroUI Button/Popover migration not zero-risk under owns-only."
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "rule": "starci-fe/require-frame-self-declare",
+      "count": 2,
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ residual host-element/raw-shape on scroll host. Principle-only edit would leave file above zero warnings."
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx",
+      "rule": "starci-fe/require-frame-self-declare",
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ page-folder-two-files-only (page-folder moves forbidden)."
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "rules": ["starci-fe/require-identity-root", "starci-fe/require-frame-self-declare"],
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ page-folder-two-files-only ∩ no-heroui-outside-vocabulary."
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "rules": ["starci-fe/require-identity-root", "starci-fe/require-frame-self-declare"],
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ page-folder-two-files-only ∩ no-heroui-outside-vocabulary."
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ page-folder-two-files-only ∩ no-heroui-outside-vocabulary."
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ page-folder-two-files-only ∩ no-heroui-outside-vocabulary."
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ page-folder-two-files-only ∩ no-heroui-outside-vocabulary."
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ large residual architectural debt (20 unsafe)."
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "skeleton redesign forbidden ∩ zero-warn-ratchet (21 unsafe)."
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "zero-warn-ratchet ∩ residual unsafe debt."
+    },
+    {
+      "file": "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "skeleton redesign forbidden ∩ zero-warn-ratchet; root not identity-capable frame."
+    },
+    {
+      "file": "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "skeleton redesign forbidden ∩ zero-warn-ratchet."
+    },
+    {
+      "file": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "skeleton redesign forbidden ∩ zero-warn-ratchet."
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "hold",
+      "reason": "compound Object.assign over HeroUI Skeleton bar — not a proven identity root without redesign."
+    }
+  ],
+  "vendor": [
+    {
+      "scope": "src/components/blocks/skeleton/Skeleton/{Accordion,Avatar,Badge,Breadcrumbs,Button,Card,Checkbox,Chip,Disclosure,Input,Kbd,ListBox,ListRow,Menu,Meter,Metric,Pagination,Paragraph,ProgressBar,RadioGroup,SegmentBar,Select,Slider,Switch,Table,Tabs,TextArea,Typography,UserCell}/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "count": 29,
+      "classification": "vendor",
+      "reason": "Roots are HeroUI <Skeleton/> vendor passthroughs with public className. Identity requires a house frame/composite root; adding one is skeleton redesign (forbidden). Residual no-heroui/classname/host/cn debt blocks zero-warn ratchet."
+    },
+    {
+      "files": [
+        "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+        "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+        "src/components/blocks/skeleton/SkeletonText/index.tsx",
+        "src/components/blocks/skeleton/Skeleton/index.tsx",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx"
+      ],
+      "note": "Also counted under hold for ratchet/redesign; vendor root is the deeper blocker for identity."
+    }
+  ],
+  "ambiguous": [
+    {
+      "file": "src/components/pages/JobPostFormPage/index.tsx",
+      "rule": "starci-fe/require-identity-root",
+      "classification": "ambiguous",
+      "reason": "Box root can take identity, but clearing no-heroui requires Button atom migration that drops native type=submit; submit wiring not proven under owns-only without form-behavior risk. Held rather than applied."
+    }
+  ],
+  "locked": [],
+  "skippedUnsafeRules": {
+    "note": "Non-safeRules telemetry on owns left untouched (heroui, host-element, classname, cn, raw-shape, page-folder, parallel/twin skeleton).",
+    "examples": [
+      "starci-fe/no-heroui-outside-vocabulary",
+      "starci-fe/no-host-element-at-sentence-tier",
+      "starci-fe/no-public-classname-prop",
+      "starci-fe/page-folder-two-files-only"
+    ]
+  },
+  "constraintsHonored": [
+    "owns-only edits",
+    "no skeleton redesign",
+    "no new principles/rules/contracts",
+    "no page-folder moves",
+    "no eslint-disable",
+    "no commit/push/reset/checkout/branch",
+    "changed files eslint --max-warnings=0"
+  ]
+}

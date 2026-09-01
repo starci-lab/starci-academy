@@ -1,0 +1,122 @@
+{
+  "batch": "B36+B37d",
+  "title": "Final combined commit certification",
+  "checkpoint": "84b92cd77",
+  "generatedAt": "2026-08-08T18:20:00.000Z",
+  "verdict": "READY TO COMMIT",
+  "committed": false,
+  "scope": {
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b36-b37d-scope.json",
+    "productManifestCount": 134,
+    "unowned": 0,
+    "unexplainedDual": 0,
+    "forbidden": 0,
+    "unrelated": 0,
+    "excludedOutOfScope": 11,
+    "preDirty": 5,
+    "byClass": {
+      "B36-contract": 22,
+      "B36-consumer": 43,
+      "B37-whole-composite": 64,
+      "B37c-correction": 5
+    }
+  },
+  "eslint": {
+    "command": "npx eslint --format json --no-error-on-unmatched-pattern src .storybook",
+    "before": { "warnings": 6269, "files": 1105, "errors": 0, "a11y": 11 },
+    "after": { "warnings": 6174, "files": 1084, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -95, "files": -21, "errors": 0, "a11y": 0 },
+    "note": "Checkpoint measured via detached worktree at 84b92cd77 (canonical). Differs by +4/+1 from B36's recorded 6265/1104 due to measurement environment; do not use intermediate 6206.",
+    "changedFileCertification": {
+      "introducedErrors": 0,
+      "introducedWarnings": 0,
+      "closedDiagnostics": 44,
+      "relocatedAuthDebt": 18,
+      "preexistingOnManifest": "recorded in proofs",
+      "maxWarnings0Chunks": "fail on pre-existing/relocated debt only — introduced=0"
+    }
+  },
+  "topology": {
+    "LabeledCard": { "before": 97, "after": 77 },
+    "frameless": { "before": 54, "after": 46 },
+    "SurfaceListCard": { "before": 87, "after": 50 },
+    "SurfaceCardList": { "before": 111, "after": 146 }
+  },
+  "trendingContents": {
+    "shape": "_TrendingContents -> SurfaceCardList",
+    "TrendingContentsSurface": "absent",
+    "TrendingRow": "absent",
+    "TrendingContentsSkeleton": "absent",
+    "identity": { "tier": "block", "component": "TrendingContents" }
+  },
+  "residualRedundantLabeledSurface": {
+    "count": 6,
+    "enforcement": "audit-only",
+    "files": [
+      {
+        "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "mismatch": "ReactNode feed rows (message + ActivityAvatar + ReactionBar); not exact SurfaceCardListItem"
+      },
+      {
+        "file": "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "mismatch": "EntityResultRow owns SurfaceListCardItem chrome; parent shell-only"
+      },
+      {
+        "file": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "mismatch": "EntityResultRow owns row chrome; outside-owns"
+      },
+      {
+        "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "mismatch": "ChallengeCourseRow outside owns still emits SurfaceListCardItem; repo list shell held"
+      },
+      {
+        "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "mismatch": "Composite body (StatPair + SurfaceListCard tracks); not exact list-only collapse",
+        "hits": 2
+      }
+    ]
+  },
+  "b36ContractProof": {
+    "NavbarFrameParity": true,
+    "GlyphMarkMutedMapping": "muted -> text-muted",
+    "CallerIdentityRootsOnly": true,
+    "AuthenticationPanelShared": true,
+    "noReactNodeBodyFallback": true,
+    "noForbiddenConsumerEdits": true,
+    "SurfaceListExactMigrationsPreserveBehavior": true
+  },
+  "apiRetention": {
+    "LabeledCard.frameless": "retained — held E/H consumers remain",
+    "SurfaceListCard": "retained — held outside-owns / ReactNode consumers remain",
+    "noCompatibilityWrapper": true,
+    "noPublicCssDoorReplacement": true,
+    "SurfaceCardList.fillHeight": "added as named semantic prop (SB+src parity) during B37d regression repair"
+  },
+  "largeDiffProof": {
+    "formatterOnlyRetained": 0,
+    "lineEndingOnlyRetained": 0,
+    "unrelatedRetained": 0,
+    "largeSemanticFiles": 61
+  },
+  "forbiddenProof": {
+    "nivoNivoexpertMiaMiaProductEdits": false,
+    "preDirtyExcluded": [
+      "CLAUDE.md",
+      ".claude/fe/decision-ledger.json",
+      ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+      ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+      ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx"
+    ],
+    "pass": true
+  },
+  "gates": {
+    "tsc": 0,
+    "pluginEslintTests": 0,
+    "principleStyleTests": 0,
+    "semanticContractsTests": 0,
+    "auditFe": 0,
+    "gitDiffCheck": 0,
+    "changedFileIntroducedDiagnostics": 0
+  },
+  "recommendedCommitMessage": "refactor(fe): unlock surface contracts and collapse labeled list ownership\n\nLand B36 NavbarFrame/GlyphMark/identity/auth panel unlocks with B37 whole-composite\nSurfaceCardList ownership collapses; restore ruleset freeze (no new lint rule) and\ncompress TrendingContents to a single SurfaceCardList."
+}

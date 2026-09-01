@@ -1,0 +1,73 @@
+{
+  "generatedAt": "2026-08-07T13:24:05.463Z",
+  "deadPassthroughCount": 11,
+  "deadPassthrough": [
+    {
+      "file": ".storybook/components/behaviors/DragScrollArea/DragScrollArea.tsx",
+      "prop": "className",
+      "exprUses": 0,
+      "totalMentions": 5
+    },
+    {
+      "file": ".storybook/components/behaviors/ResizableRail/ResizableRail.tsx",
+      "prop": "className",
+      "exprUses": 0,
+      "totalMentions": 7
+    },
+    {
+      "file": ".storybook/components/frames/Cluster/Cluster.tsx",
+      "prop": "classNames",
+      "exprUses": 0,
+      "totalMentions": 3
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "prop": "classNames",
+      "exprUses": 0,
+      "totalMentions": 3
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "prop": "classNames",
+      "exprUses": 0,
+      "totalMentions": 4
+    },
+    {
+      "file": "src/components/behaviors/DragScrollArea/index.tsx",
+      "prop": "className",
+      "exprUses": 0,
+      "totalMentions": 5
+    },
+    {
+      "file": "src/components/behaviors/ResizableRail/index.tsx",
+      "prop": "className",
+      "exprUses": 0,
+      "totalMentions": 7
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "prop": "className",
+      "exprUses": 0,
+      "totalMentions": 16
+    },
+    {
+      "file": "src/components/frames/Cluster/index.tsx",
+      "prop": "classNames",
+      "exprUses": 0,
+      "totalMentions": 3
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "prop": "classNames",
+      "exprUses": 0,
+      "totalMentions": 3
+    },
+    {
+      "file": "src/components/svg/Logo/index.tsx",
+      "prop": "className",
+      "exprUses": 1,
+      "totalMentions": 3
+    }
+  ],
+  "note": "Heuristic — verify each before deleting prop or call-site"
+}

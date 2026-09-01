@@ -1,0 +1,27 @@
+{
+  "partition": "navigation-buttons",
+  "manifest": [
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/blocks/navigation/TabsCard/index.tsx",
+    "src/components/composites/buttons/ButtonGroup/index.tsx",
+    ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx"
+  ],
+  "consumerEvidence": "See 2026-08-09-b29-secondary-scan.json",
+  "valueSet": {
+    "SidebarNavItem": ["mostly icon size-5 on children — not SidebarNavItem door"],
+    "TabsCard": ["mx-auto w-full max-w-3xl", "w-full max-w-xs", "other width/placement mixes"],
+    "ButtonGroup": ["w-fit", "Separator absolute chrome", "nivoexpert w-full"]
+  },
+  "oldApi": "className/classNames doors retained",
+  "newApi": "hold — multi placement values / vendor-adjacent; no exact existing principle covers TabsCard width cluster",
+  "changed": [],
+  "holds": [
+    { "component": "SidebarNavItem", "reason": "scan hits are child icon classes; door consumers unclear/finite axis not proven" },
+    { "component": "TabsCard", "reason": "mixed width/max-w/mx-auto placement — needs measure frame, not invent in B29" },
+    { "component": "ButtonGroup", "reason": "w-fit + Separator chrome + nivoexpert; twin complexity" }
+  ],
+  "parity": "n/a — hold only",
+  "verification": { "local": "n/a" },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

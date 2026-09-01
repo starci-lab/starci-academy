@@ -1,0 +1,3320 @@
+{
+  "generatedAt": "2026-08-07T11:55:17.664Z",
+  "prioritized": 239,
+  "provenDeadCount": 181,
+  "liveApiCount": 58,
+  "provenDead": [
+    {
+      "file": ".storybook/components/atoms/display/Badge/Badge.tsx",
+      "prop": "classNames",
+      "line": 47,
+      "component": "Badge",
+      "worker": "atoms",
+      "aliases": [
+        "Badge",
+        "BadgeColor",
+        "BadgePlacement"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "prop": "classNames",
+      "line": 61,
+      "component": "IconTile",
+      "worker": "atoms",
+      "aliases": [
+        "IconTile",
+        "IconTileTone",
+        "IconTileSize",
+        "IconWeight",
+        "IconComponent"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/display/Logo/Logo.tsx",
+      "prop": "classNames",
+      "line": 48,
+      "component": "Logo",
+      "worker": "atoms",
+      "aliases": [
+        "Logo",
+        "LogoSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/display/Progress/Progress.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "Progress",
+      "worker": "atoms",
+      "aliases": [
+        "Progress",
+        "ProgressColor",
+        "ProgressSize",
+        "ProgressBar",
+        "ProgressCircle",
+        "ProgressGauge"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/display/SnippetIcon/SnippetIcon.tsx",
+      "prop": "classNames",
+      "line": 33,
+      "component": "SnippetIcon",
+      "worker": "atoms",
+      "aliases": [
+        "SnippetIcon"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "prop": "classNames",
+      "line": 32,
+      "component": "Spinner",
+      "worker": "atoms",
+      "aliases": [
+        "Spinner",
+        "SpinnerSize",
+        "SpinnerTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/display/StepBadge/StepBadge.tsx",
+      "prop": "classNames",
+      "line": 42,
+      "component": "StepBadge",
+      "worker": "atoms",
+      "aliases": [
+        "StepBadge",
+        "StepBadgeState",
+        "StepBadgeSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/display/ThreadConnector/ThreadConnector.tsx",
+      "prop": "classNames",
+      "line": 18,
+      "component": "ThreadConnector",
+      "worker": "atoms",
+      "aliases": [
+        "ThreadConnector"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "prop": "classNames",
+      "line": 100,
+      "component": "Alert",
+      "worker": "atoms",
+      "aliases": [
+        "Alert",
+        "AlertIcon",
+        "AlertStatus",
+        "AlertTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/feedback/ReactionPicker/ReactionPicker.tsx",
+      "prop": "classNames",
+      "line": 36,
+      "component": "ReactionPicker",
+      "worker": "atoms",
+      "aliases": [
+        "ReactionPicker",
+        "ReactionPickerItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "ChoiceCheckbox",
+      "worker": "atoms",
+      "aliases": [
+        "ChoiceCheckbox"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/ChoiceRadio/ChoiceRadio.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "ChoiceRadio",
+      "worker": "atoms",
+      "aliases": [
+        "ChoiceRadio"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/ChoiceSwitch/ChoiceSwitch.tsx",
+      "prop": "classNames",
+      "line": 26,
+      "component": "ChoiceSwitch",
+      "worker": "atoms",
+      "aliases": [
+        "ChoiceSwitch"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+      "prop": "classNames",
+      "line": 19,
+      "component": "InputCurrency",
+      "worker": "atoms",
+      "aliases": [
+        "InputCurrency"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputDate/InputDate.tsx",
+      "prop": "classNames",
+      "line": 18,
+      "component": "InputDate",
+      "worker": "atoms",
+      "aliases": [
+        "InputDate"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputNumber/InputNumber.tsx",
+      "prop": "classNames",
+      "line": 18,
+      "component": "InputNumber",
+      "worker": "atoms",
+      "aliases": [
+        "InputNumber"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputOtp/InputOtp.tsx",
+      "prop": "classNames",
+      "line": 16,
+      "component": "InputOtp",
+      "worker": "atoms",
+      "aliases": [
+        "InputOtp"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputPassword/InputPassword.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "InputPassword",
+      "worker": "atoms",
+      "aliases": [
+        "InputPassword"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputText/InputText.tsx",
+      "prop": "classNames",
+      "line": 14,
+      "component": "InputText",
+      "worker": "atoms",
+      "aliases": [
+        "InputText"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputTextarea/InputTextarea.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "InputTextarea",
+      "worker": "atoms",
+      "aliases": [
+        "InputTextarea"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputTime/InputTime.tsx",
+      "prop": "classNames",
+      "line": 16,
+      "component": "InputTime",
+      "worker": "atoms",
+      "aliases": [
+        "InputTime"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+      "prop": "classNames",
+      "line": 84,
+      "component": "SearchAutocomplete",
+      "worker": "atoms",
+      "aliases": [
+        "SearchAutocomplete",
+        "SearchAutocompleteItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/SelectCombobox/SelectCombobox.tsx",
+      "prop": "classNames",
+      "line": 27,
+      "component": "SelectCombobox",
+      "worker": "atoms",
+      "aliases": [
+        "SelectCombobox"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/SelectMulti/SelectMulti.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "SelectMulti",
+      "worker": "atoms",
+      "aliases": [
+        "SelectMulti"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/SelectSingle/SelectSingle.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "SelectSingle",
+      "worker": "atoms",
+      "aliases": [
+        "SelectSingle"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/_input/types.ts",
+      "prop": "classNames",
+      "line": 29,
+      "component": "_input",
+      "worker": "atoms",
+      "aliases": [
+        "_input"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/forms/_select/types.ts",
+      "prop": "classNames",
+      "line": 26,
+      "component": "_select",
+      "worker": "atoms",
+      "aliases": [
+        "_select",
+        "SelectOption"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/media/CoverImage/CoverImage.tsx",
+      "prop": "classNames",
+      "line": 24,
+      "component": "CoverImage",
+      "worker": "atoms",
+      "aliases": [
+        "CoverImage"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/media/Image/Image.tsx",
+      "prop": "classNames",
+      "line": 61,
+      "component": "Image",
+      "worker": "atoms",
+      "aliases": [
+        "Image"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/media/QRCode/QRCode.tsx",
+      "prop": "classNames",
+      "line": 38,
+      "component": "QRCode",
+      "worker": "atoms",
+      "aliases": [
+        "QRCode"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Accordion/Accordion.tsx",
+      "prop": "classNames",
+      "line": 51,
+      "component": "Accordion",
+      "worker": "atoms",
+      "aliases": [
+        "Accordion",
+        "AccordionItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Breadcrumbs/Breadcrumbs.tsx",
+      "prop": "classNames",
+      "line": 65,
+      "component": "Breadcrumbs",
+      "worker": "atoms",
+      "aliases": [
+        "Breadcrumbs",
+        "BreadcrumbItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "prop": "classNames",
+      "line": 40,
+      "component": "Link",
+      "worker": "atoms",
+      "aliases": [
+        "Link",
+        "LinkBack"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "prop": "classNames",
+      "line": 65,
+      "component": "Link",
+      "worker": "atoms",
+      "aliases": [
+        "Link",
+        "LinkSeeMoreSize",
+        "LinkSeeMore"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Pagination/Pagination.tsx",
+      "prop": "classNames",
+      "line": 38,
+      "component": "Pagination",
+      "worker": "atoms",
+      "aliases": [
+        "Pagination"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "prop": "classNames",
+      "line": 68,
+      "component": "Tabs",
+      "worker": "atoms",
+      "aliases": [
+        "Tabs",
+        "IconComponent",
+        "TabItem",
+        "TabsBase"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "prop": "classNames",
+      "line": 66,
+      "component": "Tabs",
+      "worker": "atoms",
+      "aliases": [
+        "Tabs",
+        "TabsExtended"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/atoms/overlay/Menu/Menu.tsx",
+      "prop": "classNames",
+      "line": 97,
+      "component": "Menu",
+      "worker": "atoms",
+      "aliases": [
+        "Menu",
+        "IconComponent",
+        "MenuItemModel",
+        "MenuSectionModel"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+      "prop": "classNames",
+      "line": 65,
+      "component": "ActionBar",
+      "worker": "composites",
+      "aliases": [
+        "ActionBar",
+        "ActionBarSlot"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ChipButtonList/ChipButtonList.tsx",
+      "prop": "classNames",
+      "line": 47,
+      "component": "ChipButtonList",
+      "worker": "composites",
+      "aliases": [
+        "ChipButtonList",
+        "ChipButtonItem",
+        "ChipButtonListVariant",
+        "ChipButtonListDirection"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+      "prop": "classNames",
+      "line": 65,
+      "component": "InputButtonLike",
+      "worker": "composites",
+      "aliases": [
+        "InputButtonLike",
+        "InputButtonLikeSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/cards/HighlightCard/HighlightCard.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "HighlightCard",
+      "worker": "composites",
+      "aliases": [
+        "HighlightCard"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/chips/ChipGroup/ChipGroup.tsx",
+      "prop": "classNames",
+      "line": 40,
+      "component": "ChipGroup",
+      "worker": "composites",
+      "aliases": [
+        "ChipGroup",
+        "ChipGroupItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "prop": "classNames",
+      "line": 79,
+      "component": "EnumChip",
+      "worker": "composites",
+      "aliases": [
+        "EnumChip",
+        "EnumChipColor",
+        "EnumChipIcon",
+        "EnumChipEntry"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "prop": "classNames",
+      "line": 13,
+      "component": "HighlightChip",
+      "worker": "composites",
+      "aliases": [
+        "HighlightChip",
+        "HighlightChipTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/chips/RemovableToken/RemovableToken.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "RemovableToken",
+      "worker": "composites",
+      "aliases": [
+        "RemovableToken"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/data/Table/Table.tsx",
+      "prop": "classNames",
+      "line": 80,
+      "component": "Table",
+      "worker": "composites",
+      "aliases": [
+        "Table",
+        "TableAlign",
+        "TableColumnSpec",
+        "TableRowItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx",
+      "prop": "classNames",
+      "line": 67,
+      "component": "ConfirmDialog",
+      "worker": "composites",
+      "aliases": [
+        "ConfirmDialog"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/feedback/OneTimeReveal/OneTimeReveal.tsx",
+      "prop": "classNames",
+      "line": 75,
+      "component": "OneTimeReveal",
+      "worker": "composites",
+      "aliases": [
+        "OneTimeReveal",
+        "OneTimeRevealLabels"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/feedback/Toast/Toast.tsx",
+      "prop": "classNames",
+      "line": 52,
+      "component": "Toast",
+      "worker": "composites",
+      "aliases": [
+        "Toast",
+        "IconComponent",
+        "ToastStatus",
+        "ToastActionComponent"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup.tsx",
+      "prop": "classNames",
+      "line": 50,
+      "component": "ChoiceRadioGroup",
+      "worker": "composites",
+      "aliases": [
+        "ChoiceRadioGroup",
+        "ChoiceRadioOption"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/form/Form/Form.tsx",
+      "prop": "classNames",
+      "line": 78,
+      "component": "Form",
+      "worker": "composites",
+      "aliases": [
+        "Form",
+        "FormSection",
+        "FormActions"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/form/InputTags/InputTags.tsx",
+      "prop": "classNames",
+      "line": 32,
+      "component": "InputTags",
+      "worker": "composites",
+      "aliases": [
+        "InputTags"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/form/SecretField/SecretField.tsx",
+      "prop": "classNames",
+      "line": 107,
+      "component": "SecretField",
+      "worker": "composites",
+      "aliases": [
+        "SecretField",
+        "SecretFieldStatus",
+        "SecretFieldDeliveryTone",
+        "SecretFieldMode",
+        "SecretFieldLabels"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/layout/Disclosure/Disclosure.tsx",
+      "prop": "classNames",
+      "line": 58,
+      "component": "Disclosure",
+      "worker": "composites",
+      "aliases": [
+        "Disclosure"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "prop": "classNames",
+      "line": 72,
+      "component": "Page",
+      "worker": "composites",
+      "aliases": [
+        "Page",
+        "PageHeader",
+        "PageBottomBar"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/layout/Section/Section.tsx",
+      "prop": "classNames",
+      "line": 75,
+      "component": "Section",
+      "worker": "composites",
+      "aliases": [
+        "Section",
+        "SectionLevel",
+        "SectionHeaderSlot",
+        "SectionHeader"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/lists/AuthorByline/AuthorByline.tsx",
+      "prop": "classNames",
+      "line": 26,
+      "component": "AuthorByline",
+      "worker": "composites",
+      "aliases": [
+        "AuthorByline"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/lists/AvatarGroup/AvatarGroup.tsx",
+      "prop": "classNames",
+      "line": 49,
+      "component": "AvatarGroup",
+      "worker": "composites",
+      "aliases": [
+        "AvatarGroup",
+        "AvatarGroupItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+      "prop": "classNames",
+      "line": 39,
+      "component": "IconLabelValueRow",
+      "worker": "composites",
+      "aliases": [
+        "IconLabelValueRow"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/lists/IdentityContentRow/IdentityContentRow.tsx",
+      "prop": "classNames",
+      "line": 41,
+      "component": "IdentityContentRow",
+      "worker": "composites",
+      "aliases": [
+        "IdentityContentRow"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/navigation/DoubleTabsCard/DoubleTabsCard.tsx",
+      "prop": "classNames",
+      "line": 49,
+      "component": "DoubleTabsCard",
+      "worker": "composites",
+      "aliases": [
+        "DoubleTabsCard"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+      "prop": "classNames",
+      "line": 43,
+      "component": "Stepper",
+      "worker": "composites",
+      "aliases": [
+        "Stepper",
+        "StepperStep"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "prop": "classNames",
+      "line": 102,
+      "component": "Toolbar",
+      "worker": "composites",
+      "aliases": [
+        "Toolbar",
+        "ToolbarTabItem",
+        "ToolbarTabGroup"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/CourseProgressBar/CourseProgressBar.tsx",
+      "prop": "classNames",
+      "line": 37,
+      "component": "CourseProgressBar",
+      "worker": "composites",
+      "aliases": [
+        "CourseProgressBar",
+        "CourseProgressDimension"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/Legend/Legend.tsx",
+      "prop": "className",
+      "line": 18,
+      "component": "Legend",
+      "worker": "composites",
+      "aliases": [
+        "Legend",
+        "LegendItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/Legend/Legend.tsx",
+      "prop": "classNames",
+      "line": 55,
+      "component": "Legend",
+      "worker": "composites",
+      "aliases": [
+        "Legend",
+        "LegendItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+      "prop": "classNames",
+      "line": 21,
+      "component": "MetricCard",
+      "worker": "composites",
+      "aliases": [
+        "MetricCard"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressRing/ProgressRing.tsx",
+      "prop": "classNames",
+      "line": 47,
+      "component": "ProgressRing",
+      "worker": "composites",
+      "aliases": [
+        "ProgressRing"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx",
+      "prop": "classNames",
+      "line": 57,
+      "component": "SegmentBar",
+      "worker": "composites",
+      "aliases": [
+        "SegmentBar",
+        "SegmentBarSegment"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatGridCard/StatGridCard.tsx",
+      "prop": "classNames",
+      "line": 45,
+      "component": "StatGridCard",
+      "worker": "composites",
+      "aliases": [
+        "StatGridCard",
+        "StatGridCardItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatPair/StatPair.tsx",
+      "prop": "classNames",
+      "line": 19,
+      "component": "StatPair",
+      "worker": "composites",
+      "aliases": [
+        "StatPair",
+        "StatPairValueType"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/stats/StatRibbon/StatRibbon.tsx",
+      "prop": "classNames",
+      "line": 44,
+      "component": "StatRibbon",
+      "worker": "composites",
+      "aliases": [
+        "StatRibbon",
+        "StatRibbonItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+      "prop": "className",
+      "line": 38,
+      "component": "DotLabel",
+      "worker": "composites",
+      "aliases": [
+        "DotLabel",
+        "DotLabelTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/text/DotLabel/DotLabel.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "DotLabel",
+      "worker": "composites",
+      "aliases": [
+        "DotLabel",
+        "DotLabelTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/text/InlineIconLabel/InlineIconLabel.tsx",
+      "prop": "classNames",
+      "line": 90,
+      "component": "InlineIconLabel",
+      "worker": "composites",
+      "aliases": [
+        "InlineIconLabel",
+        "InlineIconLabelTone",
+        "InlineIconLabelSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/text/MetaDotRow/MetaDotRow.tsx",
+      "prop": "classNames",
+      "line": 31,
+      "component": "MetaDotRow",
+      "worker": "composites",
+      "aliases": [
+        "MetaDotRow"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/text/PricePeriod/PricePeriod.tsx",
+      "prop": "classNames",
+      "line": 49,
+      "component": "PricePeriod",
+      "worker": "composites",
+      "aliases": [
+        "PricePeriod",
+        "PricePeriodSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/viewers/FlowDiagram/FlowDiagram.tsx",
+      "prop": "classNames",
+      "line": 84,
+      "component": "FlowDiagram",
+      "worker": "composites",
+      "aliases": [
+        "FlowDiagram",
+        "FLOW_DIAGRAM_CARD_NODE_TYPE",
+        "FlowDiagramCardNodeData"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "prop": "classNames",
+      "line": 30,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "CodePreviewTabs"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "prop": "classNames",
+      "line": 81,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "CodeToHtml"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "prop": "classNames",
+      "line": 301,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "MarkdownMeasure"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+      "prop": "classNames",
+      "line": 59,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "MarkdownTableRow",
+        "MarkdownTableHead",
+        "MarkdownTable",
+        "MarkdownTableBody",
+        "MarkdownTableColumn",
+        "MarkdownTableCell"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "prop": "classNames",
+      "line": 52,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "MermaidDiagram"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/composites/viewers/RichText/RichText.tsx",
+      "prop": "classNames",
+      "line": 54,
+      "component": "RichText",
+      "worker": "composites",
+      "aliases": [
+        "RichText"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/HideAbove/HideAbove.tsx",
+      "prop": "classNames",
+      "line": 37,
+      "component": "HideAbove",
+      "worker": "frames",
+      "aliases": [
+        "HideAbove",
+        "HideAboveAt"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/PageEndPad/PageEndPad.tsx",
+      "prop": "classNames",
+      "line": 22,
+      "component": "PageEndPad",
+      "worker": "frames",
+      "aliases": [
+        "PageEndPad"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/PinnedTrack/PinnedTrack.tsx",
+      "prop": "classNames",
+      "line": 77,
+      "component": "PinnedTrack",
+      "worker": "frames",
+      "aliases": [
+        "PinnedTrack"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/RailShell/RailShell.tsx",
+      "prop": "classNames",
+      "line": 81,
+      "component": "RailShell",
+      "worker": "frames",
+      "aliases": [
+        "RailShell"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/ResponsiveRow/ResponsiveRow.tsx",
+      "prop": "classNames",
+      "line": 72,
+      "component": "ResponsiveRow",
+      "worker": "frames",
+      "aliases": [
+        "ResponsiveRow",
+        "ResponsiveRowSwitch"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/ScrollArea/ScrollArea.tsx",
+      "prop": "classNames",
+      "line": 47,
+      "component": "ScrollArea",
+      "worker": "frames",
+      "aliases": [
+        "ScrollArea",
+        "ScrollAreaAxis"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/SplitWorkspace/SplitWorkspace.tsx",
+      "prop": "classNames",
+      "line": 73,
+      "component": "SplitWorkspace",
+      "worker": "frames",
+      "aliases": [
+        "SplitWorkspace"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": ".storybook/components/frames/Split/Split.tsx",
+      "prop": "classNames",
+      "line": 52,
+      "component": "Split",
+      "worker": "frames",
+      "aliases": [
+        "Split"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/Badge/index.tsx",
+      "prop": "classNames",
+      "line": 50,
+      "component": "Badge",
+      "worker": "atoms",
+      "aliases": [
+        "Badge",
+        "BadgeColor",
+        "BadgePlacement"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/IconTile/index.tsx",
+      "prop": "classNames",
+      "line": 54,
+      "component": "IconTile",
+      "worker": "atoms",
+      "aliases": [
+        "IconTile",
+        "IconTileTone",
+        "IconTileSize",
+        "IconWeight",
+        "IconComponent"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/Logo/index.tsx",
+      "prop": "classNames",
+      "line": 39,
+      "component": "Logo",
+      "worker": "atoms",
+      "aliases": [
+        "Logo",
+        "LogoSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/Progress/index.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "Progress",
+      "worker": "atoms",
+      "aliases": [
+        "Progress",
+        "ProgressColor",
+        "ProgressSize",
+        "ProgressBar",
+        "ProgressCircle",
+        "ProgressGauge"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/SnippetIcon/index.tsx",
+      "prop": "classNames",
+      "line": 33,
+      "component": "SnippetIcon",
+      "worker": "atoms",
+      "aliases": [
+        "SnippetIcon"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/Spinner/index.tsx",
+      "prop": "classNames",
+      "line": 28,
+      "component": "Spinner",
+      "worker": "atoms",
+      "aliases": [
+        "Spinner",
+        "SpinnerSize",
+        "SpinnerTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/StepBadge/index.tsx",
+      "prop": "classNames",
+      "line": 28,
+      "component": "StepBadge",
+      "worker": "atoms",
+      "aliases": [
+        "StepBadge",
+        "StepBadgeState",
+        "StepBadgeSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/display/ThreadConnector/index.tsx",
+      "prop": "classNames",
+      "line": 23,
+      "component": "ThreadConnector",
+      "worker": "atoms",
+      "aliases": [
+        "ThreadConnector"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/feedback/Alert/index.tsx",
+      "prop": "classNames",
+      "line": 104,
+      "component": "Alert",
+      "worker": "atoms",
+      "aliases": [
+        "Alert",
+        "AlertIcon",
+        "AlertStatus",
+        "AlertTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/feedback/ReactionPicker/index.tsx",
+      "prop": "classNames",
+      "line": 43,
+      "component": "ReactionPicker",
+      "worker": "atoms",
+      "aliases": [
+        "ReactionPicker",
+        "ReactionPickerItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/ChoiceCheckbox/index.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "ChoiceCheckbox",
+      "worker": "atoms",
+      "aliases": [
+        "ChoiceCheckbox"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/ChoiceRadio/index.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "ChoiceRadio",
+      "worker": "atoms",
+      "aliases": [
+        "ChoiceRadio"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/ChoiceSwitch/index.tsx",
+      "prop": "classNames",
+      "line": 26,
+      "component": "ChoiceSwitch",
+      "worker": "atoms",
+      "aliases": [
+        "ChoiceSwitch"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputCurrency/index.tsx",
+      "prop": "classNames",
+      "line": 19,
+      "component": "InputCurrency",
+      "worker": "atoms",
+      "aliases": [
+        "InputCurrency"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputDate/index.tsx",
+      "prop": "classNames",
+      "line": 18,
+      "component": "InputDate",
+      "worker": "atoms",
+      "aliases": [
+        "InputDate"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputNumber/index.tsx",
+      "prop": "classNames",
+      "line": 18,
+      "component": "InputNumber",
+      "worker": "atoms",
+      "aliases": [
+        "InputNumber"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputOtp/index.tsx",
+      "prop": "classNames",
+      "line": 16,
+      "component": "InputOtp",
+      "worker": "atoms",
+      "aliases": [
+        "InputOtp"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputPassword/index.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "InputPassword",
+      "worker": "atoms",
+      "aliases": [
+        "InputPassword"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputText/index.tsx",
+      "prop": "classNames",
+      "line": 14,
+      "component": "InputText",
+      "worker": "atoms",
+      "aliases": [
+        "InputText"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputTextarea/index.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "InputTextarea",
+      "worker": "atoms",
+      "aliases": [
+        "InputTextarea"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/InputTime/index.tsx",
+      "prop": "classNames",
+      "line": 16,
+      "component": "InputTime",
+      "worker": "atoms",
+      "aliases": [
+        "InputTime"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/SearchAutocomplete/index.tsx",
+      "prop": "classNames",
+      "line": 73,
+      "component": "SearchAutocomplete",
+      "worker": "atoms",
+      "aliases": [
+        "SearchAutocomplete",
+        "SearchAutocompleteItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/SelectCombobox/index.tsx",
+      "prop": "classNames",
+      "line": 27,
+      "component": "SelectCombobox",
+      "worker": "atoms",
+      "aliases": [
+        "SelectCombobox"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/SelectMulti/index.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "SelectMulti",
+      "worker": "atoms",
+      "aliases": [
+        "SelectMulti"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/SelectSingle/index.tsx",
+      "prop": "classNames",
+      "line": 25,
+      "component": "SelectSingle",
+      "worker": "atoms",
+      "aliases": [
+        "SelectSingle"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/_input/types.ts",
+      "prop": "classNames",
+      "line": 29,
+      "component": "_input",
+      "worker": "atoms",
+      "aliases": [
+        "_input"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/forms/_select/types.ts",
+      "prop": "classNames",
+      "line": 26,
+      "component": "_select",
+      "worker": "atoms",
+      "aliases": [
+        "_select",
+        "SelectOption"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/media/CoverImage/index.tsx",
+      "prop": "classNames",
+      "line": 22,
+      "component": "CoverImage",
+      "worker": "atoms",
+      "aliases": [
+        "CoverImage"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/media/Image/index.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "Image",
+      "worker": "atoms",
+      "aliases": [
+        "Image"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/media/QRCode/index.tsx",
+      "prop": "classNames",
+      "line": 31,
+      "component": "QRCode",
+      "worker": "atoms",
+      "aliases": [
+        "QRCode"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/navigation/Accordion/index.tsx",
+      "prop": "classNames",
+      "line": 51,
+      "component": "Accordion",
+      "worker": "atoms",
+      "aliases": [
+        "Accordion",
+        "AccordionItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/navigation/Breadcrumbs/index.tsx",
+      "prop": "classNames",
+      "line": 74,
+      "component": "Breadcrumbs",
+      "worker": "atoms",
+      "aliases": [
+        "Breadcrumbs",
+        "BreadcrumbItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkBack.tsx",
+      "prop": "classNames",
+      "line": 40,
+      "component": "Link",
+      "worker": "atoms",
+      "aliases": [
+        "Link",
+        "LinkBack"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "prop": "classNames",
+      "line": 53,
+      "component": "Link",
+      "worker": "atoms",
+      "aliases": [
+        "Link",
+        "LinkSeeMoreSize",
+        "LinkSeeMore"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/navigation/Pagination/index.tsx",
+      "prop": "classNames",
+      "line": 43,
+      "component": "Pagination",
+      "worker": "atoms",
+      "aliases": [
+        "Pagination"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "prop": "classNames",
+      "line": 73,
+      "component": "Tabs",
+      "worker": "atoms",
+      "aliases": [
+        "Tabs",
+        "IconComponent",
+        "TabItem",
+        "TabsBase"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "prop": "classNames",
+      "line": 53,
+      "component": "Tabs",
+      "worker": "atoms",
+      "aliases": [
+        "Tabs",
+        "TabsExtended"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/atoms/overlay/Menu/index.tsx",
+      "prop": "classNames",
+      "line": 102,
+      "component": "Menu",
+      "worker": "atoms",
+      "aliases": [
+        "Menu",
+        "IconComponent",
+        "MenuItemModel",
+        "MenuSectionModel"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/buttons/ActionBar/index.tsx",
+      "prop": "classNames",
+      "line": 64,
+      "component": "ActionBar",
+      "worker": "composites",
+      "aliases": [
+        "ActionBar",
+        "ActionBarSlot"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/buttons/InputButtonLike/index.tsx",
+      "prop": "classNames",
+      "line": 65,
+      "component": "InputButtonLike",
+      "worker": "composites",
+      "aliases": [
+        "InputButtonLike",
+        "InputButtonLikeSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/cards/HighlightCard/index.tsx",
+      "prop": "classNames",
+      "line": 23,
+      "component": "HighlightCard",
+      "worker": "composites",
+      "aliases": [
+        "HighlightCard"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/chips/ChipGroup/index.tsx",
+      "prop": "classNames",
+      "line": 45,
+      "component": "ChipGroup",
+      "worker": "composites",
+      "aliases": [
+        "ChipGroup",
+        "ChipGroupItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/chips/EnumChip/index.tsx",
+      "prop": "classNames",
+      "line": 81,
+      "component": "EnumChip",
+      "worker": "composites",
+      "aliases": [
+        "EnumChip",
+        "EnumChipColor",
+        "EnumChipIcon",
+        "EnumChipEntry"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "prop": "classNames",
+      "line": 15,
+      "component": "HighlightChip",
+      "worker": "composites",
+      "aliases": [
+        "HighlightChip",
+        "HighlightChipTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/chips/RemovableToken/index.tsx",
+      "prop": "classNames",
+      "line": 58,
+      "component": "RemovableToken",
+      "worker": "composites",
+      "aliases": [
+        "RemovableToken"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/data/Table/index.tsx",
+      "prop": "classNames",
+      "line": 80,
+      "component": "Table",
+      "worker": "composites",
+      "aliases": [
+        "Table",
+        "TableAlign",
+        "TableColumnSpec",
+        "TableRowItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/feedback/ConfirmDialog/index.tsx",
+      "prop": "classNames",
+      "line": 67,
+      "component": "ConfirmDialog",
+      "worker": "composites",
+      "aliases": [
+        "ConfirmDialog"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/feedback/Toast/index.tsx",
+      "prop": "classNames",
+      "line": 71,
+      "component": "Toast",
+      "worker": "composites",
+      "aliases": [
+        "Toast",
+        "IconComponent",
+        "ToastStatus",
+        "ToastActionComponent"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/form/ChoiceRadioGroup/index.tsx",
+      "prop": "classNames",
+      "line": 50,
+      "component": "ChoiceRadioGroup",
+      "worker": "composites",
+      "aliases": [
+        "ChoiceRadioGroup",
+        "ChoiceRadioOption"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/form/Form/index.tsx",
+      "prop": "classNames",
+      "line": 106,
+      "component": "Form",
+      "worker": "composites",
+      "aliases": [
+        "Form",
+        "FormSection",
+        "FormActions"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/form/InputTags/index.tsx",
+      "prop": "classNames",
+      "line": 39,
+      "component": "InputTags",
+      "worker": "composites",
+      "aliases": [
+        "InputTags"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/layout/Disclosure/index.tsx",
+      "prop": "classNames",
+      "line": 78,
+      "component": "Disclosure",
+      "worker": "composites",
+      "aliases": [
+        "Disclosure"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "prop": "classNames",
+      "line": 92,
+      "component": "Page",
+      "worker": "composites",
+      "aliases": [
+        "Page",
+        "PageHeader",
+        "PageBottomBar"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "prop": "classNames",
+      "line": 105,
+      "component": "Section",
+      "worker": "composites",
+      "aliases": [
+        "Section",
+        "SectionLevel",
+        "SectionHeaderSlot",
+        "SectionHeader"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/lists/AuthorByline/index.tsx",
+      "prop": "classNames",
+      "line": 48,
+      "component": "AuthorByline",
+      "worker": "composites",
+      "aliases": [
+        "AuthorByline"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/lists/AvatarGroup/index.tsx",
+      "prop": "classNames",
+      "line": 49,
+      "component": "AvatarGroup",
+      "worker": "composites",
+      "aliases": [
+        "AvatarGroup",
+        "AvatarGroupItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "prop": "classNames",
+      "line": 66,
+      "component": "IconLabelValueRow",
+      "worker": "composites",
+      "aliases": [
+        "IconLabelValueRow"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/lists/IdentityContentRow/index.tsx",
+      "prop": "classNames",
+      "line": 74,
+      "component": "IdentityContentRow",
+      "worker": "composites",
+      "aliases": [
+        "IdentityContentRow"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+      "prop": "classNames",
+      "line": 63,
+      "component": "DoubleTabsCard",
+      "worker": "composites",
+      "aliases": [
+        "DoubleTabsCard"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/navigation/Toolbar/index.tsx",
+      "prop": "classNames",
+      "line": 102,
+      "component": "Toolbar",
+      "worker": "composites",
+      "aliases": [
+        "Toolbar",
+        "ToolbarTabItem",
+        "ToolbarTabGroup"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/CourseProgressBar/index.tsx",
+      "prop": "classNames",
+      "line": 38,
+      "component": "CourseProgressBar",
+      "worker": "composites",
+      "aliases": [
+        "CourseProgressBar",
+        "CourseProgressDimension"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/Legend/index.tsx",
+      "prop": "className",
+      "line": 19,
+      "component": "Legend",
+      "worker": "composites",
+      "aliases": [
+        "Legend",
+        "LegendItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/Legend/index.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "Legend",
+      "worker": "composites",
+      "aliases": [
+        "Legend",
+        "LegendItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/MetricCard/index.tsx",
+      "prop": "classNames",
+      "line": 21,
+      "component": "MetricCard",
+      "worker": "composites",
+      "aliases": [
+        "MetricCard"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/ProgressRing/index.tsx",
+      "prop": "classNames",
+      "line": 47,
+      "component": "ProgressRing",
+      "worker": "composites",
+      "aliases": [
+        "ProgressRing"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/SegmentBar/index.tsx",
+      "prop": "classNames",
+      "line": 58,
+      "component": "SegmentBar",
+      "worker": "composites",
+      "aliases": [
+        "SegmentBar",
+        "SegmentBarSegment"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/StatGridCard/index.tsx",
+      "prop": "classNames",
+      "line": 34,
+      "component": "StatGridCard",
+      "worker": "composites",
+      "aliases": [
+        "StatGridCard",
+        "StatGridCardItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/StatPair/index.tsx",
+      "prop": "classNames",
+      "line": 23,
+      "component": "StatPair",
+      "worker": "composites",
+      "aliases": [
+        "StatPair",
+        "StatPairValueType"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/stats/StatRibbon/index.tsx",
+      "prop": "classNames",
+      "line": 46,
+      "component": "StatRibbon",
+      "worker": "composites",
+      "aliases": [
+        "StatRibbon",
+        "StatRibbonItem"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "prop": "className",
+      "line": 64,
+      "component": "DotLabel",
+      "worker": "composites",
+      "aliases": [
+        "DotLabel",
+        "DotLabelTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/text/DotLabel/index.tsx",
+      "prop": "classNames",
+      "line": 82,
+      "component": "DotLabel",
+      "worker": "composites",
+      "aliases": [
+        "DotLabel",
+        "DotLabelTone"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/text/InlineIconLabel/index.tsx",
+      "prop": "classNames",
+      "line": 90,
+      "component": "InlineIconLabel",
+      "worker": "composites",
+      "aliases": [
+        "InlineIconLabel",
+        "InlineIconLabelTone",
+        "InlineIconLabelSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/text/MetaDotRow/index.tsx",
+      "prop": "classNames",
+      "line": 39,
+      "component": "MetaDotRow",
+      "worker": "composites",
+      "aliases": [
+        "MetaDotRow"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/text/PricePeriod/index.tsx",
+      "prop": "classNames",
+      "line": 53,
+      "component": "PricePeriod",
+      "worker": "composites",
+      "aliases": [
+        "PricePeriod",
+        "PricePeriodSize"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "prop": "classNames",
+      "line": 30,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "CodePreviewTabs"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "prop": "classNames",
+      "line": 81,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "CodeToHtml"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+      "prop": "classNames",
+      "line": 59,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "MarkdownTableRow",
+        "MarkdownTableHead",
+        "MarkdownTable",
+        "MarkdownTableBody",
+        "MarkdownTableColumn",
+        "MarkdownTableCell"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "prop": "classNames",
+      "line": 52,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "MermaidDiagram"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/viewers/MarkdownContent/index.tsx",
+      "prop": "classNames",
+      "line": 331,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "MarkdownMeasure"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/composites/viewers/RichText/index.tsx",
+      "prop": "classNames",
+      "line": 57,
+      "component": "RichText",
+      "worker": "composites",
+      "aliases": [
+        "RichText"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/HideAbove/index.tsx",
+      "prop": "classNames",
+      "line": 37,
+      "component": "HideAbove",
+      "worker": "frames",
+      "aliases": [
+        "HideAbove",
+        "HideAboveAt"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/PageEndPad/index.tsx",
+      "prop": "classNames",
+      "line": 22,
+      "component": "PageEndPad",
+      "worker": "frames",
+      "aliases": [
+        "PageEndPad"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/PinnedTrack/index.tsx",
+      "prop": "classNames",
+      "line": 77,
+      "component": "PinnedTrack",
+      "worker": "frames",
+      "aliases": [
+        "PinnedTrack"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/RailShell/index.tsx",
+      "prop": "classNames",
+      "line": 81,
+      "component": "RailShell",
+      "worker": "frames",
+      "aliases": [
+        "RailShell"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/ResponsiveRow/index.tsx",
+      "prop": "classNames",
+      "line": 72,
+      "component": "ResponsiveRow",
+      "worker": "frames",
+      "aliases": [
+        "ResponsiveRow",
+        "ResponsiveRowSwitch"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/ScrollArea/index.tsx",
+      "prop": "classNames",
+      "line": 47,
+      "component": "ScrollArea",
+      "worker": "frames",
+      "aliases": [
+        "ScrollArea",
+        "ScrollAreaAxis"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/SplitWorkspace/index.tsx",
+      "prop": "classNames",
+      "line": 73,
+      "component": "SplitWorkspace",
+      "worker": "frames",
+      "aliases": [
+        "SplitWorkspace"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    },
+    {
+      "file": "src/components/frames/Split/index.tsx",
+      "prop": "classNames",
+      "line": 52,
+      "component": "Split",
+      "worker": "frames",
+      "aliases": [
+        "Split"
+      ],
+      "consumerCount": 0,
+      "consumers": []
+    }
+  ],
+  "liveApiSample": [
+    {
+      "file": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "prop": "classNames",
+      "line": 67,
+      "component": "Button",
+      "worker": "atoms",
+      "aliases": [
+        "Button",
+        "ButtonBase"
+      ],
+      "consumerCount": 45,
+      "consumers": [
+        "src/components/blocks/cards/ContinueCard/index.tsx",
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/blocks/dashboard/DailyQuest/index.tsx",
+        "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+        "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        "src/components/blocks/learn/EnrollGate/index.tsx",
+        "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+        "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+        "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+        "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+        "src/components/blocks/learn/ModuleContinueBand/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "prop": "classNames",
+      "line": 63,
+      "component": "Chip",
+      "worker": "atoms",
+      "aliases": [
+        "Chip",
+        "ChipTone",
+        "IconComponent",
+        "ChipBase"
+      ],
+      "consumerCount": 9,
+      "consumers": [
+        "src/components/blocks/course/CourseTrialChip/index.tsx",
+        "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+        "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+        "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+        "src/components/composites/chips/EnumChip/index.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/atoms/display/Avatar/AvatarBase.tsx",
+      "prop": "classNames",
+      "line": 145,
+      "component": "Avatar",
+      "worker": "atoms",
+      "aliases": [
+        "Avatar",
+        "IconWeight",
+        "IconComponent",
+        "AvatarStatus",
+        "AvatarRing",
+        "AvatarSize",
+        "AvatarColor",
+        "AvatarFallback"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        "src/components/blocks/learn/CourseQaComposer/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/atoms/display/Divider/Divider.tsx",
+      "prop": "classNames",
+      "line": 66,
+      "component": "Divider",
+      "worker": "atoms",
+      "aliases": [
+        "Divider",
+        "DividerOrientation",
+        "DividerVariant",
+        "DividerShape"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/frames/Stack/index.tsx",
+        ".storybook/components/frames/Stack/Stack.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputSearch/InputSearch.tsx",
+      "prop": "classNames",
+      "line": 22,
+      "component": "InputSearch",
+      "worker": "atoms",
+      "aliases": [
+        "InputSearch"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/atoms/forms/_input/FieldSkeleton.tsx",
+      "prop": "classNames",
+      "line": 5,
+      "component": "_input",
+      "worker": "atoms",
+      "aliases": [
+        "_input",
+        "FieldSkeleton"
+      ],
+      "consumerCount": 17,
+      "consumers": [
+        "src/components/atoms/forms/InputCurrency/index.tsx",
+        "src/components/atoms/forms/InputDate/index.tsx",
+        "src/components/atoms/forms/InputNumber/index.tsx",
+        "src/components/atoms/forms/InputPassword/index.tsx",
+        "src/components/atoms/forms/InputSearch/index.tsx",
+        "src/components/atoms/forms/InputText/index.tsx",
+        "src/components/atoms/forms/InputTextarea/index.tsx",
+        "src/components/atoms/forms/InputTime/index.tsx",
+        "src/components/composites/form/InputTags/index.tsx",
+        ".storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+        ".storybook/components/atoms/forms/InputDate/InputDate.tsx",
+        ".storybook/components/atoms/forms/InputNumber/InputNumber.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/atoms/forms/_select/TriggerSkeleton.tsx",
+      "prop": "classNames",
+      "line": 5,
+      "component": "_select",
+      "worker": "atoms",
+      "aliases": [
+        "_select",
+        "TriggerSkeleton"
+      ],
+      "consumerCount": 6,
+      "consumers": [
+        "src/components/atoms/forms/SelectCombobox/index.tsx",
+        "src/components/atoms/forms/SelectMulti/index.tsx",
+        "src/components/atoms/forms/SelectSingle/index.tsx",
+        ".storybook/components/atoms/forms/SelectCombobox/SelectCombobox.tsx",
+        ".storybook/components/atoms/forms/SelectMulti/SelectMulti.tsx",
+        ".storybook/components/atoms/forms/SelectSingle/SelectSingle.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/atoms/text/Typography/Typography.tsx",
+      "prop": "classNames",
+      "line": 296,
+      "component": "Typography",
+      "worker": "atoms",
+      "aliases": [
+        "Typography",
+        "TypographyIcon",
+        "TypographyColor",
+        "TypographySize",
+        "TypographyAlign"
+      ],
+      "consumerCount": 72,
+      "consumers": [
+        "src/components/blocks/ai/QuotaBar/index.tsx",
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+        "src/components/blocks/learn/ChallengeBrief/index.tsx",
+        "src/components/blocks/learn/ChallengeHeader/index.tsx",
+        "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "src/components/blocks/learn/ContentHeader/index.tsx",
+        "src/components/blocks/learn/ContentReaction/index.tsx",
+        "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+        "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "AsyncContent",
+      "worker": "composites",
+      "aliases": [
+        "AsyncContent",
+        "AsyncContentEmpty",
+        "AsyncContentError"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "prop": "classNames",
+      "line": 61,
+      "component": "ButtonGroup",
+      "worker": "composites",
+      "aliases": [
+        "ButtonGroup",
+        "ButtonGroupItem"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+      "prop": "classNames",
+      "line": 54,
+      "component": "ButtonRadioGroup",
+      "worker": "composites",
+      "aliases": [
+        "ButtonRadioGroup",
+        "ButtonRadioGroupItem"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+        ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "prop": "classNames",
+      "line": 35,
+      "component": "FloatingActionButton",
+      "worker": "composites",
+      "aliases": [
+        "FloatingActionButton"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/chips/EnumChip/EnumChip.tsx",
+      "prop": "className",
+      "line": 73,
+      "component": "EnumChip",
+      "worker": "composites",
+      "aliases": [
+        "EnumChip",
+        "EnumChipColor",
+        "EnumChipIcon",
+        "EnumChipEntry"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/blocks/chips/HostPlatformChip/component.tsx",
+        "src/components/blocks/chips/LessonVideoKindChip/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "prop": "WithClassNames",
+      "line": 26,
+      "component": "HighlightChip",
+      "worker": "composites",
+      "aliases": [
+        "HighlightChip",
+        "HighlightChipTone"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/composites/chips/HighlightChip/index.tsx",
+        "src/components/pages/RewardsPage/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/feedback/Callout/Callout.tsx",
+      "prop": "classNames",
+      "line": 75,
+      "component": "Callout",
+      "worker": "composites",
+      "aliases": [
+        "Callout",
+        "CalloutStatus",
+        "CalloutIcon"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+        ".storybook/components/starci/blocks/learn/TaskLockedAlert/TaskLockedAlert.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+      "prop": "classNames",
+      "line": 71,
+      "component": "EmptyState",
+      "worker": "composites",
+      "aliases": [
+        "EmptyState",
+        "EmptyStateIcon"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/composites/async/AsyncContent/index.tsx",
+        ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/form/_field/FieldFrame.tsx",
+      "prop": "classNames",
+      "line": 43,
+      "component": "_field",
+      "worker": "composites",
+      "aliases": [
+        "_field",
+        "fieldName",
+        "FieldFrame"
+      ],
+      "consumerCount": 23,
+      "consumers": [
+        "src/components/atoms/forms/InputCurrency/index.tsx",
+        "src/components/atoms/forms/InputDate/index.tsx",
+        "src/components/atoms/forms/InputNumber/index.tsx",
+        "src/components/atoms/forms/InputPassword/index.tsx",
+        "src/components/atoms/forms/InputSearch/index.tsx",
+        "src/components/atoms/forms/InputText/index.tsx",
+        "src/components/atoms/forms/InputTextarea/index.tsx",
+        "src/components/atoms/forms/InputTime/index.tsx",
+        "src/components/atoms/forms/SelectCombobox/index.tsx",
+        "src/components/atoms/forms/SelectMulti/index.tsx",
+        "src/components/atoms/forms/SelectSingle/index.tsx",
+        "src/components/composites/form/InputTags/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+      "prop": "classNames",
+      "line": 63,
+      "component": "UserCell",
+      "worker": "composites",
+      "aliases": [
+        "UserCell"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressMeter/ProgressMeter.tsx",
+      "prop": "classNames",
+      "line": 53,
+      "component": "ProgressMeter",
+      "worker": "composites",
+      "aliases": [
+        "ProgressMeter"
+      ],
+      "consumerCount": 5,
+      "consumers": [
+        "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/stats/ProgressMeter/TargetMark.tsx",
+      "prop": "classNames",
+      "line": 29,
+      "component": "ProgressMeter",
+      "worker": "composites",
+      "aliases": [
+        "ProgressMeter",
+        "ProgressMeterTargetMark"
+      ],
+      "consumerCount": 5,
+      "consumers": [
+        "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/text/TitledText/TitledText.tsx",
+      "prop": "classNames",
+      "line": 98,
+      "component": "TitledText",
+      "worker": "composites",
+      "aliases": [
+        "TitledText",
+        "TitledTextSize"
+      ],
+      "consumerCount": 4,
+      "consumers": [
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/composites/lists/List/index.tsx",
+        ".storybook/components/composites/lists/List/List.tsx",
+        ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "prop": "className",
+      "line": 88,
+      "component": "MarkdownContent",
+      "worker": "composites",
+      "aliases": [
+        "MarkdownContent",
+        "MarkdownRenderersParams",
+        "buildMarkdownRenderers"
+      ],
+      "consumerCount": 8,
+      "consumers": [
+        "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+        "src/components/blocks/feed/CommunityPostCard/component.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "src/components/blocks/learn/QaInboxRow/index.tsx",
+        "src/components/blocks/learn/QaMessageBubble/index.tsx",
+        "src/components/blocks/learn/QaQuestionThread/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/Cluster/Cluster.tsx",
+      "prop": "classNames",
+      "line": 69,
+      "component": "Cluster",
+      "worker": "frames",
+      "aliases": [
+        "Cluster"
+      ],
+      "consumerCount": 5,
+      "consumers": [
+        "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+        "src/components/pages/ProfileChallengeManagePage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/Container/Container.tsx",
+      "prop": "classNames",
+      "line": 113,
+      "component": "Container",
+      "worker": "frames",
+      "aliases": [
+        "Container",
+        "ContainerSize"
+      ],
+      "consumerCount": 3,
+      "consumers": [
+        "src/components/pages/KpiPage/component.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/Flex/Flex.tsx",
+      "prop": "classNames",
+      "line": 115,
+      "component": "Flex",
+      "worker": "frames",
+      "aliases": [
+        "Flex",
+        "FlexDirection"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/frames/Stack/index.tsx",
+        ".storybook/components/frames/Stack/Stack.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/Grid/Grid.tsx",
+      "prop": "classNames",
+      "line": 126,
+      "component": "Grid",
+      "worker": "frames",
+      "aliases": [
+        "Grid",
+        "GridItem",
+        "GridColumns"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx",
+      "prop": "classNames",
+      "line": 52,
+      "component": "ResponsiveCluster",
+      "worker": "frames",
+      "aliases": [
+        "ResponsiveCluster",
+        "ResponsiveClusterItem"
+      ],
+      "consumerCount": 4,
+      "consumers": [
+        "src/components/composites/buttons/ActionBar/index.tsx",
+        "src/components/composites/buttons/ButtonGroup/index.tsx",
+        ".storybook/components/composites/buttons/ActionBar/ActionBar.tsx",
+        ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/Stack/Stack.tsx",
+      "prop": "classNames",
+      "line": 102,
+      "component": "Stack",
+      "worker": "frames",
+      "aliases": [
+        "Stack",
+        "StackV",
+        "StackH"
+      ],
+      "consumerCount": 185,
+      "consumers": [
+        "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "src/components/blocks/ai/QuotaBar/index.tsx",
+        "src/components/blocks/async/EmptyContent/index.tsx",
+        "src/components/blocks/async/ErrorContent/index.tsx",
+        "src/components/blocks/cards/ContinueCard/index.tsx",
+        "src/components/blocks/cards/PressableCard/index.tsx",
+        "src/components/blocks/cards/PricingCard/index.tsx",
+        "src/components/blocks/cards/SectionCard/index.tsx",
+        "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+        "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+        "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+        "src/components/blocks/learn/CourseQaComposer/index.tsx"
+      ]
+    },
+    {
+      "file": ".storybook/components/frames/Stage/Stage.tsx",
+      "prop": "classNames",
+      "line": 78,
+      "component": "Stage",
+      "worker": "frames",
+      "aliases": [
+        "Stage",
+        "StageFill"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        "src/components/pages/MindMapPage/component.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/buttons/Button/ButtonBase.tsx",
+      "prop": "classNames",
+      "line": 74,
+      "component": "Button",
+      "worker": "atoms",
+      "aliases": [
+        "Button",
+        "ButtonBase"
+      ],
+      "consumerCount": 45,
+      "consumers": [
+        "src/components/blocks/cards/ContinueCard/index.tsx",
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/blocks/dashboard/DailyQuest/index.tsx",
+        "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+        "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+        "src/components/blocks/learn/EnrollGate/index.tsx",
+        "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+        "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+        "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+        "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+        "src/components/blocks/learn/ModuleContinueBand/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "prop": "classNames",
+      "line": 65,
+      "component": "Chip",
+      "worker": "atoms",
+      "aliases": [
+        "Chip",
+        "ChipTone",
+        "IconComponent",
+        "ChipBase"
+      ],
+      "consumerCount": 9,
+      "consumers": [
+        "src/components/blocks/course/CourseTrialChip/index.tsx",
+        "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+        "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+        "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+        "src/components/composites/chips/EnumChip/index.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "prop": "classNames",
+      "line": 145,
+      "component": "Avatar",
+      "worker": "atoms",
+      "aliases": [
+        "Avatar",
+        "IconWeight",
+        "IconComponent",
+        "AvatarStatus",
+        "AvatarRing",
+        "AvatarSize",
+        "AvatarColor",
+        "AvatarFallback"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        "src/components/blocks/learn/CourseQaComposer/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/display/Divider/index.tsx",
+      "prop": "classNames",
+      "line": 56,
+      "component": "Divider",
+      "worker": "atoms",
+      "aliases": [
+        "Divider",
+        "DividerOrientation",
+        "DividerVariant",
+        "DividerShape"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/frames/Stack/index.tsx",
+        ".storybook/components/frames/Stack/Stack.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/forms/InputSearch/index.tsx",
+      "prop": "classNames",
+      "line": 22,
+      "component": "InputSearch",
+      "worker": "atoms",
+      "aliases": [
+        "InputSearch"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/forms/_input/FieldSkeleton.tsx",
+      "prop": "classNames",
+      "line": 5,
+      "component": "_input",
+      "worker": "atoms",
+      "aliases": [
+        "_input",
+        "FieldSkeleton"
+      ],
+      "consumerCount": 17,
+      "consumers": [
+        "src/components/atoms/forms/InputCurrency/index.tsx",
+        "src/components/atoms/forms/InputDate/index.tsx",
+        "src/components/atoms/forms/InputNumber/index.tsx",
+        "src/components/atoms/forms/InputPassword/index.tsx",
+        "src/components/atoms/forms/InputSearch/index.tsx",
+        "src/components/atoms/forms/InputText/index.tsx",
+        "src/components/atoms/forms/InputTextarea/index.tsx",
+        "src/components/atoms/forms/InputTime/index.tsx",
+        "src/components/composites/form/InputTags/index.tsx",
+        ".storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+        ".storybook/components/atoms/forms/InputDate/InputDate.tsx",
+        ".storybook/components/atoms/forms/InputNumber/InputNumber.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/forms/_select/TriggerSkeleton.tsx",
+      "prop": "classNames",
+      "line": 5,
+      "component": "_select",
+      "worker": "atoms",
+      "aliases": [
+        "_select",
+        "TriggerSkeleton"
+      ],
+      "consumerCount": 6,
+      "consumers": [
+        "src/components/atoms/forms/SelectCombobox/index.tsx",
+        "src/components/atoms/forms/SelectMulti/index.tsx",
+        "src/components/atoms/forms/SelectSingle/index.tsx",
+        ".storybook/components/atoms/forms/SelectCombobox/SelectCombobox.tsx",
+        ".storybook/components/atoms/forms/SelectMulti/SelectMulti.tsx",
+        ".storybook/components/atoms/forms/SelectSingle/SelectSingle.tsx"
+      ]
+    },
+    {
+      "file": "src/components/atoms/text/Typography/index.tsx",
+      "prop": "classNames",
+      "line": 283,
+      "component": "Typography",
+      "worker": "atoms",
+      "aliases": [
+        "Typography",
+        "TypographyIcon",
+        "TypographyColor",
+        "TypographySize",
+        "TypographyAlign"
+      ],
+      "consumerCount": 72,
+      "consumers": [
+        "src/components/blocks/ai/QuotaBar/index.tsx",
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+        "src/components/blocks/learn/ChallengeBrief/index.tsx",
+        "src/components/blocks/learn/ChallengeHeader/index.tsx",
+        "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "src/components/blocks/learn/ContentHeader/index.tsx",
+        "src/components/blocks/learn/ContentReaction/index.tsx",
+        "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+        "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/async/AsyncContent/index.tsx",
+      "prop": "classNames",
+      "line": 80,
+      "component": "AsyncContent",
+      "worker": "composites",
+      "aliases": [
+        "AsyncContent",
+        "AsyncContentEmpty",
+        "AsyncContentError"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "prop": "classNames",
+      "line": 65,
+      "component": "ButtonGroup",
+      "worker": "composites",
+      "aliases": [
+        "ButtonGroup",
+        "ButtonGroupItem"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+      "prop": "classNames",
+      "line": 54,
+      "component": "ButtonRadioGroup",
+      "worker": "composites",
+      "aliases": [
+        "ButtonRadioGroup",
+        "ButtonRadioGroupItem"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+        ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "prop": "classNames",
+      "line": 32,
+      "component": "FloatingActionButton",
+      "worker": "composites",
+      "aliases": [
+        "FloatingActionButton"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/chips/EnumChip/index.tsx",
+      "prop": "className",
+      "line": 75,
+      "component": "EnumChip",
+      "worker": "composites",
+      "aliases": [
+        "EnumChip",
+        "EnumChipColor",
+        "EnumChipIcon",
+        "EnumChipEntry"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/blocks/chips/HostPlatformChip/component.tsx",
+        "src/components/blocks/chips/LessonVideoKindChip/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "prop": "WithClassNames",
+      "line": 29,
+      "component": "HighlightChip",
+      "worker": "composites",
+      "aliases": [
+        "HighlightChip",
+        "HighlightChipTone"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/pages/RewardsPage/index.tsx",
+        ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/feedback/Callout/index.tsx",
+      "prop": "classNames",
+      "line": 88,
+      "component": "Callout",
+      "worker": "composites",
+      "aliases": [
+        "Callout",
+        "CalloutStatus",
+        "CalloutIcon"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+        ".storybook/components/starci/blocks/learn/TaskLockedAlert/TaskLockedAlert.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/feedback/EmptyState/index.tsx",
+      "prop": "classNames",
+      "line": 83,
+      "component": "EmptyState",
+      "worker": "composites",
+      "aliases": [
+        "EmptyState",
+        "EmptyStateIcon"
+      ],
+      "consumerCount": 2,
+      "consumers": [
+        "src/components/composites/async/AsyncContent/index.tsx",
+        ".storybook/components/composites/async/AsyncContent/AsyncContent.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/form/_field/FieldFrame.tsx",
+      "prop": "classNames",
+      "line": 43,
+      "component": "_field",
+      "worker": "composites",
+      "aliases": [
+        "_field",
+        "fieldName",
+        "FieldFrame"
+      ],
+      "consumerCount": 23,
+      "consumers": [
+        "src/components/atoms/forms/InputCurrency/index.tsx",
+        "src/components/atoms/forms/InputDate/index.tsx",
+        "src/components/atoms/forms/InputNumber/index.tsx",
+        "src/components/atoms/forms/InputPassword/index.tsx",
+        "src/components/atoms/forms/InputSearch/index.tsx",
+        "src/components/atoms/forms/InputText/index.tsx",
+        "src/components/atoms/forms/InputTextarea/index.tsx",
+        "src/components/atoms/forms/InputTime/index.tsx",
+        "src/components/atoms/forms/SelectCombobox/index.tsx",
+        "src/components/atoms/forms/SelectMulti/index.tsx",
+        "src/components/atoms/forms/SelectSingle/index.tsx",
+        "src/components/composites/form/InputTags/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/lists/UserCell/index.tsx",
+      "prop": "classNames",
+      "line": 71,
+      "component": "UserCell",
+      "worker": "composites",
+      "aliases": [
+        "UserCell"
+      ],
+      "consumerCount": 1,
+      "consumers": [
+        "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/stats/ProgressMeter/TargetMark.tsx",
+      "prop": "classNames",
+      "line": 29,
+      "component": "ProgressMeter",
+      "worker": "composites",
+      "aliases": [
+        "ProgressMeter",
+        "ProgressMeterTargetMark"
+      ],
+      "consumerCount": 5,
+      "consumers": [
+        "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/stats/ProgressMeter/index.tsx",
+      "prop": "classNames",
+      "line": 53,
+      "component": "ProgressMeter",
+      "worker": "composites",
+      "aliases": [
+        "ProgressMeter"
+      ],
+      "consumerCount": 5,
+      "consumers": [
+        "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        ".storybook/components/starci/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx"
+      ]
+    },
+    {
+      "file": "src/components/composites/text/TitledText/index.tsx",
+      "prop": "classNames",
+      "line": 97,
+      "component": "TitledText",
+      "worker": "composites",
+      "aliases": [
+        "TitledText",
+        "TitledTextSize"
+      ],
+      "consumerCount": 4,
+      "consumers": [
+        "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+        "src/components/composites/lists/List/index.tsx",
+        ".storybook/components/composites/lists/List/List.tsx",
+        ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx"
+      ]
+    }
+  ]
+}

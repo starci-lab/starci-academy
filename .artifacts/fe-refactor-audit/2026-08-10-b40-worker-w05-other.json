@@ -1,0 +1,154 @@
+{
+  "batch": "B40",
+  "worker": "w05-other",
+  "status": "complete",
+  "completedAt": "2026-08-09T02:20:00.000Z",
+  "checkpoint": "2a096210a",
+  "ownsFileCount": 41,
+  "safeFindingsScoped": 55,
+  "counts": {
+    "applied": 24,
+    "hold": 31,
+    "vendor": 0,
+    "locked": 0,
+    "ambiguous": 0,
+    "filesChanged": 22,
+    "filesEslintClean": 22
+  },
+  "byRule": {
+    "starci-fe/require-export-jsdoc": { "scoped": 14, "applied": 14, "hold": 0 },
+    "starci-fe/handler-on-prefix": { "scoped": 1, "applied": 1, "hold": 0 },
+    "starci-fe/no-vietnamese-in-source-authoring": { "scoped": 7, "applied": 7, "hold": 0 },
+    "starci-fe/no-emoji-in-source": { "scoped": 2, "applied": 2, "hold": 0 },
+    "starci-fe/prefer-arrow-export": { "scoped": 1, "applied": 0, "hold": 1 },
+    "starci-fe/require-identity-root": { "scoped": 15, "applied": 0, "hold": 15 },
+    "starci-fe/require-frame-self-declare": { "scoped": 15, "applied": 0, "hold": 15 },
+    "starci-fe/no-inline-parameter-type": { "scoped": 0, "applied": 0, "hold": 0 }
+  },
+  "applied": [
+    {
+      "rule": "starci-fe/require-export-jsdoc",
+      "files": [
+        ".storybook/utils/BlockAnatomy/BlockAnatomy.tsx",
+        "src/modules/api/redirect/github.ts",
+        "src/modules/api/rest/keycloak/google/redirect.ts",
+        "src/modules/keycloak/github.ts",
+        "src/modules/keycloak/google.ts",
+        "src/modules/superjson/index.ts",
+        "src/modules/utils/computations/round.ts",
+        "src/modules/utils/misc.ts",
+        "src/modules/utils/sanitize.ts",
+        "src/resources/assets/index.ts",
+        "src/resources/constants/lang.ts",
+        "src/resources/path/index.ts",
+        "src/utils/extract-sandpack-files.ts"
+      ],
+      "note": "14 exports received role JSDoc; lang.ts covers languages + Language (2)."
+    },
+    {
+      "rule": "starci-fe/handler-on-prefix",
+      "files": [".storybook/utils/BlockAnatomy/BlockAnatomy.tsx"],
+      "note": "handleCopy → onCopy (+ call site)."
+    },
+    {
+      "rule": "starci-fe/no-vietnamese-in-source-authoring",
+      "files": [
+        "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+        "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+        "src/modules/api/graphql/queries/types/recommended-courses.ts",
+        "src/modules/types/entities/challenge.ts",
+        "src/modules/types/enums/cv-block-type.ts",
+        "src/modules/utils/rank.ts",
+        "src/modules/utils/session-display-name.ts"
+      ],
+      "note": "Authoring/JSDoc Vietnamese replaced with English glosses; no locale content touched."
+    },
+    {
+      "rule": "starci-fe/no-emoji-in-source",
+      "files": [
+        "src/modules/storage/session/types/oauth-idp-hint.ts",
+        "src/modules/types/entities/user-challenge-submission.ts"
+      ],
+      "note": "U+2194 LEFT RIGHT ARROW in comments → ASCII <->."
+    }
+  ],
+  "holds": [
+    {
+      "classification": "hold",
+      "rule": "starci-fe/prefer-arrow-export",
+      "file": "src/modules/utils/computations/pow-10.ts",
+      "reason": "Call-signature overloads require `function` form; arrow const cannot express overload signatures without TS2322 (documented in-file)."
+    },
+    {
+      "classification": "hold",
+      "rule": "starci-fe/require-identity-root",
+      "count": 15,
+      "reason": "No proven identity-capable single root that can land under --max-warnings=0. Host `<div>`/`<a>` roots, HeroUI `Card`, `SurfaceListCardRow`/`SurfaceListCardItem`, `ProfileSectionGuard` passthrough, and `AsyncContent` Base (no identity prop) are not proven insert sites. ProfilePinned→LabeledCard was a proven candidate but the file still fails non-safe rules (retired-async/parallel-skeleton/classname doors); attempted apply reverted.",
+      "files": [
+        "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/index.tsx",
+        "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileChallengesPage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+        "src/components/pages/ProfileProjectsPage/index.tsx",
+        "src/components/pages/SettingsHomePage/index.tsx"
+      ]
+    },
+    {
+      "classification": "hold",
+      "rule": "starci-fe/require-frame-self-declare",
+      "count": 15,
+      "reason": "Existing-principle candidates exist (sibling-stack/icon-text/content-row/block-boundary/page-pad/layout-split) but host page files fail --max-warnings=0 on non-safe architectural rules (heroui-outside-vocabulary, host-element, classname doors, retired-async, parallel-skeleton, frame-fragment). Applied then reverted per worker gate.",
+      "files": [
+        "src/components/pages/BookmarksPage/index.tsx",
+        "src/components/pages/MembershipPage/index.tsx",
+        "src/components/pages/PersonalProjectTaskPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx"
+      ]
+    }
+  ],
+  "filesChanged": [
+    ".storybook/utils/BlockAnatomy/BlockAnatomy.tsx",
+    "src/modules/api/graphql/queries/types/my-installment-plans.ts",
+    "src/modules/api/graphql/queries/types/pickable-cv-achievements.ts",
+    "src/modules/api/graphql/queries/types/recommended-courses.ts",
+    "src/modules/api/redirect/github.ts",
+    "src/modules/api/rest/keycloak/google/redirect.ts",
+    "src/modules/keycloak/github.ts",
+    "src/modules/keycloak/google.ts",
+    "src/modules/storage/session/types/oauth-idp-hint.ts",
+    "src/modules/superjson/index.ts",
+    "src/modules/types/entities/challenge.ts",
+    "src/modules/types/entities/user-challenge-submission.ts",
+    "src/modules/types/enums/cv-block-type.ts",
+    "src/modules/utils/computations/round.ts",
+    "src/modules/utils/misc.ts",
+    "src/modules/utils/rank.ts",
+    "src/modules/utils/sanitize.ts",
+    "src/modules/utils/session-display-name.ts",
+    "src/resources/assets/index.ts",
+    "src/resources/constants/lang.ts",
+    "src/resources/path/index.ts",
+    "src/utils/extract-sandpack-files.ts"
+  ],
+  "eslint": {
+    "command": "npx eslint --max-warnings=0 <22 changed owns files>",
+    "errors": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  "notes": [
+    "Did not edit outside owns. No commit/push/reset/checkout/branch.",
+    "Page-local frame/identity burns blocked by pre-existing non-safe debt on the same files (max-warnings gate).",
+    "BlockAnatomy VI comments remain allowlisted (CONTENT_ALLOWLIST); only jsdoc + handler-on-prefix burned there."
+  ]
+}

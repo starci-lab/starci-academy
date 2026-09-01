@@ -1,0 +1,67 @@
+{
+  "batch": "B35",
+  "role": "coordinator-notes",
+  "checkpoint": "02011807",
+  "generatedAt": "2026-08-08T15:30:00.000Z",
+  "peerWorkersPresent": [
+    "navigation-shells-layouts",
+    "overlays-modals-drawers",
+    "learn-course-content",
+    "playground-practice-interview",
+    "commerce-account-settings",
+    "community-feed-blog-league",
+    "profile-cv-careers-consultant",
+    "dashboard-admin-system-architecture",
+    "pages-and-filing"
+  ],
+  "eslint": {
+    "before": {
+      "warnings": 6872,
+      "files": 1232,
+      "errors": 0,
+      "a11y": 11
+    },
+    "after": {
+      "warnings": 6275,
+      "files": 1104,
+      "errors": 0,
+      "a11y": 11
+    },
+    "delta": {
+      "warnings": -597,
+      "files": -128,
+      "errors": 0,
+      "a11y": 0
+    },
+    "afterArtifact": ".artifacts/fe-refactor-audit/2026-08-10-b35-eslint-after.json",
+    "topRuleDeltas": [
+      { "rule": "starci-fe/no-host-element-at-sentence-tier", "delta": -181 },
+      { "rule": "starci-fe/no-public-classname-prop", "delta": -85 },
+      { "rule": "starci-fe/no-raw-shape-at-sentence-tier", "delta": -61 },
+      { "rule": "starci-fe/require-frame-self-declare", "delta": -60 },
+      { "rule": "starci-fe/page-folder-two-files-only", "delta": -56 },
+      { "rule": "starci-fe/require-identity-root", "delta": -38 },
+      { "rule": "starci-fe/no-frame-fragment-item", "delta": -28 },
+      { "rule": "starci-fe/no-heroui-outside-vocabulary", "delta": -25 },
+      { "rule": "starci-fe/no-helper-folder-in-components", "delta": -25 },
+      { "rule": "starci-fe/no-classname-at-sentence-tier", "delta": -21 },
+      { "rule": "starci-fe/no-cn-above-vocabulary", "delta": -17 },
+      { "rule": "starci-fe/no-emoji-in-source", "delta": 4 },
+      { "rule": "starci-fe/no-parallel-skeleton", "delta": 1 }
+    ]
+  },
+  "gates": {
+    "tsc": "pass",
+    "pluginTests": "pass",
+    "principleStyle": "pass",
+    "semanticContracts": "pass",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass"
+  },
+  "coordinatorSlice": {
+    "doorsBurned": 14,
+    "lockedConsumerHolds": ["Avatar", "Divider", "Typography", "Stack", "Button", "SurfaceListCard"],
+    "highOverlapHeld": ["SurfaceListCard", "CourseCard hosts", "SitePreview", "SurfaceCard"]
+  },
+  "parentStatusNote": "Do not treat as final status.md — parent finalizes. Aggregate product inventory improved 6872→6275 (−597 / −128 files). Coordinator burned dead shared/block CSS doors and ran Mission C gates."
+}

@@ -1,0 +1,20 @@
+{
+  "partition": "identity-proven-roots",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "(29 unclear hosts from BATCH 13)",
+      "reason": "Out of scope — identity-decision only when clearly declared"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "no-additional-clear-roots",
+      "classification": "skipped",
+      "note": "WeeklyChallengeCard already applied in prior batch + weekly-challenge-parity; NestedCard/PricingCard/AiQuota*/ConsultantCard already stamped earlier"
+    }
+  ],
+  "verification": { "note": "No additional clear roots in this batch" },
+  "regressions": []
+}

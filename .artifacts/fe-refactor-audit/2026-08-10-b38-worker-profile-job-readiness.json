@@ -1,0 +1,50 @@
+{
+  "batch": "B38",
+  "agent": "profile-job-readiness",
+  "status": "complete",
+  "completedAt": "2026-08-08T19:05:00.000Z",
+  "checkpoint": "2a096210a",
+  "owns": [
+    "src/components/blocks/profile/ProfileJobReadiness/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx"
+  ],
+  "ownsNote": "Coordinator expanded owns after page-folder ratchet: moved block out of ProfileOverviewPage/ and updated the page import.",
+  "residuals": {
+    "ProfileJobReadiness-A": {
+      "path": "src/components/blocks/profile/ProfileJobReadiness/index.tsx",
+      "class": "A",
+      "action": "collapsed",
+      "detail": "Removed LabeledCard skeleton SurfaceListCard twin. Same SurfaceCardList tree uses isSkeleton with headline + track placeholder content rows."
+    },
+    "ProfileJobReadiness-B": {
+      "path": "src/components/blocks/profile/ProfileJobReadiness/index.tsx",
+      "class": "A",
+      "action": "collapsed",
+      "detail": "One SurfaceCardList owns label, emptyState, error/errorState, optional strongest-track headline, and TrackCard body rows with href on SurfaceCardListItem."
+    }
+  },
+  "anatomyAfter": "SurfaceCardList label + isSkeleton + emptyState + error/errorState; items = optional StrongestHeadline content row + TrackCard content rows (href on list item)",
+  "changed": [
+    "src/components/blocks/profile/ProfileJobReadiness/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx"
+  ],
+  "deleted": [
+    "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx"
+  ],
+  "zeroConsumerProof": {
+    "oldPath": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/",
+    "importers": ["ProfileOverviewPage/index.tsx → now @/components/blocks/profile/ProfileJobReadiness"],
+    "rgAfter": "no remaining imports of ./ProfileJobReadiness"
+  },
+  "storybookParity": "No Storybook twin for ProfileJobReadiness — recorded explicitly.",
+  "verification": {
+    "eslint": {
+      "command": "npx eslint --max-warnings=0 src/components/blocks/profile/ProfileJobReadiness/index.tsx src/components/pages/ProfileOverviewPage/index.tsx",
+      "errors": 0,
+      "warnings": 0,
+      "maxWarningsZero": true
+    },
+    "gitDiffCheck": "pass",
+    "committed": false
+  }
+}

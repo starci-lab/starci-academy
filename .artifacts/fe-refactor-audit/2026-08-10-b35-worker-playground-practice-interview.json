@@ -1,0 +1,214 @@
+{
+  "batch": "B35",
+  "agent": "playground-practice-interview",
+  "agentKey": "playground-practice-interview",
+  "checkpoint": "02011807",
+  "branch": "mtp",
+  "committed": false,
+  "generatedAt": "2026-08-08T14:50:00.000Z",
+  "focus": "Playground, practice, interview, quiz, challenge, submission — GlyphMark, Markdown axes, typed icons, frames, shells",
+  "manifest": {
+    "key": "playground-practice-interview",
+    "fileCount": 51,
+    "source": ".artifacts/fe-refactor-audit/2026-08-10-b35-manifests.json"
+  },
+  "lockedHolds": [
+    {
+      "family": "MockInterviewSession",
+      "paths": [
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx"
+      ],
+      "owner": "pages-and-filing",
+      "reason": "Listed locked hold — do not burn; not in this agent manifest"
+    },
+    {
+      "family": "QuizSession",
+      "paths": [
+        "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/index.tsx"
+      ],
+      "owner": "pages-and-filing",
+      "reason": "Listed locked hold (QuizSession + skeleton + FlashcardQuizHistory) — do not burn; not in this agent manifest"
+    },
+    {
+      "family": "LearnLoopScroll",
+      "paths": [
+        "src/components/pages/LandingPage/LearnLoopScroll/index.tsx"
+      ],
+      "owner": "pages-and-filing",
+      "reason": "Listed locked hold — do not burn; not in this agent manifest"
+    },
+    {
+      "family": "ContentAiChat",
+      "paths": ["src/components/blocks/learn/ContentAiChat/index.tsx"],
+      "owner": "learn-course-content",
+      "reason": "Listed locked hold — outside this agent exclusive edit set"
+    },
+    {
+      "family": "ArchitectureScene",
+      "reason": "Listed locked hold — outside this agent exclusive edit set"
+    },
+    {
+      "family": "BlockAnatomy",
+      "reason": "Listed locked hold — outside this agent exclusive edit set"
+    }
+  ],
+  "closedClusters": [
+    {
+      "id": "ModuleChallengeList",
+      "files": ["src/components/blocks/learn/ModuleChallengeList/index.tsx"],
+      "actions": [
+        "Migrated size-5 PuzzlePieceIcon + hand-rolled Skeleton to GlyphMark { icon, tone: success|default, isSkeleton }",
+        "CHALLENGE_LEADING_CLASS string table → CHALLENGE_LEADING { Icon, tone }"
+      ],
+      "eslintMaxWarnings0": "pass",
+      "sbTwin": "held — .storybook/.../ModuleChallengeList/ModuleChallengeList.tsx unassigned in B35 manifests (outside exclusive edit set)"
+    },
+    {
+      "id": "PlaygroundExerciseGrid",
+      "files": [
+        ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx",
+        "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx"
+      ],
+      "actions": [
+        "SB first then src",
+        "Removed host div wrappers; identity on SurfaceCardPressableGroup / EmptyState (src)",
+        "Named title-subtitle + sibling-stack with neighbour-contrasting explains",
+        "Burned Chip classNames w-fit door on src (matched SB)",
+        "Typed icons already on IconTile / Chip / EmptyState / Typography.suffixIcon"
+      ],
+      "eslintMaxWarnings0": "pass (src)",
+      "retune": "tile body StackV gap 4→3 for honest sibling-stack"
+    }
+  ],
+  "partialClusters": [
+    {
+      "id": "SubmissionFindingsList",
+      "files": [
+        ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+        "src/components/blocks/learn/SubmissionFindingsList/index.tsx"
+      ],
+      "actions": [
+        "SB first then src",
+        "Markdown wrappers text-muted [&_p]:m-0 → tone=muted flow=embedded",
+        "min-w-0 flex-1 → FillAvailable at=base",
+        "Panel StackV → sibling-stack + explain",
+        "Burned Chip classNames shrink-0 on src; identity on SurfaceCardAccordion; removed identity wrapper div on SB"
+      ],
+      "remaining": [
+        "severity trigger icons size-3.5 with text-danger|warning|muted — not GlyphMark (size-5; no danger/muted tone)",
+        "MapPin/Lightbulb size-3/3.5 text-muted — not GlyphMark",
+        "cn(...) + @heroui/react for severity iconTone"
+      ],
+      "eslintMaxWarnings0": "fail — 2 held severity-glyph warnings"
+    },
+    {
+      "id": "QuizRecapList",
+      "files": [
+        ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+        "src/components/blocks/learn/QuizRecapList/index.tsx"
+      ],
+      "actions": [
+        "SB first then src",
+        "Expanded frame-fragment items; named block-boundary / sibling-stack / chip-row",
+        "Identity on root StackV; removed host wrapper divs"
+      ],
+      "remaining": ["Skeleton className size doors on shimmer bars — no finite Skeleton size API for these bars"]
+    },
+    {
+      "id": "PlaygroundStepGuide",
+      "files": [
+        ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+        "src/components/blocks/learn/PlaygroundStepGuide/index.tsx"
+      ],
+      "actions": [
+        "SB first then src",
+        "Expanded frame-fragment items; named block-boundary / title-subtitle / sibling-stack / icon-text",
+        "Identity on root StackV / EmptyState (src); EmptyState already takes typed CheckCircleIcon"
+      ],
+      "remaining": ["Skeleton className size doors on shimmer bars"],
+      "retune": "verify pending spinner|label gap 3→2 for honest icon-text; verifyControls gap 2→3 for sibling-stack"
+    },
+    {
+      "id": "QuizCard",
+      "files": ["src/components/blocks/learn/QuizCard/index.tsx"],
+      "actions": [
+        "Correct OptionResultIcon → GlyphMark tone=success"
+      ],
+      "held": [
+        {
+          "path": "OptionResultIcon incorrect",
+          "reason": "text-danger-soft-foreground — GlyphMarkTone has no danger (default|accent|success|warning)"
+        }
+      ],
+      "sbTwin": "unassigned in B35 manifests",
+      "remaining": ["HeroUI Radio/Checkbox vocabulary, classNames doors, host div, unnamed StackV"]
+    }
+  ],
+  "heldClusters": [
+    {
+      "id": "PlaygroundRagWorkspace",
+      "score": 5,
+      "files": ["src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx"],
+      "reason": "Top unlocked overlap cluster remains host/raw-shape/className-door heavy; ReactNode size-4 icons + Markdown without axes need larger shell redesign — not an exact GlyphMark/Markdown drop-in vertical"
+    },
+    {
+      "id": "ChallengeCard",
+      "files": [
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx"
+      ],
+      "reason": "Raw host card shell + size-4 status icons with muted/danger tones; Markdown axes already applied in B34; GlyphMark not exact"
+    },
+    {
+      "id": "PlaygroundCliSession / PromptPlayground / PlaygroundRagSession",
+      "reason": "Large host/raw-shape surfaces; defer to dedicated shell pass"
+    }
+  ],
+  "mappings": {
+    "ModuleChallengeList.CHALLENGE_LEADING": {
+      "completed": { "Icon": "PuzzlePieceIcon", "tone": "success" },
+      "todo": { "Icon": "PuzzlePieceIcon", "tone": "default" },
+      "skeleton": "GlyphMark isSkeleton"
+    },
+    "QuizCard.OptionResultIcon.correct": {
+      "Icon": "CheckCircleIcon",
+      "tone": "success",
+      "was": "size-5 text-success-soft-foreground weight=fill"
+    },
+    "SubmissionFindingsList.Markdown": {
+      "from": "wrapper div text-muted [&_p]:m-0 (+ min-w-0 flex-1)",
+      "to": "tone=muted flow=embedded (+ FillAvailable at=base)"
+    }
+  },
+  "changed": [
+    "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+    "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx",
+    "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+    ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+    "src/components/blocks/learn/QuizRecapList/index.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+    "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+    "src/components/blocks/learn/QuizCard/index.tsx"
+  ],
+  "verification": {
+    "tscOwnedGlyphMarkMarkdownFrames": "no diagnostics on ModuleChallengeList / PlaygroundExerciseGrid / SubmissionFindingsList / QuizRecapList / PlaygroundStepGuide / QuizCard after SB EmptyState identity fix",
+    "eslintClosed": {
+      "ModuleChallengeList": "0 warnings",
+      "PlaygroundExerciseGrid": "0 warnings"
+    },
+    "gitDiffCheck": "pass on changed trees",
+    "constraints": [
+      "touched owned manifest files only",
+      "no eslint-disable",
+      "no new vocabulary / fake principles / CSS-shaped public props",
+      "SB first then src for owned twins",
+      "locked holds classified not burned"
+    ]
+  },
+  "summary": "Closed ModuleChallengeList (GlyphMark) and PlaygroundExerciseGrid (frames/typed icons/shell identity). Partial Markdown+FillAvailable+frames on SubmissionFindingsList; frame/shell closes on QuizRecapList + PlaygroundStepGuide; QuizCard success → GlyphMark (danger held). Locked MockInterviewSession / QuizSession / LearnLoopScroll (+ ContentAiChat / ArchitectureScene / BlockAnatomy) classified, not burned. PlaygroundRagWorkspace and ChallengeCard held for non-exact debt."
+}

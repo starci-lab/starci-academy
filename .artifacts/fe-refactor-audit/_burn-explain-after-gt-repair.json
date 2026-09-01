@@ -1,0 +1,75 @@
+{
+  "repaired": 26,
+  "hard": [],
+  "changedFiles": 17,
+  "changed": [
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\LabeledCard\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\cards\\PressableCard\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\CollapsibleSidebar\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\Navbar\\index.tsx",
+      "fileRepaired": 5
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\SettingsSidebarNav\\DesktopNavRow\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\blocks\\navigation\\SettingsSidebarNav\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\cards\\SurfaceCard\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\composites\\lists\\UserCell\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\AdminAiBalancerPage\\AdminAiBalancerSkeleton\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\FlashcardReviewPage\\index.tsx",
+      "fileRepaired": 4
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\NotificationsPage\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\PersonalProjectTaskPage\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfilePublicCvPage\\index.tsx",
+      "fileRepaired": 2
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\ProfileSkillsPage\\ProfileCoding\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\QrPanel\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SepayCheckoutPage\\index.tsx",
+      "fileRepaired": 1
+    },
+    {
+      "file": "D:\\Repositories\\starci-academy\\src\\components\\pages\\SystemStatusPage\\AiKeyGroup\\index.tsx",
+      "fileRepaired": 1
+    }
+  ]
+}

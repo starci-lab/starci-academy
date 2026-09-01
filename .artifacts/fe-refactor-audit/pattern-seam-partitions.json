@@ -1,0 +1,2417 @@
+{
+  "generatedAt": "2026-08-05T21:41:11.715Z",
+  "baselineHoles": 1305,
+  "completed": {},
+  "partitions": [
+    {
+      "id": "pages-learn-commerce",
+      "dirs": [],
+      "description": "Learning/course/commerce pages excl completed",
+      "holes": 172,
+      "byClass": {
+        "raw-vendor-foreign": 139,
+        "padding-plus-gap": 17,
+        "real-seam-no-owner": 14,
+        "redundant-wrapper": 2
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/LearningHistoryPage",
+          "total": 26,
+          "byClass": {
+            "raw-vendor-foreign": 23,
+            "padding-plus-gap": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+              8
+            ],
+            [
+              "src/components/pages/LearningHistoryPage/index.tsx",
+              7
+            ],
+            [
+              "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+              5
+            ],
+            [
+              "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/SepayCheckoutPage",
+          "total": 15,
+          "byClass": {
+            "raw-vendor-foreign": 15
+          },
+          "topFiles": [
+            [
+              "src/components/pages/SepayCheckoutPage/OrderSummary/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/SepayCheckoutPage/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/CourseDetailPage",
+          "total": 14,
+          "byClass": {
+            "raw-vendor-foreign": 14
+          },
+          "topFiles": [
+            [
+              "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx",
+              5
+            ],
+            [
+              "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/CourseDetailPage/component.tsx",
+              3
+            ],
+            [
+              "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+              1
+            ],
+            [
+              "src/components/pages/CourseDetailPage/CoursePricingRail/PhaseRow/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/RewardsPage",
+          "total": 14,
+          "byClass": {
+            "padding-plus-gap": 4,
+            "raw-vendor-foreign": 10
+          },
+          "topFiles": [
+            [
+              "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+              9
+            ],
+            [
+              "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/RewardsPage/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/JobListPage",
+          "total": 13,
+          "byClass": {
+            "real-seam-no-owner": 4,
+            "raw-vendor-foreign": 9
+          },
+          "topFiles": [
+            [
+              "src/components/pages/JobListPage/JobListRow/index.tsx",
+              5
+            ],
+            [
+              "src/components/pages/JobListPage/component.tsx",
+              4
+            ],
+            [
+              "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+              4
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/JobPostFormPage",
+          "total": 13,
+          "byClass": {
+            "raw-vendor-foreign": 11,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+              6
+            ],
+            [
+              "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/JobPostFormPage/SubmitSuccess/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+              1
+            ],
+            [
+              "src/components/pages/JobPostFormPage/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/HeadhuntingCompanyPage",
+          "total": 10,
+          "byClass": {
+            "real-seam-no-owner": 1,
+            "raw-vendor-foreign": 9
+          },
+          "topFiles": [
+            [
+              "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyLoadingState/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyConsultants/component.tsx",
+              1
+            ],
+            [
+              "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/CommunityChatPage",
+          "total": 9,
+          "byClass": {
+            "raw-vendor-foreign": 6,
+            "redundant-wrapper": 1,
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx",
+              4
+            ],
+            [
+              "src/components/pages/CommunityChatPage/ChatPane/component.tsx",
+              3
+            ],
+            [
+              "src/components/pages/CommunityChatPage/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/InstallmentPlansPage",
+          "total": 9,
+          "byClass": {
+            "raw-vendor-foreign": 9
+          },
+          "topFiles": [
+            [
+              "src/components/pages/InstallmentPlansPage/index.tsx",
+              9
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/AiSettingsPage",
+          "total": 8,
+          "byClass": {
+            "raw-vendor-foreign": 8
+          },
+          "topFiles": [
+            [
+              "src/components/pages/AiSettingsPage/index.tsx",
+              8
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/NotificationsPage",
+          "total": 8,
+          "byClass": {
+            "raw-vendor-foreign": 7,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/NotificationsPage/index.tsx",
+              8
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/AppearancePage",
+          "total": 6,
+          "byClass": {
+            "raw-vendor-foreign": 5,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/AppearancePage/index.tsx",
+              6
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/BlogListPage",
+          "total": 6,
+          "byClass": {
+            "raw-vendor-foreign": 5,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/BlogListPage/FeaturedPost/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+              1
+            ],
+            [
+              "src/components/pages/BlogListPage/StartHereAnchor/index.tsx",
+              1
+            ],
+            [
+              "src/components/pages/BlogListPage/TopicsStrip/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/CommunityFeedPage",
+          "total": 5,
+          "byClass": {
+            "raw-vendor-foreign": 1,
+            "real-seam-no-owner": 4
+          },
+          "topFiles": [
+            [
+              "src/components/pages/CommunityFeedPage/component.tsx",
+              4
+            ],
+            [
+              "src/components/pages/CommunityFeedPage/CommunityComposer/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/BlogPostPage",
+          "total": 4,
+          "byClass": {
+            "real-seam-no-owner": 2,
+            "redundant-wrapper": 1,
+            "raw-vendor-foreign": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/BlogPostPage/component.tsx",
+              3
+            ],
+            [
+              "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/FlashcardReviewPage",
+          "total": 4,
+          "byClass": {
+            "raw-vendor-foreign": 3,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/FlashcardReviewPage/index.tsx",
+              4
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ContentPage",
+          "total": 3,
+          "byClass": {
+            "padding-plus-gap": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ContentPage/component.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/SettingsHomePage",
+          "total": 2,
+          "byClass": {
+            "raw-vendor-foreign": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/SettingsHomePage/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/LoginPage",
+          "total": 1,
+          "byClass": {
+            "raw-vendor-foreign": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/LoginPage/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/PublicArticlePage",
+          "total": 1,
+          "byClass": {
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/PublicArticlePage/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/TalentDirectoryPage",
+          "total": 1,
+          "byClass": {
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/TalentDirectoryPage/component.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-profile",
+      "dirs": [],
+      "description": "All Profile* pages",
+      "holes": 159,
+      "byClass": {
+        "raw-vendor-foreign": 134,
+        "real-seam-no-owner": 13,
+        "redundant-wrapper": 2,
+        "padding-plus-gap": 10
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/ProfileOverviewPage",
+          "total": 22,
+          "byClass": {
+            "raw-vendor-foreign": 17,
+            "real-seam-no-owner": 4,
+            "redundant-wrapper": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+              8
+            ],
+            [
+              "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/ProfileOverviewPage/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileSkillsPage",
+          "total": 20,
+          "byClass": {
+            "raw-vendor-foreign": 19,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+              20
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileRedirectPage",
+          "total": 17,
+          "byClass": {
+            "raw-vendor-foreign": 16,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileRedirectPage/index.tsx",
+              17
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/CvEditorPage",
+          "total": 16,
+          "byClass": {
+            "raw-vendor-foreign": 14,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/CvEditorPage/index.tsx",
+              15
+            ],
+            [
+              "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileActivityPage",
+          "total": 14,
+          "byClass": {
+            "raw-vendor-foreign": 14
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+              10
+            ],
+            [
+              "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+              4
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileProjectsPage",
+          "total": 14,
+          "byClass": {
+            "real-seam-no-owner": 3,
+            "redundant-wrapper": 1,
+            "raw-vendor-foreign": 7,
+            "padding-plus-gap": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+              6
+            ],
+            [
+              "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+              4
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileChallengeManagePage",
+          "total": 10,
+          "byClass": {
+            "raw-vendor-foreign": 9,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileChallengeManagePage/index.tsx",
+              10
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileChallengesPage",
+          "total": 9,
+          "byClass": {
+            "raw-vendor-foreign": 9
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+              7
+            ],
+            [
+              "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileChallengeSubmissionPage",
+          "total": 8,
+          "byClass": {
+            "raw-vendor-foreign": 8
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+              8
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileProjectRoadmapPage",
+          "total": 8,
+          "byClass": {
+            "raw-vendor-foreign": 7,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+              8
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/EditProfilePage",
+          "total": 7,
+          "byClass": {
+            "padding-plus-gap": 1,
+            "raw-vendor-foreign": 6
+          },
+          "topFiles": [
+            [
+              "src/components/pages/EditProfilePage/index.tsx",
+              7
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfileCodingProblemPage",
+          "total": 7,
+          "byClass": {
+            "raw-vendor-foreign": 7
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfileCodingProblemPage/index.tsx",
+              7
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/CvGalleryPage",
+          "total": 5,
+          "byClass": {
+            "real-seam-no-owner": 4,
+            "raw-vendor-foreign": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/CvGalleryPage/CvGallery/component.tsx",
+              5
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ProfilePublicCvPage",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ProfilePublicCvPage/index.tsx",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-flashcards",
+      "dirs": [],
+      "description": "FlashcardsPage only",
+      "holes": 138,
+      "byClass": {
+        "real-seam-no-owner": 18,
+        "raw-vendor-foreign": 91,
+        "padding-plus-gap": 26,
+        "redundant-wrapper": 3
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/FlashcardsPage",
+          "total": 138,
+          "byClass": {
+            "real-seam-no-owner": 18,
+            "raw-vendor-foreign": 91,
+            "padding-plus-gap": 26,
+            "redundant-wrapper": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+              24
+            ],
+            [
+              "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+              15
+            ],
+            [
+              "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+              13
+            ],
+            [
+              "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+              9
+            ],
+            [
+              "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+              8
+            ],
+            [
+              "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+              8
+            ],
+            [
+              "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+              7
+            ],
+            [
+              "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-mock-interview",
+      "dirs": [],
+      "description": "MockInterviewPage only",
+      "holes": 104,
+      "byClass": {
+        "raw-vendor-foreign": 89,
+        "padding-plus-gap": 15
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/MockInterviewPage",
+          "total": 104,
+          "byClass": {
+            "raw-vendor-foreign": 89,
+            "padding-plus-gap": 15
+          },
+          "topFiles": [
+            [
+              "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+              33
+            ],
+            [
+              "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+              15
+            ],
+            [
+              "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+              11
+            ],
+            [
+              "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+              11
+            ],
+            [
+              "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+              9
+            ],
+            [
+              "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+              9
+            ],
+            [
+              "src/components/pages/MockInterviewPage/MockInterviewGatePreview/index.tsx",
+              5
+            ],
+            [
+              "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+              5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sb-nivoexpert",
+      "dirs": [],
+      "description": "nivoexpert excl completed AcademySettingsForm",
+      "holes": 98,
+      "byClass": {
+        "real-seam-no-owner": 79,
+        "redundant-wrapper": 9,
+        "padding-plus-gap": 10
+      },
+      "directories": [
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/landing",
+          "total": 23,
+          "byClass": {
+            "real-seam-no-owner": 19,
+            "redundant-wrapper": 2,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/landing/OfferSection/OfferSection.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/landing/CourseOfferCard/CourseOfferCard.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/landing/CurriculumPreview/CurriculumPreview.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/landing/HeroIdentity/HeroIdentity.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/landing/LandingFooter/LandingFooter.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/landing/LeadCaptureCard/LeadCaptureCard.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/landing/ProofStrip/ProofStrip.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/overlays/drawers",
+          "total": 14,
+          "byClass": {
+            "padding-plus-gap": 2,
+            "real-seam-no-owner": 10,
+            "redundant-wrapper": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/overlays/drawers/LeadDetailDrawer/LeadDetailDrawer.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivoexpert/overlays/drawers/AiSuggestionDrawer/AiSuggestionDrawer.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivoexpert/overlays/drawers/OrderDetailDrawer/OrderDetailDrawer.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/overlays/drawers/PostModerationDrawer/PostModerationDrawer.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/overlays/drawers/ThemeEditorDrawer/ThemeEditorDrawer.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivoexpert/overlays/drawers/MemberDetailDrawer/MemberDetailDrawer.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/dashboard",
+          "total": 11,
+          "byClass": {
+            "real-seam-no-owner": 9,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/dashboard/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+              7
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/dashboard/AnalyticsView/AnalyticsView.tsx",
+              4
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/community",
+          "total": 9,
+          "byClass": {
+            "real-seam-no-owner": 6,
+            "redundant-wrapper": 3
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/community/PostModerationCard/PostModerationCard.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/community/PostCard/PostCard.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/community/PostComposer/PostComposer.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/automation",
+          "total": 7,
+          "byClass": {
+            "real-seam-no-owner": 4,
+            "redundant-wrapper": 1,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/automation/AiOpsSummary/AiOpsSummary.tsx",
+              1
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/automation/N8nWorkflowTable/N8nWorkflowTable.tsx",
+              1
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/automation/OpsEventTable/OpsEventTable.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/classroom",
+          "total": 7,
+          "byClass": {
+            "real-seam-no-owner": 6,
+            "redundant-wrapper": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+              5
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/classroom/LessonViewer/LessonViewer.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/learn",
+          "total": 7,
+          "byClass": {
+            "real-seam-no-owner": 7
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/learn/MyCoursesGrid/MyCoursesGrid.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/learn/LearnerOverview/LearnerOverview.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/pages/ExpertDashboardOverview",
+          "total": 6,
+          "byClass": {
+            "padding-plus-gap": 2,
+            "real-seam-no-owner": 4
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+              6
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/studio",
+          "total": 3,
+          "byClass": {
+            "real-seam-no-owner": 3
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/layouts/TenantLandingShell",
+          "total": 3,
+          "byClass": {
+            "real-seam-no-owner": 3
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/members",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/members/MembersManager/MembersManager.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/revenue",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/revenue/OrderTable/OrderTable.tsx",
+              1
+            ],
+            [
+              ".storybook/components/nivoexpert/blocks/revenue/RevenueSummary/RevenueSummary.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/overlays/modals",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/overlays/modals/BanMemberModal/BanMemberModal.tsx",
+              1
+            ],
+            [
+              ".storybook/components/nivoexpert/overlays/modals/SetMemberRoleModal/SetMemberRoleModal.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/blocks/leads",
+          "total": 1,
+          "byClass": {
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/blocks/leads/LeadsPipeline/LeadsPipeline.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivoexpert/pages/AcademyManagementDashboard",
+          "total": 1,
+          "byClass": {
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivoexpert/pages/AcademyManagementDashboard/AcademyManagementDashboard.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sb-nivo-rest",
+      "dirs": [],
+      "description": "remaining nivo",
+      "holes": 94,
+      "byClass": {
+        "real-seam-no-owner": 76,
+        "padding-plus-gap": 12,
+        "redundant-wrapper": 6
+      },
+      "directories": [
+        {
+          "dir": ".storybook/components/nivo/blocks/expert-site",
+          "total": 26,
+          "byClass": {
+            "real-seam-no-owner": 21,
+            "padding-plus-gap": 1,
+            "redundant-wrapper": 4
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/expert-site/LeadDetail/LeadDetail.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/agent-os",
+          "total": 20,
+          "byClass": {
+            "real-seam-no-owner": 18,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/agent-os/AgentDetailDrawer/AgentDetailDrawer.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/agent-os/HealthCard/HealthCard.tsx",
+              1
+            ],
+            [
+              ".storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/catalog",
+          "total": 6,
+          "byClass": {
+            "real-seam-no-owner": 6
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivo/blocks/catalog/BuyConfirmModal/BuyConfirmModal.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/pages/CatalogView",
+          "total": 6,
+          "byClass": {
+            "real-seam-no-owner": 5,
+            "redundant-wrapper": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+              6
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/pages/ExpertSiteView",
+          "total": 6,
+          "byClass": {
+            "padding-plus-gap": 4,
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+              6
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/wallet",
+          "total": 5,
+          "byClass": {
+            "real-seam-no-owner": 4,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+              5
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/account",
+          "total": 4,
+          "byClass": {
+            "padding-plus-gap": 1,
+            "redundant-wrapper": 1,
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/dashboard",
+          "total": 4,
+          "byClass": {
+            "real-seam-no-owner": 4
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+              1
+            ],
+            [
+              ".storybook/components/nivo/blocks/dashboard/ProductQuickSelector/ProductQuickSelector.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/support",
+          "total": 4,
+          "byClass": {
+            "real-seam-no-owner": 3,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/billing",
+          "total": 3,
+          "byClass": {
+            "real-seam-no-owner": 3
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+              2
+            ],
+            [
+              ".storybook/components/nivo/blocks/billing/InvoiceDetailModal/InvoiceDetailModal.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/pages/Dashboard",
+          "total": 3,
+          "byClass": {
+            "padding-plus-gap": 2,
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/pages/AgentOsConsole",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/pages/ControlPlaneOverview",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/pages/ExpertSiteOverview",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/blocks/domains",
+          "total": 1,
+          "byClass": {
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-league-system",
+      "dirs": [],
+      "description": "League + SystemStatus + Security",
+      "holes": 68,
+      "byClass": {
+        "real-seam-no-owner": 11,
+        "redundant-wrapper": 1,
+        "padding-plus-gap": 8,
+        "raw-vendor-foreign": 48
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/LeaguePage",
+          "total": 33,
+          "byClass": {
+            "real-seam-no-owner": 11,
+            "redundant-wrapper": 1,
+            "padding-plus-gap": 3,
+            "raw-vendor-foreign": 18
+          },
+          "topFiles": [
+            [
+              "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+              11
+            ],
+            [
+              "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+              9
+            ],
+            [
+              "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+              8
+            ],
+            [
+              "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+              4
+            ],
+            [
+              "src/components/pages/LeaguePage/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/SystemStatusPage",
+          "total": 24,
+          "byClass": {
+            "padding-plus-gap": 5,
+            "raw-vendor-foreign": 19
+          },
+          "topFiles": [
+            [
+              "src/components/pages/SystemStatusPage/SystemStatusSkeleton/index.tsx",
+              10
+            ],
+            [
+              "src/components/pages/SystemStatusPage/index.tsx",
+              7
+            ],
+            [
+              "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/SecurityPage",
+          "total": 11,
+          "byClass": {
+            "raw-vendor-foreign": 11
+          },
+          "topFiles": [
+            [
+              "src/components/pages/SecurityPage/index.tsx",
+              11
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-practice",
+      "dirs": [],
+      "description": "PracticeHub + PracticeProblem",
+      "holes": 66,
+      "byClass": {
+        "real-seam-no-owner": 1,
+        "raw-vendor-foreign": 57,
+        "padding-plus-gap": 8
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/PracticeHubPage",
+          "total": 36,
+          "byClass": {
+            "real-seam-no-owner": 1,
+            "raw-vendor-foreign": 35
+          },
+          "topFiles": [
+            [
+              "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+              9
+            ],
+            [
+              "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+              6
+            ],
+            [
+              "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+              5
+            ],
+            [
+              "src/components/pages/PracticeHubPage/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/PracticeProblemPage",
+          "total": 30,
+          "byClass": {
+            "padding-plus-gap": 8,
+            "raw-vendor-foreign": 22
+          },
+          "topFiles": [
+            [
+              "src/components/pages/PracticeProblemPage/index.tsx",
+              20
+            ],
+            [
+              "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-dashboard",
+      "dirs": [],
+      "description": "DashboardPage only",
+      "holes": 63,
+      "byClass": {
+        "real-seam-no-owner": 22,
+        "raw-vendor-foreign": 35,
+        "redundant-wrapper": 2,
+        "padding-plus-gap": 4
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/DashboardPage",
+          "total": 63,
+          "byClass": {
+            "real-seam-no-owner": 22,
+            "raw-vendor-foreign": 35,
+            "redundant-wrapper": 2,
+            "padding-plus-gap": 4
+          },
+          "topFiles": [
+            [
+              "src/components/pages/DashboardPage/index.tsx",
+              7
+            ],
+            [
+              "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+              6
+            ],
+            [
+              "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+              3
+            ],
+            [
+              "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/DashboardPage/TopLearners/component.tsx",
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-admin",
+      "dirs": [],
+      "description": "All Admin* pages",
+      "holes": 61,
+      "byClass": {
+        "padding-plus-gap": 5,
+        "raw-vendor-foreign": 56
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/AdminAiBalancerPage",
+          "total": 26,
+          "byClass": {
+            "padding-plus-gap": 3,
+            "raw-vendor-foreign": 23
+          },
+          "topFiles": [
+            [
+              "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+              11
+            ],
+            [
+              "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+              5
+            ],
+            [
+              "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+              5
+            ],
+            [
+              "src/components/pages/AdminAiBalancerPage/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/AdminUploadVideoPage",
+          "total": 21,
+          "byClass": {
+            "raw-vendor-foreign": 20,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+              6
+            ],
+            [
+              "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+              4
+            ],
+            [
+              "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/AdminUploadVideoPage/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/AdminLoginPage",
+          "total": 8,
+          "byClass": {
+            "raw-vendor-foreign": 7,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/pages/AdminLoginPage/index.tsx",
+              8
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/AdminMpegDashTestPage",
+          "total": 6,
+          "byClass": {
+            "raw-vendor-foreign": 6
+          },
+          "topFiles": [
+            [
+              "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/AdminMpegDashTestPage/index.tsx",
+              1
+            ],
+            [
+              "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sb-nivo-landing",
+      "dirs": [],
+      "description": "nivo blocks/landing + related",
+      "holes": 56,
+      "byClass": {
+        "real-seam-no-owner": 53,
+        "padding-plus-gap": 1,
+        "redundant-wrapper": 2
+      },
+      "directories": [
+        {
+          "dir": ".storybook/components/nivo/blocks/landing",
+          "total": 56,
+          "byClass": {
+            "real-seam-no-owner": 53,
+            "padding-plus-gap": 1,
+            "redundant-wrapper": 2
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+              5
+            ],
+            [
+              ".storybook/components/nivo/blocks/landing/OperatingLoopHero/OperatingLoopHero.tsx",
+              5
+            ],
+            [
+              ".storybook/components/nivo/blocks/landing/ProductShowcase/ProductShowcase.tsx",
+              5
+            ],
+            [
+              ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+              4
+            ],
+            [
+              ".storybook/components/nivo/blocks/landing/AiSuggestionCard/AiSuggestionCard.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivo/blocks/landing/PricingTeaser/PricingTeaser.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+              3
+            ],
+            [
+              ".storybook/components/nivo/blocks/landing/ClosingCta/ClosingCta.tsx",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-misc",
+      "dirs": [],
+      "description": "Remaining smaller pages",
+      "holes": 55,
+      "byClass": {
+        "raw-vendor-foreign": 48,
+        "padding-plus-gap": 4,
+        "real-seam-no-owner": 3
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/BookmarksPage",
+          "total": 8,
+          "byClass": {
+            "raw-vendor-foreign": 6,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/BookmarksPage/index.tsx",
+              6
+            ],
+            [
+              "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/MyFeedbackPage",
+          "total": 7,
+          "byClass": {
+            "raw-vendor-foreign": 7
+          },
+          "topFiles": [
+            [
+              "src/components/pages/MyFeedbackPage/index.tsx",
+              7
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/ContactPage",
+          "total": 6,
+          "byClass": {
+            "raw-vendor-foreign": 6
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/ContactPage/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/ContactPage/ContactFaq/index.tsx",
+              1
+            ],
+            [
+              "src/components/pages/ContactPage/ContactForm/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/PrivacySettingsPage",
+          "total": 6,
+          "byClass": {
+            "padding-plus-gap": 1,
+            "raw-vendor-foreign": 5
+          },
+          "topFiles": [
+            [
+              "src/components/pages/PrivacySettingsPage/index.tsx",
+              6
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/LegalPage",
+          "total": 5,
+          "byClass": {
+            "raw-vendor-foreign": 5
+          },
+          "topFiles": [
+            [
+              "src/components/pages/LegalPage/index.tsx",
+              5
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/SessionsPage",
+          "total": 5,
+          "byClass": {
+            "raw-vendor-foreign": 5
+          },
+          "topFiles": [
+            [
+              "src/components/pages/SessionsPage/index.tsx",
+              5
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/AiUsagePage",
+          "total": 4,
+          "byClass": {
+            "raw-vendor-foreign": 4
+          },
+          "topFiles": [
+            [
+              "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+              2
+            ],
+            [
+              "src/components/pages/AiUsagePage/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/MembershipPage",
+          "total": 4,
+          "byClass": {
+            "padding-plus-gap": 1,
+            "raw-vendor-foreign": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/MembershipPage/index.tsx",
+              4
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/KpiPage",
+          "total": 3,
+          "byClass": {
+            "real-seam-no-owner": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/KpiPage/component.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/MySubmissionsPage",
+          "total": 3,
+          "byClass": {
+            "raw-vendor-foreign": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/MySubmissionsPage/index.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/MyAttemptsPage",
+          "total": 2,
+          "byClass": {
+            "raw-vendor-foreign": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/MyAttemptsPage/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/pages/OauthRedirectPage",
+          "total": 2,
+          "byClass": {
+            "raw-vendor-foreign": 2
+          },
+          "topFiles": [
+            [
+              "src/components/pages/OauthRedirectPage/index.tsx",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-architecture",
+      "dirs": [],
+      "description": "ArchitecturePage only",
+      "holes": 49,
+      "byClass": {
+        "raw-vendor-foreign": 43,
+        "real-seam-no-owner": 3,
+        "padding-plus-gap": 3
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/ArchitecturePage",
+          "total": 49,
+          "byClass": {
+            "raw-vendor-foreign": 43,
+            "real-seam-no-owner": 3,
+            "padding-plus-gap": 3
+          },
+          "topFiles": [
+            [
+              "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+              16
+            ],
+            [
+              "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+              12
+            ],
+            [
+              "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+              6
+            ],
+            [
+              "src/components/pages/ArchitecturePage/index.tsx",
+              6
+            ],
+            [
+              "src/components/pages/ArchitecturePage/CurlTester/component.tsx",
+              5
+            ],
+            [
+              "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+              3
+            ],
+            [
+              "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pages-landing",
+      "dirs": [],
+      "description": "LandingPage only",
+      "holes": 46,
+      "byClass": {
+        "padding-plus-gap": 7,
+        "raw-vendor-foreign": 38,
+        "real-seam-no-owner": 1
+      },
+      "directories": [
+        {
+          "dir": "src/components/pages/LandingPage",
+          "total": 45,
+          "byClass": {
+            "padding-plus-gap": 7,
+            "raw-vendor-foreign": 38
+          },
+          "topFiles": [
+            [
+              "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+              21
+            ],
+            [
+              "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+              10
+            ],
+            [
+              "src/components/pages/LandingPage/index.tsx",
+              9
+            ],
+            [
+              "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+              3
+            ],
+            [
+              "src/components/pages/LandingPage/KnowledgeGraph/ShuffleBeacon.tsx",
+              1
+            ],
+            [
+              "src/components/pages/LandingPage/StatStrip/component.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/nivo/pages/LandingPage",
+          "total": 1,
+          "byClass": {
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/nivo/pages/LandingPage/LandingPage.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "src-overlays",
+      "dirs": [],
+      "description": "overlays/modals + drawers",
+      "holes": 37,
+      "byClass": {
+        "real-seam-no-owner": 34,
+        "padding-plus-gap": 3
+      },
+      "directories": [
+        {
+          "dir": "src/components/overlays/modals",
+          "total": 29,
+          "byClass": {
+            "real-seam-no-owner": 27,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              "src/components/overlays/modals/PaymentModal/component.tsx",
+              9
+            ],
+            [
+              "src/components/overlays/modals/ShareModal/component.tsx",
+              4
+            ],
+            [
+              "src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx",
+              3
+            ],
+            [
+              "src/components/overlays/modals/AuthenticationModal/SignInSection/OtpState/index.tsx",
+              2
+            ],
+            [
+              "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+              2
+            ],
+            [
+              "src/components/overlays/modals/LanguageModal/component.tsx",
+              2
+            ],
+            [
+              "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+              2
+            ],
+            [
+              "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/overlays/drawers",
+          "total": 8,
+          "byClass": {
+            "real-seam-no-owner": 7,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+              7
+            ],
+            [
+              "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "src-blocks-layouts",
+      "dirs": [],
+      "description": "blocks + layouts + composites leftovers",
+      "holes": 34,
+      "byClass": {
+        "real-seam-no-owner": 19,
+        "padding-plus-gap": 9,
+        "redundant-wrapper": 2,
+        "raw-vendor-foreign": 4
+      },
+      "directories": [
+        {
+          "dir": "src/components/blocks/cards",
+          "total": 8,
+          "byClass": {
+            "real-seam-no-owner": 5,
+            "padding-plus-gap": 2,
+            "redundant-wrapper": 1
+          },
+          "topFiles": [
+            [
+              "src/components/blocks/cards/MediaCard/index.tsx",
+              2
+            ],
+            [
+              "src/components/blocks/cards/PricingCard/index.tsx",
+              2
+            ],
+            [
+              "src/components/blocks/cards/SectionCard/index.tsx",
+              2
+            ],
+            [
+              "src/components/blocks/cards/LabeledCard/index.tsx",
+              1
+            ],
+            [
+              "src/components/blocks/cards/SummaryCard/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/blocks/community",
+          "total": 6,
+          "byClass": {
+            "real-seam-no-owner": 5,
+            "redundant-wrapper": 1
+          },
+          "topFiles": [
+            [
+              "src/components/blocks/community/CommunityCommentItem/component.tsx",
+              3
+            ],
+            [
+              "src/components/blocks/community/CommunityCommentThread/component.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/blocks/learn",
+          "total": 6,
+          "byClass": {
+            "real-seam-no-owner": 3,
+            "padding-plus-gap": 3
+          },
+          "topFiles": [
+            [
+              "src/components/blocks/learn/EnrollGate/index.tsx",
+              2
+            ],
+            [
+              "src/components/blocks/learn/QuizCard/index.tsx",
+              2
+            ],
+            [
+              "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+              1
+            ],
+            [
+              "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/blocks/stats",
+          "total": 3,
+          "byClass": {
+            "real-seam-no-owner": 1,
+            "padding-plus-gap": 2
+          },
+          "topFiles": [
+            [
+              "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+              3
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/composites/form",
+          "total": 3,
+          "byClass": {
+            "raw-vendor-foreign": 3
+          },
+          "topFiles": [
+            [
+              "src/components/composites/form/Dropzone/index.tsx",
+              2
+            ],
+            [
+              "src/components/composites/form/InputTags/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/blocks/profile",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 1,
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/blocks/rendering",
+          "total": 2,
+          "byClass": {
+            "real-seam-no-owner": 2
+          },
+          "topFiles": [
+            [
+              "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+              2
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/composites/buttons",
+          "total": 1,
+          "byClass": {
+            "raw-vendor-foreign": 1
+          },
+          "topFiles": [
+            [
+              "src/components/composites/buttons/InputButtonLike/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/layouts/HeadhuntingCompaniesLayout",
+          "total": 1,
+          "byClass": {
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              "src/components/layouts/HeadhuntingCompaniesLayout/component.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/layouts/Navbar",
+          "total": 1,
+          "byClass": {
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": "src/components/layouts/SettingsLayout",
+          "total": 1,
+          "byClass": {
+            "real-seam-no-owner": 1
+          },
+          "topFiles": [
+            [
+              "src/components/layouts/SettingsLayout/component.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sb-starci-other",
+      "dirs": [],
+      "description": "starci + remaining storybook",
+      "holes": 5,
+      "byClass": {
+        "raw-vendor-foreign": 4,
+        "padding-plus-gap": 1
+      },
+      "directories": [
+        {
+          "dir": ".storybook/components/composites/form",
+          "total": 3,
+          "byClass": {
+            "raw-vendor-foreign": 3
+          },
+          "topFiles": [
+            [
+              ".storybook/components/composites/form/Dropzone/Dropzone.tsx",
+              2
+            ],
+            [
+              ".storybook/components/composites/form/InputTags/InputTags.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/composites/buttons",
+          "total": 1,
+          "byClass": {
+            "raw-vendor-foreign": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx",
+              1
+            ]
+          ]
+        },
+        {
+          "dir": ".storybook/components/composites/viewers",
+          "total": 1,
+          "byClass": {
+            "padding-plus-gap": 1
+          },
+          "topFiles": [
+            [
+              ".storybook/components/composites/viewers/FlowDiagram/FlowDiagram.tsx",
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

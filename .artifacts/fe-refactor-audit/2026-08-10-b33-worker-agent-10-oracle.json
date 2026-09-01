@@ -1,0 +1,158 @@
+{
+  "batch": "B33",
+  "agent": "agent-10-oracle",
+  "role": "coordinator-prep / product-edit-light",
+  "checkpoint": "139391b6",
+  "status": "awaiting-peers",
+  "manifest": {
+    "key": "agent-10-oracle",
+    "focus": "plugins tests + aggregation only",
+    "clusterIds": [],
+    "files": [],
+    "fileCount": 0
+  },
+  "overlapProof": {
+    "source": ".artifacts/fe-refactor-audit/2026-08-10-b33-manifests.json",
+    "declaredOverlapPass": true,
+    "recheckedAt": "2026-08-08T12:50:00.000Z",
+    "recheckResult": "PASS",
+    "uniqueFiles": 395,
+    "totalAssignments": 395,
+    "duplicateCount": 0,
+    "duplicates": [],
+    "fileCountsMatchDeclared": true,
+    "perAgent": [
+      { "agent": "agent-1-button", "fileCount": 45, "actual": 45 },
+      { "agent": "agent-2-chip-avatar", "fileCount": 40, "actual": 40 },
+      { "agent": "agent-3-typography", "fileCount": 40, "actual": 40 },
+      { "agent": "agent-4-stack-flex-cluster", "fileCount": 45, "actual": 45 },
+      { "agent": "agent-5-container-grid", "fileCount": 40, "actual": 40 },
+      { "agent": "agent-6-composites", "fileCount": 40, "actual": 40 },
+      { "agent": "agent-7-identity", "fileCount": 50, "actual": 50 },
+      { "agent": "agent-8-page-folder", "fileCount": 40, "actual": 40 },
+      { "agent": "agent-9-sentence-heroui", "fileCount": 55, "actual": 55 },
+      { "agent": "agent-10-oracle", "fileCount": 0, "actual": 0 }
+    ],
+    "forbiddenProductPathsInManifests": 0,
+    "note": "Every assigned path appears under exactly one agent; agent-10 product file list remains empty."
+  },
+  "forbiddenPathWatchlist": {
+    "doNotEdit": [
+      ".storybook/components/nivo/**",
+      ".storybook/components/nivoexpert/**",
+      ".storybook/components/mia-mia/**",
+      ".storybook/stories/nivo/**",
+      ".storybook/stories/nivoexpert/**",
+      ".storybook/stories/mia-mia/**",
+      "src/components/nivo/**",
+      "src/components/nivoexpert/**",
+      "src/resources/**",
+      "src/modules/api/**"
+    ],
+    "lockedProductShapes": [
+      "BlockAnatomy",
+      "MockInterviewSession",
+      "QuizSession",
+      "LearnLoopScroll",
+      "ContentAiChat",
+      "ArchitectureScene"
+    ],
+    "governanceReadOnly": [
+      "CLAUDE.md",
+      ".claude/fe/decision-ledger.json"
+    ],
+    "eslintGuardrails": [
+      "Do not weaken ESLint rules, severity, or allowlists",
+      "No eslint-disable for architectural burn findings"
+    ],
+    "manifestScan": {
+      "nivoOrMiaMiaHits": 0,
+      "status": "clean"
+    }
+  },
+  "plannedGates": [
+    {
+      "id": "tsc",
+      "command": "npx tsc --noEmit",
+      "when": "after-peers",
+      "scope": "repo"
+    },
+    {
+      "id": "eslint-plugin-tests",
+      "command": "node --test plugins/eslint/*.test.mjs",
+      "when": "after-peers",
+      "scope": "plugins/eslint"
+    },
+    {
+      "id": "eslint-touched-chunks",
+      "command": "npx eslint --max-warnings=0 <peer-changed-files>",
+      "when": "after-peers",
+      "scope": "union of peer worker changed files"
+    },
+    {
+      "id": "audit-fe",
+      "command": "npm run audit:fe",
+      "when": "after-peers",
+      "scope": "aggregate FE gate"
+    },
+    {
+      "id": "diff-check",
+      "command": "git diff --check",
+      "when": "after-peers",
+      "scope": "working tree"
+    }
+  ],
+  "pluginTests": {
+    "edited": false,
+    "reason": "No new B33 identity/CSS-door consumer pattern has landed yet; existing coverage in architectural-oracle.test.mjs (require-identity-root) and css-door-laundering.test.mjs (no-css-door-type-laundering) is sufficient. Prefer zero plugin edits until peer diffs show a clear regression gap.",
+    "existingCoverageRelevantToB33": [
+      "plugins/eslint/architectural-oracle.test.mjs#require-identity-root",
+      "plugins/eslint/architectural-oracle.test.mjs#require-frame-self-declare",
+      "plugins/eslint/css-door-laundering.test.mjs#no-css-door-type-laundering",
+      "plugins/eslint/public-contracts.test.mjs#no-public-classname-prop",
+      "plugins/eslint/sentence-hosts.test.mjs#no-host-element-at-sentence-tier",
+      "plugins/eslint/sentence-tier.test.mjs#no-raw-shape-at-sentence-tier"
+    ]
+  },
+  "aggregation": {
+    "mode": "scaffold-only",
+    "note": "Full aggregation runs after peer workers (agents 1–9) finish. This file is the coordinator prep oracle scaffold: overlap re-verified PASS, product manifest empty, no mass product refactors, no plugin edits.",
+    "pendingInputs": [
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-1-button.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-2-chip-avatar.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-3-typography.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-4-stack-flex-cluster.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-5-container-grid.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-6-composites.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-7-identity.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-8-page-folder.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-worker-agent-9-sentence-heroui.json"
+    ],
+    "plannedOutputsAfterPeers": [
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-status.json",
+      ".artifacts/fe-refactor-audit/2026-08-10-b33-status.md"
+    ]
+  },
+  "clusterIds": [],
+  "consumersScanned": [],
+  "consumersMigrated": [],
+  "sharedApiRemovedOrRetained": [],
+  "beforeAfterMessages": {},
+  "closedClusters": [],
+  "partialClusters": [],
+  "holds": [],
+  "forbiddenConsumers": [],
+  "parity": {
+    "touched": false,
+    "note": "Oracle has empty product manifest; no twin pairs edited."
+  },
+  "tests": {
+    "run": false,
+    "note": "Deferred until after peer workers finish; plugin suite planned in plannedGates."
+  },
+  "regressions": [],
+  "productEdits": {
+    "performed": false,
+    "note": "Product-edit-light: empty manifest; no mass product refactors."
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "rewritten": [
+    {
+      "file": ".storybook/components/atoms/forms/InputCurrency/InputCurrency.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputDate/InputDate.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputNumber/InputNumber.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputPassword/InputPassword.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputSearch/InputSearch.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputText/InputText.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputTextarea/InputTextarea.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/InputTime/InputTime.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@sb-components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/SelectCombobox/SelectCombobox.tsx",
+      "name": "TriggerSkeleton",
+      "from": "../_select/TriggerSkeleton",
+      "to": "@sb-components/atoms/forms/_select/TriggerSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/SelectMulti/SelectMulti.tsx",
+      "name": "TriggerSkeleton",
+      "from": "../_select/TriggerSkeleton",
+      "to": "@sb-components/atoms/forms/_select/TriggerSkeleton"
+    },
+    {
+      "file": ".storybook/components/atoms/forms/SelectSingle/SelectSingle.tsx",
+      "name": "TriggerSkeleton",
+      "from": "../_select/TriggerSkeleton",
+      "to": "@sb-components/atoms/forms/_select/TriggerSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputCurrency/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputDate/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputNumber/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputPassword/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputSearch/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputText/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputTextarea/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/InputTime/index.tsx",
+      "name": "FieldSkeleton",
+      "from": "../_input/FieldSkeleton",
+      "to": "@/components/atoms/forms/_input/FieldSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/SelectCombobox/index.tsx",
+      "name": "TriggerSkeleton",
+      "from": "../_select/TriggerSkeleton",
+      "to": "@/components/atoms/forms/_select/TriggerSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/SelectMulti/index.tsx",
+      "name": "TriggerSkeleton",
+      "from": "../_select/TriggerSkeleton",
+      "to": "@/components/atoms/forms/_select/TriggerSkeleton"
+    },
+    {
+      "file": "src/components/atoms/forms/SelectSingle/index.tsx",
+      "name": "TriggerSkeleton",
+      "from": "../_select/TriggerSkeleton",
+      "to": "@/components/atoms/forms/_select/TriggerSkeleton"
+    }
+  ],
+  "skipped": [],
+  "hard": [
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "line": 13,
+      "name": "ScoreRowSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+      "line": 18,
+      "name": "CommandSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+      "line": 19,
+      "name": "OsTabsSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "line": 13,
+      "name": "ScoreRowSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "line": 18,
+      "name": "CommandSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "line": 19,
+      "name": "OsTabsSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "line": 8,
+      "name": "ChallengeCardSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+      "line": 4,
+      "name": "CodeBodySkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+      "line": 4,
+      "name": "CodeBodySkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "line": 11,
+      "name": "ContentBodySkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/index.tsx",
+      "line": 5,
+      "name": "LessonCardSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/SandboxBody/index.tsx",
+      "line": 6,
+      "name": "CodeBodySkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "line": 15,
+      "name": "PersonalProjectDashboardSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      "line": 8,
+      "name": "TaskResultsSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/index.tsx",
+      "line": 8,
+      "name": "TaskSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/index.tsx",
+      "line": 24,
+      "name": "AdminAiBalancerSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/CommunityChatPage/index.tsx",
+      "line": 10,
+      "name": "ChatPaneSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 11,
+      "name": "FlashcardReviewerSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 13,
+      "name": "QuizSessionSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 15,
+      "name": "FlashcardQuizResultSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 24,
+      "name": "FlashcardSessionStatsSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/index.tsx",
+      "line": 11,
+      "name": "MockInterviewSetupSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/index.tsx",
+      "line": 12,
+      "name": "MockInterviewSessionSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/index.tsx",
+      "line": 34,
+      "name": "PracticeProblemSkeleton",
+      "reason": "not-abs-candidate"
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/index.tsx",
+      "line": 15,
+      "name": "SystemStatusSkeleton",
+      "reason": "not-abs-candidate"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "partition": "atoms-display-forms",
+  "generatedAt": "2026-08-06T21:49:03.282Z",
+  "checkpoint": "27127bb5",
+  "fileCount": 3,
+  "totalPartitionFiles": 3,
+  "totalPartitionMessages": 5,
+  "capped": false,
+  "allowedClassifications": [
+    "safe-mechanical",
+    "safe-structural"
+  ],
+  "holdClassifications": [
+    "semantic-hold",
+    "vendor-hold",
+    "teacher-hold",
+    "locked-path",
+    "ambiguous"
+  ],
+  "files": [
+    {
+      "path": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/chips/Chip/ChipBase.tsx",
+      "twin": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "twinExists": true,
+      "candidateCount": 2,
+      "messageCount": 2,
+      "byClass": {
+        "safe-structural": 2
+      },
+      "candidateRules": [
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 75,
+          "column": 49,
+          "message": "`dotClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe-structural"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 89,
+          "column": 11,
+          "message": "`dotClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe-structural"
+        }
+      ]
+    },
+    {
+      "path": "src/components/atoms/display/Logo/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/display/Logo/index.tsx",
+      "twin": ".storybook/components/atoms/display/Logo/index.tsx",
+      "twinExists": false,
+      "candidateCount": 0,
+      "messageCount": 1,
+      "byClass": {
+        "semantic-hold": 1
+      },
+      "candidateRules": [],
+      "holdRules": [
+        "starci-fe/no-hardcoded-user-text-in-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-hardcoded-user-text-in-vocabulary",
+          "line": 68,
+          "column": 13,
+          "message": "`aria-label=\"StarCi Academy\"` hardcodes copy in an atom — i18n belongs to the connected file; take a resolved string prop instead.",
+          "severity": 1,
+          "classification": "semantic-hold"
+        }
+      ]
+    },
+    {
+      "path": "src/components/atoms/navigation/Pagination/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/atoms/navigation/Pagination/index.tsx",
+      "twin": ".storybook/components/atoms/navigation/Pagination/index.tsx",
+      "twinExists": false,
+      "candidateCount": 0,
+      "messageCount": 2,
+      "byClass": {
+        "semantic-hold": 2
+      },
+      "candidateRules": [],
+      "holdRules": [
+        "starci-fe/no-hardcoded-user-text-in-vocabulary"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-hardcoded-user-text-in-vocabulary",
+          "line": 113,
+          "column": 29,
+          "message": "`aria-label=\"Previous page\"` hardcodes copy in an atom — i18n belongs to the connected file; take a resolved string prop instead.",
+          "severity": 1,
+          "classification": "semantic-hold"
+        },
+        {
+          "rule": "starci-fe/no-hardcoded-user-text-in-vocabulary",
+          "line": 137,
+          "column": 29,
+          "message": "`aria-label=\"Trang sau\"` hardcodes copy in an atom — i18n belongs to the connected file; take a resolved string prop instead.",
+          "severity": 1,
+          "classification": "semantic-hold"
+        }
+      ]
+    }
+  ]
+}

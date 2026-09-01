@@ -1,0 +1,144 @@
+{
+  "batch": "31f",
+  "date": "2026-08-09",
+  "worker": "sb-blocks-learn-b",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "contract": ".claude/fe/contracts/frame-items.md",
+  "fixedCount": 19,
+  "heldCount": 0,
+  "heldSiblingCount": 0,
+  "fragFindingsClosed": 30,
+  "classification": {
+    "peer-items": 19,
+    "nested-relationship": 0,
+    "conditional-peers": 0,
+    "single-rendered-child": 0,
+    "hold": 0
+  },
+  "fixed": [
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "frag": 4,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      "frag": 3,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionButton.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass"
+    }
+  ],
+  "held": [],
+  "heldSiblings": [],
+  "verification": {
+    "eslintMaxWarnings0": {
+      "exitOk": true,
+      "filesChecked": 19,
+      "failed": []
+    }
+  },
+  "note": "All attempt-list files fixed via peer item factories and conditional spreads. Existing nested frames with principles preserved; no new principles introduced."
+}

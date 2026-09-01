@@ -1,0 +1,203 @@
+{
+  "partition": "blocks-profile-stats-marketing",
+  "manifest": [
+    ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+    "src/components/blocks/dashboard/ChangelogList/index.tsx",
+    "src/components/blocks/dashboard/DailyQuest/index.tsx",
+    "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/dashboard/Podium/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+    "src/components/blocks/marketing/HeroBanner/index.tsx",
+    "src/components/blocks/marketing/PitchCard/index.tsx",
+    "src/components/blocks/marketing/TrackCard/index.tsx",
+    "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+    "src/components/blocks/profile/MascotBadge/index.tsx",
+    "src/components/blocks/profile/ProfileHero/index.tsx",
+    "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+    "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+    "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+    "src/components/blocks/stats/Score/component.tsx",
+    "src/components/blocks/stats/Score/index.tsx",
+    "src/components/blocks/stats/VerdictHeroCard/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+    "src/components/blocks/marketing/HeroBanner/index.tsx",
+    "src/components/blocks/marketing/PitchCard/index.tsx",
+    "src/components/blocks/marketing/TrackCard/index.tsx",
+    "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+    "src/components/blocks/stats/Score/component.tsx",
+    "src/components/blocks/stats/Score/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "kind": "safe-noop",
+      "change": "Dropped duplicate SectionCard classNames=[h-full]; fillHeight already owns height",
+      "consumers": "internal mount only; public PitchCard classNames consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door; kept intrinsic Card h-full",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/stats/Score/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/stats/Score/index.tsx",
+      "kind": "dead-safe",
+      "change": "Dropped WithClassNames from connected props type",
+      "consumers": "open-tag className consumers = 0"
+    }
+  ],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 6,
+    "parentPlacementApplied": 0,
+    "proposals": 3
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [
+    {
+      "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "evidence": "internal mount only; public PitchCard classNames consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/stats/Score/component.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/stats/Score/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    }
+  ],
+  "proposals": [
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "component": "LeaderboardListCard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+            "prop": "className",
+            "line": 132,
+            "snippet": "<LeaderboardListCard className={className} title={labels.title} onSeeMore={onSeeMore} seeMoreLabel={labels.seeMoreLabel}"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-profile-stats-marketing",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "component": "RankDeltaCaret",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+            "prop": "className",
+            "line": 96,
+            "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" /"
+          },
+          {
+            "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+            "prop": "className",
+            "line": 105,
+            "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" /"
+          },
+          {
+            "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+            "prop": "className",
+            "line": 189,
+            "snippet": "<RankDeltaCaret delta={row.rankDelta} className=\"w-8 shrink-0 justify-end\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-profile-stats-marketing",
+      "twin": null
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "component": "ProfileLoadingState",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": false,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-profile-stats-marketing"
+    }
+  ],
+  "parity": {
+    "storybookSrc": "src-only burns this wave (no SB twins for applied files)"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

@@ -1,0 +1,400 @@
+{
+  "batch": "B33c",
+  "checkpoint": "139391b6",
+  "source": "2026-08-10-b32c-clusters.json partialSample (18)",
+  "generatedAt": "2026-08-08T13:27:28.007Z",
+  "counts": {
+    "closed": 12,
+    "still-partial": 4,
+    "unchanged-hold": 2
+  },
+  "closed": 12,
+  "stillPartial": 4,
+  "unchangedHold": 2,
+  "forbiddenConsumerHold": 0,
+  "falsePrior": 0,
+  "expectedUnresolvedFamilies": [
+    {
+      "family": "QaConversationHeader API drift",
+      "status": "unchanged-hold",
+      "proof": {
+        "id": "src-or-sb:blocks/learn/QaConversationHeader::QaConversationHeader::sentence-root::band5",
+        "files": [
+          ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+          "src/components/blocks/learn/QaConversationHeader/index.tsx"
+        ],
+        "beforeFocusRaw": 8,
+        "afterFocusRaw": 8,
+        "beforeFocusRules": [
+          "starci-fe/no-host-element-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ],
+        "afterFocusRules": [
+          "starci-fe/no-host-element-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ],
+        "status": "unchanged-hold",
+        "reason": "src FollowButton/i18n API ≠ SB twin; agent-9 held"
+      }
+    },
+    {
+      "family": "KeepGoingPath / ModuleLessonList skeleton shimmer",
+      "status": "still-partial",
+      "proof": [
+        {
+          "id": "src-or-sb:blocks/learn/KeepGoingPath::KeepGoingPath::css-contract::band2",
+          "files": [
+            ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+            "src/components/blocks/learn/KeepGoingPath/index.tsx"
+          ],
+          "beforeFocusRaw": 3,
+          "afterFocusRaw": 1,
+          "beforeFocusRules": [
+            "starci-fe/no-classname-at-sentence-tier",
+            "starci-fe/no-public-classname-prop"
+          ],
+          "afterFocusRules": [
+            "starci-fe/no-public-classname-prop"
+          ],
+          "status": "still-partial",
+          "reason": "glyphClass renamed; Skeleton className shimmer remains (no size-5 house shimmer)"
+        },
+        {
+          "id": "src-or-sb:blocks/learn/ModuleLessonList::ModuleLessonList::css-contract::band3",
+          "files": [
+            ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+            "src/components/blocks/learn/ModuleLessonList/index.tsx"
+          ],
+          "beforeFocusRaw": 3,
+          "afterFocusRaw": 1,
+          "beforeFocusRules": [
+            "starci-fe/no-classname-at-sentence-tier",
+            "starci-fe/no-public-classname-prop"
+          ],
+          "afterFocusRules": [
+            "starci-fe/no-public-classname-prop"
+          ],
+          "status": "still-partial",
+          "reason": "glyphClass renamed; Skeleton className shimmer remains (no size-5 house shimmer)"
+        }
+      ]
+    },
+    {
+      "family": "CollapsibleSidebar nav landmark",
+      "status": "unchanged-hold",
+      "proof": {
+        "id": "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8",
+        "files": [
+          ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+          "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+        ],
+        "beforeFocusRaw": 6,
+        "afterFocusRaw": 3,
+        "beforeFocusRules": [
+          "starci-fe/no-host-element-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier",
+          "starci-fe/require-frame-self-declare"
+        ],
+        "afterFocusRules": [
+          "starci-fe/no-host-element-at-sentence-tier",
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ],
+        "status": "unchanged-hold",
+        "reason": "identity/frame-self-declare improved; <nav> host/raw-shape held pending NavLandmark"
+      }
+    }
+  ],
+  "clusters": [
+    {
+      "id": "src-or-sb:blocks/ai/AiQuotaLane::AiQuotaLane::sentence-root::band2",
+      "files": [
+        ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+        "src/components/blocks/ai/AiQuotaLane/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band2",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ],
+      "beforeFocusRaw": 3,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::css-contract::band5",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ],
+      "beforeFocusRaw": 2,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/ChangelogList::ChangelogList::sentence-root::band5",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+        "src/components/blocks/dashboard/ChangelogList/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/dashboard/WeeklyGoals::WeeklyGoals::sentence-root::band10",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+        "src/components/blocks/dashboard/WeeklyGoals/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/CourseQaQuestionList/SkeletonQuestionRow::SkeletonQuestionRow::sentence-root::band1",
+      "files": [
+        ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+        "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx"
+      ],
+      "beforeFocusRaw": 3,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/FoundationSearchBar::FoundationSearchBar::sentence-root::band4",
+      "files": [
+        ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+        "src/components/blocks/learn/FoundationSearchBar/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/InterviewerPresence::InterviewerPresence::sentence-root::band12",
+      "files": [
+        ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+        "src/components/blocks/learn/InterviewerPresence/index.tsx"
+      ],
+      "beforeFocusRaw": 3,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/KeepGoingPath::KeepGoingPath::css-contract::band2",
+      "files": [
+        ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+        "src/components/blocks/learn/KeepGoingPath/index.tsx"
+      ],
+      "beforeFocusRaw": 3,
+      "afterFocusRaw": 1,
+      "beforeFocusRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterFocusRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "still-partial",
+      "reason": "glyphClass renamed; Skeleton className shimmer remains (no size-5 house shimmer)"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/LeaderboardBoard/Board::Board::sentence-root::band1",
+      "files": [
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/LeaderboardBoard::LeaderboardBoard::sentence-root::band3",
+      "files": [
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/ModuleLessonList::ModuleLessonList::css-contract::band3",
+      "files": [
+        ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+        "src/components/blocks/learn/ModuleLessonList/index.tsx"
+      ],
+      "beforeFocusRaw": 3,
+      "afterFocusRaw": 1,
+      "beforeFocusRules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterFocusRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "still-partial",
+      "reason": "glyphClass renamed; Skeleton className shimmer remains (no size-5 house shimmer)"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/QaConversationHeader::QaConversationHeader::sentence-root::band5",
+      "files": [
+        ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+        "src/components/blocks/learn/QaConversationHeader/index.tsx"
+      ],
+      "beforeFocusRaw": 8,
+      "afterFocusRaw": 8,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "afterFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "status": "unchanged-hold",
+      "reason": "src FollowButton/i18n API ≠ SB twin; agent-9 held"
+    },
+    {
+      "id": "src-or-sb:blocks/learn/SubmissionAttemptSelector::SubmissionAttemptSelector::sentence-root::band7",
+      "files": [
+        ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+        "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:blocks/navigation/CollapsibleSidebar::CollapsibleSidebar::sentence-root::band8",
+      "files": [
+        ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+        "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+      ],
+      "beforeFocusRaw": 6,
+      "afterFocusRaw": 3,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "afterFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "status": "unchanged-hold",
+      "reason": "identity/frame-self-declare improved; <nav> host/raw-shape held pending NavLandmark"
+    },
+    {
+      "id": "src-or-sb:blocks/navigation/ProfileTabsBar::ProfileTabsBar::sentence-root::band4",
+      "files": [
+        ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+        "src/components/blocks/navigation/ProfileTabsBar/index.tsx"
+      ],
+      "beforeFocusRaw": 1,
+      "afterFocusRaw": 0,
+      "beforeFocusRules": [
+        "starci-fe/no-host-element-at-sentence-tier"
+      ],
+      "afterFocusRules": [],
+      "status": "closed",
+      "reason": "focus rules present before, absent after on twin files"
+    },
+    {
+      "id": "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band58",
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx"
+      ],
+      "beforeFocusRaw": 49,
+      "afterFocusRaw": 42,
+      "beforeFocusRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterFocusRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "still-partial",
+      "reason": "residual SurfaceCard door rules remain"
+    },
+    {
+      "id": "src-or-sb:composites/cards/SurfaceCard::SurfaceCard::css-contract::band88",
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx"
+      ],
+      "beforeFocusRaw": 49,
+      "afterFocusRaw": 42,
+      "beforeFocusRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "afterFocusRules": [
+        "starci-fe/no-public-classname-prop"
+      ],
+      "status": "still-partial",
+      "reason": "residual SurfaceCard door rules remain"
+    }
+  ]
+}

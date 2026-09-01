@@ -38,6 +38,14 @@ exception.
 
 - `component.test.tsx` renders `_X` without request, locale or store providers.
 - `index.test.tsx` tests world wiring with the real catalogue and boundary mocks.
+- An unresolved request is `data === undefined` without a terminal error, including the interval
+  where an SWR key is disabled while viewer/session prerequisites settle. `isLoading === true` is
+  never the sole pending test.
+- Every connected block test covers `{ data: undefined, error: undefined, isLoading: false }` and
+  proves the presentational twin remains pending rather than exposing settled zero, empty or ready
+  content.
+- A page whose blocks settle independently keeps every block mounted in its loading shape; a fast
+  request may not erase or stand in for a slower sibling.
 - If `_X` needs a world provider, the split has failed.
 - If connected `index.tsx` contains a JSX element other than `_X`, it owns presentation and
   violates the law.

@@ -1,0 +1,43 @@
+﻿.storybook/components/composites/buttons/InputButtonLike/InputButtonLike.tsx(100,26): error TS2322: Type '"truncate"' is not assignable to type 'AllowedClassName'.
+.storybook/components/composites/feedback/ConfirmDialog/ConfirmDialog.tsx(126,33): error TS2322: Type '{ principle: "flex-action-end"; explain: string; items: ({ key: string; label: string; variant: "secondary"; isDisabled: boolean; onPress: () => void; } | { key: string; label: string; variant: "danger" | "primary"; isPending: boolean; onPress: () => void; })[]; }' is not assignable to type 'IntrinsicAttributes & ButtonGroupProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & ButtonGroupProps'.
+.storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx(106,25): error TS2322: Type '{ columns: { base: 1; sm: 2; lg: 3; }; principle: "content-row"; explain: string; items: GridItem[]; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & GridBaseProps'.
+.storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx(123,33): error TS2322: Type '{ columns: { base: 1; sm: 2; lg: 3; }; principle: "content-row"; explain: string; items: GridItem[]; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & GridBaseProps'.
+.storybook/components/starci/blocks/dashboard/ContinueLearning/ContinueLearning.tsx(88,17): error TS2322: Type '{ items: GridItem[]; columns: { base: 1; sm: 2; lg: 3; }; principle: "content-row"; explain: string; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & GridBaseProps'.
+.storybook/components/starci/blocks/dashboard/ContinueLearning/ContinueLearning.tsx(110,17): error TS2322: Type '{ items: GridItem[]; columns: { base: 1; sm: 2; lg: 3; }; principle: "content-row"; explain: string; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & GridBaseProps'.
+.storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx(137,17): error TS2322: Type '{ ariaLabel: string; columns: { base: 1; sm: 2; }; items: SurfaceCardPressableGroupItem[]; isSkeleton: boolean; principle: "content-row"; explain: string; }' is not assignable to type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+.storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx(256,13): error TS2322: Type '{ columns: { base: 1; sm: 2; md: 3; }; principle: "content-row"; explain: string; items: GridItem[]; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & GridBaseProps'.
+.storybook/components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard.tsx(261,33): error TS2322: Type '{ columns: { base: 1; sm: 2; }; principle: "content-row"; explain: string; items: { key: string; content: () => Element; }[]; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & GridBaseProps'.
+.storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx(164,17): error TS2322: Type '{ items: SurfaceCardPressableGroupItem[]; ariaLabel: string; columns: { base: 1; sm: 2; }; isSkeleton: boolean; principle: "content-row"; explain: string; }' is not assignable to type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+.storybook/components/starci/blocks/learn/RatingBar/RatingBar.tsx(115,17): error TS2322: Type '{ ariaLabel: string; columns: { base: 2; md: 4; }; keyboardShortcut: true; items: SurfaceCardPressableGroupItem[]; isSkeleton: boolean; principle: "content-row"; explain: string; }' is not assignable to type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+.storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx(196,25): error TS2322: Type '{ ariaLabel: string; columns: { base: 1; sm: 2; }; principle: "sibling-stack"; explain: string; items: SurfaceCardPressableGroupItem[]; }' is not assignable to type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+.storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx(204,25): error TS2322: Type '{ ariaLabel: string; columns: { base: 1; sm: 2; }; principle: "content-row"; explain: string; items: SurfaceCardPressableGroupItem[]; }' is not assignable to type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & SurfaceCardPressableGroupProps'.
+.storybook/stories/composites/form/Form/FormActions.stories.tsx(78,25): error TS2322: Type '{ principle: "flex-action-end"; explain: string; items: ({ key: string; label: string; variant: "secondary"; icon: Icon; } | { key: string; label: string; icon: Icon; variant?: undefined; })[]; }' is not assignable to type 'IntrinsicAttributes & FormActionsProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & FormActionsProps'.
+.storybook/stories/composites/form/Form/FormActions.stories.tsx(93,25): error TS2322: Type '{ principle: "flex-action-start"; explain: string; items: ({ key: string; label: string; variant: "secondary"; icon: Icon; } | { key: string; label: string; icon: Icon; variant?: undefined; })[]; }' is not assignable to type 'IntrinsicAttributes & FormActionsProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & FormActionsProps'.
+.storybook/stories/composites/form/Form/FormActions.stories.tsx(108,25): error TS2322: Type '{ principle: "flex-action-between"; explain: string; items: ({ key: string; label: string; variant: "secondary"; icon: Icon; } | { key: string; label: string; icon: Icon; variant?: undefined; })[]; }' is not assignable to type 'IntrinsicAttributes & FormActionsProps'.
+  Property 'explain' does not exist on type 'IntrinsicAttributes & FormActionsProps'.
+src/components/composites/buttons/InputButtonLike/index.tsx(100,26): error TS2322: Type '"truncate"' is not assignable to type 'AllowedClassName'.
+src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx(81,64): error TS1009: Trailing comma not allowed.
+src/components/pages/AiUsagePage/AiUsageHistory/index.tsx(96,36): error TS2635: Type 'number' has no signatures for which the type argument list is applicable.
+src/components/pages/AiUsagePage/AiUsageHistory/index.tsx(96,36): error TS2749: 'total' refers to a value, but is being used as a type here. Did you mean 'typeof total'?
+src/components/pages/MyFeedbackPage/index.tsx(66,36): error TS2635: Type 'number' has no signatures for which the type argument list is applicable.
+src/components/pages/MyFeedbackPage/index.tsx(66,36): error TS2749: 'total' refers to a value, but is being used as a type here. Did you mean 'typeof total'?
+src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx(79,42): error TS2693: 'Record' only refers to a type, but is being used as a value here.
+src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx(79,66): error TS7006: Parameter 'acc' implicitly has an 'any' type.
+src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx(79,71): error TS7006: Parameter 'challenge' implicitly has an 'any' type.
+src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx(56,42): error TS2693: 'Record' only refers to a type, but is being used as a value here.
+src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx(56,66): error TS7006: Parameter 'acc' implicitly has an 'any' type.
+src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx(56,71): error TS7006: Parameter 'challenge' implicitly has an 'any' type.

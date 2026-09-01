@@ -1,0 +1,342 @@
+{
+  "partition": "blocks-learn-practice",
+  "manifest": [
+    "src/components/blocks/code/IOExampleCard/index.tsx",
+    "src/components/blocks/code/SandpackPanel/index.tsx",
+    "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+    "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+    "src/components/blocks/learn/ConceptMap/index.tsx",
+    "src/components/blocks/learn/LearnMobileBar/index.tsx",
+    "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+    "src/components/blocks/learn/LearnSidebar/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+    "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+    "src/components/blocks/learn/OnThisPage/index.tsx",
+    "src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "src/components/blocks/learn/QaMessageBubble/index.tsx",
+    "src/components/blocks/learn/QaQuestionThread/index.tsx",
+    "src/components/blocks/learn/ReferenceLinks/index.tsx",
+    "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+    "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+    "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+    "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+    "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+    "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+    "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+    "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/code/IOExampleCard/index.tsx",
+    "src/components/blocks/code/SandpackPanel/index.tsx",
+    "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+    "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+    "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+    "src/components/blocks/learn/ConceptMap/index.tsx",
+    "src/components/blocks/learn/LearnMobileBar/index.tsx",
+    "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+    "src/components/blocks/learn/LearnSidebar/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+    "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+    "src/components/blocks/learn/OnThisPage/index.tsx",
+    "src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "src/components/blocks/learn/QaMessageBubble/index.tsx",
+    "src/components/blocks/learn/QaQuestionThread/index.tsx",
+    "src/components/blocks/learn/ReferenceLinks/index.tsx",
+    "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+    "src/components/blocks/learn/lesson/AiLab/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+    "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+    "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+    "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+    "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+    "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+    "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+    "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "live-api Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton",
+    "vendor / locked / Nivo / B19–B25 / teacher holds / skeleton slots",
+    "doors with JSX consumers (EntityLink restored)",
+    "rest-spread forwarding (...props)",
+    "src/components/blocks/feed/EntityLink/index.tsx — restored (live className consumer in CommentItem)",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx — restored (void className side-effect API)"
+  ],
+  "evidence": {
+    "proof": "brace-aware destructure + open-tag consumer index (locked paths counted as consumers)",
+    "inventoryBefore": {
+      "hits": 2194,
+      "files": 816
+    }
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "src-first where no SB twin; SB starci twins when present"
+  },
+  "verification": {
+    "local": "tsc pass after partition"
+  },
+  "regressions": [],
+  "overlapCheck": "partitionOf(file) — each changed file in exactly one worker"
+}

@@ -1,0 +1,207 @@
+{
+  "partition": "blocks-community-feed",
+  "manifest": [
+    "src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "src/components/blocks/community/Discussion/CommentItem.tsx",
+    "src/components/blocks/community/Discussion/InteractionBar.tsx",
+    "src/components/blocks/community/Discussion/index.tsx",
+    "src/components/blocks/community/FollowButton/index.tsx",
+    "src/components/blocks/feed/ActivityAvatar/index.tsx",
+    "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "src/components/blocks/feed/ActivityFeed/index.tsx",
+    "src/components/blocks/feed/CommentThread/index.tsx",
+    "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+    "src/components/blocks/feed/CommunityPostCard/component.tsx",
+    "src/components/blocks/feed/Composer/index.tsx",
+    "src/components/blocks/feed/EntityLink/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/community/Discussion/InteractionBar.tsx",
+    "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "src/components/blocks/feed/ActivityFeed/index.tsx",
+    "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+    "src/components/blocks/feed/CommunityPostCard/component.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/index.tsx",
+      "kind": "dead-safe",
+      "change": "Stopped forwarding dead className to presentational half",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    }
+  ],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 5,
+    "parentPlacementApplied": 0,
+    "proposals": 4
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [
+    {
+      "file": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "evidence": "open-tag className consumers = 0"
+    }
+  ],
+  "proposals": [
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "component": "CommentComposer",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+            "prop": "className",
+            "line": 186,
+            "snippet": "<CommentComposer className=\"w-full\" placeholder={t(\"discussion.replyPlaceholder\")} submitLabel={t(\"discussion.reply\")} c"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "component": "Discussion",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+            "prop": "className",
+            "line": 293,
+            "snippet": "<Discussion className={className} // discussion data currentUserId={currentUserId} currentUser={currentUser ? { username"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "component": "FollowButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+            "prop": "className",
+            "line": 103,
+            "snippet": "<FollowButton quiet following={isFollowing} isPending={isFollowPending} onToggle={onToggleFollow} className=\"ml-1 shrink"
+          },
+          {
+            "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+            "prop": "className",
+            "line": 105,
+            "snippet": "<FollowButton className=\"shrink-0\" following={user.following} isPending={user.isPending} onToggle={() =>"
+          },
+          {
+            "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+            "prop": "className",
+            "line": 336,
+            "snippet": "<FollowButton className=\"shrink-0\" quiet following={row.following} isPending={row.isPending} onToggle={row.onToggleFollo"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "component": "Composer",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/feed/CommentThread/index.tsx",
+            "prop": "className",
+            "line": 117,
+            "snippet": "<Composer value={replyValue} onChange={setReplyValue} onSubmit={submitReply} avatarSrc={avatarSrc} placeholder=\"Write a "
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-community-feed",
+      "twin": null
+    }
+  ],
+  "parity": {
+    "storybookSrc": "src-only burns this wave (no SB twins for applied files)"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

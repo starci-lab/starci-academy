@@ -1,0 +1,124 @@
+import fs from "fs"
+
+function stripUseClient(src) {
+  return src.replace(/^["']use client["'];?\r?\n\r?\n?/, "")
+}
+
+function splitImportsAndBody(src) {
+  const lines = src.split(/\r?\n/)
+  const imports = []
+  let i = 0
+  while (i < lines.length) {
+    const line = lines[i]
+    const trimmed = line.trim()
+    if (
+      trimmed.startsWith("import ") ||
+      (imports.length &&
+        !imports[imports.length - 1].includes(" from ") &&
+        (trimmed.startsWith("{") ||
+          trimmed.startsWith("}") ||
+          trimmed.startsWith("type ") ||
+          trimmed.endsWith(",") ||
+          /^[A-Za-z0-9_,\s]+$/.test(trimmed)))
+    ) {
+      let block = line
+      while (
+        i + 1 < lines.length &&
+        (!/from\s+["']/.test(block) ||
+          (block.match(/{/g) || []).length > (block.match(/}/g) || []).length)
+      ) {
+        if (/^import\s+["']/.test(block.trim()) && block.includes(";")) break
+        if (
+          /from\s+["'][^"']+["']\s*;?\s*$/.test(block) &&
+          (block.match(/{/g) || []).length <= (block.match(/}/g) || []).length
+        )
+          break
+        i++
+        block += "\n" + lines[i]
+      }
+      imports.push(block)
+      i++
+      continue
+    }
+    if (trimmed === "" && imports.length) {
+      i++
+      continue
+    }
+    break
+  }
+  return { imports, body: lines.slice(i).join("\n").replace(/^\n+/, "") }
+}
+
+function mergeChildren(parentPath, children, removeImportRes) {
+  const parentRaw = fs.readFileSync(parentPath, "utf8")
+  const hasClient = /^["']use client["']/.test(parentRaw)
+  let parent = stripUseClient(parentRaw)
+  for (const re of removeImportRes) parent = parent.replace(re, "")
+  const parentParts = splitImportsAndBody(parent)
+
+  const importMap = new Map()
+  const add = (list) => {
+    for (const imp of list) {
+      const key = imp.replace(/\s+/g, " ").trim()
+      if (!importMap.has(key)) importMap.set(key, imp)
+    }
+  }
+  add(parentParts.imports)
+
+  const bodies = []
+  for (const childPath of children) {
+    const raw = stripUseClient(fs.readFileSync(childPath, "utf8"))
+    const parts = splitImportsAndBody(raw)
+    add(parts.imports)
+    bodies.push(parts.body.trimEnd())
+    fs.unlinkSync(childPath)
+    console.log("deleted", childPath)
+    const dir = childPath.replace(/\\/g, "/").replace(/\/[^/]+$/, "")
+    if (fs.existsSync(dir) && fs.readdirSync(dir).length === 0) {
+      fs.rmdirSync(dir)
+      console.log("rmdir", dir)
+    }
+  }
+
+  const out =
+    (hasClient ? '"use client"\n\n' : "") +
+    [...importMap.values()].join("\n") +
+    "\n\n" +
+    bodies.join("\n\n") +
+    "\n\n" +
+    parentParts.body.trimStart()
+  fs.writeFileSync(parentPath, out.replace(/\n{3,}/g, "\n\n"))
+  console.log("wrote", parentPath)
+}
+
+mergeChildren(
+  "src/components/pages/ContactPage/ContactChannels/index.tsx",
+  ["src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx"],
+  [/import\s*\{[\s\S]*?\}\s*from\s*["']\.\/FounderCard["'];?\r?\n/],
+)
+
+mergeChildren(
+  "src/components/pages/RewardsPage/index.tsx",
+  [
+    "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+    "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+  ],
+  [
+    /import\s*\{[\s\S]*?\}\s*from\s*["']\.\/MyVouchers["'];?\r?\n/,
+    /import\s*\{[\s\S]*?\}\s*from\s*["']\.\/RewardCatalog["'];?\r?\n/,
+  ],
+)
+
+mergeChildren(
+  "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+  ["src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx"],
+  [/import\s*\{[\s\S]*?\}\s*from\s*["']\.\/PinnedProjectCard["'];?\r?\n/],
+)
+
+mergeChildren(
+  "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+  ["src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx"],
+  [/import\s*\{[\s\S]*?\}\s*from\s*["']\.\/ProjectCard["'];?\r?\n/],
+)
+
+console.log("more collapses done")

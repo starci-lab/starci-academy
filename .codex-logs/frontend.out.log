@@ -1,0 +1,19 @@
+
+> starci-academy@0.1.0 dev
+> next dev --hostname 127.0.0.1
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+✓ Starting...
+✓ Ready in 9.7s
+○ Compiling /[locale] ...
+ GET /vi 200 in 16.8s (compile: 15.0s, proxy.ts: 7ms, render: 1831ms)
+ GET /manifest.webmanifest 200 in 386ms (compile: 359ms, render: 27ms)
+○ Compiling /[locale]/courses ...
+ GET /vi/courses 200 in 5.7s (compile: 5.7s, proxy.ts: 8ms, render: 31ms)
+ GET /manifest.webmanifest 200 in 16ms (compile: 5ms, render: 11ms)

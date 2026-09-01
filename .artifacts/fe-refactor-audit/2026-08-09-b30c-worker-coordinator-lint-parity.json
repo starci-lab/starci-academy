@@ -1,0 +1,54 @@
+{
+  "manifest": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b30c-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b30c-status.md",
+    ".artifacts/fe-refactor-audit/2026-08-09-b30-status.md",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "warningsBefore": {
+    "changedSet": 72
+  },
+  "warningsAfter": {
+    "changedSetProduct": 0
+  },
+  "introducedByB30": [],
+  "preExistingInTouchedFile": [],
+  "fixed": [
+    "LabeledList",
+    "ContentTabBar"
+  ],
+  "retractedB30Changes": [
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/lists/ListRow/README.md",
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx"
+  ],
+  "holds": [
+    "Most B30 door burns restored via checkpoint retract",
+    "TabsCard residual consumers restored on retracted pages; QuizSession unchanged",
+    "LeaderboardListCard B30b StackV repair retracted"
+  ],
+  "parity": {
+    "kept": "LabeledList + ContentTabBar src-only",
+    "ButtonGroupAtoms": "unchanged (FlexWrap retract restores HeroUI usage)"
+  },
+  "verification": {
+    "tsc": "pass",
+    "eslintChangedSet": "0 errors, 0 warnings (LabeledList, ContentTabBar, sentence-tier.test.mjs)",
+    "pluginTests": "pass including sentence-tier",
+    "storybookTests": "pass",
+    "auditFe": "pass; 29 teacher holds",
+    "gitDiffCheck": "pass"
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "overlaps": []
+}

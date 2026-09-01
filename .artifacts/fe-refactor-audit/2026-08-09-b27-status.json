@@ -1,0 +1,568 @@
+{
+  "batch": 27,
+  "title": "Live CSS-door contract triage",
+  "committed": false,
+  "checkpoint": "a7b574c2",
+  "generatedAt": "2026-08-07T15:13:13.057Z",
+  "workers": 10,
+  "overlapResult": "pass",
+  "inventory": {
+    "rule": "starci-fe/no-public-classname-prop",
+    "before": {
+      "hits": 1667,
+      "files": 609
+    },
+    "after": {
+      "hits": 1618,
+      "files": 593
+    },
+    "delta": {
+      "hits": -49,
+      "files": -16
+    }
+  },
+  "classificationSummary": {
+    "inventoryHitClasses": {
+      "live-api": 1542,
+      "locked": 76
+    },
+    "deadSafeCandidatesFound": 1,
+    "deadSafeApplied": 24,
+    "deadSafeHeld": [
+      "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx"
+    ],
+    "emptyNoops": 0,
+    "parentPlacementApplied": 1,
+    "safeNoopApplied": 1,
+    "liveApiProposals": 59,
+    "ambiguousProposals": 36
+  },
+  "appliedSummary": {
+    "filesChanged": 25,
+    "kind": "dead-safe / safe-noop door burns + one exact parent-placement (existing block-boundary)",
+    "parentPlacement": 1,
+    "safeNoop": 1,
+    "note": "Proposals and classifications are not counted as fixes. Profile page line-ending churn reverted."
+  },
+  "changedFiles": [
+    "src/components/blocks/community/Discussion/InteractionBar.tsx",
+    "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "src/components/blocks/feed/ActivityFeed/index.tsx",
+    "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+    "src/components/blocks/feed/CommunityPostCard/component.tsx",
+    "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+    "src/components/blocks/grading/GradeCreditCaption/index.tsx",
+    "src/components/blocks/grading/GradingByline/component.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+    "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+    "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+    "src/components/blocks/ai/QuotaBar/index.tsx",
+    "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+    "src/components/blocks/cards/GroupPressableCard/index.tsx",
+    "src/components/blocks/layout/PageContainer/index.tsx",
+    "src/components/blocks/learn/QaInboxRow/index.tsx",
+    "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+    "src/components/blocks/marketing/HeroBanner/index.tsx",
+    "src/components/blocks/marketing/PitchCard/index.tsx",
+    "src/components/blocks/marketing/TrackCard/index.tsx",
+    "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+    "src/components/blocks/stats/Score/component.tsx",
+    "src/components/blocks/stats/Score/index.tsx",
+    "src/components/layouts/LearnShellLayout/component.tsx",
+    "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx"
+  ],
+  "liveApiProposals": [
+    {
+      "component": "ElementCloseButton",
+      "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 1,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 1,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "SectionCard",
+      "file": "src/components/blocks/cards/SectionCard/index.tsx",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 1,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CodeConsole",
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "AddToCartButton",
+      "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "PhaseScarcityNote",
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 1,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "TierCardBase",
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CommentComposer",
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "Discussion",
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "FollowButton",
+      "file": "src/components/blocks/community/FollowButton/index.tsx",
+      "classNameConsumers": 3,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "AiRewriteButton",
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "classNameConsumers": 4,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "LeaderboardListCard",
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "Composer",
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "InfoTooltip",
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "BadgeImage",
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "BrandLockup",
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "BrandLogo",
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "IconTile",
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "AmbientBackground",
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "PageHeader",
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "StickyBottomBar",
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "ChatToolResult",
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "ContentMap",
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "LeaderboardCategoryRail",
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "MilestoneOutline",
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "PlaygroundRagWorkspace",
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "LabeledList",
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "classNameConsumers": 0,
+      "classNamesConsumers": 1,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "ListRow",
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "classNameConsumers": 4,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "MpegDash",
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "Standard",
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "Youtube",
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "BackLink",
+      "file": "src/components/blocks/navigation/BackLink/index.tsx",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CollapsibleSidebar",
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "classNameConsumers": 3,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "OutlineRail",
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "SidebarNavItem",
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "classNameConsumers": 4,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "TabsCard",
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "classNameConsumers": 5,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "RankDeltaCaret",
+      "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+      "classNameConsumers": 3,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "ButtonGroup",
+      "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 2,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 1,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "ArchitectureRail",
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "MetricsInline",
+      "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CourseHero",
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CourseMobileEnrollBar",
+      "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CoursePricingRail",
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "MockInterviewWorkspace",
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "PracticeRail",
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "GithubIcon",
+      "file": "src/components/svg/GithubIcon/index.tsx",
+      "classNameConsumers": 7,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "GoogleIcon",
+      "file": "src/components/svg/GoogleIcon/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "LogoMark",
+      "file": "src/components/svg/LogoMark/index.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "TierLevelIcon",
+      "file": "src/components/svg/TierLevelIcon/index.tsx",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "ButtonGroup",
+      "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+      "classNameConsumers": 2,
+      "classNamesConsumers": 2,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "FloatingActionButton",
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 1,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CodeToHtml",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+      "classNameConsumers": 1,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    },
+    {
+      "component": "CollapsibleSidebar",
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "classNameConsumers": 3,
+      "classNamesConsumers": 0,
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn"
+    }
+  ],
+  "holdsPreserved": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "parity": {
+    "appliedSrcOnly": true,
+    "twins": "none for applied set"
+  },
+  "verification": {
+    "tsc": "pass",
+    "eslintChangedFilesQuiet": "pass (0 errors on 25 files)",
+    "pluginTests": "pass (public-contracts, namespaces, authoring, contentpage)",
+    "storybookContractTests": "pass (principle-style, semantic-contracts)",
+    "auditFe": "pass (27 teacher holds; 0 undocumented seams)"
+  },
+  "regressions": []
+}

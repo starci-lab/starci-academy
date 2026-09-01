@@ -1,0 +1,736 @@
+{
+  "partition": "identity-hosts",
+  "generatedAt": "2026-08-06T22:52:56.136Z",
+  "batch": 13,
+  "fileCount": 30,
+  "allowedApply": [
+    "safe-api-removal",
+    "safe-consumer-migration"
+  ],
+  "recordOnly": [
+    "new-named-slot-required",
+    "vendor-boundary",
+    "identity-decision",
+    "skeleton-decision",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "seededDecisions": [],
+  "hardHolds": [
+    "27 teacher pattern holds / Nivo / locked paths / a11y",
+    "ChipBase API / handleSide vendor boundary",
+    "No invented principle tokens / no eslint-disable / no generic className escapes",
+    "No HeroUI conversion when atom API non-identical",
+    "No prop removal while real consumers depend on it"
+  ],
+  "files": [
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 17,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 39,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 120,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/async/AsyncContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/AsyncContent/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 14,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/async/ErrorContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/ErrorContent/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 25,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 50,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/blog/PostRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/blog/PostRow/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 20,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 48,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 16,
+          "column": 51,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/code/SandpackPanel/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 78,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 78,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 19,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 37,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/community/CommunityPost/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/community/CommunityPost/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 17,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 14,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/course/CourseTrialChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/course/CourseTrialChip/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 8,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/no-inline-parameter-type",
+          "line": 85,
+          "column": 47,
+          "message": "Name this parameter type (`type` / `interface` in the module) — do not inline `{ … }` on a destructured parameter.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 433,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/dashboard/ChangelogList/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/dashboard/ChangelogList/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 45,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/dashboard/Confetti/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/dashboard/Confetti/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 77,
+          "column": 26,
+          "message": "`overflow-hidden` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 84,
+          "column": 21,
+          "message": "`absolute` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/dashboard/ContinueLearning/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 21,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 67,
+          "column": 1,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 138,
+          "column": 32,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 24,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-inline-skeleton-branch",
+          "line": 173,
+          "column": 24,
+          "message": "`data.endsInLabel != null || isSkeleton ? … : …` picks between two DIFFERENT elements — that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component.",
+          "severity": 1,
+          "classification": "skeleton-decision"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 187,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 26,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/identity/BadgeImage/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 42,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/layout/SocketConnectionStatus/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/SocketConnectionStatus/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 14,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/layout/Spacer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/Spacer/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 30,
+          "column": 31,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 36,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/layout/TopLoader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/layout/TopLoader/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 44,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 19,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/Canvas/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ConceptMap/Canvas/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 38,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 152,
+          "column": 33,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ContentArticle/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 21,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 118,
+          "column": 29,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    }
+  ]
+}

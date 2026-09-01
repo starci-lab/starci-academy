@@ -1,0 +1,250 @@
+{
+  "batch": "B40",
+  "worker": "w12-src-overlays",
+  "manifest": ".artifacts/fe-refactor-audit/b40-manifests/w12-src-overlays.json",
+  "doNotCommit": true,
+  "excluded": ["MindMapNodeDrawer"],
+  "owns": [
+    "src/components/composites/text/TitledText/index.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+    "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+    "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+    "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+    "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+    "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+    "src/components/overlays/modals/ManagePinnedProjectsModal/component.tsx",
+    "src/components/overlays/modals/PaymentModal/component.tsx",
+    "src/components/pages/MyAttemptsPage/index.tsx"
+  ],
+  "baseline": {
+    "totalFindings": 101,
+    "safeFindings": 54,
+    "otherFindings": 47,
+    "byRule": {
+      "starci-fe/require-frame-self-declare": 46,
+      "starci-fe/no-public-classname-prop": 25,
+      "starci-fe/require-identity-root": 8,
+      "starci-fe/no-host-element-at-sentence-tier": 7,
+      "starci-fe/page-folder-two-files-only": 7,
+      "starci-fe/no-raw-shape-at-sentence-tier": 3,
+      "starci-fe/no-heroui-outside-vocabulary": 2,
+      "starci-fe/no-skeleton-twin-component": 1,
+      "starci-fe/no-retired-async-content": 1,
+      "starci-fe/no-parallel-skeleton": 1
+    }
+  },
+  "changedFiles": [
+    "src/components/overlays/modals/PaymentModal/component.tsx",
+    "src/components/overlays/drawers/MiniCartDrawer/component.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "classification": "applied",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "changes": [
+        "FillAvailable at=base replaces Typography/StackV classNames min-w-0 flex-1",
+        "Button w-full → StackV principle=center-measure (existing commerce CTA pattern)",
+        "Named undeclared StackVs: sibling-stack / group-boundary / label-field / block-boundary with template explains"
+      ]
+    },
+    {
+      "file": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "classification": "applied",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "changes": [
+        "Cart-line skeleton → IdentityTile + FillAvailable + Typography/PriceTagInline + Button isSkeleton (CartLine vocabulary; no Skeleton className bars)",
+        "Preview total skeleton → Typography/PriceTagInline isSkeleton",
+        "Button w-full → StackV principle=center-measure",
+        "Named undeclared StackVs: sibling-stack / name-handle / title-subtitle / group-boundary / block-boundary"
+      ]
+    }
+  ],
+  "holds": [
+    {
+      "file": "src/components/composites/text/TitledText/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Public classNames has zero live consumers, but Typography skeleton widths still require classNames (no Typography width prop). Dropping widths would redesign skeleton bars. Cannot reach eslint 0."
+    },
+    {
+      "file": "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Selected-row tint uses raw div; Pagination wrapped in raw nav. No landmark/nav frame vocabulary; SurfaceCard selected chrome gap. Cannot reach eslint 0 without new host owners."
+    },
+    {
+      "file": "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Typography skeleton width classNames + Pagination nav host. Same as B35 hold — needs landmark frame + Typography width vocabulary."
+    },
+    {
+      "file": "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Pagination <nav> has no house landmark owner; dropping nav changes a11y naming (forbidden). Principle-only edit cannot clear file."
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-public-classname-prop",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only; page-folder moves forbidden."
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only; page-folder moves forbidden."
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only; page-folder moves forbidden."
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "reason": "Nested overlay subfolder + Button w-full; page-folder moves forbidden."
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/ExternalProjectForm/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "reason": "Nested overlay subfolder + Button w-full; page-folder moves forbidden."
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/ManagePinnedListSkeleton/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/no-skeleton-twin-component",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "reason": "page-folder + skeleton-twin + Skeleton aspect-video className; skeleton redesign forbidden."
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/page-folder-two-files-only",
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "page-folder-two-files-only; page-folder moves forbidden."
+    },
+    {
+      "file": "src/components/overlays/modals/ManagePinnedProjectsModal/component.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/no-public-classname-prop"
+      ],
+      "reason": "Inline list skeleton uses Box className=card + Skeleton aspect-video className; MediaCard has no isSkeleton; replacing with Skeleton.Card would redesign the MediaCard mirror."
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "classification": "hold",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-retired-async-content",
+        "starci-fe/require-identity-root",
+        "starci-fe/no-host-element-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-parallel-skeleton",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "HeroUI Button/Chip/Typography/Spinner, retired AsyncContent, parallel skeleton, raw hosts/shapes. Needs vocabulary migration + skeleton contract beyond safe mechanical burn."
+    }
+  ],
+  "vendor": [
+    {
+      "file": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "classification": "vendor",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "Documented missing Calendar atom — direct @heroui/react Calendar import. Box className resets are vendor-mount chrome. No existing vocabulary migration; inventing Calendar atom out of scope."
+    }
+  ],
+  "locked": [],
+  "ambiguous": [],
+  "eslintProof": {
+    "command": "npx eslint --max-warnings=0 <changedFiles>",
+    "changedFilesExitCode": 0,
+    "diffCheckExitCode": 0,
+    "files": [
+      "src/components/overlays/modals/PaymentModal/component.tsx",
+      "src/components/overlays/drawers/MiniCartDrawer/component.tsx"
+    ]
+  },
+  "counts": {
+    "owns": 16,
+    "changedFiles": 2,
+    "applied": 2,
+    "holds": 13,
+    "vendor": 1,
+    "locked": 0,
+    "ambiguous": 0,
+    "baselineFindings": 101,
+    "safeBaseline": 54
+  },
+  "notes": [
+    "Ratchet: only files that reach eslint --max-warnings=0 after allowed fixes were kept; all other owns held without edits.",
+    "MindMapNodeDrawer excluded and untouched.",
+    "No new principles/rules/contracts; no page-folder moves; no eslint-disable; no commit."
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "partition": "video-renderer-contract",
+  "manifest": [
+    "src/components/blocks/media/VideoRenderer/index.tsx",
+    "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Youtube/index.tsx"
+  ],
+  "consumerEvidence": [
+    {
+      "component": "VideoRenderer",
+      "evidence": "open-tag className/classNames consumers = 0 (PreviewCard passes url, rendererType, title only)"
+    },
+    {
+      "component": "MpegDash",
+      "evidence": "open-tag className consumers = 0 (only caller is VideoRenderer index)"
+    },
+    {
+      "component": "Standard",
+      "evidence": "open-tag className consumers = 0 (only caller is VideoRenderer index)"
+    },
+    {
+      "component": "Youtube",
+      "evidence": "open-tag className consumers = 0 (only caller is VideoRenderer index)"
+    }
+  ],
+  "valueSet": {
+    "VideoRenderer": {
+      "intrinsicRoot": "w-full aspect-video rounded-large overflow-hidden",
+      "emptyState": "text-muted flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm"
+    },
+    "MpegDash": {
+      "intrinsicChrome": "relative aspect-video overflow-hidden rounded-large bg-black"
+    },
+    "Standard": {
+      "intrinsicChrome": "relative aspect-video overflow-hidden rounded-large bg-black"
+    },
+    "Youtube": {
+      "iframeChrome": "aspect-video w-full rounded-large",
+      "invalidUrlChrome": "text-muted flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm"
+    }
+  },
+  "oldApi": {
+    "VideoRenderer": {
+      "className": "string",
+      "classNames": {
+        "base": "string",
+        "content": "string"
+      }
+    },
+    "MpegDash": {
+      "className": "string"
+    },
+    "Standard": {
+      "className": "string"
+    },
+    "Youtube": {
+      "className": "string"
+    }
+  },
+  "newApi": {
+    "VideoRenderer": {
+      "url": "string",
+      "hostPlatform": "VideoHostPlatform?",
+      "videoType": "LessonVideoType?",
+      "rendererType": "VideoRendererType?",
+      "title": "string?"
+    },
+    "MpegDash": {
+      "src": "string"
+    },
+    "Standard": {
+      "src": "string"
+    },
+    "Youtube": {
+      "url": "string",
+      "title": "string?"
+    }
+  },
+  "changed": [
+    "src/components/blocks/media/VideoRenderer/index.tsx",
+    "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Youtube/index.tsx"
+  ],
+  "holds": [
+    "VideoControls subtree unchanged (controls, fullscreen, quality selector)",
+    "jsx-a11y/no-static-element-interactions eslint-disable retained on MpegDash/Standard hover shells",
+    "renderer selection (resolveRendererType), invalid-URL empty states preserved",
+    "no SB twins under .storybook for VideoRenderer family"
+  ],
+  "parity": {
+    "storybookSrc": "src-only — no .storybook twins found for VideoRenderer/MpegDash/Standard/Youtube"
+  },
+  "verification": {
+    "consumerScan": "grep open-tag className/classNames on VideoRenderer, MpegDash, Standard, Youtube → 0",
+    "useMemoDeps": "dropped classNames?.content from VideoRenderer content memo",
+    "importsRemoved": "cn + WithClassNames removed from all four files",
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — VideoRenderer family scoped to b29 worker; sole consumer PreviewCard unchanged"
+}

@@ -1,0 +1,879 @@
+{
+  "screenCount": 50,
+  "leafCandidates": [
+    {
+      "screen": "src/components/layouts/Footer",
+      "name": "FooterNavColumn",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/layouts/Navbar",
+      "name": "CartButton",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/layouts/Navbar",
+      "name": "LanguageDropdown",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/layouts/Navbar",
+      "name": "Logo",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/layouts/Navbar",
+      "name": "NavLinks",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/layouts/Navbar",
+      "name": "NotificationBell",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/layouts/Navbar",
+      "name": "SearchButton",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/overlays/modals/ManagePinnedProjectsModal",
+      "name": "CourseProjectForm",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/overlays/modals/ManagePinnedProjectsModal",
+      "name": "ExternalProjectForm",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/overlays/modals/ManagePinnedProjectsModal",
+      "name": "ManagePinnedListSkeleton",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/overlays/modals/ManagePinnedProjectsModal",
+      "name": "PinnedProjectCard",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AdminAiBalancerPage",
+      "name": "AdminAiBalancerSkeleton",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AdminAiBalancerPage",
+      "name": "TopBar",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AdminMpegDashTestPage",
+      "name": "Header",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AdminMpegDashTestPage",
+      "name": "PreviewCard",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AdminUploadVideoPage",
+      "name": "Header",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AdminUploadVideoPage",
+      "name": "LoadingScreen",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AdminUploadVideoPage",
+      "name": "TopBar",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/AiUsagePage",
+      "name": "AiUsageHistory",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/ArchitecturePage",
+      "name": "ArchitectureMap",
+      "entries": [
+        "future-scene.ts",
+        "index.tsx",
+        "scene.ts"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/ArchitecturePage",
+      "name": "CurlTester",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/ArchitecturePage",
+      "name": "MetricsInline",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/ArchitecturePage",
+      "name": "NodeDissectionPanel",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BlogListPage",
+      "name": "CategoryFilter",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BlogListPage",
+      "name": "FeaturedPost",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BlogListPage",
+      "name": "Masthead",
+      "entries": [
+        "index.tsx",
+        "scene.ts"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BlogListPage",
+      "name": "StartHereAnchor",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BlogListPage",
+      "name": "TopicsStrip",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BlogPostPage",
+      "name": "ReadingProgress",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BlogPostPage",
+      "name": "RelatedPosts",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/BookmarksPage",
+      "name": "BookmarkCard",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CommunityChatPage",
+      "name": "ChatPane",
+      "entries": [
+        "ChatPaneSkeleton.tsx",
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CommunityFeedPage",
+      "name": "CommunityComposer",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/ContactPage",
+      "name": "ContactFaq",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/ContactPage",
+      "name": "ContactForm",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseCatalogPage",
+      "name": "CatalogCourseCard",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseCatalogPage",
+      "name": "CatalogLineCardSkeleton",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseDetailPage",
+      "name": "CourseCtaButtons",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseDetailPage",
+      "name": "CourseFaq",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseDetailPage",
+      "name": "CourseHero",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseDetailPage",
+      "name": "CourseMobileEnrollBar",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseDetailPage",
+      "name": "CoursePrerequisites",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseDetailPage",
+      "name": "CourseTrustStats",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CourseDetailPage",
+      "name": "CourseValueProps",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CvEditorPage",
+      "name": "CvEditorToolbarBar",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/CvGalleryPage",
+      "name": "CvGallery",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "AiQuotaCard",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "CommunityTab",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "DailyQuest",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "DashboardTabsBar",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "ExploreTab",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "FlashcardReview",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "LeagueTierBadge",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "QuickActions",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "RecommendedCourses",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "StreakFreezeCard",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "StreakStrip",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "UpcomingLivestreamCard",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "WeeklyGoals",
+      "entries": [
+        "component.tsx",
+        "index.tsx",
+        "map.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/DashboardPage",
+      "name": "WhoToFollow",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/EditProfilePage",
+      "name": "AvatarUploadModal",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "DueReviewHero",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "FlashcardMobileNav",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "FlashcardReviewHistory",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "FlashcardReviewModeModal",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "FlashcardReviewStats",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "FlashcardSessionStats",
+      "entries": [
+        "component.tsx",
+        "FlashcardSessionStatsSkeleton.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "FlashcardStatsStrip",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/FlashcardsPage",
+      "name": "FlashcardStudyRail",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/HeadhuntingCompanyPage",
+      "name": "HeadhuntingCompanyBreadcrumbs",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/HeadhuntingCompanyPage",
+      "name": "HeadhuntingCompanyConsultants",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/HeadhuntingCompanyPage",
+      "name": "HeadhuntingCompanyLoadingState",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/HeadhuntingCompanyPage",
+      "name": "HeadhuntingCompanyProfile",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/JobListPage",
+      "name": "JobListRowSkeleton",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/JobListPage",
+      "name": "JobListRow",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/JobPostFormPage",
+      "name": "ApplyMethodSection",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/JobPostFormPage",
+      "name": "CompanySection",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/JobPostFormPage",
+      "name": "PositionSection",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/JobPostFormPage",
+      "name": "SubmitSuccess",
+      "entries": [
+        "index.tsx"
+      ],
+      "hasComponent": false,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    },
+    {
+      "screen": "src/components/pages/LandingPage",
+      "name": "StatStrip",
+      "entries": [
+        "component.tsx",
+        "index.tsx"
+      ],
+      "hasComponent": true,
+      "note": "leaf folder — still SKIP unless already mirrored in blocks/"
+    }
+  ],
+  "sampleScreens": [
+    {
+      "s": "src/components/layouts/Footer",
+      "tops": [
+        "FooterNavColumn"
+      ]
+    },
+    {
+      "s": "src/components/layouts/LearnShellLayout",
+      "tops": [
+        "types"
+      ]
+    },
+    {
+      "s": "src/components/layouts/Navbar",
+      "tops": [
+        "AccountMenuDropdown",
+        "CartButton",
+        "LanguageDropdown",
+        "Logo",
+        "NavLinks",
+        "NotificationBell",
+        "SearchButton",
+        "types",
+        "useNavbarItems.ts"
+      ]
+    },
+    {
+      "s": "src/components/layouts/PublicProfileLayout",
+      "tops": [
+        "map.ts"
+      ]
+    },
+    {
+      "s": "src/components/layouts/SettingsLayout",
+      "tops": [
+        "map.ts"
+      ]
+    },
+    {
+      "s": "src/components/overlays/drawers/SubmissionAttemptsDrawer",
+      "tops": [
+        "map.ts"
+      ]
+    },
+    {
+      "s": "src/components/overlays/modals/AiQuotaModal",
+      "tops": [
+        "hooks",
+        "map.ts"
+      ]
+    },
+    {
+      "s": "src/components/overlays/modals/AuthenticationModal",
+      "tops": [
+        "SignInSection",
+        "SignUpSection"
+      ]
+    },
+    {
+      "s": "src/components/overlays/modals/GlobalSearchModal",
+      "tops": [
+        "Content"
+      ]
+    },
+    {
+      "s": "src/components/overlays/modals/ManagePinnedProjectsModal",
+      "tops": [
+        "CourseProjectForm",
+        "ExternalProjectForm",
+        "ManagePinnedListSkeleton",
+        "PinnedProjectCard",
+        "hooks"
+      ]
+    },
+    {
+      "s": "src/components/overlays/modals/PremiumGateModal",
+      "tops": [
+        "map.ts"
+      ]
+    },
+    {
+      "s": "src/components/pages/AdminAiBalancerPage",
+      "tops": [
+        "AdminAiBalancerSkeleton",
+        "ProviderSection",
+        "TopBar"
+      ]
+    },
+    {
+      "s": "src/components/pages/AdminMpegDashTestPage",
+      "tops": [
+        "ConfigCard",
+        "Header",
+        "PreviewCard",
+        "QuickTestUrls",
+        "constants",
+        "map.tsx",
+        "types"
+      ]
+    },
+    {
+      "s": "src/components/pages/AdminUploadVideoPage",
+      "tops": [
+        "FileSelectionCard",
+        "Header",
+        "LoadingScreen",
+        "TopBar",
+        "UploadProgressCard",
+        "enums",
+        "map.tsx",
+        "types",
+        "utils"
+      ]
+    },
+    {
+      "s": "src/components/pages/AiUsagePage",
+      "tops": [
+        "AiUsageHistory",
+        "hooks"
+      ]
+    }
+  ]
+}

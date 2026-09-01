@@ -1,0 +1,32 @@
+{
+  "partition": "cards-lists",
+  "manifest": [
+    "src/components/blocks/cards/SectionCard/index.tsx",
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/lists/LabeledList/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx"
+  ],
+  "consumerEvidence": "See 2026-08-09-b29-secondary-scan.json",
+  "valueSet": {
+    "SectionCard": ["dynamic classNames passthrough", "icon size-5 text-accent (false positive on child)"],
+    "TierCardBase": ["border-accent ring-2 ring-accent/30 popular chrome", "TierLevelIcon size classes"],
+    "LeaderboardListCard": ["dynamic className passthrough"],
+    "LabeledList": ["zero door consumers — self-start is on Button inside action"],
+    "ListRow": ["multi: padding variants, leading icons, dense rows"]
+  },
+  "oldApi": "className/classNames doors retained",
+  "newApi": "hold — no single finite semantic axis proven in B29 wave",
+  "changed": [],
+  "holds": [
+    { "component": "SectionCard", "reason": "dynamic classNames + mixed consumers" },
+    { "component": "TierCardBase", "reason": "popular ring chrome mixes border+ring; needs named chrome axis" },
+    { "component": "LeaderboardListCard", "reason": "passthrough className" },
+    { "component": "LabeledList", "reason": "no real door consumers this wave" },
+    { "component": "ListRow", "reason": "multi-value padding/leading set — not one axis" }
+  ],
+  "parity": "n/a — hold only",
+  "verification": { "local": "n/a" },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

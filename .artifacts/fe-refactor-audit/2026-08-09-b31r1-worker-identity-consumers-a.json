@@ -1,0 +1,36 @@
+{
+  "worker": "identity-consumers-a",
+  "manifest": [],
+  "candidates": [
+    "src/components/blocks/auth/GithubTeamGate/index.tsx",
+    "src/components/blocks/cards/PlaygroundCard/component.tsx",
+    "src/components/blocks/commerce/CartLine/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx"
+  ],
+  "changed": [],
+  "held": [
+    {
+      "file": "GithubTeamGate",
+      "reason": "pre-existing ESLint warnings — max-warnings=0 blocks import migration"
+    },
+    {
+      "file": "PlaygroundCard/component",
+      "reason": "pre-existing ESLint warnings — max-warnings=0 blocks import migration"
+    },
+    {
+      "file": "CartLine",
+      "reason": "pre-existing ESLint warnings (heroui + raw flex)"
+    },
+    {
+      "file": "ReadinessChecklist",
+      "reason": "pre-existing ESLint warnings (identity root + className)"
+    }
+  ],
+  "migrated": [],
+  "warningCounts": {
+    "sampleChunk": "included in coordinator 42-warning sample across 7 files"
+  },
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

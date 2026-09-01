@@ -1,0 +1,28 @@
+{
+  "partition": "exports-and-barrels",
+  "changed": [
+    "src/components/blocks/learn/ContinueCard/index.tsx"
+  ],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/modules/utils/computations/pow-10.ts",
+      "rules": ["starci-fe/prefer-arrow-export"],
+      "reason": "Arrow const cannot express call-signature overloads without TS2322; function overloads preserved (coordinator repair)"
+    }
+  ],
+  "verification": {
+    "eslintQuietExit": 0,
+    "notes": [
+      "ContinueCard: removed runtime namespace object; named exports ContinueCardHero/ContinueCardItem retained.",
+      "pow10: arrow conversion reverted — function overloads required for BN|Decimal discrimination."
+    ]
+  },
+  "regressions": [
+    {
+      "path": "src/modules/utils/computations/pow-10.ts",
+      "note": "Arrow overload assignment failed tsc TS2322; reverted to export function overloads",
+      "resolved": true
+    }
+  ]
+}

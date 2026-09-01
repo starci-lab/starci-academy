@@ -1,0 +1,1154 @@
+{
+  "batch": "B35",
+  "phase": 0,
+  "checkpoint": "02011807",
+  "generatedAt": "2026-08-08T14:33:48.722Z",
+  "source": "2026-08-10-b35-eslint-before.json",
+  "baselineClaim": {
+    "warnings": 6872,
+    "files": 1232,
+    "errors": 0,
+    "a11y": 11
+  },
+  "measured": {
+    "rawMessages": 6872,
+    "warnings": 6872,
+    "errors": 0,
+    "a11y": 11,
+    "affectedFiles": 1232,
+    "starciMessages": 6861,
+    "forbiddenMessages": 301
+  },
+  "baselineMatch": {
+    "warnings": true,
+    "files": true,
+    "errors": true,
+    "a11y": true
+  },
+  "byRuleFull": {
+    "starci-fe/no-host-element-at-sentence-tier": 1680,
+    "starci-fe/no-public-classname-prop": 1193,
+    "starci-fe/no-raw-shape-at-sentence-tier": 829,
+    "starci-fe/require-frame-self-declare": 691,
+    "starci-fe/require-identity-root": 571,
+    "starci-fe/no-heroui-outside-vocabulary": 437,
+    "starci-fe/no-cn-above-vocabulary": 372,
+    "starci-fe/page-folder-two-files-only": 351,
+    "starci-fe/no-classname-at-sentence-tier": 198,
+    "starci-fe/no-frame-fragment-item": 102,
+    "starci-fe/no-parallel-skeleton": 68,
+    "starci-fe/no-inline-parameter-type": 63,
+    "starci-fe/no-helper-folder-in-components": 60,
+    "starci-fe/no-emoji-in-source": 50,
+    "starci-fe/no-inline-skeleton-branch": 45,
+    "starci-fe/no-retired-async-content": 40,
+    "starci-fe/no-skeleton-twin-component": 39,
+    "starci-fe/require-export-jsdoc": 17,
+    "starci-fe/no-arbitrary-token": 16,
+    "starci-fe/no-vietnamese-in-source-authoring": 9,
+    "jsx-a11y/aria-role": 8,
+    "starci-fe/no-per-part-classname-prop": 8,
+    "starci-fe/no-hero-heading-class": 8,
+    "starci-fe/handler-on-prefix": 6,
+    "starci-fe/no-hardcoded-user-text-in-vocabulary": 4,
+    "starci-fe/no-css-door-type-laundering": 2,
+    "jsx-a11y/no-static-element-interactions": 2,
+    "starci-fe/no-identity-wrapper-div": 1,
+    "jsx-a11y/click-events-have-key-events": 1,
+    "starci-fe/prefer-arrow-export": 1
+  },
+  "byRuleStarci": {
+    "starci-fe/no-host-element-at-sentence-tier": 1680,
+    "starci-fe/no-public-classname-prop": 1193,
+    "starci-fe/no-raw-shape-at-sentence-tier": 829,
+    "starci-fe/require-frame-self-declare": 691,
+    "starci-fe/require-identity-root": 571,
+    "starci-fe/no-heroui-outside-vocabulary": 437,
+    "starci-fe/no-cn-above-vocabulary": 372,
+    "starci-fe/page-folder-two-files-only": 351,
+    "starci-fe/no-classname-at-sentence-tier": 198,
+    "starci-fe/no-frame-fragment-item": 102,
+    "starci-fe/no-parallel-skeleton": 68,
+    "starci-fe/no-inline-parameter-type": 63,
+    "starci-fe/no-helper-folder-in-components": 60,
+    "starci-fe/no-emoji-in-source": 50,
+    "starci-fe/no-inline-skeleton-branch": 45,
+    "starci-fe/no-retired-async-content": 40,
+    "starci-fe/no-skeleton-twin-component": 39,
+    "starci-fe/require-export-jsdoc": 17,
+    "starci-fe/no-arbitrary-token": 16,
+    "starci-fe/no-vietnamese-in-source-authoring": 9,
+    "starci-fe/no-per-part-classname-prop": 8,
+    "starci-fe/no-hero-heading-class": 8,
+    "starci-fe/handler-on-prefix": 6,
+    "starci-fe/no-hardcoded-user-text-in-vocabulary": 4,
+    "starci-fe/no-css-door-type-laundering": 2,
+    "starci-fe/no-identity-wrapper-div": 1,
+    "starci-fe/prefer-arrow-export": 1
+  },
+  "starciScoped": {
+    "actionableFiles": 1047,
+    "filesWithStarciFindings": 1047,
+    "byBucket": {
+      "shared-vocab": 41,
+      "blocks": 549,
+      "layouts": 28,
+      "overlays": 56,
+      "pages": 368,
+      "other": 5
+    }
+  },
+  "predirty": {
+    "note": "Forbidden / pre-dirty paths excluded from all edit manifests",
+    "files": [
+      ".storybook/components/mia-mia/_cn.ts",
+      ".storybook/components/mia-mia/atoms/buttons/ChunkyButton/index.tsx",
+      ".storybook/components/mia-mia/atoms/data-display/NbPill/index.tsx",
+      ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+      ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+      ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+      ".storybook/components/mia-mia/blocks/marketing/CtaBanner/index.tsx",
+      ".storybook/components/mia-mia/blocks/marketing/Hero/index.tsx",
+      ".storybook/components/mia-mia/blocks/marketing/ProofStrip/index.tsx",
+      ".storybook/components/mia-mia/blocks/marketing/SiteFooter/index.tsx",
+      ".storybook/components/mia-mia/blocks/marketing/SiteHeader/index.tsx",
+      ".storybook/components/mia-mia/composites/cards/FeatureCard/index.tsx",
+      ".storybook/components/mia-mia/composites/cards/StickerCard/index.tsx",
+      ".storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx",
+      ".storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx",
+      ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+      ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+      ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      ".storybook/components/nivo/blocks/agent-os/AgentOsSubNav/AgentOsSubNav.tsx",
+      ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+      ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+      ".storybook/components/nivo/blocks/agent-os/HealthCard/HealthCard.tsx",
+      ".storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx",
+      ".storybook/components/nivo/blocks/agent-os/ModelsSection/ModelsSection.tsx",
+      ".storybook/components/nivo/blocks/agent-os/N8nWorkflowTable/N8nWorkflowTable.tsx",
+      ".storybook/components/nivo/blocks/agent-os/OpsEventTable/OpsEventTable.tsx",
+      ".storybook/components/nivo/blocks/agent-os/PlaygroundPanel/PlaygroundPanel.tsx",
+      ".storybook/components/nivo/blocks/agent-os/PricingTierCard/PricingTierCard.tsx",
+      ".storybook/components/nivo/blocks/agent-os/ProvisioningState/ProvisioningState.tsx",
+      ".storybook/components/nivo/blocks/agent-os/ThreadDrawer/ThreadDrawer.tsx",
+      ".storybook/components/nivo/blocks/agent-os/ToolsSection/ToolsSection.tsx",
+      ".storybook/components/nivo/blocks/auth/TwoFactorChallenge/TwoFactorChallenge.tsx",
+      ".storybook/components/nivo/blocks/billing/InvoiceDetailModal/InvoiceDetailModal.tsx",
+      ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+      ".storybook/components/nivo/blocks/catalog/BuyConfirmModal/BuyConfirmModal.tsx",
+      ".storybook/components/nivo/blocks/catalog/CatalogProductCard/CatalogProductCard.tsx",
+      ".storybook/components/nivo/blocks/catalog/CatalogTierCard/CatalogTierCard.tsx",
+      ".storybook/components/nivo/blocks/catalog/CategoryTabs/CategoryTabs.tsx",
+      ".storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx",
+      ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+      ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+      ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+      ".storybook/components/nivo/blocks/dashboard/OperatingLoopRail/OperatingLoopRail.tsx",
+      ".storybook/components/nivo/blocks/dashboard/ProductQuickSelector/ProductQuickSelector.tsx",
+      ".storybook/components/nivo/blocks/dashboard/QuickActionsCard/QuickActionsCard.tsx",
+      ".storybook/components/nivo/blocks/dashboard/RecentActivityCard/RecentActivityCard.tsx",
+      ".storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx",
+      ".storybook/components/nivo/blocks/expert-site/DeployStatusCard/DeployStatusCard.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadForm/ExpertSiteLeadForm.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      ".storybook/components/nivo/blocks/expert-site/ExpertSiteOfferingsEditor/ExpertSiteOfferingsEditor.tsx",
+      ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+      ".storybook/components/nivo/blocks/expert-site/OfferingsSummaryCard/OfferingsSummaryCard.tsx",
+      ".storybook/components/nivo/blocks/landing/AiSuggestionCard/AiSuggestionCard.tsx",
+      ".storybook/components/nivo/blocks/landing/AuditCta/AuditCta.tsx",
+      ".storybook/components/nivo/blocks/landing/ClosingCta/ClosingCta.tsx",
+      ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+      ".storybook/components/nivo/blocks/landing/DemoFlow/DemoFlow.tsx",
+      ".storybook/components/nivo/blocks/landing/FaqAccordion/FaqAccordion.tsx",
+      ".storybook/components/nivo/blocks/landing/Footer/Footer.tsx",
+      ".storybook/components/nivo/blocks/landing/HeroBanner/HeroBanner.tsx",
+      ".storybook/components/nivo/blocks/landing/HumanInTheLoop/HumanInTheLoop.tsx",
+      ".storybook/components/nivo/blocks/landing/LeadLeakageMap/LeadLeakageMap.tsx",
+      ".storybook/components/nivo/blocks/landing/MarketingNavbar/MarketingNavbar.tsx",
+      ".storybook/components/nivo/blocks/landing/MegaMenu/MegaMenu.tsx",
+      ".storybook/components/nivo/blocks/landing/OperatingLoopHero/OperatingLoopHero.tsx",
+      ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+      ".storybook/components/nivo/blocks/landing/PartnerStrip/PartnerStrip.tsx",
+      ".storybook/components/nivo/blocks/landing/PricingTeaser/PricingTeaser.tsx",
+      ".storybook/components/nivo/blocks/landing/ProblemStatement/ProblemStatement.tsx",
+      ".storybook/components/nivo/blocks/landing/ProductQuickSelector/ProductQuickSelector.tsx",
+      ".storybook/components/nivo/blocks/landing/ProductShowcase/ProductShowcase.tsx",
+      ".storybook/components/nivo/blocks/landing/ProofStrip/ProofStrip.tsx",
+      ".storybook/components/nivo/blocks/landing/SectionHeading/SectionHeading.tsx",
+      ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+      ".storybook/components/nivo/blocks/landing/StoryBeatCard/StoryBeatCard.tsx",
+      ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+      ".storybook/components/nivo/blocks/landing/SystemStoryCard/SystemStoryCard.tsx",
+      ".storybook/components/nivo/blocks/navigation/NivoSidebar/NivoSidebar.tsx",
+      ".storybook/components/nivo/blocks/navigation/NivoTopBar/NivoTopBar.tsx",
+      ".storybook/components/nivo/blocks/navigation/SidebarNavGroup/SidebarNavGroup.tsx",
+      ".storybook/components/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.tsx",
+      ".storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx",
+      ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+      ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      ".storybook/components/nivo/layouts/DashboardShell/DashboardShell.tsx",
+      ".storybook/components/nivo/layouts/MarketingLandingShell/MarketingLandingShell.tsx",
+      ".storybook/components/nivo/pages/AccountView/AccountView.tsx",
+      ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+      ".storybook/components/nivo/pages/AgentOsProvision/AgentOsProvision.tsx",
+      ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+      ".storybook/components/nivo/pages/DomainsView/DomainsView.tsx",
+      ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      ".storybook/components/nivo/pages/InvoicesView/InvoicesView.tsx",
+      ".storybook/components/nivo/pages/LandingPage/LandingPage.tsx",
+      ".storybook/components/nivo/pages/SupportView/SupportView.tsx",
+      ".storybook/components/nivo/pages/WalletView/WalletView.tsx",
+      ".storybook/components/nivoexpert/blocks/auth/AuthCard/AuthCard.tsx",
+      ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+      ".storybook/components/nivoexpert/blocks/automation/AiOpsSummary/AiOpsSummary.tsx",
+      ".storybook/components/nivoexpert/blocks/automation/N8nWorkflowTable/N8nWorkflowTable.tsx",
+      ".storybook/components/nivoexpert/blocks/automation/OpsEventTable/OpsEventTable.tsx",
+      ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+      ".storybook/components/nivoexpert/blocks/classroom/LessonTOC/LessonTOC.tsx",
+      ".storybook/components/nivoexpert/blocks/classroom/LessonViewer/LessonViewer.tsx",
+      ".storybook/components/nivoexpert/blocks/community/PostCard/PostCard.tsx",
+      ".storybook/components/nivoexpert/blocks/community/PostComposer/PostComposer.tsx",
+      ".storybook/components/nivoexpert/blocks/community/PostModerationCard/PostModerationCard.tsx",
+      ".storybook/components/nivoexpert/blocks/dashboard/AnalyticsView/AnalyticsView.tsx",
+      ".storybook/components/nivoexpert/blocks/dashboard/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/CatalogComingSoonPanel/CatalogComingSoonPanel.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/CommunityPreviewCard/CommunityPreviewCard.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/CourseCatalogGrid/CourseCatalogGrid.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/CourseFeaturedCard/CourseFeaturedCard.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/CourseOfferCard/CourseOfferCard.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/CurriculumPreview/CurriculumPreview.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/HeroIdentity/HeroIdentity.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/LandingFooter/LandingFooter.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/LeadCaptureCard/LeadCaptureCard.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/OfferSection/OfferSection.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/ProofStrip/ProofStrip.tsx",
+      ".storybook/components/nivoexpert/blocks/landing/StickyEnrolBar/StickyEnrolBar.tsx",
+      ".storybook/components/nivoexpert/blocks/leads/LeadsPipeline/LeadsPipeline.tsx",
+      ".storybook/components/nivoexpert/blocks/learn/ContinueLearningRail/ContinueLearningRail.tsx",
+      ".storybook/components/nivoexpert/blocks/learn/LearnerOverview/LearnerOverview.tsx",
+      ".storybook/components/nivoexpert/blocks/learn/MyCoursesGrid/MyCoursesGrid.tsx",
+      ".storybook/components/nivoexpert/blocks/members/MembersManager/MembersManager.tsx",
+      ".storybook/components/nivoexpert/blocks/revenue/OrderTable/OrderTable.tsx",
+      ".storybook/components/nivoexpert/blocks/revenue/RevenueSummary/RevenueSummary.tsx",
+      ".storybook/components/nivoexpert/blocks/studio/CourseRailList/CourseRailList.tsx",
+      ".storybook/components/nivoexpert/layouts/ExpertDashboardShell/ExpertDashboardShell.tsx",
+      ".storybook/components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell.tsx",
+      ".storybook/components/nivoexpert/overlays/drawers/AiSuggestionDrawer/AiSuggestionDrawer.tsx",
+      ".storybook/components/nivoexpert/overlays/drawers/LeadDetailDrawer/LeadDetailDrawer.tsx",
+      ".storybook/components/nivoexpert/overlays/drawers/MemberDetailDrawer/MemberDetailDrawer.tsx",
+      ".storybook/components/nivoexpert/overlays/drawers/OrderDetailDrawer/OrderDetailDrawer.tsx",
+      ".storybook/components/nivoexpert/overlays/drawers/PostModerationDrawer/PostModerationDrawer.tsx",
+      ".storybook/components/nivoexpert/overlays/drawers/ThemeEditorDrawer/ThemeEditorDrawer.tsx",
+      ".storybook/components/nivoexpert/overlays/modals/BanMemberModal/BanMemberModal.tsx",
+      ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+      ".storybook/components/nivoexpert/overlays/modals/SetMemberRoleModal/SetMemberRoleModal.tsx",
+      ".storybook/components/nivoexpert/overlays/modals/TemplatePickerModal/TemplatePickerModal.tsx",
+      ".storybook/components/nivoexpert/pages/AcademyManagementDashboard/AcademyManagementDashboard.tsx",
+      ".storybook/components/nivoexpert/pages/CourseStudio/CourseStudio.tsx",
+      ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+      ".storybook/components/nivoexpert/pages/automation/AiManagementDashboard/AiManagementDashboard.tsx",
+      ".storybook/components/nivoexpert/pages/community/CommunityFeed/CommunityFeed.tsx",
+      ".storybook/components/nivoexpert/pages/revenue/RevenueView/RevenueView.tsx",
+      ".storybook/stories/nivo/layouts/MarketingLandingShell/MarketingLandingShell.stories.tsx",
+      ".storybook/stories/nivoexpert/overlays/drawers/MemberDetailDrawer/MemberDetailDrawer.stories.tsx"
+    ],
+    "messageCount": 301
+  },
+  "forbidden": [
+    "nivo",
+    "nivoexpert",
+    "mia-mia",
+    "CLAUDE.md",
+    ".claude/fe/decision-ledger.json",
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+    "src/components/blocks/learn/ReactionButton/types.ts",
+    "a11y (observed only)"
+  ],
+  "overlapScoring": {
+    "categories": [
+      {
+        "key": "host",
+        "rules": [
+          "starci-fe/no-host-element-at-sentence-tier"
+        ]
+      },
+      {
+        "key": "raw-shape",
+        "rules": [
+          "starci-fe/no-raw-shape-at-sentence-tier"
+        ]
+      },
+      {
+        "key": "classname-family",
+        "rules": [
+          "starci-fe/no-classname-at-sentence-tier",
+          "starci-fe/no-cn-above-vocabulary",
+          "starci-fe/no-public-classname-prop"
+        ]
+      },
+      {
+        "key": "identity-root",
+        "rules": [
+          "starci-fe/require-identity-root"
+        ]
+      },
+      {
+        "key": "frame-self-declare",
+        "rules": [
+          "starci-fe/require-frame-self-declare"
+        ]
+      },
+      {
+        "key": "heroui",
+        "rules": [
+          "starci-fe/no-heroui-outside-vocabulary"
+        ]
+      },
+      {
+        "key": "frame-fragment",
+        "rules": [
+          "starci-fe/no-frame-fragment-item"
+        ]
+      },
+      {
+        "key": "page-two-files",
+        "rules": [
+          "starci-fe/page-folder-two-files-only"
+        ]
+      }
+    ],
+    "maxScore": 8,
+    "note": "Overlap score = count of distinct categories with ≥1 finding on that file/family"
+  },
+  "topClusters": [
+    {
+      "id": "pages/MockInterviewPage/MockInterviewSession::MockInterviewSession",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 83,
+      "locked": true,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/LandingPage/LearnLoopScroll::LearnLoopScroll",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 68,
+      "locked": true,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/LandingPage/LearnLoopScroll/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/navigation/Navbar::Navbar",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-fragment",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 41,
+      "locked": false,
+      "agents": [
+        "navigation-shells-layouts"
+      ],
+      "files": [
+        ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        "src/components/blocks/navigation/Navbar/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/MockInterviewSessionSkeleton::MockInterviewSessionSkeleton",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 34,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/navigation/SettingsSidebarNav::SettingsSidebarNav",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-fragment",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 17,
+      "locked": false,
+      "agents": [
+        "navigation-shells-layouts"
+      ],
+      "files": [
+        ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "src/components/blocks/navigation/SettingsSidebarNav/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/InterviewerPresence::InterviewerPresence",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 14,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/VoiceHero::VoiceHero",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 13,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/VoiceHero/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ProfileActivityPage/ProfileActivity::ProfileActivity",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 13,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/CvEditorPage/CvEditorToolbarBar::CvEditorToolbarBar",
+      "overlapScore": 7,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 7,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/FlashcardsPage/QuizSession/QuizSessionSkeleton::QuizSessionSkeleton",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 30,
+      "locked": true,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ProfileRedirectPage::ProfileRedirectPage",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 26,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ProfileRedirectPage/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ArchitecturePage/NodeDissectionPanel::NodeDissectionPanel",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 25,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/cards/SurfaceListCard::SurfaceListCard",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 24,
+      "locked": false,
+      "agents": [
+        "shared-consumer-chains-coordinator"
+      ],
+      "files": [
+        "src/components/blocks/cards/SurfaceListCard/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ArchitecturePage/ArchitectureRail::ArchitectureRail",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 23,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/MockInterviewHistory::MockInterviewHistory",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files"
+      ],
+      "raw": 22,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton::OverviewContributionsSkeleton",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 19,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav::ArchitectureMobileNav",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 18,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/MockInterviewStats::MockInterviewStats",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files"
+      ],
+      "raw": 18,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/LandingPage/TalentMarketplace::TalentMarketplace",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 17,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/LandingPage/TalentMarketplace/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/MockInterviewWorkspace::MockInterviewWorkspace",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 16,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ProfileActivityPage/ProfileAchievements::ProfileAchievements",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files"
+      ],
+      "raw": 13,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/MockInterviewScorecard::MockInterviewScorecard",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files"
+      ],
+      "raw": 12,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/AiUsagePage/AiUsageHistory::AiUsageHistory",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files"
+      ],
+      "raw": 11,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/MockInterviewDiagram::MockInterviewDiagram",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 11,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/PracticeHubPage/ProgressCockpit::ProgressCockpit",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 11,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/RewardsPage/MyVouchers::MyVouchers",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 11,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/PracticeHubPage/ProblemCatalog::ProblemCatalog",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 10,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ArchitecturePage/ArchitectureMap::ArchitectureMap",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 8,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/MockInterviewPage/MockInterviewTrackSnapshot::MockInterviewTrackSnapshot",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 8,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard::PinnedProjectCard",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files"
+      ],
+      "raw": 8,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/ContactPage/ContactChannels/FounderCard::FounderCard",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "host",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 7,
+      "locked": false,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx"
+      ]
+    },
+    {
+      "id": "layouts/Navbar/NavLinks::NavLinks",
+      "overlapScore": 6,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "page-two-files",
+        "raw-shape"
+      ],
+      "raw": 6,
+      "locked": false,
+      "agents": [
+        "navigation-shells-layouts"
+      ],
+      "files": [
+        "src/components/layouts/Navbar/NavLinks/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/learn/ContentAiChat::ContentAiChat",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 68,
+      "locked": true,
+      "agents": [
+        "learn-course-content"
+      ],
+      "files": [
+        "src/components/blocks/learn/ContentAiChat/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/FlashcardsPage/QuizSession::QuizSession",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "frame-fragment",
+        "frame-self-declare",
+        "heroui",
+        "page-two-files"
+      ],
+      "raw": 58,
+      "locked": true,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/FlashcardsPage/QuizSession/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/profile/ContributionCalendarView::ContributionCalendarView",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 46,
+      "locked": false,
+      "agents": [
+        "profile-cv-careers-consultant"
+      ],
+      "files": [
+        "src/components/blocks/profile/ContributionCalendarView/index.tsx"
+      ]
+    },
+    {
+      "id": "pages/FlashcardsPage/QuizSession/FlashcardQuizHistory::FlashcardQuizHistory",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "frame-self-declare",
+        "heroui",
+        "identity-root",
+        "page-two-files"
+      ],
+      "raw": 39,
+      "locked": true,
+      "agents": [
+        "pages-and-filing"
+      ],
+      "files": [
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/cards/CourseCard::CourseCard",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 35,
+      "locked": false,
+      "agents": [
+        "shared-consumer-chains-coordinator"
+      ],
+      "files": [
+        "src/components/blocks/cards/CourseCard/component.tsx"
+      ]
+    },
+    {
+      "id": "blocks/learn/personal-project/TaskResult::TaskResult",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 34,
+      "locked": false,
+      "agents": [
+        "learn-course-content"
+      ],
+      "files": [
+        "src/components/blocks/learn/personal-project/TaskResult/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/learn/PlaygroundRagWorkspace::PlaygroundRagWorkspace",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 32,
+      "locked": false,
+      "agents": [
+        "playground-practice-interview"
+      ],
+      "files": [
+        "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx"
+      ]
+    },
+    {
+      "id": "blocks/marketing/SitePreview::SitePreview",
+      "overlapScore": 5,
+      "categories": [
+        "classname-family",
+        "heroui",
+        "host",
+        "identity-root",
+        "raw-shape"
+      ],
+      "raw": 30,
+      "locked": false,
+      "agents": [
+        "shared-consumer-chains-coordinator"
+      ],
+      "files": [
+        "src/components/blocks/marketing/SitePreview/index.tsx"
+      ]
+    }
+  ],
+  "agentFileCounts": {
+    "navigation-shells-layouts": 75,
+    "overlays-modals-drawers": 59,
+    "learn-course-content": 181,
+    "playground-practice-interview": 51,
+    "commerce-account-settings": 14,
+    "community-feed-blog-league": 22,
+    "profile-cv-careers-consultant": 49,
+    "dashboard-admin-system-architecture": 13,
+    "pages-and-filing": 368,
+    "shared-consumer-chains-coordinator": 215
+  },
+  "overlapPass": true,
+  "overlaps": [],
+  "pageLeak": [],
+  "unassigned": []
+}

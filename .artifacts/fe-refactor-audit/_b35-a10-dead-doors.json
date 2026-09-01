@@ -1,0 +1,230 @@
+{
+  "dead": [
+    {
+      "def": ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "name": "map",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": ".storybook/components/composites/viewers/MarkdownContent/MarkdownTableParts.tsx",
+      "name": "MarkdownTableParts",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": ".storybook/components/frames/Stack/Stack.tsx",
+      "name": "Stack",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/async/EmptyContent/index.tsx",
+      "name": "EmptyContent",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/async/ErrorContent/index.tsx",
+      "name": "ErrorContent",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "name": "CheckListCard",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/cards/ContinueCard/index.tsx",
+      "name": "ContinueCard",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/cards/CourseCard/component.tsx",
+      "name": "CourseCard",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "name": "CourseCardSkeleton",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "name": "CrossListCard",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "name": "GroupPressableCard",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "name": "SummaryCard",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "name": "AiCategoryChip",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/chips/AiCategoryChip/index.tsx",
+      "name": "AiCategoryChip",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/form/SearchBar/component.tsx",
+      "name": "SearchBar",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/form/SearchBar/index.tsx",
+      "name": "SearchBar",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "name": "AvatarUploadButton",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "name": "StickyBottomBar",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/layout/SubPageHeader/component.tsx",
+      "name": "SubPageHeader",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "name": "map",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "name": "MarkdownTableParts",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/skeleton/AccordionSkeleton/types/accordion-skeleton.ts",
+      "name": "accordion-skeleton",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "name": "PaginationSkeleton",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "name": "Kbd",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "name": "Meter",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+      "name": "Metric",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "name": "Paragraph",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+      "name": "VerdictHeroCard",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/composites/data/KeyValue/index.tsx",
+      "name": "KeyValue",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/composites/viewers/MarkdownContent/CodePreviewTabs.tsx",
+      "name": "CodePreviewTabs",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/composites/viewers/MarkdownContent/map.tsx",
+      "name": "map",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    },
+    {
+      "def": "src/components/frames/Stack/index.tsx",
+      "name": "Stack",
+      "n": 0,
+      "forbidden": 0,
+      "sample": []
+    }
+  ],
+  "liveCount": 90,
+  "deadCount": 32
+}

@@ -1,0 +1,142 @@
+{
+  "batch": "B37",
+  "agent": "profile-consumers-a",
+  "status": "complete",
+  "completedAt": "2026-08-09T00:15:00.000Z",
+  "checkpoint": "84b92cd77",
+  "owns": [
+    "src/components/pages/ProfileChallengeManagePage/index.tsx",
+    "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "src/components/pages/ProfileCodingProblemPage/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+    "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+    "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx"
+  ],
+  "requiredFirstTargets": {
+    "OverviewCodeSkills": {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "class": "C",
+      "action": "collapsed",
+      "detail": "Removed LabeledCard frameless={cond}+AsyncContent. Single SurfaceCardList owns label/onSeeMore/seeMoreLabel, isSkeleton, emptyState, error/errorState. Snapshot body is one SurfaceCardListItem content row; StatPair/SegmentBar respond to isSkeleton (rowSkeleton ?? isFirstLoad)."
+    },
+    "OverviewChallengeSkills": {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "class": "C",
+      "action": "collapsed",
+      "detail": "Same class-C collapse as OverviewCodeSkills."
+    },
+    "ProfileCoding": {
+      "path": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "class": "A",
+      "action": "partial",
+      "migrated": [
+        "statsHeading LabeledCard+SurfaceListCard → labeled SurfaceCardList with SurfaceCardListItem content rows",
+        "history LabeledCard+toolbar+SurfaceListCard → labeled SurfaceCardList; toolbar is first free-form row; history rows + show-more are SurfaceCardListItem",
+        "skeleton SurfaceListCard → SurfaceCardList isSkeleton items"
+      ],
+      "held": [
+        {
+          "id": "ProfileCoding-metrics-StatRibbon",
+          "classification": "E",
+          "reason": "LabeledCard frameless + StatRibbon (self-framed composite), not a list shell. Exact A/C collapse does not apply."
+        }
+      ]
+    },
+    "ProfileChallenges": {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "class": "A",
+      "action": "partial",
+      "migrated": [
+        "statsHeading LabeledCard+SurfaceListCard → labeled SurfaceCardList with SurfaceCardListItem content rows",
+        "skeleton SurfaceListCard → SurfaceCardList isSkeleton items"
+      ],
+      "held": [
+        {
+          "id": "ProfileChallenges-metrics-StatRibbon",
+          "classification": "E",
+          "reason": "LabeledCard frameless + StatRibbon — non-list body."
+        },
+        {
+          "id": "ProfileChallenges-repo-ChallengeCourseRow",
+          "classification": "H-mismatch",
+          "reason": "LabeledCard frameless + SurfaceListCard remains. ChallengeCourseRow (outside owns) still emits SurfaceListCardItem JSX; converting would double-nest or require editing a non-owned file."
+        }
+      ]
+    }
+  },
+  "otherOwned": {
+    "ProfileChallengeSubmissionPage": {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "class": "A",
+      "action": "collapsed",
+      "detail": "Attempts LabeledCard+SurfaceListCard → labeled SurfaceCardList with data rows + emptyState for noAttempts. Skeleton list → SurfaceCardList."
+    },
+    "ProfileCodingProblemPage": {
+      "path": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "class": "A",
+      "action": "partial",
+      "migrated": [
+        "submissionHeading LabeledCard+SurfaceListCard → labeled SurfaceCardList with data rows + emptyState for notSolved"
+      ],
+      "held": [
+        {
+          "id": "ProfileCodingProblem-statement-Markdown",
+          "classification": "E/F",
+          "reason": "LabeledCard frameless + MarkdownContent body — not a list; legitimate framed prose."
+        }
+      ]
+    },
+    "ProfileChallengeManagePage": {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "class": "G",
+      "action": "migrated",
+      "detail": "Legacy unlabeled SurfaceListCard → SurfaceCardList data rows (href/hover content). Skeleton → SurfaceCardList isSkeleton. Page-level AsyncContent retained for empty/error (toolbar lives outside the list)."
+    },
+    "OverviewCourses": {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+      "class": "A",
+      "action": "held",
+      "mismatch": {
+        "id": "OverviewCourses-CourseRow-outside-owns",
+        "reason": "CourseRow (not in owns) emits SurfaceListCardItem JSX. Cannot convert parent to SurfaceCardListItem data rows without editing the child or double-nesting."
+      }
+    },
+    "ProfileJobReadiness": {
+      "path": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "class": "A-classified-mismatch",
+      "action": "held",
+      "mismatch": {
+        "id": "ProfileJobReadiness-composite-body",
+        "reason": "LabeledCard frameless wraps StackV(StatPair headline + SurfaceListCard tracks), not an exact list-only child. TrackCard also emits SurfaceListCardItem outside a clean data-row migration without child edits."
+      }
+    }
+  },
+  "constraintsHonored": {
+    "noCssDoors": true,
+    "noReactNodeFallbacks": true,
+    "noCommit": true,
+    "noForbiddenTrees": true,
+    "ownsOnly": true
+  },
+  "notes": [
+    "fillHeight on Overview*Skills mapped to SurfaceCardList classNames h-full + flex-1 (SurfaceCardList has no fillHeight prop).",
+    "src ListFreeRow does not yet forward isSkeleton into content (SB does); Overview*Skills use rowSkeleton ?? isFirstLoad so shimmer works under either contract.",
+    "ProfileCoding history toolbar-as-first-row is the collapse that removes LabeledCard without inventing a toolbar slot on SurfaceCardList."
+  ],
+  "verification": {
+    "tsc": {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "ownedPathErrors": 0
+    },
+    "eslintOwned": {
+      "errors": 0,
+      "note": "Pre-existing warnings only (heroui imports, page-folder, retired AsyncContent on multi-section tabs, held LabeledCard+SurfaceListCard on ProfileChallenges repo)."
+    },
+    "gitDiffCheck": "pass",
+    "committed": false
+  }
+}

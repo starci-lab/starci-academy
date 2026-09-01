@@ -1,0 +1,608 @@
+[
+  {
+    "file": "src/components/blocks/community/Discussion/constants.ts",
+    "total": 6,
+    "safe": 6,
+    "unsafe": 0,
+    "rules": {
+      "starci-fe/no-emoji-in-source": 6
+    }
+  },
+  {
+    "file": "src/components/pages/JobPostFormPage/index.tsx",
+    "total": 2,
+    "safe": 1,
+    "unsafe": 1,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1
+    }
+  },
+  {
+    "file": "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx",
+    "total": 2,
+    "safe": 1,
+    "unsafe": 1,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/require-frame-self-declare": 1
+    }
+  },
+  {
+    "file": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+    "total": 3,
+    "safe": 1,
+    "unsafe": 2,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1
+    }
+  },
+  {
+    "file": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+    "total": 3,
+    "safe": 1,
+    "unsafe": 2,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1
+    }
+  },
+  {
+    "file": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+    "total": 3,
+    "safe": 1,
+    "unsafe": 2,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1
+    }
+  },
+  {
+    "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "total": 4,
+    "safe": 2,
+    "unsafe": 2,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/require-frame-self-declare": 1
+    }
+  },
+  {
+    "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "total": 4,
+    "safe": 2,
+    "unsafe": 2,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/require-frame-self-declare": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+    "total": 4,
+    "safe": 1,
+    "unsafe": 3,
+    "rules": {
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+    "total": 5,
+    "safe": 2,
+    "unsafe": 3,
+    "rules": {
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/require-frame-self-declare": 2,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+    "total": 5,
+    "safe": 1,
+    "unsafe": 4,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+    "total": 6,
+    "safe": 1,
+    "unsafe": 5,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-public-classname-prop": 4
+    }
+  },
+  {
+    "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+    "total": 7,
+    "safe": 1,
+    "unsafe": 6,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/handler-on-prefix": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-raw-shape-at-sentence-tier": 3
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+    "total": 7,
+    "safe": 1,
+    "unsafe": 6,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-arbitrary-token": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+    "total": 7,
+    "safe": 1,
+    "unsafe": 6,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+    "total": 7,
+    "safe": 1,
+    "unsafe": 6,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+    "total": 7,
+    "safe": 1,
+    "unsafe": 6,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-arbitrary-token": 2
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+    "total": 7,
+    "safe": 1,
+    "unsafe": 6,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+    "total": 7,
+    "safe": 1,
+    "unsafe": 6,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+    "total": 8,
+    "safe": 1,
+    "unsafe": 7,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 4,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+    "total": 8,
+    "safe": 1,
+    "unsafe": 7,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-cn-above-vocabulary": 2
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+    "total": 8,
+    "safe": 1,
+    "unsafe": 7,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-arbitrary-token": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+    "total": 8,
+    "safe": 1,
+    "unsafe": 7,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1,
+      "starci-fe/no-arbitrary-token": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+    "total": 8,
+    "safe": 1,
+    "unsafe": 7,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 1,
+      "starci-fe/no-cn-above-vocabulary": 2
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+    "total": 9,
+    "safe": 1,
+    "unsafe": 8,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-cn-above-vocabulary": 2
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+    "total": 9,
+    "safe": 1,
+    "unsafe": 8,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+    "total": 9,
+    "safe": 1,
+    "unsafe": 8,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 3,
+      "starci-fe/no-cn-above-vocabulary": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+    "total": 9,
+    "safe": 1,
+    "unsafe": 8,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+    "total": 10,
+    "safe": 1,
+    "unsafe": 9,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1,
+      "starci-fe/no-arbitrary-token": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+    "total": 10,
+    "safe": 1,
+    "unsafe": 9,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1,
+      "starci-fe/no-arbitrary-token": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+    "total": 10,
+    "safe": 1,
+    "unsafe": 9,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 2,
+      "starci-fe/no-cn-above-vocabulary": 2,
+      "starci-fe/no-raw-shape-at-sentence-tier": 1
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+    "total": 11,
+    "safe": 1,
+    "unsafe": 10,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 3,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 2
+    }
+  },
+  {
+    "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+    "total": 12,
+    "safe": 1,
+    "unsafe": 11,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-classname-at-sentence-tier": 1,
+      "starci-fe/no-public-classname-prop": 2,
+      "starci-fe/no-host-element-at-sentence-tier": 3,
+      "starci-fe/no-cn-above-vocabulary": 1,
+      "starci-fe/no-raw-shape-at-sentence-tier": 2,
+      "starci-fe/no-arbitrary-token": 1
+    }
+  },
+  {
+    "file": "src/components/pages/PracticeProblemPage/index.tsx",
+    "total": 21,
+    "safe": 1,
+    "unsafe": 20,
+    "rules": {
+      "starci-fe/no-heroui-outside-vocabulary": 1,
+      "starci-fe/no-parallel-skeleton": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 9,
+      "starci-fe/no-raw-shape-at-sentence-tier": 8,
+      "starci-fe/no-public-classname-prop": 1
+    }
+  },
+  {
+    "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+    "total": 22,
+    "safe": 1,
+    "unsafe": 21,
+    "rules": {
+      "starci-fe/page-folder-two-files-only": 1,
+      "starci-fe/no-skeleton-twin-component": 1,
+      "starci-fe/require-identity-root": 1,
+      "starci-fe/no-host-element-at-sentence-tier": 5,
+      "starci-fe/no-raw-shape-at-sentence-tier": 4,
+      "starci-fe/no-public-classname-prop": 10
+    }
+  }
+]

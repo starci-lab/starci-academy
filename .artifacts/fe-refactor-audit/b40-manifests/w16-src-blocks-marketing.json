@@ -1,0 +1,40 @@
+{
+  "batch": "B40",
+  "worker": "w16-src-blocks-marketing",
+  "owns": [
+    "src/components/blocks/marketing/AdBanner/index.tsx",
+    "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+    "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+    "src/components/blocks/marketing/HeroBanner/index.tsx",
+    "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+    "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+    "src/components/blocks/marketing/SectionHeading/index.tsx",
+    "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+    "src/components/blocks/marketing/SitePreview/index.tsx",
+    "src/components/blocks/marketing/TopicLane/index.tsx",
+    "src/components/blocks/marketing/TrackCard/index.tsx",
+    "src/components/blocks/marketing/TruthList/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+    "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "src/components/pages/AiUsagePage/index.tsx",
+    "src/components/pages/MyFeedbackPage/index.tsx",
+    "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+    "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+    "src/components/pages/ProfileActivityPage/index.tsx",
+    "src/components/pages/ProfilePublicCvPage/index.tsx"
+  ],
+  "safeRules": [
+    "starci-fe/require-export-jsdoc",
+    "starci-fe/no-inline-parameter-type",
+    "starci-fe/handler-on-prefix",
+    "starci-fe/prefer-arrow-export",
+    "starci-fe/no-vietnamese-in-source-authoring",
+    "starci-fe/require-identity-root",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-emoji-in-source"
+  ],
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w16-src-blocks-marketing.json"
+}

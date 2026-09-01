@@ -1,0 +1,21 @@
+{
+  "batch": "B32c",
+  "phase": 5,
+  "generatedAt": "2026-08-08T12:29:13.096Z",
+  "method": "pre-existing if same ruleId existed on file before (message template changes ignored)",
+  "certifyFileCount": 203,
+  "remainingMessages": 113,
+  "bucketCounts": {
+    "introduced-by-b32": 0,
+    "pre-existing-related": 113,
+    "pre-existing-unrelated": 0,
+    "observed-a11y": 0
+  },
+  "introducedErrors": 0,
+  "introducedWarnings": 0,
+  "closedClusterDoorWarnings": 0,
+  "closedClusterDoorWarningSamples": [],
+  "unclassified": 0,
+  "introducedSamples": [],
+  "ok": true
+}

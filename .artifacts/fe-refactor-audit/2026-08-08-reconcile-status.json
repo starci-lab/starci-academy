@@ -1,0 +1,179 @@
+{
+  "generatedAt": "2026-08-06T22:37:30.594Z",
+  "batch": 12,
+  "title": "Consumer/API reconciliation",
+  "checkpoint": "db1f7a11",
+  "workers": {
+    "atoms-composites-consumers": {
+      "changed": 8,
+      "skipped": 12,
+      "holds": 6,
+      "regressions": 0,
+      "verification": {
+        "eslintQuietChanged": {
+          "exitOk": true,
+          "errorCount": 0,
+          "files": [
+            "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+            ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+            "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+            ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+            "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+            "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+            ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+            ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx"
+          ]
+        },
+        "defsRemoved": [],
+        "note": "No per-part props removed from composite defs — live consumers remain for each. No commit."
+      }
+    },
+    "blocks-consumer-migrations": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 40,
+      "regressions": 0,
+      "verification": {
+        "note": "Capped 40 reviewed; 0 safe rewrites. No twinExists pairs in manifest. No consumerUnit (per-part classname) entries. HeroUI symbols differ from house atom APIs (Button label/prefixIcon, Card omits className, Typography text/size, Chip→ChipBase, Tooltip compound→label API, CloseButton missing). cn-only files perform real class merges (not noop passthrough). Identity: no clear frame/composite root accepting identity={{}}; PressableCard/SurfaceListCard/TierCardBase already have resolveIdentity plumbing for callers. Skeletons hard-held.",
+        "eslintQuiet": "n/a (no changed files)"
+      }
+    },
+    "pages-consumer-migrations": {
+      "changed": 0,
+      "skipped": 2,
+      "holds": 38,
+      "regressions": 0,
+      "verification": {
+        "note": "No source edits — all 40 capped files held or skipped (skeletons). No Storybook twins in manifest (twinExists=false). HeroUI Button/Typography/Chip/Card/form compounds not identical to atoms; cn-only imports tied to cn-above. No clear identity-capable single roots (PageContainer/StickyBottomBar/SurfaceListCardRow/blocks AsyncContent lack identity; ContactForm mixed Box+form). eslint --quiet not run (zero changed).",
+        "changedCount": 0,
+        "skippedCount": 2,
+        "holdsCount": 38
+      }
+    },
+    "storybook-src-parity": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 0,
+      "regressions": 0,
+      "verification": {
+        "note": "No candidate files after exclusive claim — worker omitted by coordinator"
+      }
+    },
+    "exports-and-barrels": {
+      "changed": 1,
+      "skipped": 0,
+      "holds": 1,
+      "regressions": 1,
+      "verification": {
+        "eslintQuietExit": 0,
+        "notes": [
+          "ContinueCard: removed runtime namespace object; named exports ContinueCardHero/ContinueCardItem retained.",
+          "pow10: arrow conversion reverted — function overloads required for BN|Decimal discrimination."
+        ]
+      }
+    },
+    "identity-safe-roots": {
+      "changed": 5,
+      "skipped": 0,
+      "holds": 30,
+      "regressions": 0,
+      "verification": {
+        "eslintQuiet": {
+          "paths": [
+            "src/components/blocks/cards/NestedCard/index.tsx",
+            "src/components/blocks/cards/PricingCard/index.tsx",
+            "src/components/blocks/ai/AiQuotaLane/index.tsx",
+            "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+            "src/components/blocks/consultant/ConsultantCard/index.tsx"
+          ],
+          "exitCode": 0
+        },
+        "batchSize": 35,
+        "changedCount": 5,
+        "holdCount": 30,
+        "skippedCount": 0,
+        "twinExistsInBatch": 0,
+        "note": "No Storybook twins in batch (twinExists:false). Identity only on unambiguous capable hosts; host/mixed/unclear roots held."
+      }
+    },
+    "heroui-boundaries": {
+      "changed": 0,
+      "skipped": 0,
+      "holds": 35,
+      "regressions": 0,
+      "verification": {
+        "eslintQuiet": "skipped — no source files changed",
+        "changedCount": 0,
+        "holdCount": 35,
+        "note": "All 35 capped candidates held. No twinExists storybook paths. Prefer-hold: every consumer uses HeroUI children/compound APIs that are not identical to StarCi atoms (Button.label, Typography.text, Pagination data-driven, Link Back/SeeMore only, ChipBase, Popover/Modal/Accordion/Dropdown/Table/Breadcrumbs compounds, import * as HeroUI namespaces, cn with no redirect)."
+      }
+    }
+  },
+  "totals": {
+    "changed": 14,
+    "skipped": 14,
+    "holds": 150,
+    "regressions": 1
+  },
+  "overlaps": [],
+  "uniqueChangedFiles": 14,
+  "twinParity": {
+    "softMismatches": 0,
+    "issues": []
+  },
+  "ruleDelta": {
+    "before": 4690,
+    "after": 4679,
+    "delta": -11,
+    "rows": [
+      {
+        "r": "starci-fe/require-identity-root",
+        "b": 626,
+        "a": 621,
+        "d": -5
+      },
+      {
+        "r": "starci-fe/no-heroui-outside-vocabulary",
+        "b": 509,
+        "a": 507,
+        "d": -2
+      },
+      {
+        "r": "starci-fe/no-cn-above-vocabulary",
+        "b": 600,
+        "a": 598,
+        "d": -2
+      },
+      {
+        "r": "starci-fe/no-classname-at-sentence-tier",
+        "b": 542,
+        "a": 541,
+        "d": -1
+      },
+      {
+        "r": "starci-fe/no-runtime-namespace",
+        "b": 1,
+        "a": 0,
+        "d": -1
+      }
+    ]
+  },
+  "coordinator": {
+    "repairs": [
+      {
+        "path": "src/modules/utils/computations/pow-10.ts",
+        "note": "reverted arrow overload; prefer-arrow held"
+      }
+    ]
+  },
+  "verification": {
+    "tsc": true,
+    "eslintQuietChanged": true,
+    "eslintMaxWarningsChanged": "fails-on-preexisting-held-warnings-only",
+    "pluginTests": true,
+    "principleStyle": true,
+    "auditFe": true,
+    "teacherHolds": 27
+  },
+  "noCommit": true
+}

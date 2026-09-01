@@ -1,0 +1,89 @@
+{
+  "warnings": 6206,
+  "errors": 0,
+  "files": 1088,
+  "a11y": 11,
+  "newRule": 6,
+  "top": [
+    [
+      "starci-fe/no-host-element-at-sentence-tier",
+      1497
+    ],
+    [
+      "starci-fe/no-public-classname-prop",
+      1098
+    ],
+    [
+      "starci-fe/no-raw-shape-at-sentence-tier",
+      767
+    ],
+    [
+      "starci-fe/require-frame-self-declare",
+      623
+    ],
+    [
+      "starci-fe/require-identity-root",
+      520
+    ],
+    [
+      "starci-fe/no-heroui-outside-vocabulary",
+      404
+    ],
+    [
+      "starci-fe/no-cn-above-vocabulary",
+      353
+    ],
+    [
+      "starci-fe/page-folder-two-files-only",
+      276
+    ],
+    [
+      "starci-fe/no-classname-at-sentence-tier",
+      176
+    ],
+    [
+      "starci-fe/no-frame-fragment-item",
+      74
+    ],
+    [
+      "starci-fe/no-inline-parameter-type",
+      63
+    ],
+    [
+      "starci-fe/no-parallel-skeleton",
+      63
+    ],
+    [
+      "starci-fe/no-emoji-in-source",
+      54
+    ],
+    [
+      "starci-fe/no-inline-skeleton-branch",
+      44
+    ],
+    [
+      "starci-fe/no-skeleton-twin-component",
+      38
+    ],
+    [
+      "starci-fe/no-retired-async-content",
+      37
+    ],
+    [
+      "starci-fe/no-helper-folder-in-components",
+      33
+    ],
+    [
+      "starci-fe/require-export-jsdoc",
+      16
+    ],
+    [
+      "starci-fe/no-arbitrary-token",
+      16
+    ],
+    [
+      "starci-fe/no-vietnamese-in-source-authoring",
+      9
+    ]
+  ]
+}

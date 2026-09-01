@@ -1,0 +1,91 @@
+{
+  "batch": 18,
+  "title": "CONTRACT CANON BEFORE API MIGRATION",
+  "date": "2026-08-08",
+  "baseHead": "6c787529",
+  "branch": "mtp",
+  "committed": false,
+  "changedFiles": [
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "implementationReadyApplied": [
+    {
+      "id": "ModalShell-bodyClassName-to-StackV",
+      "existingCanon": "StackV principle=content-row (12px)",
+      "files": [
+        ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+        ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx"
+      ]
+    }
+  ],
+  "requiresTeacherApproval": [
+    {
+      "id": "dialogWidth-footerVariant",
+      "consumers": ["MiniCartDrawer"],
+      "implementationReady": false,
+      "reason": "new APIs; no existing DrawerShell size/footer token"
+    },
+    {
+      "id": "viewportFit-near-fullscreen",
+      "consumers": ["CvPreviewModal"],
+      "implementationReady": false,
+      "reason": "new API; cover/full not equivalent to 92vh×96vw"
+    },
+    {
+      "id": "PDFView-height-vocabulary",
+      "consumers": ["CvPreviewModal", "PDFView.stories"],
+      "implementationReady": false,
+      "reason": "open pixel/vh set; no canon enum"
+    },
+    {
+      "id": "SurfaceCard-bodyVariant",
+      "consumers": ["ContinueCard", "PressableGroup TILE_CHROME"],
+      "implementationReady": false,
+      "reason": "multi-semantic; one enum leaves escapes"
+    }
+  ],
+  "vendorBoundaries": {
+    "heroui": 30,
+    "identicalWrappers": 0
+  },
+  "skeletonRedesign": {
+    "paths": 23,
+    "sourceEdits": false
+  },
+  "nivoexpertFollowUp": {
+    "prop": "DrawerShell.contentClassName",
+    "consumer": "LessonEditorPanel:150",
+    "edited": false
+  },
+  "proposedApisNotInvented": [
+    "dialogWidth",
+    "footerVariant",
+    "viewportFit",
+    "PDF height enum",
+    "bodyVariant",
+    "contentStack"
+  ],
+  "coordinator": {
+    "overlappingEdits": 0,
+    "teacherHoldEdits": false,
+    "runtimeNamespaceRegression": false,
+    "pluralPrincipleRegression": false,
+    "inventedApis": false
+  },
+  "verification": {
+    "tsc": { "exit": 0 },
+    "eslintMaxWarnings": { "exit": 0 },
+    "nodeTests": { "pass": 15, "fail": 0 },
+    "auditFe": { "exit": 0, "teacherHolds": 27, "failing": 0 }
+  },
+  "partitions": {
+    "modal-surface-contracts": "applied-bodyClassName; SurfaceCard held",
+    "commerce-dialog-contracts": "proposal-only",
+    "cv-preview-pdf-contracts": "proposal-only",
+    "nivo-boundary-proposal": "proposal-only",
+    "heroui-boundary-ledger": "vendor-boundary",
+    "skeleton-redesign-proposal": "proposal-only"
+  }
+}

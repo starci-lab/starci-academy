@@ -1,0 +1,41 @@
+{
+  "batch": "B40",
+  "worker": "w11-src-pages-LeaguePage",
+  "owns": [
+    "src/components/blocks/code/CodeConsole/index.tsx",
+    "src/components/blocks/code/IOExampleCard/index.tsx",
+    "src/components/blocks/code/SandpackPanel/index.tsx",
+    "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+    "src/components/blocks/feed/ActivityAvatar/index.tsx",
+    "src/components/blocks/feed/ChatBubble/index.tsx",
+    "src/components/blocks/feed/ChatPanel/index.tsx",
+    "src/components/blocks/feed/ReactionBar/index.tsx",
+    "src/components/blocks/feed/Timeline/index.tsx",
+    "src/components/pages/AdminLoginPage/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+    "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+    "src/components/pages/ArchitecturePage/index.tsx",
+    "src/components/pages/KpiPage/component.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "src/components/pages/LeaguePage/index.tsx",
+    "src/components/pages/LegalPage/index.tsx",
+    "src/components/pages/ProfileRedirectPage/index.tsx"
+  ],
+  "safeRules": [
+    "starci-fe/require-export-jsdoc",
+    "starci-fe/no-inline-parameter-type",
+    "starci-fe/handler-on-prefix",
+    "starci-fe/prefer-arrow-export",
+    "starci-fe/no-vietnamese-in-source-authoring",
+    "starci-fe/require-identity-root",
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-emoji-in-source"
+  ],
+  "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b40-worker-w11-src-pages-LeaguePage.json"
+}

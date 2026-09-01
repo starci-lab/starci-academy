@@ -1,0 +1,36 @@
+{
+  "partition": "pages-learning-commerce",
+  "manifest": [
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx"
+  ],
+  "changed": [
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx"
+  ],
+  "applied": [
+    {
+      "kind": "redundant-passthrough",
+      "files": [
+        "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+        "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx"
+      ],
+      "change": "Removed className={className} on LabeledAccordionCard; skeleton path still uses cn(ACCORDION_CARD_SKELETON, className)",
+      "consumerSearch": "CourseDetail mounts <CourseOutline search/> / <CourseMilestoneOutline search/> with no className; LabeledAccordionCard ignored the prop"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "CourseOutline/CourseMilestoneOutline WithClassNames retained (skeleton path)",
+    "locked LearnLoopScroll / QuizSession / etc."
+  ],
+  "evidence": {},
+  "principles": [],
+  "parity": {
+    "storybookSrc": "n/a — page trees"
+  },
+  "verification": {
+    "local": "deferred to aggregate"
+  },
+  "regressions": []
+}

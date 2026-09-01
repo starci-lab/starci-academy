@@ -1,0 +1,202 @@
+{
+  "partition": "identity-safe-roots",
+  "changed": [
+    {
+      "path": "src/components/blocks/cards/NestedCard/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on clear SurfaceCardNested root"
+    },
+    {
+      "path": "src/components/blocks/cards/PricingCard/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "identity on clear SectionCard root"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaLane/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "unwrap empty div → StackV identity"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "unwrap empty div → StackV identity"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "unwrap empty wrapper divs → SurfaceCard identity"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Dropdown cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "raw div root; no capable frame/composite host"
+    },
+    {
+      "path": "src/components/layouts/Footer/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "raw footer root; no capable frame/composite host"
+    },
+    {
+      "path": "src/components/layouts/LearnShellLayout/component.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "raw layout div root; no capable frame/composite host"
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Dropdown.Menu cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Dropdown.Menu cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Button cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Switch cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "raw div root; no capable frame/composite host"
+    },
+    {
+      "path": "src/components/layouts/Navbar/AccountMenuDropdown/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Dropdown cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Button cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "raw nav root; mixed layout tree"
+    },
+    {
+      "path": "src/components/layouts/Navbar/Logo/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Link cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "raw div root; no capable frame/composite host"
+    },
+    {
+      "path": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Popover cannot carry identity"
+    },
+    {
+      "path": "src/components/layouts/Navbar/SearchButton/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root InputButtonLike cannot carry identity"
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "mixed roots across branches (className div wrapping AiQuotaLane/SurfaceCard/StackV)"
+    },
+    {
+      "path": "src/components/blocks/async/AsyncContent/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "multi-branch returns (ErrorContent/fragment/empty/content); no single frame root"
+    },
+    {
+      "path": "src/components/blocks/async/ErrorContent/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "hand-rolled data-tier div claims composite while folder is block; unclear tier for identity"
+    },
+    {
+      "path": "src/components/blocks/blog/PostRow/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root Link cannot carry identity"
+    },
+    {
+      "path": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root EnumChip cannot carry identity"
+    },
+    {
+      "path": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host root EnumChip cannot carry identity"
+    },
+    {
+      "path": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "raw div wrapping vendor Sandpack; no capable frame/composite host"
+    },
+    {
+      "path": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "mixed roots (Skeleton vs color-wrapper div around Cluster)"
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagInline/component.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host PriceTagBase cannot carry identity"
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagProminent/component.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host PriceTagBase cannot carry identity"
+    },
+    {
+      "path": "src/components/blocks/community/CommunityPost/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host CommunityPostCard cannot carry identity"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host SearchAutocomplete (atom) cannot carry identity; empty wrapper divs only"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "mixed root: region div (aria) wrapping AsyncContent; cannot stamp without dropping a11y region or inventing host"
+    },
+    {
+      "path": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "rules": ["starci-fe/require-identity-root"],
+      "reason": "host PageHeader cannot carry identity; empty wrapper div only"
+    }
+  ],
+  "verification": {
+    "eslintQuiet": {
+      "paths": [
+        "src/components/blocks/cards/NestedCard/index.tsx",
+        "src/components/blocks/cards/PricingCard/index.tsx",
+        "src/components/blocks/ai/AiQuotaLane/index.tsx",
+        "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "src/components/blocks/consultant/ConsultantCard/index.tsx"
+      ],
+      "exitCode": 0
+    },
+    "batchSize": 35,
+    "changedCount": 5,
+    "holdCount": 30,
+    "skippedCount": 0,
+    "twinExistsInBatch": 0,
+    "note": "No Storybook twins in batch (twinExists:false). Identity only on unambiguous capable hosts; host/mixed/unclear roots held."
+  },
+  "regressions": []
+}

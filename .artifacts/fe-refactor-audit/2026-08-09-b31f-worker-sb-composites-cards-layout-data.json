@@ -1,0 +1,35 @@
+{
+  "worker": "sb-composites-cards-layout-data",
+  "status": "done",
+  "attempted": [
+    ".storybook/components/composites/data/KeyValue/KeyValue.tsx",
+    ".storybook/components/composites/layout/Section/Section.tsx",
+    ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+    ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx"
+  ],
+  "fixed": [
+    ".storybook/components/composites/data/KeyValue/KeyValue.tsx",
+    ".storybook/components/composites/layout/Section/Section.tsx",
+    ".storybook/components/composites/navigation/Stepper/Stepper.tsx",
+    ".storybook/components/composites/stats/SegmentBar/SegmentBar.tsx"
+  ],
+  "held": [
+    {
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "reason": "other-debt:22 (no-public-classname-prop) — retract family"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "reason": "other-debt:4 (no-public-classname-prop) — retract family"
+    }
+  ],
+  "findingsBefore": 11,
+  "findingsFixed": 8,
+  "findingsHeld": 3,
+  "classification": {
+    "peer-items": 3,
+    "conditional-peers": 4,
+    "nested-relationship": 1
+  },
+  "eslintMaxWarnings0": true
+}

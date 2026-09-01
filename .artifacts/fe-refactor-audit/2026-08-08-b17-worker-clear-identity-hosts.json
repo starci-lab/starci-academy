@@ -1,0 +1,40 @@
+{
+  "partition": "clear-identity-hosts",
+  "changed": [
+    "src/components/blocks/learn/UpNextCard/index.tsx",
+    "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx"
+  ],
+  "skipped": [
+    "29 unclear identity hosts from BATCH 13",
+    "FlashcardDueHero mixed roots",
+    "ReactionButton skeleton span + StackH",
+    "PersonalProjectDashboard host div",
+    "UpNextCard — no Storybook twin to mirror"
+  ],
+  "holds": [
+    "unclear-identity-hosts-batch13"
+  ],
+  "evidence": {
+    "UpNextCard": {
+      "root": "SectionCard",
+      "soleExportReturn": true,
+      "acceptsCallerIdentity": true,
+      "stamp": "identity={{ tier: \"block\", component: \"UpNextCard\" }}"
+    },
+    "PlaygroundSetupSteps": {
+      "root": "StackV",
+      "soleExportReturn": true,
+      "acceptsCallerIdentity": true,
+      "stamp": "identity={{ tier: \"block\", component: \"PlaygroundSetupSteps\" }}",
+      "twinSynced": true
+    }
+  },
+  "proposals": [],
+  "verification": {
+    "tsc": 0,
+    "eslintQuiet": 0,
+    "eslintMaxWarnings": "fails pre-existing held warnings only"
+  },
+  "regressions": []
+}

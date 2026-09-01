@@ -1,0 +1,34 @@
+{
+  "filesWithWarnings": 7,
+  "totalWarnings": 0,
+  "files": [
+    {
+      "name": "_b35c-chunk-0.json",
+      "parseError": true
+    },
+    {
+      "name": "_b35c-chunk-1.json",
+      "parseError": true
+    },
+    {
+      "name": "_b35c-chunk-2.json",
+      "parseError": true
+    },
+    {
+      "name": "_b35c-chunk-3.json",
+      "parseError": true
+    },
+    {
+      "name": "_b35c-chunk-4.json",
+      "parseError": true
+    },
+    {
+      "name": "_b35c-chunk-5.json",
+      "parseError": true
+    },
+    {
+      "name": "_b35c-chunk-6.json",
+      "parseError": true
+    }
+  ]
+}

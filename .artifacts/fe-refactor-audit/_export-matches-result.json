@@ -1,0 +1,308 @@
+{
+  "patched": [
+    {
+      "file": "src/components/atoms/data/Table/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Root": "TableRoot",
+        "ScrollContainer": "TableScrollContainer",
+        "Content": "TableContent",
+        "Header": "TableHeader",
+        "Body": "TableBody",
+        "Column": "TableColumn",
+        "Row": "TableRow",
+        "Cell": "TableCell"
+      }
+    },
+    {
+      "file": "src/components/atoms/display/Progress/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Bar": "ProgressBar",
+        "Circle": "ProgressCircle",
+        "Gauge": "Meter"
+      }
+    },
+    {
+      "file": "src/components/atoms/feedback/AlertDialog/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Root": "AlertDialogRoot",
+        "Backdrop": "AlertDialogBackdrop",
+        "Container": "AlertDialogContainer",
+        "Dialog": "AlertDialogDialog",
+        "Header": "AlertDialogHeader",
+        "Heading": "AlertDialogHeading",
+        "Body": "AlertDialogBody",
+        "Footer": "AlertDialogFooter"
+      }
+    },
+    {
+      "file": "src/components/atoms/forms/ListBox/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Root": "ListBoxRoot",
+        "Item": "ListBoxItem"
+      }
+    },
+    {
+      "file": "src/components/atoms/forms/Select/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Root": "SelectRoot",
+        "Trigger": "SelectTrigger",
+        "Value": "SelectValue",
+        "Indicator": "SelectIndicator",
+        "Popover": "SelectPopover"
+      }
+    },
+    {
+      "file": "src/components/atoms/navigation/Link/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Back": "LinkBack",
+        "SeeMore": "LinkSeeMore"
+      }
+    },
+    {
+      "file": "src/components/atoms/overlay/Drawer/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Root": "DrawerRoot",
+        "Backdrop": "DrawerBackdrop",
+        "Content": "DrawerContent",
+        "Dialog": "DrawerDialog",
+        "Header": "DrawerHeader",
+        "Body": "DrawerBody",
+        "Footer": "DrawerFooter",
+        "CloseTrigger": "DrawerCloseTrigger"
+      }
+    },
+    {
+      "file": "src/components/atoms/overlay/Modal/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Root": "ModalRoot",
+        "Backdrop": "ModalBackdrop",
+        "Container": "ModalContainer",
+        "Dialog": "ModalDialog",
+        "Header": "ModalHeader",
+        "Body": "ModalBody",
+        "Footer": "ModalFooter",
+        "CloseTrigger": "ModalCloseTrigger"
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonAccordion as Accordion"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonAvatar as Avatar"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonBadge as Badge"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonBreadcrumbs as Breadcrumbs"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonButton as Button"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonCard as Card"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonCheckbox as Checkbox"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonChip as Chip"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonDisclosure as Disclosure"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonInput as Input"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonKbd as Kbd"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonListBox as ListBox"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonListRow as ListRow"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonMenu as Menu"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonMeter as Meter"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonMetric as Metric"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonPagination as Pagination"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonParagraph as Paragraph"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonProgressBar as ProgressBar"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonRadioGroup as RadioGroup"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonSegmentBar as SegmentBar"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonSelect as Select"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonSlider as Slider"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonSwitch as Switch"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonTable as Table"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonTabs as Tabs"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonTextArea as TextArea"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonTypography as Typography"
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "kind": "skeleton-alias",
+      "alias": "SkeletonUserCell as UserCell"
+    },
+    {
+      "file": "src/components/composites/chips/Chip/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Enum": "EnumChip",
+        "Highlight": "HighlightChip",
+        "Removable": "RemovableToken"
+      }
+    },
+    {
+      "file": "src/components/composites/data/KeyValue/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Row": "KeyValueRow",
+        "List": "KeyValueList"
+      }
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Header": "Header",
+        "BottomBar": "BottomBar"
+      }
+    },
+    {
+      "file": "src/components/composites/lists/List/index.tsx",
+      "kind": "compound",
+      "members": {
+        "Row": "Row",
+        "Labeled": "Labeled",
+        "Meta": "Meta",
+        "ToggleRow": "ToggleRow"
+      }
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+      "kind": "long-alias",
+      "alias": "GlobalSearchContentBlock as Block"
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+      "kind": "long-alias",
+      "alias": "GlobalSearchEmpty as Empty"
+    },
+    {
+      "file": "src/components/overlays/modals/GlobalSearchModal/Content/index.tsx",
+      "kind": "long-alias",
+      "alias": "GlobalSearchContent as Content"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "kind": "long-alias",
+      "alias": "AdminMpegDashTestHeader as Header"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "kind": "long-alias",
+      "alias": "AdminUploadVideoHeader as Header"
+    }
+  ],
+  "skipped": [],
+  "hard": [
+    {
+      "file": "src/components/blocks/cv/BlockRegistry/index.tsx",
+      "reason": "registry-consts-not-component"
+    }
+  ]
+}

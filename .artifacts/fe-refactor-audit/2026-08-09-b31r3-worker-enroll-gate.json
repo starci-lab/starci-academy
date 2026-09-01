@@ -1,0 +1,33 @@
+{
+  "worker": "enroll-gate",
+  "manifest": [],
+  "warningsBefore": [
+    { "line": 41, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 51, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 58, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 65, "rule": "starci-fe/no-public-classname-prop" },
+    { "line": 126, "rule": "starci-fe/no-public-classname-prop" },
+    { "line": 157, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 178, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 179, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 181, "rule": "starci-fe/require-frame-self-declare" },
+    { "line": 183, "rule": "starci-fe/require-frame-self-declare" }
+  ],
+  "warningsAfter": "unchanged — not edited",
+  "legacyImportBefore": "@/components/blocks/identity/IconTile",
+  "legacyImportAfter": "@/components/blocks/identity/IconTile",
+  "iconExpressionBefore": "<LockIcon aria-hidden focusable=\"false\" />",
+  "iconComponentAfter": null,
+  "changed": [],
+  "held": [
+    {
+      "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "reason": "CARD_SURFACE / TEASER_FADE / -mt-32 float have no frame vocabulary; dropping Medium overlap for LockedContentMask would not be behaviorally exact. SB twin drifted (circular IconTile + different price API)."
+    }
+  ],
+  "retracted": [],
+  "storybookParity": "held — twin drifted; neither tree edited",
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

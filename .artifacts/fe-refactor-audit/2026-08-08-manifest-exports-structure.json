@@ -1,0 +1,17 @@
+{
+  "partition": "exports-structure",
+  "generatedAt": "2026-08-06T21:05:14.781Z",
+  "fileCount": 1,
+  "files": [
+    {
+      "path": "src/components/blocks/cv/BlockRegistry/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cv/BlockRegistry/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/export-matches-folder"
+      ],
+      "holdRules": []
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import {NextConfig} from "next"
 import createNextIntlPlugin from "next-intl/plugin"
+import {withSentryConfig} from "@sentry/nextjs"
  
 const nextConfig: NextConfig = {
     // Deploy nhanh: bỏ qua tsc khi `next build` (code đã verify riêng qua
@@ -22,4 +23,17 @@ const nextConfig: NextConfig = {
 }
  
 const withNextIntl = createNextIntlPlugin()
-export default withNextIntl(nextConfig)
+const configuredNext = withNextIntl(nextConfig)
+const canUploadSentrySourceMaps = Boolean(
+    process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_PROJECT,
+)
+
+export default withSentryConfig(configuredNext, {
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    org: process.env.SENTRY_ORG ?? "starci-lab-company",
+    project: process.env.SENTRY_PROJECT,
+    silent: !process.env.CI,
+    sourcemaps: {
+        disable: !canUploadSentrySourceMaps,
+    },
+})

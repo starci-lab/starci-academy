@@ -1,0 +1,300 @@
+{
+  "changed": [
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": ".storybook/story-kit.tsx",
+      "edits": 2,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/architecture/page.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/blog/[slug]/page.tsx",
+      "edits": 2,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/contact/page.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/learn/playground/[slug]/layout.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/courses/[courseId]/page.tsx",
+      "edits": 2,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/home/page.tsx",
+      "edits": 2,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/layout.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/privacy/page.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/profile/[username]/layout.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/profile/settings/layout.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/status/page.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/app/[locale]/terms/page.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "edits": 3,
+      "aliases": 3
+    },
+    {
+      "file": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/grading/GradingByline/component.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/AuroraEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/BubblesEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/EmberEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/FirefliesEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/RainEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/SnowEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/StarsEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/WaveEffect.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/RootNode/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "edits": 2,
+      "aliases": 2
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/learn/QuizCard/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "edits": 2,
+      "aliases": 2
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "edits": 15,
+      "aliases": 7
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "edits": 3,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+      "edits": 2,
+      "aliases": 2
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "edits": 11,
+      "aliases": 5
+    },
+    {
+      "file": "src/components/layouts/PersonalProjectWorkspaceLayout/index.tsx",
+      "edits": 2,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/layouts/PublicProfileLayout/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "edits": 2,
+      "aliases": 2
+    },
+    {
+      "file": "src/components/pages/CvGalleryPage/CvGallery/component.tsx",
+      "edits": 3,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/LegalPage/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/pages/ProfilePublicCvPage/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/providers/PlaygroundSessionProvider/index.tsx",
+      "edits": 1,
+      "aliases": 1
+    },
+    {
+      "file": "src/components/providers/SwrProvider.tsx",
+      "edits": 1,
+      "aliases": 1
+    }
+  ],
+  "skipped": [
+    {
+      "file": "src/app/[locale]/error.tsx",
+      "reason": "no editable inline types found"
+    }
+  ]
+}

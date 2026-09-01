@@ -1,0 +1,180 @@
+{
+  "batch": "B35",
+  "agent": "pages-and-filing",
+  "agentKey": "pages-and-filing",
+  "checkpoint": "02011807",
+  "generatedAt": "2026-08-08T14:45:00.000Z",
+  "status": "partial",
+  "summary": "Filed page-local hooks/types/utils/constants/maps out of page folders into src/hooks and src/modules; inlined ChatPaneSkeleton and Contact FounderCard; held MockInterview/QuizSession/LearnLoopScroll product paths. Nested high-score UI collapses (ProfileActivity, AiUsageHistory, CvEditorToolbarBar, Rewards, KnowledgeGraph leaf merge) were attempted then reverted after import-merge corruption — still open page-folder debt under nested page ecosystems.",
+  "foldersReducedToTwoFiles": {
+    "count": 10,
+    "note": "Leaf page folders that previously had >2 files and now have ≤2 files (component.tsx/index.tsx only, or index alone). Nested sibling component folders under the same page still produce page-folder-two-files-only on the parent until inlined or relocated.",
+    "folders": [
+      "src/components/pages/ArchitecturePage",
+      "src/components/pages/ArchitecturePage/ArchitectureMap",
+      "src/components/pages/ChallengeResultPage",
+      "src/components/pages/CommunityChatPage/ChatPane",
+      "src/components/pages/CourseContents",
+      "src/components/pages/CourseDetailPage",
+      "src/components/pages/DashboardPage/ContinueLearning",
+      "src/components/pages/DashboardPage/WeeklyGoals",
+      "src/components/pages/FlashcardsPage",
+      "src/components/pages/KpiPage"
+    ],
+    "alsoClearedHelperOnlyTops": [
+      "src/components/pages/PracticeHubPage",
+      "src/components/pages/OauthRedirectPage",
+      "src/components/pages/SepayCheckoutPage",
+      "src/components/pages/AdminMpegDashTestPage",
+      "src/components/pages/AdminUploadVideoPage",
+      "src/components/pages/SystemStatusPage",
+      "src/components/pages/LearningHistoryPage",
+      "src/components/pages/DashboardPage",
+      "src/components/pages/ContactPage/ContactChannels"
+    ]
+  },
+  "closedClusters": [
+    {
+      "id": "pages-and-filing::PracticeHubPage::helpers-out",
+      "status": "closed",
+      "evidence": "hooks/types/utils/constants removed; destinations under src/hooks + src/modules/types|utils/practice-hub*"
+    },
+    {
+      "id": "pages-and-filing::FlashcardsPage::hooks-and-constants-out",
+      "status": "closed",
+      "evidence": "useFlashcardNav + start-session hooks → src/hooks; SM2/DUE/LEVEL constants → src/modules/utils/flashcards.ts"
+    },
+    {
+      "id": "pages-and-filing::DashboardPage::hooks-types-maps-out",
+      "status": "closed",
+      "evidence": "useDashboardTabUrlSync, useResumeItems, DASHBOARD_TABS, WeeklyGoals map relocated"
+    },
+    {
+      "id": "pages-and-filing::CourseDetailPage::hooks-types-constants-out",
+      "status": "closed",
+      "evidence": "useCourseEnrollment, usePricingRows, CoursePriceRow types, PHASE_LABEL_KEY relocated; folder is component+index only"
+    },
+    {
+      "id": "pages-and-filing::ArchitecturePage::helpers-out",
+      "status": "closed",
+      "evidence": "catalog/modules/metrics/statusVisual/scenes + health/node hooks relocated; ArchitectureScene remains locked hold (not edited)"
+    },
+    {
+      "id": "pages-and-filing::Admin-Sepay-Oauth-LearningHistory-maps-out",
+      "status": "closed",
+      "evidence": "Admin MpegDash/Upload types+maps+enums, Sepay bank parse, OauthAction enum+message map, LearningHistory useSelectedCourse + outline map, ChallengeResult/CourseContents/SystemStatus/Blog masthead maps, Landing constants + knowledge-graph data, Kpi meta, groupByCourse relocated"
+    },
+    {
+      "id": "pages-and-filing::ChatPane::skeleton-inline",
+      "status": "closed",
+      "evidence": "ChatPaneSkeleton inlined into ChatPane/component.tsx; folder is component+index only; CommunityChatPage imports from ./ChatPane"
+    },
+    {
+      "id": "pages-and-filing::ContactChannels::FounderCard-inline",
+      "status": "closed",
+      "evidence": "FounderCard inlined into ContactChannels/index.tsx; FounderCard folder removed"
+    }
+  ],
+  "heldClusters": [
+    {
+      "id": "pages-and-filing::MockInterviewPage::product-lock",
+      "status": "hold",
+      "reason": "Locked product path (MockInterview etc.) — classify hold, do not unlock. Includes Session + nested MockInterview* UI and page-root helpers (types/persona/map/LAYOUT).",
+      "paths": [
+        "src/components/pages/MockInterviewPage/**"
+      ]
+    },
+    {
+      "id": "pages-and-filing::QuizSession::product-lock",
+      "status": "hold",
+      "reason": "Manifest lockedHolds + brief lock for QuizSession tree",
+      "paths": [
+        "src/components/pages/FlashcardsPage/QuizSession/**"
+      ]
+    },
+    {
+      "id": "pages-and-filing::LearnLoopScroll::product-lock",
+      "status": "hold",
+      "reason": "Manifest lockedHolds + brief lock; only import retarget to landing-constants",
+      "paths": [
+        "src/components/pages/LandingPage/LearnLoopScroll/index.tsx"
+      ]
+    },
+    {
+      "id": "pages-and-filing::nested-page-ecosystems::inline-debt",
+      "status": "hold",
+      "reason": "Aggressive parent-inline of ProfileActivity/AiUsageHistory/CvEditorToolbarBar/Rewards/KnowledgeGraph corrupted import graphs; reverted. Still the bulk of page-folder-two-files-only (nested rest paths under pages/<Name>/).",
+      "examples": [
+        "ProfileActivityPage/{ProfileActivity,ProfileAchievements}",
+        "AiUsagePage/AiUsageHistory",
+        "CvEditorPage/CvEditorToolbarBar",
+        "LandingPage/KnowledgeGraph/{ConceptNode,ShuffleBeacon}",
+        "DashboardPage/* nested tabs",
+        "PracticeHubPage/* nested rails/catalog",
+        "ArchitecturePage/* nested map/rail/panel"
+      ]
+    },
+    {
+      "id": "pages-and-filing::FlashcardQuizResult-SessionStats::skeleton-twins",
+      "status": "hold",
+      "reason": "Inline of skeleton/recap produced atom vs HeroUI Button/Typography collisions; restored multi-file folders pending careful isSkeleton co-location"
+    }
+  ],
+  "destinationsCreated": [
+    "src/hooks/usePracticeView.ts",
+    "src/hooks/usePracticeFilters.ts",
+    "src/hooks/useCodingProblemsSwr.ts",
+    "src/hooks/useMyCodingProgressSwr.ts",
+    "src/hooks/useFlashcardNav.ts",
+    "src/hooks/useStartFlashcardReviewSession.ts",
+    "src/hooks/useStartFlashcardDueReviewSession.ts",
+    "src/hooks/useDashboardTabUrlSync.ts",
+    "src/hooks/useResumeItems.ts",
+    "src/hooks/useCourseEnrollment.ts",
+    "src/hooks/usePricingRows.ts",
+    "src/hooks/useSystemHealthPoll.ts",
+    "src/hooks/useArchitectureNode.ts",
+    "src/hooks/useSelectedCourse.ts",
+    "src/modules/types/practice-hub.ts",
+    "src/modules/types/course-detail.ts",
+    "src/modules/types/dashboard-tabs.ts",
+    "src/modules/types/sepay-checkout.ts",
+    "src/modules/types/admin-mpeg-dash-test.ts",
+    "src/modules/types/admin-upload-video.ts",
+    "src/modules/types/enums/oauth-action.ts",
+    "src/modules/types/enums/upload-status.ts",
+    "src/modules/utils/practice-hub.ts",
+    "src/modules/utils/flashcards.ts",
+    "src/modules/utils/course-detail.ts",
+    "src/modules/utils/architecture-catalog.ts",
+    "src/modules/utils/architecture-modules.ts",
+    "src/modules/utils/architecture-metrics.ts",
+    "src/modules/utils/architecture-status-visual.tsx",
+    "src/modules/utils/architecture-live-scene.ts",
+    "src/modules/utils/architecture-future-scene.ts",
+    "src/modules/utils/parse-bank-details.ts",
+    "src/modules/utils/oauth-action-message.ts",
+    "src/modules/utils/landing-constants.ts",
+    "src/modules/utils/knowledge-graph-data.ts",
+    "src/modules/utils/kpi-meta.tsx",
+    "src/modules/utils/weekly-goals-map.tsx",
+    "src/modules/utils/group-challenges-by-course.ts",
+    "src/modules/utils/challenge-result-map.ts",
+    "src/modules/utils/course-contents-map.ts",
+    "src/modules/utils/learning-history-outline-map.ts",
+    "src/modules/utils/system-status-map.tsx",
+    "src/modules/utils/admin-mpeg-dash-map.tsx",
+    "src/modules/utils/admin-mpeg-dash-quick-urls.ts",
+    "src/modules/utils/admin-upload-video-map.tsx",
+    "src/modules/utils/blog-masthead-scene.ts"
+  ],
+  "verification": {
+    "tsc": "clean (npx tsc --noEmit after import fixes)",
+    "note": "Did not run full npm run audit:fe (agent 10 owns aggregate gates)"
+  },
+  "proposedNext": [
+    "Safe nested-page inlines with import-graph aware merge (or split to component.tsx presentational + index wiring) for ProfileActivityPage, AiUsagePage, CvEditorPage, PracticeHubPage, ArchitecturePage nested leaves",
+    "Co-locate FlashcardQuizResult/FlashcardSessionStats skeletons via isSkeleton rather than twin files",
+    "Hold MockInterview page-root helpers until product unlock"
+  ]
+}

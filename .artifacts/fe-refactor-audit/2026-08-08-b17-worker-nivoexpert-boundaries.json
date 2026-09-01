@@ -1,0 +1,35 @@
+{
+  "partition": "nivoexpert-boundaries",
+  "changed": [],
+  "skipped": [
+    ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx"
+  ],
+  "holds": [
+    {
+      "id": "DrawerShell-contentClassName-nivoexpert",
+      "classification": "nivoexpert-boundary",
+      "prop": "contentClassName",
+      "declaredOn": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "srcTwinHasProp": false
+    }
+  ],
+  "evidence": {
+    "soleConsumer": ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx:150 contentClassName=\"w-full sm:max-w-[560px]\"",
+    "otherDrawerShellCallersPassProp": false,
+    "batchForbidden": "Do not edit Nivo/Nivoexpert consumers"
+  },
+  "proposals": [
+    {
+      "id": "LessonEditorPanel-off-contentClassName",
+      "when": "nivo-allowed batch",
+      "options": [
+        "Migrate LessonEditorPanel onto dialogClassName or future dialogWidth, then remove contentClassName if zero consumers",
+        "Keep SB-only prop as intentional nivoexpert twin debt"
+      ],
+      "doNotInventNow": true
+    }
+  ],
+  "verification": { "note": "document only — DrawerShell prop kept" },
+  "regressions": []
+}

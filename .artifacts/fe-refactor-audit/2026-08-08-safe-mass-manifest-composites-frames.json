@@ -1,0 +1,275 @@
+{
+  "partition": "composites-frames",
+  "generatedAt": "2026-08-06T22:13:20.379Z",
+  "batch": 11,
+  "fileCount": 4,
+  "totalPartitionFiles": 20,
+  "totalSafeFiles": 4,
+  "capped": false,
+  "allowedClassifications": [
+    "safe"
+  ],
+  "holdClassifications": [
+    "hold",
+    "vendor",
+    "ambiguous"
+  ],
+  "allowedWork": [
+    "vocabulary redirects / approved substitutions",
+    "public-export JSDoc + English authoring",
+    "mechanical type/import/export with proven consumers",
+    "identity root only on clear declared roots",
+    "HeroUI layout wrappers → existing atoms (identical API)",
+    "remove unused per-part classname (non-vendor, no consumers)"
+  ],
+  "hardHolds": [
+    "a11y / ChipBase API / handleSide / teacher holds / Nivo / locked paths",
+    "missing-both frame principles / page-folder / parallel skeleton",
+    "raw-shape without existing honest principle",
+    "vendor HeroUI compounds / fake tokens / eslint-disable / git ops"
+  ],
+  "files": [
+    {
+      "path": "src/components/composites/layout/DrawerShell/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/layout/DrawerShell/index.tsx",
+      "twin": ".storybook/components/composites/layout/DrawerShell/index.tsx",
+      "twinExists": false,
+      "safeCount": 2,
+      "messageCount": 2,
+      "byClass": {
+        "safe": 2
+      },
+      "safeRules": [
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 71,
+          "column": 5,
+          "message": "`dialogClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 73,
+          "column": 5,
+          "message": "`footerClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/cards/SurfaceCard/index.tsx",
+      "twin": ".storybook/components/composites/cards/SurfaceCard/index.tsx",
+      "twinExists": false,
+      "safeCount": 1,
+      "messageCount": 15,
+      "byClass": {
+        "ambiguous": 14,
+        "safe": 1
+      },
+      "safeRules": [
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 64,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 229,
+          "column": 5,
+          "message": "`contentClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 368,
+          "column": 17,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 375,
+          "column": 33,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 413,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 533,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 648,
+          "column": 37,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 870,
+          "column": 9,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1175,
+          "column": 53,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1430,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1451,
+          "column": 21,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1570,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1720,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1731,
+          "column": 29,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1781,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    },
+    {
+      "path": "src/components/composites/layout/ModalShell/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/layout/ModalShell/index.tsx",
+      "twin": ".storybook/components/composites/layout/ModalShell/index.tsx",
+      "twinExists": false,
+      "safeCount": 1,
+      "messageCount": 1,
+      "byClass": {
+        "safe": 1
+      },
+      "safeRules": [
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "holdRules": [],
+      "messages": [
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 78,
+          "column": 5,
+          "message": "`containerClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe"
+        }
+      ]
+    },
+    {
+      "path": "src/components/composites/viewers/PDFView/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/viewers/PDFView/index.tsx",
+      "twin": ".storybook/components/composites/viewers/PDFView/index.tsx",
+      "twinExists": false,
+      "safeCount": 1,
+      "messageCount": 3,
+      "byClass": {
+        "safe": 1,
+        "ambiguous": 2
+      },
+      "safeRules": [
+        "starci-fe/no-per-part-classname-prop"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "messages": [
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 140,
+          "column": 5,
+          "message": "`heightClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 277,
+          "column": 17,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 300,
+          "column": 21,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ]
+    }
+  ]
+}

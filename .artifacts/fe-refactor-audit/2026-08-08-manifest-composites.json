@@ -1,0 +1,434 @@
+{
+  "partition": "composites",
+  "generatedAt": "2026-08-06T21:05:14.775Z",
+  "fileCount": 41,
+  "files": [
+    {
+      "path": ".storybook/components/composites/form/Form/Form.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/form/Form/Form.tsx",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/form/Form/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/form/Form/index.tsx",
+      "safeCount": 4,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/layout/Page/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/layout/Page/index.tsx",
+      "safeCount": 3,
+      "messageCount": 5,
+      "safeRules": [
+        "starci-fe/no-inline-skeleton-branch",
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/composites/layout/Section/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/layout/Section/index.tsx",
+      "safeCount": 3,
+      "messageCount": 4,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/composites/lists/List/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/lists/List/index.tsx",
+      "safeCount": 2,
+      "messageCount": 7,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-runtime-namespace"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": ".storybook/components/composites/layout/Page/Page.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/layout/Page/Page.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/layout/Section/Section.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/layout/Section/Section.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/lists/List/List.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/lists/List/List.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source",
+        "starci-fe/no-runtime-namespace"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/viewers/MarkdownContent/markdown-table.ts",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/viewers/MarkdownContent/markdown-table.ts",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/prefer-arrow-export"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/stories/composites/lists/IconLabelValueRow/IconLabelValueRow.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/composites/lists/IconLabelValueRow/IconLabelValueRow.stories.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/stories/composites/lists/List/ListRow.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/composites/lists/List/ListRow.stories.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/feedback/EmptyState/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/feedback/EmptyState/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/form/ImageDropzone/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/form/ImageDropzone/index.tsx",
+      "safeCount": 2,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/lists/IdentityContentRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/lists/IdentityContentRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/composites/navigation/Toolbar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/navigation/Toolbar/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/composites/text/TitledText/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/text/TitledText/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": "src/components/composites/viewers/MarkdownContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/viewers/MarkdownContent/index.tsx",
+      "safeCount": 1,
+      "messageCount": 2,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": [
+        "starci-fe/require-frame-self-declare"
+      ]
+    },
+    {
+      "path": ".storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/data/KeyValue/KeyValue.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/data/KeyValue/KeyValue.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-runtime-namespace"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/form/_field/FieldFrame.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/form/_field/FieldFrame.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/lists/IconLabelValueRow/IconLabelValueRow.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/text/TitledText/TitledText.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/text/TitledText/TitledText.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/viewers/MarkdownContent/map.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/stories/composites/layout/Section/SectionHeader.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/composites/layout/Section/SectionHeader.stories.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/stories/composites/lists/IdentityContentRow/IdentityContentRow.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/composites/lists/IdentityContentRow/IdentityContentRow.stories.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/stories/composites/text/TitledText/TitledText.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/composites/text/TitledText/TitledText.stories.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": ".storybook/stories/composites/viewers/MarkdownContent/MarkdownContent.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/composites/viewers/MarkdownContent/MarkdownContent.stories.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/async/AsyncContent/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/async/AsyncContent/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/buttons/ButtonRadioGroup/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/chips/Chip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/chips/Chip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/chips/EnumChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/chips/EnumChip/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/data/KeyValue/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/data/KeyValue/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-runtime-namespace"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/feedback/Callout/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/feedback/Callout/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/form/_field/FieldFrame.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/form/_field/FieldFrame.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/require-export-jsdoc"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/lists/IconLabelValueRow/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/navigation/DoubleTabsCard/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/text/DotLabel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/text/DotLabel/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/text/ScoreValue/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/text/ScoreValue/index.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    },
+    {
+      "path": "src/components/composites/viewers/MarkdownContent/map.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/viewers/MarkdownContent/map.tsx",
+      "safeCount": 1,
+      "messageCount": 1,
+      "safeRules": [
+        "starci-fe/no-emoji-in-source"
+      ],
+      "holdRules": []
+    }
+  ]
+}

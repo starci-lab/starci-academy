@@ -1,0 +1,225 @@
+{
+  "partition": "heroui-boundaries",
+  "batch": 12,
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["ColorSwatch", "ColorSwatchPicker", "Label", "cn", "parseColor", "Color"],
+      "reason": "HeroUI color compound + parseColor/Color types; no identical StarCi atom. Label alone cannot clear the import."
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Accordion", "Typography", "cn"],
+      "reason": "Accordion.* compound namespace; Typography uses children/type=body-* vs atom text/size API."
+    },
+    {
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven vocabulary redirect/atom for cn — inventing one is out of scope."
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven cn atom/redirect."
+    },
+    {
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven cn atom/redirect."
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Button", "Link", "Typography"],
+      "reason": "Button atom requires label (no children); Link atom is LinkBack/LinkSeeMore only; Typography atom uses text prop + different size axis."
+    },
+    {
+      "path": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Button", "Typography"],
+      "reason": "HeroUI Button children/fullWidth vs Button label API; Typography children/type vs text/size."
+    },
+    {
+      "path": "src/components/blocks/commerce/PriceTag/PriceTagBase.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Popover"],
+      "reason": "Popover compound namespace — no identical non-compound atom swap."
+    },
+    {
+      "path": "src/components/blocks/commerce/TierCard/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn", "Button", "Chip", "Spinner", "Typography"],
+      "reason": "Chip.Label compound + ChipBase hard-hold; Button/Typography children APIs differ; Spinner nested usage not identical to atom props."
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "classification": "api-hold",
+      "imports": ["Button", "TextArea", "TextField", "cn"],
+      "reason": "InputTextarea is FieldFrame-wrapped StringFieldProps, not raw TextField/TextArea; Button children ≠ label."
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "classification": "api-hold",
+      "imports": ["Link", "cn"],
+      "reason": "No general Link atom (only LinkBack/LinkSeeMore); cn has no redirect."
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven cn atom/redirect."
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven cn atom/redirect."
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Button", "Popover", "cn"],
+      "reason": "Popover compound; Button children ≠ label atom API."
+    },
+    {
+      "path": "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven cn atom/redirect."
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Label", "ListBox", "Select", "Typography"],
+      "reason": "Select/ListBox compound vendor surface; Typography API differs. No identical swap."
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "classification": "api-hold",
+      "imports": ["Button", "Spinner"],
+      "reason": "Button children + inline Spinner vs Button label/isPending atom contract."
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "classification": "api-hold",
+      "imports": ["Button", "cn"],
+      "reason": "Button children ≠ label; cn has no redirect."
+    },
+    {
+      "path": "src/components/blocks/grading/GradingByline/component.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven cn atom/redirect."
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Pagination"],
+      "reason": "HeroUI Pagination.Content/Item/Link compound vs data-driven Pagination atom (currentPage/totalPages/onPageChange)."
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn"],
+      "reason": "cn-only; no proven cn atom/redirect."
+    },
+    {
+      "path": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Link as HeroUILink"],
+      "reason": "General href Link; StarCi Link namespace is Back/SeeMore only — not identical."
+    },
+    {
+      "path": "src/components/blocks/navigation/Navbar/NavbarLanguageMenu/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Dropdown", "Label"],
+      "reason": "Dropdown compound namespace; Label thin-wrap exists but cannot clear heroui import alone."
+    },
+    {
+      "path": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Breadcrumbs", "cn"],
+      "reason": "Breadcrumbs compound; atom wraps compound internally and is not a drop-in for consumer compound usage."
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "classification": "vendor-hold",
+      "imports": ["* as HeroUI"],
+      "reason": "Vendor namespace import — compound-namespace redesign forbidden."
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "classification": "vendor-hold",
+      "imports": ["cn", "Table"],
+      "reason": "Table compound + cn; no identical drop-in."
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/mdxComponents.tsx",
+      "classification": "vendor-hold",
+      "imports": ["* as HeroUI"],
+      "reason": "Vendor namespace import — compound-namespace redesign forbidden."
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Modal"],
+      "reason": "Modal compound namespace; page-folder hold also present — no identical atom swap."
+    },
+    {
+      "path": "src/components/overlays/modals/AuthenticationModal/SignUpSection/OtpState/component.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Modal"],
+      "reason": "Modal compound namespace; page-folder hold also present."
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Button"],
+      "reason": "HeroUI Button children + className vs Button label/classNames atom API."
+    },
+    {
+      "path": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Button", "Chip", "ProgressBar"],
+      "reason": "Button/Chip APIs differ (ChipBase hard-hold); Progress atom is not ProgressBar drop-in without prop audit — prefer hold."
+    },
+    {
+      "path": "src/components/pages/AiSettingsPage/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Label", "Link", "Skeleton", "Typography"],
+      "reason": "Mixed import: Link/Typography/Skeleton APIs differ from atoms; Label alone cannot clear heroui."
+    },
+    {
+      "path": "src/components/pages/BlogListPage/TopicsStrip/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Chip", "Typography"],
+      "reason": "ChipBase hard-hold + Typography children/type vs text/size; page-folder hold co-present."
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/index.tsx",
+      "classification": "vendor-hold",
+      "imports": ["Button", "Input", "Pagination", "TextField", "Typography"],
+      "reason": "Pagination compound + Input/TextField raw vs InputText field API; Button/Typography children differ."
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "classification": "api-hold",
+      "imports": ["Link", "Typography"],
+      "reason": "No general Link atom; Typography API differs; page-folder hold co-present."
+    }
+  ],
+  "verification": {
+    "eslintQuiet": "skipped — no source files changed",
+    "changedCount": 0,
+    "holdCount": 35,
+    "note": "All 35 capped candidates held. No twinExists storybook paths. Prefer-hold: every consumer uses HeroUI children/compound APIs that are not identical to StarCi atoms (Button.label, Typography.text, Pagination data-driven, Link Back/SeeMore only, ChipBase, Popover/Modal/Accordion/Dropdown/Table/Breadcrumbs compounds, import * as HeroUI namespaces, cn with no redirect)."
+  },
+  "regressions": []
+}

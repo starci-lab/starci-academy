@@ -1,0 +1,691 @@
+{
+  "partition": "per-part-props",
+  "generatedAt": "2026-08-06T22:52:56.132Z",
+  "batch": 13,
+  "fileCount": 17,
+  "allowedApply": [
+    "safe-api-removal",
+    "safe-consumer-migration"
+  ],
+  "recordOnly": [
+    "new-named-slot-required",
+    "vendor-boundary",
+    "identity-decision",
+    "skeleton-decision",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "seededDecisions": [
+    {
+      "id": "DrawerShell-dialog-footer",
+      "classification": "new-named-slot-required",
+      "note": "MiniCart uses dialogClassName=sm:max-w-md and footerClassName flex-col stretch — real layout; needs named size/footerVariant or keep prop"
+    },
+    {
+      "id": "ModalShell-container-CvPreview",
+      "classification": "new-named-slot-required",
+      "note": "CvPreview containerClassName near-fullscreen + PDF heightClassName — not equivalent to size=cover/full without proof"
+    },
+    {
+      "id": "PDFView-heightClassName",
+      "classification": "new-named-slot-required",
+      "note": "Multiple story/viewport heights; propose height token enum only if canon already has sizes"
+    },
+    {
+      "id": "SurfaceCard-contentClassName",
+      "classification": "new-named-slot-required",
+      "note": "ContinueCard/LeagueCard/Leaderboard use contentClassName for stack chrome — stacking-layout owns ContinueCard; SurfaceCard prop may stay until named bodyVariant"
+    }
+  ],
+  "hardHolds": [
+    "27 teacher pattern holds / Nivo / locked paths / a11y",
+    "ChipBase API / handleSide vendor boundary",
+    "No invented principle tokens / no eslint-disable / no generic className escapes",
+    "No HeroUI conversion when atom API non-identical",
+    "No prop removal while real consumers depend on it"
+  ],
+  "files": [
+    {
+      "path": "src/components/composites/layout/DrawerShell/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/layout/DrawerShell/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 71,
+          "column": 5,
+          "message": "`dialogClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 73,
+          "column": 5,
+          "message": "`footerClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/composites/layout/ModalShell/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/layout/ModalShell/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 1,
+      "messages": [
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 78,
+          "column": 5,
+          "message": "`containerClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "safe-consumer-migration"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/cards/SurfaceCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 15,
+      "messages": [
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 64,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 229,
+          "column": 5,
+          "message": "`contentClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 368,
+          "column": 17,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 375,
+          "column": 33,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 413,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 533,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 648,
+          "column": 37,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 870,
+          "column": 9,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1175,
+          "column": 53,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1430,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1451,
+          "column": 21,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1570,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1720,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1731,
+          "column": 29,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 1781,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/composites/viewers/PDFView/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/composites/viewers/PDFView/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 140,
+          "column": 5,
+          "message": "`heightClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 277,
+          "column": 17,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 300,
+          "column": 21,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/components/composites/viewers/PDFView/PDFView.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/composites/viewers/PDFView/PDFView.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/rendering/PDFView/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/rendering/PDFView/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 6,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 12,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 20,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 39,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 26,
+          "column": 5,
+          "message": "`heightClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 122,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 138,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 142,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "safe-consumer-migration"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 155,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "safe-consumer-migration"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 218,
+          "column": 16,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "safe-consumer-migration"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 269,
+          "column": 17,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "safe-consumer-migration"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 293,
+          "column": 9,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "safe-consumer-migration"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/overlays/drawers/MiniCartDrawer/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/drawers/MiniCartDrawer/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/overlays/modals/CvPreviewModal/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/CvPreviewModal/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/overlays/modals/CvPreviewModal/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/CvPreviewModal/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 56,
+          "column": 5,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 113,
+          "column": 9,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 131,
+          "column": 15,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 139,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/stories/composites/viewers/PDFView/PDFView.stories.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 9,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 12,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 44,
+          "column": 5,
+          "message": "`contentClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 136,
+          "column": 9,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 139,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 146,
+          "column": 37,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 155,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 162,
+          "column": 17,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 14,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 12,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 49,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-per-part-classname-prop",
+          "line": 51,
+          "column": 5,
+          "message": "`contentClassName` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 93,
+          "column": 20,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 100,
+          "column": 17,
+          "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 115,
+          "column": 17,
+          "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 123,
+          "column": 30,
+          "message": "`absolute` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 130,
+          "column": 36,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 139,
+          "column": 14,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 145,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 154,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 160,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 171,
+          "column": 33,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "batch": 22,
+  "title": "Chrome axis and remaining boundary closure",
+  "generatedAt": "2026-08-09T00:00:00.000Z",
+  "checkpoint": "90009dc5",
+  "findings": [
+    {
+      "id": "tile-chrome",
+      "partition": "surface-card-chrome",
+      "classification": "intrinsic-semantic",
+      "evidence": "PressableGroup passes contentClassName={TILE_CHROME=\"rounded-2xl shadow-field\"} onto Base. Skeleton tile hardcodes same string. Distinct from bodyVariant tile (flex/gap/overflow).",
+      "action": "Add chromeVariant default|tile; PressableGroup uses chromeVariant=\"tile\"; strip TILE_CHROME from contentClassName"
+    },
+    {
+      "id": "continue-card-body",
+      "partition": "continue-card-twins",
+      "classification": "intrinsic-semantic",
+      "evidence": "ContinueCard Item+Hero already use bodyVariant=\"tile\" only — default surface chrome (not TILE_CHROME). Preserve visual: do not add chromeVariant=\"tile\".",
+      "action": "Verify SB/src parity; no chrome migration"
+    },
+    {
+      "id": "pressable-item-span",
+      "partition": "pressable-group-audit",
+      "classification": "new-contract-proposal",
+      "evidence": "ContentPager + stories pass item.classNames:[\"col-span-2\"] via contentClassName funnel",
+      "action": "proposal only — PressableGroupItem.span?: 1|2"
+    },
+    {
+      "id": "drawer-nivoexpert",
+      "partition": "nivoexpert-boundary-report",
+      "classification": "nivo-or-teacher-hold",
+      "evidence": "LessonEditorPanel contentClassName=\"w-full sm:max-w-[560px]\"",
+      "action": "proposal only — migrate to dialogWidth; do not edit nivoexpert"
+    },
+    {
+      "id": "showcase-learnloop",
+      "partition": "showcase-locked-report",
+      "classification": "nivo-or-teacher-hold",
+      "evidence": "LearnLoopScroll locked; TalentMarketplace also uses contentClassName",
+      "action": "proposal only — no edits to locked path"
+    }
+  ],
+  "approvedContract": {
+    "chromeVariant": "default | tile",
+    "tileOwns": "rounded-2xl shadow-field",
+    "bodyVariantUnchanged": "default | stacked | tile"
+  }
+}

@@ -1,0 +1,490 @@
+{
+  "topology": {
+    "beforeExpected": {
+      "LabeledCard": 97,
+      "frameless": 54,
+      "SurfaceListCard": 87,
+      "SurfaceCardList": 111
+    },
+    "afterMeasured": {
+      "LabeledCard": 77,
+      "frameless": 46,
+      "SurfaceListCard": 50,
+      "SurfaceCardList": 146
+    }
+  },
+  "trendingProof": {
+    "hasTrendingContentsSurface": false,
+    "hasTrendingRowImport": false,
+    "trendingRowExists": false,
+    "skeletonFolderExists": false,
+    "componentMountsSurfaceCardList": true,
+    "noLabeledCardJsx": true,
+    "noSurfaceListCardJsx": true,
+    "identityPresent": true
+  },
+  "apiProof": {
+    "labeledCardFramelessStillPresent": true,
+    "surfaceListCardModulePresent": true,
+    "surfaceListCardExports": true
+  },
+  "residualLabeledSurface": {
+    "batch": "B36+B37c",
+    "generatedAt": "2026-08-08T17:40:16.742Z",
+    "note": "Audit-only residual redundant labeled-surface patterns. Not an ESLint rule (ruleset freeze).",
+    "count": 6,
+    "hits": [
+      {
+        "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "child": "SurfaceListCard",
+        "frameless": true,
+        "pattern": "LabeledCard frameless wraps self-framed surface"
+      },
+      {
+        "file": "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "child": "SurfaceListCard",
+        "frameless": true,
+        "pattern": "LabeledCard frameless wraps self-framed surface"
+      },
+      {
+        "file": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "child": "SurfaceListCard",
+        "frameless": true,
+        "pattern": "LabeledCard frameless wraps self-framed surface"
+      },
+      {
+        "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "child": "SurfaceListCard",
+        "frameless": true,
+        "pattern": "LabeledCard frameless wraps self-framed surface"
+      },
+      {
+        "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "child": "SurfaceListCard",
+        "frameless": true,
+        "pattern": "LabeledCard frameless wraps self-framed surface"
+      },
+      {
+        "file": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "child": "SurfaceListCard",
+        "frameless": true,
+        "pattern": "LabeledCard frameless wraps self-framed surface"
+      }
+    ]
+  },
+  "eslintChangedFileCertification": {
+    "introducedErrors": 0,
+    "introducedWarnings": 0,
+    "closedCount": 44,
+    "preexistingOnManifest": 873,
+    "relocatedDebt": 18,
+    "introducedSample": [],
+    "relocatedSample": [
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 149,
+        "column": 13,
+        "severity": 1,
+        "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 162,
+        "column": 13,
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 171,
+        "column": 13,
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+        "ruleId": "starci-fe/no-public-classname-prop",
+        "line": 209,
+        "column": 17,
+        "severity": 1,
+        "message": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/index.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 220,
+        "column": 9,
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 108,
+        "column": 13,
+        "severity": 1,
+        "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/OtpState/index.tsx",
+        "ruleId": "starci-fe/no-public-classname-prop",
+        "line": 135,
+        "column": 17,
+        "severity": 1,
+        "message": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignInSection/index.tsx",
+        "ruleId": "starci-fe/require-identity-root",
+        "line": 39,
+        "column": 1,
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 113,
+        "column": 21,
+        "severity": 1,
+        "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/OtpState/component.tsx",
+        "ruleId": "starci-fe/no-public-classname-prop",
+        "line": 131,
+        "column": 33,
+        "severity": 1,
+        "message": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 94,
+        "column": 5,
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 105,
+        "column": 29,
+        "severity": 1,
+        "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 118,
+        "column": 25,
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 122,
+        "column": 37,
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+        "ruleId": "starci-fe/require-frame-self-declare",
+        "line": 175,
+        "column": 25,
+        "severity": 1,
+        "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/RegistrationState/component.tsx",
+        "ruleId": "starci-fe/no-public-classname-prop",
+        "line": 181,
+        "column": 41,
+        "severity": 1,
+        "message": "Do not pass `classNames` to house component `Button`. Parent layout owns placement; use the parent principle or a named wrapper.",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/SignUpSection/index.tsx",
+        "ruleId": "starci-fe/require-identity-root",
+        "line": 23,
+        "column": 1,
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "note": "relocated from AuthenticationModal"
+      },
+      {
+        "file": "src/components/blocks/auth/AuthenticationPanel/component.tsx",
+        "ruleId": "starci-fe/require-identity-root",
+        "line": 8,
+        "column": 1,
+        "severity": 1,
+        "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+        "note": "relocated from AuthenticationModal"
+      }
+    ],
+    "pass": true
+  },
+  "closedSample": [
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "ruleId": "starci-fe/no-host-element-at-sentence-tier",
+      "line": 283,
+      "column": 9,
+      "severity": 1,
+      "message": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "ruleId": "starci-fe/no-host-element-at-sentence-tier",
+      "line": 285,
+      "column": 13,
+      "severity": 1,
+      "message": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "ruleId": "starci-fe/no-inline-skeleton-branch",
+      "line": 104,
+      "column": 20,
+      "severity": 1,
+      "message": "`isSkeleton ? … : …` picks between two DIFFERENT elements — that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component."
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 106,
+      "column": 21,
+      "severity": 1,
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentModeNav/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 16,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 13,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 397,
+      "column": 57,
+      "severity": 1,
+      "message": "Do not pass `className` to house component `SurfaceListCardRow`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 51,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "ruleId": "starci-fe/no-host-element-at-sentence-tier",
+      "line": 283,
+      "column": 9,
+      "severity": 1,
+      "message": "Sentence-tier file must not render raw `<nav>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "line": 283,
+      "column": 14,
+      "severity": 1,
+      "message": "`sticky` on <nav> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "ruleId": "starci-fe/no-host-element-at-sentence-tier",
+      "line": 285,
+      "column": 13,
+      "severity": 1,
+      "message": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+    },
+    {
+      "file": "src/components/blocks/settings/SettingsBreadcrumb/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 21,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/component.tsx",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "line": 4,
+      "column": 1,
+      "severity": 1,
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/overlays/modals/AuthenticationModal/component.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 10,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 21,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 17,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 21,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 21,
+      "column": 41,
+      "severity": 1,
+      "message": "Public house component prop `className` is forbidden. Parent layout owns placement; expose a semantic variant or use a named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "ruleId": "starci-fe/no-classname-at-sentence-tier",
+      "line": 21,
+      "column": 54,
+      "severity": 1,
+      "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 21,
+      "column": 54,
+      "severity": 1,
+      "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 23,
+      "column": 26,
+      "severity": 1,
+      "message": "Do not pass `className` to house component `SurfaceListCard`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 20,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "ruleId": "starci-fe/no-classname-at-sentence-tier",
+      "line": 28,
+      "column": 48,
+      "severity": 1,
+      "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 28,
+      "column": 48,
+      "severity": 1,
+      "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "ruleId": "starci-fe/require-frame-self-declare",
+      "line": 77,
+      "column": 29,
+      "severity": 1,
+      "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 78,
+      "column": 49,
+      "severity": 1,
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "line": 4,
+      "column": 1,
+      "severity": 1,
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "ruleId": "starci-fe/require-identity-root",
+      "line": 17,
+      "column": 1,
+      "severity": 1,
+      "message": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "ruleId": "starci-fe/no-host-element-at-sentence-tier",
+      "line": 93,
+      "column": 25,
+      "severity": 1,
+      "message": "Sentence-tier file must not render raw `<div>`. Compose a typed vocabulary owner that owns this landmark, layout, or chrome (see `.claude/fe/contracts/sentence-hosts.md`)."
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "line": 54,
+      "column": 26,
+      "severity": 1,
+      "message": "Do not pass `className` to house component `SurfaceListCardItem`. Parent layout owns placement; use the parent principle or a named wrapper."
+    }
+  ]
+}

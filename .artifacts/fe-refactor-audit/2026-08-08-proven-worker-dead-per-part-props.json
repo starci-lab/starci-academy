@@ -1,0 +1,56 @@
+{
+  "partition": "dead-per-part-props",
+  "changed": [
+    {
+      "path": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "JSDoc only — clarified contentClassName is held for LessonEditorPanel; prop NOT removed"
+    }
+  ],
+  "skipped": [
+    {
+      "path": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "prop": "contentClassName",
+      "reason": "REVERTED false dead-prop claim; live consumer LessonEditorPanel (nivoexpert out of scope)"
+    }
+  ],
+  "holds": [
+    {
+      "path": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "prop": "contentClassName",
+      "proof": ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx:150 contentClassName=\"w-full sm:max-w-[560px]\"",
+      "reason": "SB-only width escape; absent from src DrawerShell; do not invent dialogWidth"
+    },
+    {
+      "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "dialogClassName/footerClassName still live layout — proposed dialogWidth/footerVariant not invented this batch"
+    },
+    {
+      "path": "src/components/overlays/modals/CvPreviewModal/component.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "containerClassName + heightClassName live — viewportFit/height enum not invented"
+    },
+    {
+      "path": ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx",
+      "rules": ["starci-fe/no-per-part-classname-prop"],
+      "reason": "bodyClassName has story consumers — keep"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DrawerShell-contentClassName-dead",
+      "classification": "safe-api-removal",
+      "applied": false,
+      "reverted": true,
+      "proof": {
+        "falseClaim": "repo search missed LessonEditorPanel JSX prop",
+        "liveConsumer": ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+        "action": "restored contentClassName on DrawerContent; marked hold in ledger"
+      }
+    }
+  ],
+  "removedProps": [],
+  "verification": {},
+  "regressions": []
+}

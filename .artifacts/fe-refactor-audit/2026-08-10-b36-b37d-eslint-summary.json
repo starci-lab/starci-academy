@@ -1,0 +1,160 @@
+{
+  "command": "npx eslint --format json --no-error-on-unmatched-pattern src .storybook",
+  "checkpoint": "84b92cd77",
+  "before": {
+    "warnings": 6269,
+    "files": 1105,
+    "errors": 0,
+    "a11y": 11
+  },
+  "after": {
+    "warnings": 6174,
+    "files": 1084,
+    "errors": 0,
+    "a11y": 11
+  },
+  "delta": {
+    "warnings": -95,
+    "files": -21,
+    "errors": 0,
+    "a11y": 0
+  },
+  "noRedundantLabeledSurfacePresent": {
+    "before": 0,
+    "after": 0
+  },
+  "ruleDelta": [
+    {
+      "ruleId": "starci-fe/page-folder-two-files-only",
+      "before": 296,
+      "after": 274,
+      "delta": -22,
+      "domain": "tier-ownership"
+    },
+    {
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "before": 1107,
+      "after": 1093,
+      "delta": -14,
+      "domain": "css-contract"
+    },
+    {
+      "ruleId": "starci-fe/require-identity-root",
+      "before": 532,
+      "after": 519,
+      "delta": -13,
+      "domain": "tier-ownership"
+    },
+    {
+      "ruleId": "starci-fe/require-frame-self-declare",
+      "before": 630,
+      "after": 622,
+      "delta": -8,
+      "domain": "tier-ownership"
+    },
+    {
+      "ruleId": "starci-fe/no-host-element-at-sentence-tier",
+      "before": 1497,
+      "after": 1490,
+      "delta": -7,
+      "domain": "sentence-shape"
+    },
+    {
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "before": 411,
+      "after": 404,
+      "delta": -7,
+      "domain": "tier-ownership"
+    },
+    {
+      "ruleId": "starci-fe/no-emoji-in-source",
+      "before": 58,
+      "after": 54,
+      "delta": -4,
+      "domain": "authoring"
+    },
+    {
+      "ruleId": "starci-fe/no-parallel-skeleton",
+      "before": 67,
+      "after": 63,
+      "delta": -4,
+      "domain": "lifecycle"
+    },
+    {
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "before": 765,
+      "after": 761,
+      "delta": -4,
+      "domain": "sentence-shape"
+    },
+    {
+      "ruleId": "starci-fe/no-classname-at-sentence-tier",
+      "before": 178,
+      "after": 174,
+      "delta": -4,
+      "domain": "sentence-shape"
+    },
+    {
+      "ruleId": "starci-fe/no-retired-async-content",
+      "before": 40,
+      "after": 37,
+      "delta": -3,
+      "domain": "lifecycle"
+    },
+    {
+      "ruleId": "starci-fe/no-helper-folder-in-components",
+      "before": 35,
+      "after": 33,
+      "delta": -2,
+      "domain": "tier-ownership"
+    },
+    {
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "before": 354,
+      "after": 353,
+      "delta": -1,
+      "domain": "sentence-shape"
+    },
+    {
+      "ruleId": "starci-fe/no-skeleton-twin-component",
+      "before": 38,
+      "after": 37,
+      "delta": -1,
+      "domain": "lifecycle"
+    },
+    {
+      "ruleId": "starci-fe/no-inline-skeleton-branch",
+      "before": 45,
+      "after": 44,
+      "delta": -1,
+      "domain": "lifecycle"
+    }
+  ],
+  "domainDelta": {
+    "tier-ownership": {
+      "before": 1904,
+      "after": 1852,
+      "delta": -52
+    },
+    "css-contract": {
+      "before": 1107,
+      "after": 1093,
+      "delta": -14
+    },
+    "sentence-shape": {
+      "before": 2794,
+      "after": 2778,
+      "delta": -16
+    },
+    "authoring": {
+      "before": 58,
+      "after": 54,
+      "delta": -4
+    },
+    "lifecycle": {
+      "before": 190,
+      "after": 181,
+      "delta": -9
+    }
+  }
+}

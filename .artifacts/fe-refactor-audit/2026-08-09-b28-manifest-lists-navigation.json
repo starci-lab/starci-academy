@@ -1,0 +1,105 @@
+{
+  "worker": "lists-navigation",
+  "manifest": [
+    "src/components/blocks/lists/LabeledList/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/navigation/BackLink/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/blocks/navigation/TabsCard/index.tsx"
+  ],
+  "candidates": [
+    {
+      "component": "LabeledList",
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "self-start — apply only if parent Box migration clean; deferred if twin risk"
+      },
+      "consumerCount": 1,
+      "valueSet": [
+        "self-start"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "ListRow",
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "multi-value / re-check"
+      },
+      "consumerCount": 9,
+      "valueSet": [
+        "p-3",
+        "size-2 text-accent-soft-foreground",
+        "size-5 text-success-soft-foreground",
+        "size-5 text-muted",
+        "size-5 text-foreground",
+        "text-accent-soft-foreground",
+        "STATUS_ICON_CLASS[lesson.status]"
+      ],
+      "ownerships": [
+        "intrinsic",
+        "dynamic"
+      ]
+    },
+    {
+      "component": "BackLink",
+      "file": "src/components/blocks/navigation/BackLink/index.tsx",
+      "plan": {
+        "action": "apply-parent-mixed",
+        "reason": "@app-sm:hidden → HideAbove; shrink-0 → parent Box classNames"
+      },
+      "consumerCount": 2,
+      "valueSet": [
+        "@app-sm:hidden",
+        "shrink-0"
+      ],
+      "ownerships": [
+        "parent-placement"
+      ]
+    },
+    {
+      "component": "SidebarNavItem",
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "multi consumers"
+      },
+      "consumerCount": 5,
+      "valueSet": [
+        "size-5 shrink-0",
+        "rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white"
+      ],
+      "ownerships": [
+        "mixed",
+        "intrinsic"
+      ]
+    },
+    {
+      "component": "TabsCard",
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "plan": {
+        "action": "hold",
+        "reason": "multi consumers"
+      },
+      "consumerCount": 12,
+      "valueSet": [
+        "mx-auto w-full max-w-3xl",
+        "w-full max-w-xs",
+        "size-5",
+        "size-4 shrink-0",
+        "w-full",
+        "size-5 shrink-0",
+        "size-4"
+      ],
+      "ownerships": [
+        "parent-placement",
+        "intrinsic",
+        "mixed"
+      ]
+    }
+  ]
+}

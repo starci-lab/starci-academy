@@ -1,0 +1,1036 @@
+{
+  "partition": "blocks-layout-navigation-media",
+  "manifest": [
+    ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+    ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+    ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+    ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+    ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+    ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+    ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+    ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+    "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+    "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+    "src/components/blocks/ai/QuotaBar/index.tsx",
+    "src/components/blocks/async/EmptyContent/index.tsx",
+    "src/components/blocks/async/ErrorContent/index.tsx",
+    "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+    "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+    "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+    "src/components/blocks/cards/CheckListCard/index.tsx",
+    "src/components/blocks/cards/ContinueCard/index.tsx",
+    "src/components/blocks/cards/CourseCard/component.tsx",
+    "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+    "src/components/blocks/cards/CrossListCard/index.tsx",
+    "src/components/blocks/cards/GroupPressableCard/index.tsx",
+    "src/components/blocks/cards/LabeledCard/index.tsx",
+    "src/components/blocks/cards/MediaCard/index.tsx",
+    "src/components/blocks/cards/NestedCard/index.tsx",
+    "src/components/blocks/cards/PlaygroundCard/component.tsx",
+    "src/components/blocks/cards/PressableCard/index.tsx",
+    "src/components/blocks/cards/PricingCard/index.tsx",
+    "src/components/blocks/cards/SectionCard/index.tsx",
+    "src/components/blocks/cards/SummaryCard/index.tsx",
+    "src/components/blocks/cards/SurfaceListCard/index.tsx",
+    "src/components/blocks/chips/AiCategoryChip/component.tsx",
+    "src/components/blocks/chips/AiCategoryChip/index.tsx",
+    "src/components/blocks/chips/DifficultyChip/index.tsx",
+    "src/components/blocks/chips/EnumChip/index.tsx",
+    "src/components/blocks/chips/HostPlatformChip/component.tsx",
+    "src/components/blocks/chips/HostPlatformChip/index.tsx",
+    "src/components/blocks/chips/StatusChip/index.tsx",
+    "src/components/blocks/chips/TagChips/component.tsx",
+    "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+    "src/components/blocks/course/CourseTrialChip/index.tsx",
+    "src/components/blocks/feedback/InfoTooltip/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+    "src/components/blocks/form/SearchBar/component.tsx",
+    "src/components/blocks/form/SearchBar/index.tsx",
+    "src/components/blocks/form/SearchInput/component.tsx",
+    "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+    "src/components/blocks/identity/BadgeImage/index.tsx",
+    "src/components/blocks/identity/BrandLockup/index.tsx",
+    "src/components/blocks/identity/BrandLogo/index.tsx",
+    "src/components/blocks/identity/IconTile/index.tsx",
+    "src/components/blocks/identity/Logo/index.tsx",
+    "src/components/blocks/identity/UserAvatar/index.tsx",
+    "src/components/blocks/layout/AmbientBackground/index.tsx",
+    "src/components/blocks/layout/AppSplash/component.tsx",
+    "src/components/blocks/layout/DragScrollArea/index.tsx",
+    "src/components/blocks/layout/PageContainer/index.tsx",
+    "src/components/blocks/layout/PageHeader/index.tsx",
+    "src/components/blocks/layout/ResizableRail/index.tsx",
+    "src/components/blocks/layout/Spacer/index.tsx",
+    "src/components/blocks/layout/StickyBottomBar/index.tsx",
+    "src/components/blocks/layout/SubPageHeader/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+    "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+    "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+    "src/components/blocks/lists/LabeledList/index.tsx",
+    "src/components/blocks/lists/ListRow/index.tsx",
+    "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+    "src/components/blocks/media/VideoRenderer/index.tsx",
+    "src/components/blocks/navigation/BackLink/component.tsx",
+    "src/components/blocks/navigation/BackLink/index.tsx",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+    "src/components/blocks/navigation/Footer/index.tsx",
+    "src/components/blocks/navigation/NavLinks/index.tsx",
+    "src/components/blocks/navigation/Navbar/index.tsx",
+    "src/components/blocks/navigation/OutlineRail/index.tsx",
+    "src/components/blocks/navigation/Pagination/component.tsx",
+    "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+    "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+    "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+    "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+    "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/blocks/navigation/TabsCard/index.tsx",
+    "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/component.tsx",
+    "src/components/blocks/rendering/MarkdownContent/component.tsx",
+    "src/components/blocks/rendering/MarkdownContent/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/map.tsx",
+    "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+    "src/components/blocks/skeleton/AccordionSkeleton/types/accordion-skeleton.ts",
+    "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+    "src/components/blocks/skeleton/Skeleton/index.tsx",
+    "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+    "src/components/blocks/skeleton/SkeletonText/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+    "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+    "src/components/blocks/ai/QuotaBar/index.tsx",
+    "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+    "src/components/blocks/cards/GroupPressableCard/index.tsx",
+    "src/components/blocks/layout/PageContainer/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused classNames door on StackV root",
+      "consumers": "open-tag classNames consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door on root wrappers",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused classNames door on StackV root",
+      "consumers": "open-tag classNames consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused WithClassNames/className",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused root WithClassNames/className; kept item.className",
+      "consumers": "open-tag root className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/layout/PageContainer/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed WithClassNames/className; static page shell classes only",
+      "consumers": "open-tag className consumers = 0"
+    }
+  ],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 6,
+    "parentPlacementApplied": 0,
+    "proposals": 36
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [
+    {
+      "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "evidence": "open-tag classNames consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "evidence": "open-tag classNames consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "evidence": "open-tag root className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/layout/PageContainer/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    }
+  ],
+  "proposals": [
+    {
+      "file": "src/components/blocks/async/EmptyContent/index.tsx",
+      "component": "EmptyContent",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "component": "ErrorContent",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "component": "InfiniteScrollSentinel",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "component": "ElementCloseButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": "src/components/blocks/chips/StatusChip/index.tsx",
+            "prop": "classNames",
+            "line": 116,
+            "snippet": "<ElementCloseButton label={cancelLabel ?? \"\"} onPress={onCancel} tone={tone} classNames={[\"shrink-0\"]} /"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "component": "FloatingActionButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+            "prop": "className",
+            "line": 126,
+            "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+          }
+        ],
+        "classNames": [
+          {
+            "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+            "prop": "classNames",
+            "line": 57,
+            "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+          }
+        ],
+        "classNameCount": 1,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "component": "CheckListCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "component": "CrossListCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/MediaCard/index.tsx",
+      "component": "MediaCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/NestedCard/index.tsx",
+      "component": "NestedCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/cards/SectionCard/index.tsx",
+      "component": "SectionCard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": "src/components/blocks/learn/QuizCard/index.tsx",
+            "prop": "classNames",
+            "line": 300,
+            "snippet": "<SectionCard identity={{ tier: \"block\", component: \"QuizCard\" }} classNames={classNames} >"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "component": "SummaryCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "component": "DifficultyChip",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "component": "InfoTooltip",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+            "prop": "className",
+            "line": 155,
+            "snippet": "<InfoTooltip className=\"text-sm font-medium\" title={labels.streakLabel} description={labels.streakHelp}>"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "component": "BadgeImage",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+            "prop": "className",
+            "line": 68,
+            "snippet": "<BadgeImage objectKey={objectKey} size={innerSize} alt={name} className={cn( // scale up to eat the art's built-in trans"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "component": "BrandLockup",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/Footer/index.tsx",
+            "prop": "className",
+            "line": 78,
+            "snippet": "<BrandLockup className=\"self-start\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+      "component": "BrandLogo",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+            "prop": "className",
+            "line": 27,
+            "snippet": "<BrandLogo className=\"h-10\" /"
+          },
+          {
+            "file": "src/components/blocks/layout/AppSplash/component.tsx",
+            "prop": "className",
+            "line": 73,
+            "snippet": "<BrandLogo className=\"h-14\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "component": "IconTile",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+            "prop": "className",
+            "line": 294,
+            "snippet": "<IconTile size=\"sm\" tone=\"accent\" icon={REWARD_ICON[reward.key] ?? ( <GiftIcon aria-hidden focusable=\"false\" className=\""
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "component": "AmbientBackground",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/AppearancePage/index.tsx",
+            "prop": "className",
+            "line": 256,
+            "snippet": "<AmbientBackground effect={option} className=\"absolute inset-0 -z-0\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "component": "PageHeader",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+            "prop": "className",
+            "line": 33,
+            "snippet": "<PageHeader className={className} breadcrumb={<LearnBreadcrumb /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "component": "StickyBottomBar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+            "prop": "className",
+            "line": 53,
+            "snippet": "<StickyBottomBar className={className}>"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "component": "LabeledList",
+      "classification": "live-api",
+      "consumers": {
+        "className": [],
+        "classNames": [
+          {
+            "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+            "prop": "classNames",
+            "line": 82,
+            "snippet": "<LabeledList label={t(\"lessonRail.challenges.title\")} action={( <Button label={t(\"lessonRail.challenges.practice\")} size"
+          }
+        ],
+        "classNameCount": 0,
+        "classNamesCount": 1
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "component": "ListRow",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+            "prop": "className",
+            "line": 52,
+            "snippet": "<ListRow key={item.id} // p-3, not ListRow's bare py-2: this checklist always renders // INSIDE a bounded card, where a "
+          },
+          {
+            "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+            "prop": "className",
+            "line": 199,
+            "snippet": "<ListRow key={notification.id} leading={!notification.isRead ? ( <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\""
+          },
+          {
+            "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+            "prop": "className",
+            "line": 209,
+            "snippet": "<ListRow key={task.id} leading={task.completed ? ( <CheckCircleIcon aria-hidden focusable=\"false\" className=\"size-5 text"
+          },
+          {
+            "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+            "prop": "className",
+            "line": 245,
+            "snippet": "<ListRow key={challenge.id} leading={( <PuzzlePieceIcon aria-hidden focusable=\"false\" className=\"size-5 text-foreground\""
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 4,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+      "component": "VideoRenderer",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "component": "MpegDash",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+            "prop": "className",
+            "line": 92,
+            "snippet": "<MpegDash src={url} className={classNames?.content} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "component": "Standard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+            "prop": "className",
+            "line": 108,
+            "snippet": "<Standard src={url} className={classNames?.content} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "component": "Youtube",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+            "prop": "className",
+            "line": 99,
+            "snippet": "<Youtube url={url} title={title} className={classNames?.content} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/BackLink/index.tsx",
+      "component": "BackLink",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+            "prop": "className",
+            "line": 60,
+            "snippet": "<BackLink onPress={parent.onPress} className={cn(isLongTrail ? undefined : \"@app-sm:hidden\")} /"
+          },
+          {
+            "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+            "prop": "className",
+            "line": 45,
+            "snippet": "<BackLink className=\"shrink-0\" target={t(\"cv.builder.galleryTarget\")} onPress={onBack} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "component": "CollapsibleSidebar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          },
+          {
+            "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+            "prop": "className",
+            "line": 85,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlo"
+          },
+          {
+            "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx"
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "component": "OutlineRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentMap/index.tsx",
+            "prop": "className",
+            "line": 216,
+            "snippet": "<OutlineRail className={className} header={progress ? { label: t(\"courseContents.progress\"), progress: { done: progress."
+          },
+          {
+            "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+            "prop": "className",
+            "line": 233,
+            "snippet": "<OutlineRail className={cn(\"@app-lg:min-h-0 @app-lg:flex-1\", className)} header={taskTotals.total >"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 2,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "component": "ProgrammingLanguageTabs",
+      "classification": "ambiguous",
+      "reason": "rest-spread may forward className",
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "component": "SidebarNavItem",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+            "prop": "className",
+            "line": 100,
+            "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+            "prop": "className",
+            "line": 72,
+            "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+          },
+          {
+            "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+            "prop": "className",
+            "line": 119,
+            "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+          },
+          {
+            "file": ".storybook/stories/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
+            "prop": "className",
+            "line": 64,
+            "snippet": "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" endContent={ <span className=\"rounded-full bg-accent px-2 py-0 text-"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 4,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "component": "TabsCard",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+            "prop": "className",
+            "line": 75,
+            "snippet": "<TabsCard className=\"mx-auto w-full max-w-3xl\" leftTabs={leftTabs} rightTabs={rightTabs} collapseRightOnMobile rightTabs"
+          },
+          {
+            "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+            "prop": "className",
+            "line": 108,
+            "snippet": "<TabsCard variant=\"primary\" className=\"w-full max-w-xs\" leftTabs={{ selectedKey: era, ariaLabel: t(\"view.eraAria\"), onSe"
+          },
+          {
+            "file": "src/components/pages/FlashcardsPage/index.tsx",
+            "prop": "className",
+            "line": 371,
+            "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"overview\", label: t(\"flashcard.review.over"
+          },
+          {
+            "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+            "prop": "className",
+            "line": 812,
+            "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"begin\", label: t(\"flashcard.quiz.setupTabB"
+          },
+          {
+            "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+            "prop": "className",
+            "line": 227,
+            "snippet": "<TabsCard leftTabs={{ items: [ { key: \"contents\", label: t(\"profileSettings.learning.detail.contents\"), icon: <ListBulle"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 5,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "component": "CodeToHtml",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 389,
+            "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "component": "MermaidDiagram",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+            "prop": "className",
+            "line": 370,
+            "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": null
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "component": "AiQuotaHistoryPanel",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-layout-navigation-media"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "component": "CollapsibleSidebar",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          },
+          {
+            "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+            "prop": "className",
+            "line": 85,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlo"
+          },
+          {
+            "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+            "prop": "className",
+            "line": 142,
+            "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 3,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-layout-navigation-media",
+      "twin": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+    }
+  ],
+  "parity": {
+    "storybookSrc": "src-only burns this wave (no SB twins for applied files)"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

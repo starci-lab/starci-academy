@@ -1,0 +1,324 @@
+{
+  "partition": "stacking-layout",
+  "generatedAt": "2026-08-06T22:52:56.134Z",
+  "batch": 13,
+  "fileCount": 11,
+  "allowedApply": [
+    "safe-api-removal",
+    "safe-consumer-migration"
+  ],
+  "recordOnly": [
+    "new-named-slot-required",
+    "vendor-boundary",
+    "identity-decision",
+    "skeleton-decision",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "seededDecisions": [],
+  "hardHolds": [
+    "27 teacher pattern holds / Nivo / locked paths / a11y",
+    "ChipBase API / handleSide vendor boundary",
+    "No invented principle tokens / no eslint-disable / no generic className escapes",
+    "No HeroUI conversion when atom API non-identical",
+    "No prop removal while real consumers depend on it"
+  ],
+  "files": [
+    {
+      "path": "src/components/blocks/learn/ContinueCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 51,
+          "column": 18,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 59,
+          "column": 60,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 66,
+          "column": 18,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/ContinueCard/types.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/ContinueCard/types.ts",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 22,
+          "column": 5,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 36,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        },
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 37,
+          "column": 5,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "new-named-slot-required"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 8,
+          "column": 1,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 23,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/.storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 0,
+      "messages": [],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 3,
+      "messages": [
+        {
+          "rule": "starci-fe/page-folder-two-files-only",
+          "line": 1,
+          "column": 1,
+          "message": "`pages/DashboardPage/` contains `LeagueCard/component.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 29,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 49,
+          "column": 42,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 13,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 58,
+          "column": 51,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 126,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-emoji-in-source",
+          "line": 127,
+          "column": 22,
+          "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 131,
+          "column": 31,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 135,
+          "column": 31,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 147,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 160,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 171,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 173,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 203,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 204,
+          "column": 43,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 222,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    }
+  ]
+}

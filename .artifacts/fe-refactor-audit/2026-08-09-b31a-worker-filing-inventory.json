@@ -1,0 +1,102 @@
+{
+  "manifest": [],
+  "classification": {
+    "src/components/pages/DashboardPage/TopLearners/component.tsx": {
+      "classification": "presentational shape",
+      "export": "_TopLearners",
+      "warningsBefore": {
+        "errors": 0,
+        "warnings": 10,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 8
+        }
+      },
+      "debts": [
+        "WithClassNames / public className",
+        "dead className passthrough to LeaderboardListCard",
+        "Skeleton className size/placement bars",
+        "StackV classNames min-w-0 flex-1",
+        "Skeleton.Typography className min-w-0 flex-1",
+        "page-folder (clears if moved to blocks/)"
+      ]
+    },
+    "src/components/pages/DashboardPage/TopLearners/index.tsx": {
+      "classification": "connected data/wiring",
+      "export": "TopLearners",
+      "owns": [
+        "useQueryGlobalLeaderboardSwr",
+        "useMutateSetFollowSwr",
+        "i18n labels",
+        "router see-more"
+      ],
+      "warningsBefore": {
+        "errors": 0,
+        "warnings": 1,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1
+        }
+      },
+      "canonNote": "Connected half is valid at block tier (tiers/split.md). Presentational purity keeps fetch in index.tsx after move."
+    },
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx": {
+      "classification": "skeleton implementation (orphan twin)",
+      "export": "TopLearnersSkeleton",
+      "liveImports": 0,
+      "warningsBefore": {
+        "errors": 0,
+        "warnings": 13,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/no-skeleton-twin-component": 1,
+          "starci-fe/no-heroui-outside-vocabulary": 1,
+          "starci-fe/require-identity-root": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 7,
+          "starci-fe/no-cn-above-vocabulary": 1
+        }
+      },
+      "destinationRecommendation": "DELETE — unused; loading is co-located isSkeleton in component.tsx; twin violates no-skeleton-twin-component"
+    }
+  },
+  "importsBefore": [
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "line": 25,
+      "import": "from \"../TopLearners\"",
+      "jsx": "<TopLearners />",
+      "classNamePassed": false
+    }
+  ],
+  "importsAfter": null,
+  "warningsBefore": {
+    "component": 10,
+    "index": 1,
+    "skeletonTwin": 13,
+    "communityTab": 3
+  },
+  "warningsAfter": null,
+  "changed": [],
+  "moved": [],
+  "deleted": [],
+  "skipped": [
+    "src/components/pages/DashboardPage/TopLearners/component.tsx",
+    "src/components/pages/DashboardPage/TopLearners/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx"
+  ],
+  "holds": [
+    "community-tab-import-ratchet",
+    "top-learners-colocated-skeleton-classname"
+  ],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [],
+  "skeletonParity": "n/a — no product edits",
+  "storybookParity": "none",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "status": "complete-read-only"
+}

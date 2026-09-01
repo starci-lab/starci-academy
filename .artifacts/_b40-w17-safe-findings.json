@@ -1,0 +1,482 @@
+{
+  "safe": 54,
+  "byRule": {
+    "starci-fe/require-frame-self-declare": 5,
+    "starci-fe/handler-on-prefix": 1,
+    "starci-fe/no-emoji-in-source": 6,
+    "starci-fe/require-identity-root": 42
+  },
+  "files": 46,
+  "byFile": {
+    "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx": [
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 145,
+        "col": 9,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists "
+      },
+      {
+        "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 166,
+        "col": 9,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists "
+      }
+    ],
+    "src/components/blocks/community/Discussion/ReactionBar.tsx": [
+      {
+        "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+        "rule": "starci-fe/handler-on-prefix",
+        "line": 47,
+        "col": 11,
+        "msg": "`handlePick` → rename to `onPick` (handlers are `onXxx`, not `handleXxx` — react-idioms §7)."
+      }
+    ],
+    "src/components/blocks/community/Discussion/constants.ts": [
+      {
+        "file": "src/components/blocks/community/Discussion/constants.ts",
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 22,
+        "col": 16,
+        "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "file": "src/components/blocks/community/Discussion/constants.ts",
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 28,
+        "col": 16,
+        "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "file": "src/components/blocks/community/Discussion/constants.ts",
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 34,
+        "col": 16,
+        "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "file": "src/components/blocks/community/Discussion/constants.ts",
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 40,
+        "col": 16,
+        "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "file": "src/components/blocks/community/Discussion/constants.ts",
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 46,
+        "col": 16,
+        "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      },
+      {
+        "file": "src/components/blocks/community/Discussion/constants.ts",
+        "rule": "starci-fe/no-emoji-in-source",
+        "line": 52,
+        "col": 16,
+        "msg": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+      }
+    ],
+    "src/components/blocks/skeleton/AccordionSkeleton/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 21,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/SkeletonParagraph/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 18,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/SkeletonText/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 19,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Badge/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Button/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Card/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Chip/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Input/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Menu/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Meter/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Metric/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 7,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Select/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Slider/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Switch/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Table/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/Typography/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 6,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/blocks/skeleton/Skeleton/index.tsx": [
+      {
+        "file": "src/components/blocks/skeleton/Skeleton/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 36,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx": [
+      {
+        "file": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/pages/JobPostFormPage/CompanySection/index.tsx": [
+      {
+        "file": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 21,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/pages/JobPostFormPage/PositionSection/index.tsx": [
+      {
+        "file": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 45,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/pages/JobPostFormPage/index.tsx": [
+      {
+        "file": "src/components/pages/JobPostFormPage/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx": [
+      {
+        "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 17,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/pages/PracticeProblemPage/index.tsx": [
+      {
+        "file": "src/components/pages/PracticeProblemPage/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 59,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ],
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx": [
+      {
+        "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 19,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 68,
+        "col": 17,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists "
+      }
+    ],
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx": [
+      {
+        "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 18,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      },
+      {
+        "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 79,
+        "col": 17,
+        "msg": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists "
+      }
+    ],
+    "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx": [
+      {
+        "file": "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx",
+        "rule": "starci-fe/require-frame-self-declare",
+        "line": 88,
+        "col": 23,
+        "msg": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists "
+      }
+    ],
+    "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx": [
+      {
+        "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+        "rule": "starci-fe/require-identity-root",
+        "line": 20,
+        "col": 1,
+        "msg": "JSX file without an `identity` prop on the root — add `identity` with `tier` and `component` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+      }
+    ]
+  }
+}

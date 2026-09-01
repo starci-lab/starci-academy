@@ -1,0 +1,129 @@
+{
+  "partition": "blocks-cv-grading",
+  "manifest": [
+    "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+    "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+    "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+    "src/components/blocks/grading/GradeCreditCaption/index.tsx",
+    "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+    "src/components/blocks/grading/GradingByline/component.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/component.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+    "src/components/blocks/grading/GradeCreditCaption/index.tsx",
+    "src/components/blocks/grading/GradingByline/component.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/component.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/grading/GradeCreditCaption/index.tsx",
+      "kind": "dead-safe",
+      "change": "Stopped forwarding dead className",
+      "consumers": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/grading/GradingByline/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed VerdictIcon className door; fixed glyph classes",
+      "consumers": "open-tag VerdictIcon className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+      "kind": "dead-safe",
+      "change": "Removed unused className door",
+      "consumers": "open-tag className consumers = 0"
+    }
+  ],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 4,
+    "parentPlacementApplied": 0,
+    "proposals": 1
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged",
+    "CvPdfPreview: zero className consumers but held as CvPreview-family contract"
+  ],
+  "consumerEvidence": [
+    {
+      "file": "src/components/blocks/grading/GradeCreditCaption/component.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/grading/GradeCreditCaption/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/grading/GradingByline/component.tsx",
+      "evidence": "open-tag VerdictIcon className consumers = 0"
+    },
+    {
+      "file": "src/components/blocks/grading/SelfHostGpuMark/component.tsx",
+      "evidence": "open-tag className consumers = 0"
+    }
+  ],
+  "proposals": [
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+      "component": "AiRewriteButton",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 94,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+          },
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 131,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+          },
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 147,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+          },
+          {
+            "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+            "prop": "className",
+            "line": 52,
+            "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={onRewrite} /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 4,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-cv-grading",
+      "twin": null
+    }
+  ],
+  "parity": {
+    "storybookSrc": "src-only burns this wave (no SB twins for applied files)"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

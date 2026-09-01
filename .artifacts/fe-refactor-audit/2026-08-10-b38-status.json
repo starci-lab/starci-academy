@@ -1,0 +1,43 @@
+{
+  "batch": "B38",
+  "checkpoint": "2a096210a",
+  "verdict": "NOT READY",
+  "generatedAt": "2026-08-08T19:20:00.000Z",
+  "goal": "Close six audit-only redundant labeled-surface shells",
+  "closed": [
+    "ActivityFeed",
+    "RelatedContentList",
+    "MindMapNodeDrawer",
+    "ProfileJobReadiness-A",
+    "ProfileJobReadiness-B"
+  ],
+  "held": [
+    {
+      "id": "ProfileChallenges",
+      "class": "A",
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "reason": "Exact collapse correct; eslint --max-warnings=0 blocked by page-folder-two-files-only, no-retired-async-content, no-parallel-skeleton, no-public-classname-prop. Migration reverted."
+    },
+    {
+      "id": "ContentAiChat-search",
+      "class": "co-consumer",
+      "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "reason": "Not a B37c residual; co-migration retracted. EntityResultRow optional onSelect + ChatToolResult icon?: unknown keep checkpoint ContentAiChat compiling."
+    }
+  ],
+  "eslint": {
+    "command": "npx eslint --format json --no-error-on-unmatched-pattern src .storybook",
+    "before": { "warnings": 6174, "files": 1084, "errors": 0, "a11y": 11 },
+    "after": { "warnings": 6150, "files": 1080, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -24, "files": -4, "errors": 0, "a11y": 0 }
+  },
+  "residualsAfter": {
+    "count": 1,
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b38-redundant-labeled-surface.json"
+  },
+  "contract": {
+    "classB": false,
+    "storybookEdits": 0
+  },
+  "committed": false
+}

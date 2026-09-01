@@ -1,0 +1,16 @@
+{
+  "partition": "atoms-display-forms",
+  "changed": [],
+  "skipped": "No proven-dead doors in this partition this batch; HeroUI-wrapping atoms held as vendor-adjacent.",
+  "holds": [
+    "atoms classNames doors — most wrap HeroUI; not burned without semantic API"
+  ],
+  "evidence": [],
+  "newVariants": [],
+  "vendorBoundaries": [],
+  "verification": {
+    "tsc": "n/a",
+    "eslintMaxWarnings0": "n/a"
+  },
+  "regressions": []
+}

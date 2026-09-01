@@ -1,0 +1,50 @@
+{
+  "starci-fe/no-inline-skeleton-branch": {
+    "beforeAll": 62,
+    "beforeUnlocked": 58,
+    "afterAll": 55,
+    "afterUnlocked": 51,
+    "afterLocked": 2,
+    "afterHold": 2
+  },
+  "starci-fe/no-skeleton-twin-component": {
+    "beforeAll": 40,
+    "beforeUnlocked": 37,
+    "afterAll": 39,
+    "afterUnlocked": 36,
+    "afterLocked": 2,
+    "afterHold": 1
+  },
+  "starci-fe/no-parallel-skeleton": {
+    "beforeAll": 92,
+    "beforeUnlocked": 90,
+    "afterAll": 68,
+    "afterUnlocked": 66,
+    "afterLocked": 2,
+    "afterHold": 0
+  },
+  "starci-fe/export-matches-folder": {
+    "beforeAll": 47,
+    "beforeUnlocked": 47,
+    "afterAll": 7,
+    "afterUnlocked": 7,
+    "afterLocked": 0,
+    "afterHold": 0
+  },
+  "starci-fe/no-helper-folder-in-components": {
+    "beforeAll": 66,
+    "beforeUnlocked": 62,
+    "afterAll": 66,
+    "afterUnlocked": 62,
+    "afterLocked": 0,
+    "afterHold": 4
+  },
+  "starci-fe/page-folder-two-files-only": {
+    "beforeAll": 356,
+    "beforeUnlocked": 326,
+    "afterAll": 356,
+    "afterUnlocked": 326,
+    "afterLocked": 10,
+    "afterHold": 20
+  }
+}

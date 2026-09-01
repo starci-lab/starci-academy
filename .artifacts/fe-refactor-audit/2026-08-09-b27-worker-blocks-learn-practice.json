@@ -1,0 +1,312 @@
+{
+  "partition": "blocks-learn-practice",
+  "manifest": [
+    ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+    ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+    ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+    ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+    ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardToolbar/LeaderboardToolbar.tsx",
+    ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+    ".storybook/components/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.tsx",
+    ".storybook/components/starci/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+    ".storybook/components/starci/blocks/learn/TaskLockedAlert/TaskLockedAlert.tsx",
+    "src/components/blocks/code/CodeConsole/index.tsx",
+    "src/components/blocks/learn/AIProcessingText/index.tsx",
+    "src/components/blocks/learn/ChallengeBrief/index.tsx",
+    "src/components/blocks/learn/ChallengeHeader/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+    "src/components/blocks/learn/ContentAiChat/index.tsx",
+    "src/components/blocks/learn/ContentAiFab/index.tsx",
+    "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+    "src/components/blocks/learn/ContentCommentThread/index.tsx",
+    "src/components/blocks/learn/ContentDiscussion/index.tsx",
+    "src/components/blocks/learn/ContentHeader/index.tsx",
+    "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+    "src/components/blocks/learn/ContentMap/index.tsx",
+    "src/components/blocks/learn/ContentReaction/index.tsx",
+    "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+    "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+    "src/components/blocks/learn/CourseQaComposer/index.tsx",
+    "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+    "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+    "src/components/blocks/learn/EnrollGate/index.tsx",
+    "src/components/blocks/learn/EntityResultRow/component.tsx",
+    "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+    "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+    "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+    "src/components/blocks/learn/KeepGoingPath/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+    "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+    "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+    "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+    "src/components/blocks/learn/LearnNudges/component.tsx",
+    "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+    "src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+    "src/components/blocks/learn/MockInterviewAnswerAction/index.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/ScoreRow/index.tsx",
+    "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+    "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+    "src/components/blocks/learn/ModuleContinueBand/index.tsx",
+    "src/components/blocks/learn/ModuleLessonList/index.tsx",
+    "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+    "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+    "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+    "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+    "src/components/blocks/learn/PlaygroundEnterBanner/index.tsx",
+    "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+    "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+    "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+    "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+    "src/components/blocks/learn/PlaygroundSetupSteps/OsTabsSkeleton/index.tsx",
+    "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+    "src/components/blocks/learn/QaConversationHeader/index.tsx",
+    "src/components/blocks/learn/QaInboxRow/index.tsx",
+    "src/components/blocks/learn/QaMessageBubble/index.tsx",
+    "src/components/blocks/learn/QaQuestionThread/index.tsx",
+    "src/components/blocks/learn/QuizCard/index.tsx",
+    "src/components/blocks/learn/QuizRecapList/index.tsx",
+    "src/components/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+    "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+    "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+    "src/components/blocks/learn/TaskBriefBody/index.tsx",
+    "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+    "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+    "src/components/blocks/learn/VariantChip/types.ts",
+    "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+    "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+    "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+    "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+    "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+    "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx"
+  ],
+  "changed": [
+    "src/components/blocks/learn/QaInboxRow/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "kind": "dead-safe",
+      "change": "Removed WithClassNames/className; fixed row chrome classes",
+      "consumers": "open-tag className consumers = 0"
+    }
+  ],
+  "classification": {
+    "note": "Per-finding map lives in aggregate; worker holds inventory files assigned by partitionOf",
+    "deadSafeApplied": 1,
+    "parentPlacementApplied": 0,
+    "proposals": 9
+  },
+  "holds": [
+    "Button/Chip/Stack/Grid/Box/SurfaceCard and other live APIs with consumers",
+    "vendor HeroUI/Box foreign mounts",
+    "DrawerShell/ShowcaseMockup/MiniCart/CvPreview/PDFView/B19–B26",
+    "CvPdfPreview held (CvPreview-adjacent contract) despite zero className consumers",
+    "Nivo/locked/teacher holds/skeleton ComponentType slots",
+    "no new variants/slots/tokens/eslint-disable; lint severity unchanged"
+  ],
+  "consumerEvidence": [
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "evidence": "open-tag className consumers = 0"
+    }
+  ],
+  "proposals": [
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "component": "CodeConsole",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/pages/PracticeProblemPage/index.tsx",
+            "prop": "className",
+            "line": 751,
+            "snippet": "<CodeConsole className=\"h-[42%]\" ariaLabel={t(\"codingPractice.consoleLabel\")} selectedTab={consoleTab} onSelectTab={(key"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "component": "ChatToolResult",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+            "prop": "className",
+            "line": 1025,
+            "snippet": "<ChatToolResult items={tr.items} isLoading={tr.isLoading} label={t(meta.labelKey)} icon={<Icon className=\"size-4\" aria-h"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/index.tsx",
+      "component": "ContentMap",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/LearnShellLayout/index.tsx",
+            "prop": "className",
+            "line": 146,
+            "snippet": "<ContentMap className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "component": "LeaderboardCategoryRail",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/LearnShellLayout/index.tsx",
+            "prop": "className",
+            "line": 168,
+            "snippet": "<LeaderboardCategoryRail variant=\"rail\" className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "component": "MilestoneOutline",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/layouts/LearnShellLayout/index.tsx",
+            "prop": "className",
+            "line": 157,
+            "snippet": "<MilestoneOutline className=\"min-h-0 @app-lg:flex-1\" /"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "component": "PlaygroundRagWorkspace",
+      "classification": "live-api",
+      "consumers": {
+        "className": [
+          {
+            "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+            "prop": "className",
+            "line": 103,
+            "snippet": "<PlaygroundRagWorkspace className=\"h-full\" ragAnswer={byomState.ragAnswer} ragCitations={byomState.ragCitations} sendRag"
+          }
+        ],
+        "classNames": [],
+        "classNameCount": 1,
+        "classNamesCount": 0
+      },
+      "effect": "parent-placement-or-chrome",
+      "futureApi": "Named placement variant or parent-owned principle — do not invent in B27 without teacher-approved axis",
+      "whyNotB27": "Live consumers exist; requires semantic contract design, not mechanical burn",
+      "worker": "blocks-learn-practice",
+      "twin": null
+    },
+    {
+      "file": "src/components/blocks/learn/QuizCard/index.tsx",
+      "component": "QuizCard",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": false,
+      "destClassNames": true,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-learn-practice"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      "component": "ReactionGlyph",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": false,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-learn-practice"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      "component": "ReactionGlyph",
+      "classification": "ambiguous",
+      "reason": "door present but consumer/impl relationship unclear",
+      "destClassName": true,
+      "destClassNames": false,
+      "cName": 0,
+      "cNames": 0,
+      "worker": "blocks-learn-practice"
+    }
+  ],
+  "parity": {
+    "storybookSrc": "src-only burns this wave (no SB twins for applied files)"
+  },
+  "verification": {
+    "local": "eslint chunk deferred to coordinator"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — partitionOf assigns each inventory file once"
+}

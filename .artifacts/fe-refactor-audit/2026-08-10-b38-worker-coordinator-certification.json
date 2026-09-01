@@ -1,0 +1,60 @@
+{
+  "batch": "B38",
+  "agent": "coordinator-certification",
+  "status": "complete",
+  "completedAt": "2026-08-08T19:20:00.000Z",
+  "checkpoint": "2a096210a",
+  "verdict": "NOT READY",
+  "reason": "ProfileChallenges residual Exact A remains open (retracted for zero-warning ratchet). Five of six audit shells closed.",
+  "productPackage": [
+    "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "src/components/blocks/learn/RelatedContentList/component.tsx",
+    "src/components/blocks/learn/EntityResultRow/component.tsx",
+    "src/components/blocks/learn/EntityResultRow/index.tsx",
+    "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+    "src/components/blocks/profile/ProfileJobReadiness/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx"
+  ],
+  "deleted": [
+    "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx"
+  ],
+  "excludedPreDirty": [
+    "CLAUDE.md",
+    ".claude/fe/decision-ledger.json (pre-dirty; B38 hold appended)",
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+    "src/components/blocks/auth/AuthenticationPanel/SignInSection/CredentialsState/types/**"
+  ],
+  "forbiddenDiffs": [],
+  "overlaps": [],
+  "classifications": {
+    "ActivityFeed": "A closed",
+    "RelatedContentList": "A closed",
+    "MindMapNodeDrawer": "A closed",
+    "ProfileChallenges": "A held",
+    "ProfileJobReadiness-A": "A closed",
+    "ProfileJobReadiness-B": "A closed",
+    "classB": [],
+    "classC": [],
+    "classD": []
+  },
+  "eslint": {
+    "before": { "warnings": 6174, "files": 1084, "errors": 0, "a11y": 11 },
+    "after": { "warnings": 6150, "files": 1080, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -24, "files": -4 },
+    "changedFilesMaxWarningsZero": true
+  },
+  "gates": {
+    "pluginTests": "pass",
+    "principleSemantic": "pass",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass",
+    "tsc": "known unrelated LandingPage/KnowledgeGraph + graphql links/options only"
+  },
+  "storybookParity": {
+    "SurfaceCardList": "unchanged — no class B",
+    "ProfileJobReadiness": "no Storybook twin",
+    "ActivityFeed": "no Storybook twin required for residual collapse",
+    "RelatedContentList": "no Storybook twin required"
+  }
+}

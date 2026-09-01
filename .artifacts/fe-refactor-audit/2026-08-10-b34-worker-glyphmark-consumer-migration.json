@@ -1,0 +1,56 @@
+{
+  "agent": "glyphmark-consumer-migration",
+  "batch": "B34",
+  "wave": "B",
+  "checkpoint": "6ff21c66",
+  "generatedAt": "2026-08-08T14:00:00.000Z",
+  "changed": [
+    ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+    "src/components/blocks/learn/KeepGoingPath/index.tsx",
+    ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+    "src/components/blocks/learn/ModuleLessonList/index.tsx"
+  ],
+  "held": [
+    {
+      "path": "WeeklyGoals SB+src",
+      "reason": "status glyph uses text-muted — not in GlyphMarkTone (default|accent|success|warning); not exact"
+    }
+  ],
+  "mappings": {
+    "KeepGoingPath.CONTENT_LEADING": {
+      "active": { "Icon": "PlayCircleIcon", "tone": "accent", "was": "size-5 text-accent-soft-foreground" },
+      "done": { "Icon": "CheckCircleIcon", "tone": "success", "was": "size-5 text-success-soft-foreground" },
+      "todo": { "Icon": "CircleIcon", "tone": "default", "was": "size-5 text-foreground" }
+    },
+    "KeepGoingPath.LOCKED_LEADING": {
+      "Icon": "LockIcon",
+      "tone": "warning",
+      "was": "size-5 text-warning-soft-foreground",
+      "ariaLabel": "Paid content"
+    },
+    "ModuleLessonList.STATUS_LEADING": {
+      "resume": { "Icon": "PlayIcon", "tone": "accent", "was": "size-5 text-accent-soft-foreground" },
+      "read": { "Icon": "CheckIcon", "tone": "success", "was": "size-5 text-success-soft-foreground" },
+      "unread": { "Icon": "CircleIcon", "tone": "default", "was": "size-5 text-foreground" }
+    },
+    "skeleton": "hand-rolled size-5 shrink-0 rounded-full HeroSkeleton/Skeleton → GlyphMark isSkeleton"
+  },
+  "deleted": [
+    "glyphClass string tables",
+    "hand-rolled size-5 icon classNames",
+    "HeroSkeleton/Skeleton size-5 shrink-0 rounded-full leading placeholders",
+    "direct Phosphor Icon className mounts for status glyphs"
+  ],
+  "verification": {
+    "tsc": "clean for owned files (full tsc --noEmit exit 0; no KeepGoingPath/ModuleLessonList/GlyphMark diagnostics)",
+    "parity": "SB/src twins both render GlyphMark with matching { Icon, tone } tables",
+    "constraints": [
+      "no className doors invented",
+      "no ReactNode icons",
+      "touched owned files only",
+      "no eslint-disable"
+    ]
+  },
+  "regressions": [],
+  "skipped": []
+}

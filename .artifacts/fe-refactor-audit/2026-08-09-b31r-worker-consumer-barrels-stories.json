@@ -1,0 +1,24 @@
+{
+  "changed": [],
+  "held": [
+    "await IconTile unblock"
+  ],
+  "retracted": [],
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "candidateEvidence": [],
+  "beforeTier": null,
+  "afterTier": null,
+  "destination": null,
+  "consumersBefore": {},
+  "consumersAfter": null,
+  "publicDoorsBefore": {},
+  "publicDoorsAfter": null,
+  "skeletonBefore": {},
+  "skeletonAfter": null,
+  "storybookParity": "no moves — no rewires"
+}

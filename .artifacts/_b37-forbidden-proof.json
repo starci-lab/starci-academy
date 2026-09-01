@@ -1,0 +1,15 @@
+﻿{
+    "checkpoint":  "84b92cd77",
+    "productDiffsVsHead":  [
+                               ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"
+                           ],
+    "productDiffsVsCheckpoint":  [
+                                     ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx"
+                                 ],
+    "pass":  false,
+    "head":  "84b92cd7731a1d097e1f3a0c6465d026071d9ab9",
+    "untrackedForbidden":  [
+                               ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+                               ".storybook/stories/nivo/blocks/instances/InstanceList/InstanceList.stories.tsx"
+                           ]
+}

@@ -1,0 +1,162 @@
+{
+  "batch": "B31a",
+  "phase": "filing-inventory",
+  "editsAllowed": false,
+  "checkpoint": {
+    "head": "18f84f5b15528163e9fca10cfb7252323f02f013",
+    "subject": "refactor(fe): enforce semantic closure ratchet"
+  },
+  "objective": "Promote TopLearners from pages/DashboardPage/TopLearners to blocks/dashboard/TopLearners",
+  "leaderboardListCardClassNameRemainsOpen": true,
+  "storybookScan": {
+    "twin": "none",
+    "evidence": [
+      "rg TopLearners under .storybook → 0 matches",
+      "no .storybook/components/starci/blocks/dashboard/TopLearners",
+      "no TopLearners.stories.tsx"
+    ]
+  },
+  "currentFamily": {
+    "src/components/pages/DashboardPage/TopLearners/component.tsx": {
+      "classification": "presentational shape",
+      "export": "_TopLearners",
+      "warningsBefore": {
+        "errors": 0,
+        "warnings": 10,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 8
+        }
+      },
+      "debts": [
+        "WithClassNames / public className",
+        "dead className passthrough to LeaderboardListCard",
+        "Skeleton className size/placement bars",
+        "StackV classNames min-w-0 flex-1",
+        "Skeleton.Typography className min-w-0 flex-1",
+        "page-folder (clears if moved to blocks/)"
+      ]
+    },
+    "src/components/pages/DashboardPage/TopLearners/index.tsx": {
+      "classification": "connected data/wiring",
+      "export": "TopLearners",
+      "owns": [
+        "useQueryGlobalLeaderboardSwr",
+        "useMutateSetFollowSwr",
+        "i18n labels",
+        "router see-more"
+      ],
+      "warningsBefore": {
+        "errors": 0,
+        "warnings": 1,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1
+        }
+      },
+      "canonNote": "Connected half is valid at block tier (tiers/split.md). Presentational purity keeps fetch in index.tsx after move."
+    },
+    "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx": {
+      "classification": "skeleton implementation (orphan twin)",
+      "export": "TopLearnersSkeleton",
+      "liveImports": 0,
+      "warningsBefore": {
+        "errors": 0,
+        "warnings": 13,
+        "byRule": {
+          "starci-fe/page-folder-two-files-only": 1,
+          "starci-fe/no-skeleton-twin-component": 1,
+          "starci-fe/no-heroui-outside-vocabulary": 1,
+          "starci-fe/require-identity-root": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 7,
+          "starci-fe/no-cn-above-vocabulary": 1
+        }
+      },
+      "destinationRecommendation": "DELETE — unused; loading is co-located isSkeleton in component.tsx; twin violates no-skeleton-twin-component"
+    }
+  },
+  "consumers": {
+    "astOpenTag": [
+      {
+        "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+        "line": 25,
+        "import": "from \"../TopLearners\"",
+        "jsx": "<TopLearners />",
+        "classNamePassed": false
+      }
+    ],
+    "jsdocOnly": [
+      "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "src/components/pages/LeaguePage/GlobalBoard/index.tsx (prose mention only)"
+    ],
+    "pageOwner": {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "note": "composes CommunityTab; does not import TopLearners directly",
+      "warningsBefore": {
+        "errors": 0,
+        "warnings": 2,
+        "byRule": {
+          "starci-fe/no-raw-shape-at-sentence-tier": 1,
+          "starci-fe/require-frame-self-declare": 1
+        }
+      },
+      "pageFolderExempt": true
+    }
+  },
+  "destinationShapeIfUnblocked": {
+    "src/components/blocks/dashboard/TopLearners/component.tsx": "presentational _TopLearners",
+    "src/components/blocks/dashboard/TopLearners/index.tsx": "connected TopLearners",
+    "deleted": [
+      "src/components/pages/DashboardPage/TopLearners/**",
+      "TopLearnersSkeleton twin (unused)"
+    ],
+    "noCompatibilityBarrelAtOldPath": true,
+    "communityTabImportAfter": "from \"@/components/blocks/dashboard/TopLearners\""
+  },
+  "completionBlockers": [
+    {
+      "id": "community-tab-import-ratchet",
+      "severity": "atomic",
+      "detail": "The only live import site is CommunityTab/index.tsx under pages/DashboardPage/. page-folder-two-files-only always fires on rest=CommunityTab/index.tsx. Import-only edit leaves ≥1 warning. Promoting/inlining CommunityTab is forbidden (no CommunityTab refactor beyond mechanically required import). Therefore no changed-set can include the required import update at 0 warnings.",
+      "eslint": {
+        "starci-fe/page-folder-two-files-only": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      },
+      "noteOnGap6": "block-boundary owns gap step 6 (=gap-6) — raw-shape is fixable with StackV principle=block-boundary + identity, but page-folder remains."
+    },
+    {
+      "id": "top-learners-colocated-skeleton-classname",
+      "severity": "family-zero-warn",
+      "detail": "After page-folder clears at blocks/, co-located skeleton still passes className to Skeleton bars (size-12 rounded-xl IconTile stand-in, h-3 w-6 rank slot, h-3 w-10 value, h-8 w-24 follow) and classNames to StackV/Typography. Skeleton.Avatar size=lg is size-12 but rounded-full — not exact IconTile chrome. No typed Skeleton.* preserves exact shimmer without redesign. Batch forbids skeleton redesign → stop."
+    }
+  ],
+  "proposedWorkerManifests": {
+    "filing-inventory": {
+      "sourceEdits": [],
+      "status": "complete"
+    },
+    "storybook-top-learners": {
+      "sourceEdits": [],
+      "status": "hold",
+      "reason": "no twin/story"
+    },
+    "src-top-learners-promotion": {
+      "sourceEdits": [],
+      "status": "blocked",
+      "reason": "community-tab-import-ratchet + skeleton classname debt"
+    },
+    "coordinator-gates": {
+      "sourceEdits": [
+        ".artifacts/fe-refactor-audit/2026-08-09-b31a-inventory.json",
+        ".artifacts/fe-refactor-audit/2026-08-09-b31a-status.json",
+        ".artifacts/fe-refactor-audit/2026-08-09-b31a-status.md",
+        ".artifacts/fe-refactor-audit/2026-08-09-b31a-worker-*.json",
+        ".claude/fe/decision-ledger.json"
+      ]
+    }
+  },
+  "overlapCheck": "pass — no LeaderboardListCard/Nivo/locked edits attempted"
+}

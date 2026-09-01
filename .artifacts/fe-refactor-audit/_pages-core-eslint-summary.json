@@ -1,0 +1,13 @@
+[
+  {
+    "path": "src/modules/utils/computations/pow-10.ts",
+    "messages": [
+      {
+        "line": 22,
+        "col": 17,
+        "rule": "starci-fe/prefer-arrow-export",
+        "message": "Use an arrow const `const pow10 = (…) => {…}` — no module-level `function` (structure-and-naming §5)."
+      }
+    ]
+  }
+]

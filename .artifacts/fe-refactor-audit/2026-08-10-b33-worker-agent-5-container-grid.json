@@ -1,0 +1,236 @@
+{
+  "batch": "B33",
+  "agent": "agent-5-container-grid",
+  "checkpoint": "139391b6",
+  "branch": "mtp",
+  "status": "partial",
+  "manifest": "agent-5-container-grid",
+  "clusterIds": [],
+  "focus": "Container/Grid/measure consumer chains",
+  "summary": "Migrated StarCi page/layout Container + Stack/SplitWorkspace/RailShell self-declare chains onto exact existing principles (page-pad for padding={6} Containers; center-measure only for flush padding={1} measure caps; layout-split/block-boundary/group-boundary for matching Stack gaps). Fixed SettingsLayout's fake center-measure+padding={6}. Manifest lint 90→66 (−24), require-frame-self-declare 26→2. Held GroupPressableCard/raw navbar measure wrappers, lesson-article anchors, flush gap={1} stacks, and Container.classNames (live consumer outside partition).",
+  "consumersScanned": 40,
+  "consumersMigrated": [
+    "src/components/layouts/SettingsLayout/component.tsx",
+    ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+    "src/components/pages/ChallengePage/component.tsx",
+    ".storybook/components/starci/pages/ChallengePage/ChallengePage.tsx",
+    "src/components/pages/ChallengeResultPage/component.tsx",
+    ".storybook/components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx",
+    "src/components/pages/ContentPage/component.tsx",
+    ".storybook/components/starci/pages/ContentPage/ContentPage.tsx",
+    "src/components/pages/ModulePage/component.tsx",
+    ".storybook/components/starci/pages/ModulePage/ModulePage.tsx",
+    "src/components/pages/MockInterviewPage/index.tsx",
+    ".storybook/components/starci/pages/MockInterviewPage/MockInterviewPage.tsx",
+    "src/components/layouts/PublicProfileLayout/component.tsx",
+    "src/components/pages/FoundationsCategoryPage/component.tsx",
+    "src/components/pages/LeaderboardPage/component.tsx",
+    ".storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx",
+    ".storybook/components/starci/pages/FlashcardReviewPage/FlashcardReviewPage.tsx",
+    ".storybook/components/starci/pages/FoundationResourcePage/FoundationResourcePage.tsx",
+    ".storybook/components/starci/pages/FoundationsCategoryPage/FoundationsCategoryPage.tsx",
+    ".storybook/components/starci/pages/FoundationsGridPage/FoundationsGridPage.tsx",
+    ".storybook/components/starci/pages/HeadhuntingsPage/HeadhuntingsPage.tsx",
+    ".storybook/components/starci/pages/PlaygroundHubPage/PlaygroundHubPage.tsx",
+    ".storybook/components/starci/pages/PlaygroundPreparePage/PlaygroundPreparePage.tsx",
+    ".storybook/components/starci/pages/QuizPage/QuizPage.tsx"
+  ],
+  "migrations": [
+    {
+      "pattern": "Container padding={6} → principle=page-pad",
+      "note": "Exact padding-family token; rejects card-padding. Not center-measure (would fake-claim measure on a node that also owns page padding)."
+    },
+    {
+      "pattern": "Container padding={1} size measure → principle=center-measure",
+      "files": ["ContentPage src"],
+      "note": "Exact ContentTabBar precedent; flush padding so measure is the only structural claim."
+    },
+    {
+      "pattern": "StackV gap={7} → layout-split; gap={6} → block-boundary; gap={5} → group-boundary",
+      "note": "Principle owns the matching gap step; corrects prior block-boundary-on-gap-7 drift (principle was silently forcing gap-6)."
+    },
+    {
+      "pattern": "SplitWorkspace / RailShell → layout-split",
+      "files": ["ChallengePage", "PublicProfileLayout"]
+    },
+    {
+      "pattern": "SettingsLayout Container center-measure+padding={6} → page-pad",
+      "note": "Removed fake center-measure on a padded measure node."
+    }
+  ],
+  "sharedApiRemovedOrRetained": {
+    "Container.classNames": {
+      "action": "retained",
+      "reason": "Live consumer remains outside this manifest (src/components/pages/ProfileCodingProblemPage). B32 hold stands; no door burn here.",
+      "liveConsumersOutsidePartition": ["src/components/pages/ProfileCodingProblemPage/index.tsx"]
+    },
+    "Grid.classNames": {
+      "action": "already-removed",
+      "note": "B32 closed; no remaining Grid classNames/gap escapes in this partition."
+    },
+    "GroupPressableCard item.className / hand-rolled grid": {
+      "action": "retained",
+      "reason": "Not honest Grid migration: uses @sm/@md container steps (not @app-*), up to 4 cols at sm, and col-start placement via item.className. GridItem.span only supports 1|2."
+    }
+  },
+  "beforeAfterMessages": {
+    "scope": "agent-5-container-grid 40-file eslint slice",
+    "before": 90,
+    "after": 66,
+    "delta": -24,
+    "byRule": {
+      "before": {
+        "starci-fe/require-frame-self-declare": 26,
+        "starci-fe/no-host-element-at-sentence-tier": 21,
+        "starci-fe/no-raw-shape-at-sentence-tier": 14,
+        "starci-fe/require-identity-root": 7,
+        "starci-fe/no-public-classname-prop": 5,
+        "starci-fe/no-cn-above-vocabulary": 5,
+        "starci-fe/no-heroui-outside-vocabulary": 4,
+        "starci-fe/page-folder-two-files-only": 3,
+        "starci-fe/no-classname-at-sentence-tier": 2,
+        "starci-fe/no-parallel-skeleton": 2,
+        "starci-fe/no-inline-skeleton-branch": 1
+      },
+      "after": {
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 21,
+        "starci-fe/no-raw-shape-at-sentence-tier": 14,
+        "starci-fe/require-identity-root": 7,
+        "starci-fe/no-public-classname-prop": 5,
+        "starci-fe/no-cn-above-vocabulary": 5,
+        "starci-fe/no-heroui-outside-vocabulary": 4,
+        "starci-fe/page-folder-two-files-only": 3,
+        "starci-fe/no-classname-at-sentence-tier": 2,
+        "starci-fe/no-parallel-skeleton": 2,
+        "starci-fe/no-inline-skeleton-branch": 1
+      }
+    }
+  },
+  "closedClusters": [
+    "ChallengePage Container/SplitWorkspace/StackV require-frame-self-declare (src+SB)",
+    "ModulePage Container/StackV require-frame-self-declare (src+SB)",
+    "ContentPage Container require-frame-self-declare (src; SB page-pad outer)",
+    "SettingsLayout Container fake-center-measure → page-pad (src+SB)",
+    "PublicProfileLayout RailShell + Container require-frame-self-declare",
+    "MockInterviewPage Container + header StackV require-frame-self-declare",
+    "SB page twins page-pad/layout-split/block-boundary parity for ChallengeResult/CourseQa/Flashcard/Foundation*/Headhuntings/Playground*/Quiz"
+  ],
+  "partialClusters": [
+    {
+      "id": "flush-gap-1-stack-self-declare",
+      "files": [
+        "src/components/layouts/PublicProfileLayout/component.tsx",
+        "src/components/pages/MockInterviewPage/index.tsx"
+      ],
+      "remaining": "require-frame-self-declare ×2",
+      "reason": "StackV gap={1} flush chrome (tabs+body / identity-only single child). name-handle is the only gap-1 token but would be a fake semantic claim; no flush/zero-seam principle exists. Not inventing one."
+    },
+    {
+      "id": "contentpage-lesson-article-anchors",
+      "files": ["src/components/pages/ContentPage/component.tsx"],
+      "remaining": "no-host-element-at-sentence-tier ×3 + no-inline-skeleton-branch ×1",
+      "reason": "Raw divs carry id=lesson-article + data-ai-selectable (no vocabulary owns arbitrary id+data attrs). Header skeleton ternary is pre-existing parallel-shape debt."
+    }
+  ],
+  "holds": [
+    {
+      "files": ["src/components/blocks/cards/GroupPressableCard/index.tsx"],
+      "rules": [
+        "no-heroui-outside-vocabulary",
+        "require-identity-root",
+        "no-classname-at-sentence-tier",
+        "no-public-classname-prop",
+        "no-host-element-at-sentence-tier",
+        "no-cn-above-vocabulary"
+      ],
+      "reason": "Hand-rolled @container grid + item.className placement/verdict chrome. Grid frame API cannot express @sm/@md steps, 4-col sm, or col-start without inventing vocabulary."
+    },
+    {
+      "files": ["src/components/blocks/layout/shell/Navbar/index.tsx"],
+      "rules": ["require-identity-root", "no-host-element-at-sentence-tier", "no-raw-shape-at-sentence-tier"],
+      "reason": "Raw sticky nav + mx-auto w-full px-3 bar. Not a reading Container measure; Measure/PageEndPad/FillAvailable do not own this chrome landmark."
+    },
+    {
+      "files": [
+        "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+        "src/components/blocks/learn/OnThisPage/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+        "src/components/layouts/Navbar/NavLinks/index.tsx"
+      ],
+      "reason": "Host/cn/HeroUI/identity/className debt outside exact Container/Grid/measure migration; no exact frame swap without redesign."
+    },
+    {
+      "files": [
+        "src/components/pages/ArchitecturePage/ArchitectureMap/scene.ts",
+        "src/components/pages/ArchitecturePage/modules.ts"
+      ],
+      "rule": "page-folder-two-files-only",
+      "reason": "Non-UI helpers under page folder; destination is modules/resources (agent-8 territory)."
+    },
+    {
+      "files": ["src/components/pages/MockInterviewPage/index.tsx"],
+      "rules": ["no-parallel-skeleton"],
+      "reason": "Parallel MockInterview*Skeleton imports; isSkeleton threading redesign out of measure scope."
+    },
+    {
+      "api": "Container.classNames",
+      "reason": "Retained for ProfileCodingProblemPage live consumer outside partition."
+    }
+  ],
+  "forbiddenConsumers": {
+    "nivo": 0,
+    "nivoexpert": 0,
+    "mia-mia": 0,
+    "note": "No edits under forbidden product trees; CLAUDE.md and decision-ledger untouched."
+  },
+  "parity": {
+    "storybookFirst": true,
+    "mirrored": [
+      "SettingsLayout",
+      "ChallengePage",
+      "ChallengeResultPage",
+      "ModulePage",
+      "PlaygroundHubPage",
+      "PlaygroundPreparePage",
+      "FoundationsCategoryPage (gap-7 layout-split)",
+      "page-pad Containers across SB learning pages"
+    ],
+    "srcOnlyInManifest": [
+      "PublicProfileLayout",
+      "LeaderboardPage",
+      "ContentPage reading/footer Container center-measure (SB ContentPage is simpler outer-only blueprint)"
+    ],
+    "sbOnlyInManifest": [
+      "FlashcardReviewPage",
+      "QuizPage",
+      "MockInterviewPage blueprint"
+    ]
+  },
+  "tests": {
+    "eslint": {
+      "command": "npx eslint --max-warnings=0 <agent-5 40 files>",
+      "beforeArtifact": ".artifacts/fe-refactor-audit/_b33-agent5-eslint-before.json",
+      "afterArtifact": ".artifacts/fe-refactor-audit/_b33-agent5-eslint-after.json",
+      "result": "90→66 messages; require-frame-self-declare 26→2; no new rule families"
+    },
+    "tsc": {
+      "command": "npx tsc --noEmit",
+      "result": "exit 2; remaining errors are pre-existing outside touched files (CodePreviewTabs classNames, CollapsibleSidebar className, PriceTag classNames, EnumChip className, CvTemplateGalleryModal cn)"
+    },
+    "gitDiffCheck": {
+      "command": "git diff --check <touched paths>",
+      "result": "pass"
+    }
+  },
+  "regressions": [],
+  "didNotEdit": [
+    "CLAUDE.md",
+    ".claude/fe/decision-ledger.json",
+    "nivo/**",
+    "nivoexpert/**",
+    "mia-mia/**",
+    "frames/Container|Grid APIs (consumer-only migration)"
+  ]
+}

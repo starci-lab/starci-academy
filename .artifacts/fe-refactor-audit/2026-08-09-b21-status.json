@@ -1,0 +1,33 @@
+{
+  "batch": 21,
+  "title": "STRICT CSS-DOOR HOLD CLOSURE",
+  "committed": false,
+  "generatedAt": "2026-08-07T08:41:25.870Z",
+  "overlapCheck": {
+    "ok": true,
+    "overlaps": []
+  },
+  "resolved": [
+    "List.* public classNames (dead)",
+    "KeyValue.* public classNames (dead)",
+    "LabeledCard.contentClassName (parent-placement → StackV/Grid, then deleted)"
+  ],
+  "held": [
+    "DrawerShell SB contentClassName (nivoexpert)",
+    "SurfaceCard TILE_CHROME contentClassName",
+    "ShowcaseMockup.contentClassName (LearnLoopScroll locked)",
+    "Approved contracts unchanged"
+  ],
+  "proposalsNotClaimedFixed": [
+    "surface-chrome-axis",
+    "pressable-item-span",
+    "LessonEditorPanel → dialogWidth (nivo batch)"
+  ],
+  "verification": {
+    "tsc": "pass",
+    "eslintMaxWarnings0_clean": "pass — SB List + SB KeyValue",
+    "eslintMaxWarnings0_partial": "LabeledCard / GatePreview / src List-KeyValue retain pre-existing non-door warnings; contentClassName door gone",
+    "pluginTests": "pass (16)",
+    "auditFe": "0 failing / 27 held"
+  }
+}

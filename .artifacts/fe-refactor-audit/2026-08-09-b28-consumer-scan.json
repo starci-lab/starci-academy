@@ -1,0 +1,4135 @@
+[
+  {
+    "component": "ElementCloseButton",
+    "file": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+    "worker": "buttons-actions",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/chips/StatusChip/index.tsx",
+        "line": 116,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"shrink-0\"]",
+        "normalized": "shrink-0",
+        "tokens": [
+          "shrink-0"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ElementCloseButton label={cancelLabel ?? \"\"} onPress={onCancel} tone={tone} classNames={[\"shrink-0\"]} />"
+      }
+    ],
+    "valueSet": [
+      "shrink-0"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "shrink-0"
+    ],
+    "classifiedHint": {
+      "classNameCount": 0,
+      "classNamesCount": 1,
+      "sample": [
+        {
+          "file": "src/components/blocks/chips/StatusChip/index.tsx",
+          "prop": "classNames",
+          "line": 116,
+          "snippet": "<ElementCloseButton label={cancelLabel ?? \"\"} onPress={onCancel} tone={tone} classNames={[\"shrink-0\"]} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "FloatingActionButton",
+    "file": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+    "worker": "buttons-actions",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+        "line": 126,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+        "line": 57,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "classNames",
+        "normalized": "classNames",
+        "tokens": [
+          "classNames"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} />"
+      }
+    ],
+    "valueSet": [
+      "className",
+      "classNames"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "className",
+      "classNames"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 1,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+          "prop": "className",
+          "line": 126,
+          "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+          "prop": "classNames",
+          "line": 57,
+          "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "SectionCard",
+    "file": "src/components/blocks/cards/SectionCard/index.tsx",
+    "worker": "cards-commerce",
+    "consumerCount": 4,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/QuizCard/index.tsx",
+        "line": 300,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "classNames",
+        "normalized": "classNames",
+        "tokens": [
+          "classNames"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<SectionCard identity={{ tier: \"block\", component: \"QuizCard\" }} classNames={classNames} >"
+      },
+      {
+        "file": "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+        "line": 86,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 text-accent-soft-foreground",
+        "normalized": "size-5 text-accent-soft-foreground",
+        "tokens": [
+          "size-5",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<SectionCard icon={() => <SnowflakeIcon className=\"size-5 text-accent-soft-foreground\" />} title={labels.title} >"
+      },
+      {
+        "file": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+        "line": 89,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 text-accent-soft-foreground",
+        "normalized": "size-5 text-accent-soft-foreground",
+        "tokens": [
+          "size-5",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<SectionCard icon={() => <VideoCameraIcon className=\"size-5 text-accent-soft-foreground\" />} title={labels.title} >"
+      },
+      {
+        "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+        "line": 158,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 text-accent-soft-foreground",
+        "normalized": "size-5 text-accent-soft-foreground",
+        "tokens": [
+          "size-5",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<SectionCard icon={() => <UserPlusIcon className=\"size-5 text-accent-soft-foreground\" />} title={title} >"
+      }
+    ],
+    "valueSet": [
+      "classNames",
+      "size-5 text-accent-soft-foreground"
+    ],
+    "ownerships": [
+      "dynamic",
+      "intrinsic"
+    ],
+    "allTokens": [
+      "classNames",
+      "size-5",
+      "text-accent-soft-foreground"
+    ],
+    "classifiedHint": {
+      "classNameCount": 0,
+      "classNamesCount": 1,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/QuizCard/index.tsx",
+          "prop": "classNames",
+          "line": 300,
+          "snippet": "<SectionCard identity={{ tier: \"block\", component: \"QuizCard\" }} classNames={classNames} >"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CodeConsole",
+    "file": "src/components/blocks/code/CodeConsole/index.tsx",
+    "worker": "learn-content",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/PracticeProblemPage/index.tsx",
+        "line": 751,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-[42%]",
+        "normalized": "h-[42%]",
+        "tokens": [
+          "h-[42%]"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CodeConsole className=\"h-[42%]\" ariaLabel={t(\"codingPractice.consoleLabel\")} selectedTab={consoleTab} onSelectTab={(key) => setConsoleTab(key as ConsoleTab)} tabs={[ { key: \"testcase\", label: t(\"codingPractice.tabTestca"
+      }
+    ],
+    "valueSet": [
+      "h-[42%]"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "h-[42%]"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/PracticeProblemPage/index.tsx",
+          "prop": "className",
+          "line": 751,
+          "snippet": "<CodeConsole className=\"h-[42%]\" ariaLabel={t(\"codingPractice.consoleLabel\")} selectedTab={consoleTab} onSelectTab={(key"
+        }
+      ]
+    }
+  },
+  {
+    "component": "AddToCartButton",
+    "file": "src/components/blocks/commerce/AddToCartButton/index.tsx",
+    "worker": "buttons-actions",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+        "line": 45,
+        "prop": "className",
+        "kind": "string",
+        "value": "flex-1",
+        "normalized": "flex-1",
+        "tokens": [
+          "flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<AddToCartButton course={course} isEnrolled={course.isEnrolled ?? undefined} variant=\"secondary\" className=\"flex-1\" />"
+      }
+    ],
+    "valueSet": [
+      "flex-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/CourseCatalogPage/CatalogCourseCard/index.tsx",
+          "prop": "className",
+          "line": 45,
+          "snippet": "<AddToCartButton course={course} isEnrolled={course.isEnrolled ?? undefined} variant=\"secondary\" className=\"flex-1\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "PhaseScarcityNote",
+    "file": "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
+    "worker": "cards-commerce",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+        "line": 108,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"self-center\"]",
+        "normalized": "self-center",
+        "tokens": [
+          "self-center"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PhaseScarcityNote currentPhase={price.currentPhase} seatsRemaining={price.seatsRemaining ?? null} nextPhasePriceVnd={price.nextPhasePriceVnd ?? null} classNames={[\"self-center\"]} />"
+      }
+    ],
+    "valueSet": [
+      "self-center"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "self-center"
+    ],
+    "classifiedHint": {
+      "classNameCount": 0,
+      "classNamesCount": 1,
+      "sample": [
+        {
+          "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+          "prop": "classNames",
+          "line": 108,
+          "snippet": "<PhaseScarcityNote currentPhase={price.currentPhase} seatsRemaining={price.seatsRemaining ?? null} nextPhasePriceVnd={pr"
+        }
+      ]
+    }
+  },
+  {
+    "component": "TierCardBase",
+    "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "worker": "cards-commerce",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+        "line": 42,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-6 shrink-0 text-accent-soft-foreground",
+        "normalized": "size-6 shrink-0 text-accent-soft-foreground",
+        "tokens": [
+          "size-6",
+          "shrink-0",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "mixed",
+        "snippet": "<TierCardBase identity={{ tier: \"block\", component: \"FreeTierCard\" }} isSkeleton={isSkeleton} icon={() => ( <TierLevelIcon level={1} className=\"size-6 shrink-0 text-accent-soft-foreground\" /> )} title={t(\"aiSubscription."
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCard/index.tsx",
+        "line": 92,
+        "prop": "className",
+        "kind": "expr",
+        "value": "tier.popular ? \"border-accent ring-2 ring-accent/30\" : undefined",
+        "normalized": "border-accent ring-2 ring-accent/30",
+        "tokens": [
+          "border-accent",
+          "ring-2",
+          "ring-accent/30"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<TierCardBase identity={{ tier: \"block\", component: \"TierCard\" }} className={tier.popular ? \"border-accent ring-2 ring-accent/30\" : undefined} icon={() => ( <TierLevelIcon level={tierLevel} className=\"size-6 shrink-0 tex"
+      }
+    ],
+    "valueSet": [
+      "size-6 shrink-0 text-accent-soft-foreground",
+      "border-accent ring-2 ring-accent/30"
+    ],
+    "ownerships": [
+      "mixed",
+      "intrinsic"
+    ],
+    "allTokens": [
+      "size-6",
+      "shrink-0",
+      "text-accent-soft-foreground",
+      "border-accent",
+      "ring-2",
+      "ring-accent/30"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/commerce/TierCard/index.tsx",
+          "prop": "className",
+          "line": 92,
+          "snippet": "<TierCardBase identity={{ tier: \"block\", component: \"TierCard\" }} className={tier.popular ? \"border-accent ring-2 ring-a"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CommentComposer",
+    "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "worker": "community-feed",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+        "line": 186,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-full",
+        "normalized": "w-full",
+        "tokens": [
+          "w-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CommentComposer className=\"w-full\" placeholder={t(\"discussion.replyPlaceholder\")} submitLabel={t(\"discussion.reply\")} currentUser={currentUser} onCancel={() => setReplying(false)} onSubmit={(body) => { onReply(comment.i"
+      }
+    ],
+    "valueSet": [
+      "w-full"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "w-full"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+          "prop": "className",
+          "line": 186,
+          "snippet": "<CommentComposer className=\"w-full\" placeholder={t(\"discussion.replyPlaceholder\")} submitLabel={t(\"discussion.reply\")} c"
+        }
+      ]
+    }
+  },
+  {
+    "component": "Discussion",
+    "file": "src/components/blocks/community/Discussion/index.tsx",
+    "worker": "community-feed",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+        "line": 293,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<Discussion className={className} // discussion data currentUserId={currentUserId} currentUser={currentUser ? { username: currentUser.username, avatar: currentUser.avatar } : null} comments={comments} total={total} isLoa"
+      }
+    ],
+    "valueSet": [
+      "className"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "className"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+          "prop": "className",
+          "line": 293,
+          "snippet": "<Discussion className={className} // discussion data currentUserId={currentUserId} currentUser={currentUser ? { username"
+        }
+      ]
+    }
+  },
+  {
+    "component": "FollowButton",
+    "file": "src/components/blocks/community/FollowButton/index.tsx",
+    "worker": "buttons-actions",
+    "consumerCount": 3,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+        "line": 103,
+        "prop": "className",
+        "kind": "string",
+        "value": "ml-1 shrink-0",
+        "normalized": "ml-1 shrink-0",
+        "tokens": [
+          "ml-1",
+          "shrink-0"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<FollowButton quiet following={isFollowing} isPending={isFollowPending} onToggle={onToggleFollow} className=\"ml-1 shrink-0\" />"
+      },
+      {
+        "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+        "line": 105,
+        "prop": "className",
+        "kind": "string",
+        "value": "shrink-0",
+        "normalized": "shrink-0",
+        "tokens": [
+          "shrink-0"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<FollowButton className=\"shrink-0\" following={user.following} isPending={user.isPending} onToggle={() => { // already followed from this card → no-op if (!user.following) { onFollow(user.globalId) } }} />"
+      },
+      {
+        "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "line": 336,
+        "prop": "className",
+        "kind": "string",
+        "value": "shrink-0",
+        "normalized": "shrink-0",
+        "tokens": [
+          "shrink-0"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<FollowButton className=\"shrink-0\" quiet following={row.following} isPending={row.isPending} onToggle={row.onToggleFollow} />"
+      }
+    ],
+    "valueSet": [
+      "ml-1 shrink-0",
+      "shrink-0"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "ml-1",
+      "shrink-0"
+    ],
+    "classifiedHint": {
+      "classNameCount": 3,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+          "prop": "className",
+          "line": 103,
+          "snippet": "<FollowButton quiet following={isFollowing} isPending={isFollowPending} onToggle={onToggleFollow} className=\"ml-1 shrink"
+        },
+        {
+          "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+          "prop": "className",
+          "line": 105,
+          "snippet": "<FollowButton className=\"shrink-0\" following={user.following} isPending={user.isPending} onToggle={() =>"
+        },
+        {
+          "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+          "prop": "className",
+          "line": 336,
+          "snippet": "<FollowButton className=\"shrink-0\" quiet following={row.following} isPending={row.isPending} onToggle={row.onToggleFollo"
+        }
+      ]
+    }
+  },
+  {
+    "component": "AiRewriteButton",
+    "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/AiRewriteButton.tsx",
+    "worker": "buttons-actions",
+    "consumerCount": 4,
+    "consumers": [
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+        "line": 94,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit self-start",
+        "normalized": "w-fit self-start",
+        "tokens": [
+          "w-fit",
+          "self-start"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() => onRewriteItem(item.id)} />"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+        "line": 131,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit self-start",
+        "normalized": "w-fit self-start",
+        "tokens": [
+          "w-fit",
+          "self-start"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() => onRewriteItem(item.id)} />"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+        "line": 147,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit self-start",
+        "normalized": "w-fit self-start",
+        "tokens": [
+          "w-fit",
+          "self-start"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() => onRewriteItem(item.id)} />"
+      },
+      {
+        "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+        "line": 52,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit self-start",
+        "normalized": "w-fit self-start",
+        "tokens": [
+          "w-fit",
+          "self-start"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={onRewrite} />"
+      }
+    ],
+    "valueSet": [
+      "w-fit self-start"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "w-fit",
+      "self-start"
+    ],
+    "classifiedHint": {
+      "classNameCount": 4,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+          "prop": "className",
+          "line": 94,
+          "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+          "prop": "className",
+          "line": 131,
+          "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+          "prop": "className",
+          "line": 147,
+          "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={() =>"
+        },
+        {
+          "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+          "prop": "className",
+          "line": 52,
+          "snippet": "<AiRewriteButton className=\"w-fit self-start\" onRewrite={onRewrite} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "LeaderboardListCard",
+    "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "worker": "cards-commerce",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "line": 132,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<LeaderboardListCard className={className} title={labels.title} onSeeMore={onSeeMore} seeMoreLabel={labels.seeMoreLabel} standing={standing} rows={rows} selfRow={selfRow} ellipsisLabel={ellipsisLabel} meLabel={labels.meL"
+      }
+    ],
+    "valueSet": [
+      "className"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "className"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+          "prop": "className",
+          "line": 132,
+          "snippet": "<LeaderboardListCard className={className} title={labels.title} onSeeMore={onSeeMore} seeMoreLabel={labels.seeMoreLabel}"
+        }
+      ]
+    }
+  },
+  {
+    "component": "Composer",
+    "file": "src/components/blocks/feed/Composer/index.tsx",
+    "worker": "community-feed",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/feed/CommentThread/index.tsx",
+        "line": 117,
+        "prop": "className",
+        "kind": "string",
+        "value": "pl-9",
+        "normalized": "pl-9",
+        "tokens": [
+          "pl-9"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<Composer value={replyValue} onChange={setReplyValue} onSubmit={submitReply} avatarSrc={avatarSrc} placeholder=\"Write a reply...\" submitLabel=\"Reply\" className=\"pl-9\" />"
+      }
+    ],
+    "valueSet": [
+      "pl-9"
+    ],
+    "ownerships": [
+      "intrinsic"
+    ],
+    "allTokens": [
+      "pl-9"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/feed/CommentThread/index.tsx",
+          "prop": "className",
+          "line": 117,
+          "snippet": "<Composer value={replyValue} onChange={setReplyValue} onSubmit={submitReply} avatarSrc={avatarSrc} placeholder=\"Write a "
+        }
+      ]
+    }
+  },
+  {
+    "component": "InfoTooltip",
+    "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+    "worker": "buttons-actions",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+        "line": 155,
+        "prop": "className",
+        "kind": "string",
+        "value": "text-sm font-medium",
+        "normalized": "text-sm font-medium",
+        "tokens": [
+          "text-sm",
+          "font-medium"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<InfoTooltip className=\"text-sm font-medium\" title={labels.streakLabel} description={labels.streakHelp}>"
+      }
+    ],
+    "valueSet": [
+      "text-sm font-medium"
+    ],
+    "ownerships": [
+      "intrinsic"
+    ],
+    "allTokens": [
+      "text-sm",
+      "font-medium"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+          "prop": "className",
+          "line": 155,
+          "snippet": "<InfoTooltip className=\"text-sm font-medium\" title={labels.streakLabel} description={labels.streakHelp}>"
+        }
+      ]
+    }
+  },
+  {
+    "component": "BadgeImage",
+    "file": "src/components/blocks/identity/BadgeImage/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+        "line": 68,
+        "prop": "className",
+        "kind": "expr",
+        "value": "cn(\r\n                    // scale up to eat the art's built-in transparent margin so the\r\n                    // visible animal reaches the ring (overflow clipped by parent)\r\n                    \"rounded-full object-cover scale-[1.18]\",\r\n                    !earned && \"opacity-40 grayscale\",\r\n                )",
+        "normalized": " // scale up to eat the art's built-in transparent margin so the // visible animal reaches the ring (overflow clipped by parent) \"rounded-full object-cover scale-[1.18]\", !earned && \"opacity-40 grayscale\", ",
+        "tokens": [
+          "//",
+          "scale",
+          "up",
+          "to",
+          "eat",
+          "the",
+          "art's",
+          "built-in",
+          "transparent",
+          "margin",
+          "so",
+          "the",
+          "//",
+          "visible",
+          "animal",
+          "reaches",
+          "the",
+          "ring",
+          "(overflow",
+          "clipped",
+          "by",
+          "parent)",
+          "\"rounded-full",
+          "object-cover",
+          "scale-[1.18]\",",
+          "!earned",
+          "&&",
+          "\"opacity-40",
+          "grayscale\","
+        ],
+        "ownership": "dynamic",
+        "snippet": "<BadgeImage objectKey={objectKey} size={innerSize} alt={name} className={cn( // scale up to eat the art's built-in transparent margin so the // visible animal reaches the ring (overflow clipped by parent) \"rounded-full o"
+      }
+    ],
+    "valueSet": [
+      " // scale up to eat the art's built-in transparent margin so the // visible animal reaches the ring (overflow clipped by parent) \"rounded-full object-cover scale-[1.18]\", !earned && \"opacity-40 grayscale\", "
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "//",
+      "scale",
+      "up",
+      "to",
+      "eat",
+      "the",
+      "art's",
+      "built-in",
+      "transparent",
+      "margin",
+      "so",
+      "visible",
+      "animal",
+      "reaches",
+      "ring",
+      "(overflow",
+      "clipped",
+      "by",
+      "parent)",
+      "\"rounded-full",
+      "object-cover",
+      "scale-[1.18]\",",
+      "!earned",
+      "&&",
+      "\"opacity-40",
+      "grayscale\","
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+          "prop": "className",
+          "line": 68,
+          "snippet": "<BadgeImage objectKey={objectKey} size={innerSize} alt={name} className={cn( // scale up to eat the art's built-in trans"
+        }
+      ]
+    }
+  },
+  {
+    "component": "BrandLockup",
+    "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/layouts/Footer/index.tsx",
+        "line": 78,
+        "prop": "className",
+        "kind": "string",
+        "value": "self-start",
+        "normalized": "self-start",
+        "tokens": [
+          "self-start"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<BrandLockup className=\"self-start\" />"
+      }
+    ],
+    "valueSet": [
+      "self-start"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "self-start"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/layouts/Footer/index.tsx",
+          "prop": "className",
+          "line": 78,
+          "snippet": "<BrandLockup className=\"self-start\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "BrandLogo",
+    "file": "src/components/blocks/identity/BrandLogo/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+        "line": 27,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-10",
+        "normalized": "h-10",
+        "tokens": [
+          "h-10"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<BrandLogo className=\"h-10\" />"
+      },
+      {
+        "file": "src/components/blocks/layout/AppSplash/component.tsx",
+        "line": 73,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-14",
+        "normalized": "h-14",
+        "tokens": [
+          "h-14"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<BrandLogo className=\"h-14\" />"
+      }
+    ],
+    "valueSet": [
+      "h-10",
+      "h-14"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "h-10",
+      "h-14"
+    ],
+    "classifiedHint": {
+      "classNameCount": 2,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+          "prop": "className",
+          "line": 27,
+          "snippet": "<BrandLogo className=\"h-10\" /"
+        },
+        {
+          "file": "src/components/blocks/layout/AppSplash/component.tsx",
+          "prop": "className",
+          "line": 73,
+          "snippet": "<BrandLogo className=\"h-14\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "IconTile",
+    "file": "src/components/blocks/identity/IconTile/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+        "line": 294,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 text-accent-soft-foreground",
+        "normalized": "size-5 text-accent-soft-foreground",
+        "tokens": [
+          "size-5",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<IconTile size=\"sm\" tone=\"accent\" icon={REWARD_ICON[reward.key] ?? ( <GiftIcon aria-hidden focusable=\"false\" className=\"size-5 text-accent-soft-foreground\" /> )} />"
+      }
+    ],
+    "valueSet": [
+      "size-5 text-accent-soft-foreground"
+    ],
+    "ownerships": [
+      "intrinsic"
+    ],
+    "allTokens": [
+      "size-5",
+      "text-accent-soft-foreground"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+          "prop": "className",
+          "line": 294,
+          "snippet": "<IconTile size=\"sm\" tone=\"accent\" icon={REWARD_ICON[reward.key] ?? ( <GiftIcon aria-hidden focusable=\"false\" className=\""
+        }
+      ]
+    }
+  },
+  {
+    "component": "AmbientBackground",
+    "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+    "worker": "layout-shells",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/AppearancePage/index.tsx",
+        "line": 256,
+        "prop": "className",
+        "kind": "string",
+        "value": "absolute inset-0 -z-0",
+        "normalized": "absolute inset-0 -z-0",
+        "tokens": [
+          "absolute",
+          "inset-0",
+          "-z-0"
+        ],
+        "ownership": "ambiguous",
+        "snippet": "<AmbientBackground effect={option} className=\"absolute inset-0 -z-0\" />"
+      }
+    ],
+    "valueSet": [
+      "absolute inset-0 -z-0"
+    ],
+    "ownerships": [
+      "ambiguous"
+    ],
+    "allTokens": [
+      "absolute",
+      "inset-0",
+      "-z-0"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/AppearancePage/index.tsx",
+          "prop": "className",
+          "line": 256,
+          "snippet": "<AmbientBackground effect={option} className=\"absolute inset-0 -z-0\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "PageHeader",
+    "file": "src/components/blocks/layout/PageHeader/index.tsx",
+    "worker": "layout-shells",
+    "consumerCount": 31,
+    "consumers": [
+      {
+        "file": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+        "line": 55,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+        "line": 125,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+        "line": 81,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={ breadcrumbItems?.length ? ({ isSkeleton: skeleton }: SkeletonProps) => ( <div className=\"w-fit\"> {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old capab"
+      },
+      {
+        "file": "src/components/blocks/learn/CourseQaHeader/index.tsx",
+        "line": 57,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+        "line": 58,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+        "line": 148,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems} isSkeleton={isSkeleton} /> </div> )} title={title} description={descr"
+      },
+      {
+        "file": "src/components/blocks/learn/FoundationsHeader/index.tsx",
+        "line": 56,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+        "line": 53,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems} isSkeleton={isSkeleton} /> </d"
+      },
+      {
+        "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+        "line": 75,
+        "prop": "className",
+        "kind": "string",
+        "value": "flex flex-wrap items-center gap-2",
+        "normalized": "flex flex-wrap items-center gap-2",
+        "tokens": [
+          "flex",
+          "flex-wrap",
+          "items-center",
+          "gap-2"
+        ],
+        "ownership": "ambiguous",
+        "snippet": "<PageHeader breadcrumb={<ResponsiveBreadcrumb items={breadcrumbItems} />} title={title} description={description || undefined} meta={( <div className=\"flex flex-wrap items-center gap-2\"> <ReadBadge /> <Chip color=\"defaul"
+      },
+      {
+        "file": "src/components/blocks/learn/ModuleHeader/index.tsx",
+        "line": 151,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems} isSkeleton={isSkeleton} /> </div> )} title={title} description={descr"
+      },
+      {
+        "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+        "line": 178,
+        "prop": "className",
+        "kind": "string",
+        "value": "flex flex-wrap items-center gap-2",
+        "normalized": "flex flex-wrap items-center gap-2",
+        "tokens": [
+          "flex",
+          "flex-wrap",
+          "items-center",
+          "gap-2"
+        ],
+        "ownership": "ambiguous",
+        "snippet": "<PageHeader breadcrumb={<TaskBreadcrumb />} title={t(\"finalProject.dashboard.title\")} description={t(\"finalProject.dashboard.subtitle\")} meta={( <div className=\"flex flex-wrap items-center gap-2\"> <Chip color={isConnecte"
+      },
+      {
+        "file": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+        "line": 312,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || crumbs.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile items={crumbs} isSkeleton={isSkeleton} /> </div> ) : undefined } title={title} d"
+      },
+      {
+        "file": "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+        "line": 49,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => ( <div className=\"w-fit\"> <LinkBack label={breadcrumbLabel} onPress={onBack} /> </div> )} title={title} description={description} />"
+      },
+      {
+        "file": "src/components/pages/ArchitecturePage/index.tsx",
+        "line": 74,
+        "prop": "className",
+        "kind": "string",
+        "value": "flex flex-wrap items-center gap-2",
+        "normalized": "flex flex-wrap items-center gap-2",
+        "tokens": [
+          "flex",
+          "flex-wrap",
+          "items-center",
+          "gap-2"
+        ],
+        "ownership": "ambiguous",
+        "snippet": "<PageHeader breadcrumb={( <ResponsiveBreadcrumb items={[ { key: \"home\", label: tGlobal(\"nav.home\"), onPress: () => router.push(pathConfig().locale().build()), }, { key: \"current\", label: t(\"title\"), }, ]} /> )} title={t("
+      },
+      {
+        "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+        "line": 33,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<PageHeader className={className} breadcrumb={<LearnBreadcrumb />} title={title} description={lead ?? description} meta={<CourseTrustStats />} />"
+      },
+      {
+        "file": "src/components/pages/NotificationsPage/index.tsx",
+        "line": 206,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4",
+        "normalized": "size-4",
+        "tokens": [
+          "size-4"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<PageHeader breadcrumb={( <ResponsiveBreadcrumb items={[ { key: \"home\", label: t(\"nav.home\"), onPress: () => router.push(pathConfig().locale(locale).build()), }, { key: \"notifications\", label: t(\"notifications.title\"), }"
+      },
+      {
+        "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "line": 90,
+        "prop": "className",
+        "kind": "expr",
+        "value": "scoreToneClass(score)",
+        "normalized": "scoreToneClass(score)",
+        "tokens": [
+          "scoreToneClass(score)"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<PageHeader breadcrumb={( <BackLink target={t(\"publicProfile.challengesTab.repoHeading\")} onPress={() => router.push( username && courseSlug ? pathConfig().locale(locale).profile(username).challenges().course(courseSlug)"
+      },
+      {
+        "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+        "line": 108,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4",
+        "normalized": "size-4",
+        "tokens": [
+          "size-4"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<PageHeader breadcrumb={( <BackLink target={t(\"publicProfile.capstone.roadmapBackToProjects\")} onPress={() => router.push(pathConfig().locale(locale).profile(username ?? undefined).projects().build())} /> )} title={proje"
+      },
+      {
+        "file": "src/components/pages/SystemStatusPage/index.tsx",
+        "line": 83,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4",
+        "normalized": "size-4",
+        "tokens": [
+          "size-4"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<PageHeader title={t(\"title\")} description={t(\"subtitle\")} actions={ <Button variant=\"secondary\" size=\"sm\" onPress={onRefresh} isPending={isValidating} > <ArrowsClockwiseIcon aria-hidden focusable=\"false\" className=\"size"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryHeader/ConsultantDirectoryHeader.tsx",
+        "line": 55,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+        "line": 125,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+        "line": 81,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={ breadcrumbItems?.length ? ({ isSkeleton: skeleton }: SkeletonProps) => ( <div className=\"w-fit\"> {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old capab"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/CourseQaHeader/CourseQaHeader.tsx",
+        "line": 57,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/FoundationCategoryHeader/FoundationCategoryHeader.tsx",
+        "line": 58,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+        "line": 148,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems} isSkeleton={isSkeleton} /> </div> )} title={title} description={descr"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/FoundationsHeader/FoundationsHeader.tsx",
+        "line": 56,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/LeaderboardHeader/LeaderboardHeader.tsx",
+        "line": 53,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems} isSkeleton={isSkeleton} /> </d"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ModuleHeader/ModuleHeader.tsx",
+        "line": 160,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems} isSkeleton={isSkeleton} /> </div> )} title={title} description={descr"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard.tsx",
+        "line": 312,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || crumbs.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile items={crumbs} isSkeleton={isSkeleton} /> </div> ) : undefined } title={title} d"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupHeader/PlaygroundSetupHeader.tsx",
+        "line": 49,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => ( <div className=\"w-fit\"> <LinkBack label={breadcrumbLabel} onPress={onBack} /> </div> )} title={title} description={description} />"
+      },
+      {
+        "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+        "line": 296,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PageHeader isSkeleton={isSkeleton} breadcrumb={() => isSkeleton || breadcrumbItems?.length ? ( <div className=\"w-fit\"> <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton}"
+      }
+    ],
+    "valueSet": [
+      "w-fit",
+      "flex flex-wrap items-center gap-2",
+      "className",
+      "size-4",
+      "scoreToneClass(score)"
+    ],
+    "ownerships": [
+      "parent-placement",
+      "ambiguous",
+      "dynamic",
+      "intrinsic"
+    ],
+    "allTokens": [
+      "w-fit",
+      "flex",
+      "flex-wrap",
+      "items-center",
+      "gap-2",
+      "className",
+      "size-4",
+      "scoreToneClass(score)"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+          "prop": "className",
+          "line": 33,
+          "snippet": "<PageHeader className={className} breadcrumb={<LearnBreadcrumb /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "StickyBottomBar",
+    "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+    "worker": "layout-shells",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+        "line": 53,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<StickyBottomBar className={className}>"
+      }
+    ],
+    "valueSet": [
+      "className"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "className"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+          "prop": "className",
+          "line": 53,
+          "snippet": "<StickyBottomBar className={className}>"
+        }
+      ]
+    }
+  },
+  {
+    "component": "ChatToolResult",
+    "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+    "worker": "learn-content",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "line": 1025,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4",
+        "normalized": "size-4",
+        "tokens": [
+          "size-4"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ChatToolResult items={tr.items} isLoading={tr.isLoading} label={t(meta.labelKey)} icon={<Icon className=\"size-4\" aria-hidden focusable=\"false\" />} onSelect={onSelectSearchResult} onViewAll={() => { setContentSearchQuery"
+      }
+    ],
+    "valueSet": [
+      "size-4"
+    ],
+    "ownerships": [
+      "intrinsic"
+    ],
+    "allTokens": [
+      "size-4"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+          "prop": "className",
+          "line": 1025,
+          "snippet": "<ChatToolResult items={tr.items} isLoading={tr.isLoading} label={t(meta.labelKey)} icon={<Icon className=\"size-4\" aria-h"
+        }
+      ]
+    }
+  },
+  {
+    "component": "ContentMap",
+    "file": "src/components/blocks/learn/ContentMap/index.tsx",
+    "worker": "learn-content",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/layouts/LearnShellLayout/index.tsx",
+        "line": 146,
+        "prop": "className",
+        "kind": "string",
+        "value": "min-h-0 @app-lg:flex-1",
+        "normalized": "min-h-0 @app-lg:flex-1",
+        "tokens": [
+          "min-h-0",
+          "@app-lg:flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ContentMap className=\"min-h-0 @app-lg:flex-1\" />"
+      }
+    ],
+    "valueSet": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "min-h-0",
+      "@app-lg:flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 146,
+          "snippet": "<ContentMap className=\"min-h-0 @app-lg:flex-1\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "LeaderboardCategoryRail",
+    "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+    "worker": "learn-content",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/layouts/LearnShellLayout/index.tsx",
+        "line": 168,
+        "prop": "className",
+        "kind": "string",
+        "value": "min-h-0 @app-lg:flex-1",
+        "normalized": "min-h-0 @app-lg:flex-1",
+        "tokens": [
+          "min-h-0",
+          "@app-lg:flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<LeaderboardCategoryRail variant=\"rail\" className=\"min-h-0 @app-lg:flex-1\" />"
+      }
+    ],
+    "valueSet": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "min-h-0",
+      "@app-lg:flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 168,
+          "snippet": "<LeaderboardCategoryRail variant=\"rail\" className=\"min-h-0 @app-lg:flex-1\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "MilestoneOutline",
+    "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+    "worker": "learn-content",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/layouts/LearnShellLayout/index.tsx",
+        "line": 157,
+        "prop": "className",
+        "kind": "string",
+        "value": "min-h-0 @app-lg:flex-1",
+        "normalized": "min-h-0 @app-lg:flex-1",
+        "tokens": [
+          "min-h-0",
+          "@app-lg:flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<MilestoneOutline className=\"min-h-0 @app-lg:flex-1\" />"
+      }
+    ],
+    "valueSet": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "min-h-0",
+      "@app-lg:flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/layouts/LearnShellLayout/index.tsx",
+          "prop": "className",
+          "line": 157,
+          "snippet": "<MilestoneOutline className=\"min-h-0 @app-lg:flex-1\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "PlaygroundRagWorkspace",
+    "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+    "worker": "learn-content",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+        "line": 103,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-full",
+        "normalized": "h-full",
+        "tokens": [
+          "h-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PlaygroundRagWorkspace className=\"h-full\" ragAnswer={byomState.ragAnswer} ragCitations={byomState.ragCitations} sendRagIndex={sendRagIndex} sendRagAsk={sendRagAsk} />"
+      }
+    ],
+    "valueSet": [
+      "h-full"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "h-full"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+          "prop": "className",
+          "line": 103,
+          "snippet": "<PlaygroundRagWorkspace className=\"h-full\" ragAnswer={byomState.ragAnswer} ragCitations={byomState.ragCitations} sendRag"
+        }
+      ]
+    }
+  },
+  {
+    "component": "LabeledList",
+    "file": "src/components/blocks/lists/LabeledList/index.tsx",
+    "worker": "lists-navigation",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+        "line": 82,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"self-start\"]",
+        "normalized": "self-start",
+        "tokens": [
+          "self-start"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<LabeledList label={t(\"lessonRail.challenges.title\")} action={( <Button label={t(\"lessonRail.challenges.practice\")} size=\"sm\" variant=\"primary\" suffixIcon={ArrowRightIcon} onPress={onPractice} classNames={[\"self-start\"]}"
+      }
+    ],
+    "valueSet": [
+      "self-start"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "self-start"
+    ],
+    "classifiedHint": {
+      "classNameCount": 0,
+      "classNamesCount": 1,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+          "prop": "classNames",
+          "line": 82,
+          "snippet": "<LabeledList label={t(\"lessonRail.challenges.title\")} action={( <Button label={t(\"lessonRail.challenges.practice\")} size"
+        }
+      ]
+    }
+  },
+  {
+    "component": "ListRow",
+    "file": "src/components/blocks/lists/ListRow/index.tsx",
+    "worker": "lists-navigation",
+    "consumerCount": 9,
+    "consumers": [
+      {
+        "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+        "line": 52,
+        "prop": "className",
+        "kind": "string",
+        "value": "p-3",
+        "normalized": "p-3",
+        "tokens": [
+          "p-3"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow key={item.id} // p-3, not ListRow's bare py-2: this checklist always renders // INSIDE a bounded card, where a row with no horizontal padding // sits flush against the card edge. Padding on the ROW keeps the // "
+      },
+      {
+        "file": "src/components/blocks/navigation/Navbar/index.tsx",
+        "line": 281,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-2 text-accent-soft-foreground",
+        "normalized": "size-2 text-accent-soft-foreground",
+        "tokens": [
+          "size-2",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow key={item.id} leading={!item.isRead ? ( ({ isSkeleton }: SkeletonProps) => isSkeleton ? null : <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\" className=\"size-2 text-accent-soft-foreground\" /> ) : undefi"
+      },
+      {
+        "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+        "line": 199,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-2 text-accent-soft-foreground",
+        "normalized": "size-2 text-accent-soft-foreground",
+        "tokens": [
+          "size-2",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow key={notification.id} leading={!notification.isRead ? ( <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\" className=\"size-2 text-accent-soft-foreground\" /> ) : undefined} title={t( notification.title.key, "
+      },
+      {
+        "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+        "line": 209,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 text-success-soft-foreground",
+        "normalized": "size-5 text-success-soft-foreground",
+        "tokens": [
+          "size-5",
+          "text-success-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow key={task.id} leading={task.completed ? ( <CheckCircleIcon aria-hidden focusable=\"false\" className=\"size-5 text-success-soft-foreground\" /> ) : attempted ? ( <CircleHalfIcon aria-hidden focusable=\"false\" classNa"
+      },
+      {
+        "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+        "line": 207,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 text-muted",
+        "normalized": "size-5 text-muted",
+        "tokens": [
+          "size-5",
+          "text-muted"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow title={lesson.title} subtitle={t(\"content.minutesRead\", { minutes: lesson.minutesRead })} meta={( <> {lesson.difficulty ? ( <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} /> ) : null} {lesson.isPre"
+      },
+      {
+        "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+        "line": 245,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 text-foreground",
+        "normalized": "size-5 text-foreground",
+        "tokens": [
+          "size-5",
+          "text-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow key={challenge.id} leading={( <PuzzlePieceIcon aria-hidden focusable=\"false\" className=\"size-5 text-foreground\" /> )} title={challenge.title} meta={( <> <DifficultyChip difficulty={toDifficulty(challenge.difficu"
+      },
+      {
+        "file": "src/components/pages/MySubmissionsPage/index.tsx",
+        "line": 70,
+        "prop": "className",
+        "kind": "string",
+        "value": "text-accent-soft-foreground",
+        "normalized": "text-accent-soft-foreground",
+        "tokens": [
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow key={item.id} title={item.challengeTitle} divider={index < items.length - 1} meta={( <> <EntityToken globalId={item.courseGlobalId} label={item.courseTitle} /> <Chip size=\"sm\" variant=\"soft\" color={STATUS_COLOR_"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+        "line": 167,
+        "prop": "className",
+        "kind": "expr",
+        "value": "STATUS_ICON_CLASS[lesson.status]",
+        "normalized": "STATUS_ICON_CLASS[lesson.status]",
+        "tokens": [
+          "STATUS_ICON_CLASS[lesson.status]"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<ListRow key={lesson.id} divider={index < lessons.length - 1} leading={() => <Icon aria-hidden focusable=\"false\" weight=\"fill\" className={STATUS_ICON_CLASS[lesson.status]} />} title={lesson.title} subtitle={`${labels.les"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+        "line": 279,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-2 text-accent-soft-foreground",
+        "normalized": "size-2 text-accent-soft-foreground",
+        "tokens": [
+          "size-2",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<ListRow key={item.id} leading={!item.isRead ? ( ({ isSkeleton }: SkeletonProps) => isSkeleton ? null : <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\" className=\"size-2 text-accent-soft-foreground\" /> ) : undefi"
+      }
+    ],
+    "valueSet": [
+      "p-3",
+      "size-2 text-accent-soft-foreground",
+      "size-5 text-success-soft-foreground",
+      "size-5 text-muted",
+      "size-5 text-foreground",
+      "text-accent-soft-foreground",
+      "STATUS_ICON_CLASS[lesson.status]"
+    ],
+    "ownerships": [
+      "intrinsic",
+      "dynamic"
+    ],
+    "allTokens": [
+      "p-3",
+      "size-2",
+      "text-accent-soft-foreground",
+      "size-5",
+      "text-success-soft-foreground",
+      "text-muted",
+      "text-foreground",
+      "STATUS_ICON_CLASS[lesson.status]"
+    ],
+    "classifiedHint": {
+      "classNameCount": 4,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+          "prop": "className",
+          "line": 52,
+          "snippet": "<ListRow key={item.id} // p-3, not ListRow's bare py-2: this checklist always renders // INSIDE a bounded card, where a "
+        },
+        {
+          "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+          "prop": "className",
+          "line": 199,
+          "snippet": "<ListRow key={notification.id} leading={!notification.isRead ? ( <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\""
+        },
+        {
+          "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+          "prop": "className",
+          "line": 209,
+          "snippet": "<ListRow key={task.id} leading={task.completed ? ( <CheckCircleIcon aria-hidden focusable=\"false\" className=\"size-5 text"
+        },
+        {
+          "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+          "prop": "className",
+          "line": 245,
+          "snippet": "<ListRow key={challenge.id} leading={( <PuzzlePieceIcon aria-hidden focusable=\"false\" className=\"size-5 text-foreground\""
+        }
+      ]
+    }
+  },
+  {
+    "component": "MpegDash",
+    "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+    "worker": "media-rendering",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+        "line": 92,
+        "prop": "className",
+        "kind": "expr",
+        "value": "classNames?.content",
+        "normalized": "classNames?.content",
+        "tokens": [
+          "classNames?.content"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<MpegDash src={url} className={classNames?.content} />"
+      }
+    ],
+    "valueSet": [
+      "classNames?.content"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "classNames?.content"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+          "prop": "className",
+          "line": 92,
+          "snippet": "<MpegDash src={url} className={classNames?.content} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "Standard",
+    "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+    "worker": "media-rendering",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+        "line": 108,
+        "prop": "className",
+        "kind": "expr",
+        "value": "classNames?.content",
+        "normalized": "classNames?.content",
+        "tokens": [
+          "classNames?.content"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<Standard src={url} className={classNames?.content} />"
+      }
+    ],
+    "valueSet": [
+      "classNames?.content"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "classNames?.content"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+          "prop": "className",
+          "line": 108,
+          "snippet": "<Standard src={url} className={classNames?.content} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "Youtube",
+    "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+    "worker": "media-rendering",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+        "line": 99,
+        "prop": "className",
+        "kind": "expr",
+        "value": "classNames?.content",
+        "normalized": "classNames?.content",
+        "tokens": [
+          "classNames?.content"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<Youtube url={url} title={title} className={classNames?.content} />"
+      }
+    ],
+    "valueSet": [
+      "classNames?.content"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "classNames?.content"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+          "prop": "className",
+          "line": 99,
+          "snippet": "<Youtube url={url} title={title} className={classNames?.content} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "BackLink",
+    "file": "src/components/blocks/navigation/BackLink/index.tsx",
+    "worker": "lists-navigation",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+        "line": 60,
+        "prop": "className",
+        "kind": "expr",
+        "value": "cn(isLongTrail ? undefined : \"@app-sm:hidden\")",
+        "normalized": "@app-sm:hidden",
+        "tokens": [
+          "@app-sm:hidden"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<BackLink onPress={parent.onPress} className={cn(isLongTrail ? undefined : \"@app-sm:hidden\")} />"
+      },
+      {
+        "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+        "line": 45,
+        "prop": "className",
+        "kind": "string",
+        "value": "shrink-0",
+        "normalized": "shrink-0",
+        "tokens": [
+          "shrink-0"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<BackLink className=\"shrink-0\" target={t(\"cv.builder.galleryTarget\")} onPress={onBack} />"
+      }
+    ],
+    "valueSet": [
+      "@app-sm:hidden",
+      "shrink-0"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "@app-sm:hidden",
+      "shrink-0"
+    ],
+    "classifiedHint": {
+      "classNameCount": 2,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+          "prop": "className",
+          "line": 60,
+          "snippet": "<BackLink onPress={parent.onPress} className={cn(isLongTrail ? undefined : \"@app-sm:hidden\")} /"
+        },
+        {
+          "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+          "prop": "className",
+          "line": 45,
+          "snippet": "<BackLink className=\"shrink-0\" target={t(\"cv.builder.galleryTarget\")} onPress={onBack} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CollapsibleSidebar",
+    "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+    "worker": "rails",
+    "consumerCount": 3,
+    "consumers": [
+      {
+        "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+        "line": 142,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-full",
+        "normalized": "h-full",
+        "tokens": [
+          "h-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} className=\"h-full\" >"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+        "line": 85,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlot={topSlot} className={className} >"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "line": 142,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-full",
+        "normalized": "h-full",
+        "tokens": [
+          "h-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} className=\"h-full\" >"
+      }
+    ],
+    "valueSet": [
+      "h-full",
+      "className"
+    ],
+    "ownerships": [
+      "parent-placement",
+      "dynamic"
+    ],
+    "allTokens": [
+      "h-full",
+      "className"
+    ],
+    "classifiedHint": {
+      "classNameCount": 3,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+          "prop": "className",
+          "line": 142,
+          "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+        },
+        {
+          "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+          "prop": "className",
+          "line": 85,
+          "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlo"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+          "prop": "className",
+          "line": 142,
+          "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+        }
+      ]
+    }
+  },
+  {
+    "component": "OutlineRail",
+    "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+    "worker": "rails",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/ContentMap/index.tsx",
+        "line": 216,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<OutlineRail className={className} header={progress ? { label: t(\"courseContents.progress\"), progress: { done: progress.lessonsRead, total: progress.lessonsTotal }, countLabel: t(\"courseContents.contentCount\", { read: pr"
+      },
+      {
+        "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+        "line": 233,
+        "prop": "className",
+        "kind": "expr",
+        "value": "cn(\"@app-lg:min-h-0 @app-lg:flex-1\", className)",
+        "normalized": "@app-lg:min-h-0 @app-lg:flex-1",
+        "tokens": [
+          "@app-lg:min-h-0",
+          "@app-lg:flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<OutlineRail className={cn(\"@app-lg:min-h-0 @app-lg:flex-1\", className)} header={taskTotals.total > 0 ? { label: t(\"courseContents.progress\"), progress: { done: taskTotals.done, total: taskTotals.total }, countLabel: t(\""
+      }
+    ],
+    "valueSet": [
+      "className",
+      "@app-lg:min-h-0 @app-lg:flex-1"
+    ],
+    "ownerships": [
+      "dynamic",
+      "parent-placement"
+    ],
+    "allTokens": [
+      "className",
+      "@app-lg:min-h-0",
+      "@app-lg:flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 2,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/ContentMap/index.tsx",
+          "prop": "className",
+          "line": 216,
+          "snippet": "<OutlineRail className={className} header={progress ? { label: t(\"courseContents.progress\"), progress: { done: progress."
+        },
+        {
+          "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+          "prop": "className",
+          "line": 233,
+          "snippet": "<OutlineRail className={cn(\"@app-lg:min-h-0 @app-lg:flex-1\", className)} header={taskTotals.total >"
+        }
+      ]
+    }
+  },
+  {
+    "component": "SidebarNavItem",
+    "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "worker": "lists-navigation",
+    "consumerCount": 5,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+        "line": 100,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 shrink-0",
+        "normalized": "size-5 shrink-0",
+        "tokens": [
+          "size-5",
+          "shrink-0"
+        ],
+        "ownership": "mixed",
+        "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" />} label={item.label} isActive={selectedTab === item.tab} onPress={() => onSelect(item)} />"
+      },
+      {
+        "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+        "line": 72,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 shrink-0",
+        "normalized": "size-5 shrink-0",
+        "tokens": [
+          "size-5",
+          "shrink-0"
+        ],
+        "ownership": "mixed",
+        "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" />} label={item.label} isActive={selectedTab === item.tab} onPress={() => onSelect(item)} />"
+      },
+      {
+        "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+        "line": 119,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 shrink-0",
+        "normalized": "size-5 shrink-0",
+        "tokens": [
+          "size-5",
+          "shrink-0"
+        ],
+        "ownership": "mixed",
+        "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" />} label={item.label} isActive={selectedTab === item.tab} endContent={item.locked ? ( <LockIcon aria-label={t(\"enrollGate.locked\")} focusable"
+      },
+      {
+        "file": ".storybook/stories/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
+        "line": 62,
+        "prop": "className",
+        "kind": "string",
+        "value": "rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white",
+        "normalized": "rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white",
+        "tokens": [
+          "rounded-full",
+          "bg-accent",
+          "px-2",
+          "py-0",
+          "text-[10px]",
+          "font-bold",
+          "text-white"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<SidebarNavItem icon={ReceiptIcon} label=\\\"Invoices\\\" endContent={<Badge />} onPress={onPress} />\", render: ( <SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" endContent={ <span className=\"rounded-full bg-accent px-2 "
+      },
+      {
+        "file": ".storybook/stories/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
+        "line": 64,
+        "prop": "className",
+        "kind": "string",
+        "value": "rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white",
+        "normalized": "rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white",
+        "tokens": [
+          "rounded-full",
+          "bg-accent",
+          "px-2",
+          "py-0",
+          "text-[10px]",
+          "font-bold",
+          "text-white"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" endContent={ <span className=\"rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white\">1</span> } onPress={() => {}} />"
+      }
+    ],
+    "valueSet": [
+      "size-5 shrink-0",
+      "rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white"
+    ],
+    "ownerships": [
+      "mixed",
+      "intrinsic"
+    ],
+    "allTokens": [
+      "size-5",
+      "shrink-0",
+      "rounded-full",
+      "bg-accent",
+      "px-2",
+      "py-0",
+      "text-[10px]",
+      "font-bold",
+      "text-white"
+    ],
+    "classifiedHint": {
+      "classNameCount": 4,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+          "prop": "className",
+          "line": 100,
+          "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+        },
+        {
+          "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+          "prop": "className",
+          "line": 72,
+          "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+        },
+        {
+          "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+          "prop": "className",
+          "line": 119,
+          "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" /"
+        },
+        {
+          "file": ".storybook/stories/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
+          "prop": "className",
+          "line": 64,
+          "snippet": "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" endContent={ <span className=\"rounded-full bg-accent px-2 py-0 text-"
+        }
+      ]
+    }
+  },
+  {
+    "component": "TabsCard",
+    "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+    "worker": "lists-navigation",
+    "consumerCount": 12,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+        "line": 75,
+        "prop": "className",
+        "kind": "string",
+        "value": "mx-auto w-full max-w-3xl",
+        "normalized": "mx-auto w-full max-w-3xl",
+        "tokens": [
+          "mx-auto",
+          "w-full",
+          "max-w-3xl"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<TabsCard className=\"mx-auto w-full max-w-3xl\" leftTabs={leftTabs} rightTabs={rightTabs} collapseRightOnMobile rightTabsNeutral />"
+      },
+      {
+        "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+        "line": 108,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-full max-w-xs",
+        "normalized": "w-full max-w-xs",
+        "tokens": [
+          "w-full",
+          "max-w-xs"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<TabsCard variant=\"primary\" className=\"w-full max-w-xs\" leftTabs={{ selectedKey: era, ariaLabel: t(\"view.eraAria\"), onSelectionChange: (key) => setEra(String(key) as typeof era), items: [ { key: \"present\", label: t(\"view"
+      },
+      {
+        "file": "src/components/pages/CourseCatalogPage/component.tsx",
+        "line": 273,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5",
+        "normalized": "size-5",
+        "tokens": [
+          "size-5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: labels.viewAria, onSelectionChange: (key: Key) => onChangeView(String(key) as CatalogView), items: [ { key: \"grid\", label: ( <SquaresFourIcon classNam"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+        "line": 352,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5",
+        "normalized": "size-5",
+        "tokens": [
+          "size-5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: labels.viewAria, onSelectionChange: (key) => onViewChange(String(key) as DeckView), items: [ { key: \"grid\", label: ( <SquaresFourIcon className=\"size-"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "line": 226,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5",
+        "normalized": "size-5",
+        "tokens": [
+          "size-5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: groupMode, ariaLabel: labels.groupByDeck, onSelectionChange: (key) => setGroupMode(String(key) as FlashcardReviewHistoryGroupMode), items: [ { key: \"deck\", label: <Car"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+        "line": 179,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4 shrink-0",
+        "normalized": "size-4 shrink-0",
+        "tokens": [
+          "size-4",
+          "shrink-0"
+        ],
+        "ownership": "mixed",
+        "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: mode, ariaLabel: labels.modeAria, onSelectionChange: (key) => { if (key === \"study\" || key === \"quiz\") { onModeChange(key) } }, items: [ { key: \"study\", icon: <CardsTh"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/index.tsx",
+        "line": 371,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-full",
+        "normalized": "w-full",
+        "tokens": [
+          "w-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"overview\", label: t(\"flashcard.review.overviewTabOverview\") }, { key: \"history\", label: t(\"flashcard.review.overviewTabHistory\") }, { key: \"st"
+      },
+      {
+        "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+        "line": 812,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-full",
+        "normalized": "w-full",
+        "tokens": [
+          "w-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"begin\", label: t(\"flashcard.quiz.setupTabBegin\") }, { key: \"history\", label: t(\"flashcard.quiz.setupTabHistory\") }, { key: \"stats\", label: t(\""
+      },
+      {
+        "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+        "line": 227,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5 shrink-0",
+        "normalized": "size-5 shrink-0",
+        "tokens": [
+          "size-5",
+          "shrink-0"
+        ],
+        "ownership": "mixed",
+        "snippet": "<TabsCard leftTabs={{ items: [ { key: \"contents\", label: t(\"profileSettings.learning.detail.contents\"), icon: <ListBulletsIcon aria-hidden focusable=\"false\" className=\"size-5 shrink-0\" />, }, { key: \"personalProject\", la"
+      },
+      {
+        "file": "src/components/pages/NotificationsPage/index.tsx",
+        "line": 242,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4",
+        "normalized": "size-4",
+        "tokens": [
+          "size-4"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<TabsCard leftTabs={{ items: [ { key: ALL_TAB, label: t(\"notifications.tabs.all\") }, { key: NotificationType.CommentReply, label: t(\"notifications.tabs.commentReply\"), icon: <ChatCircleIcon className=\"size-4\" aria-hidden"
+      },
+      {
+        "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+        "line": 75,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4 shrink-0",
+        "normalized": "size-4 shrink-0",
+        "tokens": [
+          "size-4",
+          "shrink-0"
+        ],
+        "ownership": "mixed",
+        "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: t(\"PracticeHubPage.rail.modeAria\"), onSelectionChange: (key) => setView(String(key) as PracticeView), items: [ { key: \"problems\", label: ( <StackH gap"
+      },
+      {
+        "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+        "line": 40,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4 shrink-0",
+        "normalized": "size-4 shrink-0",
+        "tokens": [
+          "size-4",
+          "shrink-0"
+        ],
+        "ownership": "mixed",
+        "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: t(\"PracticeHubPage.rail.modeAria\"), onSelectionChange: (key) => setView(String(key) as PracticeView), items: [ { key: \"problems\", label: ( <StackH gap"
+      }
+    ],
+    "valueSet": [
+      "mx-auto w-full max-w-3xl",
+      "w-full max-w-xs",
+      "size-5",
+      "size-4 shrink-0",
+      "w-full",
+      "size-5 shrink-0",
+      "size-4"
+    ],
+    "ownerships": [
+      "parent-placement",
+      "intrinsic",
+      "mixed"
+    ],
+    "allTokens": [
+      "mx-auto",
+      "w-full",
+      "max-w-3xl",
+      "max-w-xs",
+      "size-5",
+      "size-4",
+      "shrink-0"
+    ],
+    "classifiedHint": {
+      "classNameCount": 5,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+          "prop": "className",
+          "line": 75,
+          "snippet": "<TabsCard className=\"mx-auto w-full max-w-3xl\" leftTabs={leftTabs} rightTabs={rightTabs} collapseRightOnMobile rightTabs"
+        },
+        {
+          "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+          "prop": "className",
+          "line": 108,
+          "snippet": "<TabsCard variant=\"primary\" className=\"w-full max-w-xs\" leftTabs={{ selectedKey: era, ariaLabel: t(\"view.eraAria\"), onSe"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/index.tsx",
+          "prop": "className",
+          "line": 371,
+          "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"overview\", label: t(\"flashcard.review.over"
+        },
+        {
+          "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+          "prop": "className",
+          "line": 812,
+          "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"begin\", label: t(\"flashcard.quiz.setupTabB"
+        },
+        {
+          "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+          "prop": "className",
+          "line": 227,
+          "snippet": "<TabsCard leftTabs={{ items: [ { key: \"contents\", label: t(\"profileSettings.learning.detail.contents\"), icon: <ListBulle"
+        }
+      ]
+    }
+  },
+  {
+    "component": "RankDeltaCaret",
+    "file": "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 3,
+    "consumers": [
+      {
+        "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "line": 96,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-8 justify-end",
+        "normalized": "w-8 justify-end",
+        "tokens": [
+          "w-8",
+          "justify-end"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" />"
+      },
+      {
+        "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+        "line": 105,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-8 justify-end",
+        "normalized": "w-8 justify-end",
+        "tokens": [
+          "w-8",
+          "justify-end"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" />"
+      },
+      {
+        "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+        "line": 189,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-8 shrink-0 justify-end",
+        "normalized": "w-8 shrink-0 justify-end",
+        "tokens": [
+          "w-8",
+          "shrink-0",
+          "justify-end"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<RankDeltaCaret delta={row.rankDelta} className=\"w-8 shrink-0 justify-end\" />"
+      }
+    ],
+    "valueSet": [
+      "w-8 justify-end",
+      "w-8 shrink-0 justify-end"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "w-8",
+      "justify-end",
+      "shrink-0"
+    ],
+    "classifiedHint": {
+      "classNameCount": 3,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+          "prop": "className",
+          "line": 96,
+          "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" /"
+        },
+        {
+          "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+          "prop": "className",
+          "line": 105,
+          "snippet": "<RankDeltaCaret delta={entry.rankDelta} className=\"w-8 justify-end\" /"
+        },
+        {
+          "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+          "prop": "className",
+          "line": 189,
+          "snippet": "<RankDeltaCaret delta={row.rankDelta} className=\"w-8 shrink-0 justify-end\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CodeToHtml",
+    "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+    "worker": "media-rendering",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 389,
+        "prop": "className",
+        "kind": "expr",
+        "value": "blockMy",
+        "normalized": "blockMy",
+        "tokens": [
+          "blockMy"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={codeElevated} className={blockMy} />"
+      }
+    ],
+    "valueSet": [
+      "blockMy"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "blockMy"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+          "prop": "className",
+          "line": 389,
+          "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+        }
+      ]
+    }
+  },
+  {
+    "component": "MermaidDiagram",
+    "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+    "worker": "media-rendering",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 370,
+        "prop": "className",
+        "kind": "expr",
+        "value": "blockMy",
+        "normalized": "blockMy",
+        "tokens": [
+          "blockMy"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabel={t(\"markdown.mermaidExpand\")} caption={mermaidCaptions[code.trim()]} fallbackLabel={t(\"markdown.me"
+      }
+    ],
+    "valueSet": [
+      "blockMy"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "blockMy"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+          "prop": "className",
+          "line": 370,
+          "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+        }
+      ]
+    }
+  },
+  {
+    "component": "ButtonGroup",
+    "file": "src/components/composites/buttons/ButtonGroup/index.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 4,
+    "consumers": [
+      {
+        "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "line": 152,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+      },
+      {
+        "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "line": 167,
+        "prop": "className",
+        "kind": "string",
+        "value": "!top-0 !h-full !bg-border !opacity-100",
+        "normalized": "!top-0 !h-full !bg-border !opacity-100",
+        "tokens": [
+          "!top-0",
+          "!h-full",
+          "!bg-border",
+          "!opacity-100"
+        ],
+        "ownership": "ambiguous",
+        "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" />"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        "line": 124,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"w-full\"]",
+        "normalized": "w-full",
+        "tokens": [
+          "w-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+        "line": 112,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"w-full\"]",
+        "normalized": "w-full",
+        "tokens": [
+          "w-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm"
+      }
+    ],
+    "valueSet": [
+      "w-fit",
+      "!top-0 !h-full !bg-border !opacity-100",
+      "w-full"
+    ],
+    "ownerships": [
+      "parent-placement",
+      "ambiguous"
+    ],
+    "allTokens": [
+      "w-fit",
+      "!top-0",
+      "!h-full",
+      "!bg-border",
+      "!opacity-100",
+      "w-full"
+    ],
+    "classifiedHint": {
+      "classNameCount": 2,
+      "classNamesCount": 2,
+      "sample": [
+        {
+          "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+          "prop": "className",
+          "line": 152,
+          "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+        },
+        {
+          "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+          "prop": "className",
+          "line": 167,
+          "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" /"
+        },
+        {
+          "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+          "prop": "classNames",
+          "line": 124,
+          "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+        },
+        {
+          "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+          "prop": "classNames",
+          "line": 112,
+          "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+        }
+      ]
+    }
+  },
+  {
+    "component": "FloatingActionButton",
+    "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+        "line": 126,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+        "line": 57,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "classNames",
+        "normalized": "classNames",
+        "tokens": [
+          "classNames"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} />"
+      }
+    ],
+    "valueSet": [
+      "className",
+      "classNames"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "className",
+      "classNames"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 1,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+          "prop": "className",
+          "line": 126,
+          "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+          "prop": "classNames",
+          "line": 57,
+          "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CodeToHtml",
+    "file": "src/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 389,
+        "prop": "className",
+        "kind": "expr",
+        "value": "blockMy",
+        "normalized": "blockMy",
+        "tokens": [
+          "blockMy"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={codeElevated} className={blockMy} />"
+      }
+    ],
+    "valueSet": [
+      "blockMy"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "blockMy"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+          "prop": "className",
+          "line": 389,
+          "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+        }
+      ]
+    }
+  },
+  {
+    "component": "MermaidDiagram",
+    "file": "src/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 370,
+        "prop": "className",
+        "kind": "expr",
+        "value": "blockMy",
+        "normalized": "blockMy",
+        "tokens": [
+          "blockMy"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabel={t(\"markdown.mermaidExpand\")} caption={mermaidCaptions[code.trim()]} fallbackLabel={t(\"markdown.me"
+      }
+    ],
+    "valueSet": [
+      "blockMy"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "blockMy"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+          "prop": "className",
+          "line": 370,
+          "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+        }
+      ]
+    }
+  },
+  {
+    "component": "ArchitectureRail",
+    "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+    "worker": "rails",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/ArchitecturePage/index.tsx",
+        "line": 63,
+        "prop": "className",
+        "kind": "string",
+        "value": "min-h-0 @app-lg:flex-1",
+        "normalized": "min-h-0 @app-lg:flex-1",
+        "tokens": [
+          "min-h-0",
+          "@app-lg:flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ArchitectureRail className=\"min-h-0 @app-lg:flex-1\" healthByName={healthByName} selectedId={node} onSelect={setNode} />"
+      }
+    ],
+    "valueSet": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "min-h-0",
+      "@app-lg:flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/ArchitecturePage/index.tsx",
+          "prop": "className",
+          "line": 63,
+          "snippet": "<ArchitectureRail className=\"min-h-0 @app-lg:flex-1\" healthByName={healthByName} selectedId={node} onSelect={setNode} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "MetricsInline",
+    "file": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+    "worker": "course-pages",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+        "line": 48,
+        "prop": "className",
+        "kind": "string",
+        "value": "text-xs text-muted",
+        "normalized": "text-xs text-muted",
+        "tokens": [
+          "text-xs",
+          "text-muted"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<MetricsInline metrics={metrics} className=\"text-xs text-muted\" />"
+      }
+    ],
+    "valueSet": [
+      "text-xs text-muted"
+    ],
+    "ownerships": [
+      "intrinsic"
+    ],
+    "allTokens": [
+      "text-xs",
+      "text-muted"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+          "prop": "className",
+          "line": 48,
+          "snippet": "<MetricsInline metrics={metrics} className=\"text-xs text-muted\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CourseHero",
+    "file": "src/components/pages/CourseDetailPage/CourseHero/index.tsx",
+    "worker": "course-pages",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/CourseDetailPage/component.tsx",
+        "line": 120,
+        "prop": "className",
+        "kind": "string",
+        "value": "@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1",
+        "normalized": "@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1",
+        "tokens": [
+          "@app-md:col-span-2",
+          "@app-md:col-start-1",
+          "@app-md:row-start-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CourseHero className=\"@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1\" />"
+      }
+    ],
+    "valueSet": [
+      "@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "@app-md:col-span-2",
+      "@app-md:col-start-1",
+      "@app-md:row-start-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "prop": "className",
+          "line": 120,
+          "snippet": "<CourseHero className=\"@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CourseMobileEnrollBar",
+    "file": "src/components/pages/CourseDetailPage/CourseMobileEnrollBar/index.tsx",
+    "worker": "course-pages",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/CourseDetailPage/component.tsx",
+        "line": 145,
+        "prop": "className",
+        "kind": "string",
+        "value": "@app-md:hidden",
+        "normalized": "@app-md:hidden",
+        "tokens": [
+          "@app-md:hidden"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CourseMobileEnrollBar className=\"@app-md:hidden\" />"
+      }
+    ],
+    "valueSet": [
+      "@app-md:hidden"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "@app-md:hidden"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "prop": "className",
+          "line": 145,
+          "snippet": "<CourseMobileEnrollBar className=\"@app-md:hidden\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CoursePricingRail",
+    "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+    "worker": "course-pages",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/CourseDetailPage/component.tsx",
+        "line": 125,
+        "prop": "className",
+        "kind": "string",
+        "value": "@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1",
+        "normalized": "@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1",
+        "tokens": [
+          "@app-md:col-span-1",
+          "@app-md:col-start-3",
+          "@app-md:row-span-2",
+          "@app-md:row-start-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CoursePricingRail className=\"@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1\" />"
+      }
+    ],
+    "valueSet": [
+      "@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "@app-md:col-span-1",
+      "@app-md:col-start-3",
+      "@app-md:row-span-2",
+      "@app-md:row-start-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/CourseDetailPage/component.tsx",
+          "prop": "className",
+          "line": 125,
+          "snippet": "<CoursePricingRail className=\"@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "MockInterviewWorkspace",
+    "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+    "worker": "hard-holds",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+        "line": 2070,
+        "prop": "className",
+        "kind": "string",
+        "value": "min-h-0 flex-1",
+        "normalized": "min-h-0 flex-1",
+        "tokens": [
+          "min-h-0",
+          "flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState={codeState} onCodeStateChange={setCodeState} givenCodeVariants={currentSeedTopic?.givenCodes ?? []} "
+      },
+      {
+        "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+        "line": 2337,
+        "prop": "className",
+        "kind": "string",
+        "value": "min-h-0 flex-1",
+        "normalized": "min-h-0 flex-1",
+        "tokens": [
+          "min-h-0",
+          "flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState={codeState} onCodeStateChange={setCodeState} />"
+      }
+    ],
+    "valueSet": [
+      "min-h-0 flex-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "min-h-0",
+      "flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 2,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+          "prop": "className",
+          "line": 2070,
+          "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState="
+        },
+        {
+          "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+          "prop": "className",
+          "line": 2337,
+          "snippet": "<MockInterviewWorkspace className=\"min-h-0 flex-1\" tool={workspaceTool} onDiagramChange={handleDiagramChange} codeState="
+        }
+      ]
+    }
+  },
+  {
+    "component": "PracticeRail",
+    "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+    "worker": "rails",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/PracticeHubPage/index.tsx",
+        "line": 51,
+        "prop": "className",
+        "kind": "string",
+        "value": "min-h-0 @app-lg:flex-1",
+        "normalized": "min-h-0 @app-lg:flex-1",
+        "tokens": [
+          "min-h-0",
+          "@app-lg:flex-1"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<PracticeRail className=\"min-h-0 @app-lg:flex-1\" />"
+      }
+    ],
+    "valueSet": [
+      "min-h-0 @app-lg:flex-1"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "min-h-0",
+      "@app-lg:flex-1"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/PracticeHubPage/index.tsx",
+          "prop": "className",
+          "line": 51,
+          "snippet": "<PracticeRail className=\"min-h-0 @app-lg:flex-1\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "GithubIcon",
+    "file": "src/components/svg/GithubIcon/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 7,
+    "consumers": [
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 144,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5",
+        "normalized": "size-5",
+        "tokens": [
+          "size-5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<GithubIcon className=\"size-5\" />"
+      },
+      {
+        "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+        "line": 183,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4",
+        "normalized": "size-4",
+        "tokens": [
+          "size-4"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<GithubIcon className=\"size-4\" />"
+      },
+      {
+        "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+        "line": 188,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-5",
+        "normalized": "size-5",
+        "tokens": [
+          "size-5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<GithubIcon className=\"size-5\" />"
+      },
+      {
+        "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+        "line": 236,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-4",
+        "normalized": "size-4",
+        "tokens": [
+          "size-4"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<GithubIcon aria-hidden className=\"size-4\" />"
+      },
+      {
+        "file": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+        "line": 54,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-16 h-16",
+        "normalized": "w-16 h-16",
+        "tokens": [
+          "w-16",
+          "h-16"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<GithubIcon className=\"w-16 h-16\" />"
+      },
+      {
+        "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+        "line": 274,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-3.5",
+        "normalized": "size-3.5",
+        "tokens": [
+          "size-3.5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<GithubIcon className=\"size-3.5\" />"
+      },
+      {
+        "file": "src/components/pages/SettingsHomePage/index.tsx",
+        "line": 52,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-3.5",
+        "normalized": "size-3.5",
+        "tokens": [
+          "size-3.5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<GithubIcon className=\"size-3.5\" />"
+      }
+    ],
+    "valueSet": [
+      "size-5",
+      "size-4",
+      "w-16 h-16",
+      "size-3.5"
+    ],
+    "ownerships": [
+      "intrinsic",
+      "parent-placement"
+    ],
+    "allTokens": [
+      "size-5",
+      "size-4",
+      "w-16",
+      "h-16",
+      "size-3.5"
+    ],
+    "classifiedHint": {
+      "classNameCount": 7,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "prop": "className",
+          "line": 144,
+          "snippet": "<GithubIcon className=\"size-5\" /"
+        },
+        {
+          "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+          "prop": "className",
+          "line": 183,
+          "snippet": "<GithubIcon className=\"size-4\" /"
+        },
+        {
+          "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+          "prop": "className",
+          "line": 188,
+          "snippet": "<GithubIcon className=\"size-5\" /"
+        },
+        {
+          "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+          "prop": "className",
+          "line": 236,
+          "snippet": "<GithubIcon aria-hidden className=\"size-4\" /"
+        },
+        {
+          "file": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+          "prop": "className",
+          "line": 54,
+          "snippet": "<GithubIcon className=\"w-16 h-16\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "GoogleIcon",
+    "file": "src/components/svg/GoogleIcon/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/pages/SettingsHomePage/index.tsx",
+        "line": 54,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-3.5",
+        "normalized": "size-3.5",
+        "tokens": [
+          "size-3.5"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<GoogleIcon className=\"size-3.5\" />"
+      }
+    ],
+    "valueSet": [
+      "size-3.5"
+    ],
+    "ownerships": [
+      "intrinsic"
+    ],
+    "allTokens": [
+      "size-3.5"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/pages/SettingsHomePage/index.tsx",
+          "prop": "className",
+          "line": 54,
+          "snippet": "<GoogleIcon className=\"size-3.5\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "LogoMark",
+    "file": "src/components/svg/LogoMark/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+        "line": 45,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-10",
+        "normalized": "size-10",
+        "tokens": [
+          "size-10"
+        ],
+        "ownership": "intrinsic",
+        "snippet": "<LogoMark className=\"size-10\" />"
+      }
+    ],
+    "valueSet": [
+      "size-10"
+    ],
+    "ownerships": [
+      "intrinsic"
+    ],
+    "allTokens": [
+      "size-10"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+          "prop": "className",
+          "line": 45,
+          "snippet": "<LogoMark className=\"size-10\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "TierLevelIcon",
+    "file": "src/components/svg/TierLevelIcon/index.tsx",
+    "worker": "identity-svg",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+        "line": 46,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-6 shrink-0 text-accent-soft-foreground",
+        "normalized": "size-6 shrink-0 text-accent-soft-foreground",
+        "tokens": [
+          "size-6",
+          "shrink-0",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "mixed",
+        "snippet": "<TierLevelIcon level={1} className=\"size-6 shrink-0 text-accent-soft-foreground\" />"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCard/index.tsx",
+        "line": 96,
+        "prop": "className",
+        "kind": "string",
+        "value": "size-6 shrink-0 text-accent-soft-foreground",
+        "normalized": "size-6 shrink-0 text-accent-soft-foreground",
+        "tokens": [
+          "size-6",
+          "shrink-0",
+          "text-accent-soft-foreground"
+        ],
+        "ownership": "mixed",
+        "snippet": "<TierLevelIcon level={tierLevel} className=\"size-6 shrink-0 text-accent-soft-foreground\" />"
+      }
+    ],
+    "valueSet": [
+      "size-6 shrink-0 text-accent-soft-foreground"
+    ],
+    "ownerships": [
+      "mixed"
+    ],
+    "allTokens": [
+      "size-6",
+      "shrink-0",
+      "text-accent-soft-foreground"
+    ],
+    "classifiedHint": {
+      "classNameCount": 2,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+          "prop": "className",
+          "line": 46,
+          "snippet": "<TierLevelIcon level={1} className=\"size-6 shrink-0 text-accent-soft-foreground\" /"
+        },
+        {
+          "file": "src/components/blocks/commerce/TierCard/index.tsx",
+          "prop": "className",
+          "line": 96,
+          "snippet": "<TierLevelIcon level={tierLevel} className=\"size-6 shrink-0 text-accent-soft-foreground\" /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "ButtonGroup",
+    "file": ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 4,
+    "consumers": [
+      {
+        "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "line": 152,
+        "prop": "className",
+        "kind": "string",
+        "value": "w-fit",
+        "normalized": "w-fit",
+        "tokens": [
+          "w-fit"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+      },
+      {
+        "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+        "line": 167,
+        "prop": "className",
+        "kind": "string",
+        "value": "!top-0 !h-full !bg-border !opacity-100",
+        "normalized": "!top-0 !h-full !bg-border !opacity-100",
+        "tokens": [
+          "!top-0",
+          "!h-full",
+          "!bg-border",
+          "!opacity-100"
+        ],
+        "ownership": "ambiguous",
+        "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" />"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+        "line": 124,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"w-full\"]",
+        "normalized": "w-full",
+        "tokens": [
+          "w-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+        "line": 112,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "[\"w-full\"]",
+        "normalized": "w-full",
+        "tokens": [
+          "w-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false), }, { key: \"confirm"
+      }
+    ],
+    "valueSet": [
+      "w-fit",
+      "!top-0 !h-full !bg-border !opacity-100",
+      "w-full"
+    ],
+    "ownerships": [
+      "parent-placement",
+      "ambiguous"
+    ],
+    "allTokens": [
+      "w-fit",
+      "!top-0",
+      "!h-full",
+      "!bg-border",
+      "!opacity-100",
+      "w-full"
+    ],
+    "classifiedHint": {
+      "classNameCount": 2,
+      "classNamesCount": 2,
+      "sample": [
+        {
+          "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+          "prop": "className",
+          "line": 152,
+          "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+        },
+        {
+          "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+          "prop": "className",
+          "line": 167,
+          "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" /"
+        },
+        {
+          "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+          "prop": "classNames",
+          "line": 124,
+          "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+        },
+        {
+          "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+          "prop": "classNames",
+          "line": 112,
+          "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, va"
+        }
+      ]
+    }
+  },
+  {
+    "component": "FloatingActionButton",
+    "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 2,
+    "consumers": [
+      {
+        "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+        "line": 126,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+        "line": 57,
+        "prop": "classNames",
+        "kind": "expr",
+        "value": "classNames",
+        "normalized": "classNames",
+        "tokens": [
+          "classNames"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} />"
+      }
+    ],
+    "valueSet": [
+      "className",
+      "classNames"
+    ],
+    "ownerships": [
+      "dynamic"
+    ],
+    "allTokens": [
+      "className",
+      "classNames"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 1,
+      "sample": [
+        {
+          "file": "src/components/blocks/learn/ContentAiFab/index.tsx",
+          "prop": "className",
+          "line": 126,
+          "snippet": "<FloatingActionButton onPress={open} ariaLabel={t(\"contentAi.ask\")} className={className} >"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+          "prop": "classNames",
+          "line": 57,
+          "snippet": "<FloatingActionButton onPress={onOpen} ariaLabel={ARIA_LABEL} icon={SparkleIcon} classNames={classNames} /"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CodeToHtml",
+    "file": ".storybook/components/composites/viewers/MarkdownContent/CodeToHtml.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 389,
+        "prop": "className",
+        "kind": "expr",
+        "value": "blockMy",
+        "normalized": "blockMy",
+        "tokens": [
+          "blockMy"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={codeElevated} className={blockMy} />"
+      }
+    ],
+    "valueSet": [
+      "blockMy"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "blockMy"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+          "prop": "className",
+          "line": 389,
+          "snippet": "<CodeToHtml code={code} language={lang} theme={isDark ? \"material-theme-darker\" : \"material-theme-lighter\"} elevated={co"
+        }
+      ]
+    }
+  },
+  {
+    "component": "MermaidDiagram",
+    "file": ".storybook/components/composites/viewers/MarkdownContent/MermaidDiagram.tsx",
+    "worker": "composite-twins",
+    "consumerCount": 1,
+    "consumers": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 370,
+        "prop": "className",
+        "kind": "expr",
+        "value": "blockMy",
+        "normalized": "blockMy",
+        "tokens": [
+          "blockMy"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabel={t(\"markdown.mermaidExpand\")} caption={mermaidCaptions[code.trim()]} fallbackLabel={t(\"markdown.me"
+      }
+    ],
+    "valueSet": [
+      "blockMy"
+    ],
+    "ownerships": [
+      "parent-placement"
+    ],
+    "allTokens": [
+      "blockMy"
+    ],
+    "classifiedHint": {
+      "classNameCount": 1,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+          "prop": "className",
+          "line": 370,
+          "snippet": "<MermaidDiagram code={code} theme={isDark ? \"dark\" : \"default\"} loadingLabel={t(\"markdown.mermaidRendering\")} expandLabe"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CollapsibleSidebar",
+    "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    "worker": "rails",
+    "consumerCount": 3,
+    "consumers": [
+      {
+        "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+        "line": 142,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-full",
+        "normalized": "h-full",
+        "tokens": [
+          "h-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} className=\"h-full\" >"
+      },
+      {
+        "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+        "line": 85,
+        "prop": "className",
+        "kind": "expr",
+        "value": "className",
+        "normalized": "className",
+        "tokens": [
+          "className"
+        ],
+        "ownership": "dynamic",
+        "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlot={topSlot} className={className} >"
+      },
+      {
+        "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+        "line": 142,
+        "prop": "className",
+        "kind": "string",
+        "value": "h-full",
+        "normalized": "h-full",
+        "tokens": [
+          "h-full"
+        ],
+        "ownership": "parent-placement",
+        "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} className=\"h-full\" >"
+      }
+    ],
+    "valueSet": [
+      "h-full",
+      "className"
+    ],
+    "ownerships": [
+      "parent-placement",
+      "dynamic"
+    ],
+    "allTokens": [
+      "h-full",
+      "className"
+    ],
+    "classifiedHint": {
+      "classNameCount": 3,
+      "classNamesCount": 0,
+      "sample": [
+        {
+          "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+          "prop": "className",
+          "line": 142,
+          "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+        },
+        {
+          "file": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+          "prop": "className",
+          "line": 85,
+          "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} topSlo"
+        },
+        {
+          "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+          "prop": "className",
+          "line": 142,
+          "snippet": "<CollapsibleSidebar title={title} collapseLabel={collapseLabel} expandLabel={expandLabel} storageKey={storageKey} classN"
+        }
+      ]
+    }
+  },
+  {
+    "component": "CvPdfPreview",
+    "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+    "worker": "hard-holds",
+    "consumerCount": 0,
+    "consumers": [],
+    "valueSet": [],
+    "ownerships": [],
+    "allTokens": [],
+    "classifiedHint": null
+  }
+]

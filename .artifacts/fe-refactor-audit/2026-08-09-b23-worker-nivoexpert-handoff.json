@@ -1,0 +1,36 @@
+{
+  "partition": "nivoexpert-handoff",
+  "changed": [],
+  "skipped": [
+    ".storybook/components/nivoexpert/** — mandatory non-edit"
+  ],
+  "holds": [
+    "DrawerShell.contentClassName sole consumer LessonEditorPanel"
+  ],
+  "evidence": [
+    "LessonEditorPanel.tsx:~150 contentClassName=\"w-full sm:max-w-[560px]\"",
+    "DrawerShell maps contentClassName → DrawerContent; dialogWidth → DrawerDialog (different nodes)",
+    "Existing dialogWidth tokens: default|cart (cart → sm:max-w-md ≈ 28rem ≠ 560px)"
+  ],
+  "handoff": {
+    "id": "lesson-editor-drawer-width",
+    "ownerBatch": "future Nivo/Nivoexpert-allowed batch",
+    "steps": [
+      "Confirm visually whether width must live on DrawerContent vs DrawerDialog (HeroUI Drawer)",
+      "If Dialog owns width: add DrawerDialogWidth token e.g. editor → \"w-full sm:max-w-[560px]\" (or nearest scale token if design accepts)",
+      "If Content must own width: add a named contentWidth axis — do NOT rename contentClassName",
+      "Edit LessonEditorPanel only: swap contentClassName for the semantic prop",
+      "Re-scan consumers; delete DrawerShell.contentClassName when zero remain"
+    ],
+    "doNot": [
+      "edit nivoexpert in CSS-door house batches",
+      "map 560px onto cart/sm:max-w-md without design sign-off"
+    ],
+    "notClaimedFixed": true
+  },
+  "ratchetReady": false,
+  "verification": {
+    "edits": "none"
+  },
+  "regressions": []
+}

@@ -1,0 +1,153 @@
+{
+  "partition": "app-modules-utils",
+  "checkpoint": "27127bb5",
+  "changed": [
+    {
+      "path": "src/modules/api/graphql/mutations/types/start-mock-interview-session.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-flashcard-quiz-session-by-session-id.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/query-my-in-progress-flashcard-quiz-session.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/proxy.ts",
+      "rules": ["starci-fe/prefer-arrow-export", "starci-fe/require-export-jsdoc"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/content/modules/layout.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/page.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/page.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/quiz/sessions/[sessionId]/result/page.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/page.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/courses/[courseId]/learn/flashcards/review/sessions/[sessionId]/result/page.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/layout.tsx",
+      "rules": ["starci-fe/no-inline-parameter-type"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/not-found.tsx",
+      "rules": ["starci-fe/prefer-arrow-export"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/privacy/page.tsx",
+      "rules": ["starci-fe/no-inline-parameter-type"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/profile/[username]/layout.tsx",
+      "rules": ["starci-fe/no-inline-parameter-type"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/profile/settings/layout.tsx",
+      "rules": ["starci-fe/no-inline-parameter-type"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/[locale]/terms/page.tsx",
+      "rules": ["starci-fe/no-inline-parameter-type"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "rules": ["starci-fe/require-export-jsdoc"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/providers/HeroUIProvider.tsx",
+      "rules": ["starci-fe/require-export-jsdoc"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/providers/NextThemesProvider.tsx",
+      "rules": ["starci-fe/require-export-jsdoc"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/providers/PlaygroundSessionProvider/index.tsx",
+      "rules": ["starci-fe/no-inline-parameter-type"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/components/providers/SwrProvider.tsx",
+      "rules": ["starci-fe/no-inline-parameter-type"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/config/seo.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/hooks/effects/useAccentOverride.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/hooks/effects/useDefaultRedirect.ts",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    },
+    {
+      "path": "src/hooks/effects/UseEffects.tsx",
+      "rules": ["starci-fe/no-vietnamese-in-source-authoring"],
+      "reason": "safe-authoring-burn"
+    }
+  ],
+  "skipped": [],
+  "holds": [],
+  "verification": {
+    "eslintQuietChanged": "pass",
+    "eslintSafeRemainingInBatch": {},
+    "manifestFiles": 26,
+    "changed": 26,
+    "skipped": 0,
+    "holds": 0
+  },
+  "regressions": [],
+  "counts": {
+    "manifestFiles": 26,
+    "changed": 26,
+    "skipped": 0,
+    "holds": 0
+  }
+}

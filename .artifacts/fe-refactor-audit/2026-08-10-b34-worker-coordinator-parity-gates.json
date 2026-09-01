@@ -1,0 +1,179 @@
+{
+  "batch": "B34",
+  "wave": "B",
+  "worker": "coordinator-parity-gates",
+  "checkpoint": "6ff21c66",
+  "status": "done-with-peer-blockers",
+  "focus": "Migrate CollapsibleSidebar raw <nav> to NavigationRail; retain src className for mia-mia; run post-peer gates",
+  "changed": [
+    ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+    "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+  ],
+  "migration": {
+    "from": "<nav className=\"flex min-h-0 flex-1 flex-col\">…</nav>",
+    "to": "<NavigationRail body={() => <DragScrollArea>…</DragScrollArea>} />",
+    "ownership": {
+      "NavigationRail": "nav landmark + flex min-h-0 flex-1 flex-col",
+      "DragScrollArea": "scrolling / overflow",
+      "inner StackV": "sibling-stack gap={4} nav-row rhythm",
+      "outer StackV": "group-boundary sibling rhythm (header / topSlot / nav)",
+      "CollapsibleSidebar root": "animation / padding / width / header / collapse (unchanged)"
+    },
+    "holdCommentRemoved": "HOLD: no house NavLandmark frame owns `<nav>` + column flex-fill yet.",
+    "identity": "Unchanged — outer StackV keeps identity={{ tier: \"block\", component: \"CollapsibleSidebar\" }}; NavigationRail nested without identity (same pattern as FillAvailable sibling)"
+  },
+  "classNameRetention": {
+    "sbCollapsibleSidebar": "doorless — no public className (unchanged)",
+    "srcCollapsibleSidebar": {
+      "retained": true,
+      "prop": "className?: string",
+      "appliedOn": "motion.aside via cn(..., className)",
+      "reason": "forbidden mia-mia consumer still passes placement className"
+    },
+    "miaMiaConsumerProof": {
+      "path": ".storybook/components/mia-mia/blocks/layout/DashboardSidebar/index.tsx",
+      "usage": "<CollapsibleSidebar … className={className}>",
+      "edited": false,
+      "note": "Documented only — mia-mia edits forbidden"
+    }
+  },
+  "doorBurn": {
+    "target": "src/components/blocks/rendering/MarkdownContent className",
+    "decision": "retain — note for parent; do not burn in this worker",
+    "scan": {
+      "method": "JSX tag scan for <MarkdownContent … className=> across src + .storybook/components/starci",
+      "remainingClassNameConsumers": 0
+    },
+    "whyNotBurnedHere": [
+      "MarkdownContent files owned by markdown-consumers-learn (Wave B peer); not in coordinator exclusive edit set",
+      "Door still present on presentational + connected halves; eslint still flags no-public-classname-prop",
+      "Zero remaining StarCi className call sites — parent can safely burn after confirming no forbidden consumers"
+    ],
+    "parentAction": "Burn className from blocks/rendering MarkdownContent (component + index) and composites/viewers twin if desired; verify WithClassNames removal"
+  },
+  "peersAwaited": [
+    "2026-08-10-b34-worker-glyphmark-consumer-migration.json",
+    "2026-08-10-b34-worker-qa-header-src-consumer-migration.json",
+    "2026-08-10-b34-worker-markdown-consumers-learn.json",
+    "2026-08-10-b34-worker-markdown-consumers-feed-profile-and-chip-icons.json"
+  ],
+  "gates": {
+    "tsc": {
+      "command": "npx tsc --noEmit",
+      "exit": 1,
+      "ownedRegression": false,
+      "errors": [
+        {
+          "file": "src/components/blocks/chips/HostPlatformChip/component.tsx",
+          "count": 4,
+          "message": "Type 'Element' is not assignable to type 'IconComponent | undefined'"
+        },
+        {
+          "file": "src/components/blocks/chips/LessonVideoKindChip/index.tsx",
+          "count": 3,
+          "message": "Type 'Element' is not assignable to type 'IconComponent | undefined'"
+        },
+        {
+          "file": "src/components/overlays/modals/ManagePinnedProjectsModal/CourseProjectForm/component.tsx",
+          "count": 1,
+          "message": "Type 'Element' is not assignable to type 'IconComponent | undefined'"
+        },
+        {
+          "file": "src/components/overlays/modals/ManagePinnedProjectsModal/PinnedProjectCard/index.tsx",
+          "count": 1,
+          "message": "Type 'Element' is not assignable to type 'IconComponent | undefined'"
+        },
+        {
+          "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+          "count": 1,
+          "message": "Type 'Element' is not assignable to type 'IconComponent | undefined'"
+        },
+        {
+          "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+          "count": 1,
+          "message": "Type 'Element' is not assignable to type 'IconComponent | undefined'"
+        }
+      ],
+      "cause": "Peer EnumChip/StatusChip icon: IconComponent API (markdown-consumers-feed-profile-and-chip-icons) — out-of-manifest consumers still pass JSX elements"
+    },
+    "eslint": {
+      "command": "npx eslint --max-warnings=0 (28 B34 changed files in 4 chunks)",
+      "fileCount": 28,
+      "chunks": [
+        { "chunk": 1, "files": 7, "warnings": 8, "errors": 0, "exit": 1 },
+        { "chunk": 2, "files": 7, "warnings": 49, "errors": 0, "exit": 1 },
+        { "chunk": 3, "files": 7, "warnings": 66, "errors": 0, "exit": 1 },
+        { "chunk": 4, "files": 7, "warnings": 67, "errors": 0, "exit": 1 }
+      ],
+      "owned": {
+        "sbCollapsibleSidebar": { "exit": 0, "clean": true },
+        "srcCollapsibleSidebar": {
+          "exit": 1,
+          "warnings": 7,
+          "note": "Pre-existing / intentional retention: className door for mia-mia, cn+heroui on root, StackV classNames, DragScrollArea className=flex-1 — not introduced by NavigationRail wiring"
+        }
+      },
+      "chunk1OwnedFile": "SB CollapsibleSidebar had zero findings; chunk1 warnings are QaMessageBubble MessageRow + QaQuestionThread (peers)"
+    },
+    "pluginEslintTests": {
+      "command": "node --test plugins/eslint/*.test.mjs",
+      "exit": 0,
+      "pass": 22,
+      "fail": 0
+    },
+    "principleStyle": {
+      "command": "node --test .storybook/test-runner/principle-style.test.mjs",
+      "exit": 0,
+      "pass": 7,
+      "fail": 0
+    },
+    "semanticContracts": {
+      "command": "node --test .storybook/test-runner/semantic-contracts.test.mjs",
+      "exit": 0,
+      "pass": 8,
+      "fail": 0
+    },
+    "auditFe": {
+      "command": "npm run audit:fe",
+      "exit": 1,
+      "ownedRegression": false,
+      "failure": {
+        "job": "check-pattern-coverage",
+        "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "detail": "2 undocumented StackH seams missing principle — peer markdown/chip migration surface"
+      },
+      "passingJobsNoted": ["audit-frames", "audit-atoms", "audit-composites", "audit-principles"]
+    },
+    "gitDiffCheck": {
+      "command": "git diff --check 6ff21c66 -- .storybook src",
+      "exit": 0
+    }
+  },
+  "blockers": [
+    {
+      "kind": "peer-tsc",
+      "owner": "markdown-consumers-feed-profile-and-chip-icons (EnumChip/StatusChip IconComponent)",
+      "action": "Migrate remaining Element icon passers listed under gates.tsc.errors (HostPlatformChip, LessonVideoKindChip, ManagePinnedProjectsModal, ProfileProjectRoadmapPage, ProfileCapstone ProjectCard) — outside this worker's edit set"
+    },
+    {
+      "kind": "peer-eslint",
+      "owner": "Wave B peer migrations",
+      "action": "B34 changed-file eslint is red on peer files (host elements, principles, className doors, etc.); SB owned CollapsibleSidebar is clean"
+    },
+    {
+      "kind": "peer-audit-fe",
+      "owner": "pages/MockInterviewPage/MockInterviewScorecard",
+      "action": "Add principle tokens on 2 StackH sites or ledger hold"
+    }
+  ],
+  "notTouched": [
+    "nivo",
+    "nivoexpert",
+    "mia-mia",
+    "CLAUDE.md",
+    "decision-ledger.json",
+    "NavigationRail twins (Wave A)",
+    "MarkdownContent door burn"
+  ],
+  "summary": "CollapsibleSidebar SB+src now mount NavigationRail for the nav landmark; src keeps className for mia-mia DashboardSidebar; SB stays doorless. Plugin/principle/semantic tests and git diff --check pass. tsc, batch eslint, and audit:fe fail on peer chip/scorecard surfaces — not CollapsibleSidebar regressions. MarkdownContent className has zero StarCi consumers; retain for parent burn."
+}

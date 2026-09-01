@@ -1,0 +1,19 @@
+{
+  "partition": "storybook-only",
+  "changed": [],
+  "skipped": [],
+  "holds": [
+    {
+      "path": ".storybook/components/pages/LearnShell.tsx",
+      "rules": ["starci-fe/handler-on-prefix"],
+      "reason": "handleSide hard hold (BATCH 11)"
+    },
+    {
+      "path": ".storybook/components/pages/MindMapPage.tsx",
+      "rules": ["starci-fe/handler-on-prefix"],
+      "reason": "handleSide hard hold (BATCH 11)"
+    }
+  ],
+  "verification": { "note": "No safe-candidate files in manifest — worker skipped by coordinator" },
+  "regressions": []
+}

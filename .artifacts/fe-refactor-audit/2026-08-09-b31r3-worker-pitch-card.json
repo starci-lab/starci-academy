@@ -1,0 +1,19 @@
+{
+  "worker": "pitch-card",
+  "manifest": ["src/components/blocks/marketing/PitchCard/index.tsx"],
+  "warningsBefore": [
+    { "line": 48, "rule": "starci-fe/no-public-classname-prop", "detail": "Typography classNames flex-1" }
+  ],
+  "warningsAfter": [],
+  "legacyImportBefore": "../../identity/IconTile",
+  "legacyImportAfter": null,
+  "iconExpressionBefore": "icon: React.ReactNode",
+  "iconComponentAfter": "icon: IdentityTileIcon → <IdentityTile icon={icon} size=\"md\" />",
+  "changed": ["src/components/blocks/marketing/PitchCard/index.tsx"],
+  "held": [],
+  "retracted": [],
+  "storybookParity": "n/a — no Storybook twin",
+  "verification": { "eslintMaxWarnings0": "pass", "landedIn": "8ccf8641" },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

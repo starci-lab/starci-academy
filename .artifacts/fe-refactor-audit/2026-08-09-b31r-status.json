@@ -1,0 +1,63 @@
+{
+  "batch": "B31r",
+  "complete": false,
+  "status": "blocked",
+  "checkpoint": {
+    "head": "18f84f5b15528163e9fca10cfb7252323f02f013",
+    "subject": "refactor(fe): enforce semantic closure ratchet"
+  },
+  "productEdits": false,
+  "provenMoves": [],
+  "ambiguousCandidates": [
+    {
+      "path": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+      "reason": "Places fallback icon/image chain; historically vendor atom. AvatarGroup already demoted to composite. Full Avatar demotion is ambiguous without dedicated batch; not IconTile-clear.",
+      "proposedTier": "hold-ambiguous"
+    },
+    {
+      "path": "src/components/atoms/buttons/Button/ButtonBase.tsx",
+      "reason": "Vendor vocabulary atom wrapping HeroUI; label/icon slots are atom value API, not a new composite shelf move in B31r",
+      "proposedTier": "hold-vendor-atom"
+    },
+    {
+      "path": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "reason": "Vendor vocabulary atom; mass-move forbidden",
+      "proposedTier": "hold-vendor-atom"
+    },
+    {
+      "path": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "reason": "Vendor vocabulary atom; mass-move forbidden",
+      "proposedTier": "hold-vendor-atom"
+    },
+    {
+      "path": "src/components/atoms/overlay/Menu/index.tsx",
+      "reason": "Vendor overlay atom; locked-style complexity; hold",
+      "proposedTier": "hold-vendor-atom"
+    },
+    {
+      "path": "src/components/atoms/feedback/Alert/index.tsx",
+      "reason": "Vendor atom with icon slot; ambiguous vs composite Callout family",
+      "proposedTier": "hold-ambiguous"
+    }
+  ],
+  "oldPathsDeleted": [],
+  "compatibilityPaths": "none created (forbidden)",
+  "iconTile": {
+    "classification": "composite",
+    "canonicalPathIfUnblocked": "src/components/composites/lists/IconTile (alongside UserCell/AvatarGroup/IdentityContentRow) — no composites/identity or composites/display shelf exists; creating one is forbidden tidy-folder invention",
+    "finalCanonicalPath": "unresolved — dual live paths remain",
+    "api": "unreconciled (IconComponent+round size-10 vs ReactNode+rounded-xl size-12)",
+    "consumerMigration": "not started",
+    "duplicatePublicName": true
+  },
+  "remainingBlockersForTopLearners": [
+    "Canonical IconTile must own isSkeleton at size-12 rounded-xl chrome (block geometry) after reconcile",
+    "TopLearners still under pages/ (page-folder) — B31a",
+    "CommunityTab still under pages/ — B31a0 inline proposal",
+    "LeaderboardListCard.className still open — later B31"
+  ],
+  "next": [
+    "Dedicated IconTile chrome-unify batch: pick one sm geometry (likely block size-12 rounded-xl for product parity), update SB atom first, migrate all atom+block consumers including an explicit nivo unlock or dual-write plan, delete duplicate path",
+    "Then B31a0 CommunityTab inline + B31a TopLearners promote + skeleton uses composite IconTile isSkeleton"
+  ]
+}

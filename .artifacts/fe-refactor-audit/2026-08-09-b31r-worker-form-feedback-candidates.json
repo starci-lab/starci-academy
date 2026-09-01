@@ -1,0 +1,40 @@
+{
+  "changed": [],
+  "held": [
+    "vendor atoms held"
+  ],
+  "retracted": [],
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "candidateEvidence": [
+    {
+      "path": "src/components/atoms/buttons/Button/ButtonBase.tsx",
+      "reason": "Vendor vocabulary atom wrapping HeroUI; label/icon slots are atom value API, not a new composite shelf move in B31r",
+      "proposedTier": "hold-vendor-atom"
+    },
+    {
+      "path": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "reason": "Vendor vocabulary atom; mass-move forbidden",
+      "proposedTier": "hold-vendor-atom"
+    },
+    {
+      "path": "src/components/atoms/feedback/Alert/index.tsx",
+      "reason": "Vendor atom with icon slot; ambiguous vs composite Callout family",
+      "proposedTier": "hold-ambiguous"
+    }
+  ],
+  "beforeTier": "atom",
+  "afterTier": null,
+  "destination": null,
+  "consumersBefore": {},
+  "consumersAfter": null,
+  "publicDoorsBefore": {},
+  "publicDoorsAfter": null,
+  "skeletonBefore": {},
+  "skeletonAfter": null,
+  "storybookParity": "n/a"
+}

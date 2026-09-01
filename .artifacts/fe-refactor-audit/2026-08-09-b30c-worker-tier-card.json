@@ -1,0 +1,39 @@
+{
+  "manifest": [
+    "src/components/blocks/commerce/TierCardBase/index.tsx",
+    "src/components/blocks/commerce/TierCard/index.tsx"
+  ],
+  "warningsBefore": {
+    "TierCardBase": 11,
+    "TierCard": 3
+  },
+  "warningsAfter": {
+    "TierCardBase": "retracted-to-checkpoint",
+    "TierCard": "retracted-to-checkpoint"
+  },
+  "introducedByB30": [
+    "isFeatured",
+    "className door burn"
+  ],
+  "preExistingInTouchedFile": [
+    "no-heroui-outside-vocabulary",
+    "no-raw-shape-at-sentence-tier",
+    "no-inline-skeleton-branch",
+    "no-cn-above-vocabulary",
+    "require-identity-root"
+  ],
+  "fixed": [],
+  "retractedB30Changes": [
+    "TierCardBase.isFeatured + className door burn",
+    "TierCard isFeatured migration"
+  ],
+  "holds": [
+    "TierCardBase.className door restored (checkpoint)"
+  ],
+  "parity": "n/a retracted",
+  "verification": {
+    "action": "git checkout 8c13fd52"
+  },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

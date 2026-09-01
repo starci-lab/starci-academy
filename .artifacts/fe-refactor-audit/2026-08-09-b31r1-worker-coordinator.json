@@ -1,0 +1,44 @@
+{
+  "worker": "coordinator",
+  "batch": "B31r1",
+  "checkpoint": "18f84f5b",
+  "complete": false,
+  "status": "blocked",
+  "productEdits": false,
+  "overlapCheck": "pass — empty manifests, no file claimed twice",
+  "parity": {
+    "storybookSrc": "n/a — IdentityTile not landed",
+    "sizeContractsSeparate": "approved on paper; only atom IconTile exists in tree"
+  },
+  "oldPathImports": {
+    "before": 35,
+    "after": 35,
+    "path": "blocks/identity/IconTile"
+  },
+  "deletionProof": {
+    "blocksIdentityIconTileDeleted": false,
+    "reason": "live consumers remain; holds + ratchet"
+  },
+  "holds": [
+    "COMPOSITE-3/10 vs approved composite IdentityTile owning shimmer",
+    "page-folder (28)",
+    "LeaderboardListCard (batch-forbidden)",
+    "nivo (6)",
+    "unlocked candidates fail zero-warn"
+  ],
+  "lint": {
+    "changedFiles": [],
+    "boundedChunks": "skipped — no product TS/TSX/MJS changes"
+  },
+  "tests": {
+    "skipped": true,
+    "reason": "no product edits; retract law"
+  },
+  "regressions": [],
+  "artifacts": [
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r1-inventory.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r1-status.json",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r1-status.md",
+    ".artifacts/fe-refactor-audit/2026-08-09-b31r1-worker-*.json"
+  ]
+}

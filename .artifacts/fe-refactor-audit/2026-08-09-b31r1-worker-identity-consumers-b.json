@@ -1,0 +1,42 @@
+{
+  "worker": "identity-consumers-b",
+  "manifest": [],
+  "candidates": [
+    "src/components/blocks/learn/EnrollGate/index.tsx",
+    "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+    "src/components/blocks/marketing/PitchCard/index.tsx"
+  ],
+  "batchForbidden": [
+    "TopLearners internals",
+    "CommunityTab",
+    "LeaderboardListCard"
+  ],
+  "changed": [],
+  "held": [
+    {
+      "file": "EnrollGate",
+      "reason": "pre-existing ESLint warnings (Box self-declare, Skeleton className, Button classNames)"
+    },
+    {
+      "file": "PremiumPaywall",
+      "reason": "pre-existing ESLint warnings"
+    },
+    {
+      "file": "PitchCard",
+      "reason": "pre-existing Typography classNames warning"
+    },
+    {
+      "file": "LeaderboardListCard",
+      "reason": "batch-forbidden — do not edit"
+    },
+    {
+      "file": "page-folder consumers",
+      "reason": "hold-page-folder — 28 sites"
+    }
+  ],
+  "migrated": [],
+  "storiesTouched": [],
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

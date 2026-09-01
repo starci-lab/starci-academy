@@ -1,0 +1,175 @@
+{
+  "batch": "B35",
+  "agent": "community-feed-blog-league",
+  "manifest": "community-feed-blog-league",
+  "checkpoint": "02011807",
+  "committed": false,
+  "generatedAt": "2026-08-08T14:45:00.000Z",
+  "focus": "Community, feed, discussion, blog, league — HeroUI-exact house vocab closes; markdown embedded flow retained; no CommunityCard invented",
+  "fileCount": 22,
+  "storybookFirst": {
+    "note": "Manifest is src-only. Mirrored SB/src learn ContentCommentComposer + ContentDiscussion patterns into community Discussion/CommentComposer and feed Composer; nivoexpert community PostCard forbidden.",
+    "twinsRead": [
+      ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "src/components/blocks/learn/ContentDiscussion/index.tsx"
+    ]
+  },
+  "changedFiles": [
+    "src/components/blocks/community/FollowButton/index.tsx",
+    "src/components/blocks/feed/EntityLink/index.tsx",
+    "src/components/blocks/feed/FeedItem/index.tsx",
+    "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+    "src/components/blocks/feed/CommunityPostCard/component.tsx",
+    "src/components/blocks/community/Discussion/CommentComposer.tsx",
+    "src/components/blocks/feed/Composer/index.tsx",
+    "src/components/blocks/community/Discussion/index.tsx",
+    "src/components/blocks/feed/CommentThread/index.tsx",
+    "src/components/blocks/feed/ActivityFeed/component.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+    "src/components/blocks/community/Discussion/CommentItem.tsx"
+  ],
+  "closedClusters": [
+    {
+      "id": "FollowButton",
+      "status": "closed",
+      "change": "HeroUI Button/Spinner/cn → house Button + Box identity; quiet maps secondary/tertiary"
+    },
+    {
+      "id": "EntityLink",
+      "status": "closed",
+      "change": "HeroUI Link/cn/WithClassNames → Typography isLink/semibold; CommentItem dropped text-sm className"
+    },
+    {
+      "id": "FeedItem",
+      "status": "closed",
+      "change": "HeroUI Typography + host divs → StackH/StackV + house Typography"
+    },
+    {
+      "id": "CommunityPostCard",
+      "status": "closed",
+      "change": "HeroUI Card/Typography → SurfaceCard + Avatar + Stack + house Typography; MarkdownContent flow=embedded retained; did not invent CommunityCard"
+    },
+    {
+      "id": "CommunityCommentRow",
+      "status": "closed",
+      "change": "HeroUI Typography + host divs → IdentityContentRow + Stack + house Typography; MarkdownContent flow=embedded retained"
+    },
+    {
+      "id": "CommentComposer",
+      "status": "closed",
+      "change": "Mirrored ContentCommentComposer: StackH/FillAvailable/InputTextarea/InputButtonLike/Button/Avatar"
+    },
+    {
+      "id": "Composer",
+      "status": "closed",
+      "change": "HeroUI TextField/TextArea/Button/Spinner → StackH + InputTextarea + Button; className door → nested prop"
+    },
+    {
+      "id": "CommentThread",
+      "status": "closed",
+      "change": "Host/cn → StackV nested; Composer nested for reply indent; Reply via Typography isButton"
+    },
+    {
+      "id": "Discussion",
+      "status": "closed",
+      "change": "HeroUI section/Label/Typography/Button/Spinner/WithClassNames → StackV + house vocab; className door burned"
+    },
+    {
+      "id": "ContentBodyV2/Discussion",
+      "status": "closed",
+      "change": "Dead className passthrough removed (ContentPage never supplied it); StackV identity root"
+    },
+    {
+      "id": "ActivityFeed",
+      "status": "closed",
+      "change": "Host flex root → StackV identity + group-boundary"
+    }
+  ],
+  "markdownPresentation": {
+    "CommunityPostCard": "flow=\"embedded\" (already migrated B34; retained)",
+    "CommunityCommentRow": "flow=\"embedded\" (already migrated B34; retained)",
+    "note": "No new Markdown axes invented; presentation contract consumed only"
+  },
+  "beforeAfterMessages": {
+    "scope": "22-file community-feed-blog-league manifest",
+    "before": {
+      "total": 198,
+      "byRule": {
+        "starci-fe/no-heroui-outside-vocabulary": 16,
+        "starci-fe/no-public-classname-prop": 18,
+        "starci-fe/no-host-element-at-sentence-tier": 65,
+        "starci-fe/no-raw-shape-at-sentence-tier": 53,
+        "starci-fe/no-cn-above-vocabulary": 14,
+        "starci-fe/handler-on-prefix": 1,
+        "starci-fe/no-emoji-in-source": 12,
+        "starci-fe/require-identity-root": 15,
+        "starci-fe/no-classname-at-sentence-tier": 4
+      }
+    },
+    "after": {
+      "total": 92,
+      "byRule": {
+        "starci-fe/no-heroui-outside-vocabulary": 7,
+        "starci-fe/no-host-element-at-sentence-tier": 30,
+        "starci-fe/no-cn-above-vocabulary": 8,
+        "starci-fe/no-raw-shape-at-sentence-tier": 25,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/handler-on-prefix": 1,
+        "starci-fe/no-emoji-in-source": 12,
+        "starci-fe/require-identity-root": 5
+      }
+    },
+    "delta": -106,
+    "filesClean": 11
+  },
+  "holds": [
+    {
+      "id": "ChatPanel-ChatBubble",
+      "paths": [
+        "src/components/blocks/feed/ChatPanel/index.tsx",
+        "src/components/blocks/feed/ChatBubble/index.tsx"
+      ],
+      "reason": "Dense chat chrome (scroll host, bubble align, typing dots) lacks exact house frame without inventing chat-panel shelf"
+    },
+    {
+      "id": "ReactionBar-emoji",
+      "paths": [
+        "src/components/blocks/feed/ReactionBar/index.tsx",
+        "src/components/blocks/community/Discussion/ReactionBar.tsx",
+        "src/components/blocks/community/Discussion/constants.ts",
+        "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx"
+      ],
+      "reason": "no-emoji-in-source + picker chrome; needs approved icon-token mapping, not invented glyph table"
+    },
+    {
+      "id": "CommentItem",
+      "paths": [
+        "src/components/blocks/community/Discussion/CommentItem.tsx"
+      ],
+      "reason": "Still HeroUI/host-heavy; SB ContentCommentThread is the blueprint but full port is a larger vertical (thread indent, edit/delete, reactions) — partial only via EntityLink className drop"
+    },
+    {
+      "id": "ActivityAvatar-Timeline-InteractionBar-ContentReactionBar",
+      "paths": [
+        "src/components/blocks/feed/ActivityAvatar/index.tsx",
+        "src/components/blocks/feed/Timeline/index.tsx",
+        "src/components/blocks/community/Discussion/InteractionBar.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx"
+      ],
+      "reason": "Badge overlay / timeline rail / skeleton className — no exact house size/shimmer without new shelf"
+    }
+  ],
+  "forbidden": {
+    "CommunityCard": "not invented — used existing SurfaceCard",
+    "nivoexpert": "not edited"
+  },
+  "gates": {
+    "tscOwnedSet": "clean (no diagnostics on owned files; repo has unrelated pre-existing tsc errors elsewhere)",
+    "eslintOwnedFiles": "198 → 92 warnings; 11 files at zero; no errors introduced",
+    "gitDiffCheck": "clean on changed files"
+  },
+  "status": "done"
+}

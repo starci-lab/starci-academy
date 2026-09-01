@@ -1,0 +1,201 @@
+{
+  "batch": "B35",
+  "agentKey": "overlays-modals-drawers",
+  "checkpoint": "02011807",
+  "generatedAt": "2026-08-08T14:50:00.000Z",
+  "doNotCommit": true,
+  "mission": "Close StarCi overlay/modal/drawer/auth-overlay sentence roots via ModalShell/DrawerShell finite APIs; SB first then src; score≥5 first.",
+  "baselineSlice": {
+    "manifestFiles": 59,
+    "rankedFamilies": 21,
+    "scoreGe5": [
+      { "family": "AuthenticationModal", "score": 5, "raw": 54 },
+      { "family": "GithubTeamGate", "score": 5, "raw": 18 }
+    ]
+  },
+  "closed": [
+    {
+      "family": "GithubTeamGate",
+      "score": 5,
+      "status": "closed",
+      "files": ["src/components/blocks/auth/GithubTeamGate/index.tsx"],
+      "changes": [
+        "Replaced raw HeroUI Alert/Modal/Button/Typography/cn with Callout + ModalShell + house Button/Chip/Typography + Stack/Cluster",
+        "Root identity on StackV; step rows via Chip + Cluster; course identity via IconTile + StackH"
+      ],
+      "eslintAfter": 0
+    },
+    {
+      "family": "PremiumGateModal",
+      "score": 4,
+      "status": "closed-except-held-map",
+      "files": [
+        ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+        "src/components/overlays/modals/PremiumGateModal/component.tsx"
+      ],
+      "changes": [
+        "SB: removed public className + host wrapper; ModalShell is root; principles on all StackV/Cluster",
+        "src: removed Typography/Button classNames doors; principles on StackV stacks; identity already on ModalShell"
+      ],
+      "eslintAfter": {
+        "component+sb": 0,
+        "map.ts": "page-folder-two-files-only (held)"
+      }
+    },
+    {
+      "family": "MaintenanceModal",
+      "score": 4,
+      "status": "closed",
+      "files": ["src/components/overlays/modals/MaintenanceModal/component.tsx"],
+      "changes": [
+        "Swapped @heroui/react AlertDialog for house AlertDialog* atoms + Phosphor WarningIcon",
+        "Footer uses Split (flex-action-between) instead of StackH classNames w-full",
+        "Identity root via StackV; ModalShell not used (non-dismissable — no finite shell variant)"
+      ],
+      "eslintAfter": 0
+    },
+    {
+      "family": "CookieConsentBanner",
+      "score": 4,
+      "status": "closed",
+      "files": ["src/components/blocks/feedback/CookieConsentBanner/index.tsx"],
+      "changes": [
+        "House Button/Typography; StackH/StackV replace raw flex hosts; identity on StackV root around StickyBottomBar"
+      ],
+      "eslintAfter": 0
+    },
+    {
+      "family": "E2eResultDrawer",
+      "score": 3,
+      "status": "closed",
+      "files": [
+        ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+        "src/components/overlays/drawers/E2eResultDrawer/component.tsx"
+      ],
+      "changes": [
+        "SB: removed host div wrappers; Tabs bare; principles on stacks",
+        "src: Skeleton.Typography/ListRow instead of Skeleton className doors; principles on stacks"
+      ],
+      "eslintAfter": 0
+    },
+    {
+      "family": "AiQuotaModal",
+      "score": 2,
+      "status": "sb-closed-src-hooks-held",
+      "files": [".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx"],
+      "changes": [
+        "Removed outer host div + Tabs wrapper; header is StackH without pr-8 host; body StackV principled"
+      ],
+      "eslintAfter": {
+        "sb": 0,
+        "src hooks/map": "page-folder + no-helper-folder (held — cannot move outside manifest)"
+      }
+    },
+    {
+      "family": "MindMapNodeDrawer",
+      "score": 1,
+      "status": "closed",
+      "files": ["src/components/overlays/drawers/MindMapNodeDrawer/component.tsx"],
+      "changes": ["Added principle/explain on all StackV instances"],
+      "eslintAfter": 0
+    },
+    {
+      "family": "FollowListModal",
+      "score": 1,
+      "status": "closed",
+      "files": ["src/components/overlays/modals/FollowListModal/component.tsx"],
+      "changes": ["Principled StackV/Box/ScrollArea"],
+      "eslintAfter": 0
+    },
+    {
+      "family": "LanguageModal",
+      "score": 1,
+      "status": "closed",
+      "files": ["src/components/overlays/modals/LanguageModal/component.tsx"],
+      "changes": ["Principled section StackVs"],
+      "eslintAfter": 0
+    },
+    {
+      "family": "LinkGithubModal",
+      "score": 2,
+      "status": "closed",
+      "files": ["src/components/overlays/modals/LinkGithubModal/component.tsx"],
+      "changes": [
+        "Dropped GithubIcon className + Button w-full classNames; principled body StackV"
+      ],
+      "eslintAfter": 0
+    },
+    {
+      "family": "PersonalProjectTaskAttemptsDrawer",
+      "score": 1,
+      "status": "closed",
+      "files": ["src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx"],
+      "changes": ["Principled attempt-row StackV"],
+      "eslintAfter": 0
+    },
+    {
+      "family": "SubmissionAttemptsDrawer",
+      "score": 4,
+      "status": "partial",
+      "files": [
+        ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx"
+      ],
+      "changes": [
+        "Removed outer host wrapper around DrawerShell; principled AsyncContent stacks"
+      ],
+      "remaining": [
+        "selected-row host div (SurfaceCardListItem selected chrome — needs vocabulary)",
+        "skeleton host div",
+        "nav landmark for Pagination (needs named landmark frame)"
+      ]
+    }
+  ],
+  "holds": [
+    {
+      "family": "AuthenticationModal",
+      "score": 5,
+      "reason": "Documented ModalShell conflict: SignIn/SignUp sections also mount bare on LoginPage with their own Modal.CloseTrigger/Header/Body; wrapping in ModalShell double-nests chrome. Closing needs chrome-only ModalShell variant (agent 10 vocabulary) plus page-folder extraction of nested sections to blocks (outside this manifest).",
+      "categories": ["classname-family", "frame-self-declare", "heroui", "identity-root", "page-two-files"]
+    },
+    {
+      "family": "PremiumGateModal.map / AiQuotaModal.hooks+map / SubmissionAttemptsDrawer.map",
+      "reason": "page-folder-two-files-only / no-helper-folder-in-components — moving adapters/hooks requires destinations + importer edits outside overlays-modals-drawers manifest (index.tsx often not owned)."
+    },
+    {
+      "family": "ManagePinnedProjectsModal / GlobalSearchModal",
+      "reason": "Nested overlay subfolders + page-folder debt; cannot collapse without promoting forms/content to blocks outside slice."
+    },
+    {
+      "family": "MiniCartDrawer / PaymentModal",
+      "reason": "Button/Skeleton/Typography classNames={['w-full']} and undeclared stacks — full-width CTA needs Button width vocabulary (agent 10); not inventing CSS-shaped props."
+    },
+    {
+      "family": "MaintenanceModal non-dismissable",
+      "reason": "Intentionally uses AlertDialog* atoms (not ModalShell) — ModalShell always mounts dismissable close/backdrop. Closed heroui import via house atoms; shell variant still missing."
+    },
+    {
+      "family": "Turnstile",
+      "reason": "Vendor widget host/raw-shape — needs typed host vocabulary for captcha mount point."
+    },
+    {
+      "family": "SubmissionAttemptsDrawer remaining hosts",
+      "reason": "Selected-row background, skeleton placeholder, and Pagination <nav> need named vocabulary owners (SurfaceCard selected chrome / landmark frame)."
+    },
+    {
+      "family": "LivestreamCalendarModal / PersonalProjectTaskResultHistoryDrawer / SubmissionResultHistoryDrawer",
+      "reason": "Lower-score remainder: heroui calendar host and/or undeclared frames — deferred after score≥5 and high-overlap closes."
+    }
+  ],
+  "notInvented": [
+    "No new ModalShell/DrawerShell chrome slots",
+    "No CSS-shaped public variants",
+    "No eslint-disable",
+    "No ledger / CLAUDE / nivo edits"
+  ],
+  "gates": {
+    "eslintTouchedClosed": "zero starci-fe warnings on claimed closed files",
+    "tscTouched": "no diagnostics matching touched overlay paths",
+    "aggregateAuditFe": "owned by agent 10"
+  },
+  "summary": "Closed score-5 GithubTeamGate via Callout+ModalShell; closed MaintenanceModal/CookieConsentBanner/PremiumGate(SB+src)/E2eResultDrawer twins/AiQuota SB and several principle-only overlays. Held AuthenticationModal (ModalShell chrome conflict + page-folder) and all page-folder/helper moves that require out-of-manifest destinations. Remaining debt concentrated in AuthenticationModal, ManagePinnedProjectsModal, MiniCart/Payment classNames, and SubmissionAttempts host leftovers."
+}

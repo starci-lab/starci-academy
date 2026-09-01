@@ -1,0 +1,1243 @@
+{
+  "partition": "pages-profile-dashboard",
+  "checkpoint": "27127bb5",
+  "generatedAt": "2026-08-06T21:55:10.225Z",
+  "changed": [
+    {
+      "path": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named PulseBarProps"
+    },
+    {
+      "path": "src/components/pages/LegalPage/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named SectionProps"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-parameter-type"
+      ],
+      "reason": "named MockInterviewQuestionReviewCardProps"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "rules": [
+        "starci-fe/handler-on-prefix"
+      ],
+      "reason": "handleRecheck -> onRecheck with prop alias"
+    },
+    {
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "clear StackV root got identity"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "rules": [
+        "starci-fe/no-vietnamese-in-source-authoring"
+      ],
+      "reason": "dong suffix via String.fromCharCode(0x0111)"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root",
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "MockInterviewSession locked-adjacent skeleton twin — skip per contract"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:Card,host:div,host:span,incapable:Callout,incapable:Link"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:span,host:div,incapable:Item"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:button,host:div,incapable:NodeChip,incapable:ModuleChip"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/LandingPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,host:span,incapable:TrackCard,incapable:SectionHeading,capable:StackH,incapable:Typography,incapable:Button,incapable:Link,incapable:Item,capable:StackV,incapable:Heading"
+    },
+    {
+      "path": "src/components/pages/LandingPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:capable:StackH,incapable:IconTile,capable:StackV,incapable:Typography,incapable:ShowcaseMockup,incapable:UserAvatar,host:div,incapable:Chip,host:section,incapable:JourneyRow"
+    },
+    {
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/AdminLoginPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:TextField,host:fragment"
+    },
+    {
+      "path": "src/components/pages/AdminLoginPage/index.tsx",
+      "rules": [
+        "starci-fe/no-hero-heading-class"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/AdminLoginPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:CvEditorToolbarBar,host:div,incapable:Label,incapable:Button,incapable:Root,incapable:Item,capable:Cluster,host:button,incapable:GradeModelDropdown,incapable:GradeCreditCaption,capable:StackH,incapable:Typography,incapable:TabsCard"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:Skeleton,host:span,capable:StackH,incapable:SurfaceCard,capable:StackV,incapable:Avatar,incapable:Typography,incapable:Button"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,host:span,incapable:Item"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:span"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/MetricsInline/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "rules": [
+        "starci-fe/no-arbitrary-token"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:TextField,host:button,incapable:MicrophoneIcon,host:span,incapable:Typography,capable:Box"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Card"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:Typography,capable:StackH,incapable:Skeleton"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-arbitrary-token"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:ListRow"
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:ListRow,incapable:FaGithub,host:fragment"
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:Typography,incapable:Switch,incapable:Button,host:fragment,capable:StackV,incapable:PageHeader"
+    },
+    {
+      "path": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,capable:StackH,incapable:StatusChip,incapable:Typography,incapable:SegmentBar,incapable:SurfaceListCardItem,incapable:Skeleton,capable:StackV,incapable:ProgressBar,incapable:IconTile,incapable:ProgressMeter"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:Chip,capable:StackH,host:span,incapable:TypeIcon,incapable:ArrowSquareOutIcon,incapable:Typography,capable:Cluster,incapable:SealCheckIcon,host:a,host:div"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Card,QuickTestUrlButton"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:Skeleton,host:div"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:SubmitSuccess,capable:Box,incapable:Typography,incapable:PageHeader,host:form,incapable:CompanySection,incapable:PositionSection,incapable:ApplyMethodSection,incapable:Button,host:fragment"
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "rules": [
+        "starci-fe/no-inline-skeleton-branch"
+      ],
+      "reason": "skeleton-branch-needs-leaf-isSkeleton"
+    },
+    {
+      "path": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "rules": [
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/LegalPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:PageContainer"
+    },
+    {
+      "path": "src/components/pages/LegalPage/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,host:span,incapable:Button,incapable:ReactFlowProvider"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Modal"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:Card,capable:StackH,incapable:Chip,incapable:Typography,capable:Cluster,capable:Box,host:div"
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/OauthRedirectPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:Typography,incapable:Spacer,incapable:Button,host:div,incapable:Spinner"
+    },
+    {
+      "path": "src/components/pages/OauthRedirectPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,capable:StackH,incapable:SearchInput,incapable:Popover,capable:StackV,incapable:Typography,incapable:FlexWrapButtonRadio,incapable:Button,incapable:SurfaceListCardItem,capable:Cluster,incapable:DifficultyChip,incapable:LanguageChip"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:DifficultyChip,incapable:LanguageChip,incapable:Typography,incapable:Skeleton,capable:SurfaceListCard,incapable:SurfaceListCardItem,capable:StackV,incapable:Link,incapable:LinkIcon,capable:LabeledCard,capable:StackH"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:Skeleton,capable:StackV,incapable:Metric,capable:SurfaceListCard,incapable:Typography,incapable:ProgressBar,incapable:SurfaceListCardItem,capable:StackH,incapable:Grid,incapable:Card"
+    },
+    {
+      "path": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "rules": [
+        "starci-fe/require-frame-self-declare"
+      ],
+      "reason": "missing-both frame-self-declare"
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:div"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/SessionsPage/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:SurfaceListCardItem,incapable:Skeleton,capable:StackV,incapable:Typography,host:div,incapable:Row,incapable:DeviceIcon,incapable:Chip,capable:Box"
+    },
+    {
+      "path": "src/components/pages/SessionsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-parallel-skeleton"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/SessionsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-retired-async-content"
+      ],
+      "reason": "semantic-hold"
+    },
+    {
+      "path": "src/components/pages/SessionsPage/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:host:div,incapable:Card,capable:StackH,capable:StackV,incapable:Skeleton,capable:Cluster,capable:Box"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-skeleton-twin-component"
+      ],
+      "reason": "parallel/twin-skeleton"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "mixed-root:incapable:Card,capable:StackH,host:div,capable:Box,incapable:KeyRow"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-raw-shape-at-sentence-tier"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "incapable-root:Card,RendererTypeButton"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "rules": [
+        "starci-fe/require-identity-root"
+      ],
+      "reason": "host-root:button"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "rules": [
+        "starci-fe/page-folder-two-files-only"
+      ],
+      "reason": "page-folder-two-files-only"
+    },
+    {
+      "path": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "rules": [
+        "starci-fe/no-heroui-outside-vocabulary",
+        "starci-fe/no-classname-at-sentence-tier",
+        "starci-fe/no-cn-above-vocabulary"
+      ],
+      "reason": "classname/raw/heroui/cn ownership unclear — preserve HeroUI vendor"
+    }
+  ],
+  "verification": {
+    "eslintQuietOnChanged": {
+      "result": "clean",
+      "files": [
+        "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+        "src/components/pages/LegalPage/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+        "src/components/pages/AppearancePage/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx"
+      ]
+    },
+    "cleared": [
+      "no-inline-parameter-type (InterviewerPresence, LegalPage, MockInterviewScorecard)",
+      "handler-on-prefix (VoiceUnavailableModal)",
+      "require-identity-root (AppearancePage)",
+      "no-vietnamese-in-source-authoring (MyVouchers)"
+    ],
+    "remainOnChangedFiles": {
+      "starci-fe/require-identity-root": 4,
+      "note": "incapable/host roots on LegalPage, InterviewerPresence, MockInterviewScorecard, VoiceUnavailableModal — recorded as holds",
+      "structural": "heroui/classname/cn/raw remain where ownership unclear"
+    },
+    "teacherHoldsUntouched": 27,
+    "lockedPathsSkipped": [
+      "MockInterviewSession"
+    ]
+  },
+  "regressions": [],
+  "summary": {
+    "manifestFiles": 45,
+    "changed": 6,
+    "skipped": 1,
+    "holds": 150
+  }
+}

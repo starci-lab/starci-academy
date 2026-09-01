@@ -1,0 +1,47 @@
+{
+  "issues": [
+    {
+      "changed": ".storybook/components/atoms/buttons/Button/ButtonBase.tsx",
+      "twin": "src/components/atoms/buttons/Button/ButtonBase.tsx",
+      "twinExists": true,
+      "twinChanged": false
+    },
+    {
+      "changed": ".storybook/components/atoms/chips/Chip/ChipBase.tsx",
+      "twin": "src/components/atoms/chips/Chip/ChipBase.tsx",
+      "twinExists": true,
+      "twinChanged": false
+    },
+    {
+      "changed": ".storybook/components/atoms/forms/_input/FieldSkeleton.tsx",
+      "twin": "src/components/atoms/forms/_input/FieldSkeleton.tsx",
+      "twinExists": true,
+      "twinChanged": false
+    },
+    {
+      "changed": ".storybook/components/atoms/navigation/Link/LinkBack.tsx",
+      "twin": "src/components/atoms/navigation/Link/LinkBack.tsx",
+      "twinExists": true,
+      "twinChanged": false
+    },
+    {
+      "changed": ".storybook/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "twin": "src/components/atoms/navigation/Link/LinkSeeMore.tsx",
+      "twinExists": true,
+      "twinChanged": false
+    },
+    {
+      "changed": ".storybook/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "twin": "src/components/atoms/navigation/Tabs/TabsExtended.tsx",
+      "twinExists": true,
+      "twinChanged": false
+    },
+    {
+      "changed": ".storybook/components/composites/viewers/MarkdownContent/markdown-table.ts",
+      "twin": "src/components/composites/viewers/MarkdownContent/markdown-table.ts",
+      "twinExists": true,
+      "twinChanged": false
+    }
+  ],
+  "count": 7
+}

@@ -1,0 +1,77 @@
+{
+  "batch": "B36",
+  "wave": "A",
+  "agent": "navbar-frame-storybook",
+  "checkpoint": "84b92cd77",
+  "status": "done",
+  "changedPaths": [
+    ".storybook/components/frames/NavbarFrame/NavbarFrame.tsx",
+    ".storybook/stories/frames/NavbarFrame/NavbarFrame.stories.tsx",
+    ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+    ".storybook/stories/starci/blocks/navigation/Navbar/Navbar.stories.tsx"
+  ],
+  "api": {
+    "component": "NavbarFrame",
+    "path": ".storybook/components/frames/NavbarFrame/NavbarFrame.tsx",
+    "props": {
+      "identity": "CallerIdentity | undefined — resolveIdentity on root; own fallback { tier: \"frame\", name: \"NavbarFrame\" }",
+      "primary": "ComponentTypeWithSkeleton — required; wrapped in h-16 min-h-16",
+      "secondary": "ComponentTypeWithSkeleton | undefined — optional region below primary; does not change primary height",
+      "isSkeleton": "boolean | undefined — forwarded to primary and secondary"
+    },
+    "intrinsic": {
+      "root": "semantic <nav> with classes sticky top-0 z-50 border-b border-default bg-surface",
+      "primaryRow": "h-16 min-h-16",
+      "forbidden": [
+        "public principle",
+        "className/classNames",
+        "gap/padding/align/justify",
+        "children/ReactNode",
+        "sticky prop / z-index variants",
+        "app state / menus / Dropdown / Kbd / Popover"
+      ]
+    },
+    "meta": { "tier": "frame", "name": "NavbarFrame" }
+  },
+  "parityNotes": [
+    "Mirrored FooterFrame pattern: named frame owns landmark + chrome; callers own slot content only.",
+    "SB Navbar mounts NavbarFrame as outer root with identity={{ tier: \"block\", component: \"Navbar\" }}.",
+    "Primary slot = former primary-row StackH contents (logo, pills, search, locale/theme, cart, notifications, account, mobile trigger).",
+    "Secondary slot = DrawerShell mobile menu (sibling below primary; keeps primary height contract). Previously a sibling inside raw <nav>.",
+    "Closed raw outer <nav> and h-16 host div; identity/frame-self-declare now on NavbarFrame via resolveIdentity.",
+    "House atoms/frames kept for contents; direct HeroUI Dropdown/Kbd/Popover/Button remain inside primary where no house vocabulary exists.",
+    "Navbar.stories annotate map updated with NavbarFrame storyId for anatomy parity.",
+    "src twin and src NavbarFrame left untouched (owned by navbar-frame-src-and-parity)."
+  ],
+  "remainingHolds": [
+    {
+      "id": "navbar-heroui-atoms",
+      "scope": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx (and src twin, out of slice)",
+      "proof": "Missing house Dropdown / Kbd / Popover badge-trigger atoms. Direct HeroUI remains inside primary by contract hold.",
+      "status": "held"
+    },
+    {
+      "id": "navbar-src-frame-parity",
+      "scope": "src/components/frames/NavbarFrame/** and src/components/blocks/navigation/Navbar/**",
+      "proof": "Wave A agent owns Storybook only; src mirror is navbar-frame-src-and-parity.",
+      "status": "out-of-slice"
+    },
+    {
+      "id": "layouts-shell-navbar",
+      "scope": "layouts/Navbar and shell/Navbar",
+      "proof": "Manifest Wave B — must not touch this wave.",
+      "status": "out-of-slice"
+    }
+  ],
+  "gates": {
+    "eslintTouched": {
+      "command": "npx eslint <touched> --max-warnings 0",
+      "exit": 0
+    },
+    "tscTouchedFilter": {
+      "note": "Full tsc --noEmit; filtered for NavbarFrame/Navbar paths — zero hits on touched files",
+      "touchedHits": 0
+    },
+    "gitDiffCheck": "clean on touched paths"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "worker": "cart-line",
+  "manifest": [],
+  "warningsBefore": [
+    { "line": 4, "rule": "starci-fe/no-heroui-outside-vocabulary" },
+    { "line": 60, "rule": "starci-fe/no-raw-shape-at-sentence-tier" },
+    { "line": 68, "rule": "starci-fe/no-raw-shape-at-sentence-tier" }
+  ],
+  "warningsAfter": "unchanged — not edited",
+  "legacyImportBefore": "@/components/blocks/identity/IconTile",
+  "legacyImportAfter": "@/components/blocks/identity/IconTile",
+  "iconExpressionBefore": "<GraduationCapIcon />",
+  "iconComponentAfter": null,
+  "changed": [],
+  "held": [
+    {
+      "file": "src/components/blocks/commerce/CartLine/index.tsx",
+      "reason": "Title column needs min-w-0 flex-1 beside IdentityTile; Stack/Typography classNames forbidden at sentence tier; FillAvailable is @app-lg rail height only; no frame owns unconditional nested flex-1."
+    }
+  ],
+  "retracted": [],
+  "storybookParity": "n/a",
+  "verification": { "productEdits": false },
+  "regressions": [],
+  "overlapCheck": "pass"
+}

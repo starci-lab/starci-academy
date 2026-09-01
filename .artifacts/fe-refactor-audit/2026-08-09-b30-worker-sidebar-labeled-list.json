@@ -1,0 +1,83 @@
+{
+  "manifest": [
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/blocks/lists/LabeledList/index.tsx"
+  ],
+  "openTagConsumers": [],
+  "valueSet": {
+    "beforeApparent": {
+      "SidebarNavItem": "nested icon/Badge classes only (brace-aware → 0)",
+      "LabeledList": "nested Button classNames self-start only (brace-aware → 0)"
+    },
+    "after": []
+  },
+  "ownership": {
+    "door": "zero real open-tag consumers → delete className doors"
+  },
+  "oldApi": "className?: string on both",
+  "newApi": "no public CSS door",
+  "changed": [
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+    "src/components/blocks/lists/LabeledList/index.tsx"
+  ],
+  "holds": [],
+  "parity": {
+    "SidebarNavItem": "Nivo SB twin already doorless (separate component; not edited)",
+    "LabeledList": "src-only (no SB twin)"
+  },
+  "verification": {
+    "tsc": "pending-coordinator",
+    "b30b": "LabeledList false closure repaired with Stack frames"
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "semanticClosureAudit": {
+    "batch": "30b",
+    "confirmedFalseClosure": {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "oldPayload": "bare branch: <div className=\"flex flex-col gap-3\"> after className door removed",
+      "classification": "principle-owned",
+      "owner": "StackV principle=sibling-stack (shared by bare + LabeledCard branches)",
+      "action": "Shared content StackV; bare returns content; LabeledCard wraps same content; gap prop removed (principle owns spacing)",
+      "verification": "bare no-raw-shape on outer stack cleared; pre-existing row-internal flex warnings remain (not introduced by B30 door burn)"
+    },
+    "findings": [
+      {
+        "file": "src/components/blocks/lists/LabeledList/index.tsx",
+        "oldPayload": "className={cn(\"flex flex-col gap-3\", className)} → className=\"flex flex-col gap-3\" (+ inner flex rows)",
+        "classification": "principle-owned",
+        "owner": "StackV sibling-stack + StackH icon-text + StackV gap={2} for rows",
+        "action": "fixed in 30b — door stay closed; raw layout replaced with frames",
+        "verification": "0 no-raw-shape on LabeledList after repair"
+      },
+      {
+        "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+        "oldPayload": "removed className from cn(intrinsic row chrome…)",
+        "classification": "intrinsic",
+        "owner": "SidebarNavItem leaf chrome (active/hover/focus/collapsed)",
+        "action": "no change — appearance chrome, not child spacing/placement",
+        "verification": "0 no-raw-shape warnings on file"
+      }
+    ],
+    "unresolvedPreExistingInB30TouchedFiles": [
+      {
+        "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "note": "9× no-raw-shape on row/standing internal flex markup — pre-existed B30; not introduced by door removal; out of 30b regression scope"
+      },
+      {
+        "file": "src/components/blocks/lists/ListRow/index.tsx",
+        "note": "internal text/meta column flex — pre-existing leaf structure"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+        "note": "internal Card layout flex divs — pre-existing"
+      }
+    ],
+    "holdsUnchanged": [
+      "TabsCard door live (QuizSession)",
+      "composite ButtonGroup classNames (nivoexpert)",
+      "SectionCard / QuizCard classNames"
+    ],
+    "scope": "sidebar-labeled-list"
+  }
+}

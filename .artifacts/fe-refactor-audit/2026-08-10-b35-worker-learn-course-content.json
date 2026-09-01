@@ -1,0 +1,269 @@
+{
+  "batch": "B35",
+  "agent": "learn-course-content",
+  "agentKey": "learn-course-content",
+  "checkpoint": "02011807",
+  "committed": false,
+  "generatedAt": "2026-08-08T14:45:00.000Z",
+  "focus": "Close learn/course/content sentence roots (SB first, then src): hosts, identity/self-declare, CSS/cn, HeroUI bypass, MarkdownContent axes, GlyphMark exact matches, intrinsic skeletons",
+  "manifestFileCount": 181,
+  "filesEdited": [
+    ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+    ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+    ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+    ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+    ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+    ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaHeader/CourseQaHeader.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationCategoryHeader/FoundationCategoryHeader.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationResourceBody/FoundationResourceBody.tsx",
+    ".storybook/components/starci/blocks/learn/FoundationsHeader/FoundationsHeader.tsx",
+    ".storybook/components/starci/blocks/learn/LeaderboardHeader/LeaderboardHeader.tsx",
+    ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+    ".storybook/components/starci/blocks/learn/ModuleHeader/ModuleHeader.tsx",
+    ".storybook/components/starci/blocks/learn/RatingBar/RatingBar.tsx",
+    ".storybook/components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner.tsx",
+    ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+    "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+    "src/components/blocks/learn/ContentModeNav/index.tsx",
+    "src/components/blocks/learn/CourseBrief/index.tsx",
+    "src/components/blocks/learn/CourseQaComposer/index.tsx",
+    "src/components/blocks/learn/CourseQaHeader/index.tsx",
+    "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+    "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+    "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+    "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+    "src/components/blocks/learn/FoundationHeader/index.tsx",
+    "src/components/blocks/learn/FoundationResourceBody/index.tsx",
+    "src/components/blocks/learn/FoundationsHeader/index.tsx",
+    "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+    "src/components/blocks/learn/ModuleHeader/index.tsx",
+    "src/components/blocks/learn/RatingBar/index.tsx",
+    "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+    "src/components/blocks/learn/UpNextCard/index.tsx",
+    "src/components/blocks/learn/VoiceHero/index.tsx"
+  ],
+  "closedClusters": [
+    {
+      "id": "ContentPager",
+      "scope": "SB",
+      "change": "Dropped double host; identity on SurfaceCardPressableGroup (mirrored clean src). Muted size-5 carets held (no GlyphMark muted)."
+    },
+    {
+      "id": "CourseQaToolbar",
+      "scope": "SB",
+      "change": "Identity StackV root; Toolbar unwrapped; search FillAvailable/flex-fill-base replaces min-w-0 flex-1 host."
+    },
+    {
+      "id": "RatingBar",
+      "scope": "SB+src",
+      "change": "Dropped double host; identity on SurfaceCardPressableGroup both twins."
+    },
+    {
+      "id": "MindMapRail",
+      "scope": "SB",
+      "change": "Removed host wrappers around ButtonRadioGroup + Badge; identity already on StackV."
+    },
+    {
+      "id": "FlashcardDeckList",
+      "scope": "SB→src",
+      "change": "Identity StackV; FillAvailable for search + progress; dropped Grid/Tabs/Pagination hosts; frame self-declare + no fragment items; src remirrored to SB (kept searchLabel)."
+    },
+    {
+      "id": "FoundationResourceBody",
+      "scope": "SB+src",
+      "change": "SurfaceCard identity roots for document/video; Button leaf returns without host (identity hold on Button-only leaf)."
+    },
+    {
+      "id": "ContentModeNav",
+      "scope": "SB (+src hold comment)",
+      "change": "Dropped double host; Toolbar is root. Src identity held — Toolbar lacks CallerIdentity."
+    },
+    {
+      "id": "ContentAiFab",
+      "scope": "SB",
+      "change": "Dropped double host; FloatingActionButton is root. Src divergent connected HeroUI twin classified, not remirrored."
+    },
+    {
+      "id": "CourseQaComposer",
+      "scope": "SB+src",
+      "change": "Host→identity/frame close (SB first, src remirror)."
+    },
+    {
+      "id": "VoiceHero",
+      "scope": "SB+src",
+      "change": "Outer host drop / identity wiring on closable roots."
+    },
+    {
+      "id": "TrialEnrollBanner",
+      "scope": "SB (+src host)",
+      "change": "Dropped hosts; Alert/Callout roots. Src identity held — Callout/Alert lack CallerIdentity."
+    },
+    {
+      "id": "UpNextCard",
+      "scope": "src",
+      "change": "Exact GlyphMark success for CheckCircleIcon size-5; frame self-declare on StackH/StackV/Cluster."
+    },
+    {
+      "id": "ModuleSlotNode",
+      "scope": "src",
+      "change": "Exact GlyphMark success for read CheckCircleIcon size-5 (cn/host residual remain on React Flow button)."
+    },
+    {
+      "id": "Header cluster (CourseBrief/ModuleHeader/FoundationsHeader/FoundationHeader/CourseQaHeader/LeaderboardHeader/FoundationCategoryHeader/ContentHeader)",
+      "scope": "SB±src",
+      "change": "Outer PageHeader host wrappers removed; StackV identity where ContentHeader has stack root. Residual w-fit breadcrumb hosts + PageHeader identity gap held."
+    },
+    {
+      "id": "FoundationCategorySearchBar",
+      "scope": "SB+src",
+      "change": "Host→identity/frame close mirroring FoundationSearchBar recipe."
+    },
+    {
+      "id": "CourseQaQuestionList",
+      "scope": "SB+src",
+      "change": "Outer host drop; residual Pagination <nav> / aria region classified where present."
+    },
+    {
+      "id": "ContentAiSelectionAsk",
+      "scope": "SB only",
+      "change": "Partial host/className cleanup; fixed-position host retained. Src divergent connected portal held (adjacent ContentAiChat ecosystem)."
+    }
+  ],
+  "glyphMark": {
+    "converted": [
+      {
+        "file": "src/components/blocks/learn/UpNextCard/index.tsx",
+        "from": "CheckCircleIcon size-5 text-success-soft-foreground",
+        "to": "GlyphMark tone=success"
+      },
+      {
+        "file": "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+        "from": "CheckCircleIcon size-5 text-success-soft-foreground",
+        "to": "GlyphMark tone=success"
+      }
+    ],
+    "notConverted": [
+      {
+        "pattern": "ContentPager carets size-5 text-muted",
+        "reason": "GlyphMarkTone has no muted"
+      },
+      {
+        "pattern": "FlashcardDeckList CaretRight size-4 accent",
+        "reason": "GlyphMark footprint is fixed size-5"
+      },
+      {
+        "pattern": "ResumeRail PlayIcon size-5 accent",
+        "reason": "Exact tone match exists but sits inside HeroUI Link/cn shell — larger heroui/cn burn deferred"
+      }
+    ]
+  },
+  "markdownContent": {
+    "freeClassNameRemainingInOwned": "none on MarkdownContent call sites",
+    "note": "Prior B34 axes (density/tone/flow/emphasis/previewLines) already cover owned learn consumers; no new axes invented"
+  },
+  "holds": [
+    {
+      "id": "ContentAiChat + children",
+      "paths": [
+        "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+        "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+        "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx"
+      ],
+      "action": "locked hold — classify only, zero edits",
+      "baselineScore": "score 5 / raw 68 in ranked clusters"
+    },
+    {
+      "id": "PageHeader identity gap",
+      "files": [
+        "CourseBrief",
+        "ModuleHeader",
+        "FoundationsHeader",
+        "FoundationHeader",
+        "CourseQaHeader",
+        "LeaderboardHeader",
+        "FoundationCategoryHeader"
+      ],
+      "reason": "PageHeader does not accept CallerIdentity (ledger ChallengeHeader retraction family). Outer hosts removed; identity remains held."
+    },
+    {
+      "id": "breadcrumb w-fit host",
+      "reason": "No hug-width frame vocabulary for breadcrumb measure; parent-placement w-fit retained with hold comments."
+    },
+    {
+      "id": "Toolbar / Callout / Alert / FloatingActionButton / Button identity",
+      "reason": "Composites/atoms used as sentence roots lack CallerIdentity; hosts closed where possible."
+    },
+    {
+      "id": "ContentAiFab src + ContentAiSelectionAsk src",
+      "reason": "Divergent connected HeroUI twins; full remirror is product rewrite adjacent to locked ContentAiChat."
+    },
+    {
+      "id": "TaskResult",
+      "reason": "High-score family retained; large HeroUI/cn/raw surface — not burned this pass after vertical SB catch-up priority."
+    },
+    {
+      "id": "Intrinsic skeleton twins",
+      "paths": [
+        "ContentHeaderSkeleton",
+        "ContentBodySkeleton",
+        "CodeBodySkeleton",
+        "ContentMapSkeleton",
+        "MilestoneOutlineSkeleton",
+        "LessonCardSkeleton",
+        "personal-project/*Skeleton"
+      ],
+      "reason": "Deferred — need parent isSkeleton fold; no new skeleton shelves invented this pass."
+    }
+  ],
+  "revertedOutOfScope": [
+    ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx",
+    ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+    ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+    ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+    "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+    "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+    "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+    "src/components/blocks/learn/QuizCard/index.tsx",
+    "src/components/blocks/learn/QuizRecapList/index.tsx",
+    "src/components/blocks/learn/ReactionButton/types.ts",
+    "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+    "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx"
+  ],
+  "gates": {
+    "eslintClosedSample": {
+      "zeroStarciWarnings": [
+        "ContentPager SB",
+        "CourseQaToolbar SB",
+        "RatingBar SB+src",
+        "MindMapRail SB",
+        "FlashcardDeckList SB+src",
+        "FoundationResourceBody SB+src",
+        "ContentAiFab SB",
+        "ContentModeNav SB",
+        "CourseQaComposer SB+src",
+        "TrialEnrollBanner SB",
+        "VoiceHero SB+src",
+        "UpNextCard src"
+      ]
+    },
+    "tscOwnedTouchpoints": "no diagnostics matching owned filenames in filtered tsc scan (repo tsc exit 2 from unrelated peers)",
+    "constraints": [
+      "no new contracts/vocabulary",
+      "no GlyphMark muted",
+      "no eslint-disable",
+      "ContentAiChat untouched",
+      "playground/quiz/challenge/submission/forbidden trees reverted",
+      "manifest-only edits retained"
+    ]
+  },
+  "status": "done",
+  "summary": "Closed high-overlap SB→src sentence roots across pager/toolbar/rating/mind-map/flashcard/foundation/header/voice/composer clusters; GlyphMark exact success matches on UpNextCard + ModuleSlotNode; MarkdownContent free styling already clear. ContentAiChat locked hold; PageHeader/Toolbar identity + w-fit breadcrumb + skeleton twins classified."
+}

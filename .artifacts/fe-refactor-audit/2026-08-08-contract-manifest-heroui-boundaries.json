@@ -1,0 +1,2088 @@
+{
+  "partition": "heroui-boundaries",
+  "generatedAt": "2026-08-06T22:55:14.210Z",
+  "batch": 13,
+  "fileCount": 30,
+  "allowedApply": [
+    "safe-api-removal",
+    "safe-consumer-migration"
+  ],
+  "recordOnly": [
+    "new-named-slot-required",
+    "vendor-boundary",
+    "identity-decision",
+    "skeleton-decision",
+    "teacher-hold",
+    "ambiguous"
+  ],
+  "seededDecisions": [
+    {
+      "id": "heroui-boundary:components.blocks.async.InfiniteScrollSentinel.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.auth.GithubTeamGate.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "imports": [
+        "Alert",
+        "Button",
+        "Modal",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Alert: Alert atom is Alert.* data props (title/description/body); HeroUI Alert.Indicator/Content/Title/Description compound + className — non-identical | Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Modal: Modal is vendor compound (Backdrop/Container/Dialog/Header/Body); no identical non-compound atom drop-in — compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Alert.Indicator, Alert.Content, Alert.Title, Alert.Description, Modal.Backdrop, Modal.Container, Modal.Dialog, Modal.CloseTrigger, Modal.Header, Modal.Body"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.auth.Turnstile.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.buttons.ElementCloseButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "imports": [
+        "CloseButton",
+        "cn"
+      ],
+      "reason": "CloseButton: No CloseButton atom; ElementCloseButton wraps HeroUI CloseButton with className — cannot migrate without new atom | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.buttons.FloatingActionButton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "imports": [
+        "Button",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.buttons.RatingBar.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "imports": [
+        "Chip",
+        "Typography"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | compound usage observed: Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CheckListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CourseCardSkeleton.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CourseCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.CrossListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.FlipCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "imports": [
+        "ScrollShadow",
+        "cn"
+      ],
+      "reason": "ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.GroupPressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.HighlightCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.LabeledAccordionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "imports": [
+        "Accordion",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Accordion: Accordion atom is data-driven `items[]` over DisclosureGroup; HeroUI Accordion.* compound (Item/Heading/Trigger/Panel/Body) — vendor compound redesign forbidden | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Accordion.Item, Accordion.Heading, Accordion.Trigger, Accordion.Indicator, Accordion.Panel, Accordion.Body"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.PlaygroundCard.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "imports": [
+        "Button",
+        "Card",
+        "Chip",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Card.Content, Card.Footer, Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.PressableCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.SectionCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.SummaryCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.SurfaceListCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.cards.verdict-band.ts",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.CvSubmissionFields.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "imports": [
+        "Button",
+        "ProgressBar",
+        "Spinner",
+        "Typography",
+        "cn"
+      ],
+      "reason": "Button: Button atom requires `label` (or isIconOnly+prefixIcon+ariaLabel); forbids public className. HeroUI Button uses children and/or className — non-identical | ProgressBar: Progress atom is Progress.Bar with value/max/color (Track/Fill internal); HeroUI ProgressBar.Track/Fill compound + className — non-identical | Spinner: Spinner atom uses size/tone/label + classNames array; usage co-imported with non-identical Button/Typography/ProgressBar — cannot clear heroui import by Spinner alone | Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: ProgressBar.Track, ProgressBar.Fill"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.careers.CVSubmissionForm.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "imports": [
+        "Card",
+        "cn"
+      ],
+      "reason": "Card: Card atom strips className/classNames and exports Card/CardContent only; HeroUI Card.Content/Footer compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.AiCategoryChip.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.DifficultyChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.EnumChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "imports": [
+        "Chip",
+        "Tooltip",
+        "cn"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.LanguageChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "imports": [
+        "Typography",
+        "cn"
+      ],
+      "reason": "Typography: Typography atom uses `text` + `size` axis; HeroUI Typography uses children + `type` (+ className) — non-identical | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.StatusChip.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "imports": [
+        "Chip"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | compound usage observed: Chip.Label"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.chips.TagChips.component.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "imports": [
+        "Chip",
+        "ScrollShadow",
+        "Tooltip"
+      ],
+      "reason": "Chip: ChipBase hard-hold: atom uses `text`/`tone`/`dotColor|dotClassName`; HeroUI uses Chip.Label compound + children + color/variant — no ChipBase redesign | ScrollShadow: No ScrollShadow atom; HeroUI ScrollShadow + className has no identical vocabulary wrap | Tooltip: Tooltip atom is Tooltip.Base with `label` + children trigger; HeroUI Tooltip.Trigger/Content compound + className — non-identical | compound usage observed: Chip.Label, Tooltip.Trigger, Tooltip.Content"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.code.CodeConsole.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "imports": [
+        "Tabs",
+        "cn"
+      ],
+      "reason": "Tabs: Tabs atom is data-driven TabsBase/TabsExtended; HeroUI Tabs.ListContainer/List/Tab/Indicator compound — vendor compound redesign forbidden | cn: cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign | compound usage observed: Tabs.ListContainer, Tabs.List, Tabs.Tab, Tabs.Indicator"
+    },
+    {
+      "id": "heroui-boundary:components.blocks.code.IOExampleCard.index.tsx",
+      "classification": "vendor-boundary",
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "imports": [
+        "cn"
+      ],
+      "reason": "cn is vocabulary-tier only; no sentence-tier atom/redirect — importing cn from @heroui/react cannot be swapped without redesign"
+    }
+  ],
+  "hardHolds": [
+    "27 teacher pattern holds / Nivo / locked paths / a11y",
+    "ChipBase API / handleSide vendor boundary",
+    "No invented principle tokens / no eslint-disable / no generic className escapes",
+    "No HeroUI conversion when atom API non-identical",
+    "No prop removal while real consumers depend on it"
+  ],
+  "files": [
+    {
+      "path": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 77,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 12,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 29,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 134,
+          "column": 15,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 191,
+          "column": 46,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 197,
+          "column": 50,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 201,
+          "column": 66,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 208,
+          "column": 45,
+          "message": "`flex` on <ol> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 209,
+          "column": 49,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 211,
+          "column": 54,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 227,
+          "column": 49,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 231,
+          "column": 49,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 233,
+          "column": 54,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/auth/Turnstile/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/auth/Turnstile/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 9,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 9,
+          "column": 41,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 120,
+          "column": 47,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 1,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 9,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 38,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 68,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 9,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 9,
+          "column": 52,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 41,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/buttons/RatingBar/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/buttons/RatingBar/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 41,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 89,
+          "column": 27,
+          "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CheckListCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 32,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 52,
+          "column": 20,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 92,
+          "column": 9,
+          "message": "`relative` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 9,
+      "messages": [
+        {
+          "rule": "starci-fe/no-skeleton-twin-component",
+          "line": 1,
+          "column": 1,
+          "message": "`CourseCardSkeleton` is a hand-mirrored twin: a second description of a shape that already has one. Give the component it mirrors an `isSkeleton` prop and let it rest as ITSELF — the twin cannot be kept in step, it can only be noticed after it has already drifted. (The `Skeleton.*` primitives under `blocks/skeleton/` are the pieces you rest WITH, and are exempt.)",
+          "severity": 1,
+          "classification": "skeleton-decision"
+        },
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 16,
+          "column": 51,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 18,
+          "column": 26,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 22,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 29,
+          "column": 25,
+          "message": "`flex` on <ul> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 31,
+          "column": 45,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 43,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/CourseCard/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CourseCard/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 20,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 14,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 28,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 28,
+          "column": 42,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 158,
+          "column": 30,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 163,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 166,
+          "column": 26,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 175,
+          "column": 34,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 181,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 182,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 204,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 214,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 232,
+          "column": 26,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 238,
+          "column": 22,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 247,
+          "column": 30,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 256,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 257,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 274,
+          "column": 29,
+          "message": "`flex` on <ul> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 276,
+          "column": 49,
+          "message": "`flex` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 289,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 313,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/CrossListCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 9,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 42,
+          "column": 20,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 75,
+          "column": 9,
+          "message": "`relative` on <li> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/FlipCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 6,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 10,
+          "column": 40,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 50,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 54,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 72,
+          "column": 36,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 7,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 16,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 58,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 69,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 204,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 208,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 227,
+          "column": 40,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/HighlightCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 8,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 8,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 28,
+          "column": 21,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 6,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 27,
+          "column": 52,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 102,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 114,
+          "column": 38,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 121,
+          "column": 56,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 173,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 20,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 46,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 48,
+          "column": 26,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 51,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/PressableCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/PressableCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 10,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 38,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 38,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 121,
+          "column": 21,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 131,
+          "column": 22,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 148,
+          "column": 28,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 162,
+          "column": 21,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 169,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 170,
+          "column": 13,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 175,
+          "column": 30,
+          "message": "`relative` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/SectionCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 41,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 105,
+          "column": 27,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 112,
+          "column": 9,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 131,
+          "column": 29,
+          "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/SummaryCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 38,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 84,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 99,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 105,
+          "column": 13,
+          "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 11,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 30,
+          "column": 5,
+          "message": "Prop `className` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 57,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 57,
+          "column": 47,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 101,
+          "column": 20,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 113,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 185,
+          "column": 26,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 210,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/require-frame-self-declare",
+          "line": 217,
+          "column": 21,
+          "message": "`<StackH>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 253,
+          "column": 51,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 307,
+          "column": 27,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/cards/verdict-band.ts",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 1,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 58,
+          "column": 12,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 7,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 21,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 21,
+          "column": 50,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 70,
+          "column": 46,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 71,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 89,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 90,
+          "column": 26,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/careers/CVSubmissionForm/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 6,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 20,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 48,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 76,
+          "column": 26,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/AiCategoryChip/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 11,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 46,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 38,
+          "column": 22,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 39,
+          "column": 38,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/DifficultyChip/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 1,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 23,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 49,
+          "column": 5,
+          "message": "Prop `classNames` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 70,
+          "column": 24,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 74,
+          "column": 42,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/EnumChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/EnumChip/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 4,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 9,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 24,
+          "column": 58,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 54,
+          "column": 71,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/LanguageChip/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 4,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 2,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 7,
+          "column": 44,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 23,
+          "column": 26,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/StatusChip/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/StatusChip/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 2,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/chips/TagChips/component.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/chips/TagChips/component.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 5,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 10,
+          "column": 40,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 40,
+          "column": 14,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 55,
+          "column": 34,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/code/CodeConsole/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/code/CodeConsole/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 7,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 5,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 10,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 20,
+          "column": 43,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 57,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 73,
+          "column": 18,
+          "message": "`overflow-auto` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 77,
+          "column": 18,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+          "line": 79,
+          "column": 22,
+          "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    },
+    {
+      "path": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "absolutePath": "D:/Repositories/starci-academy/src/components/blocks/code/IOExampleCard/index.tsx",
+      "twin": null,
+      "twinExists": false,
+      "messageCount": 6,
+      "messages": [
+        {
+          "rule": "starci-fe/no-heroui-outside-vocabulary",
+          "line": 3,
+          "column": 1,
+          "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
+          "severity": 1,
+          "classification": "vendor-boundary"
+        },
+        {
+          "rule": "starci-fe/require-identity-root",
+          "line": 7,
+          "column": 1,
+          "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
+          "severity": 1,
+          "classification": "identity-decision"
+        },
+        {
+          "rule": "starci-fe/no-classname-at-sentence-tier",
+          "line": 22,
+          "column": 45,
+          "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 47,
+          "column": 25,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 51,
+          "column": 32,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        },
+        {
+          "rule": "starci-fe/no-cn-above-vocabulary",
+          "line": 53,
+          "column": 37,
+          "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
+          "severity": 1,
+          "classification": "ambiguous"
+        }
+      ],
+      "role": "primary"
+    }
+  ],
+  "workerClosedAt": "2026-08-06T22:55:14.210Z",
+  "closure": {
+    "batch": 13,
+    "apply": [],
+    "recordOnly": [
+      "vendor-boundary"
+    ],
+    "changedCount": 0,
+    "decisionCount": 30
+  }
+}

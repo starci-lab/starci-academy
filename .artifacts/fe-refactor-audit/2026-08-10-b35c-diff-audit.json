@@ -1,0 +1,284 @@
+{
+  "batch": "B35c",
+  "checkpoint": "02011807",
+  "filesAudited": 301,
+  "regressions": [
+    {
+      "kind": "dishonest-principle",
+      "path": "src/components/blocks/feed/EntityLink/index.tsx",
+      "evidence": "principle=\"icon-text\" stamped on Box root whose sole leaf is Typography text (no icon). Explain admits sole leaf; icon-text misnames a text-only token."
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Skeleton keeps one Premium lane placeholder as the panel body — not group-boundary, because there is no secti"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"card-caption\" explain=\"Keeps the scarcity line as a caption under the price so the two read as one price cluster, not as separate blocks.\" isSkeleton={is"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={1} principle=\"title-subtitle\" explain=\"Name over role — not label-field, because neither line is a form control label.\" isSkeleton={isSkeleton} items={[ () =>"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"ContentHeader\" }} gap={6} principle=\"sibling-stack\" explain=\"Page identity cluster and outcomes card are same-kind peers on the lesso"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH identity={{ tier: \"block\", component: \"CourseQaComposer\" }} gap={3} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta doe"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"CourseQaQuestionList\" }} gap={4} principle=\"sibling-stack\" explain=\"Question list and pager are same-kind peers in the roll-up column"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"CourseQaToolbar\" }} gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" items={chips} />"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"sibling-stack\" explain=\"Chip row and author line are same-kind peers in the meta cluster — not group-boundary, because they are repeating meta sections r"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap,align); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"VoiceHero\" }} gap={4} principle=\"card-caption\" explain=\"Holds caption text under card media so the caption stays attached to the imag"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH gap={3} principle=\"flex-action\" explain=\"Groups language and theme controls on one horizontal peer row so they share a single hit baseline.\" items={[ () =>"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"SettingsSidebarNav\" }} gap={1} principle=\"group-boundary\" explain=\"Separates the desktop rail from the mobile pill bar so each leaf k"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"layout\", component: \"LearnShell\" }} gap={1} principle=\"group-boundary\" explain=\"Separates the learn surface from floating AI triggers so each region keep"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={1} principle=\"group-boundary\" explain=\"Separates the profile tab chrome from the measured body so each region keeps its own seam owner — not sibling-stack, because the"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"sibling-stack\" explain=\"Skeleton title bar over attempt-row placeholders — not group-boundary, because these are peer loading bars.\" isSkeleton={isSkelet"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} principle=\"sibling-stack\" explain=\"Skeleton attempt rows — not group-boundary, because these are peer loading placeholders.\" items={skeletonRows} />"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={6} principle=\"block-boundary\" explain=\"Tabs over the active quota panel — not group-boundary, because this is the modal body's major section seam.\" items={tabsAndPanel"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} principle=\"sibling-stack\" explain=\"Repeating unlock lines — not group-boundary, because these are peer checklist rows rather than section groups.\" isSkeleton={isSke"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Skeleton keeps one Premium lane placeholder as the panel body — not group-boundary, because there is no secti"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={1} principle=\"title-subtitle\" explain=\"Course title over team state — not label-field, because neither line is a form control label.\" items={[ () =>"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"card-caption\" explain=\"Keeps the scarcity line as a caption under the price so the two read as one price cluster, not as separate blocks.\" isSkeleton={is"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap,align); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH identity={{ tier: \"block\", component: \"CommentComposer\" }} gap={4} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta does"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/community/Discussion/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"Discussion\" }} gap={4} principle=\"group-boundary\" explain=\"Header+composer group above the comment list — not sibling-stack, because "
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} identity={{ tier: \"block\", component: \"AchievementBlockEditor\" }} principle=\"sibling-stack\" explain=\"Same-kind peer stack of repeatable achievement cards — not grou"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} principle=\"group-boundary\" explain=\"Section group spacing — not sibling-stack, because description, input, error, and submit are distinct groups rather than same-ki"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} principle=\"group-boundary\" explain=\"Section group spacing — not sibling-stack, because description, input, error, and submit are distinct groups rather than same-ki"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH gap={2} principle=\"content-row\" explain=\"Keeps template name and ATS chip on one baseline so the chip does not drop under the title.\" items={[ () =>"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={IDENTITY} gap={4} principle=\"sibling-stack\" explain=\"Quest checklist and claim state are same-kind siblings in the daily-quest body — not group-boundary, because "
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"ActivityFeed\" }} gap={6} principle=\"group-boundary\" explain=\"Day groups are section boundaries in the feed — not sibling-stack, becau"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/feed/CommentThread/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because the comment row, optional reply composer, and nested replies are repeating sib"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"CommunityCommentRow\" }} gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because the deleted pla"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because header, body, footer, and optional thread are repeating siblings in one post u"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/feed/Composer/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap,align); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH identity={{ tier: \"block\", component: \"Composer\" }} gap={4} principle=\"content-row\" explain=\"Keeps the optional avatar, field, and send cluster on one baseline so trailing "
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/feed/FeedItem/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={2} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because action text, timestamp, and optional footer are repeating vertical siblings in"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap,align); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH gap={3} principle=\"flex-action\" explain=\"Consent copy beside the Accept/Reject/Customize cluster — not sibling-stack, because the sides are asymmetric roles on one bar.\" al"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH identity={{ tier: \"block\", component: \"CourseQaComposer\" }} gap={3} principle=\"content-row\" explain=\"Keeps primary content and trailing meta on one baseline so the meta doe"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"CourseQaQuestionList\" }} gap={4} principle=\"sibling-stack\" explain=\"Question list and pager are same-kind peers in the roll-up column"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} principle=\"sibling-stack\" explain=\"Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.\" isSkeleton={is"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"sibling-stack\" explain=\"Chip row and author line are same-kind peers in the meta cluster — not group-boundary, because they are repeating meta sections r"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/learn/VoiceHero/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap,align); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"VoiceHero\" }} gap={4} principle=\"card-caption\" explain=\"Holds caption text under card media so the caption stays attached to the imag"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/navigation/Navbar/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackH gap={3} principle=\"icon-text\" explain=\"Avatar beside its guest prompt — not name-handle, because this pairs a glyph with instructional text rather than a name/handle identi"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"block\", component: \"SettingsSidebarNav\" }} gap={1} principle=\"group-boundary\" explain=\"Separates the desktop rail from the mobile pill bar so each leaf k"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <Cluster gap={3} principle=\"chip-row\" explain=\"Lets chips share one wrapping row so related tags stay together without stacking as a column.\" items={[ ...(isSkeleton || location ? "
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV identity={{ tier: \"layout\", component: \"FooterNavColumn\" }} gap={4} principle=\"label-field\" explain=\"Column title over its link list — not title-subtitle, because the title"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/layouts/Footer/index.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={6} principle=\"block-boundary\" explain=\"Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.\" divider ite"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/overlays/drawers/E2eResultDrawer/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"sibling-stack\" explain=\"Skeleton title bar over attempt-row placeholders — not group-boundary, because these are peer loading bars.\" isSkeleton={isSkelet"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={4} principle=\"sibling-stack\" explain=\"Skeleton related-content sections — not group-boundary, because these are repeating peer loading blocks.\" items={skeletonSections"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={2} principle=\"sibling-stack\" explain=\"Attempt label/chip over feedback over timestamp — not group-boundary, because these are peer pieces of one attempt row.\" isSkelet"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (className(s)); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <Box className=\"max-h-[60vh]\" principle=\"flex-fill\" explain=\"Caps the follow list viewport so tabs stay put while the list scrolls inside.\" >"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/overlays/modals/LanguageModal/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} principle=\"sibling-stack\" explain=\"Popular languages label over selectable grid — not group-boundary, because these are peer pieces of one section.\" items={popularS"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/overlays/modals/LinkGithubModal/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={6} principle=\"block-boundary\" explain=\"Intro mark over the link CTA — not group-boundary, because this is the modal body's major section seam, and not sibling-stack, b"
+    },
+    {
+      "kind": "gap-align-padding-beside-principle",
+      "path": "src/components/overlays/modals/PremiumGateModal/component.tsx",
+      "evidence": "B35 added principle while retaining public frame CSS props (gap); TOPOLOGY requires principle to exclusively own gap/padding/align/justify. sample: <StackV gap={3} principle=\"sibling-stack\" explain=\"Repeating unlock lines — not group-boundary, because these are peer checklist rows rather than section groups.\" isSkeleton={isSke"
+    }
+  ],
+  "regressionCount": 53,
+  "ok": true,
+  "repairedDuringCert": true,
+  "repairLog": ".artifacts/fe-refactor-audit/2026-08-10-b35c-repair-log.json",
+  "notes": [
+    "Cert repaired all 52 gap-align-padding-beside-principle sites and EntityLink explain; Cluster frame now principle-owns spacing. Post-repair ok=true.",
+    "Automated scan of all 301 retainedProduct paths vs git diff 02011807; deep spot-check of 55+ high-risk files (ChatPane, coordinator door burns, Box intros, className removals, principle stamps) across agents.",
+    "Cleared after review: raw-host SettingsSidebarNav (held sticky div retained inside new StackV root — not a raw-for-raw swap); SearchBar/PaginationSkeleton/Navbar className door burns kept pre-existing internal host literals (not door-to-local laundering); public-api deletions are page-folder moves with live imports retargeted to @/hooks and @/modules; ChatPane skeleton repair intentional (await-id -> isSkeleton; ChatPaneSkeleton deleted); ComponentType->ReactNode none; line-ending/formatting churn none; ProfileLoadingState Box+className mirrors pre-checkpoint src hold (SB twin catch-up, not new escape); ContentAiSelectionAsk SB identity-only touch — className door pre-existing, src twin is connected not presentational.",
+    "gap-align-padding-beside-principle: 52 files where principle was newly co-located with gap/align/padding/justify on the same frame open tag (deduped one finding per file).",
+    "no-public-frame-css-props remains pilot-scoped per ESLINT-RULESET.md; TOPOLOGY still forbids dual ownership — reported as architectural regression.",
+    "Spot-check owners covered: shared-consumer-chains-coordinator, learn-course-content, navigation-shells-layouts, overlays-modals-drawers, commerce-account-settings, community-feed-blog-league, profile-cv-careers-consultant, dashboard-admin-system-architecture, ChatPane skeleton repair, pages-and-filing samples."
+  ]
+}

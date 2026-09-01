@@ -1,0 +1,48 @@
+{
+  "partition": "composites-lists-stats-text-viewers",
+  "manifest": [
+    ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+    "src/components/composites/chips/HighlightChip/index.tsx"
+  ],
+  "changed": [
+    ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+    "src/components/composites/chips/HighlightChip/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "live-api Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton",
+    "vendor / locked / Nivo / B19–B25 / teacher holds / skeleton slots",
+    "doors with JSX consumers (EntityLink restored)",
+    "rest-spread forwarding (...props)",
+    "src/components/blocks/feed/EntityLink/index.tsx — restored (live className consumer in CommentItem)",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx — restored (void className side-effect API)"
+  ],
+  "evidence": {
+    "proof": "brace-aware destructure + open-tag consumer index (locked paths counted as consumers)",
+    "inventoryBefore": {
+      "hits": 2194,
+      "files": 816
+    }
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "HighlightChip SB+src twins burned together"
+  },
+  "verification": {
+    "local": "tsc pass after partition"
+  },
+  "regressions": [],
+  "overlapCheck": "partitionOf(file) — each changed file in exactly one worker"
+}

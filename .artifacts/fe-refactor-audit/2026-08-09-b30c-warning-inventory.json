@@ -1,0 +1,691 @@
+{
+  "generatedAt": "2026-08-07T18:30:50.834Z",
+  "total": 72,
+  "byFile": {
+    "src/components/blocks/commerce/TierCardBase/index.tsx": {
+      "count": 11,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 5,
+        "starci-fe/no-inline-skeleton-branch": 3
+      }
+    },
+    "src/components/blocks/commerce/TierCard/index.tsx": {
+      "count": 3,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    },
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx": {
+      "count": 11,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 9,
+        "starci-fe/no-emoji-in-source": 1
+      }
+    },
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx": {
+      "count": 1,
+      "rules": {
+        "starci-fe/require-identity-root": 1
+      }
+    },
+    "src/components/blocks/learn/lesson/ContentTabBar/index.tsx": {
+      "count": 1,
+      "rules": {
+        "starci-fe/require-identity-root": 1
+      }
+    },
+    "src/components/blocks/lists/LabeledList/index.tsx": {
+      "count": 1,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 1
+      }
+    },
+    "src/components/blocks/lists/ListRow/index.tsx": {
+      "count": 6,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2,
+        "starci-fe/no-cn-above-vocabulary": 2
+      }
+    },
+    "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx": {
+      "count": 5,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    },
+    "src/components/blocks/navigation/SidebarNavItem/index.tsx": {
+      "count": 4,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 2
+      }
+    },
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx": {
+      "count": 6,
+      "rules": {
+        "starci-fe/page-folder-two-files-only": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2,
+        "starci-fe/require-frame-self-declare": 1
+      }
+    },
+    "src/components/pages/DashboardPage/TopLearners/component.tsx": {
+      "count": 6,
+      "rules": {
+        "starci-fe/page-folder-two-files-only": 1,
+        "starci-fe/no-public-classname-prop": 5
+      }
+    },
+    "src/components/pages/FlashcardsPage/index.tsx": {
+      "count": 9,
+      "rules": {
+        "starci-fe/no-parallel-skeleton": 4,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1,
+        "starci-fe/require-frame-self-declare": 3
+      }
+    },
+    "src/components/pages/NotificationsPage/index.tsx": {
+      "count": 8,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-retired-async-content": 1,
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    }
+  },
+  "inventory": [
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 5,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 17,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 89,
+      "column": 24,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 97,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 98,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-inline-skeleton-branch",
+      "message": "`isSkeleton ? … : …` picks between two DIFFERENT elements — that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 112,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 113,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-inline-skeleton-branch",
+      "message": "`isSkeleton ? … : …` picks between two DIFFERENT elements — that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 118,
+      "column": 26,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 127,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 129,
+      "column": 42,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "line": 130,
+      "column": 30,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-inline-skeleton-branch",
+      "message": "`isSkeleton ? … : …` picks between two DIFFERENT elements — that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "line": 6,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "line": 98,
+      "column": 21,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `TierLevelIcon`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "line": 117,
+      "column": 26,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 4,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 124,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 125,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-emoji-in-source",
+      "message": "Emoji is not allowed in source authoring — use an icon token or plain text. (Translation/content modules and test fixtures are allowlisted.)"
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 129,
+      "column": 31,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 133,
+      "column": 31,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 145,
+      "column": 30,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 158,
+      "column": 30,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 168,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 170,
+      "column": 26,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 191,
+      "column": 38,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 192,
+      "column": 43,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <span> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "line": 9,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "line": 21,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/lists/LabeledList/index.tsx",
+      "line": 57,
+      "column": 23,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-frame-self-declare",
+      "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "line": 4,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "line": 7,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "line": 85,
+      "column": 18,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "line": 96,
+      "column": 22,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "line": 104,
+      "column": 27,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "line": 132,
+      "column": 28,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "line": 5,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "line": 10,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "line": 20,
+      "column": 66,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-classname-at-sentence-tier",
+      "message": "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it."
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "line": 20,
+      "column": 66,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "`WithClassNames<...>` is forbidden on a public house component. Replace the CSS door with a semantic API or named wrapper."
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "line": 122,
+      "column": 61,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "line": 4,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "line": 14,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "line": 54,
+      "column": 24,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "line": 67,
+      "column": 32,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 1,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/page-folder-two-files-only",
+      "message": "`pages/ArchitecturePage/` contains `ArchitectureMap/index.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 5,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 25,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 106,
+      "column": 14,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 108,
+      "column": 47,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "line": 109,
+      "column": 17,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-frame-self-declare",
+      "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 1,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/page-folder-two-files-only",
+      "message": "`pages/DashboardPage/` contains `TopLearners/component.tsx` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 89,
+      "column": 41,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 93,
+      "column": 33,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 107,
+      "column": 53,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 110,
+      "column": 53,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "line": 111,
+      "column": 53,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 10,
+      "column": 10,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-parallel-skeleton",
+      "message": "Import `FlashcardReviewerSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 12,
+      "column": 10,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-parallel-skeleton",
+      "message": "Import `QuizSessionSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 14,
+      "column": 10,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-parallel-skeleton",
+      "message": "Import `FlashcardQuizResultSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 23,
+      "column": 10,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-parallel-skeleton",
+      "message": "Import `FlashcardSessionStatsSkeleton` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 38,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-identity-root",
+      "message": "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 333,
+      "column": 18,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-raw-shape-at-sentence-tier",
+      "message": "`flex` on <div> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 340,
+      "column": 17,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-frame-self-declare",
+      "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 368,
+      "column": 37,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-frame-self-declare",
+      "message": "`<StackV>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "line": 372,
+      "column": 49,
+      "severity": "warning",
+      "ruleId": "starci-fe/require-frame-self-declare",
+      "message": "`<Box>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`)."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 23,
+      "column": 1,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-heroui-outside-vocabulary",
+      "message": "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 50,
+      "column": 10,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-retired-async-content",
+      "message": "`AsyncContent` is retired — thread `isSkeleton` to each leaf, and use AsyncContentEmpty/AsyncContentError from '@/components/composites/async/AsyncContent'."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 313,
+      "column": 41,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-parallel-skeleton",
+      "message": "Prop `skeleton={<…>}` is a hand-kept parallel skeleton tree that drifts from the real shape — thread `isSkeleton` to each leaf so shimmer mirrors the loaded tree."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 321,
+      "column": 81,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 323,
+      "column": 111,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `classNames` to house component `StackV`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 326,
+      "column": 93,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 327,
+      "column": 93,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-public-classname-prop",
+      "message": "Do not pass `className` to house component `Skeleton`. Parent layout owns placement; use the parent principle or a named wrapper."
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "line": 379,
+      "column": 88,
+      "severity": "warning",
+      "ruleId": "starci-fe/no-cn-above-vocabulary",
+      "message": "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here."
+    }
+  ]
+}

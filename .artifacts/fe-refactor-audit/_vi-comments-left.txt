@@ -1,0 +1,45 @@
+﻿MISS block starting: // ΓöÇΓöÇ tier map d├╣ng chung ΓÇö suy tier tß╗½ ─É╞»ß╗£NG Dß║¬N FILE, kh├┤n
+MISS block starting: // L4 ΓÇö off-scale spacing: fractional Tailwind (gap-1.5, p-2
+MISS block starting: // structure-and-naming ┬º5 + "t├¬n h├ám phß║úi l├á arrow": mß╗ìi h├á
+MISS block starting: // atom layer = bß╗ìc vendor 1 Lß║ªN (atom-layer-heroui-wrappers
+{ replacedBlocks: 10, remainingViLines: 99 }
+59: // ΓöÇΓöÇ tier map d├╣ng chung ΓÇö suy tier tß╗½ ─É╞»ß╗£NG Dß║¬N FILE, kh├┤ng phß║úi nß╗Öi dung ΓöÇΓöÇ
+60: // vocabulary: atoms/frames/composites (bß╗ìc vendor + gh├⌐p leaf, kh├┤ng quyß║┐t layout/data).
+61: // sentence: blocks/pages/layouts/overlays (gh├⌐p c├óu, kh├┤ng tß╗▒ vß║╜ h├¼nh/gß╗ìi data).
+62: // Kh├┤ng c├▓n nh├á tß║ím: `features`, `starci`, `modals(v2)`, `drawers(v2)`, `pallettes` ─æ├ú rß╗ùng v├á
+63: // bß╗ï xo├í, n├¬n bß╗æn t├¬n d╞░ß╗¢i ─æ├óy l├á TO├ÇN Bß╗ÿ tß║ºng c├óu ΓÇö th├¬m mß╗Öt th╞░ mß╗Ñc mß╗¢i cß║ính ch├║ng l├á l├ích cß╗òng.
+64: // Bß║Ñt cß╗⌐ g├¼ NGO├ÇI `src/components/**` (route app/, hook, module) KH├öNG PHß║óI 1 component tier ΓÇö
+65: // mß╗ùi rule d├╣ng helper n├áy tß╗▒ n├│i r├╡ trong comment n├│ bß╗Å qua phß║ím vi ─æ├│ hay kh├┤ng.
+81: // fractional KH├öNG BAO GIß╗£ ─æ├║ng thang ΓåÆ bß║»t chß║»c, 0 false-positive.
+108: docs: { description: "Cß║Ñm ΓëÑ2 <Chip> kß╗ü nhau trong 1 cß╗Ñm ΓÇö 1 cß╗Ñm meta tß╗æi ─æa 1 chip. [[enforcement L3
+124: // L2 ΓÇö header anatomy: cß║Ñm escape-hatch `titleClassName` (n├óng header modal th├ánh hero/H-scale).
+128: docs: { description: "Cß║Ñm prop titleClassName tr├¬n Modal/Shell ΓÇö header = Typography body semibold d
+141: // L2b ΓÇö hero heading class: text-{xl,2xl,3xl} + font-bold tr├¬n 1 element = heading hand-roll ΓåÆ Typo
+146: docs: { description: "text-xl+/font-bold hand-roll = heading ΓåÆ d├╣ng <Typography type>. [[enforcement
+161: // L4b/token ΓÇö arbitrary Tailwind value = tho├ít token-system. Tailwind v4 sinh spacing bß║▒ng calc
+162: // (kh├┤ng prune-enum ─æ╞░ß╗úc), n├¬n chß║╖n "cß╗¡a hß║¡u": `gap-[7px]` (ngo├ái scale) + `text-[#hex]` (ngo├ái sem
+163: // 'warn' ΓÇö c├│ ca hß╗úp lß╗ç (vd % / px canh chß╗ënh, brand hex) ΓåÆ d├╣ng eslint-disable + l├╜ do.
+169: docs: { description: "Cß║Ñm arbitrary spacing/hex-color (tho├ít token-system). [[enforcement token]]" }
+193: // structure-and-naming ┬º5 + "t├¬n h├ám phß║úi l├á arrow": mß╗ìi h├ám module-level l├á `const X = () => {}`,
+194: // KH├öNG `function` declaration / `export default function`. Bß║»t FunctionDeclaration ß╗ƒ top-level.
+292: // atom layer = bß╗ìc vendor 1 Lß║ªN (atom-layer-heroui-wrappers). Import @heroui/react thß║│ng ß╗ƒ sentence
+293: // tier = 1 block tß╗▒ quyß║┐t lß║íi appearance m├á atom ─æ├ú chß╗æt ΓÇö bß╗Å qua atom, chß╗ông nguß╗ôn sß╗▒ thß║¡t h├¼nh dß║í
+294: // CHß╗ê ├íp cho file d╞░ß╗¢i `src/components/**` (sentence tier); ngo├ái src/components/ (route, hook, mod
+295: // KH├öNG bß╗ï rule n├áy soi ΓÇö false-positive-risk: 1 hook/route import @heroui/react thß║│ng lß╗ìt l╞░ß╗¢i.
+319: // call site, invisible to every other screen that will need the same thing." ß╗₧ sentence tier, prop
+320: // className/classNames (hoß║╖c kß║┐ thß╗½a WithClassNames<ΓÇª>) mß╗ƒ lß║íi cß╗¡a hß║¡u ─æ├│ ΓÇö ─æ├│ng bß║▒ng c├ích ─æß║⌐y kh├íc
+321: // biß╗çt xuß╗æng 1 tier, n╞íi n├│ c├│ T├èN (1 composite/variant mß╗¢i). CHß╗ê ├íp sentence tier.
+325: docs: { description: "Sentence tier kh├┤ng nhß║¡n prop className/classNames ΓÇö cß╗¡a hß║¡u che kh├íc biß╗çt gß╗ìi
+359: // BLOCK-5: composing a class string ("cn(") l├á quyß║┐t h├¼nh dß║íng ΓÇö viß╗çc cß╗ºa tier d╞░ß╗¢i (composite/atom
+360: // `cn(` xuß║Ñt hiß╗çn ngo├ái vocabulary tier ─æß╗ìc l├á "thiß║┐u 1 composite, hoß║╖c composite c├│ sß║╡n thiß║┐u vari
+361: // CHß╗ê ├íp sentence tier (ngo├ái src/components/ ΓÇö hook/lib ─æß╗ïnh ngh─⌐a `cn` ch├¡nh n├│ ΓÇö KH├öNG bß╗ï soi;
+362: // false-positive-risk: `cn(` trong 1 hook/util ngo├ái components lß╗ìt l╞░ß╗¢i, chß║Ñp nhß║¡n ─æß╗â giß╗» precisio
+366: docs: { description: "Gß╗ìi cn(...) chß╗ë hß╗úp lß╗ç ß╗ƒ tier vocabulary ΓÇö tier tr├¬n compose bß║▒ng composite c├│
+385: // fe-asynccontent-4branch-retired: AsyncContent (bare, 4-nh├ính) + EmptyContent/ErrorContent = bß╗Ö
+386: // wrapper ─æ├ú NGHß╗ê H╞»U ΓÇö thay bß║▒ng isSkeleton thread xuß╗æng tß╗½ng leaf + AsyncContentEmpty/AsyncConten
+387: // Global ΓÇö ├íp cho Mß╗îI file (kß╗â cß║ú ngo├ái src/components/), v├¼ import retired c├│ thß╗â lß╗ìt ß╗ƒ bß║Ñt cß╗⌐ ─æ├óu
+393: docs: { description: "Cß║Ñm AsyncContent (bare) + EmptyContent/ErrorContent ΓÇö bß╗Ö 4-nh├ính ─æ├ú retired. [
+418: // atom-tightening-migration-and-pos-ruling: overlay dev-tool showAnatomy/anatPart/data-anat-* ─æ├ú
+419: // NGHß╗ê H╞»U ΓÇö identity giß╗¥ l├á data-tier + data-component. Global ΓÇö soi cß║ú prop declaration, prop pas
+420: // destructure, v├á JSX attr data-anat*, v├¼ overlay c├│ thß╗â r╞íi rß╗¢t ß╗ƒ bß║Ñt cß╗⌐ file n├áo (blueprint c┼⌐).
+424: docs: { description: "Cß║Ñm showAnatomy/anatPart/data-anat-* ΓÇö overlay blueprint ─æ├ú retired, identity 

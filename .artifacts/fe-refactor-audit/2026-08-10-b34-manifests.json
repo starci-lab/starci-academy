@@ -1,0 +1,93 @@
+{
+  "batch": "B34",
+  "checkpoint": "6ff21c66",
+  "waveA": {
+    "overlapPass": true,
+    "tsc": 0,
+    "status": "complete",
+    "manifests": {
+      "glyphmark-storybook-contract": [
+        ".storybook/components/atoms/display/GlyphMark/GlyphMark.tsx"
+      ],
+      "glyphmark-src-contract": [
+        "src/components/atoms/display/GlyphMark/index.tsx"
+      ],
+      "navigationrail-twins-contract": [
+        ".storybook/components/frames/NavigationRail/NavigationRail.tsx",
+        "src/components/frames/NavigationRail/index.tsx"
+      ],
+      "markdown-presentation-contract": [
+        ".storybook/components/composites/viewers/MarkdownContent/MarkdownContent.tsx",
+        "src/components/composites/viewers/MarkdownContent/index.tsx"
+      ],
+      "qa-header-storybook-contract": [
+        ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+        ".storybook/stories/starci/blocks/learn/QaConversationHeader/QaConversationHeader.stories.tsx"
+      ]
+    }
+  },
+  "wave": "B",
+  "overlapPass": true,
+  "manifests": {
+    "glyphmark-consumer-migration": {
+      "focus": "Migrate exact size-5 tone/skeleton glyphs to GlyphMark; delete glyphClass tables",
+      "files": [
+        ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+        "src/components/blocks/learn/KeepGoingPath/index.tsx",
+        ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+        "src/components/blocks/learn/ModuleLessonList/index.tsx"
+      ],
+      "holdOut": [
+        {
+          "path": "WeeklyGoals SB+src",
+          "reason": "status glyph uses text-muted — not in GlyphMarkTone (default|accent|success|warning); not exact"
+        }
+      ]
+    },
+    "qa-header-src-consumer-migration": {
+      "focus": "Mirror SB QaConversationHeader into src; migrate QaQuestionThread person/labels + its markdown className on same files",
+      "files": [
+        "src/components/blocks/learn/QaConversationHeader/index.tsx",
+        "src/components/blocks/learn/QaQuestionThread/index.tsx",
+        ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx"
+      ]
+    },
+    "markdown-consumers-learn": {
+      "focus": "Add MarkdownPresentation axes on blocks/rendering MarkdownContent; migrate learn markdown className callers (except QaQuestionThread)",
+      "files": [
+        "src/components/blocks/rendering/MarkdownContent/component.tsx",
+        "src/components/blocks/rendering/MarkdownContent/index.tsx",
+        "src/components/blocks/learn/QaMessageBubble/index.tsx",
+        ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+        "src/components/blocks/learn/QaInboxRow/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx"
+      ]
+    },
+    "markdown-consumers-feed-profile-and-chip-icons": {
+      "focus": "Migrate feed/profile markdown className callers; typed ComponentType icons on StatusChip and legacy EnumChip brand paths",
+      "files": [
+        "src/components/blocks/feed/CommunityPostCard/component.tsx",
+        "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+        "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/blocks/chips/StatusChip/index.tsx",
+        "src/components/blocks/chips/EnumChip/index.tsx",
+        "src/components/pages/SystemStatusPage/ComponentCard/index.tsx"
+      ],
+      "note": "Presentation props on blocks/rendering land in markdown-consumers-learn; this agent migrates call sites only. If page MockInterviewScorecard is locked, hold and report."
+    },
+    "coordinator-parity-gates": {
+      "focus": "Migrate CollapsibleSidebar to NavigationRail; retain src className for mia-mia; run gates after peer reports",
+      "files": [
+        ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+        "src/components/blocks/navigation/CollapsibleSidebar/index.tsx"
+      ],
+      "postPeer": [
+        "burn MarkdownContent className on blocks/rendering only if zero remaining allowed consumers",
+        "tsc + eslint chunks + plugin/principle/semantic tests + audit:fe + git diff --check",
+        "write aggregate notes for status/handoff (coordinator does not write final status alone if parent will)"
+      ]
+    }
+  }
+}

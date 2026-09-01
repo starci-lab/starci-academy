@@ -1,0 +1,147 @@
+{
+  "batch": "B33",
+  "title": "StarCi-only partial-cluster and consumer-chain closure",
+  "checkpoint": "139391b6",
+  "generatedAt": "2026-08-08T13:12:51.182Z",
+  "verdict": "READY TO CERTIFY",
+  "committed": false,
+  "overlapPass": true,
+  "inventory": {
+    "before": {
+      "raw": 7136,
+      "files": 1260,
+      "errors": 0,
+      "a11y": 11
+    },
+    "after": {
+      "raw": 6902,
+      "files": 1230,
+      "errors": 0,
+      "a11y": 11
+    },
+    "delta": {
+      "raw": -234,
+      "files": -30,
+      "errors": 0
+    }
+  },
+  "workers": {
+    "agent-1-button": {
+      "closed": 3,
+      "partial": 0,
+      "holds": 1,
+      "changed": 3
+    },
+    "agent-2-chip-avatar": {
+      "closed": 5,
+      "partial": 5,
+      "holds": 7,
+      "changed": 20
+    },
+    "agent-3-typography": {
+      "closed": 8,
+      "partial": 0,
+      "holds": 6,
+      "changed": 0
+    },
+    "agent-4-stack-flex-cluster": {
+      "closed": 0,
+      "partial": 0,
+      "holds": 6,
+      "changed": 0
+    },
+    "agent-5-container-grid": {
+      "closed": 7,
+      "partial": 2,
+      "holds": 6,
+      "changed": 0
+    },
+    "agent-6-composites": {
+      "closed": 8,
+      "partial": 1,
+      "holds": 2,
+      "changed": 0
+    },
+    "agent-7-identity": {
+      "closed": 3,
+      "partial": 1,
+      "holds": 2,
+      "changed": 8
+    },
+    "agent-8-page-folder": {
+      "closed": 4,
+      "partial": 1,
+      "holds": 6,
+      "changed": 8
+    },
+    "agent-9-sentence-heroui": {
+      "closed": 9,
+      "partial": 2,
+      "holds": 5,
+      "changed": 14
+    },
+    "agent-10-oracle": {
+      "closed": 0,
+      "partial": 0,
+      "holds": 0,
+      "changed": 0
+    }
+  },
+  "totals": {
+    "workerClosedClaims": 47,
+    "workerPartialClaims": 12,
+    "workerHolds": 41,
+    "changedFiles": 145
+  },
+  "partialClusters": {
+    "beforeB32c": 18,
+    "note": "Agent 9 closed 9/12 assigned sentence partials; agent 7 closed 3/4 identity partials; SurfaceCard band58/88 closed by agent 6; remaining held with evidence"
+  },
+  "sharedDoors": {
+    "deleted": [
+      "ButtonGroup.classNames (already B32)",
+      "ProgressMeter.classNames",
+      "EnumChip className/classNames (composite)",
+      "composite MarkdownContent doors",
+      "SurfaceCard residual accordion doors"
+    ],
+    "retainedBecauseForbiddenOrLive": [
+      "Button.classNames",
+      "Chip.classNames",
+      "Avatar.classNames",
+      "Typography.classNames",
+      "Stack/Flex classNames",
+      "Container.classNames",
+      "CollapsibleSidebar.className (mia-mia DashboardSidebar)",
+      "blocks MarkdownContent.className"
+    ]
+  },
+  "b34Proposals": [
+    "blocks MarkdownContent.className multi-dimension payloads",
+    "NavLandmark for CollapsibleSidebar <nav>",
+    "StatusChip ReactNode icon",
+    "legacy EnumChip brand icons"
+  ],
+  "forbiddenPathDiffProof": true,
+  "excludedPreDirty": [
+    "CLAUDE.md",
+    ".claude/fe/decision-ledger.json",
+    ".storybook/stories/mia-mia/blocks/marketing/SiteFooter/SiteFooter.stories.tsx",
+    "src/components/blocks/learn/ReactionButton/types.ts"
+  ],
+  "gates": {
+    "tsc": "pass",
+    "pluginTests": "22/22",
+    "principleSemantic": "15/15",
+    "auditFe": "pass (29 holds)",
+    "gitDiffCheck": "pass"
+  },
+  "coordinatorRepairs": [
+    "Restored CollapsibleSidebar.className for mia-mia locked consumer; fixed SurfaceCard label-field explain error"
+  ],
+  "a11y": {
+    "before": 11,
+    "after": 11,
+    "unchanged": true
+  }
+}

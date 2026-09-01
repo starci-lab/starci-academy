@@ -1,0 +1,56 @@
+{
+  "batch": 23,
+  "title": "Boundary handoff and lint ratchet preparation",
+  "committed": false,
+  "checkpoint": "bd09062d",
+  "headAtWrite": null,
+  "generatedAt": "2026-08-07T10:06:28.429Z",
+  "appliedCode": {
+    "pressableGroupItemSpan": "span?: 1 | 2 → GridItem.span",
+    "migrated": [
+      "ContentPager SB+src",
+      "PagerFullWidth story"
+    ]
+  },
+  "handoffsNotClaimedFixed": [
+    "lesson-editor-drawer-width",
+    "showcase-mockup-content-layout",
+    "css-door-error-ratchet"
+  ],
+  "cssDoorSummary": {
+    "vendor-boundary": {
+      "hits": 0,
+      "files": 0,
+      "note": "Rule skips vendor-boundary files; allowlist unchanged. Paths listed in handoff."
+    },
+    "locked": {
+      "hits": 57,
+      "files": 12
+    },
+    "teacher-hold": {
+      "hits": 15,
+      "files": 7
+    },
+    "live-api": {
+      "hits": 1568,
+      "files": 777
+    },
+    "ambiguous": {
+      "hits": 0,
+      "files": 0
+    },
+    "ratchet-ready": {
+      "hits": 852,
+      "files": 341
+    }
+  },
+  "verification": {
+    "tsc": "pass",
+    "eslintStoryAndSbContentPager": "pass max-warnings=0",
+    "eslintSurfaceCardAndSrcContentPager": "pre-existing warnings only",
+    "pluginAndPrincipleTests": "24/24",
+    "auditFe": "pass (27 teacher holds)",
+    "ruleSeverity": "unchanged",
+    "vendorAllowlist": "unchanged"
+  }
+}

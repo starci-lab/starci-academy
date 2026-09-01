@@ -1,0 +1,2303 @@
+{
+  "batch": "B31r-contract",
+  "phase": 1,
+  "editsAllowed": false,
+  "checkpoint": "18f84f5b",
+  "sizeMaps": {
+    "atom": {
+      "sm": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "md": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-full"
+      },
+      "lg": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      }
+    },
+    "block": {
+      "sm": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "md": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "lg": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-2xl"
+      }
+    },
+    "proposedCanonical": {
+      "sm": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "md": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "lg": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      }
+    }
+  },
+  "proposedCanonicalMap": {
+    "sm": {
+      "box": "size-10",
+      "px": 40,
+      "radius": "rounded-full"
+    },
+    "md": {
+      "box": "size-12",
+      "px": 48,
+      "radius": "rounded-xl"
+    },
+    "lg": {
+      "box": "size-16",
+      "px": 64,
+      "radius": "rounded-2xl"
+    }
+  },
+  "storybookIsBlueprint": true,
+  "storybookBlueprintNote": "SB atom IconTile uses size-10/16/20 + rounded-full for all sizes. Proposed map changes md/lg radius and remaps px — conflicts with both trees for md/lg.",
+  "consumerCount": 80,
+  "typeOnlyOrProseImports": 3,
+  "consumers": [
+    {
+      "consumer": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "line": 192,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": true,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "line": 50,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-2xl"
+      },
+      "radiusExpectation": "rounded-2xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "block lg is 80px/rounded-2xl → canonical lg is 64px/rounded-2xl — CONFLICT (px)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/commerce/CartLine/index.tsx",
+      "line": 61,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": true,
+      "alt": "item.course.title",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+      "line": 71,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "line": 172,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "neutral",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "leaderboard-list-card-hold",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "line": 61,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "item.ready ? \"success\" : \"neutral\"",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "line": 67,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "line": 48,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "line": 98,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "line": 107,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": true,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "line": 148,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      "line": 91,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+      "line": 113,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom lg is 80px/round → canonical lg is 64px/rounded-2xl — CONFLICT",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+      "line": 79,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "item.ready ? \"success\" : \"default\"",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "line": 46,
+      "oldImportPath": "../../identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "md",
+      "sizeKey": "md",
+      "actualRenderedBoxExpectation": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "radiusExpectation": "rounded-2xl",
+      "tone": "{tone}",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "block md is 64px/rounded-2xl → canonical md is 48px/rounded-xl — CONFLICT; likely needs lg",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "line": 108,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/composites/lists/UserCell/index.tsx",
+      "line": 135,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/composites/lists/UserCell/index.tsx",
+      "line": 157,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "{leadingTone}",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "line": 204,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": true,
+      "alt": "line.title",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "line": 315,
+      "oldImportPath": "@/components/atoms/display/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": true,
+      "alt": "{orderName}",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 69,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "neutral",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "line": 130,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "neutral",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "line": 69,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "neutral",
+      "src": true,
+      "alt": "content.title ?? \"\"",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "line": 36,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "line": 42,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "success",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "line": 48,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "warning",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "line": 58,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": true,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "line": 124,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": true,
+      "alt": "course.title",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "line": 104,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "line": 44,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/JobDetailPage/component.tsx",
+      "line": 195,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "md",
+      "sizeKey": "md",
+      "actualRenderedBoxExpectation": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "radiusExpectation": "rounded-2xl",
+      "tone": "neutral",
+      "src": true,
+      "alt": "company?.title",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block md is 64px/rounded-2xl → canonical md is 48px/rounded-xl — CONFLICT; likely needs lg",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/JobListPage/JobListRow/index.tsx",
+      "line": 103,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "neutral",
+      "src": true,
+      "alt": "job.company.title",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/LandingPage/index.tsx",
+      "line": 291,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": true,
+      "alt": "t(\"landing.founder.name\")",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "line": 33,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "md",
+      "sizeKey": "md",
+      "actualRenderedBoxExpectation": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "radiusExpectation": "rounded-2xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block md is 64px/rounded-2xl → canonical md is 48px/rounded-xl — CONFLICT; likely needs lg",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "line": 235,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "neutral",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "line": 265,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "neutral",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "line": 215,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "EVENT_TONE[item.type]",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "line": 155,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": true,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/LearningHistoryPage/index.tsx",
+      "line": 178,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": true,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "line": 73,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "line": 70,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": true,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "line": 227,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+      "line": 68,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "line": 111,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "line": 294,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "line": 81,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-2xl"
+      },
+      "radiusExpectation": "rounded-2xl",
+      "tone": "warning",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block lg is 80px/rounded-2xl → canonical lg is 64px/rounded-2xl — CONFLICT (px)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "line": 32,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-2xl"
+      },
+      "radiusExpectation": "rounded-2xl",
+      "tone": "success",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block lg is 80px/rounded-2xl → canonical lg is 64px/rounded-2xl — CONFLICT (px)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": "src/components/pages/SettingsHomePage/index.tsx",
+      "line": 104,
+      "oldImportPath": "@/components/blocks/identity/IconTile",
+      "oldKind": "block",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "radiusExpectation": "rounded-xl",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "page-folder-likely",
+      "migrationNote": "block sm is 48px/rounded-xl → must become canonical size=\"md\" (not sm)",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": null
+    },
+    {
+      "consumer": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+      "line": 128,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/composites/lists/UserCell/UserCell.tsx"
+    },
+    {
+      "consumer": ".storybook/components/composites/lists/UserCell/UserCell.tsx",
+      "line": 151,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "{leadingTone}",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/composites/lists/UserCell/UserCell.tsx"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+      "line": 134,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "STATUS_TONE[channel.status]",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "nivo-or-nivoexpert-locked",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+      "line": 103,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "nivo-or-nivoexpert-locked",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+      "line": 43,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "isActive ? \"accent\" : \"default\"",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "nivo-or-nivoexpert-locked",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx"
+    },
+    {
+      "consumer": ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+      "line": 57,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "layer.isHighlighted ? \"accent\" : \"default\"",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "nivo-or-nivoexpert-locked",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx"
+    },
+    {
+      "consumer": ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+      "line": 82,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "success",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "nivo-or-nivoexpert-locked",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx"
+    },
+    {
+      "consumer": ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+      "line": 174,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "nivo-or-nivoexpert-locked",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "line": 96,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      "line": 67,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "line": 123,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      "line": 98,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      "line": 107,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": true,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "line": 148,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx",
+      "line": 113,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom lg is 80px/round → canonical lg is 64px/rounded-2xl — CONFLICT",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+      "line": 74,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "item.ready ? \"success\" : \"default\"",
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx"
+    },
+    {
+      "consumer": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "line": 85,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 87,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 110,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "accent",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 116,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "success",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 122,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "warning",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 128,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "danger",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 134,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": "default",
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 157,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 163,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "md",
+      "sizeKey": "md",
+      "actualRenderedBoxExpectation": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom md is 64px/round → canonical md is 48px/rounded-xl — CONFLICT / hold unless remapped to lg",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 169,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom lg is 80px/round → canonical lg is 64px/rounded-2xl — CONFLICT",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 196,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom lg is 80px/round → canonical lg is 64px/rounded-2xl — CONFLICT",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 203,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": true,
+      "alt": "React Patterns course cover",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom lg is 80px/round → canonical lg is 64px/rounded-2xl — CONFLICT",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 215,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": true,
+      "alt": "Broken cover",
+      "isSkeleton": false,
+      "iconPresent": true,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom lg is 80px/round → canonical lg is 64px/rounded-2xl — CONFLICT",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 244,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "sm",
+      "sizeKey": "sm",
+      "actualRenderedBoxExpectation": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": null,
+      "proposedCanonicalIfLiteral": {
+        "box": "size-10",
+        "px": 40,
+        "radius": "rounded-full"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 250,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "md",
+      "sizeKey": "md",
+      "actualRenderedBoxExpectation": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom md is 64px/round → canonical md is 48px/rounded-xl — CONFLICT / hold unless remapped to lg",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-12",
+        "px": 48,
+        "radius": "rounded-xl"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    },
+    {
+      "consumer": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "line": 256,
+      "oldImportPath": "@sb-components/atoms/display/IconTile/IconTile",
+      "oldKind": "atom",
+      "sizeProp": "lg",
+      "sizeKey": "lg",
+      "actualRenderedBoxExpectation": {
+        "box": "size-20",
+        "px": 80,
+        "radius": "rounded-full"
+      },
+      "radiusExpectation": "rounded-full",
+      "tone": null,
+      "src": false,
+      "alt": null,
+      "isSkeleton": true,
+      "iconPresent": false,
+      "lockedVendorPageStatus": "unlocked-candidate",
+      "migrationNote": "atom lg is 80px/round → canonical lg is 64px/rounded-2xl — CONFLICT",
+      "proposedCanonicalIfLiteral": {
+        "box": "size-16",
+        "px": 64,
+        "radius": "rounded-2xl"
+      },
+      "storybookTwinStory": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx"
+    }
+  ],
+  "typeOnly": [
+    {
+      "consumer": "src/components/atoms/display/IconTile/index.tsx",
+      "oldImportPath": "unknown",
+      "note": "import without open-tag IconTile JSX in this scan pass",
+      "lockedVendorPageStatus": "unlocked-candidate"
+    },
+    {
+      "consumer": "src/components/blocks/dashboard/rankBadge.tsx",
+      "oldImportPath": "unknown",
+      "note": "import without open-tag IconTile JSX in this scan pass",
+      "lockedVendorPageStatus": "unlocked-candidate"
+    },
+    {
+      "consumer": "src/components/blocks/identity/IconTile/index.tsx",
+      "oldImportPath": "unknown",
+      "note": "import without open-tag IconTile JSX in this scan pass",
+      "lockedVendorPageStatus": "unlocked-candidate"
+    }
+  ],
+  "summary": {
+    "byOldKind": {
+      "atom": 44,
+      "block": 36
+    },
+    "bySizeKey": {
+      "sm": 65,
+      "lg": 10,
+      "md": 5
+    },
+    "lockedNivo": 6,
+    "pageFolderLikely": 28,
+    "blockSmMustBecomeMd": 30,
+    "sizeMapConflicts": 15,
+    "leaderboardListCard": 1,
+    "byLockStatus": {
+      "unlocked-candidate": 45,
+      "leaderboard-list-card-hold": 1,
+      "page-folder-likely": 28,
+      "nivo-or-nivoexpert-locked": 6
+    }
+  },
+  "completionForecast": {
+    "canDeleteOldPaths": false,
+    "canClaimComplete": false,
+    "primaryBlockers": [
+      "Nivo/Nivoexpert locked atom IconTile consumers (6) — forbidden to edit; old atom path cannot be deleted",
+      "Proposed canonical md/lg px/radius conflict with existing atom and block maps (15 open-tag CONFLICT sites)",
+      "Page-folder-likely block consumers (28) cannot reach 0 warnings if remapped in-place",
+      "LeaderboardListCard consumers held by batch forbid on internals (1)",
+      "Atomic no-forwarder deletion impossible while locked/held consumers remain on old paths"
+    ]
+  },
+  "canonicalPathProposed": "src/components/composites/identity/IconTile (+ SB twin)",
+  "oldPaths": [
+    "src/components/atoms/display/IconTile",
+    ".storybook/components/atoms/display/IconTile",
+    ".storybook/stories/atoms/display/IconTile",
+    "src/components/blocks/identity/IconTile"
+  ],
+  "phase1Complete": true
+}

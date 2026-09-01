@@ -1,0 +1,23 @@
+{
+  "partition": "Storybook-src-parity",
+  "changed": [
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+  ],
+  "skipped": [],
+  "holds": [
+    {
+      "path": ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+      "reason": "bodyClassName still SB-extra vs src containerClassName — held (dead-prop partition kept story consumer)"
+    },
+    {
+      "path": ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+      "reason": "contentClassName SB-only for LessonEditorPanel — held"
+    }
+  ],
+  "evidence": {
+    "SurfaceCard": "ported identity to Nested/PressableGroup/SelectableGroup/List/Accordion/CrossList/Placeholder to match src resolveIdentity sites",
+    "titleClassName": "removed from SurfaceCardListItem — 0 consumers; absent from src"
+  },
+  "verification": {},
+  "regressions": []
+}

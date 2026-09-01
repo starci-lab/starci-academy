@@ -1,0 +1,74 @@
+{
+  "batch": "B36",
+  "wave": "A",
+  "agent": "identity-forwarding-storybook",
+  "checkpoint": "84b92cd77",
+  "scope": ".storybook/components only — src twin is a separate agent",
+  "pattern": "identity?: CallerIdentity + resolveIdentity from frames/_identity on the actual rendered root (or forward to a root that already accepts identity). No wrapper div. No Button/Chip/Typography identity. No className doors.",
+  "roots": [
+    {
+      "name": "Toolbar",
+      "path": ".storybook/components/composites/navigation/Toolbar/Toolbar.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "StackH",
+      "resolution": "Forward identity={identity} to StackH (actual root via Flex). No wrapper."
+    },
+    {
+      "name": "Callout",
+      "path": ".storybook/components/composites/feedback/Callout/Callout.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "Alert",
+      "resolution": "Forward identity={identity} to Alert root. No wrapper."
+    },
+    {
+      "name": "Alert",
+      "path": ".storybook/components/atoms/feedback/Alert/Alert.tsx",
+      "before": { "hasIdentity": false, "hardcoded": "data-tier=atom data-component=Alert on HeroAlert" },
+      "after": { "hasIdentity": true },
+      "rootHost": "HeroAlert",
+      "resolution": "resolveIdentity(identity, { tier: \"atom\", name: \"Alert\" }) on HeroAlert. Approved Contract C exception.",
+      "note": "Approved exception — Alert is listed in Contract C."
+    },
+    {
+      "name": "FloatingActionButton",
+      "path": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": true },
+      "rootHost": "div (placement shell)",
+      "resolution": "resolveIdentity(identity, { tier: \"composite\", name: \"FloatingActionButton\" }) on the fixed placement div. Inner Button left unstamped."
+    },
+    {
+      "name": "SearchAutocomplete",
+      "path": ".storybook/components/atoms/forms/SearchAutocomplete/SearchAutocomplete.tsx",
+      "before": { "hasIdentity": false, "hardcoded": "data-tier=atom data-component=SearchAutocomplete on ComboBox" },
+      "after": { "hasIdentity": true },
+      "rootHost": "ComboBox",
+      "resolution": "resolveIdentity(identity, { tier: \"atom\", name: \"SearchAutocomplete\" }) on ComboBox (existing stamp site; FieldFrame bare-passthrough keeps this the DOM root when unlabeled). Approved Contract C.",
+      "note": "Approved in Contract C."
+    },
+    {
+      "name": "PageHeader",
+      "path": null,
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": false },
+      "noTwin": true,
+      "note": "src-only / no Storybook component twin under .storybook/components. Stories exist at .storybook/stories/composites/layout/Page/PageHeader.stories.tsx but there is no SB component implementation to stamp. Do not invent an SB twin. Src agent owns src/components/blocks/layout/PageHeader."
+    },
+    {
+      "name": "ResponsiveBreadcrumb",
+      "path": null,
+      "before": { "hasIdentity": false },
+      "after": { "hasIdentity": false },
+      "noTwin": true,
+      "note": "src-only / no Storybook component twin under .storybook/components. Do not invent an SB twin. Src agent owns src/components/blocks/navigation/ResponsiveBreadcrumb."
+    }
+  ],
+  "gates": {
+    "eslintTouched": "pass (exit 0)",
+    "gitDiffCheck": "pass",
+    "srcTouched": false,
+    "committed": false
+  }
+}

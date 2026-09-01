@@ -1,0 +1,134 @@
+{
+  "changed": [
+    "src/hooks/effects/useExchangeCodeForToken.ts",
+    "src/hooks/socketio/types/mock-interview.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr.ts",
+    "src/hooks/swr/api/graphql/queries/useQueryMyCvGenerationsSwr.ts",
+    "src/hooks/useRepoSandpackFiles.ts",
+    "src/hooks/zustand/overlay/hooks.ts",
+    "src/modules/api/constants.ts",
+    "src/modules/api/graphql/clients/clients/auth.ts",
+    "src/modules/api/graphql/clients/clients/no-auth.ts",
+    "src/modules/api/graphql/clients/links/error.ts",
+    "src/modules/api/graphql/mutations/mutation-ask-content-ai.ts",
+    "src/modules/api/graphql/mutations/mutation-clear-content-ai-history.ts",
+    "src/modules/api/graphql/mutations/mutation-create-content-ai-session.ts",
+    "src/modules/api/graphql/mutations/mutation-generate-submit-cv-presign-url.ts",
+    "src/modules/api/graphql/mutations/mutation-mark-content-as-readed.ts",
+    "src/modules/api/graphql/mutations/mutation-rename-content-ai-session.ts",
+    "src/modules/api/graphql/mutations/mutation-set-content-ai-session-archived.ts",
+    "src/modules/api/graphql/mutations/mutation-sign-out.ts",
+    "src/modules/api/graphql/mutations/mutation-toggle-favorite.ts",
+    "src/modules/api/graphql/mutations/mutation-touch-content-ai-session.ts",
+    "src/modules/api/graphql/mutations/mutation-verify-submit-cv-presign-url.ts",
+    "src/modules/api/graphql/mutations/mutation-set-cv-blocks-public.ts",
+    "src/modules/api/graphql/mutations/types/cart.ts"
+  ],
+  "skipped": [
+    {
+      "path": "src/hooks/effects/useSyncReduxTaskId.ts",
+      "reason": "pattern not found: \"            // Clear when we've left the capstone task surface — WITHOUT this, a task\\n            "
+    },
+    {
+      "path": "src/hooks/rhf/useCvSubmissionForm.ts",
+      "reason": "pattern not found: \"    const handleSubmit = form.handleSubmit(async (value) => {\\n        await onSubmit(value)\\n    }"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateRenderCvBlocksSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR mutation wrapper for {@link mutateRenderCvBlocks} — renders a CV\\n * document to PDF (f"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR mutation wrapper for {@link mutateSetCvBlocksPublic} — flags one CV as the\\n * user's p"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR mutation wrapper for {@link mutateStartTrial} (Bearer from Keycloak).\\n * Triggered by "
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR mutation for {@link mutateSyncFlashcardDueReviewSessionProgress}.\\n * Best-effort, fire"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR mutation for {@link mutateSyncFlashcardQuizSessionProgress}. Best-effort,\\n * fire-and-"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR mutation for {@link mutateSyncFlashcardReviewSessionProgress}.\\n * Best-effort, fire-an"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR mutation for {@link mutateSyncMockInterviewSessionTurns}. Best-effort,\\n * fire-and-for"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr.ts",
+      "reason": "pattern not found: \"/**\\n * Infinite (offset-paginated) SWR hook for the viewer's AI credit charge history\\n * — the \\\""
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR wrapper for {@link queryMyFlashcardQuizSessionBySessionId} — resolves ONE\\n * \\\"Hỏi nha"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR wrapper for {@link queryMyFlashcardReviewSessionBySessionId} — resolves a\\n * \\\"Học thẻ"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR wrapper for {@link queryMyInProgressFlashcardQuizSession}. `data` is the\\n * viewer's r"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR wrapper for {@link queryMyInProgressFlashcardReviewSession}. `data` is\\n * the viewer's"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR wrapper for {@link queryMyRewardWallet}. `data` is the viewer's reward\\n * wallet (điểm"
+    },
+    {
+      "path": "src/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr.ts",
+      "reason": "pattern not found: \"/**\\n * SWR wrapper for {@link queryMyVouchers}. `data` is the viewer's Coin-shop\\n * vouchers (new"
+    },
+    {
+      "path": "src/i18n/navigation.ts",
+      "reason": "pattern not found: \"// Lightweight wrappers around Next.js' navigation\\n// APIs that consider the routing configuration"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-complete-flashcard-review-session.ts",
+      "reason": "pattern not found: \"/**\\n * Records a finished \\\"Học thẻ\\\" review run — flips the persisted session to\\n * \\\"completed\\"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-pay-next-installment.ts",
+      "reason": "pattern not found: \"/**\\n * Pays the current cycle of an installment (trả góp) plan.\\n *\\n * Mirrors `payNextInstallmen"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-render-cv-blocks.ts",
+      "reason": "pattern not found: \"/**\\n * Compiles a CV document to PDF: the FE builds the `.tex` (from blocks+style, or\\n * the user"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-set-ai-ceil.ts",
+      "reason": "pattern not found: \"/**\\n * Sets the current user's AI model CEILING for a surface (or the global default\\n * when `sur"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-flashcard-quiz-session.ts",
+      "reason": "pattern not found: \"/**\\n * Draws a \\\"Hỏi nhanh\\\" quiz session server-side and returns its id — called right\\n * after "
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-flashcard-review-session.ts",
+      "reason": "pattern not found: \"/**\\n * Draws a \\\"Học thẻ\\\" review session server-side and returns its id — called\\n * right after "
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-start-trial.ts",
+      "reason": "pattern not found: \"/**\\n * Starts a trial (preview) enrollment for a course — the \\\"Học thử\\\" flow.\\n * Idempotent ser"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sync-flashcard-quiz-session-progress.ts",
+      "reason": "pattern not found: \"/**\\n * Best-effort, fire-and-forget persistence of an in-progress \\\"Hỏi nhanh\\\" quiz\\n * run — cal"
+    },
+    {
+      "path": "src/modules/api/graphql/mutations/mutation-sync-flashcard-review-session-progress.ts",
+      "reason": "pattern not found: \"/**\\n * Best-effort, fire-and-forget persistence of an in-progress \\\"Học thẻ\\\" review\\n * run — cal"
+    }
+  ]
+}

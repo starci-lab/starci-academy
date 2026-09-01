@@ -1,0 +1,87 @@
+{
+  "manifest": [
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx"
+  ],
+  "openTagConsumers": [
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "normalized": "className",
+      "note": "passthrough only; never painted on non-bare LabeledCard path; no live bare consumers"
+    }
+  ],
+  "valueSet": {
+    "before": [
+      "className passthrough (dead)"
+    ],
+    "after": []
+  },
+  "ownership": {
+    "className": "root placement door unused — deleted; TopLearners dropped passthrough"
+  },
+  "oldApi": "LeaderboardListCard className + TopLearners WithClassNames passthrough",
+  "newApi": "no className door",
+  "changed": [
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/component.tsx"
+  ],
+  "holds": [],
+  "parity": {
+    "LeaderboardListCard": "src-only"
+  },
+  "verification": {
+    "tsc": "pending-coordinator",
+    "b30b": "bare/card shared StackV sibling-stack; no gap beside principle"
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "semanticClosureAudit": {
+    "batch": "30b",
+    "confirmedFalseClosure": {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "oldPayload": "bare branch: <div className=\"flex flex-col gap-3\"> after className door removed",
+      "classification": "principle-owned",
+      "owner": "StackV principle=sibling-stack (shared by bare + LabeledCard branches)",
+      "action": "Shared content StackV; bare returns content; LabeledCard wraps same content; gap prop removed (principle owns spacing)",
+      "verification": "bare no-raw-shape on outer stack cleared; pre-existing row-internal flex warnings remain (not introduced by B30 door burn)"
+    },
+    "findings": [
+      {
+        "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "oldPayload": "className={cn(\"flex flex-col gap-3\", className)} → className=\"flex flex-col gap-3\"",
+        "classification": "principle-owned",
+        "owner": "StackV sibling-stack",
+        "action": "fixed in 30b",
+        "verification": "shared content stack"
+      },
+      {
+        "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "oldPayload": "passthrough className removed",
+        "classification": "parent-placement",
+        "owner": "dead passthrough (never painted on non-bare path)",
+        "action": "preserved door burn",
+        "verification": "ok"
+      }
+    ],
+    "unresolvedPreExistingInB30TouchedFiles": [
+      {
+        "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "note": "9× no-raw-shape on row/standing internal flex markup — pre-existed B30; not introduced by door removal; out of 30b regression scope"
+      },
+      {
+        "file": "src/components/blocks/lists/ListRow/index.tsx",
+        "note": "internal text/meta column flex — pre-existing leaf structure"
+      },
+      {
+        "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+        "note": "internal Card layout flex divs — pre-existing"
+      }
+    ],
+    "holdsUnchanged": [
+      "TabsCard door live (QuizSession)",
+      "composite ButtonGroup classNames (nivoexpert)",
+      "SectionCard / QuizCard classNames"
+    ],
+    "scope": "leaderboard-list-card"
+  }
+}

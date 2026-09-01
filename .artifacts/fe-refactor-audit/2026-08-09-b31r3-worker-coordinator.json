@@ -1,0 +1,36 @@
+{
+  "worker": "coordinator",
+  "batch": "B31r3",
+  "checkpoint": "8ccf8641",
+  "checkpointNote": "PitchCard + PlaygroundCard already committed; continuation landed PremiumPaywall",
+  "complete": false,
+  "status": "partial",
+  "overlapCheck": "pass — edit manifests disjoint",
+  "warningsBefore": {},
+  "warningsAfter": {},
+  "legacyImportBefore": 33,
+  "legacyImportAfter": 30,
+  "iconExpressionBefore": null,
+  "iconComponentAfter": null,
+  "changed": ["src/components/blocks/learn/lesson/PremiumPaywall/index.tsx"],
+  "held": ["readiness-checklist", "cart-line", "enroll-gate"],
+  "retracted": [],
+  "migrated": ["pitch-card", "playground-card", "premium-paywall"],
+  "rawSkeletonRemovals": [
+    "PremiumPaywall: Skeleton className h-7 w-32 → PriceTagInline isSkeleton"
+  ],
+  "storybookParity": "n/a for landed; EnrollGate twin held",
+  "verification": {
+    "tsc": "pass",
+    "eslintChanged": "pass",
+    "pluginTests": "pass",
+    "storybookTests": "pass",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass",
+    "changedProductFilesThisContinuation": [
+      "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx"
+    ]
+  },
+  "regressions": [],
+  "legacyBlockDeleted": false
+}

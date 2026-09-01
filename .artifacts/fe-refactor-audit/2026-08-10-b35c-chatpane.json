@@ -1,0 +1,117 @@
+{
+  "batch": "B35c",
+  "proof": "chatpane-behavior",
+  "checkpoint": "02011807",
+  "generatedAt": "2026-08-08T15:15:00.000Z",
+  "paths": {
+    "connected": "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+    "presentational": "src/components/pages/CommunityChatPage/ChatPane/component.tsx",
+    "deletedParallelSkeleton": "src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx"
+  },
+  "claims": {
+    "chatPaneSkeletonSymbolRemovedFromSrc": {
+      "pass": true,
+      "evidence": [
+        {
+          "kind": "grep",
+          "pattern": "ChatPaneSkeleton",
+          "scope": "src/**/*.{ts,tsx}",
+          "matches": 0,
+          "note": "Hits only under .artifacts/_b32c-worktree-* and audit markdown — not live src"
+        },
+        {
+          "kind": "fs",
+          "path": "src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx",
+          "exists": false
+        },
+        {
+          "kind": "git-diff-name-only",
+          "vs": "02011807",
+          "showsDeletion": "src/components/pages/CommunityChatPage/ChatPane/ChatPaneSkeleton.tsx"
+        }
+      ]
+    },
+    "awaitIdRendersChatPaneIsSkeleton": {
+      "pass": true,
+      "evidence": [
+        {
+          "file": "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+          "lines": "123-147",
+          "cite": "if (!conversationId) { return (<_ChatPane isSkeleton … />) }"
+        },
+        {
+          "file": "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+          "lines": "128-144",
+          "detail": "await-id branch returns presentational `_ChatPane` with `isSkeleton` (boolean prop, no parallel skeleton component)"
+        }
+      ]
+    },
+    "chatPaneLiveHoldsHooks": {
+      "pass": true,
+      "evidence": [
+        {
+          "file": "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+          "lines": "30-111",
+          "detail": "ChatPaneLive owns useTranslations, useGraphQLWithToast, useCommunityChatSocketIo, useQueryChatMessagesSwr, useMutateSendChatMessageSwr, useMemo, two useEffects, useCallback"
+        },
+        {
+          "file": "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+          "lines": "123-147",
+          "detail": "Outer ChatPane only calls useTranslations before early return; data/socket hooks never run under !conversationId — avoids conditional-hook order bug"
+        }
+      ]
+    },
+    "chatPaneLiveUsesIsSkeletonForLoadingEmptyList": {
+      "pass": true,
+      "evidence": [
+        {
+          "file": "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+          "lines": "92-95",
+          "cite": "isSkeleton={isLoading && messages.length === 0}"
+        }
+      ]
+    },
+    "noParallelSkeletonExportFromIndex": {
+      "pass": true,
+      "evidence": [
+        {
+          "file": "src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+          "exports": ["ChatPaneProps", "ChatPane"],
+          "lines": [15, 123],
+          "note": "Comment at L127: no parallel public skeleton export"
+        },
+        {
+          "dir": "src/components/pages/CommunityChatPage/ChatPane",
+          "files": ["component.tsx", "index.tsx"],
+          "noChatPaneSkeletonFile": true
+        },
+        {
+          "consumer": "src/components/pages/CommunityChatPage/index.tsx",
+          "import": "import { ChatPane } from \"./ChatPane\"",
+          "line": 9
+        }
+      ]
+    },
+    "storybookTwin": {
+      "pass": true,
+      "status": "no-twin",
+      "evidence": [
+        {
+          "kind": "glob",
+          "pattern": "**/*ChatPane*",
+          "scope": ".storybook",
+          "matches": 0
+        }
+      ]
+    }
+  },
+  "lineRanges": {
+    "ChatPaneLive": "30-111:src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+    "liveIsSkeleton": "92-95:src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+    "awaitIdBranch": "123-147:src/components/pages/CommunityChatPage/ChatPane/index.tsx",
+    "presentationalIsSkeletonProp": "35-37:src/components/pages/CommunityChatPage/ChatPane/component.tsx",
+    "presentationalSkeletonRows": "100-112:src/components/pages/CommunityChatPage/ChatPane/component.tsx"
+  },
+  "failures": [],
+  "summary": "ChatPaneSkeleton removed from src; await-id and loading-empty both use `_ChatPane isSkeleton`; hooks live only in ChatPaneLive; index exports ChatPane only; no Storybook twin."
+}

@@ -1,0 +1,134 @@
+{
+  "batch": "B34",
+  "checkpoint": "6ff21c66",
+  "generatedAt": "2026-08-08T14:15:00.000Z",
+  "verdict": "READY TO CERTIFY",
+  "commit": false,
+  "eslint": {
+    "before": { "warnings": 6911, "files": 1237, "errors": 0, "a11y": 11 },
+    "after": { "warnings": 6872, "files": 1232, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -39, "files": -5, "errors": 0, "a11y": 0 },
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b34-eslint-after.json"
+  },
+  "partialFamilies": {
+    "KeepGoingPath / ModuleLessonList skeleton shimmer": {
+      "status": "closed",
+      "via": "GlyphMark atom + consumer migration",
+      "focusEslint": "clean on SB+src twins"
+    },
+    "CollapsibleSidebar nav landmark": {
+      "status": "closed",
+      "via": "NavigationRail frame",
+      "focusEslint": {
+        "sb": "clean",
+        "src": "7 warnings retained — className door for forbidden mia-mia DashboardSidebar"
+      }
+    },
+    "QaConversationHeader API drift": {
+      "status": "closed",
+      "via": "canonical person + labels (SB blueprint → src) + QaQuestionThread boundary mapping",
+      "focusEslint": "clean on SB+src header"
+    }
+  },
+  "contracts": {
+    "A-GlyphMark": {
+      "api": {
+        "tones": ["default", "accent", "success", "warning"],
+        "props": ["icon: IconComponent", "tone?", "isSkeleton?", "ariaLabel?"]
+      },
+      "mapping": {
+        "box": "size-5 shrink-0",
+        "skeleton": "size-5 shrink-0 rounded-full",
+        "default": "text-foreground",
+        "accent": "text-accent-soft-foreground",
+        "success": "text-success-soft-foreground",
+        "warning": "text-warning-soft-foreground"
+      },
+      "consumersMigrated": ["KeepGoingPath SB+src", "ModuleLessonList SB+src"],
+      "held": [{ "target": "WeeklyGoals", "reason": "text-muted not in GlyphMarkTone" }]
+    },
+    "B-NavigationRail": {
+      "api": { "identity?": "CallerIdentity", "body": "ComponentTypeWithSkeleton", "isSkeleton?": "boolean" },
+      "owns": "nav landmark + flex min-h-0 flex-1 flex-col",
+      "consumersMigrated": ["CollapsibleSidebar SB+src"],
+      "doors": {
+        "sbCollapsibleSidebar.className": "absent",
+        "srcCollapsibleSidebar.className": "retained for .storybook/components/mia-mia/blocks/layout/DashboardSidebar"
+      }
+    },
+    "C-QaConversationHeader": {
+      "person": ["id", "displayName", "avatarUrl?"],
+      "labels": ["collapse", "askedBy", "replies", "beFirst", "founderBadge", "follow", "following"],
+      "consumersMigrated": ["src QaConversationHeader", "QaQuestionThread SB+src"]
+    },
+    "D-MarkdownPresentation": {
+      "axes": ["density", "tone", "flow", "emphasis", "previewLines"],
+      "classNameDoor": {
+        "composite": "already absent",
+        "blocks/rendering": "burned after zero StarCi className call sites"
+      },
+      "consumersMigrated": [
+        "CommunityPostCard",
+        "CommunityCommentRow",
+        "QaQuestionThread",
+        "QaMessageBubble",
+        "QaInboxRow",
+        "TaskResult",
+        "ChallengeCard",
+        "MockInterviewScorecard block+page",
+        "SB MessageRow"
+      ]
+    },
+    "E-typed-chip-icon": {
+      "StatusChip.icon": "IconComponent",
+      "legacy EnumChip.icon": "IconComponent via house Chip",
+      "consumersMigrated": [
+        "SystemStatusPage/ComponentCard",
+        "HostPlatformChip",
+        "LessonVideoKindChip",
+        "ManagePinnedProjectsModal CourseProjectForm + PinnedProjectCard",
+        "ProfileProjectRoadmapPage",
+        "ProfileCapstone ProjectCard"
+      ],
+      "notForced": "composites/chips/EnumChip check|cross closed set"
+    }
+  },
+  "aggregateRepairs": [
+    "Migrated remaining EnumChip/StatusChip JSX icon passers after Wave B (tsc unblock)",
+    "Added icon-text principles on MockInterviewPage Scorecard StackH seams (audit:fe)",
+    "Burned blocks/rendering MarkdownContent className door"
+  ],
+  "holds": [
+    {
+      "id": "b34-weeklygoals-glyphmark-text-muted",
+      "summary": "WeeklyGoals size-5 glyph uses text-muted — outside GlyphMarkTone; not migrated"
+    },
+    {
+      "id": "b34-collapsiblesidebar-classname-mia-mia",
+      "summary": "src CollapsibleSidebar.className retained for mia-mia DashboardSidebar; SB doorless"
+    }
+  ],
+  "gates": {
+    "tsc": "pass",
+    "eslintMaxWarnings0CoreContracts": "pass (GlyphMark, NavigationRail, KeepGoingPath, ModuleLessonList, QaConversationHeader, composite Markdown, SB CollapsibleSidebar)",
+    "eslintPreExistingOnTouchedDebt": "classified — EnumChip/StatusChip/blocks MarkdownContent HeroUI+identity+cn; src CollapsibleSidebar className retention",
+    "pluginEslintTests": "pass 22/22",
+    "principleStyle": "pass 7/7",
+    "semanticContracts": "pass 8/8",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass"
+  },
+  "forbiddenPathProof": {
+    "nivo": "untouched",
+    "nivoexpert": "untouched",
+    "mia-mia": "untouched (className retention documented only)",
+    "CLAUDE.md": "untouched",
+    "decision-ledger.json": "untouched"
+  },
+  "parity": {
+    "GlyphMark": "SB ↔ src mirrored",
+    "NavigationRail": "SB ↔ src mirrored",
+    "MarkdownPresentation": "composite SB ↔ src; blocks/rendering axes mirrored; className burned on blocks",
+    "QaConversationHeader": "SB blueprint mirrored to src"
+  }
+}

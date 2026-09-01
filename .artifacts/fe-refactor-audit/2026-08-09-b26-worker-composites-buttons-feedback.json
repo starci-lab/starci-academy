@@ -1,0 +1,31 @@
+{
+  "partition": "composites-buttons-feedback",
+  "manifest": [],
+  "changed": [],
+  "applied": [],
+  "skipped": [],
+  "holds": [
+    "live-api Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton",
+    "vendor / locked / Nivo / B19–B25 / teacher holds / skeleton slots",
+    "doors with JSX consumers (EntityLink restored)",
+    "rest-spread forwarding (...props)",
+    "src/components/blocks/feed/EntityLink/index.tsx — restored (live className consumer in CommentItem)",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx — restored (void className side-effect API)"
+  ],
+  "evidence": {
+    "proof": "brace-aware destructure + open-tag consumer index (locked paths counted as consumers)",
+    "inventoryBefore": {
+      "hits": 2194,
+      "files": 816
+    }
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "src-first where no SB twin; SB starci twins when present"
+  },
+  "verification": {
+    "local": "tsc pass after partition"
+  },
+  "regressions": [],
+  "overlapCheck": "partitionOf(file) — each changed file in exactly one worker"
+}

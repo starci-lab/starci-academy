@@ -1,0 +1,144 @@
+{
+  "batch": "B40",
+  "worker": "w04-src-pages-FlashcardsPage",
+  "mode": "mass-safe-burn",
+  "checkpoint": "2a096210a",
+  "manifest": ".artifacts/fe-refactor-audit/b40-manifests/w04-src-pages-FlashcardsPage.json",
+  "status": "done",
+  "filesChanged": [],
+  "eslintGate": {
+    "command": "npx eslint --max-warnings=0 <touched>",
+    "policy": "Touch only when the file can reach zero warnings after allowed mechanical fixes; otherwise hold and do not edit.",
+    "touchedClean": true,
+    "note": "No owns file can reach --max-warnings=0 under allowed fixes: 16/17 nested page children keep page-folder-two-files-only (page-folder moves forbidden); index.tsx keeps no-parallel-skeleton (skeleton redesign forbidden) plus host/raw/classname debt."
+  },
+  "safeFindingsScoped": {
+    "total": 73,
+    "byRule": {
+      "starci-fe/require-frame-self-declare": 67,
+      "starci-fe/require-identity-root": 6
+    },
+    "otherSafeRules": {
+      "starci-fe/require-export-jsdoc": 0,
+      "starci-fe/no-inline-parameter-type": 0,
+      "starci-fe/handler-on-prefix": 0,
+      "starci-fe/prefer-arrow-export": 0,
+      "starci-fe/no-vietnamese-in-source-authoring": 0,
+      "starci-fe/no-emoji-in-source": 0
+    }
+  },
+  "counts": {
+    "applied": 0,
+    "hold": 73,
+    "vendor": 0,
+    "locked": 0,
+    "ambiguous": 0,
+    "filesOwned": 17,
+    "filesChanged": 0
+  },
+  "applied": [],
+  "holds": [
+    {
+      "id": "page-folder-blocks-eslint-gate",
+      "classification": "hold",
+      "rule": [
+        "starci-fe/require-frame-self-declare",
+        "starci-fe/require-identity-root"
+      ],
+      "findingCount": 70,
+      "files": [
+        "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+        "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx"
+      ],
+      "reason": "Every nested owns path under FlashcardsPage reports starci-fe/page-folder-two-files-only. Page-folder moves are forbidden in this burn. Any edit would leave the file failing npx eslint --max-warnings=0, forcing revert.",
+      "next": "Teacher/filing wave: relocate nested UI to blocks/ or inline into the two-file page shell, then re-run safe identity/frame burn."
+    },
+    {
+      "id": "flashcards-page-index-skeleton-and-sentence-debt",
+      "classification": "hold",
+      "rule": [
+        "starci-fe/require-identity-root",
+        "starci-fe/require-frame-self-declare"
+      ],
+      "findingCount": 3,
+      "files": [
+        "src/components/pages/FlashcardsPage/index.tsx"
+      ],
+      "reason": "Only owns file without page-folder-two-files-only, but still fails eslint --max-warnings=0 via no-parallel-skeleton (4), no-host-element-at-sentence-tier (6), no-raw-shape-at-sentence-tier (1), no-public-classname-prop (1). Skeleton redesign is forbidden; remounting host/raw shapes is outside safeRules and not an exact vocabulary migration with proof in this pass.",
+      "next": "Collapse parallel skeleton branches and remount raw hosts onto house vocabulary, then stamp identity on the page root and declare unambiguous frame principles."
+    },
+    {
+      "id": "frame-self-declare-ambiguous-seams",
+      "classification": "hold",
+      "rule": "starci-fe/require-frame-self-declare",
+      "findingCount": 67,
+      "note": "Subsumed by eslint-gate holds above; called out for teacher triage. Many StackV/StackH/Container/Cluster/Box sites are gap/padding-only or multi-seam nests where no single existing PrincipleToken is unambiguous without inventing tokens or retuning spacing.",
+      "examples": [
+        "DueReviewHero StackV gap={1} count+breakdown (name-handle vs title-subtitle ambiguous)",
+        "DueReviewHero root StackV gap={6} resume+labeled card (block-boundary vs group-boundary ambiguous)",
+        "Nested review/quiz layout Containers without a proven layout-split/page-pad owner"
+      ],
+      "reason": "Manifest: require-frame-self-declare only with existing principles; hold if ambiguous."
+    },
+    {
+      "id": "identity-root-not-cleanly-stampable",
+      "classification": "hold",
+      "rule": "starci-fe/require-identity-root",
+      "findingCount": 6,
+      "files": [
+        "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/index.tsx"
+      ],
+      "reason": "FlashcardMobileNav roots on a raw div (host/raw sentence findings) — not an unambiguous identity-capable frame/composite without remount. Skeleton twins also carry no-skeleton-twin-component / classname / host debt. Page index blocked by parallel-skeleton. Manifest forbids inventing wrappers solely to carry identity.",
+      "next": "After vocabulary remount + skeleton policy resolution, stamp identity on the true identity-capable root only."
+    }
+  ],
+  "vendor": [],
+  "locked": [
+    {
+      "id": "quiz-session-excluded",
+      "classification": "locked",
+      "paths": [
+        "src/components/pages/FlashcardsPage/QuizSession/**"
+      ],
+      "reason": "Manifest + standing product lock: QuizSession paths excluded; not in owns; not touched."
+    }
+  ],
+  "ambiguous": [],
+  "mechanicalAlsoScanned": {
+    "deadPropRemoval": "none proven with zero-consumer proof inside owns without edits that fail eslint gate",
+    "redundantClassNamePassthrough": "present as no-public-classname-prop debt but clearing it does not unlock --max-warnings=0 while page-folder/skeleton blockers remain",
+    "provenStringProps": "none applied",
+    "componentTypeOwnerMount": "none applied",
+    "exactCompositeCollapse": "none applied (would be page-folder work)",
+    "existingVocabularyMigrations": "none applied without host remount proof"
+  },
+  "exclusionsHonored": [
+    "QuizSession/** not edited",
+    "no commit/push/reset/checkout/branch",
+    "no eslint-disable",
+    "no new contracts/principles/rules",
+    "no page-folder moves",
+    "no a11y",
+    "no skeleton redesign",
+    "no nivo/mia-mia/locked edits"
+  ]
+}

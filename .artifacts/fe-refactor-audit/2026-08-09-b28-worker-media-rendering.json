@@ -1,0 +1,155 @@
+{
+  "partition": "media-rendering",
+  "manifest": [
+    "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+    "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+    "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx"
+  ],
+  "consumers": {
+    "MpegDash": [
+      {
+        "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+        "line": 92,
+        "prop": "className",
+        "value": "classNames?.content",
+        "ownership": "dynamic"
+      }
+    ],
+    "Standard": [
+      {
+        "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+        "line": 108,
+        "prop": "className",
+        "value": "classNames?.content",
+        "ownership": "dynamic"
+      }
+    ],
+    "Youtube": [
+      {
+        "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+        "line": 99,
+        "prop": "className",
+        "value": "classNames?.content",
+        "ownership": "dynamic"
+      }
+    ],
+    "CodeToHtml": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 389,
+        "prop": "className",
+        "value": "blockMy",
+        "ownership": "parent-placement"
+      }
+    ],
+    "MermaidDiagram": [
+      {
+        "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "line": 370,
+        "prop": "className",
+        "value": "blockMy",
+        "ownership": "parent-placement"
+      }
+    ]
+  },
+  "valueSet": {
+    "MpegDash": [
+      "classNames?.content"
+    ],
+    "Standard": [
+      "classNames?.content"
+    ],
+    "Youtube": [
+      "classNames?.content"
+    ],
+    "CodeToHtml": [
+      "blockMy"
+    ],
+    "MermaidDiagram": [
+      "blockMy"
+    ]
+  },
+  "ownership": {
+    "MpegDash": [
+      "dynamic"
+    ],
+    "Standard": [
+      "dynamic"
+    ],
+    "Youtube": [
+      "dynamic"
+    ],
+    "CodeToHtml": [
+      "parent-placement"
+    ],
+    "MermaidDiagram": [
+      "parent-placement"
+    ]
+  },
+  "oldApi": {
+    "MpegDash": "className/classNames door retained",
+    "Standard": "className/classNames door retained",
+    "Youtube": "className/classNames door retained",
+    "CodeToHtml": "className/classNames door retained",
+    "MermaidDiagram": "className/classNames door retained"
+  },
+  "newApi": {
+    "MpegDash": "media fill — re-check",
+    "Standard": "media fill",
+    "Youtube": "media fill",
+    "CodeToHtml": "blockMy AllowedClassName — markdown spacing contract",
+    "MermaidDiagram": "blockMy markdown spacing"
+  },
+  "changed": [],
+  "holds": [
+    {
+      "component": "MpegDash",
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "reason": "media fill — re-check",
+      "values": [
+        "classNames?.content"
+      ]
+    },
+    {
+      "component": "Standard",
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "reason": "media fill",
+      "values": [
+        "classNames?.content"
+      ]
+    },
+    {
+      "component": "Youtube",
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "reason": "media fill",
+      "values": [
+        "classNames?.content"
+      ]
+    },
+    {
+      "component": "CodeToHtml",
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "reason": "blockMy AllowedClassName — markdown spacing contract",
+      "values": [
+        "blockMy"
+      ]
+    },
+    {
+      "component": "MermaidDiagram",
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "reason": "blockMy markdown spacing",
+      "values": [
+        "blockMy"
+      ]
+    }
+  ],
+  "parity": "n/a — hold only",
+  "verification": {
+    "tsc": "deferred-coordinator",
+    "eslint": "n/a"
+  },
+  "regressions": [],
+  "overlapCheck": "pass — declaration files owned once via workerFor"
+}

@@ -1,0 +1,184 @@
+{
+  "batch": "B31r",
+  "checkpoint": {
+    "head": "18f84f5b15528163e9fca10cfb7252323f02f013",
+    "subject": "refactor(fe): enforce semantic closure ratchet"
+  },
+  "editsAllowed": false,
+  "productEdits": false,
+  "tierLaw": {
+    "atom": "leaf/value renderer; no caller-owned child it places",
+    "composite": "receives ReactNode/child or icon and positions it; owns chrome/fallback relationships; domain-blind",
+    "frame": "reusable layout relationships / principles",
+    "block": "domain/sentence meaning"
+  },
+  "preferredCompositeHomeWithoutNewFolder": "src/components/composites/lists/IconTile (alongside UserCell/AvatarGroup/IdentityContentRow) — no composites/identity or composites/display shelf exists; creating one is forbidden tidy-folder invention",
+  "iconTile": {
+    "decision": "composite by ownership law",
+    "moveStatus": "held",
+    "holdReasons": [
+      "Two live house components share the public name IconTile with incompatible sm chrome: atom size-10+rounded-full vs block size-12+rounded-xl. Unifying without visual redesign is impossible; inventing a size token is forbidden.",
+      "Atom Storybook path is imported by nivo/nivoexpert trees — updating those imports is a locked/Nivo edit → hold (do not partially move).",
+      "Block path has ~30+ src consumers including many pages/* files that cannot hit 0 warnings under page-folder-two-files-only if touched for import-only rewires.",
+      "LeaderboardListCard imports blocks/identity/IconTile; batch forbids LeaderboardListCard internals — even a mechanical import rewrite still couples to the dual-chrome merge problem.",
+      "No compatibility forwarder allowed at retired paths; cannot leave atom path as a shim for nivo while moving the canonical file."
+    ],
+    "trees": {
+      "src/components/atoms/display/IconTile/index.tsx": {
+        "exportedNames": [
+          "IconTile",
+          "IconTileProps",
+          "IconTileTone",
+          "IconTileSize",
+          "IconComponent",
+          "IconWeight",
+          "meta"
+        ],
+        "callerOwnedChildren": [
+          "icon: IconComponent (placed + scaled inside chrome)"
+        ],
+        "ReactNodeComponentTypeInputs": [
+          "ComponentType SVG icon",
+          "optional src image"
+        ],
+        "childPlacementDecisions": [
+          "centers icon in tinted tile",
+          "SIZE_ICON derived from size",
+          "image cover replaces icon when src loads"
+        ],
+        "fallbackBranches": [
+          "src → onError → icon",
+          "isSkeleton → HeroSkeleton box"
+        ],
+        "domainMeaning": "none (vocabulary)",
+        "currentTier": "atom (misfiled)",
+        "proposedTier": "composite",
+        "proposedPathIfUnblocked": "src/components/composites/lists/IconTile/index.tsx",
+        "directConsumersSrcCount": 9,
+        "storybookTwin": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+        "identityMetadata": "meta = { tier: \"atom\", name: \"IconTile\" }",
+        "skeletonContract": "isSkeleton:true → HeroSkeleton with SIZE_BOX[size] + rounded-full",
+        "publicCssDoors": [
+          "classNames?: AllowedClassName[]"
+        ],
+        "smChrome": "size-10 + rounded-full",
+        "lockedVendorTeacher": "SB consumers include nivo + nivoexpert (locked)",
+        "eslintBefore": {
+          "starci-fe/no-public-classname-prop": 2
+        }
+      },
+      ".storybook/components/atoms/display/IconTile/IconTile.tsx": {
+        "parityWithSrcAtom": "aligned (isSkeleton, size-10 round, IconComponent API)",
+        "story": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+        "nivoConsumers": [
+          ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+          ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+          ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+          ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+          ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+          ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx"
+        ]
+      },
+      "src/components/blocks/identity/IconTile/index.tsx": {
+        "exportedNames": [
+          "IconTile",
+          "IconTileProps",
+          "IconTileTone",
+          "IconTileSize"
+        ],
+        "callerOwnedChildren": [
+          "icon: ReactNode (already-scaled JSX placed in chrome)"
+        ],
+        "ReactNodeComponentTypeInputs": [
+          "ReactNode icon",
+          "optional src image"
+        ],
+        "childPlacementDecisions": [
+          "centers icon/image in tinted rounded-xl tile",
+          "SIZE map embeds [&_svg] scale"
+        ],
+        "fallbackBranches": [
+          "src → onError → icon"
+        ],
+        "domainMeaning": "none — should not be a block; sentence-tier leaf drawing shape",
+        "currentTier": "block (misfiled duplicate)",
+        "proposedTier": "composite (same canonical as atom twin after reconcile)",
+        "storybookTwin": "none",
+        "identityMetadata": "missing; require-identity-root warns",
+        "skeletonContract": "absent",
+        "publicCssDoors": [
+          "WithClassNames / className"
+        ],
+        "smChrome": "size-12 + rounded-xl (TopLearners / Leaderboard standing target)",
+        "classNameOpenTagConsumers": 0,
+        "eslintBefore": {
+          "starci-fe/no-heroui-outside-vocabulary": 1,
+          "starci-fe/require-identity-root": 1,
+          "starci-fe/no-classname-at-sentence-tier": 1,
+          "starci-fe/no-public-classname-prop": 2,
+          "starci-fe/no-cn-above-vocabulary": 1
+        },
+        "lockedVendorTeacher": "none specific; many page consumers page-folder-blocked"
+      }
+    },
+    "apiReconcileNote": {
+      "atomIconApi": "IconComponent (typed component; atom scales)",
+      "blockIconApi": "ReactNode (caller scales via SIZE [&_svg] or passes prebuilt node)",
+      "speculativeRewrite": "forbidden unless every consumer migrates without behavior change",
+      "topLearnersSmExact": "block sm (size-12 rounded-xl), NOT atom sm"
+    },
+    "remainingBlockersForTopLearners": [
+      "Canonical IconTile must own isSkeleton at size-12 rounded-xl chrome (block geometry) after reconcile",
+      "TopLearners still under pages/ (page-folder) — B31a",
+      "CommunityTab still under pages/ — B31a0 inline proposal",
+      "LeaderboardListCard.className still open — later B31"
+    ]
+  },
+  "otherCandidates": {
+    "note": "Expand only with clear evidence; vendor HeroUI wrappers that take children stay ambiguous/held — not mass-moved",
+    "scannedShelves": [
+      "display",
+      "navigation",
+      "overlay",
+      "forms",
+      "feedback",
+      "buttons",
+      "chips",
+      "text"
+    ],
+    "scanArtifact": ".artifacts/fe-refactor-audit/_b31r-atom-candidate-scan.json",
+    "held": [
+      {
+        "path": "src/components/atoms/display/Avatar/AvatarBase.tsx",
+        "reason": "Places fallback icon/image chain; historically vendor atom. AvatarGroup already demoted to composite. Full Avatar demotion is ambiguous without dedicated batch; not IconTile-clear.",
+        "proposedTier": "hold-ambiguous"
+      },
+      {
+        "path": "src/components/atoms/buttons/Button/ButtonBase.tsx",
+        "reason": "Vendor vocabulary atom wrapping HeroUI; label/icon slots are atom value API, not a new composite shelf move in B31r",
+        "proposedTier": "hold-vendor-atom"
+      },
+      {
+        "path": "src/components/atoms/chips/Chip/ChipBase.tsx",
+        "reason": "Vendor vocabulary atom; mass-move forbidden",
+        "proposedTier": "hold-vendor-atom"
+      },
+      {
+        "path": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+        "reason": "Vendor vocabulary atom; mass-move forbidden",
+        "proposedTier": "hold-vendor-atom"
+      },
+      {
+        "path": "src/components/atoms/overlay/Menu/index.tsx",
+        "reason": "Vendor overlay atom; locked-style complexity; hold",
+        "proposedTier": "hold-vendor-atom"
+      },
+      {
+        "path": "src/components/atoms/feedback/Alert/index.tsx",
+        "reason": "Vendor atom with icon slot; ambiguous vs composite Callout family",
+        "proposedTier": "hold-ambiguous"
+      }
+    ],
+    "provenMoves": []
+  }
+}

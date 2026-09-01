@@ -1,0 +1,142 @@
+{
+  "changed": [],
+  "held": [
+    "Two live house components share the public name IconTile with incompatible sm chrome: atom size-10+rounded-full vs block size-12+rounded-xl. Unifying without visual redesign is impossible; inventing a size token is forbidden.",
+    "Atom Storybook path is imported by nivo/nivoexpert trees — updating those imports is a locked/Nivo edit → hold (do not partially move).",
+    "Block path has ~30+ src consumers including many pages/* files that cannot hit 0 warnings under page-folder-two-files-only if touched for import-only rewires.",
+    "LeaderboardListCard imports blocks/identity/IconTile; batch forbids LeaderboardListCard internals — even a mechanical import rewrite still couples to the dual-chrome merge problem.",
+    "No compatibility forwarder allowed at retired paths; cannot leave atom path as a shim for nivo while moving the canonical file."
+  ],
+  "retracted": [],
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "candidateEvidence": {
+    "src/components/atoms/display/IconTile/index.tsx": {
+      "exportedNames": [
+        "IconTile",
+        "IconTileProps",
+        "IconTileTone",
+        "IconTileSize",
+        "IconComponent",
+        "IconWeight",
+        "meta"
+      ],
+      "callerOwnedChildren": [
+        "icon: IconComponent (placed + scaled inside chrome)"
+      ],
+      "ReactNodeComponentTypeInputs": [
+        "ComponentType SVG icon",
+        "optional src image"
+      ],
+      "childPlacementDecisions": [
+        "centers icon in tinted tile",
+        "SIZE_ICON derived from size",
+        "image cover replaces icon when src loads"
+      ],
+      "fallbackBranches": [
+        "src → onError → icon",
+        "isSkeleton → HeroSkeleton box"
+      ],
+      "domainMeaning": "none (vocabulary)",
+      "currentTier": "atom (misfiled)",
+      "proposedTier": "composite",
+      "proposedPathIfUnblocked": "src/components/composites/lists/IconTile/index.tsx",
+      "directConsumersSrcCount": 9,
+      "storybookTwin": ".storybook/components/atoms/display/IconTile/IconTile.tsx",
+      "identityMetadata": "meta = { tier: \"atom\", name: \"IconTile\" }",
+      "skeletonContract": "isSkeleton:true → HeroSkeleton with SIZE_BOX[size] + rounded-full",
+      "publicCssDoors": [
+        "classNames?: AllowedClassName[]"
+      ],
+      "smChrome": "size-10 + rounded-full",
+      "lockedVendorTeacher": "SB consumers include nivo + nivoexpert (locked)",
+      "eslintBefore": {
+        "starci-fe/no-public-classname-prop": 2
+      }
+    },
+    ".storybook/components/atoms/display/IconTile/IconTile.tsx": {
+      "parityWithSrcAtom": "aligned (isSkeleton, size-10 round, IconComponent API)",
+      "story": ".storybook/stories/atoms/display/IconTile/IconTile.stories.tsx",
+      "nivoConsumers": [
+        ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+        ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+        ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+        ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+        ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+        ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx"
+      ]
+    },
+    "src/components/blocks/identity/IconTile/index.tsx": {
+      "exportedNames": [
+        "IconTile",
+        "IconTileProps",
+        "IconTileTone",
+        "IconTileSize"
+      ],
+      "callerOwnedChildren": [
+        "icon: ReactNode (already-scaled JSX placed in chrome)"
+      ],
+      "ReactNodeComponentTypeInputs": [
+        "ReactNode icon",
+        "optional src image"
+      ],
+      "childPlacementDecisions": [
+        "centers icon/image in tinted rounded-xl tile",
+        "SIZE map embeds [&_svg] scale"
+      ],
+      "fallbackBranches": [
+        "src → onError → icon"
+      ],
+      "domainMeaning": "none — should not be a block; sentence-tier leaf drawing shape",
+      "currentTier": "block (misfiled duplicate)",
+      "proposedTier": "composite (same canonical as atom twin after reconcile)",
+      "storybookTwin": "none",
+      "identityMetadata": "missing; require-identity-root warns",
+      "skeletonContract": "absent",
+      "publicCssDoors": [
+        "WithClassNames / className"
+      ],
+      "smChrome": "size-12 + rounded-xl (TopLearners / Leaderboard standing target)",
+      "classNameOpenTagConsumers": 0,
+      "eslintBefore": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "lockedVendorTeacher": "none specific; many page consumers page-folder-blocked"
+    }
+  },
+  "beforeTier": {
+    "atom": "atom",
+    "block": "block"
+  },
+  "afterTier": null,
+  "destination": "src/components/composites/lists/IconTile (alongside UserCell/AvatarGroup/IdentityContentRow) — no composites/identity or composites/display shelf exists; creating one is forbidden tidy-folder invention",
+  "consumersBefore": {
+    "srcAtom": 9,
+    "srcBlock": "30+",
+    "sbAtomIncludingNivo": "16+"
+  },
+  "consumersAfter": null,
+  "publicDoorsBefore": {
+    "atom": [
+      "classNames"
+    ],
+    "block": [
+      "className/WithClassNames"
+    ]
+  },
+  "publicDoorsAfter": null,
+  "skeletonBefore": {
+    "atom": "isSkeleton HeroSkeleton size-10 round",
+    "block": "absent"
+  },
+  "skeletonAfter": null,
+  "storybookParity": "atom twin exists; block twin absent"
+}

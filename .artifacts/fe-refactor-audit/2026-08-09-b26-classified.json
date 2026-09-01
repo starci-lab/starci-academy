@@ -1,0 +1,303 @@
+{
+  "generatedAt": "2026-08-07T13:38:53.791Z",
+  "totalHits": 2194,
+  "useHits": 843,
+  "declHits": 1351,
+  "files": 816,
+  "byClass": {
+    "live-api": 1994,
+    "locked": 82,
+    "ambiguous": 118
+  },
+  "safeNoop": [],
+  "emptyPatterns": [],
+  "typoDupes": [],
+  "deadPassthroughCandidates": [
+    {
+      "file": ".storybook/components/atoms/display/Logo/Logo.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": ".storybook/components/atoms/display/Spinner/Spinner.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": ".storybook/components/composites/buttons/FloatingActionButton/FloatingActionButton.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": ".storybook/components/composites/chips/HighlightChip/HighlightChip.tsx",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": ".storybook/components/frames/Flex/Flex.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "prop": "className",
+      "exprUses": 0
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "prop": "className",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/atoms/display/Logo/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/atoms/display/Spinner/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/blocks/async/EmptyContent/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "prop": "className",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/blocks/cards/MediaCard/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "prop": "className",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/blocks/learn/VariantChip/types.ts",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/composites/buttons/FloatingActionButton/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/composites/chips/HighlightChip/index.tsx",
+      "prop": "classNames",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/composites/feedback/Callout/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/composites/stats/MetricCard/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/frames/Flex/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactFaq/index.tsx",
+      "prop": "className",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/KpiPage/component.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/KpiPage/kpiMeta.tsx",
+      "prop": "className",
+      "exprUses": 0
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "prop": "classNames",
+      "exprUses": 1
+    },
+    {
+      "file": "src/components/svg/Logo/index.tsx",
+      "prop": "className",
+      "exprUses": 1
+    }
+  ],
+  "deadPassthroughCount": 57
+}

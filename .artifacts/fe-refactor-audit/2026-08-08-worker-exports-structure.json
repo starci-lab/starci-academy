@@ -1,0 +1,34 @@
+{
+  "partition": "exports-structure",
+  "manifest": ".artifacts/fe-refactor-audit/2026-08-08-manifest-exports-structure.json",
+  "generatedAt": "2026-08-07T04:05:00.000Z",
+  "rulesInScope": [
+    "starci-fe/export-matches-folder",
+    "starci-fe/no-helper-folder-in-components"
+  ],
+  "changed": [
+    {
+      "path": "src/components/blocks/cv/BlockRegistry/index.tsx",
+      "rule": "starci-fe/export-matches-folder",
+      "action": "added-folder-matching-named-export-family",
+      "detail": "Kept public CV_BLOCK_TYPE_* consts; added re-exports BlockRegistry / BlockRegistryOrder / BlockRegistryDefaultTitleEn. No runtime namespace object. No Storybook twin."
+    }
+  ],
+  "skipped": [],
+  "holds": [],
+  "verification": [
+    {
+      "check": "eslint --max-warnings=0 src/components/blocks/cv/BlockRegistry/index.tsx",
+      "result": "pass"
+    }
+  ],
+  "regressions": [],
+  "summary": {
+    "manifestFileCount": 1,
+    "changedCount": 1,
+    "skippedCount": 0,
+    "holdCount": 0,
+    "helperFolderCases": 0,
+    "exportMatchesCases": 1
+  }
+}

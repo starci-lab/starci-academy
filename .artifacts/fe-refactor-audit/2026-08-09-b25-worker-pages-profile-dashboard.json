@@ -1,0 +1,36 @@
+{
+  "partition": "pages-profile-dashboard",
+  "manifest": [
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/pages/DashboardPage/StreakStrip/component.tsx"
+  ],
+  "changed": [
+    "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+    "src/components/pages/DashboardPage/StreakStrip/component.tsx"
+  ],
+  "applied": [
+    {
+      "kind": "safe-noop",
+      "files": [
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/DashboardPage/StreakStrip/component.tsx"
+      ],
+      "change": "Removed Typography isSkeleton classNames={[\"w-1/2\"]} duplicates",
+      "count": 2
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "Button/Chip classNames={['self-start']} on DailyQuest remain live-prop",
+    "ProfileSectionGuard className live on private branch"
+  ],
+  "evidence": {},
+  "principles": [],
+  "parity": {
+    "storybookSrc": "n/a — page trees"
+  },
+  "verification": {
+    "local": "deferred to aggregate"
+  },
+  "regressions": []
+}

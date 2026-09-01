@@ -1,0 +1,44 @@
+{
+  "batch": "B35",
+  "checkpoint": "02011807",
+  "generatedAt": "2026-08-08T15:08:00.000Z",
+  "verdict": "READY TO CERTIFY",
+  "commit": false,
+  "overlapPass": true,
+  "manifestFilesChangedApprox": 259,
+  "eslint": {
+    "before": { "warnings": 6872, "files": 1232, "errors": 0, "a11y": 11 },
+    "after": { "warnings": 6270, "files": 1104, "errors": 0, "a11y": 11 },
+    "delta": { "warnings": -602, "files": -128, "errors": 0, "a11y": 0 },
+    "artifact": ".artifacts/fe-refactor-audit/2026-08-10-b35-eslint-after.json"
+  },
+  "expectedRange": {
+    "warnings": "600–1200 (hit −602)",
+    "filesCleared": "120–250 (hit −128)",
+    "semanticClusters": "350–700 (under — named closed roots ~80; multi-rule vertical closes still leave locked/missing-vocab mass)",
+    "whyNotHigher": [
+      "Locked MockInterviewSession / QuizSession / LearnLoopScroll / ContentAiChat / ArchitectureScene",
+      "Missing vocab: sticky Navbar, SettingsSidebarNav, GlyphMark muted, SurfaceCard doors, AuthenticationModal, CV/calendar/diff contracts",
+      "Shared doors retained for forbidden consumers",
+      "Deep page nests only partially filed"
+    ]
+  },
+  "parentRepairs": [
+    "Removed ChatPaneSkeleton parallel export; awaiting id uses _ChatPane isSkeleton",
+    "Restored ReactionButton/types.ts to checkpoint (pre-dirty hold-out)"
+  ],
+  "gates": {
+    "tsc": "pass",
+    "pluginTests": "pass",
+    "principleSemantic": "pass",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass"
+  },
+  "forbiddenProof": {
+    "nivo": "untouched",
+    "nivoexpert": "untouched",
+    "mia-mia": "untouched; CollapsibleSidebar.className retained"
+  },
+  "doorsBurned": 14,
+  "lockedConsumerDoorHolds": ["Avatar", "Divider", "Typography", "Stack", "Button", "SurfaceListCard"]
+}

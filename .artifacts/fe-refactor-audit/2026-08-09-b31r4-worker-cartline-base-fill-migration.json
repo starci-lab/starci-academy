@@ -1,0 +1,22 @@
+{
+  "worker": "cartline-base-fill-migration",
+  "status": "done",
+  "edited": ["src/components/blocks/commerce/CartLine/index.tsx"],
+  "warningsBefore": 3,
+  "warningsAfter": 0,
+  "placement": {
+    "before": "div.flex.min-w-0.flex-1.flex-col.gap-1",
+    "after": "FillAvailable at=\"base\" → StackV principle=name-handle"
+  },
+  "burns": [
+    "no-heroui-outside-vocabulary → house Button + Typography",
+    "no-raw-shape-at-sentence-tier → StackH + FillAvailable + StackV",
+    "legacy IconTile → IdentityTile size=\"sm\" icon={GraduationCapIcon}"
+  ],
+  "legacyIconTile": {
+    "before": "blocks/identity/IconTile",
+    "after": "atoms/display/IdentityTile"
+  },
+  "holds": [],
+  "overlap": "none"
+}

@@ -1,0 +1,846 @@
+{
+  "partition": "pages-and-overlays",
+  "manifest": [
+    "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+    "src/components/layouts/Footer/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+    "src/components/layouts/Navbar/CartButton/index.tsx",
+    "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+    "src/components/layouts/Navbar/NavLinks/index.tsx",
+    "src/components/layouts/Navbar/NotificationBell/index.tsx",
+    "src/components/layouts/Navbar/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+    "src/components/pages/AdminLoginPage/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/index.tsx",
+    "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+    "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+    "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+    "src/components/pages/ContactPage/ContactChannels/index.tsx",
+    "src/components/pages/ContactPage/ContactForm/index.tsx",
+    "src/components/pages/ContactPage/index.tsx",
+    "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+    "src/components/pages/CvEditorPage/index.tsx",
+    "src/components/pages/CvGalleryPage/index.tsx",
+    "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+    "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+    "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+    "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+    "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+    "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+    "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+    "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+    "src/components/pages/DashboardPage/QuickActions/index.tsx",
+    "src/components/pages/DashboardPage/RecommendedCourses/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/index.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/index.tsx",
+    "src/components/pages/DashboardPage/index.tsx",
+    "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewer/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStudyRail/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+    "src/components/pages/JobPostFormPage/index.tsx",
+    "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+    "src/components/pages/LandingPage/StatStrip/index.tsx",
+    "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+    "src/components/pages/LandingPage/index.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/index.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/index.tsx",
+    "src/components/pages/LeaguePage/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/index.tsx",
+    "src/components/pages/LoginPage/index.tsx",
+    "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+    "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+    "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+    "src/components/pages/MyAttemptsPage/index.tsx",
+    "src/components/pages/MyFeedbackPage/index.tsx",
+    "src/components/pages/MySubmissionsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/OauthRedirectPage/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+    "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+    "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+    "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+    "src/components/pages/ProfileActivityPage/index.tsx",
+    "src/components/pages/ProfileChallengeManagePage/index.tsx",
+    "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "src/components/pages/ProfileChallengesPage/index.tsx",
+    "src/components/pages/ProfileCodingProblemPage/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx",
+    "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+    "src/components/pages/ProfileProjectsPage/index.tsx",
+    "src/components/pages/ProfileRedirectPage/index.tsx",
+    "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+    "src/components/pages/ProfileSkillsPage/index.tsx",
+    "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+    "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+    "src/components/pages/RewardsPage/index.tsx",
+    "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+    "src/components/pages/SettingsHomePage/index.tsx",
+    "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+    "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+    "src/components/pages/SystemStatusPage/OverallBanner/index.tsx"
+  ],
+  "changed": [
+    "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+    "src/components/layouts/Footer/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+    "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+    "src/components/layouts/Navbar/CartButton/index.tsx",
+    "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+    "src/components/layouts/Navbar/NavLinks/index.tsx",
+    "src/components/layouts/Navbar/NotificationBell/index.tsx",
+    "src/components/layouts/Navbar/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+    "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+    "src/components/pages/AdminLoginPage/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+    "src/components/pages/AdminMpegDashTestPage/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+    "src/components/pages/AdminUploadVideoPage/index.tsx",
+    "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+    "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+    "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+    "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+    "src/components/pages/ContactPage/ContactChannels/index.tsx",
+    "src/components/pages/ContactPage/ContactForm/index.tsx",
+    "src/components/pages/ContactPage/index.tsx",
+    "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+    "src/components/pages/CvEditorPage/index.tsx",
+    "src/components/pages/CvGalleryPage/index.tsx",
+    "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+    "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+    "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+    "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+    "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+    "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+    "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+    "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+    "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+    "src/components/pages/DashboardPage/QuickActions/index.tsx",
+    "src/components/pages/DashboardPage/RecommendedCourses/index.tsx",
+    "src/components/pages/DashboardPage/TopLearners/index.tsx",
+    "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+    "src/components/pages/DashboardPage/WeeklyChallengeCard/index.tsx",
+    "src/components/pages/DashboardPage/index.tsx",
+    "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardReviewer/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardStudyRail/index.tsx",
+    "src/components/pages/FlashcardsPage/index.tsx",
+    "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+    "src/components/pages/JobPostFormPage/index.tsx",
+    "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+    "src/components/pages/LandingPage/StatStrip/index.tsx",
+    "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+    "src/components/pages/LandingPage/index.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/index.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/index.tsx",
+    "src/components/pages/LeaguePage/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+    "src/components/pages/LearningHistoryPage/index.tsx",
+    "src/components/pages/LoginPage/index.tsx",
+    "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+    "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+    "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+    "src/components/pages/MyAttemptsPage/index.tsx",
+    "src/components/pages/MyFeedbackPage/index.tsx",
+    "src/components/pages/MySubmissionsPage/index.tsx",
+    "src/components/pages/NotificationsPage/index.tsx",
+    "src/components/pages/OauthRedirectPage/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+    "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+    "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+    "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+    "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+    "src/components/pages/ProfileActivityPage/index.tsx",
+    "src/components/pages/ProfileChallengeManagePage/index.tsx",
+    "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+    "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+    "src/components/pages/ProfileChallengesPage/index.tsx",
+    "src/components/pages/ProfileCodingProblemPage/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+    "src/components/pages/ProfileOverviewPage/index.tsx",
+    "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+    "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+    "src/components/pages/ProfileProjectsPage/index.tsx",
+    "src/components/pages/ProfileRedirectPage/index.tsx",
+    "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+    "src/components/pages/ProfileSkillsPage/index.tsx",
+    "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+    "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+    "src/components/pages/RewardsPage/index.tsx",
+    "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+    "src/components/pages/SettingsHomePage/index.tsx",
+    "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+    "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+    "src/components/pages/SystemStatusPage/OverallBanner/index.tsx"
+  ],
+  "applied": [
+    {
+      "file": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Footer/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/CartButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/LanguageDropdown/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/layouts/Navbar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/KeyRow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminLoginPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactForm/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/CvGalleryPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardContent/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TrendingContents/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WeeklyChallengeCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/AvatarUploadModal/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/JobPostFormPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LandingPage/StatStrip/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceUnavailableModal/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MyFeedbackPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/OauthRedirectPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/SettingsHomePage/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/AiKeyGroup/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/ComponentCard/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "kind": "dead-passthrough",
+      "action": "remove-zero-consumer-WithClassNames-or-className-door"
+    }
+  ],
+  "skipped": [],
+  "holds": [
+    "live-api Button/Chip/Stack/Grid/Box/SurfaceCard/Typography/Skeleton",
+    "vendor / locked / Nivo / B19–B25 / teacher holds / skeleton slots",
+    "doors with JSX consumers (EntityLink restored)",
+    "rest-spread forwarding (...props)",
+    "src/components/blocks/feed/EntityLink/index.tsx — restored (live className consumer in CommentItem)",
+    "src/components/blocks/auth/GithubLinkGate/index.tsx — restored (void className side-effect API)"
+  ],
+  "evidence": {
+    "proof": "brace-aware destructure + open-tag consumer index (locked paths counted as consumers)",
+    "inventoryBefore": {
+      "hits": 2194,
+      "files": 816
+    }
+  },
+  "principles": [],
+  "parity": {
+    "storybookSrc": "src-first where no SB twin; SB starci twins when present"
+  },
+  "verification": {
+    "local": "tsc pass after partition"
+  },
+  "regressions": [],
+  "overlapCheck": "partitionOf(file) — each changed file in exactly one worker"
+}

@@ -1,0 +1,218 @@
+{
+  "batch": "B32",
+  "agent": "agent-7-domain-b",
+  "checkpoint": "9e86cbdf",
+  "committed": false,
+  "generatedAt": "2026-08-08T11:55:00.000Z",
+  "manifest": ".artifacts/fe-refactor-audit/2026-08-10-b32-manifests.json#agents.agent-7-domain-b",
+  "manifestFileCount": 45,
+  "changedFiles": [
+    ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+    ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+    "src/components/blocks/blog/PostRow/index.tsx",
+    "src/components/blocks/community/CommunityCommentItem/component.tsx",
+    "src/components/blocks/community/CommunityCommentThread/component.tsx",
+    "src/components/blocks/community/CommunityPost/index.tsx",
+    "src/components/blocks/community/Discussion/ReactionEmoji.tsx",
+    "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+    "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+    "src/components/blocks/grading/GradingByline/component.tsx",
+    "src/components/blocks/grading/SelfHostGpuMark/component.tsx"
+  ],
+  "eslint": {
+    "before": {
+      "starciFeMessages": 306,
+      "byRule": {
+        "starci-fe/no-host-element-at-sentence-tier": 108,
+        "starci-fe/no-raw-shape-at-sentence-tier": 75,
+        "starci-fe/require-identity-root": 29,
+        "starci-fe/no-cn-above-vocabulary": 26,
+        "starci-fe/no-heroui-outside-vocabulary": 24,
+        "starci-fe/no-public-classname-prop": 22,
+        "starci-fe/require-frame-self-declare": 9,
+        "starci-fe/no-frame-fragment-item": 7,
+        "starci-fe/no-classname-at-sentence-tier": 4,
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/no-inline-skeleton-branch": 1
+      }
+    },
+    "after": {
+      "starciFeMessages": 281,
+      "byRule": {
+        "starci-fe/no-host-element-at-sentence-tier": 99,
+        "starci-fe/no-raw-shape-at-sentence-tier": 74,
+        "starci-fe/require-identity-root": 25,
+        "starci-fe/no-cn-above-vocabulary": 25,
+        "starci-fe/no-heroui-outside-vocabulary": 22,
+        "starci-fe/no-public-classname-prop": 20,
+        "starci-fe/require-frame-self-declare": 4,
+        "starci-fe/no-frame-fragment-item": 7,
+        "starci-fe/no-classname-at-sentence-tier": 4,
+        "starci-fe/no-emoji-in-source": 1
+      }
+    },
+    "delta": -25,
+    "fullyClosedFiles": 14
+  },
+  "clustersClosed": [
+    {
+      "id": "sb-dashboard-changelog-list",
+      "files": [".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx"],
+      "change": "Removed dead className door + host wrapper; identity on SurfaceCardNested"
+    },
+    {
+      "id": "sb-dashboard-weekly-goals",
+      "files": [".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx"],
+      "change": "Removed host wrapper around StatGridCard; sibling-stack owns summary|grid seam"
+    },
+    {
+      "id": "sb-src-weekly-challenge-card",
+      "files": [
+        ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+        "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx"
+      ],
+      "change": "Removed host wrappers; sibling-stack content; flex-action-between/end status row (no span spacer / inline skeleton branch)"
+    },
+    {
+      "id": "sb-profile-hero-rank-avatar",
+      "files": [
+        ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+        ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx"
+      ],
+      "change": "SurfaceCard root identity; removed Avatar/host wrappers; block-boundary owns hero sections"
+    },
+    {
+      "id": "community-comment-thread-item",
+      "files": [
+        "src/components/blocks/community/CommunityCommentItem/component.tsx",
+        "src/components/blocks/community/CommunityCommentThread/component.tsx"
+      ],
+      "change": "Declared flex-action / sibling-stack principles on undeclared Stack frames"
+    },
+    {
+      "id": "community-post-identity",
+      "files": ["src/components/blocks/community/CommunityPost/index.tsx"],
+      "change": "StackV identity root wrapping CommunityPostCard + optional thread"
+    },
+    {
+      "id": "post-row-identity",
+      "files": ["src/components/blocks/blog/PostRow/index.tsx"],
+      "change": "identity on title-subtitle StackV"
+    },
+    {
+      "id": "dashboard-continue-learning",
+      "files": ["src/components/blocks/dashboard/ContinueLearning/index.tsx"],
+      "change": "Removed host wrapper; StackV identity around AsyncContent"
+    },
+    {
+      "id": "grading-byline-gpu-mark",
+      "files": [
+        "src/components/blocks/grading/GradingByline/component.tsx",
+        "src/components/blocks/grading/SelfHostGpuMark/component.tsx"
+      ],
+      "change": "House Stack/Typography/Tooltip; dropped direct HeroUI Tooltip/cn flex hosts"
+    },
+    {
+      "id": "reaction-emoji-cn",
+      "files": ["src/components/blocks/community/Discussion/ReactionEmoji.tsx"],
+      "change": "Removed heroui cn import; plain className template"
+    }
+  ],
+  "holds": [
+    {
+      "cluster": "discussion-feed-hero-ui",
+      "files": [
+        "src/components/blocks/community/Discussion/CommentComposer.tsx",
+        "src/components/blocks/community/Discussion/CommentItem.tsx",
+        "src/components/blocks/community/Discussion/index.tsx",
+        "src/components/blocks/community/Discussion/InteractionBar.tsx",
+        "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+        "src/components/blocks/community/FollowButton/index.tsx",
+        "src/components/blocks/feed/CommunityPostCard/component.tsx",
+        "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+        "src/components/blocks/feed/CommentThread/index.tsx",
+        "src/components/blocks/feed/Composer/index.tsx",
+        "src/components/blocks/feed/ChatPanel/index.tsx",
+        "src/components/blocks/feed/ChatBubble/index.tsx",
+        "src/components/blocks/feed/FeedItem/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/feed/ActivityAvatar/index.tsx",
+        "src/components/blocks/feed/Timeline/index.tsx"
+      ],
+      "reason": "Direct HeroUI Card/Typography/cn plus raw flex hosts. Honest closure needs SurfaceCard/Stack/UserCell migration without inventing feed-row vocabulary; several public className doors still have live consumers outside this manifest."
+    },
+    {
+      "cluster": "dashboard-league-podium",
+      "files": [
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/blocks/dashboard/Podium/index.tsx",
+        "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+        "src/components/blocks/dashboard/Confetti/index.tsx"
+      ],
+      "reason": "Remaining raw flex/absolute hosts and HeroUI usage. LeaderboardListCard still carries live className doors + emoji; prior B30/B31 vertical work left internal row flex. Completing requires page consumers (TopLearners/LeagueCard) which are outside this manifest."
+    },
+    {
+      "cluster": "profile-src-and-loading",
+      "files": [
+        "src/components/blocks/profile/ProfileHero/index.tsx",
+        "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+        "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+        "src/components/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        "src/components/blocks/profile/UserStreak/index.tsx",
+        "src/components/blocks/profile/MascotBadge/index.tsx",
+        "src/components/blocks/profile/RankBadge/index.tsx",
+        "src/components/blocks/profile/RankDeltaCaret/index.tsx",
+        "src/components/blocks/profile/CvSubmission/index.tsx"
+      ],
+      "reason": "Src ProfileHero has frame-fragment + undeclared stacks; loading/overview uses responsive host flex (@app-md) with no ShowFrom/ShowBelow owner in vocabulary; RankBadge needs runtime hex color-mix owner; MascotBadge/RankDeltaCaret/UserStreak are HeroUI+cn hosts. No consumer edits outside manifest for API door burns."
+    },
+    {
+      "cluster": "grading-diff-credit",
+      "files": [
+        "src/components/blocks/grading/DiffViewer/index.tsx",
+        "src/components/blocks/grading/GradeCreditCaption/component.tsx"
+      ],
+      "reason": "DiffViewer is a dense HeroUI/host surface; GradeCreditCaption needs interactive caption atom (button+warning icon+muted/danger text) — no existing vocabulary owner without inventing a credit-caption composite."
+    }
+  ],
+  "proposedContracts": [
+    {
+      "missingOwner": "ShowFrom / responsive split frame (or approved @app-md overview shell)",
+      "shape": "Profile overview column that is stacked on base and row+fixed sidebar from md up",
+      "blockedFiles": [
+        ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        "src/components/blocks/profile/ProfileHero/index.tsx"
+      ]
+    },
+    {
+      "missingOwner": "RankBadge / dynamic-tone pill atom",
+      "shape": "inline pill with runtime hex color-mix fill + dot, no public className",
+      "blockedFiles": ["src/components/blocks/profile/RankBadge/index.tsx"]
+    },
+    {
+      "missingOwner": "GradeCreditCaption interactive caption",
+      "shape": "muted/danger caption with optional warning icon and press-to-open quota details",
+      "blockedFiles": ["src/components/blocks/grading/GradeCreditCaption/component.tsx"]
+    },
+    {
+      "missingOwner": "Community/feed post card composite (house Card + identity header + reaction footer)",
+      "shape": "Replace HeroUI Card/Typography trees in CommunityPostCard / Discussion / feed twins",
+      "blockedFiles": [
+        "src/components/blocks/feed/CommunityPostCard/component.tsx",
+        "src/components/blocks/community/Discussion/index.tsx"
+      ]
+    }
+  ],
+  "regressions": [],
+  "ownershipViolations": [],
+  "verification": {
+    "focusedEslint": "pass on 14 fully-closed files; manifest remaining 281 starci-fe messages (was 306)",
+    "gitDiffCheck": "pass on changed files",
+    "notes": "No eslint-disable. No vocabulary invention. No consumer edits outside frozen manifest. Out-of-manifest Discussion/constants.ts touch from parallel work was reverted."
+  },
+  "summary": "Closed 14 complete vertical clusters (−25 starci-fe messages: 306→281). SB dashboard/profile twins and community comment/grading leaf clusters reached zero warnings via existing Stack/SurfaceCard/Tooltip/Typography. Held HeroUI-heavy discussion/feed/league/profile-src surfaces pending missing owners or out-of-manifest consumers."
+}

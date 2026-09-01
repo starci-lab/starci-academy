@@ -1,0 +1,142 @@
+{
+  "before": {
+    "warnings": 6882,
+    "errors": 0,
+    "a11y": 11,
+    "files": 1234,
+    "byRule": {
+      "starci-fe/no-public-classname-prop": 1193,
+      "starci-fe/no-frame-fragment-item": 102,
+      "starci-fe/require-export-jsdoc": 17,
+      "starci-fe/no-host-element-at-sentence-tier": 1680,
+      "starci-fe/no-inline-parameter-type": 63,
+      "starci-fe/no-emoji-in-source": 60,
+      "starci-fe/no-css-door-type-laundering": 2,
+      "starci-fe/no-parallel-skeleton": 68,
+      "starci-fe/handler-on-prefix": 6,
+      "jsx-a11y/aria-role": 8,
+      "starci-fe/no-per-part-classname-prop": 8,
+      "starci-fe/no-hardcoded-user-text-in-vocabulary": 4,
+      "starci-fe/require-frame-self-declare": 691,
+      "starci-fe/no-raw-shape-at-sentence-tier": 829,
+      "starci-fe/require-identity-root": 571,
+      "starci-fe/no-classname-at-sentence-tier": 198,
+      "starci-fe/no-heroui-outside-vocabulary": 437,
+      "starci-fe/no-cn-above-vocabulary": 372,
+      "starci-fe/no-skeleton-twin-component": 39,
+      "starci-fe/no-inline-skeleton-branch": 45,
+      "starci-fe/no-helper-folder-in-components": 60,
+      "starci-fe/no-vietnamese-in-source-authoring": 9,
+      "starci-fe/no-retired-async-content": 40,
+      "starci-fe/no-arbitrary-token": 16,
+      "jsx-a11y/no-static-element-interactions": 2,
+      "starci-fe/no-identity-wrapper-div": 1,
+      "starci-fe/no-hero-heading-class": 8,
+      "starci-fe/page-folder-two-files-only": 351,
+      "jsx-a11y/click-events-have-key-events": 1,
+      "starci-fe/prefer-arrow-export": 1
+    }
+  },
+  "after": {
+    "warnings": 6265,
+    "errors": 0,
+    "a11y": 11,
+    "files": 1104,
+    "byRule": {
+      "starci-fe/no-public-classname-prop": 1107,
+      "starci-fe/no-frame-fragment-item": 74,
+      "starci-fe/require-export-jsdoc": 16,
+      "starci-fe/no-host-element-at-sentence-tier": 1497,
+      "starci-fe/no-inline-parameter-type": 63,
+      "starci-fe/no-emoji-in-source": 54,
+      "starci-fe/no-css-door-type-laundering": 2,
+      "starci-fe/no-parallel-skeleton": 67,
+      "starci-fe/handler-on-prefix": 6,
+      "jsx-a11y/aria-role": 8,
+      "starci-fe/no-per-part-classname-prop": 5,
+      "starci-fe/no-hardcoded-user-text-in-vocabulary": 4,
+      "starci-fe/require-frame-self-declare": 630,
+      "starci-fe/no-raw-shape-at-sentence-tier": 765,
+      "starci-fe/require-identity-root": 532,
+      "starci-fe/no-heroui-outside-vocabulary": 411,
+      "starci-fe/no-cn-above-vocabulary": 354,
+      "starci-fe/no-classname-at-sentence-tier": 178,
+      "starci-fe/no-skeleton-twin-component": 38,
+      "starci-fe/no-inline-skeleton-branch": 45,
+      "starci-fe/no-helper-folder-in-components": 35,
+      "starci-fe/no-vietnamese-in-source-authoring": 9,
+      "starci-fe/no-retired-async-content": 40,
+      "starci-fe/no-arbitrary-token": 16,
+      "jsx-a11y/no-static-element-interactions": 2,
+      "starci-fe/no-identity-wrapper-div": 1,
+      "starci-fe/no-hero-heading-class": 8,
+      "starci-fe/page-folder-two-files-only": 296,
+      "jsx-a11y/click-events-have-key-events": 1,
+      "starci-fe/prefer-arrow-export": 1
+    }
+  },
+  "ruleDelta": [
+    {
+      "rule": "starci-fe/no-host-element-at-sentence-tier",
+      "before": 1680,
+      "after": 1497,
+      "delta": -183
+    },
+    {
+      "rule": "starci-fe/no-raw-shape-at-sentence-tier",
+      "before": 829,
+      "after": 765,
+      "delta": -64
+    },
+    {
+      "rule": "starci-fe/no-classname-at-sentence-tier",
+      "before": 198,
+      "after": 178,
+      "delta": -20
+    },
+    {
+      "rule": "starci-fe/no-cn-above-vocabulary",
+      "before": 372,
+      "after": 354,
+      "delta": -18
+    },
+    {
+      "rule": "starci-fe/no-public-classname-prop",
+      "before": 1193,
+      "after": 1107,
+      "delta": -86
+    },
+    {
+      "rule": "starci-fe/require-identity-root",
+      "before": 571,
+      "after": 532,
+      "delta": -39
+    },
+    {
+      "rule": "starci-fe/require-frame-self-declare",
+      "before": 691,
+      "after": 630,
+      "delta": -61
+    },
+    {
+      "rule": "starci-fe/no-heroui-outside-vocabulary",
+      "before": 437,
+      "after": 411,
+      "delta": -26
+    },
+    {
+      "rule": "starci-fe/no-frame-fragment-item",
+      "before": 102,
+      "after": 74,
+      "delta": -28
+    },
+    {
+      "rule": "starci-fe/page-folder-two-files-only",
+      "before": 351,
+      "after": 296,
+      "delta": -55
+    }
+  ],
+  "introduced": [],
+  "reducedCount": 182
+}

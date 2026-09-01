@@ -1,0 +1,195 @@
+{
+  "requireFrameSelfDeclare": {
+    "src-blocks": 417,
+    "src-composites": 93,
+    "src-layouts": 11,
+    "src-overlays": 129,
+    "src-pages": 1327
+  },
+  "requireIdentityRoot": {
+    "src-blocks": 469,
+    "src-layouts": 18,
+    "src-overlays": 22,
+    "src-pages": 194
+  },
+  "noRawShape": {
+    "src-blocks": 547,
+    "src-layouts": 20,
+    "src-pages": 150
+  },
+  "noClassname": {
+    "src-blocks": 364,
+    "src-layouts": 14,
+    "src-overlays": 1,
+    "src-pages": 176
+  },
+  "noHeroui": {
+    "src-blocks": 352,
+    "src-layouts": 18,
+    "src-overlays": 7,
+    "src-pages": 172
+  },
+  "noCn": {
+    "src-blocks": 450,
+    "src-layouts": 14,
+    "src-pages": 159
+  },
+  "pageFolder": {
+    "src-layouts": 20,
+    "src-overlays": 36,
+    "src-pages": 300
+  },
+  "noVi": {
+    "sb-components-other": 5,
+    "other": 5,
+    "sb-stories": 5,
+    "sb-utils": 82,
+    "src-app": 13,
+    "src-blocks": 8,
+    "src-layouts": 9,
+    "src-pages": 1,
+    "src-other": 23,
+    "src-modules": 66,
+    "src-resources": 11
+  },
+  "noEmoji": {
+    "sb-atoms": 1,
+    "sb-composites": 14,
+    "sb-frames": 4,
+    "sb-nivo": 1,
+    "sb-components-other": 9,
+    "sb-stories": 16,
+    "other": 1,
+    "sb-utils": 9,
+    "src-atoms": 1,
+    "src-blocks": 92,
+    "src-composites": 25,
+    "src-frames": 4,
+    "src-overlays": 4,
+    "src-pages": 8,
+    "src-other": 2,
+    "src-modules": 6
+  },
+  "samples": {
+    "identityOnAtoms": [],
+    "frameOnAtoms": [],
+    "identityOnStories": [],
+    "frameOnApp": [],
+    "viMainPreview": [
+      {
+        "file": ".storybook/main.ts",
+        "line": 34,
+        "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale "
+      },
+      {
+        "file": ".storybook/main.ts",
+        "line": 35,
+        "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale "
+      },
+      {
+        "file": ".storybook/preview.tsx",
+        "line": 13,
+        "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale "
+      },
+      {
+        "file": ".storybook/test-runner.ts",
+        "line": 60,
+        "msg": "Vietnamese is not allowed in source authoring — write comments, JSDoc, identifiers, and diagnostics in English. (Locale "
+      }
+    ],
+    "identityNivoexpert": [
+      {
+        "file": ".storybook/components/nivoexpert/blocks/auth/AuthCard/AuthCard.tsx",
+        "line": 108,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+        "line": 406,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/automation/AiOpsSummary/AiOpsSummary.tsx",
+        "line": 51,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/automation/N8nWorkflowTable/N8nWorkflowTable.tsx",
+        "line": 257,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/automation/OpsEventTable/OpsEventTable.tsx",
+        "line": 96,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+        "line": 191,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/classroom/LessonTOC/LessonTOC.tsx",
+        "line": 114,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/classroom/LessonViewer/LessonViewer.tsx",
+        "line": 113,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/community/PostCard/PostCard.tsx",
+        "line": 121,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/community/PostComposer/PostComposer.tsx",
+        "line": 68,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/community/PostModerationCard/PostModerationCard.tsx",
+        "line": 122,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/dashboard/AnalyticsView/AnalyticsView.tsx",
+        "line": 210,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/dashboard/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+        "line": 217,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/landing/CatalogComingSoonPanel/CatalogComingSoonPanel.tsx",
+        "line": 34,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      },
+      {
+        "file": ".storybook/components/nivoexpert/blocks/landing/CommunityPreviewCard/CommunityPreviewCard.tsx",
+        "line": 74,
+        "msg": "`<div data-tier=\"block\">` is a retired identity wrapper — pass `identity={{ tier: \"block\", component: \"…\" }}` to the roo"
+      }
+    ],
+    "anatomyOverlay": [
+      {
+        "file": ".storybook/stories/utils/AnatomyOverlay/AnatomyOverlay.stories.tsx",
+        "line": 37,
+        "msg": "`data-anat` is a retired anatomy overlay — remove it; component identity is the data-tier + data-component attr pair."
+      },
+      {
+        "file": ".storybook/stories/utils/AnatomyOverlay/AnatomyOverlay.stories.tsx",
+        "line": 63,
+        "msg": "`data-anat` is a retired anatomy overlay — remove it; component identity is the data-tier + data-component attr pair."
+      },
+      {
+        "file": ".storybook/stories/utils/AnatomyOverlay/AnatomyOverlay.stories.tsx",
+        "line": 64,
+        "msg": "`data-anat` is a retired anatomy overlay — remove it; component identity is the data-tier + data-component attr pair."
+      }
+    ]
+  }
+}

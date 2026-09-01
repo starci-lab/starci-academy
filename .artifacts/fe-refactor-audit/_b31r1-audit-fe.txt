@@ -1,0 +1,321 @@
+﻿
+> starci-academy@0.1.0 audit:fe
+> node ../starci-academy-backend/.claude/scripts/audit/run-fe.mjs .
+
+
+===== audit-frames storybook =====
+D:\Repositories\starci-academy
+tree: .storybook/components
+
+frames found: 19 file(s)
+
+FRAME-1  19 to judge
+        it owns direction, seam, alignment, and its own chrome ΓÇö nothing else
+        (run with --suspects, or --rule 1, to read them)
+
+FRAME-2  ok
+        it never asks what its children are ΓÇö FRAME-7 is this rule's detection signal
+
+FRAME-3  ok
+        imports run downward only ΓÇö a frame reaching up is arranging what it was handed
+
+FRAME-4  ok
+        the prop is `classNames: Array<AllowedClassName>` ΓÇö the same closed union an atom takes
+
+FRAME-5  1 to judge
+        composing classes is this tier's work
+        (run with --suspects, or --rule 5, to read them)
+
+FRAME-8  ok
+        chrome that exists as an atom is imported, never hand-drawn
+
+FRAME-9  ok
+        `items` or named slots ΓÇö never `children`, which no later type can constrain
+
+FRAME-10  ok
+        a shape change names its width in a PROP, never buried in a class string
+
+FRAME-11  ok
+        neither tree carries `anatPart` / `showAnatomy` / `data-anat-part` ΓÇö identity is data-tier + data-component
+
+FRAME-12  ok
+        the app's copy is the blueprint ΓÇö and a change lands in both
+
+FRAME-6 / FRAME-7  derived
+        FRAME-6 confirms a placement and FRAME-7 detects a wrong one ΓÇö both are
+        answered by FRAME-1 and FRAME-2 above. The first half of FRAME-8 (was the
+        atom handed in by the caller?) still needs a person.
+
+no violation of a checkable rule
+20 candidate(s) needing judgement ΓÇö these do not fail the gate
+exit 0
+
+===== audit-frames src =====
+D:\Repositories\starci-academy
+tree: src/components
+
+frames found: 19 file(s)
+
+FRAME-1  19 to judge
+        it owns direction, seam, alignment, and its own chrome ΓÇö nothing else
+        (run with --suspects, or --rule 1, to read them)
+
+FRAME-2  ok
+        it never asks what its children are ΓÇö FRAME-7 is this rule's detection signal
+
+FRAME-3  ok
+        imports run downward only ΓÇö a frame reaching up is arranging what it was handed
+
+FRAME-4  ok
+        the prop is `classNames: Array<AllowedClassName>` ΓÇö the same closed union an atom takes
+
+FRAME-5  1 to judge
+        composing classes is this tier's work
+        (run with --suspects, or --rule 5, to read them)
+
+FRAME-8  ok
+        chrome that exists as an atom is imported, never hand-drawn
+
+FRAME-9  ok
+        `items` or named slots ΓÇö never `children`, which no later type can constrain
+
+FRAME-10  ok
+        a shape change names its width in a PROP, never buried in a class string
+
+FRAME-11  ok
+        neither tree carries `anatPart` / `showAnatomy` / `data-anat-part` ΓÇö identity is data-tier + data-component
+
+FRAME-12  ok
+        the app's copy is the blueprint ΓÇö and a change lands in both
+
+FRAME-6 / FRAME-7  derived
+        FRAME-6 confirms a placement and FRAME-7 detects a wrong one ΓÇö both are
+        answered by FRAME-1 and FRAME-2 above. The first half of FRAME-8 (was the
+        atom handed in by the caller?) still needs a person.
+
+no violation of a checkable rule
+20 candidate(s) needing judgement ΓÇö these do not fail the gate
+exit 0
+
+===== audit-atoms storybook =====
+D:\Repositories\starci-academy
+tree: .storybook/components
+
+atoms found: 62 component folder(s), 132 exported name(s)
+
+ATOM-1  17 to judge
+        an atom is ONE element ΓÇö a child the caller handed in makes it a composite
+        (run with --suspects, or --rule 1, to read them)
+
+ATOM-2  ok
+        it knows nothing about data ΓÇö naming a domain entity is the line that decides the tier
+
+ATOM-3  ok
+        an atom imports no other tier ΓÇö importing one means it is arranging children
+
+ATOM-4  ok
+        every atom exposes `isSkeleton` ΓÇö only the atom knows the space its value will occupy
+
+ATOM-4-shape  ok
+        a shimmer is a FRACTION of its container wide, and its height is never passable
+
+ATOM-5  ok
+        `className` on an atom carries POSITION only ΓÇö appearance is already a prop
+
+ATOM-5-type  ok
+        the prop should be `classNames?: Array<AllowedClassName>` ΓÇö a free string cannot be constrained
+
+ATOM-6  15 to judge
+        it decides its own appearance, and the class strings behind a variant stay private
+        (run with --suspects, or --rule 6, to read them)
+
+ATOM-8  ok
+        an atom that renders ANOTHER atom is a composite ΓÇö taking `items` is not the signal, rendering an atom is
+
+ATOM-9  ok
+        the vendor stops at `Base` ΓÇö so the library can be swapped in one file
+
+ATOM-10  ok
+        it takes the inspection SWITCH and never the part NAME ΓÇö an atom knows what it is
+
+ATOM-11  ok
+        the app's copy is the blueprint minus the anatomy overlay ΓÇö and a change lands in both
+
+ATOM-9  note: 100 file(s) above the atom tier import the vendor directly.
+        Each is a missing atom, counted by audit-composites.mjs rule 3, not here.
+
+ATOM-7  derived
+        it belongs here when it renders a value with no child of its own to place ΓÇö
+        satisfied exactly when ATOM-1, ATOM-2 and ATOM-8 are. Nothing separate to check.
+
+no violation of a checkable rule
+32 candidate(s) needing judgement ΓÇö these do not fail the gate
+exit 0
+
+===== audit-atoms src =====
+D:\Repositories\starci-academy
+tree: src/components
+
+atoms found: 62 component folder(s), 132 exported name(s)
+
+ATOM-1  17 to judge
+        an atom is ONE element ΓÇö a child the caller handed in makes it a composite
+        (run with --suspects, or --rule 1, to read them)
+
+ATOM-2  ok
+        it knows nothing about data ΓÇö naming a domain entity is the line that decides the tier
+
+ATOM-3  ok
+        an atom imports no other tier ΓÇö importing one means it is arranging children
+
+ATOM-4  ok
+        every atom exposes `isSkeleton` ΓÇö only the atom knows the space its value will occupy
+
+ATOM-4-shape  ok
+        a shimmer is a FRACTION of its container wide, and its height is never passable
+
+ATOM-5  ok
+        `className` on an atom carries POSITION only ΓÇö appearance is already a prop
+
+ATOM-5-type  ok
+        the prop should be `classNames?: Array<AllowedClassName>` ΓÇö a free string cannot be constrained
+
+ATOM-6  15 to judge
+        it decides its own appearance, and the class strings behind a variant stay private
+        (run with --suspects, or --rule 6, to read them)
+
+ATOM-8  ok
+        an atom that renders ANOTHER atom is a composite ΓÇö taking `items` is not the signal, rendering an atom is
+
+ATOM-9  ok
+        the vendor stops at `Base` ΓÇö so the library can be swapped in one file
+
+ATOM-10  ok
+        this tree carries no inspection tooling ΓÇö `showAnatomy` and `anatPart` belong to the blueprint only
+
+ATOM-11  ok
+        the app's copy is the blueprint minus the anatomy overlay ΓÇö and a change lands in both
+
+ATOM-9  note: 501 file(s) above the atom tier import the vendor directly.
+        Each is a missing atom, counted by audit-composites.mjs rule 3, not here.
+
+ATOM-7  derived
+        it belongs here when it renders a value with no child of its own to place ΓÇö
+        satisfied exactly when ATOM-1, ATOM-2 and ATOM-8 are. Nothing separate to check.
+
+no violation of a checkable rule
+32 candidate(s) needing judgement ΓÇö these do not fail the gate
+exit 0
+
+===== audit-composites storybook =====
+D:\Repositories\starci-academy
+
+composites found: 72 file(s)
+
+COMPOSITE-3  ok
+        the vendor stops at the atom tier ΓÇö and this atom already exists
+
+COMPOSITE-3-missing-atom  1 to add
+        a vendor component with no house atom ΓÇö this list is the atom tier's to-do
+        .storybook/components/composites/identity/IdentityTile/IdentityTile.tsx
+            imports `Skeleton` from @heroui/react ΓÇö no house atom wraps it yet
+
+COMPOSITE-4  ok
+        the prop is `classNames: Array<AllowedClassName>`, and `className` is deleted, not deprecated
+
+COMPOSITE-8  ok
+        what it renders it must be able to BUILD ΓÇö a reference, never an already-called node
+
+COMPOSITE-10  1 violation(s)
+        decide WHICH parts shimmer and HOW MANY ΓÇö the shape of each is the atom's
+        .storybook/components/composites/identity/IdentityTile/IdentityTile.tsx
+            draws its own shimmer ΓÇö render the real structure with `isSkeleton` forwarded; you choose how many, the atom chooses the shape
+
+Not checked here, because they need judgement rather than parsing:
+  COMPOSITE-1 is it a reusable shape ┬╖ COMPOSITE-2/7 does a prop name a domain entity
+  COMPOSITE-5/6/8/9
+  See canon/fe/enforce/tiers/composite.md
+
+1 violation(s)
+exit 1
+
+===== audit-composites src =====
+D:\Repositories\starci-academy
+
+composites found: 67 file(s)
+
+COMPOSITE-3  ok
+        the vendor stops at the atom tier ΓÇö and this atom already exists
+
+COMPOSITE-3-missing-atom  1 to add
+        a vendor component with no house atom ΓÇö this list is the atom tier's to-do
+        src/components/composites/identity/IdentityTile/index.tsx
+            imports `Skeleton` from @heroui/react ΓÇö no house atom wraps it yet
+
+COMPOSITE-4  ok
+        the prop is `classNames: Array<AllowedClassName>`, and `className` is deleted, not deprecated
+
+COMPOSITE-8  ok
+        what it renders it must be able to BUILD ΓÇö a reference, never an already-called node
+
+COMPOSITE-10  1 violation(s)
+        decide WHICH parts shimmer and HOW MANY ΓÇö the shape of each is the atom's
+        src/components/composites/identity/IdentityTile/index.tsx
+            draws its own shimmer ΓÇö render the real structure with `isSkeleton` forwarded; you choose how many, the atom chooses the shape
+
+Not checked here, because they need judgement rather than parsing:
+  COMPOSITE-1 is it a reusable shape ┬╖ COMPOSITE-2/7 does a prop name a domain entity
+  COMPOSITE-5/6/8/9
+  See canon/fe/enforce/tiers/composite.md
+
+1 violation(s)
+exit 1
+
+===== audit-principles =====
+D:\Repositories\starci-academy
+canon: D:/Repositories/starci-academy-backend/.claude/canon/fe/enforce/spacing
+
+principles and code agree ΓÇö every step, every member, both trees
+exit 0
+
+===== check-pattern-coverage =====
+check-pattern-coverage: 29 unnamed or multi-token seam(s) total
+
+held (ledger-approved teacher holds ΓÇö not a regression): 29 seam(s) in 29 file(s)
+
+  .storybook\components\composites\form\InputTags\InputTags.tsx  (1: raw; hold=ps-sb-inputtags-input-px1-caret)
+  .storybook\components\nivo\blocks\agent-os\KnowledgeSection\KnowledgeSection.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\agent-os\ModelsSection\ModelsSection.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\agent-os\ToolsSection\ToolsSection.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\billing\InvoiceDetailModal\InvoiceDetailModal.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\billing\InvoiceList\InvoiceList.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\catalog\MyOrdersList\MyOrdersList.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\catalog\UpgradeTierConfirmModal\UpgradeTierConfirmModal.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\dashboard\KpiTile\KpiTile.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\domains\DomainList\DomainList.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\expert-site\ExpertSiteGenerate\ExpertSiteGenerate.tsx  (1: StackH; hold=sb-nivo-rest-gap2-title-meta-row-no-token)
+  .storybook\components\nivo\blocks\expert-site\ExpertSiteLeads\ExpertSiteLeads.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\expert-site\ExpertSiteLeadsPipeline\ExpertSiteLeadsPipeline.tsx  (1: StackH; hold=sb-nivo-rest-gap2-title-meta-row-no-token)
+  .storybook\components\nivo\blocks\expert-site\LeadsInboxCard\LeadsInboxCard.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\landing\AuditCta\AuditCta.tsx  (1: StackV; hold=sb-nivo-landing-gap4-copy-stack-no-token)
+  .storybook\components\nivo\blocks\landing\DemoFlow\DemoFlow.tsx  (1: StackV; hold=sb-nivo-landing-gap2-mixed-tile-no-token)
+  .storybook\components\nivo\blocks\landing\HumanInTheLoop\HumanInTheLoop.tsx  (1: StackV; hold=sb-nivo-landing-gap4-copy-stack-no-token)
+  .storybook\components\nivo\blocks\landing\OperatingLoopVisual\OperatingLoopVisual.tsx  (1: StackV; hold=sb-nivo-landing-flownode-gap1-no-token)
+  .storybook\components\nivo\blocks\landing\ProblemStatement\ProblemStatement.tsx  (1: StackV; hold=sb-nivo-landing-gap4-copy-stack-no-token)
+  .storybook\components\nivo\blocks\landing\ProductQuickSelector\ProductQuickSelector.tsx  (1: StackV; hold=sb-nivo-landing-gap2-mixed-tile-no-token)
+  .storybook\components\nivo\blocks\landing\SolutionByIndustry\SolutionByIndustry.tsx  (1: StackH; hold=sb-nivo-landing-gap2-title-chip-row-no-token)
+  .storybook\components\nivo\blocks\landing\SystemFlow\SystemFlow.tsx  (1: StackV; hold=sb-nivo-landing-gap2-mixed-tile-no-token)
+  .storybook\components\nivo\blocks\support\SupportTicketList\SupportTicketList.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\support\TicketThread\TicketThread.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\blocks\wallet\WalletOverview\WalletOverview.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  .storybook\components\nivo\pages\Dashboard\Dashboard.tsx  (1: StackH; hold=sb-nivo-rest-gap3-meta-rows-no-token)
+  src\components\composites\form\InputTags\index.tsx  (1: raw; hold=ps-sb-inputtags-input-px1-caret)
+  src\components\pages\ArchitecturePage\ArchitectureRail\index.tsx  (1: raw; hold=ps-arch-rail-px1-scroll-inset)
+  src\components\pages\PracticeHubPage\PracticeRail\index.tsx  (1: raw; hold=ps-practice-asymmetric-pad)
+
+failing (undocumented ΓÇö must name a principle or add a ledger hold): 0
+
+OK ΓÇö 29 seam(s) remain only as explicit teacher holds.
+exit 0
+
+audit:fe ΓÇö 2 job(s) failed

@@ -1,0 +1,41 @@
+{
+  "partition": "skeleton-and-teacher-hold-audit",
+  "changed": [],
+  "skipped": [
+    "skeleton redesign holds from BATCH 13 (~23 paths)",
+    "ContinueCard stacking / bodyVariant",
+    "27 teacher pattern seams"
+  ],
+  "holds": [
+    {
+      "id": "skeleton-contracts-redesign",
+      "classification": "ambiguous",
+      "countApprox": 23
+    },
+    {
+      "id": "teacher-holds-27",
+      "classification": "teacher-hold",
+      "count": 27,
+      "auditFe": "0 failing undocumented"
+    }
+  ],
+  "evidence": {
+    "teacher": "npm run audit:fe reports 27 ledger-approved seams; mostly nivo gap tokens + InputTags caret",
+    "skeleton": "Hand-rolled skeleton leaves await COMPOSITE-10 / atom isSkeleton coverage — no mechanical twin sync this batch",
+    "teacherFilesUntouched": true
+  },
+  "proposals": [
+    {
+      "id": "skeleton-atom-isSkeleton-coverage",
+      "summary": "Replace hand-rolled skeleton leaves once atoms expose isSkeleton mirrors",
+      "doNotInventNow": true
+    },
+    {
+      "id": "teacher-seams-stay-ledger",
+      "summary": "Keep 27 teacher holds; do not invent principle tokens for nivo meta rows",
+      "doNotInventNow": true
+    }
+  ],
+  "verification": { "note": "audit only — zero edits" },
+  "regressions": []
+}

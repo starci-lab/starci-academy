@@ -1,0 +1,155 @@
+{
+  "applied": [
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      "line": 232,
+      "at": 233,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      "line": 208,
+      "at": 209,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      "line": 171,
+      "at": 151,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "line": 133,
+      "at": 133,
+      "principle": "title-subtitle"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "line": 136,
+      "at": 137,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadDetail/LeadDetail.tsx",
+      "line": 138,
+      "at": 138,
+      "principle": "block-boundary"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+      "line": 92,
+      "at": 92,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+      "line": 78,
+      "at": 78,
+      "principle": "label-field"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentDetailDrawer/AgentDetailDrawer.tsx",
+      "line": 129,
+      "at": 129,
+      "principle": "block-boundary"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      "line": 79,
+      "at": 79,
+      "principle": "group-boundary"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+      "line": 112,
+      "at": 112,
+      "principle": "name-handle"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+      "line": 105,
+      "at": 105,
+      "principle": "identity"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/BuyConfirmModal/BuyConfirmModal.tsx",
+      "line": 120,
+      "at": 120,
+      "principle": "label-field"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+      "line": 138,
+      "at": 138,
+      "principle": "label-field"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 233,
+      "at": 229,
+      "principle": "label-field"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "line": 187,
+      "at": 187,
+      "principle": "label-field"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "line": 196,
+      "at": 199,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 181,
+      "at": 164,
+      "principle": "title-subtitle"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 158,
+      "at": 150,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "line": 149,
+      "at": 160,
+      "principle": "label-field"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx",
+      "line": 66,
+      "at": 66,
+      "principle": "label-field"
+    },
+    {
+      "rel": ".storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx",
+      "line": 181,
+      "at": 181,
+      "principle": "sibling-stack"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+      "line": 75,
+      "at": 75,
+      "principle": "block-boundary"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      "line": 106,
+      "at": 106,
+      "principle": "block-boundary"
+    },
+    {
+      "rel": ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      "line": 242,
+      "at": 242,
+      "principle": "block-boundary"
+    }
+  ],
+  "missed": []
+}

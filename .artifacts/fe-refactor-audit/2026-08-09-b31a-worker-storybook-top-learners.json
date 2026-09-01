@@ -1,0 +1,25 @@
+{
+  "manifest": [],
+  "classification": {},
+  "importsBefore": [],
+  "importsAfter": null,
+  "warningsBefore": {},
+  "warningsAfter": null,
+  "changed": [],
+  "moved": [],
+  "deleted": [],
+  "skipped": [],
+  "holds": [
+    "no TopLearners Storybook twin or story — hold with scan evidence"
+  ],
+  "publicDoorsRemoved": [],
+  "rawPayloadResiduals": [],
+  "skeletonParity": "n/a — no product edits",
+  "storybookParity": "none",
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "status": "hold-absent"
+}

@@ -1,0 +1,166 @@
+{
+  "SectionCard": [
+    {
+      "file": "src/components/blocks/learn/QuizCard/index.tsx",
+      "snippet": "<SectionCard identity={{ tier: \"block\", component: \"QuizCard\" }} classNames={classNames} >"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/StreakFreezeCard/component.tsx",
+      "snippet": "<SectionCard icon={() => <SnowflakeIcon className=\"size-5 text-accent-soft-foreground\" />} title={labels.title} >"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "snippet": "<SectionCard icon={() => <VideoCameraIcon className=\"size-5 text-accent-soft-foreground\" />} title={labels.title} >"
+    },
+    {
+      "file": "src/components/pages/DashboardPage/WhoToFollow/component.tsx",
+      "snippet": "<SectionCard icon={() => <UserPlusIcon className=\"size-5 text-accent-soft-foreground\" />} title={title} >"
+    }
+  ],
+  "TierCardBase": [
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "snippet": "<TierCardBase identity={{ tier: \"block\", component: \"FreeTierCard\" }} isSkeleton={isSkeleton} icon={() => ( <TierLevelIcon level={1} className=\"size-6 shrink-0 text-accent-soft-foreground\" /> )} title"
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "snippet": "<TierCardBase identity={{ tier: \"block\", component: \"TierCard\" }} className={tier.popular ? \"border-accent ring-2 ring-accent/30\" : undefined} icon={() => ( <TierLevelIcon level={tierLevel} className="
+    }
+  ],
+  "LeaderboardListCard": [
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "snippet": "<LeaderboardListCard className={className} title={labels.title} onSeeMore={onSeeMore} seeMoreLabel={labels.seeMoreLabel} standing={standing} rows={rows} selfRow={selfRow} ellipsisLabel={ellipsisLabel}"
+    }
+  ],
+  "LabeledList": [
+    {
+      "file": "src/components/blocks/learn/OnThisPage/LessonChallenges/index.tsx",
+      "snippet": "<LabeledList label={t(\"lessonRail.challenges.title\")} action={( <Button label={t(\"lessonRail.challenges.practice\")} size=\"sm\" variant=\"primary\" suffixIcon={ArrowRightIcon} onPress={onPractice} classNa"
+    }
+  ],
+  "ListRow": [
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "snippet": "<ListRow key={item.id} // p-3, not ListRow's bare py-2: this checklist always renders // INSIDE a bounded card, where a row with no horizontal padding // sits flush against the card edge. Padding on t"
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "snippet": "<ListRow key={item.id} leading={!item.isRead ? ( ({ isSkeleton }: SkeletonProps) => isSkeleton ? null : <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\" className=\"size-2 text-accent-soft-foreg"
+    },
+    {
+      "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "snippet": "<ListRow key={notification.id} leading={!notification.isRead ? ( <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\" className=\"size-2 text-accent-soft-foreground\" /> ) : undefined} title={t( noti"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "snippet": "<ListRow key={task.id} leading={task.completed ? ( <CheckCircleIcon aria-hidden focusable=\"false\" className=\"size-5 text-success-soft-foreground\" /> ) : attempted ? ( <CircleHalfIcon aria-hidden focus"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "snippet": "<ListRow title={lesson.title} subtitle={t(\"content.minutesRead\", { minutes: lesson.minutesRead })} meta={( <> {lesson.difficulty ? ( <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} /> ) :"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "snippet": "<ListRow key={challenge.id} leading={( <PuzzlePieceIcon aria-hidden focusable=\"false\" className=\"size-5 text-foreground\" /> )} title={challenge.title} meta={( <> <DifficultyChip difficulty={toDifficul"
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "snippet": "<ListRow key={item.id} title={item.challengeTitle} divider={index < items.length - 1} meta={( <> <EntityToken globalId={item.courseGlobalId} label={item.courseTitle} /> <Chip size=\"sm\" variant=\"soft\" "
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+      "snippet": "<ListRow key={lesson.id} divider={index < lessons.length - 1} leading={() => <Icon aria-hidden focusable=\"false\" weight=\"fill\" className={STATUS_ICON_CLASS[lesson.status]} />} title={lesson.title} sub"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "snippet": "<ListRow key={item.id} leading={!item.isRead ? ( ({ isSkeleton }: SkeletonProps) => isSkeleton ? null : <CircleIcon weight=\"fill\" aria-hidden focusable=\"false\" className=\"size-2 text-accent-soft-foreg"
+    }
+  ],
+  "SidebarNavItem": [
+    {
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" />} label={item.label} isActive={selectedTab === item.tab} onPress={() => onSelect(item)} />"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" />} label={item.label} isActive={selectedTab === item.tab} onPress={() => onSelect(item)} />"
+    },
+    {
+      "file": "src/components/blocks/learn/LearnSidebar/index.tsx",
+      "snippet": "<SidebarNavItem key={item.value} icon={<item.icon className=\"size-5 shrink-0\" />} label={item.label} isActive={selectedTab === item.tab} endContent={item.locked ? ( <LockIcon aria-label={t(\"enrollGate"
+    },
+    {
+      "file": ".storybook/stories/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
+      "snippet": "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" endContent={ <span className=\"rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white\">1</span> } onPress={() => {}} />"
+    }
+  ],
+  "TabsCard": [
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/index.tsx",
+      "snippet": "<TabsCard className=\"mx-auto w-full max-w-3xl\" leftTabs={leftTabs} rightTabs={rightTabs} collapseRightOnMobile rightTabsNeutral />"
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "snippet": "<TabsCard variant=\"primary\" className=\"w-full max-w-xs\" leftTabs={{ selectedKey: era, ariaLabel: t(\"view.eraAria\"), onSelectionChange: (key) => setEra(String(key) as typeof era), items: [ { key: \"pres"
+    },
+    {
+      "file": "src/components/pages/CourseCatalogPage/component.tsx",
+      "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: labels.viewAria, onSelectionChange: (key: Key) => onChangeView(String(key) as CatalogView), items: [ { key: \"grid\", label: ( <Squa"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: labels.viewAria, onSelectionChange: (key) => onViewChange(String(key) as DeckView), items: [ { key: \"grid\", label: ( <SquaresFourI"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: groupMode, ariaLabel: labels.groupByDeck, onSelectionChange: (key) => setGroupMode(String(key) as FlashcardReviewHistoryGroupMode), items: [ { key:"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: mode, ariaLabel: labels.modeAria, onSelectionChange: (key) => { if (key === \"study\" || key === \"quiz\") { onModeChange(key) } }, items: [ { key: \"st"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"overview\", label: t(\"flashcard.review.overviewTabOverview\") }, { key: \"history\", label: t(\"flashcard.review.overviewTabHis"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "snippet": "<TabsCard variant=\"secondary\" className=\"w-full\" leftTabs={{ items: [ { key: \"begin\", label: t(\"flashcard.quiz.setupTabBegin\") }, { key: \"history\", label: t(\"flashcard.quiz.setupTabHistory\") }, { key:"
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "snippet": "<TabsCard leftTabs={{ items: [ { key: \"contents\", label: t(\"profileSettings.learning.detail.contents\"), icon: <ListBulletsIcon aria-hidden focusable=\"false\" className=\"size-5 shrink-0\" />, }, { key: \""
+    },
+    {
+      "file": "src/components/pages/NotificationsPage/index.tsx",
+      "snippet": "<TabsCard leftTabs={{ items: [ { key: ALL_TAB, label: t(\"notifications.tabs.all\") }, { key: NotificationType.CommentReply, label: t(\"notifications.tabs.commentReply\"), icon: <ChatCircleIcon className="
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: t(\"PracticeHubPage.rail.modeAria\"), onSelectionChange: (key) => setView(String(key) as PracticeView), items: [ { key: \"problems\", "
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "snippet": "<TabsCard variant=\"primary\" leftTabs={{ selectedKey: view, ariaLabel: t(\"PracticeHubPage.rail.modeAria\"), onSelectionChange: (key) => setView(String(key) as PracticeView), items: [ { key: \"problems\", "
+    }
+  ],
+  "ButtonGroup": [
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "snippet": "<ButtonGroup key={item.value} size=\"sm\" className=\"w-fit\">"
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "snippet": "<ButtonGroup.Separator className=\"!top-0 !h-full !bg-border !opacity-100\" />"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/studio/ConfirmDialog/ConfirmDialog.tsx",
+      "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false)"
+    },
+    {
+      "file": ".storybook/components/nivoexpert/overlays/modals/RefundOrderModal/RefundOrderModal.tsx",
+      "snippet": "<ButtonGroup principle=\"flex-action-end\" classNames={[\"w-full\"]} items={[ { key: \"cancel\", label: labels.cancelLabel, variant: \"secondary\", isDisabled: isConfirming, onPress: () => onOpenChange(false)"
+    }
+  ]
+}

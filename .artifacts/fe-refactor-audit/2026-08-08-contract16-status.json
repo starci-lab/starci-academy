@@ -1,0 +1,91 @@
+{
+  "batch": 16,
+  "title": "REMAINING CONTRACT HOLDS",
+  "date": "2026-08-08",
+  "baseHead": "ed86d170",
+  "branch": "mtp",
+  "committed": false,
+  "changedFiles": [
+    ".storybook/components/atoms/navigation/Link/Link.tsx",
+    ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+    ".storybook/components/composites/layout/DrawerShell/DrawerShell.tsx",
+    ".storybook/components/composites/layout/ModalShell/ModalShell.tsx",
+    ".storybook/components/frames/Stack/Stack.tsx",
+    ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+    ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+    ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+    "src/components/atoms/navigation/Link/index.tsx",
+    "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+    "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+    "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+    "src/components/blocks/learn/QuizCard/index.tsx",
+    "src/components/blocks/marketing/PitchCard/index.tsx",
+    "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+    "src/components/frames/Stack/index.tsx",
+    ".claude/fe/decision-ledger.json"
+  ],
+  "resolved": {
+    "identity": [
+      "MilestoneUpNextCard",
+      "QuizCard",
+      "PitchCard",
+      "VerdictHeroCard",
+      "WeeklyGoals-relocate",
+      "JobReadinessWidget-relocate",
+      "SurfaceCard-SB-nonBase-identity"
+    ],
+    "removedProps": {
+      "ModalShell.titleClassName": { "consumers": [] },
+      "ModalShell.dialogClassName": { "consumers": [] },
+      "ModalShell.footerClassName": { "consumers": [] },
+      "DrawerShell.titleClassName": { "consumers": [] },
+      "DrawerShell.bodyClassName": { "consumers": [] },
+      "SurfaceCardListItem.titleClassName": { "consumers": [] }
+    },
+    "namespacesRemoved": ["Link", "Stack"]
+  },
+  "holds": [
+    "ModalShell.bodyClassName-story",
+    "DrawerShell.contentClassName-nivoexpert",
+    "DrawerShell.dialogClassName-footerClassName-MiniCart",
+    "MiniCart-CvPreview-PDF-API-holds",
+    "ContinueCard-skeleton-stacking",
+    "heroui-vendor-boundary-30",
+    "unclear-identity-hosts-29",
+    "teacher-holds-27"
+  ],
+  "proposedApisNotInvented": [
+    "dialogWidth",
+    "footerVariant",
+    "viewportFit",
+    "PDF height enum",
+    "bodyVariant",
+    "contentStack"
+  ],
+  "coordinator": {
+    "overlappingEdits": 0,
+    "surfaceCardIdentityParity": "aligned",
+    "runtimeNamespaceRegression": false,
+    "pluralPrincipleRegression": false,
+    "vendorBoundariesIntact": true
+  },
+  "verification": {
+    "tsc": { "exit": 0 },
+    "eslintQuietAllChanged": { "exit": 0 },
+    "eslintMaxWarningsCleanSubset": { "exit": 0 },
+    "eslintMaxWarningsAllChanged": {
+      "exit": 1,
+      "note": "pre-existing held warnings only; 0 new errors"
+    },
+    "nodeTests": { "pass": 15, "fail": 0 },
+    "auditFe": { "exit": 0, "teacherHolds": 27, "failing": 0 }
+  },
+  "partitions": {
+    "clear-identity-roots": "applied",
+    "dead-prop-consumers": "applied",
+    "direct-export-and-barrel-consumers": "applied",
+    "Storybook-src-parity": "applied",
+    "HeroUI-vendor-boundaries": "documented",
+    "skeleton-and-layout-holds": "documented"
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "batch": "B37",
+  "agent": "legacy-surface-list-remaining",
+  "status": "complete",
+  "claimedAt": "2026-08-08T17:08:00.000Z",
+  "completedAt": "2026-08-08T17:25:00.000Z",
+  "owns": [
+    "src/components/blocks/cards/CrossListCard/index.tsx",
+    "src/components/pages/JobListPage/component.tsx",
+    "src/components/pages/KpiPage/component.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+    "src/components/pages/LearningHistoryPage/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+    "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+    "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+    "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+    "src/components/pages/PracticeProblemPage/index.tsx",
+    "src/components/pages/SessionsPage/index.tsx"
+  ],
+  "pattern": "Migrate exact SurfaceListCard consumers to SurfaceCardList (fixed-row + free-form content). Class A leftovers collapse LabeledCard frameless label into SurfaceCardList label/labelEnd/subtleLabel. Do not delete SurfaceListCard module (surface-contract-src). Hold CrossList twin, external row-component shells, and skip any path claimed by another agent.",
+  "migrated": [
+    {
+      "file": "src/components/pages/PracticeProblemPage/index.tsx",
+      "class": "G",
+      "shape": "fixed-row",
+      "from": "SurfaceListCard + SurfaceListCardRow (title/meta)",
+      "to": "SurfaceCardList items[]",
+      "notes": "Submissions panel title + language/verdict meta map 1:1."
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "class": "A",
+      "shape": "fixed-row",
+      "from": "LabeledCard frameless + SurfaceListCard + SurfaceListCardRow",
+      "to": "SurfaceCardList label/labelEnd/subtleLabel + items[]",
+      "notes": "Time-bucket class A collapse; skeleton rows use content slots."
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "class": "A",
+      "shape": "free-form-content",
+      "from": "LabeledCard frameless + SurfaceListCard + SurfaceListCardItem",
+      "to": "SurfaceCardList label + content items",
+      "notes": "Gaps list only; strengths remain CheckListCard."
+    },
+    {
+      "file": "src/components/pages/KpiPage/component.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem",
+      "to": "SurfaceCardList items[] content=kpiRowBody",
+      "notes": "Preset radios + claim controls stay inside free-form content."
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem href/withVerdict",
+      "to": "SurfaceCardList items[] with href/withVerdict/content",
+      "notes": "Rank/UserCell/points/caret stay in content; promote/demote band via withVerdict."
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem",
+      "to": "SurfaceCardList items[] content skeletons",
+      "notes": "Mirror weekly board rank-4+ shimmer rows."
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem + non-item ellipsis Box",
+      "to": "SurfaceCardList items[] (ellipsis as content row with -m-3 bleed)",
+      "notes": "Hidden-between band preserved via content bleed; FollowButton/UserCell/Link stay in content."
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem",
+      "to": "SurfaceCardList items[] content skeletons",
+      "notes": "Mirror global board rank-4+ shimmer rows."
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem onPress/hover",
+      "to": "SurfaceCardList items[] content + onPress/hover=underline",
+      "notes": "IconTile + SegmentBar course rows."
+    },
+    {
+      "file": "src/components/pages/SessionsPage/index.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem",
+      "to": "SurfaceCardList items[] content",
+      "notes": "Revoke Button remains nested inside non-pressable free-form content."
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "class": "G",
+      "shape": "free-form-content",
+      "from": "SurfaceListCard + SurfaceListCardItem className=bg-accent-soft",
+      "to": "SurfaceCardList identity + items[] content",
+      "notes": "Viewer tint moved inside content via -m-3 bg-accent-soft bleed (AllowedClassName cannot carry appearance)."
+    }
+  ],
+  "held": [
+    {
+      "id": "CrossListCard-wrong-twin",
+      "files": ["src/components/blocks/cards/CrossListCard/index.tsx"],
+      "class": "H",
+      "mismatch": "Children-based marked list; exact twin is SurfaceCard.CrossList (items), not SurfaceCardList. Comment-only SurfaceListCard mention — no import to burn.",
+      "classification": "wrong-member-twin"
+    },
+    {
+      "id": "JobListPage-JobListRow-contract",
+      "files": ["src/components/pages/JobListPage/component.tsx"],
+      "class": "G",
+      "mismatch": "Parent only shells SurfaceListCard; live rows are JobListRow which roots on SurfaceListCardItem (file not in this agent owns). Migrating the shell without JobListRow co-change double-frames separators.",
+      "classification": "external-row-component"
+    },
+    {
+      "id": "ProblemCatalog-ProblemRow-contract",
+      "files": ["src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx"],
+      "class": "G",
+      "mismatch": "Live rows are ProblemRow (SurfaceListCardItem root; not owned). Shell migration without ProblemRow co-change double-frames separators. Skeleton alone would diverge from live shape.",
+      "classification": "external-row-component"
+    }
+  ],
+  "skippedClaimedElsewhere": [],
+  "surfaceListCardModule": {
+    "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+    "action": "untouched",
+    "owner": "surface-contract-src",
+    "note": "Consumers stopped importing where migrated; module retained."
+  },
+  "gates": {
+    "tscOwned": "clean (no errors under owned migrated paths)",
+    "eslintOwned": "0 errors; pre-existing warnings only (heroui/identity/classname/parallel-skeleton debt outside this burn)",
+    "gitDiffCheck": "clean"
+  },
+  "summary": {
+    "owned": 14,
+    "migrated": 11,
+    "held": 3,
+    "skipped": 0
+  }
+}

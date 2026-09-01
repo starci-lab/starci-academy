@@ -1,0 +1,17 @@
+{
+  "partition": "storybook-only",
+  "changed": [
+    ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx"
+  ],
+  "skipped": [],
+  "holds": [],
+  "evidence": [
+    "AiQuotaModal.classNames transitive-dead after ModalShell.classNames removal"
+  ],
+  "newVariants": [],
+  "vendorBoundaries": [],
+  "verification": {
+    "eslintMaxWarnings0": "pass"
+  },
+  "regressions": []
+}

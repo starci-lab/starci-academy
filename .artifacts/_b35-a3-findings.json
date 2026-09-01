@@ -1,0 +1,1630 @@
+{
+  "total": 971,
+  "fileCount": 181,
+  "rules": {
+    "starci-fe/no-host-element-at-sentence-tier": 323,
+    "starci-fe/no-public-classname-prop": 100,
+    "starci-fe/no-frame-fragment-item": 23,
+    "starci-fe/require-identity-root": 112,
+    "starci-fe/no-heroui-outside-vocabulary": 53,
+    "starci-fe/no-classname-at-sentence-tier": 21,
+    "starci-fe/no-cn-above-vocabulary": 54,
+    "starci-fe/no-raw-shape-at-sentence-tier": 147,
+    "starci-fe/no-per-part-classname-prop": 1,
+    "starci-fe/no-inline-parameter-type": 4,
+    "starci-fe/no-helper-folder-in-components": 9,
+    "starci-fe/no-emoji-in-source": 19,
+    "starci-fe/handler-on-prefix": 1,
+    "starci-fe/no-vietnamese-in-source-authoring": 2,
+    "starci-fe/require-frame-self-declare": 73,
+    "starci-fe/no-inline-skeleton-branch": 4,
+    "starci-fe/no-skeleton-twin-component": 9,
+    "starci-fe/no-parallel-skeleton": 12,
+    "starci-fe/no-retired-async-content": 3,
+    "starci-fe/no-arbitrary-token": 1
+  },
+  "ranked": [
+    [
+      "src/components/blocks/learn/ContentAiChat/index.tsx",
+      68,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 5,
+        "starci-fe/handler-on-prefix": 1,
+        "starci-fe/no-emoji-in-source": 2,
+        "starci-fe/no-vietnamese-in-source-authoring": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 28,
+        "starci-fe/no-raw-shape-at-sentence-tier": 23,
+        "starci-fe/no-cn-above-vocabulary": 4
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      34,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-retired-async-content": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-host-element-at-sentence-tier": 12,
+        "starci-fe/no-raw-shape-at-sentence-tier": 10,
+        "starci-fe/no-cn-above-vocabulary": 2,
+        "starci-fe/no-parallel-skeleton": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      25,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 12,
+        "starci-fe/no-raw-shape-at-sentence-tier": 9,
+        "starci-fe/no-public-classname-prop": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/AIProcessingText/index.tsx",
+      22,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-cn-above-vocabulary": 8,
+        "starci-fe/no-host-element-at-sentence-tier": 9,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      20,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-host-element-at-sentence-tier": 6,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 5
+      }
+    ],
+    [
+      "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      18,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 6,
+        "starci-fe/require-frame-self-declare": 6,
+        "starci-fe/no-frame-fragment-item": 6
+      }
+    ],
+    [
+      "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      18,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 7,
+        "starci-fe/no-raw-shape-at-sentence-tier": 6,
+        "starci-fe/no-cn-above-vocabulary": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      17,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/no-host-element-at-sentence-tier": 5,
+        "starci-fe/no-raw-shape-at-sentence-tier": 3,
+        "starci-fe/no-cn-above-vocabulary": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      16,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 7,
+        "starci-fe/no-raw-shape-at-sentence-tier": 7
+      }
+    ],
+    [
+      "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      15,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 6,
+        "starci-fe/no-cn-above-vocabulary": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      15,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/no-host-element-at-sentence-tier": 4,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2,
+        "starci-fe/no-arbitrary-token": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      14,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 4,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4,
+        "starci-fe/no-cn-above-vocabulary": 4
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      14,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 5,
+        "starci-fe/no-raw-shape-at-sentence-tier": 7
+      }
+    ],
+    [
+      "src/components/blocks/learn/OnThisPage/index.tsx",
+      13,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 5,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4,
+        "starci-fe/no-cn-above-vocabulary": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/QaInboxRow/index.tsx",
+      13,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 4,
+        "starci-fe/no-raw-shape-at-sentence-tier": 5,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      13,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 5,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      12,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 4,
+        "starci-fe/no-frame-fragment-item": 4,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-inline-skeleton-branch": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      12,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 5,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/RootNode/index.tsx",
+      11,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-inline-parameter-type": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 4,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2,
+        "starci-fe/no-cn-above-vocabulary": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+      11,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-emoji-in-source": 3,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      11,
+      {
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      11,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 6,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      11,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      11,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-parallel-skeleton": 2,
+        "starci-fe/no-retired-async-content": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/EnrollGate/index.tsx",
+      10,
+      {
+        "starci-fe/require-frame-self-declare": 8,
+        "starci-fe/no-public-classname-prop": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      10,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 6,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      10,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      10,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ChatToolResult/index.tsx",
+      9,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 4
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/index.tsx",
+      9,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-inline-parameter-type": 2,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      9,
+      {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-frame-fragment-item": 3,
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-public-classname-prop": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      9,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      9,
+      {
+        "starci-fe/no-skeleton-twin-component": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/ModuleNode/index.tsx",
+      8,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-cn-above-vocabulary": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+      8,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-cn-above-vocabulary": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+      8,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      8,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 5,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/E2eBody/index.tsx",
+      8,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 3
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      7,
+      {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 4
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentAiFab/index.tsx",
+      7,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+      7,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-inline-skeleton-branch": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+      7,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 4,
+        "starci-fe/no-public-classname-prop": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      7,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      7,
+      {
+        "starci-fe/require-frame-self-declare": 5,
+        "starci-fe/no-inline-skeleton-branch": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      7,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2,
+        "starci-fe/no-inline-skeleton-branch": 1
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      6,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 6
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+      6,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 6
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      6,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+      6,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardToolbar/index.tsx",
+      6,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/no-emoji-in-source": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      6,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/StarCiAIBadge/index.tsx",
+      6,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-cn-above-vocabulary": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      6,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationHeader/index.tsx",
+      5,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      5,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      5,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      5,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ResumeRail/index.tsx",
+      5,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/VariantChip/VariantChipDifficulty/index.tsx",
+      5,
+      {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      5,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      5,
+      {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/require-frame-self-declare": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/SandboxBody/index.tsx",
+      5,
+      {
+        "starci-fe/no-parallel-skeleton": 2,
+        "starci-fe/no-retired-async-content": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      5,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx",
+      4,
+      {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      4,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentAiSelectionAsk/index.tsx",
+      4,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/CourseBrief/index.tsx",
+      4,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      4,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/require-frame-self-declare": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+      4,
+      {
+        "starci-fe/no-inline-parameter-type": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/require-frame-self-declare": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      4,
+      {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationResourceBody/index.tsx",
+      4,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/LearnNudges/component.tsx",
+      4,
+      {
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      4,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ModuleContinueBand/index.tsx",
+      4,
+      {
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-public-classname-prop": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      4,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/QaChatBubble/index.tsx",
+      4,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ReactionButton/index.tsx",
+      4,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/VoiceHero/index.tsx",
+      4,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2,
+        "starci-fe/require-frame-self-declare": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      4,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      4,
+      {
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      4,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/index.tsx",
+      4,
+      {
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/require-frame-self-declare": 3
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      3,
+      {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      3,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 3
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      3,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 3
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FoundationResourceBody/FoundationResourceBody.tsx",
+      3,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 3
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      3,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 3
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      3,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/AiBalancer/KeyStatusChip/index.tsx",
+      3,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/Canvas/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/ModuleSlotNode/index.tsx",
+      3,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentRelatedList/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/CourseQaHeader/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationsHeader/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/ModuleHeader/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/QaReactionBar/index.tsx",
+      3,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/RatingBar/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/RelatedContentList/component.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/UpNextCard/index.tsx",
+      3,
+      {
+        "starci-fe/require-frame-self-declare": 3
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      3,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      3,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/LessonBody/index.tsx",
+      3,
+      {
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/require-frame-self-declare": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/CourseQaHeader/CourseQaHeader.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FoundationCategoryHeader/FoundationCategoryHeader.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/FoundationsHeader/FoundationsHeader.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/LeaderboardHeader/LeaderboardHeader.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/LeaderboardToolbar/LeaderboardToolbar.tsx",
+      2,
+      {
+        "starci-fe/no-public-classname-prop": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ModuleHeader/ModuleHeader.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/RatingBar/RatingBar.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/ReactionButton/ReactionGlyph/index.tsx",
+      2,
+      {
+        "starci-fe/no-public-classname-prop": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+      2,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/MindMapBackButton/index.tsx",
+      2,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/MindMapContinueButton/index.tsx",
+      2,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/MindMapFullscreenButton/index.tsx",
+      2,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentMap/index.tsx",
+      2,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContinueCard/types.ts",
+      2,
+      {
+        "starci-fe/no-emoji-in-source": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      2,
+      {
+        "starci-fe/no-public-classname-prop": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/CourseTeamGate/index.tsx",
+      2,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-emoji-in-source": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/EntityResultRow/component.tsx",
+      2,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/FlashcardModeSwitch/index.tsx",
+      2,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      2,
+      {
+        "starci-fe/require-frame-self-declare": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      2,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-emoji-in-source": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/LearnSidebar/index.tsx",
+      2,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+      2,
+      {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/no-public-classname-prop": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/OnThisPage/LessonFlashcards/index.tsx",
+      2,
+      {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+      2,
+      {
+        "starci-fe/require-frame-self-declare": 2
+      }
+    ],
+    [
+      "src/components/blocks/learn/TaskLockedAlert/index.tsx",
+      2,
+      {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/VariantChip/types.ts",
+      2,
+      {
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/CodeExplainingBody/index.tsx",
+      2,
+      {
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/require-frame-self-declare": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/CodeImplementationBody/index.tsx",
+      2,
+      {
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/require-frame-self-declare": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/E2eResultButton/index.tsx",
+      2,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      2,
+      {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskLockedAlert/index.tsx",
+      2,
+      {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      2,
+      {
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/require-frame-self-declare": 1
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      1,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      ".storybook/components/starci/blocks/learn/QaChatBubble/QaChatBubble.tsx",
+      1,
+      {
+        "starci-fe/no-host-element-at-sentence-tier": 1
+      }
+    ],
+    [
+      "src/components/blocks/course/CourseTrialChip/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/AiBalancer/map.tsx",
+      1,
+      {
+        "starci-fe/no-per-part-classname-prop": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/MindMapLegend/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/hooks/index.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ConceptMap/hooks/useMindMapFitView.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/ContentModeNav/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      1,
+      {
+        "starci-fe/no-emoji-in-source": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/LearnBreadcrumb/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/MindMapContinueButton/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/OnThisPage/hooks/useTableOfContents.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/TrialEnrollHook/index.tsx",
+      1,
+      {
+        "starci-fe/require-frame-self-declare": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/AiLab/types/ai-lab.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/AiLab/types/index.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/CodeExplainingBody/Empty/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/CodeImplementationBody/Empty/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/ContentBody/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/LessonBody/Empty/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/ReadBadge/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/constants/content-tabs.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/hooks/useLessonNavigation.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/types/content.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/lesson/types/index.ts",
+      1,
+      {
+        "starci-fe/no-helper-folder-in-components": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskBreadcrumb/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ],
+    [
+      "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      1,
+      {
+        "starci-fe/require-identity-root": 1
+      }
+    ]
+  ]
+}

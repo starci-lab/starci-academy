@@ -1,0 +1,4048 @@
+{
+  "batch": "B37",
+  "phase": 0,
+  "checkpoint": "84b92cd77",
+  "inventoryOf": "current-worktree",
+  "note": "B36 work may be uncommitted; inventory is of the live worktree, not HEAD tree alone.",
+  "generatedAt": "2026-08-08T16:59:25.169Z",
+  "remeasure": {
+    "LabeledCard": {
+      "count": 97,
+      "files": [
+        ".storybook/components/frames/_identity.ts",
+        ".storybook/stories/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.stories.tsx",
+        ".storybook/stories/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.stories.tsx",
+        "src/components/blocks/cards/CheckListCard/index.tsx",
+        "src/components/blocks/cards/ContinueCard/index.tsx",
+        "src/components/blocks/cards/FlipCard/index.tsx",
+        "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+        "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+        "src/components/blocks/learn/personal-project/index.tsx",
+        "src/components/composites/layout/Disclosure/index.tsx",
+        "src/components/frames/_identity.ts",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "src/components/pages/AiUsagePage/index.tsx",
+        "src/components/pages/AppearancePage/index.tsx",
+        "src/components/pages/ArchitecturePage/index.tsx",
+        "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+        "src/components/pages/ContactPage/ContactChannels/index.tsx",
+        "src/components/pages/ContactPage/ContactFaq/index.tsx",
+        "src/components/pages/ContactPage/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+        "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/component.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/index.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/index.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/component.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+        "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+        "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+        "src/components/pages/DashboardPage/WeeklyGoals/component.tsx",
+        "src/components/pages/DashboardPage/WeeklyGoals/index.tsx",
+        "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+        "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+        "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+        "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+        "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+        "src/components/pages/JobPostFormPage/index.tsx",
+        "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        "src/components/pages/MyAttemptsPage/index.tsx",
+        "src/components/pages/MyFeedbackPage/index.tsx",
+        "src/components/pages/MySubmissionsPage/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+        "src/components/pages/ProfileActivityPage/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+        "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "src/components/pages/ProfileOverviewPage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+        "src/components/pages/RewardsPage/RewardCatalog/index.tsx"
+      ]
+    },
+    "frameless": {
+      "count": 54,
+      "files": [
+        ".storybook/components/composites/stats/MetricCard/MetricCard.tsx",
+        ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+        ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+        ".storybook/stories/composites/stats/StatPair/StatPair.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ContentDiscussion/ContentDiscussion.stories.tsx",
+        "src/components/blocks/cards/CheckListCard/index.tsx",
+        "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+        "src/components/blocks/learn/ContentDiscussion/index.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+        "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/index.tsx",
+        "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+        "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+        "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+        "src/components/blocks/learn/personal-project/index.tsx",
+        "src/components/composites/stats/MetricCard/index.tsx",
+        "src/components/composites/stats/StatPair/index.tsx",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+        "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+        "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/component.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+        "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+        "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "src/components/pages/ProfileOverviewPage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx"
+      ]
+    },
+    "flushContent": {
+      "count": 2,
+      "files": [
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/pages/ContactPage/ContactChannels/index.tsx"
+      ]
+    },
+    "fillHeight": {
+      "count": 8,
+      "files": [
+        "src/components/blocks/cards/LabeledCard/index.tsx",
+        "src/components/blocks/cards/PricingCard/index.tsx",
+        "src/components/blocks/cards/SectionCard/index.tsx",
+        "src/components/blocks/marketing/PitchCard/index.tsx",
+        "src/components/pages/DashboardPage/ContinueLearning/component.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/index.tsx"
+      ]
+    },
+    "SurfaceListCard": {
+      "count": 87,
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+        ".storybook/components/composites/cards/verdict-band.ts",
+        ".storybook/components/composites/stats/StatGridCard/StatGridCard.tsx",
+        ".storybook/components/composites/viewers/MarkdownContent/map.tsx",
+        ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+        ".storybook/stories/composites/stats/StatGridCard/StatGridCard.stories.tsx",
+        "src/components/blocks/cards/CheckListCard/index.tsx",
+        "src/components/blocks/cards/CrossListCard/index.tsx",
+        "src/components/blocks/cards/GroupPressableCard/index.tsx",
+        "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+        "src/components/blocks/cards/SurfaceListCard/index.tsx",
+        "src/components/blocks/cards/verdict-band.ts",
+        "src/components/blocks/commerce/CartLine/index.tsx",
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/learn/ChatToolResult/index.tsx",
+        "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "src/components/blocks/learn/QaQuestionThread/index.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+        "src/components/blocks/rendering/MarkdownContent/map.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+        "src/components/composites/cards/verdict-band.ts",
+        "src/components/composites/viewers/MarkdownContent/map.tsx",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+        "src/components/pages/BookmarksPage/index.tsx",
+        "src/components/pages/CartPage/component.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+        "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/pages/InstallmentPlansPage/index.tsx",
+        "src/components/pages/JobListPage/JobListRow/index.tsx",
+        "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+        "src/components/pages/JobListPage/component.tsx",
+        "src/components/pages/KpiPage/component.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+        "src/components/pages/LearningHistoryPage/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+        "src/components/pages/PracticeProblemPage/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+        "src/components/pages/ProfileChallengeManagePage/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+        "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+        "src/components/pages/ProfileRedirectPage/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+        "src/components/pages/SessionsPage/index.tsx"
+      ]
+    },
+    "SurfaceListCardRow": {
+      "count": 12,
+      "files": [
+        "src/components/blocks/cards/CheckListCard/index.tsx",
+        "src/components/blocks/cards/SurfaceListCard/index.tsx",
+        "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+        "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+        "src/components/pages/PracticeProblemPage/index.tsx",
+        "src/components/pages/RewardsPage/MyVouchers/index.tsx"
+      ]
+    },
+    "SurfaceListCardItem": {
+      "count": 62,
+      "files": [
+        ".storybook/components/composites/cards/verdict-band.ts",
+        ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+        "src/components/blocks/cards/GroupPressableCard/index.tsx",
+        "src/components/blocks/cards/SurfaceListCard/index.tsx",
+        "src/components/blocks/cards/verdict-band.ts",
+        "src/components/blocks/commerce/CartLine/index.tsx",
+        "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+        "src/components/blocks/feed/ActivityFeed/component.tsx",
+        "src/components/blocks/learn/ChatToolResult/index.tsx",
+        "src/components/blocks/learn/ContentAiChat/index.tsx",
+        "src/components/blocks/learn/RelatedContentList/component.tsx",
+        "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+        "src/components/composites/cards/verdict-band.ts",
+        "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+        "src/components/pages/CartPage/component.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+        "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+        "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+        "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TopLearners/component.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+        "src/components/pages/JobListPage/JobListRow/index.tsx",
+        "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+        "src/components/pages/JobListPage/component.tsx",
+        "src/components/pages/KpiPage/component.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+        "src/components/pages/LearningHistoryPage/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+        "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+        "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+        "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+        "src/components/pages/ProfileChallengeManagePage/index.tsx",
+        "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+        "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+        "src/components/pages/ProfileCodingProblemPage/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+        "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+        "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+        "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+        "src/components/pages/ProfileRedirectPage/index.tsx",
+        "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+        "src/components/pages/SessionsPage/index.tsx"
+      ]
+    },
+    "SurfaceCardList": {
+      "count": 111,
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/composites/feedback/EmptyState/EmptyState.tsx",
+        ".storybook/components/composites/stats/StatGridCard/StatGridCard.tsx",
+        ".storybook/components/nivo/blocks/dashboard/RecentActivityCard/RecentActivityCard.tsx",
+        ".storybook/components/nivo/pages/AccountView/AccountView.tsx",
+        ".storybook/components/nivoexpert/blocks/classroom/LessonTOC/LessonTOC.tsx",
+        ".storybook/components/nivoexpert/blocks/leads/LeadsPipeline/LeadsPipeline.tsx",
+        ".storybook/components/nivoexpert/blocks/learn/ContinueLearningRail/ContinueLearningRail.tsx",
+        ".storybook/components/nivoexpert/blocks/studio/CourseRailList/CourseRailList.tsx",
+        ".storybook/components/nivoexpert/overlays/drawers/NotificationsDrawer/NotificationsDrawer.tsx",
+        ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+        ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+        ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+        ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+        ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+        ".storybook/components/starci/blocks/learn/ContentRelatedList/ContentRelatedList.tsx",
+        ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+        ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+        ".storybook/components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.tsx",
+        ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+        ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+        ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+        ".storybook/components/starci/blocks/learn/LearnNudges/LearnNudges.tsx",
+        ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+        ".storybook/components/starci/blocks/learn/ModuleChallengeList/ModuleChallengeList.tsx",
+        ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+        ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+        ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+        ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+        ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+        ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+        ".storybook/components/starci/pages/CourseContents/CourseContents.tsx",
+        ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+        ".storybook/stories/behaviors/DragScrollArea/DragScrollArea.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardCrossList.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+        ".storybook/stories/composites/layout/ModalShell/ModalShell.stories.tsx",
+        ".storybook/stories/composites/lists/List/ListLabeled.stories.tsx",
+        ".storybook/stories/nivo/blocks/dashboard/RecentActivityCard/RecentActivityCard.stories.tsx",
+        ".storybook/stories/nivo/pages/AccountView/AccountView.stories.tsx",
+        ".storybook/stories/nivoexpert/blocks/classroom/LessonTOC/LessonTOC.stories.tsx",
+        ".storybook/stories/nivoexpert/blocks/leads/LeadsPipeline/LeadsPipeline.stories.tsx",
+        ".storybook/stories/nivoexpert/blocks/learn/ContinueLearningRail/ContinueLearningRail.stories.tsx",
+        ".storybook/stories/nivoexpert/blocks/studio/CourseRailList/CourseRailList.stories.tsx",
+        ".storybook/stories/nivoexpert/overlays/drawers/NotificationsDrawer/NotificationsDrawer.stories.tsx",
+        ".storybook/stories/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.stories.tsx",
+        ".storybook/stories/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.stories.tsx",
+        ".storybook/stories/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ChallengeBrief/ChallengeBrief.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ContentHeader/ContentHeader.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ContentRelatedList/ContentRelatedList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/FoundationResourceList/FoundationResourceList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/KeepGoingPath/KeepGoingPath.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/LearnNudges/LearnNudges.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/MindMapRail/MindMapRail.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ModuleChallengeList/ModuleChallengeList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ModuleLessonList/ModuleLessonList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.stories.tsx",
+        ".storybook/stories/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.stories.tsx",
+        ".storybook/stories/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.stories.tsx",
+        ".storybook/stories/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.stories.tsx",
+        "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+        "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+        "src/components/blocks/learn/ChallengeBrief/index.tsx",
+        "src/components/blocks/learn/ContentHeader/index.tsx",
+        "src/components/blocks/learn/ContentRelatedList/index.tsx",
+        "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+        "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+        "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+        "src/components/blocks/learn/FoundationResourceList/index.tsx",
+        "src/components/blocks/learn/KeepGoingPath/index.tsx",
+        "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+        "src/components/blocks/learn/LearnNudges/component.tsx",
+        "src/components/blocks/learn/MindMapRail/index.tsx",
+        "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+        "src/components/blocks/learn/ModuleLessonList/index.tsx",
+        "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+        "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+        "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+        "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        "src/components/composites/feedback/EmptyState/index.tsx",
+        "src/components/composites/stats/StatGridCard/index.tsx",
+        "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+        "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+        "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+        "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+        "src/components/overlays/modals/FollowListModal/component.tsx",
+        "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+        "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+        "src/components/overlays/modals/GlobalSearchModal/component.tsx",
+        "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+        "src/components/overlays/modals/PaymentModal/component.tsx",
+        "src/components/pages/ContactPage/ContactChannels/index.tsx",
+        "src/components/pages/CourseContents/component.tsx",
+        "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+        "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+        "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+        "src/components/pages/NotificationsPage/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+        "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx"
+      ]
+    },
+    "SurfaceCardAccordion": {
+      "count": 24,
+      "files": [
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        ".storybook/components/composites/layout/Disclosure/Disclosure.tsx",
+        ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+        ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+        ".storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx",
+        ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+        ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+        ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+        ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+        ".storybook/stories/composites/layout/Disclosure/Disclosure.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ChallengeBrief/ChallengeBrief.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.stories.tsx",
+        ".storybook/stories/starci/blocks/learn/TaskBriefBody/TaskBriefBody.stories.tsx",
+        ".storybook/stories/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.stories.tsx",
+        "src/components/blocks/learn/ChallengeBrief/index.tsx",
+        "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+        "src/components/blocks/learn/PlaygroundResourcePanel/index.tsx",
+        "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+        "src/components/blocks/learn/TaskBriefBody/index.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        "src/components/composites/layout/Disclosure/index.tsx",
+        "src/components/pages/PersonalProjectTaskPage/index.tsx"
+      ]
+    },
+    "SurfaceCardMembersJsx": {
+      "Accordion": {
+        "count": 13,
+        "files": [
+          ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+          ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+          ".storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx",
+          ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+          ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+          ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardAccordion.stories.tsx",
+          "src/components/blocks/learn/ChallengeBrief/index.tsx",
+          "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+          "src/components/blocks/learn/PlaygroundResourcePanel/index.tsx",
+          "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+          "src/components/blocks/learn/TaskBriefBody/index.tsx",
+          "src/components/pages/PersonalProjectTaskPage/index.tsx"
+        ]
+      },
+      "Base": {
+        "count": 199,
+        "files": [
+          ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+          ".storybook/components/composites/navigation/DoubleTabsCard/DoubleTabsCard.tsx",
+          ".storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx",
+          ".storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx",
+          ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+          ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+          ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+          ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+          ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+          ".storybook/components/nivo/blocks/agent-os/HealthCard/HealthCard.tsx",
+          ".storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx",
+          ".storybook/components/nivo/blocks/agent-os/ModelsSection/ModelsSection.tsx",
+          ".storybook/components/nivo/blocks/agent-os/N8nWorkflowTable/N8nWorkflowTable.tsx",
+          ".storybook/components/nivo/blocks/agent-os/OpsEventTable/OpsEventTable.tsx",
+          ".storybook/components/nivo/blocks/agent-os/PlaygroundPanel/PlaygroundPanel.tsx",
+          ".storybook/components/nivo/blocks/agent-os/PodN8nWorkflowList/PodN8nWorkflowList.tsx",
+          ".storybook/components/nivo/blocks/agent-os/PodOpenclawStatusCard/PodOpenclawStatusCard.tsx",
+          ".storybook/components/nivo/blocks/agent-os/PricingTierCard/PricingTierCard.tsx",
+          ".storybook/components/nivo/blocks/agent-os/ProvisioningState/ProvisioningState.tsx",
+          ".storybook/components/nivo/blocks/agent-os/ThreadDrawer/ThreadDrawer.tsx",
+          ".storybook/components/nivo/blocks/agent-os/ToolsSection/ToolsSection.tsx",
+          ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+          ".storybook/components/nivo/blocks/catalog/CatalogProductCard/CatalogProductCard.tsx",
+          ".storybook/components/nivo/blocks/catalog/CatalogTierCard/CatalogTierCard.tsx",
+          ".storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx",
+          ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+          ".storybook/components/nivo/blocks/dashboard/OperatingLoopRail/OperatingLoopRail.tsx",
+          ".storybook/components/nivo/blocks/dashboard/QuickActionsCard/QuickActionsCard.tsx",
+          ".storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx",
+          ".storybook/components/nivo/blocks/expert-site/DeployStatusCard/DeployStatusCard.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadForm/ExpertSiteLeadForm.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteOfferingsEditor/ExpertSiteOfferingsEditor.tsx",
+          ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+          ".storybook/components/nivo/blocks/expert-site/OfferingsSummaryCard/OfferingsSummaryCard.tsx",
+          ".storybook/components/nivo/blocks/instances/InstanceList/InstanceList.tsx",
+          ".storybook/components/nivo/blocks/landing/AiSuggestionCard/AiSuggestionCard.tsx",
+          ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+          ".storybook/components/nivo/blocks/landing/LeadLeakageMap/LeadLeakageMap.tsx",
+          ".storybook/components/nivo/blocks/landing/OperatingLoopHero/OperatingLoopHero.tsx",
+          ".storybook/components/nivo/blocks/landing/PricingTeaser/PricingTeaser.tsx",
+          ".storybook/components/nivo/blocks/landing/ProductShowcase/ProductShowcase.tsx",
+          ".storybook/components/nivo/blocks/landing/ProofStrip/ProofStrip.tsx",
+          ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+          ".storybook/components/nivo/blocks/landing/StoryBeatCard/StoryBeatCard.tsx",
+          ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+          ".storybook/components/nivo/blocks/landing/SystemStoryCard/SystemStoryCard.tsx",
+          ".storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx",
+          ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+          ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+          ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+          ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+          ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+          ".storybook/components/nivoexpert/blocks/auth/AuthCard/AuthCard.tsx",
+          ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+          ".storybook/components/nivoexpert/blocks/automation/N8nWorkflowTable/N8nWorkflowTable.tsx",
+          ".storybook/components/nivoexpert/blocks/automation/OpsEventTable/OpsEventTable.tsx",
+          ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+          ".storybook/components/nivoexpert/blocks/classroom/LessonViewer/LessonViewer.tsx",
+          ".storybook/components/nivoexpert/blocks/community/PostCard/PostCard.tsx",
+          ".storybook/components/nivoexpert/blocks/community/PostComposer/PostComposer.tsx",
+          ".storybook/components/nivoexpert/blocks/community/PostModerationCard/PostModerationCard.tsx",
+          ".storybook/components/nivoexpert/blocks/dashboard/AnalyticsView/AnalyticsView.tsx",
+          ".storybook/components/nivoexpert/blocks/dashboard/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+          ".storybook/components/nivoexpert/blocks/landing/CommunityPreviewCard/CommunityPreviewCard.tsx",
+          ".storybook/components/nivoexpert/blocks/landing/CourseFeaturedCard/CourseFeaturedCard.tsx",
+          ".storybook/components/nivoexpert/blocks/landing/CourseOfferCard/CourseOfferCard.tsx",
+          ".storybook/components/nivoexpert/blocks/landing/LeadCaptureCard/LeadCaptureCard.tsx",
+          ".storybook/components/nivoexpert/blocks/landing/OfferSection/OfferSection.tsx",
+          ".storybook/components/nivoexpert/blocks/landing/ProofStrip/ProofStrip.tsx",
+          ".storybook/components/nivoexpert/blocks/leads/LeadsPipeline/LeadsPipeline.tsx",
+          ".storybook/components/nivoexpert/blocks/learn/LearnerOverview/LearnerOverview.tsx",
+          ".storybook/components/nivoexpert/blocks/learn/MyCoursesGrid/MyCoursesGrid.tsx",
+          ".storybook/components/nivoexpert/blocks/members/MembersManager/MembersManager.tsx",
+          ".storybook/components/nivoexpert/blocks/revenue/OrderTable/OrderTable.tsx",
+          ".storybook/components/nivoexpert/overlays/drawers/AiSuggestionDrawer/AiSuggestionDrawer.tsx",
+          ".storybook/components/nivoexpert/overlays/drawers/LeadDetailDrawer/LeadDetailDrawer.tsx",
+          ".storybook/components/nivoexpert/pages/AcademySettingsForm/AcademySettingsForm.tsx",
+          ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+          ".storybook/components/nivoexpert/pages/community/CommunityFeed/CommunityFeed.tsx",
+          ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+          ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+          ".storybook/components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+          ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+          ".storybook/components/starci/blocks/dashboard/JobReadinessWidget/JobReadinessWidget.tsx",
+          ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+          ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+          ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+          ".storybook/components/starci/blocks/learn/ChallengeScoreCard/ChallengeScoreCard.tsx",
+          ".storybook/components/starci/blocks/learn/ContentArticle/ContentArticle.tsx",
+          ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+          ".storybook/components/starci/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+          ".storybook/components/starci/blocks/learn/CourseQaInvite/CourseQaInvite.tsx",
+          ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+          ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+          ".storybook/components/starci/blocks/learn/FlashcardDueHero/FlashcardDueHero.tsx",
+          ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+          ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+          ".storybook/components/starci/blocks/learn/FoundationResourceBody/FoundationResourceBody.tsx",
+          ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+          ".storybook/components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard.tsx",
+          ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+          ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+          ".storybook/components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard.tsx",
+          ".storybook/components/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.tsx",
+          ".storybook/components/starci/blocks/learn/PersonalProjectResultScreen/PersonalProjectResultScreen.tsx",
+          ".storybook/components/starci/blocks/learn/PlaygroundEnterBanner/PlaygroundEnterBanner.tsx",
+          ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+          ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+          ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+          ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+          ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+          ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+          ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+          ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskSubmissionPanel.tsx",
+          ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+          ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+          ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+          ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+          ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCard.stories.tsx",
+          ".storybook/stories/composites/layout/Section/Section.stories.tsx",
+          ".storybook/stories/composites/navigation/Toolbar/Toolbar.stories.tsx",
+          ".storybook/stories/frames/Grid/Grid.stories.tsx",
+          ".storybook/stories/frames/Stack/StackV.stories.tsx",
+          ".storybook/stories/starci/blocks/learn/ContinueCard/ContinueCardHero.NoProgress.stories.tsx",
+          ".storybook/stories/starci/blocks/learn/ContinueCard/ContinueCardHero.Progress.stories.tsx",
+          ".storybook/stories/starci/blocks/learn/ContinueCard/ContinueCardItem.stories.tsx",
+          "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+          "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+          "src/components/blocks/cards/MediaCard/index.tsx",
+          "src/components/blocks/cards/PlaygroundCard/component.tsx",
+          "src/components/blocks/careers/CVSubmissionForm/index.tsx",
+          "src/components/blocks/commerce/TrialConversionStrip/component.tsx",
+          "src/components/blocks/consultant/ConsultantCard/index.tsx",
+          "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+          "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+          "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+          "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+          "src/components/blocks/feed/CommunityPostCard/component.tsx",
+          "src/components/blocks/learn/ChallengeBrief/index.tsx",
+          "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+          "src/components/blocks/learn/ContentArticle/index.tsx",
+          "src/components/blocks/learn/ContinueCard/ContinueCardHero/index.tsx",
+          "src/components/blocks/learn/ContinueCard/ContinueCardItem/index.tsx",
+          "src/components/blocks/learn/CourseQaInvite/index.tsx",
+          "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+          "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+          "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+          "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+          "src/components/blocks/learn/FoundationResourceBody/index.tsx",
+          "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+          "src/components/blocks/learn/MilestoneUpNextCard/index.tsx",
+          "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+          "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+          "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+          "src/components/blocks/learn/PersonalProjectGatePreview/index.tsx",
+          "src/components/blocks/learn/PersonalProjectResultScreen/index.tsx",
+          "src/components/blocks/learn/PlaygroundEnterBanner/index.tsx",
+          "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+          "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+          "src/components/blocks/learn/QuizQuestion/index.tsx",
+          "src/components/blocks/learn/QuizRecapList/index.tsx",
+          "src/components/blocks/learn/QuizSetup/index.tsx",
+          "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+          "src/components/blocks/learn/TaskSubmissionPanel/index.tsx",
+          "src/components/blocks/profile/ProfileHero/index.tsx",
+          "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "src/components/blocks/profile/ProfileLockedState/index.tsx",
+          "src/components/composites/cards/SurfaceCard/index.tsx",
+          "src/components/composites/navigation/DoubleTabsCard/index.tsx",
+          "src/components/overlays/drawers/ContentAiChatDrawer/component.tsx",
+          "src/components/overlays/modals/PaymentModal/component.tsx",
+          "src/components/pages/CommunityFeedPage/component.tsx",
+          "src/components/pages/ContentPage/component.tsx",
+          "src/components/pages/CourseCatalogPage/CatalogLineCardSkeleton/index.tsx",
+          "src/components/pages/CourseCatalogPage/component.tsx",
+          "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+          "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+          "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+          "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+          "src/components/pages/JobDetailPage/component.tsx",
+          "src/components/pages/LoginPage/component.tsx",
+          "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+          "src/components/pages/MockInterviewPage/MockInterviewGatePreview/index.tsx",
+          "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+          "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+          "src/components/pages/PersonalProjectTaskPage/index.tsx"
+        ]
+      },
+      "CrossList": {
+        "count": 5,
+        "files": [
+          ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+          ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardCrossList.stories.tsx",
+          "src/components/blocks/dashboard/DailyQuest/index.tsx",
+          "src/components/blocks/learn/MockInterviewScorecard/index.tsx"
+        ]
+      },
+      "List": {
+        "count": 69,
+        "files": [
+          ".storybook/components/nivo/blocks/dashboard/RecentActivityCard/RecentActivityCard.tsx",
+          ".storybook/components/nivo/pages/AccountView/AccountView.tsx",
+          ".storybook/components/nivoexpert/blocks/classroom/LessonTOC/LessonTOC.tsx",
+          ".storybook/components/nivoexpert/blocks/leads/LeadsPipeline/LeadsPipeline.tsx",
+          ".storybook/components/nivoexpert/blocks/learn/ContinueLearningRail/ContinueLearningRail.tsx",
+          ".storybook/components/nivoexpert/blocks/studio/CourseRailList/CourseRailList.tsx",
+          ".storybook/components/nivoexpert/overlays/drawers/NotificationsDrawer/NotificationsDrawer.tsx",
+          ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+          ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+          ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+          ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+          ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+          ".storybook/components/starci/blocks/learn/ContentRelatedList/ContentRelatedList.tsx",
+          ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+          ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+          ".storybook/components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.tsx",
+          ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+          ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+          ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+          ".storybook/components/starci/blocks/learn/LearnNudges/LearnNudges.tsx",
+          ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+          ".storybook/components/starci/blocks/learn/ModuleChallengeList/ModuleChallengeList.tsx",
+          ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+          ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+          ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+          ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+          ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+          ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+          ".storybook/components/starci/pages/CourseContents/CourseContents.tsx",
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardList.stories.tsx",
+          "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+          "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+          "src/components/blocks/learn/ChallengeBrief/index.tsx",
+          "src/components/blocks/learn/ContentHeader/index.tsx",
+          "src/components/blocks/learn/ContentRelatedList/index.tsx",
+          "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+          "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+          "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+          "src/components/blocks/learn/FoundationResourceList/index.tsx",
+          "src/components/blocks/learn/KeepGoingPath/index.tsx",
+          "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+          "src/components/blocks/learn/LearnNudges/component.tsx",
+          "src/components/blocks/learn/MindMapRail/index.tsx",
+          "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+          "src/components/blocks/learn/ModuleLessonList/index.tsx",
+          "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+          "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+          "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+          "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+          "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+          "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+          "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+          "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+          "src/components/overlays/modals/FollowListModal/component.tsx",
+          "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+          "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+          "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+          "src/components/overlays/modals/PaymentModal/component.tsx",
+          "src/components/pages/ContactPage/ContactChannels/index.tsx",
+          "src/components/pages/CourseContents/component.tsx",
+          "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+          "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+          "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+          "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+          "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+          "src/components/pages/NotificationsPage/index.tsx",
+          "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+          "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx"
+        ]
+      },
+      "Nested": {
+        "count": 6,
+        "files": [
+          ".storybook/components/nivo/blocks/agent-os/ThreadDrawer/ThreadDrawer.tsx",
+          ".storybook/components/nivo/blocks/expert-site/LeadDetail/LeadDetail.tsx",
+          ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardNested.stories.tsx",
+          "src/components/blocks/cards/NestedCard/index.tsx",
+          "src/components/blocks/dashboard/ChangelogList/index.tsx"
+        ]
+      },
+      "Placeholder": {
+        "count": 2,
+        "files": [
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPlaceholder.stories.tsx",
+          "src/components/pages/CvGalleryPage/CvGallery/component.tsx"
+        ]
+      },
+      "PressableGroup": {
+        "count": 13,
+        "files": [
+          ".storybook/components/nivo/blocks/dashboard/ProductQuickSelector/ProductQuickSelector.tsx",
+          ".storybook/components/nivo/blocks/landing/DemoFlow/DemoFlow.tsx",
+          ".storybook/components/nivo/blocks/landing/MegaMenu/MegaMenu.tsx",
+          ".storybook/components/nivo/blocks/landing/ProductQuickSelector/ProductQuickSelector.tsx",
+          ".storybook/components/nivoexpert/overlays/modals/TemplatePickerModal/TemplatePickerModal.tsx",
+          ".storybook/components/nivoexpert/pages/AcademySettingsForm/AcademySettingsForm.tsx",
+          ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+          ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx",
+          ".storybook/components/starci/blocks/learn/RatingBar/RatingBar.tsx",
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardPressableGroup.stories.tsx",
+          "src/components/blocks/learn/ContentPager/index.tsx",
+          "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+          "src/components/blocks/learn/RatingBar/index.tsx"
+        ]
+      },
+      "SelectableGroup": {
+        "count": 3,
+        "files": [
+          ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+          ".storybook/stories/composites/cards/SurfaceCard/SurfaceCardSelectableGroup.stories.tsx",
+          "src/components/overlays/modals/LanguageModal/component.tsx"
+        ]
+      }
+    }
+  },
+  "apis": {
+    "SurfaceLabelProps": {
+      "path": "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+      "fields": [
+        "label?",
+        "labelEnd?",
+        "onSeeMore?",
+        "seeMoreLabel?",
+        "action?",
+        "subtleLabel?",
+        "isSkeleton?"
+      ]
+    },
+    "SurfaceCardList": {
+      "paths": [
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+      ],
+      "extends": "SurfaceLabelProps",
+      "fields": [
+        "items",
+        "emptyState?",
+        "error?",
+        "errorState?",
+        "variant?",
+        "description?",
+        "isSkeleton?",
+        "classNames?",
+        "identity?"
+      ],
+      "supports": {
+        "label": true,
+        "labelEnd": true,
+        "action": true,
+        "onSeeMore": true,
+        "description": true,
+        "empty": true,
+        "error": true,
+        "isSkeleton": true,
+        "identity": true
+      }
+    },
+    "SurfaceCardAccordion": {
+      "paths": [
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx"
+      ],
+      "extends": "SurfaceLabelProps",
+      "fields": [
+        "items",
+        "allowsMultipleExpanded?",
+        "defaultExpandedKeys?",
+        "variant?",
+        "emptyState?",
+        "description?",
+        "isSkeleton?",
+        "identity?"
+      ],
+      "supports": {
+        "label": true,
+        "labelEnd": true,
+        "action": true,
+        "onSeeMore": true,
+        "description": true,
+        "empty": true,
+        "error": false,
+        "isSkeleton": true,
+        "identity": true
+      }
+    },
+    "SurfaceListCard": {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "fields": [
+        "children",
+        "bordered?",
+        "className?",
+        "identity?"
+      ],
+      "supports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      },
+      "note": "src-only children API; no label/empty/error/isSkeleton"
+    },
+    "LabeledCard": {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "fields": [
+        "label",
+        "labelEnd?",
+        "onSeeMore?",
+        "seeMoreLabel?",
+        "action?",
+        "children",
+        "description?",
+        "frameless?",
+        "flushContent?",
+        "fillHeight?",
+        "subtleLabel?",
+        "bordered?",
+        "identity?"
+      ]
+    }
+  },
+  "byClass": {
+    "A": 17,
+    "B": 1,
+    "C": 3,
+    "D": 0,
+    "E": 12,
+    "F": 26,
+    "G": 26,
+    "H": 17
+  },
+  "unclassifiedCount": 135,
+  "entries": [
+    {
+      "path": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "class": "H",
+      "note": "children API; twin is SurfaceCard.CrossList not List",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/cards/FlipCard/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "class": "H",
+      "note": "accordion hybrid; twin is SurfaceCardAccordion not List",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/blocks/commerce/CartLine/index.tsx",
+      "class": "H",
+      "note": "exports single SurfaceListCardItem row, not a list shell",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "class": "H",
+      "note": "bespoke ReactNode rows (rank/UserCell/valueLabel)",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "class": "H",
+      "note": "day-grouped free-form ReactNode rows (ActivityAvatar + ReactionBar)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "class": "H",
+      "note": "EntityResultRow + skeleton items without owning list shell",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "class": "H",
+      "note": "inline rename input + Dropdown chrome in rows",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "class": "H",
+      "note": "EntityResultRow children; parent only shells SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "class": "H",
+      "note": "Chip status meta not expressible as fixed SurfaceCardListItem",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list body (grid/cards/other)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + self-framed composite (CheckListCard)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "CheckListCard"
+      ],
+      "childComposite": "CheckListCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + self-framed composite (ContinueCard)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "ContinueCard"
+      ],
+      "childComposite": "ContinueCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + self-framed composite (ContinueCard)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "ContinueCard"
+      ],
+      "childComposite": "ContinueCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list body (grid/cards/other)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskResults/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list body (grid/cards/other)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/overlays/drawers/MiniCartDrawer/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/AiUsagePage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/ArchitecturePage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/CartPage/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "class": "B",
+      "note": "LabeledCard flushContent + SurfaceCardList (nested double-frame)",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": true,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceCardList"
+      ],
+      "childComposite": "SurfaceCardList",
+      "childSupports": {
+        "label": true,
+        "labelEnd": true,
+        "action": true,
+        "onSeeMore": true,
+        "description": true,
+        "empty": true,
+        "error": true,
+        "isSkeleton": true,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ContactPage/ContactFaq/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/ContactPage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/component.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list body (grid/cards/other)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseFaq/component.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "LabeledAccordionCard"
+      ],
+      "childComposite": "LabeledAccordionCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CoursePrerequisites/component.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + self-framed composite (CheckListCard)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "CheckListCard"
+      ],
+      "childComposite": "CheckListCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/pages/CourseDetailPage/CourseValueProps/component.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + self-framed composite (CheckListCard)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "CheckListCard"
+      ],
+      "childComposite": "CheckListCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ChangelogList/component.tsx",
+      "class": "H",
+      "note": "EntryRow free-form (date/chip/external link/body)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/component.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless={cond} + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+      "class": "C",
+      "note": "LabeledCard frameless + SurfaceCardList",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceCardList"
+      ],
+      "childComposite": "SurfaceCardList",
+      "childSupports": {
+        "label": true,
+        "labelEnd": true,
+        "action": true,
+        "onSeeMore": true,
+        "description": true,
+        "empty": true,
+        "error": true,
+        "isSkeleton": true,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/component.tsx",
+      "class": "H",
+      "note": "LabeledCard framed + SurfaceListCard (unexpected double frame; inspect empty/skeleton branches)",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list body (grid/cards/other)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless={cond} + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TopLearners/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "class": "H",
+      "note": "skeleton twin of TrendingContents hold",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+      "class": "H",
+      "note": "row helper for TrendingContents per-row-hook hold",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+      "class": "H",
+      "note": "per-row useResolveRouteNavigation blocks SurfaceCardList items[] without hooks-in-loop",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "class": "H",
+      "note": "LabeledCard framed + SurfaceListCard (unexpected double frame; inspect empty/skeleton branches)",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyChallengeCard/component.tsx",
+      "class": "H",
+      "note": "LabeledCard framed + SurfaceListCard (unexpected double frame; inspect empty/skeleton branches)",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReviewHero/component.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "ContinueCard"
+      ],
+      "childComposite": "ContinueCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard",
+        "SurfaceCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard",
+        "SurfaceCard",
+        "LabeledAccordionCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewModeModal/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "FlipCard",
+        "ContinueCard"
+      ],
+      "childComposite": "FlipCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/pages/JobListPage/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/ApplyMethodSection/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/CompanySection/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/PositionSection/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/KpiPage/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/LearningHistoryPage/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard",
+        "CheckListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "ContinueCard"
+      ],
+      "childComposite": "ContinueCard",
+      "childSupports": {
+        "label": null,
+        "labelEnd": null,
+        "action": null,
+        "onSeeMore": null,
+        "description": null,
+        "empty": null,
+        "error": null,
+        "isSkeleton": null,
+        "identity": null
+      }
+    },
+    {
+      "path": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list body (grid/cards/other)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/MyAttemptsPage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/MyFeedbackPage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/MySubmissionsPage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/CodingLeaderboard/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/PracticeProblemPage/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard",
+        "StatGridCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "class": "H",
+      "note": "LabeledCard framed + SurfaceListCard (unexpected double frame; inspect empty/skeleton branches)",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+      "class": "C",
+      "note": "LabeledCard frameless={cond} + SurfaceCardList",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": true,
+      "childComposites": [
+        "SurfaceCardList"
+      ],
+      "childComposite": "SurfaceCardList",
+      "childSupports": {
+        "label": true,
+        "labelEnd": true,
+        "action": true,
+        "onSeeMore": true,
+        "description": true,
+        "empty": true,
+        "error": true,
+        "isSkeleton": true,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+      "class": "C",
+      "note": "LabeledCard frameless={cond} + SurfaceCardList",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": true,
+      "childComposites": [
+        "SurfaceCardList"
+      ],
+      "childComposite": "SurfaceCardList",
+      "childSupports": {
+        "label": true,
+        "labelEnd": true,
+        "action": true,
+        "onSeeMore": true,
+        "description": true,
+        "empty": true,
+        "error": true,
+        "isSkeleton": true,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCourses/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless={cond} + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/ProfileJobReadiness/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless={cond} + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfilePinned/index.tsx",
+      "class": "E",
+      "note": "LabeledCard frameless + non-list body (grid/cards/other)",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": true,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "class": "A",
+      "note": "LabeledCard frameless + SurfaceListCard",
+      "labeledCard": true,
+      "frameless": true,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    },
+    {
+      "path": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "class": "F",
+      "note": "LabeledCard legitimately owns a generic framed body",
+      "labeledCard": true,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [],
+      "childComposite": null,
+      "childSupports": null
+    },
+    {
+      "path": "src/components/pages/SessionsPage/index.tsx",
+      "class": "G",
+      "note": "legacy SurfaceListCard without LabeledCard label",
+      "labeledCard": false,
+      "frameless": false,
+      "dynamicFrameless": false,
+      "flushContent": false,
+      "fillHeight": false,
+      "childComposites": [
+        "SurfaceListCard"
+      ],
+      "childComposite": "SurfaceListCard",
+      "childSupports": {
+        "label": false,
+        "labelEnd": false,
+        "action": false,
+        "onSeeMore": false,
+        "description": false,
+        "empty": false,
+        "error": false,
+        "isSkeleton": false,
+        "identity": true
+      }
+    }
+  ],
+  "unclassified": [
+    {
+      "path": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ChallengeBrief/ChallengeBrief.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ContentRelatedList/ContentRelatedList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/KeepGoingPath/KeepGoingPath.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/LearnNudges/LearnNudges.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ModuleChallengeList/ModuleChallengeList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/ModuleLessonList/ModuleLessonList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/learn/TaskBriefBody/TaskBriefBody.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/pages/CourseContents/CourseContents.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/ChallengeBrief/ChallengeBrief.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/ContentHeader/ContentHeader.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/ContentRelatedList/ContentRelatedList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/FoundationResourceList/FoundationResourceList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/KeepGoingPath/KeepGoingPath.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/LearnNudges/LearnNudges.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/MindMapRail/MindMapRail.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/ModuleChallengeList/ModuleChallengeList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/ModuleLessonList/ModuleLessonList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/PersonalProjectGatePreview/PersonalProjectGatePreview.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/PlaygroundResourcePanel/PlaygroundResourcePanel.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/learn/TaskBriefBody/TaskBriefBody.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": ".storybook/stories/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.stories.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/cards/ContinueCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/cards/verdict-band.ts",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/ContentRelatedList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/KeepGoingPath/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/LearnNudges/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleChallengeList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/ModuleLessonList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/PlaygroundResourcePanel/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": "SurfaceCard"
+    },
+    {
+      "path": "src/components/composites/cards/SurfaceCard/surface-card-header.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/composites/cards/verdict-band.ts",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/composites/feedback/EmptyState/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/composites/layout/Disclosure/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/composites/stats/StatGridCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/composites/viewers/MarkdownContent/map.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/frames/_identity.ts",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/overlays/drawers/PersonalProjectTaskAttemptsDrawer/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/modals/FollowListModal/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/modals/GlobalSearchModal/Content/Block/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/modals/GlobalSearchModal/Content/Empty/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/modals/GlobalSearchModal/component.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/overlays/modals/PaymentModal/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/CourseContents/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ContinueLearning/component.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/ContinueLearning/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/LeagueCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/component.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/StreakStrip/component.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyGoals/component.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": "StatGridCard"
+    },
+    {
+      "path": "src/components/pages/DashboardPage/WeeklyGoals/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": "SurfaceCard"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/InstallmentPlansPage/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/JobListPage/JobListRow/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/JobListPage/JobListRowSkeleton/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/JobPostFormPage/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/NotificationsPage/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardList"
+    },
+    {
+      "path": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "note": "direct SurfaceCardList/Accordion (owns SurfaceLabelProps; not LabeledCard topology)",
+      "childComposite": "SurfaceCardAccordion"
+    },
+    {
+      "path": "src/components/pages/PracticeHubPage/ProblemCatalog/ProblemRow/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/ProfileActivityPage/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewContributions/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    },
+    {
+      "path": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+      "note": "mention-only / row helper / import / non-JSX consumer",
+      "childComposite": null
+    }
+  ],
+  "requiredFirstTargets": [
+    {
+      "name": "TrendingContents",
+      "entries": [
+        {
+          "path": "src/components/pages/DashboardPage/TrendingContents/TrendingContentsSkeleton/index.tsx",
+          "class": "H",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "skeleton twin of TrendingContents hold"
+        },
+        {
+          "path": "src/components/pages/DashboardPage/TrendingContents/TrendingRow/index.tsx",
+          "class": "H",
+          "childComposite": null,
+          "frameless": false,
+          "note": "row helper for TrendingContents per-row-hook hold"
+        },
+        {
+          "path": "src/components/pages/DashboardPage/TrendingContents/component.tsx",
+          "class": "H",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "per-row useResolveRouteNavigation blocks SurfaceCardList items[] without hooks-in-loop"
+        }
+      ]
+    },
+    {
+      "name": "DailyQuest",
+      "entries": [
+        {
+          "path": "src/components/pages/DashboardPage/DailyQuest/component.tsx",
+          "class": "C",
+          "childComposite": "SurfaceCardList",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceCardList"
+        }
+      ]
+    },
+    {
+      "name": "RecommendedCourses",
+      "entries": [
+        {
+          "path": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless={cond} + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "OverviewCodeSkills",
+      "entries": [
+        {
+          "path": "src/components/pages/ProfileOverviewPage/OverviewCodeSkills/index.tsx",
+          "class": "C",
+          "childComposite": "SurfaceCardList",
+          "frameless": true,
+          "note": "LabeledCard frameless={cond} + SurfaceCardList"
+        }
+      ]
+    },
+    {
+      "name": "OverviewChallengeSkills",
+      "entries": [
+        {
+          "path": "src/components/pages/ProfileOverviewPage/OverviewChallengeSkills/index.tsx",
+          "class": "C",
+          "childComposite": "SurfaceCardList",
+          "frameless": true,
+          "note": "LabeledCard frameless={cond} + SurfaceCardList"
+        }
+      ]
+    },
+    {
+      "name": "ProfileCoding",
+      "entries": [
+        {
+          "path": "src/components/pages/ProfileCodingProblemPage/index.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        },
+        {
+          "path": "src/components/pages/ProfileSkillsPage/ProfileCoding/index.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "ProfileChallenges",
+      "entries": [
+        {
+          "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+          "class": null,
+          "childComposite": null,
+          "frameless": false,
+          "note": "mention-only / row helper / import / non-JSX consumer"
+        },
+        {
+          "path": "src/components/pages/ProfileChallengesPage/ProfileChallenges/index.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "FlashcardReviewHistory",
+      "entries": [
+        {
+          "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "FlashcardQuizHistory",
+      "entries": [
+        {
+          "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "ActivityFeed",
+      "entries": [
+        {
+          "path": "src/components/blocks/feed/ActivityFeed/component.tsx",
+          "class": "H",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "day-grouped free-form ReactNode rows (ActivityAvatar + ReactionBar)"
+        }
+      ]
+    },
+    {
+      "name": "MindMapNodeDrawer",
+      "entries": [
+        {
+          "path": "src/components/overlays/drawers/MindMapNodeDrawer/component.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "AiUsageHistory",
+      "entries": [
+        {
+          "path": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "ContactChannels",
+      "entries": [
+        {
+          "path": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+          "class": "F",
+          "childComposite": null,
+          "frameless": false,
+          "note": "LabeledCard legitimately owns a generic framed body"
+        },
+        {
+          "path": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+          "class": "B",
+          "childComposite": "SurfaceCardList",
+          "frameless": false,
+          "note": "LabeledCard flushContent + SurfaceCardList (nested double-frame)"
+        }
+      ]
+    },
+    {
+      "name": "ProfileCapstone",
+      "entries": [
+        {
+          "path": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+          "class": null,
+          "childComposite": null,
+          "frameless": false,
+          "note": "mention-only / row helper / import / non-JSX consumer"
+        },
+        {
+          "path": "src/components/pages/ProfileProjectsPage/ProfileCapstone/index.tsx",
+          "class": "A",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "LabeledCard frameless + SurfaceListCard"
+        }
+      ]
+    },
+    {
+      "name": "RelatedContentList",
+      "entries": [
+        {
+          "path": "src/components/blocks/learn/RelatedContentList/component.tsx",
+          "class": "H",
+          "childComposite": "SurfaceListCard",
+          "frameless": true,
+          "note": "EntityResultRow children; parent only shells SurfaceListCard"
+        }
+      ]
+    }
+  ]
+}

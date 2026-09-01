@@ -1,0 +1,35 @@
+{
+  "changed": [],
+  "held": [
+    "vendor atoms — no AST-proven non-vendor moves without mass migration"
+  ],
+  "retracted": [],
+  "verification": {
+    "productEdits": false
+  },
+  "regressions": [],
+  "overlapCheck": "pass",
+  "manifest": [],
+  "candidateEvidence": [
+    {
+      "path": "src/components/atoms/navigation/Tabs/TabsBase.tsx",
+      "reason": "Vendor vocabulary atom; mass-move forbidden",
+      "proposedTier": "hold-vendor-atom"
+    },
+    {
+      "path": "src/components/atoms/overlay/Menu/index.tsx",
+      "reason": "Vendor overlay atom; locked-style complexity; hold",
+      "proposedTier": "hold-vendor-atom"
+    }
+  ],
+  "beforeTier": "atom",
+  "afterTier": null,
+  "destination": null,
+  "consumersBefore": {},
+  "consumersAfter": null,
+  "publicDoorsBefore": {},
+  "publicDoorsAfter": null,
+  "skeletonBefore": {},
+  "skeletonAfter": null,
+  "storybookParity": "n/a"
+}
